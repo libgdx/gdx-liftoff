@@ -40,6 +40,6 @@ eclipse.project.name = appName + '-core'
 
 dependencies {
 ${joinDependencies(dependencies)}}
-        """
+"""
     }
 }
