@@ -1,0 +1,20 @@
+<form id="form" style="smooth" fillParent="true" background="menu-bg" align="top" tablePad="1"
+       oneColumn="true" defaultGrowX="true" defaultPad="2" success="@formValid">
+    <:import path="templates/header.lml"/>
+    <table>@prompt0 <:logo/> @prompt1</table>
+
+    <:import path="templates/basicData.lml"/>
+
+    <separator/>
+
+    <tabbedPane style="static" growY="true" selected="0" tabShowAction="show" tabHideAction="hide" onCreate="initTabs">
+        <:for tab="platforms;languages;extensions;thirdParty;templates;advanced">
+            <:import path="templates/tabs/{tab}.lml"/>
+        </:for>
+    </tabbedPane>
+
+    <separator/>
+    <:import path="templates/toast.lml"/>
+
+    <textButton disableOnError="true" onChange="show:generation">@generate</textButton>
+</form>

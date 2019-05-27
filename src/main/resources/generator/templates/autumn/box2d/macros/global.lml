@@ -1,0 +1,10 @@
+<!-- This is a custom macro that displays a TabbedPane's tab. - name: becomes 
+	the title of the tab. Defaults to empty string. -->
+<:macro alias="setting" replace="content" name="">
+	<!-- "name" will be replaced with the value of the passed argument. -->
+	<tab title="{name}" closeable="false" oneColumn="true" defaultPad="1"
+		bg="dialogDim">
+		<!-- "content" will be replaced with the data between macro tags. -->
+		{content}
+	</tab>
+</:macro>

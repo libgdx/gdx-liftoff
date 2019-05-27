@@ -1,0 +1,21 @@
+<tab text="@templates" closeable="false" oneColumn="true" defaultPad="3">
+    <label style="small">@templatesPrompt</label>
+    <scrollPane grow="true" padLeft="20" padRight="20" prefHeight="100" fadeBars="false">
+        <buttonTable id="templatesTable" defaultPadTop="4" defaultPadLeft="10" defaultPadRight="10" tablePadBottom="3" min="1" max="1">
+            <label color="vis-blue" tooltip="@officialTemplatesTip">@officialTemplates</label>
+            <label color="vis-blue" tooltip="@thirdPartyTemplatesTip" row="true">@thirdPartyTemplates</label>
+            <:for official="$templates" thirdParty="$thirdPartyTemplates">
+                <!-- It is assumed there are less official templates. -->
+                <:if test="{official}">
+                    <radioButton id="{official}" tooltip="@{official}Tip" align="left">@{official}</radioButton>
+                <:if:else/>
+                    <:cell/>
+                </:if>
+                <radioButton id="{thirdParty}" tooltip="@{thirdParty}Tip" align="left" row="true">@{thirdParty}</radioButton>
+            </:for>
+        </buttonTable>
+    </scrollPane>
+    <label style="small">@templatesTip</label>
+    <label style="small" padTop="-3">@templatesStar</label>
+    <linkLabel url="@issues">@templatesLink</linkLabel>
+</tab>

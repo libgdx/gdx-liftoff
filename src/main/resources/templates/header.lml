@@ -1,0 +1,9 @@
+<table toTitleTable="true" growX="true">
+    <table background="window-bg" onCreate="initTitleTable" growX="true" height="26" padBottom="-20" row="true"
+           colspan="3" touchable="enabled"/>
+    <image style="gdx-liftoff" fill="false" onClick="showSite" expandX="true" padLeft="60" padTop="26"/>
+    <imageButton style="close-blue" image="icon-minus" onChange="minimize" toTitleTable="true" fill="false"
+                 align="topRight" padTop="-6"/>
+    <imageButton style="close-window" onChange="app:exit" toTitleTable="true" fill="false" expandX="false"
+                 align="topRight" padTop="-6" padLeft="3"/>
+</table>

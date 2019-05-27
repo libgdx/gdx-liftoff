@@ -1,0 +1,55 @@
+apply plugin: 'kotlin'
+apply plugin: 'java-library'
+apply plugin: 'application'
+
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+  }
+}
+
+version = "1.9.9"
+mainClassName = 'com.github.czyzby.setup.MainKt'
+
+jar {
+  manifest {
+    attributes 'Main-Class': mainClassName
+  }
+  from files(sourceSets.main.output.classesDirs)
+  from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  jcenter()
+}
+
+dependencies {
+  api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+  api "org.apache.commons:commons-exec:$commonsExecVersion"
+  api 'org.slf4j:slf4j-nop:1.7.25'
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+  api "com.github.czyzby:gdx-autumn-mvc:$autumnVersion"
+  api "com.github.czyzby:gdx-autumn-fcs:$autumnVersion"
+  api "com.github.czyzby:gdx-lml-vis:$autumnVersion"
+}
+
+task pack {
+  doLast {
+    com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
+            file("raw").absolutePath,
+            file("src/main/resources/skin").absolutePath,
+            "tinted"
+    )
+  }
+}

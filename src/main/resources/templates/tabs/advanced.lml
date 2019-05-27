@@ -1,0 +1,61 @@
+<tab text="@advanced" closeable="false" oneColumn="true" tablePadTop="4">
+    <table defaultPad="2">
+        <label padRight="20">@localePrompt</label>
+        <:each locale="{locales}">
+            <:if test="{locale} != {currentLocale}">
+                <textButton onClick="locale:{locale}">@{locale}</textButton>
+            </:if>
+        </:each>
+        <label style="small" color="vis-blue" padLeft="20">@localeWarn</label>
+    </table>
+    <scrollPane growX="true" expand="true" fadeBars="false" disableX="true" height="160" overscroll="false" flickScroll="false">
+    <table defaultPad="3" tablePadTop="4" tablePadBottom="4" tablePadRight="3">
+        <:column column="1" growX="true" minWidth="50"/>
+        <:column column="3" growX="true" minWidth="50"/>
+        @gdxVersion
+        <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.9</textField>
+        @version
+        <textField id="version" tooltip="@versionTip" row="true">0.0.1-SNAPSHOT</textField>
+        @javaVersion
+        <floatSpinner id="javaVersion" min="1.7" max="1.9" value="1.7" step="0.1" precision="1"
+                      tooltip="@javaVersionTip"/>
+        @serverJavaVersion
+        <floatSpinner id="serverJavaVersion" min="1.7" max="1.9" value="1.8" step="0.1" precision="1" row="true"
+                      tooltip="@serverJavaVersionTip"/>
+        @androidPluginVersion
+        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">3.2.1</textField>
+        @desktopJavaVersion
+        <floatSpinner id="desktopJavaVersion" min="1.7" max="1.9" value="1.7" step="0.1" precision="1" row="true"
+                      tooltip="@desktopJavaVersionTip"/>
+        @sdkVersion
+        <intSpinner id="sdkVersion" min="9" max="27" value="$getSdkVersion" onChange="setSdkVersion" step="1"
+                    tooltip="@sdkVersionTip"/>
+        @toolsVersion
+        <textField id="toolsVersion" tooltip="@toolsVersionTip" value="$getToolsVersion"
+                   onChange="setToolsVersion" row="true" />
+        @robovmVersion
+        <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.3</textField>
+        @moeVersion
+        <textField id="moeVersion" tooltip="@moeVersionTip" row="true">1.4.0</textField>
+        @gwtVersion
+        <selectBox id="gwtVersion" tooltip="@gwtVersionTip" value="$getGwtVersion" onChange="setGwtVersion"
+                   minWidth="20">
+            <:for version="$gwtVersions">{version}
+            </:for>
+        </selectBox>
+        @gwtPlugin
+        <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.0.6</textField>
+    </table>
+    </scrollPane>
+    <table growX="true" defaultPad="2" defaultSpaceRight="10" defaultSpaceLeft="10">
+        <checkBox id="generateSkin" style="small" tooltip="@generateSkinTip">@generateSkin</checkBox>
+        <checkBox id="generateUsl" style="small" tooltip="@generateUslTip">@generateUsl</checkBox>
+        <checkBox id="generateReadme" style="small" tooltip="@generateReadmeTip">@generateReadme</checkBox>
+        <checkBox id="gradleWrapper" style="small" tooltip="@gradleWrapperTip" checked="$getGradleWrapper" onChange="setGradleWrapper">
+            @gradleWrapper
+        </checkBox>
+    </table>
+    <textField id="gradleTasks" message="@gradleTasksPrompt" tooltip="@gradleTasksTip" growX="true"
+               value="$getGradleTasks" onChange="setGradleTasks" pad="2"/>
+    <linkLabel url="https://github.com/czyzby/gdx-skins" expandY="true" align="bottom">@gdxSkinsPrompt</linkLabel>
+</tab>
