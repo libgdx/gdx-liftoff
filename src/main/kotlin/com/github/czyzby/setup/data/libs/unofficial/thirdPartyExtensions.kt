@@ -54,7 +54,7 @@ class Overlap2D : ThirdPartyExtension() {
 @Extension
 class ArtemisOdb : ThirdPartyExtension() {
     override val id = "artemisOdb"
-    override val defaultVersion = "2.1.0"
+    override val defaultVersion = "2.2.0"
     override val url = "https://github.com/junkdog/artemis-odb"
 
     override fun initiateDependencies(project: Project) {
@@ -166,7 +166,7 @@ class Dialogs : ThirdPartyExtension() {
 @Extension
 class InGameConsole : ThirdPartyExtension() {
     override val id = "inGameConsole"
-    override val defaultVersion = "0.5.2"
+    override val defaultVersion = "1.0.0"
     override val url = "https://github.com/StrongJoshua/libgdx-inGameConsole"
 
     override fun initiateDependencies(project: Project) {
@@ -268,7 +268,7 @@ class Joice : ThirdPartyExtension() {
 @Extension
 class TypingLabel : ThirdPartyExtension() {
     override val id = "typingLabel"
-    override val defaultVersion = "1.0.3"
+    override val defaultVersion = "1.0.5"
     override val url = "https://github.com/rafaskb/typing-label"
 
     override fun initiateDependencies(project: Project) {

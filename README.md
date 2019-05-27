@@ -1,6 +1,8 @@
 # gdx-liftoff
 A modern setup tool for libGDX Gradle projects, forked from czyzby/gdx-setup
 
+![Screenshot of gdx-liftoff](https://i.imgur.com/F2c7BDM.png)
+
 If you've used libGDX for even a short time, you've probably used the official `gdx-setup.jar` made by the libGDX team. You may have used alternative setup tools,
 like [czyzby/gdx-setup](https://github.com/czyzby/gdx-setup). The problem these two setup tools share is that they currently use outdated Gradle versions, both old
 enough that they won't work with Java 11 or newer, and neither seems to be updated very often. This project provides another alternative setup tool based on
