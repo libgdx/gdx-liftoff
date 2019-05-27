@@ -1,0 +1,4 @@
+<table fillParent="true" align="bottomRight">
+	<!-- Thanks to "goto:menu" action, clicking this button will change the screen to menu.lml. -->
+	<textButton onChange="goto:menu">@back</textButton>
+</table>

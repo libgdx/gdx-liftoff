@@ -1,0 +1,10 @@
+<dialog id="dialog" title="@switchControls" style="dialog">
+	<:each control="$controls">
+		<!-- These buttons will allow to change control types. -->
+		<textButton id="{control}" onResult="{control}" growX="true" row="true">
+			@{control}
+		</textButton>
+	</:each>
+	<!-- "close" action is defined in Global class. -->
+	<textButton onResult="close">@back</textButton>
+</dialog>

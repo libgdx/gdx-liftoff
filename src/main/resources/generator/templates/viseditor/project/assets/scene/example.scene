@@ -1,0 +1,193 @@
+{
+  "versionCode": 2,
+  "path": "scene/example.scene",
+  "width": 6.4,
+  "height": 4.8,
+  "pixelsPerUnit": 100.0,
+  "viewport": "STRETCH",
+  "physicsSettings": {
+    "physicsEnabled": false,
+    "gravityX": 0.0,
+    "gravityY": -9.8,
+    "allowSleep": false
+  },
+  "variables": {
+    "variables": []
+  },
+  "layers": [
+    {
+      "name": "Background",
+      "id": 0,
+      "locked": false,
+      "visible": true,
+      "cordsSystem": "WORLD",
+      "@class": "EditorLayer"
+    }
+  ],
+  "activeLayerId": 0,
+  "groupIds": [],
+  "schemes": [
+    {
+      "components": [
+        {
+          "x": 1.2651738,
+          "y": 3.3634355,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "rotation": 0.0,
+          "@class": "Transform"
+        },
+        {
+          "originX": 1.89,
+          "originY": 0.315,
+          "@class": "Origin"
+        },
+        {
+          "tint": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "@class": "Tint"
+        },
+        {
+          "asset": {
+            "relativePath": "gfx/libgdx.png",
+            "@class": "TextureRegionAsset"
+          },
+          "@class": "AssetReference"
+        },
+        {
+          "flipX": false,
+          "flipY": false,
+          "width": 3.78,
+          "height": 0.63,
+          "@class": "ProtoVisSprite"
+        },
+        {
+          "layerId": 0,
+          "@class": "Layer"
+        },
+        {
+          "uuid": "0c89bc4f-b644-43b7-8285-0fd5d6db927e",
+          "@class": "VisUUID"
+        },
+        {
+          "zIndex": 0,
+          "@class": "Renderable"
+        }
+      ],
+      "@class": "EntityScheme"
+    },
+    {
+      "components": [
+        {
+          "x": 2.5371149,
+          "y": 0.39330515,
+          "scaleX": 1.0,
+          "scaleY": 1.0,
+          "rotation": 0.0,
+          "@class": "Transform"
+        },
+        {
+          "originX": 0.64,
+          "originY": 0.64,
+          "@class": "Origin"
+        },
+        {
+          "tint": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "@class": "Tint"
+        },
+        {
+          "asset": {
+            "relativePath": "gfx/icon.png",
+            "@class": "TextureRegionAsset"
+          },
+          "@class": "AssetReference"
+        },
+        {
+          "flipX": false,
+          "flipY": false,
+          "width": 1.28,
+          "height": 1.28,
+          "@class": "ProtoVisSprite"
+        },
+        {
+          "layerId": 0,
+          "@class": "Layer"
+        },
+        {
+          "uuid": "de960b7d-de4f-4f03-86f9-b2559fde887f",
+          "@class": "VisUUID"
+        },
+        {
+          "zIndex": 0,
+          "@class": "Renderable"
+        }
+      ],
+      "@class": "EntityScheme"
+    },
+    {
+      "components": [
+        {
+          "x": 2.8140442,
+          "y": 2.1576588,
+          "scaleX": 2.0,
+          "scaleY": 2.0,
+          "rotation": 0.0,
+          "@class": "Transform"
+        },
+        {
+          "originX": 0.38,
+          "originY": 0.38,
+          "@class": "Origin"
+        },
+        {
+          "tint": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "@class": "Tint"
+        },
+        {
+          "asset": {
+            "relativePath": "gfx/plus.png",
+            "@class": "TextureRegionAsset"
+          },
+          "@class": "AssetReference"
+        },
+        {
+          "flipX": false,
+          "flipY": false,
+          "width": 0.76,
+          "height": 0.76,
+          "@class": "ProtoVisSprite"
+        },
+        {
+          "layerId": 0,
+          "@class": "Layer"
+        },
+        {
+          "uuid": "ed72304e-480f-440b-b6e3-c3e0d16eb01a",
+          "@class": "VisUUID"
+        },
+        {
+          "zIndex": 0,
+          "@class": "Renderable"
+        },
+        {
+          "@class": "VisID"
+        }
+      ],
+      "@class": "EntityScheme"
+    }
+  ]
+}

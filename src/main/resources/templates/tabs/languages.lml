@@ -1,0 +1,19 @@
+<tab text="@languages" closeable="false" oneColumn="true">
+    <label style="small" align="top" expand="true">@languagesPrompt</label>
+    <table defaultPad="3">
+        @language
+        @languageVersion
+        <:row/>
+        <:for lang="$jvmLanguages" version="$jvmLanguagesVersions">
+            <checkBox id="{lang}" align="left">@{lang}</checkBox>
+            <textField id="{lang}Version" textAlign="center">{version}</textField>
+            <linkLabel url="@{lang}Url" row="true">?</linkLabel>
+        </:for>
+    </table>
+    <linkLabel url="https://github.com/oakes/play-clj" expand="true" align="bottom">
+        @clojurePrompt
+    </linkLabel>
+    <linkLabel url="https://github.com/libgdx/libgdx/wiki/Using-libgdx-with-other-jvm-languages">
+        @otherLanguagesPrompt
+    </linkLabel>
+</tab>

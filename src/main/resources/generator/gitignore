@@ -1,0 +1,64 @@
+## Gradle
+.gradle
+gradle-app.setting
+build/
+
+## Java:
+*.class
+*.war
+*.ear
+hs_err_pid*
+
+## Android:
+android/libs/armeabi/
+android/libs/armeabi-v7a/
+android/libs/x86/
+android/gen/
+local.properties
+com_crashlytics_export_strings.xml
+
+## GWT:
+war/
+html/war/gwt_bree/
+html/gwt-unitCache/
+.apt_generated/
+html/war/WEB-INF/deploy/
+html/war/WEB-INF/classes/
+.gwt/
+gwt-unitCache/
+www-test/
+.gwt-tmp/
+
+## IntelliJ, Android Studio:
+.idea/
+*.ipr
+*.iws
+*.iml
+out/
+
+## Eclipse
+.classpath
+.project
+.metadata
+**/bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.settings/
+.loadpath
+.externalToolBuilders/
+*.launch
+
+## NetBeans
+**/nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+## OS Specific
+.DS_Store

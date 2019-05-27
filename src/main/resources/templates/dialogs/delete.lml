@@ -1,0 +1,5 @@
+<dialog title="@warn">
+    <label style="small" color="vis-blue">@deletePrompt</label>
+    <imageTextButton image="icon-trash" onResult="delete" growX="true">@yes</imageTextButton>
+    <imageTextButton image="icon-close" onResult="close" growX="true">@no</imageTextButton>
+</dialog>
