@@ -15,7 +15,7 @@ class Headless : Platform {
     }
 
     override val id = ID
-    override val isGraphical = false
+    override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = HeadlessGradleFile(project)
 

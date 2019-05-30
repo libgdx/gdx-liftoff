@@ -23,12 +23,12 @@
         <floatSpinner id="serverJavaVersion" min="1.7" max="1.9" value="1.8" step="0.1" precision="1" row="true"
                       tooltip="@serverJavaVersionTip"/>
         @androidPluginVersion
-        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">3.2.1</textField>
+        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">3.4.1</textField>
         @desktopJavaVersion
         <floatSpinner id="desktopJavaVersion" min="1.7" max="1.9" value="1.7" step="0.1" precision="1" row="true"
                       tooltip="@desktopJavaVersionTip"/>
         @sdkVersion
-        <intSpinner id="sdkVersion" min="9" max="27" value="$getSdkVersion" onChange="setSdkVersion" step="1"
+        <intSpinner id="sdkVersion" min="9" max="28" value="$getSdkVersion" onChange="setSdkVersion" step="1"
                     tooltip="@sdkVersionTip"/>
         @toolsVersion
         <textField id="toolsVersion" tooltip="@toolsVersionTip" value="$getToolsVersion"

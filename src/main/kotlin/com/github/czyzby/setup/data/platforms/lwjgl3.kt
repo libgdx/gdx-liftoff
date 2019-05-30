@@ -17,7 +17,7 @@ class LWJGL3 : Platform {
     }
 
     override val id = ID
-    //override val isGraphical = true // true is the default, and we want to prefer this to desktop
+    //override val isStandard = true // true is the default, and we want to prefer this to desktop
     override fun createGradleFile(project: Project): GradleFile = Lwjgl3GradleFile(project)
     override fun initiate(project: Project) {
         // Adding game icons:
