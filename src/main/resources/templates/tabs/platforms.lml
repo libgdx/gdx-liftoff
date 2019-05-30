@@ -3,14 +3,15 @@
     <table>
         <:for platform="$platforms">
             <:calculate key="mandatory" value="{platform}=core"/>
-            <checkBox id="{platform}" disabled="{mandatory}" checked="{mandatory}" padLeft="6"
+            <:calculate key="precheck" value="{platform}=core || {platform}=lwjgl3 || {platform}=android"/>
+            <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="6"
                       tooltip="@{platform}Tip" align="left" row="{= {for:index}%2=1}" onChange="togglePlatform">
                 @{platform}
             </checkBox>
         </:for>
     </table>
     <table oneColumn="true" defaultPad="4" defaultGrowX="true">
-        <textButton onChange="toggleClients">@toggleClientPlatforms</textButton>
+        <textButton onChange="toggleStandard">@toggleStandardPlatforms</textButton>
         <textButton onChange="toggleAll">@toggleAllPlatforms</textButton>
     </table>
 </tab>

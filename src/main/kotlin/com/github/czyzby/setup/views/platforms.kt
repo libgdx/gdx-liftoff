@@ -29,7 +29,7 @@ class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
         androidSdkButton.isDisabled = !active
     }
 
-    fun toggleClientPlatforms() = platformButtons.filter { platforms[it.name]!!.isGraphical }
+    fun toggleStandardPlatforms() = platformButtons.filter { platforms[it.name]!!.isStandard }
             .forEach { it.isChecked = !it.isChecked }
 
     fun togglePlatforms() = platformButtons.filter { it.name != Core.ID }

@@ -79,7 +79,7 @@ class MainView : ActionContainer {
         }
     }
 
-    @LmlAction("toggleClients") fun toggleClientPlatforms() = platformsData.toggleClientPlatforms()
+    @LmlAction("toggleStandard") fun toggleStandardPlatforms() = platformsData.toggleStandardPlatforms()
     @LmlAction("toggleAll") fun toggleAllPlatforms() = platformsData.togglePlatforms()
 
     @LmlAction("mkdirs") fun createDestinationDirectory() {

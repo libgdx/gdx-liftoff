@@ -13,7 +13,7 @@ class Assets : Platform {
     }
 
     override val id = ID
-    override val isGraphical = false
+    override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile =
             throw UnsupportedOperationException("This is a mock-up project with no Gradle file.")

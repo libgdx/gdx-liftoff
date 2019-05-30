@@ -31,7 +31,8 @@ class GWT : Platform {
     }
 
     override val id = ID
-
+    override val isStandard = false
+    
     override fun createGradleFile(project: Project): GradleFile = GWTGradleFile(project)
 
     override fun initiate(project: Project) {

@@ -17,7 +17,7 @@ class Desktop : Platform {
     }
 
     override val id = ID
-    override val isGraphical = false // use lwjgl3 instead
+    override val isStandard = false // use lwjgl3 instead
     override fun createGradleFile(project: Project): GradleFile = DesktopGradleFile(project)
 
     override fun initiate(project: Project) {

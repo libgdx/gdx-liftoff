@@ -18,7 +18,7 @@ class MOE : Platform {
     }
 
     override val id = ID
-    override val isGraphical = false // Will not be selected as LibGDX client platform. iOS is the default one.
+    override val isStandard = false // Will not be selected as LibGDX client platform. iOS is the default one.
 
     override fun createGradleFile(project: Project): GradleFile = MOEGradleFile(project)
 
@@ -66,7 +66,8 @@ class MOEGradleFile(val project: Project) : GradleFile(MOE.ID) {
 // Exclude all files from Gradle's test runner
 test { exclude '**' }
 
-task copyNatives << {
+task copyNatives {
+  doLast {
     file("xcode/native/ios/").mkdirs()
     def LD_FLAGS = "LIBGDX_NATIVES = "
     configurations.natives.files.each { jar->
@@ -94,6 +95,7 @@ task copyNatives << {
         proguard << "\n-keep class com.badlogic.** { *; }\n"
         proguard << "-keep enum com.badlogic.** { *; }\n"
     }
+  }
 }
 
 sourceSets.main.resources.srcDirs = [ file("../assets") ]

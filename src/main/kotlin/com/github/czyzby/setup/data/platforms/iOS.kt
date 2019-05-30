@@ -18,7 +18,8 @@ class iOS : Platform {
     }
 
     override val id = ID
-
+    override val isStandard = false
+    
     override fun createGradleFile(project: Project): GradleFile = iOSGradleFile(project)
     override fun initiate(project: Project) {
         project.rootGradle.buildDependencies.add("\"com.mobidevelop.robovm:robovm-gradle-plugin:\$robovmVersion\"")
