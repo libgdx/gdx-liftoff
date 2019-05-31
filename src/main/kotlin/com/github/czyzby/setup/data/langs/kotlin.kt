@@ -14,7 +14,7 @@ import com.github.czyzby.setup.views.JvmLanguage
 @JvmLanguage
 class Kotlin : Language {
     override val id = "kotlin"
-    override val version = "1.1.+"
+    override val version = "1.3.+"
 
     override fun initiate(project: Project) {
         project.rootGradle.buildDependencies.add("\"org.jetbrains.kotlin:kotlin-gradle-plugin:\$kotlinVersion\"")
@@ -22,7 +22,8 @@ class Kotlin : Language {
         project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "kotlin"))) }
         if (project.hasPlatform(Android.ID)) {
             val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
-            gradleFile.plugins.add("kotlin-android")
+//            gradleFile.plugins.add("kotlin-android")
+            gradleFile.insertLatePlugin()
         }
         addDependency(project, "org.jetbrains.kotlin:kotlin-stdlib:\$kotlinVersion")
     }

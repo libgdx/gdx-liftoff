@@ -76,7 +76,7 @@ ${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permiss
 class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     val plugins = mutableListOf<String>()
     val nativeDependencies = mutableSetOf<String>()
-
+    var latePlugin = false
     init {
         dependencies.add("project(':${Core.ID}')")
         addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
@@ -87,7 +87,8 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
         addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
         plugins.add("com.android.application")
     }
-
+    
+    fun insertLatePlugin() { latePlugin = true }
     /**
      * @param dependency will be added as "natives" dependency, quoted.
      */
@@ -146,26 +147,29 @@ ${joinDependencies(nativeDependencies, "natives")}
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
 task copyAndroidNatives() {
-  file("libs/armeabi/").mkdirs()
-  file("libs/armeabi-v7a/").mkdirs()
-  file("libs/arm64-v8a/").mkdirs()
-  file("libs/x86_64/").mkdirs()
-  file("libs/x86/").mkdirs()
-
-  configurations.natives.files.each { jar ->
-    def outputDir = null
-    if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-    if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-    if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
-    if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-    if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-    if(outputDir != null) {
-      copy {
-        from zipTree(jar)
-        into outputDir
-        include "*.so"
+  doFirst {
+    file("libs/armeabi/").mkdirs()
+    file("libs/armeabi-v7a/").mkdirs()
+    file("libs/arm64-v8a/").mkdirs()
+    file("libs/x86_64/").mkdirs()
+    file("libs/x86/").mkdirs()
+    
+    configurations.natives.files.each { jar ->
+      def outputDir = null
+      if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+      if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+      if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
+      if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+      if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+      if(outputDir != null) {
+        copy {
+          from zipTree(jar)
+          into outputDir
+          include "*.so"
+        }
       }
     }
+    ${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
   }
 }
 
