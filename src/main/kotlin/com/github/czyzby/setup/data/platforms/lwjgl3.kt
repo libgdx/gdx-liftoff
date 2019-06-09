@@ -55,6 +55,17 @@ sourceCompatibility = ${project.advanced.desktopJavaVersion}
 dependencies {
 ${joinDependencies(dependencies)}}
 
+import org.gradle.internal.os.OperatingSystem
+
+run {
+    workingDir = rootProject.file('assets').path
+    setIgnoreExitValue(true)
+    
+    if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
+        // Required to run LWJGL3 Java apps on MacOS
+        jvmArgs += "-XstartOnFirstThread"
+    }
+}
 jar {
   archiveFileName = "${'$'}{appName}-${'$'}{version}.jar"
   from files(sourceSets.main.output.classesDirs)
