@@ -13,100 +13,100 @@ import com.github.czyzby.setup.views.GdxPlatform
  */
 @GdxPlatform
 class MOE : Platform {
-    companion object {
-        const val ID = "ios-moe"
-    }
+		companion object {
+		    const val ID = "ios-moe"
+		}
 
-    override val id = ID
-    override val isStandard = false // Will not be selected as LibGDX client platform. iOS is the default one.
+		override val id = ID
+		override val isStandard = false // Will not be selected as LibGDX client platform. iOS is the default one.
 
-    override fun createGradleFile(project: Project): GradleFile = MOEGradleFile(project)
+		override fun createGradleFile(project: Project): GradleFile = MOEGradleFile(project)
 
-    override fun initiate(project: Project) {
-        project.rootGradle.buildDependencies.add("\"org.multi-os-engine:moe-gradle:\$moeVersion\"")
-        project.properties["moeVersion"] = project.advanced.moeVersion
+		override fun initiate(project: Project) {
+		    project.rootGradle.buildDependencies.add("\"org.multi-os-engine:moe-gradle:\$moeVersion\"")
+		    project.properties["moeVersion"] = project.advanced.moeVersion
 
-        arrayOf("Default.png", "Default@2x.png", "Default@2x~ipad.png", "Default-375w-667h@2x.png",
-                "Default-414w-736h@3x.png", "Default-568h@2x.png", "Default-1024w-1366h@2x~ipad.png", "Default~ipad.png",
-                "Icon.png", "Icon@2x.png", "Icon-72.png", "Icon-72@2x.png").forEach {
-            project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe", it),
-                    original = path("generator", "ios", "data", it)))
-        }
+		    arrayOf("Default.png", "Default@2x.png", "Default@2x~ipad.png", "Default-375w-667h@2x.png",
+		            "Default-414w-736h@3x.png", "Default-568h@2x.png", "Default-1024w-1366h@2x~ipad.png", "Default~ipad.png",
+		            "Icon.png", "Icon@2x.png", "Icon-72.png", "Icon-72@2x.png").forEach {
+		        project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe", it),
+		                original = path("generator", "ios", "data", it)))
+		    }
 
-        arrayOf("custom.xcconfig", "Info.plist", "main.cpp").forEach {
-            project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe", it),
-                    original = path("generator", "ios-moe", "xcode", "ios-moe", it)))
-        }
+		    arrayOf("custom.xcconfig", "Info.plist", "main.cpp").forEach {
+		        project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe", it),
+		                original = path("generator", "ios-moe", "xcode", "ios-moe", it)))
+		    }
 
-        arrayOf("Info.plist", "main.cpp").forEach {
-            project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe-Test", it),
-                    original = path("generator", "ios-moe", "xcode", "ios-moe-Test", it)))
-        }
+		    arrayOf("Info.plist", "main.cpp").forEach {
+		        project.files.add(CopiedFile(projectName = ID, path = path("xcode", "ios-moe-Test", it),
+		                original = path("generator", "ios-moe", "xcode", "ios-moe-Test", it)))
+		    }
 
-        project.files.add(MOEXCodeProjectFile(project))
-    }
+		    project.files.add(MOEXCodeProjectFile(project))
+		}
 }
 
 class MOEGradleFile(val project: Project) : GradleFile(MOE.ID) {
-    val nativeDependencies = mutableSetOf<String>()
+		val nativeDependencies = mutableSetOf<String>()
 
-    init {
-        dependencies.add("project(':${Core.ID}')")
-        addDependency("com.badlogicgames.gdx:gdx-backend-moe:\$gdxVersion")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios")
-    }
+		init {
+		    dependencies.add("project(':${Core.ID}')")
+		    addDependency("com.badlogicgames.gdx:gdx-backend-moe:\$gdxVersion")
+		    addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios")
+		}
 
-    /**
-     * @param dependency will be added as "natives" dependency, quoted.
-     */
-    fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
+		/**
+		 * @param dependency will be added as "natives" dependency, quoted.
+		 */
+		fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
-    override fun getContent() = """apply plugin: 'moe'
+		override fun getContent() = """apply plugin: 'moe'
 
 // Exclude all files from Gradle's test runner
 test { exclude '**' }
 
 task copyNatives {
-  doLast {
-    file("xcode/native/ios/").mkdirs()
-    def LD_FLAGS = "LIBGDX_NATIVES = "
-    configurations.natives.files.each { jar->
-        def outputDir = null
-        if (jar.name.endsWith("natives-ios.jar")) outputDir = file("xcode/native/ios")
-        if (outputDir != null) {
-            FileCollection fileCollection = zipTree(jar)
-            for (File libFile : fileCollection) {
-                if (libFile.getAbsolutePath().endsWith(".a") && !libFile.getAbsolutePath().contains("/tvos/")) {
-                    copy {
-                        from libFile.getAbsolutePath()
-                        into outputDir
-                    }
-                    LD_FLAGS += " -force_load \${'$'}{SRCROOT}/native/ios/" + libFile.getName()
-                }
-            }
-        }
-    }
-    def outFlags = file("xcode/ios-moe/custom.xcconfig")
-    outFlags.write LD_FLAGS
+	doLast {
+		file("xcode/native/ios/").mkdirs()
+		def LD_FLAGS = "LIBGDX_NATIVES = "
+		configurations.natives.files.each { jar->
+			def outputDir = null
+			if (jar.name.endsWith("natives-ios.jar")) outputDir = file("xcode/native/ios")
+			if (outputDir != null) {
+				FileCollection fileCollection = zipTree(jar)
+				for (File libFile : fileCollection) {
+					if (libFile.getAbsolutePath().endsWith(".a") && !libFile.getAbsolutePath().contains("/tvos/")) {
+						copy {
+							from libFile.getAbsolutePath()
+							into outputDir
+						}
+						LD_FLAGS += " -force_load \${'$'}{SRCROOT}/native/ios/" + libFile.getName()
+					}
+				}
+			}
+		}
+		def outFlags = file("xcode/ios-moe/custom.xcconfig")
+		outFlags.write LD_FLAGS
 
-    def proguard = file("proguard.append.cfg")
-    if (!proguard.exists()) {
-        proguard = new File("proguard.append.cfg")
-        proguard << "\n-keep class com.badlogic.** { *; }\n"
-        proguard << "-keep enum com.badlogic.** { *; }\n"
-    }
-  }
+		def proguard = file("proguard.append.cfg")
+		if (!proguard.exists()) {
+			proguard = new File("proguard.append.cfg")
+			proguard << "\n-keep class com.badlogic.** { *; }\n"
+			proguard << "-keep enum com.badlogic.** { *; }\n"
+		}
+	}
 }
 
 sourceSets.main.resources.srcDirs = [ file("../assets") ]
 
 // Setup Multi-OS Engine
 moe {
-    xcode {
-        project 'xcode/ios-moe.xcodeproj'
-        mainTarget 'ios-moe'
-        testTarget 'ios-moe-Test'
-    }
+		xcode {
+			project 'xcode/ios-moe.xcodeproj'
+			mainTarget 'ios-moe'
+			testTarget 'ios-moe-Test'
+		}
 }
 
 moeMainReleaseIphoneosXcodeBuild.dependsOn copyNatives
@@ -116,14 +116,14 @@ moeMainDebugIphonesimulatorXcodeBuild.dependsOn copyNatives
 
 // Setup Eclipse
 eclipse {
-    // Set Multi-OS Engine nature
-    project {
-        natures 'org.multi-os-engine.project'
-    }
+		// Set Multi-OS Engine nature
+		project {
+			natures 'org.multi-os-engine.project'
+		}
 }
 
 dependencies {
-  configurations { natives }
+	configurations { natives }
 
 ${joinDependencies(dependencies)}${joinDependencies(nativeDependencies, "natives")}}
 """
@@ -132,7 +132,7 @@ ${joinDependencies(dependencies)}${joinDependencies(nativeDependencies, "natives
 
 
 class MOEXCodeProjectFile(val project: Project) : SourceFile(projectName = MOE.ID, sourceFolderPath = path("xcode", "ios-moe.xcodeproj"), fileName = "project.pbxproj",
-        packageName = "", content = """// !${'$'}*UTF8*${'$'}!
+		    packageName = "", content = """// !${'$'}*UTF8*${'$'}!
 {
 	archiveVersion = 1;
 	classes = {

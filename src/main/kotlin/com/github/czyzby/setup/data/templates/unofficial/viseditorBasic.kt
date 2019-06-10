@@ -15,11 +15,11 @@ import com.github.czyzby.setup.views.ProjectTemplate
  */
 @ProjectTemplate
 class VisEditorBasicTemplate : Template {
-    override val id = "visEditorBasicTemplate"
-    override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension showing how to load project exported from VisEditor."
+	override val id = "visEditorBasicTemplate"
+	override val description: String
+		get() = "Project template included simple launchers and an `ApplicationAdapter` extension showing how to load project exported from VisEditor."
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -76,42 +76,42 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 	}
 }"""
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        VisRuntime().initiate(project)
+	override fun apply(project: Project) {
+		super.apply(project)
+		VisRuntime().initiate(project)
 
-        // Adding exported project:
-        arrayOf("textures.atlas", "textures.png").forEach {
-            project.files.add(CopiedFile(projectName = Assets.ID, path = path(it),
-                    original = path("generator", "templates", "viseditor", "exported", it)))
-        }
-        arrayOf("icon.png", "libgdx.png", "plus.png").forEach {
-            project.files.add(CopiedFile(projectName = Assets.ID, path = path("gfx", it),
-                    original = path("generator", "templates", "viseditor", "exported", "gfx", it)))
-        }
-        project.files.add(CopiedFile(projectName = Assets.ID, path = path("scene", "example.scene"),
-                original = path("generator", "templates", "viseditor", "exported", "scene", "example.scene")))
+		// Adding exported project:
+		arrayOf("textures.atlas", "textures.png").forEach {
+			project.files.add(CopiedFile(projectName = Assets.ID, path = path(it),
+					original = path("generator", "templates", "viseditor", "exported", it)))
+		}
+		arrayOf("icon.png", "libgdx.png", "plus.png").forEach {
+			project.files.add(CopiedFile(projectName = Assets.ID, path = path("gfx", it),
+					original = path("generator", "templates", "viseditor", "exported", "gfx", it)))
+		}
+		project.files.add(CopiedFile(projectName = Assets.ID, path = path("scene", "example.scene"),
+				original = path("generator", "templates", "viseditor", "exported", "scene", "example.scene")))
 
-        // Adding VisEditor project:
-        arrayOf("textures.atlas", "textures.png").forEach {
-            project.files.add(CopiedFile(projectName = Assets.ID, path = path("assets", it),
-                    original = path("generator", "templates", "viseditor", "exported", it)))
-        }
-        project.files.add(CopiedFile(projectName = "vis", path = path("project.json"),
-                original = path("generator", "templates", "viseditor", "project", "project.json")))
-        project.files.add(CopiedFile(projectName = "vis", path = path("modules", "version.json"),
-                original = path("generator", "templates", "viseditor", "project", "modules", "version.json")))
-        project.files.add(CopiedFile(projectName = "vis", path = path("modules", "settings", "exportSettings"),
-                original = path("generator", "templates", "viseditor", "project", "modules", "settings", "exportSettings")))
-        project.files.add(CopiedFile(projectName = "vis", path = path("assets", "scene", "example.scene"),
-                original = path("generator", "templates", "viseditor", "project", "assets", "scene", "example.scene")))
-        arrayOf("icon.png", "libgdx.png", "plus.png").forEach {
-            project.files.add(CopiedFile(projectName = "vis", path = path("assets", "gfx", it),
-                    original = path("generator", "templates", "viseditor", "project", "assets", "gfx", it)))
-        }
+		// Adding VisEditor project:
+		arrayOf("textures.atlas", "textures.png").forEach {
+			project.files.add(CopiedFile(projectName = Assets.ID, path = path("assets", it),
+					original = path("generator", "templates", "viseditor", "exported", it)))
+		}
+		project.files.add(CopiedFile(projectName = "vis", path = path("project.json"),
+				original = path("generator", "templates", "viseditor", "project", "project.json")))
+		project.files.add(CopiedFile(projectName = "vis", path = path("modules", "version.json"),
+				original = path("generator", "templates", "viseditor", "project", "modules", "version.json")))
+		project.files.add(CopiedFile(projectName = "vis", path = path("modules", "settings", "exportSettings"),
+				original = path("generator", "templates", "viseditor", "project", "modules", "settings", "exportSettings")))
+		project.files.add(CopiedFile(projectName = "vis", path = path("assets", "scene", "example.scene"),
+				original = path("generator", "templates", "viseditor", "project", "assets", "scene", "example.scene")))
+		arrayOf("icon.png", "libgdx.png", "plus.png").forEach {
+			project.files.add(CopiedFile(projectName = "vis", path = path("assets", "gfx", it),
+					original = path("generator", "templates", "viseditor", "project", "assets", "gfx", it)))
+		}
 
-        addSourceFile(project = project, platform = Core.ID, packageName = project.basic.rootPackage,
-                fileName = "CameraController.java", content = """package ${project.basic.rootPackage};
+		addSourceFile(project = project, platform = Core.ID, packageName = project.basic.rootPackage,
+				fileName = "CameraController.java", content = """package ${project.basic.rootPackage};
 
 import com.artemis.Aspect;
 import com.artemis.EntitySystem;
@@ -156,5 +156,5 @@ public class CameraController extends EntitySystem {
 	}
 }""");
 
-    }
+	}
 }

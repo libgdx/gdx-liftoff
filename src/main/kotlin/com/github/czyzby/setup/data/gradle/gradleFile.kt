@@ -14,7 +14,7 @@ abstract class GradleFile private constructor(override val path: String) : Proje
         ""
     } + fileName)
 
-    fun joinDependencies(dependencies: Collection<String>, type: String = "api", tab: String = "  "): String = if (dependencies.isEmpty()) "\n" else
+    fun joinDependencies(dependencies: Collection<String>, type: String = "api", tab: String = "\t"): String = if (dependencies.isEmpty()) "\n" else
         dependencies.joinToString(prefix = "$tab$type ", separator = "\n$tab$type ", postfix = "\n")
 
     /**

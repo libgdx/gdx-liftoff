@@ -35,51 +35,51 @@ app.executable=IOSLauncher
 app.build=1
 app.name=${project.basic.name}"""))
         project.files.add(SourceFile(projectName = ID, fileName = "robovm.xml", content = """<config>
-  <executableName>${'$'}{app.executable}</executableName>
-  <mainClass>${'$'}{app.mainclass}</mainClass>
-  <os>ios</os>
-  <arch>thumbv7</arch>
-  <target>ios</target>
-  <iosInfoPList>Info.plist.xml</iosInfoPList>
-  <resources>
-    <resource>
-      <directory>../assets</directory>
-      <includes>
-        <include>**</include>
-      </includes>
-      <skipPngCrush>true</skipPngCrush>
-    </resource>
-    <resource>
-      <directory>data</directory>
-    </resource>
-  </resources>
-  <forceLinkClasses>
-    <pattern>com.badlogic.gdx.scenes.scene2d.ui.*</pattern>
-    <pattern>com.badlogic.gdx.graphics.g3d.particles.**</pattern>
-    <pattern>com.android.okhttp.HttpHandler</pattern>
-    <pattern>com.android.okhttp.HttpsHandler</pattern>
-    <pattern>com.android.org.conscrypt.**</pattern>
-    <pattern>com.android.org.bouncycastle.jce.provider.BouncyCastleProvider</pattern>
-    <pattern>com.android.org.bouncycastle.jcajce.provider.keystore.BC${'$'}Mappings</pattern>
-    <pattern>com.android.org.bouncycastle.jcajce.provider.keystore.bc.BcKeyStoreSpi</pattern>
-    <pattern>com.android.org.bouncycastle.jcajce.provider.keystore.bc.BcKeyStoreSpi${'$'}Std</pattern>
-    <pattern>com.android.org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi</pattern>
-    <pattern>com.android.org.bouncycastle.crypto.digests.AndroidDigestFactoryOpenSSL</pattern>
-    <pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
-    <pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
-  </forceLinkClasses>
-  <libs>
-      <lib>z</lib>
-  </libs>
-  <frameworks>
-    <framework>UIKit</framework>
-    <framework>OpenGLES</framework>
-    <framework>QuartzCore</framework>
-    <framework>CoreGraphics</framework>
-    <framework>OpenAL</framework>
-    <framework>AudioToolbox</framework>
-    <framework>AVFoundation</framework>
-  </frameworks>
+	<executableName>${'$'}{app.executable}</executableName>
+	<mainClass>${'$'}{app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<resources>
+		<resource>
+			<directory>../assets</directory>
+			<includes>
+				<include>**</include>
+			</includes>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+		<resource>
+			<directory>data</directory>
+		</resource>
+	</resources>
+	<forceLinkClasses>
+		<pattern>com.badlogic.gdx.scenes.scene2d.ui.*</pattern>
+		<pattern>com.badlogic.gdx.graphics.g3d.particles.**</pattern>
+		<pattern>com.android.okhttp.HttpHandler</pattern>
+		<pattern>com.android.okhttp.HttpsHandler</pattern>
+		<pattern>com.android.org.conscrypt.**</pattern>
+		<pattern>com.android.org.bouncycastle.jce.provider.BouncyCastleProvider</pattern>
+		<pattern>com.android.org.bouncycastle.jcajce.provider.keystore.BC${'$'}Mappings</pattern>
+		<pattern>com.android.org.bouncycastle.jcajce.provider.keystore.bc.BcKeyStoreSpi</pattern>
+		<pattern>com.android.org.bouncycastle.jcajce.provider.keystore.bc.BcKeyStoreSpi${'$'}Std</pattern>
+		<pattern>com.android.org.bouncycastle.jce.provider.PKIXCertPathValidatorSpi</pattern>
+		<pattern>com.android.org.bouncycastle.crypto.digests.AndroidDigestFactoryOpenSSL</pattern>
+		<pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
+		<pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
+	</forceLinkClasses>
+	<libs>
+			<lib>z</lib>
+	</libs>
+	<frameworks>
+		<framework>UIKit</framework>
+		<framework>OpenGLES</framework>
+		<framework>QuartzCore</framework>
+		<framework>CoreGraphics</framework>
+		<framework>OpenAL</framework>
+		<framework>AudioToolbox</framework>
+		<framework>AVFoundation</framework>
+	</frameworks>
 </config>"""))
 
         // Copying data images:
@@ -94,10 +94,10 @@ app.name=${project.basic.name}"""))
         if (project.reflectedClasses.isNotEmpty() || project.reflectedPackages.isNotEmpty()) {
             project.files.add(SourceFile(projectName = ID, sourceFolderPath = path("src", "main", "resources"),
                     packageName = "META-INF.robovm.ios", fileName = "robovm.xml", content = """<config>
-  <forceLinkClasses>
-${project.reflectedPackages.joinToString(separator = "\n") { "    <pattern>${it}.**</pattern>" }}
-${project.reflectedClasses.joinToString(separator = "\n") { "    <pattern>${it}</pattern>" }}
-  </forceLinkClasses>
+	<forceLinkClasses>
+${project.reflectedPackages.joinToString(separator = "\n") { "		<pattern>${it}.**</pattern>" }}
+${project.reflectedClasses.joinToString(separator = "\n") { "		<pattern>${it}</pattern>" }}
+	</forceLinkClasses>
 </config>"""))
         }
     }
@@ -126,8 +126,8 @@ launchIOSDevice.dependsOn build
 createIPA.dependsOn build
 
 eclipse.project {
-  name = appName + "-ios"
-  natures 'org.robovm.eclipse.RoboVMNature'
+	name = appName + "-ios"
+	natures 'org.robovm.eclipse.RoboVMNature'
 }
 
 dependencies {

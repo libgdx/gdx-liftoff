@@ -11,16 +11,16 @@ import com.github.czyzby.setup.views.ProjectTemplate
  */
 @ProjectTemplate
 class VisUIBasicTemplate : Template {
-    override val id = "visUiBasicTemplate"
-    override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension with GUI created using [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) library."
+	override val id = "visUiBasicTemplate"
+	override val description: String
+		get() = "Project template included simple launchers and an `ApplicationAdapter` extension with GUI created using [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) library."
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        VisUI().initiate(project)
-    }
+	override fun apply(project: Project) {
+		super.apply(project)
+		VisUI().initiate(project)
+	}
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -38,53 +38,53 @@ import com.kotcrab.vis.ui.widget.VisWindow;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class ${project.basic.mainClass} extends ApplicationAdapter {
-    private Stage stage;
+	private Stage stage;
 
-    @Override
-    public void create () {
-        VisUI.load(SkinScale.X1);
+	@Override
+	public void create () {
+		VisUI.load(SkinScale.X1);
 
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+		stage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(stage);
 
-        VisTable root = new VisTable();
-        root.setFillParent(true);
-        stage.addActor(root);
+		VisTable root = new VisTable();
+		root.setFillParent(true);
+		stage.addActor(root);
 
-        final VisTextButton textButton = new VisTextButton("click me!");
-        textButton.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                textButton.setText("clicked");
-                Dialogs.showOKDialog(stage, "message", "good job!");
-            }
-        });
+		final VisTextButton textButton = new VisTextButton("click me!");
+		textButton.addListener(new ChangeListener() {
+			@Override
+			public void changed (ChangeEvent event, Actor actor) {
+				textButton.setText("clicked");
+				Dialogs.showOKDialog(stage, "message", "good job!");
+			}
+		});
 
-        VisWindow window = new VisWindow("example window");
-        window.add("this is a simple VisUI window").padTop(5f).row();
-        window.add(textButton).pad(10f);
-        window.pack();
-        window.centerWindow();
-        stage.addActor(window.fadeIn());
-    }
+		VisWindow window = new VisWindow("example window");
+		window.add("this is a simple VisUI window").padTop(5f).row();
+		window.add(textButton).pad(10f);
+		window.pack();
+		window.centerWindow();
+		stage.addActor(window.fadeIn());
+	}
 
-    @Override
-    public void resize (int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
+	@Override
+	public void resize (int width, int height) {
+		stage.getViewport().update(width, height, true);
+	}
 
-    @Override
-    public void render () {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-    }
+	@Override
+	public void render () {
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.draw();
+	}
 
-    @Override
-    public void dispose () {
-        VisUI.dispose();
-        stage.dispose();
-    }
+	@Override
+	public void dispose () {
+		VisUI.dispose();
+		stage.dispose();
+	}
 }"""
 }

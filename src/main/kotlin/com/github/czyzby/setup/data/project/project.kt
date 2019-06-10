@@ -172,13 +172,13 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
 // Run `gradle pack` task to generate skin.atlas file at assets/ui.
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
 task pack {
-  doLast {
-    com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
-            file("raw").absolutePath,
-            file("src/main/resources/skin").absolutePath,
-            "tinted"
-    )
-  }
+	doLast {
+		com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
+						file("raw").absolutePath,
+						file("src/main/resources/skin").absolutePath,
+						"tinted"
+		)
+	}
 }
 """, true, "UTF-8");
             })
@@ -198,14 +198,14 @@ task pack {
                 basic.destination.child(rootGradle.path).writeString("""
 // Run `gradle compileSkin` task to generate skin.json at assets/ui.
 task compileSkin {
-  doLast {
-    // Convert USL skin file into JSON
-    String[] uslArgs = [
-      projectDir.path + '/raw/ui/skin.usl',     // Input USL file
-      projectDir.path + '/assets/ui/skin.json'  // Output JSON file
-    ]
-    com.kotcrab.vis.usl.Main.main(uslArgs)
-  }
+	doLast {
+		// Convert USL skin file into JSON
+		String[] uslArgs = [
+			projectDir.path + '/raw/ui/skin.usl',		 // Input USL file
+			projectDir.path + '/assets/ui/skin.json'	// Output JSON file
+		]
+		com.kotcrab.vis.usl.Main.main(uslArgs)
+	}
 }""", true, "UTF-8");
             })
         }
