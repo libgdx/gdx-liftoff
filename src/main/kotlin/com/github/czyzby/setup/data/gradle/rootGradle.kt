@@ -21,16 +21,16 @@ class RootGradleFile(val project: Project) : GradleFile("") {
     }
 
     override fun getContent(): String = """buildscript {
-  repositories {
-${buildRepositories.joinToString(separator = "\n") { "    $it" }}
-  }
-  dependencies {
-${joinDependencies(buildDependencies, type = "classpath", tab = "    ")}  }
+	repositories {
+${buildRepositories.joinToString(separator = "\n") { "		$it" }}
+	}
+	dependencies {
+${joinDependencies(buildDependencies, type = "classpath", tab = "		")}	}
 }
 
 allprojects {
-  apply plugin: 'eclipse'
-  apply plugin: 'idea'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
 }
 
 configure(subprojects${if (project.hasPlatform(Android.ID)) {
@@ -38,30 +38,30 @@ configure(subprojects${if (project.hasPlatform(Android.ID)) {
     } else {
         ""
     }}) {
-${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
-  sourceCompatibility = ${project.advanced.javaVersion}
-  compileJava {
-    options.incremental = true
-  }
+${plugins.joinToString(separator = "\n") { "	apply plugin: '$it'" }}
+	sourceCompatibility = ${project.advanced.javaVersion}
+	compileJava {
+		options.incremental = true
+	}
 }
 
 subprojects {
-  version = '${project.advanced.version}'
-  ext.appName = '${project.basic.name}'
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://jitpack.io' }
-    jcenter()
-  }
+	version = '${project.advanced.version}'
+	ext.appName = '${project.basic.name}'
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url 'https://jitpack.io' }
+		jcenter()
+	}
 }
 
 // Clearing Eclipse project data in root folder:
 tasks.eclipse.doLast {
-  delete '.project'
-  delete '.classpath'
-  delete '.settings/'
+	delete '.project'
+	delete '.classpath'
+	delete '.settings/'
 }
 """
 

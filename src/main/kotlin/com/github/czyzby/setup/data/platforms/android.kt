@@ -97,43 +97,43 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 
 android {
-  compileSdkVersion ${project.advanced.androidSdkVersion}
-  sourceSets {
-    main {
-      manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['src/main/java']
-      aidl.srcDirs = ['src/main/java']
-      renderscript.srcDirs = ['src/main/java']
-      res.srcDirs = ['res']
-      assets.srcDirs = ['../assets']
-      jniLibs.srcDirs = ['libs']
-    }
-  }
-  packagingOptions {
-    // Preventing from license violations (more or less):
-    pickFirst 'META-INF/LICENSE.txt'
-    pickFirst 'META-INF/LICENSE'
-    pickFirst 'META-INF/license.txt'
-    pickFirst 'META-INF/LGPL2.1'
-    pickFirst 'META-INF/NOTICE.txt'
-    pickFirst 'META-INF/NOTICE'
-    pickFirst 'META-INF/notice.txt'
-    // Excluding unnecessary meta-data:
-    exclude 'META-INF/robovm/ios/robovm.xml'
-    exclude 'META-INF/DEPENDENCIES.txt'
-    exclude 'META-INF/DEPENDENCIES'
-    exclude 'META-INF/dependencies.txt'
-  }
-  defaultConfig {
-    applicationId '${project.basic.rootPackage}'
-    minSdkVersion 14
-    targetSdkVersion ${project.advanced.androidSdkVersion}
-  }
+	compileSdkVersion ${project.advanced.androidSdkVersion}
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src/main/java']
+			aidl.srcDirs = ['src/main/java']
+			renderscript.srcDirs = ['src/main/java']
+			res.srcDirs = ['res']
+			assets.srcDirs = ['../assets']
+			jniLibs.srcDirs = ['libs']
+		}
+	}
+	packagingOptions {
+		// Preventing from license violations (more or less):
+		pickFirst 'META-INF/LICENSE.txt'
+		pickFirst 'META-INF/LICENSE'
+		pickFirst 'META-INF/license.txt'
+		pickFirst 'META-INF/LGPL2.1'
+		pickFirst 'META-INF/NOTICE.txt'
+		pickFirst 'META-INF/NOTICE'
+		pickFirst 'META-INF/notice.txt'
+		// Excluding unnecessary meta-data:
+		exclude 'META-INF/robovm/ios/robovm.xml'
+		exclude 'META-INF/DEPENDENCIES.txt'
+		exclude 'META-INF/DEPENDENCIES'
+		exclude 'META-INF/dependencies.txt'
+	}
+	defaultConfig {
+		applicationId '${project.basic.rootPackage}'
+		minSdkVersion 14
+		targetSdkVersion ${project.advanced.androidSdkVersion}
+	}
 }
 
 repositories {
-  // needed for AAPT2, may be needed for other tools
-  google()
+	// needed for AAPT2, may be needed for other tools
+	google()
 }
 
 configurations { natives }
@@ -147,105 +147,105 @@ ${joinDependencies(nativeDependencies, "natives")}
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
 task copyAndroidNatives() {
-  doFirst {
-    file("libs/armeabi/").mkdirs()
-    file("libs/armeabi-v7a/").mkdirs()
-    file("libs/arm64-v8a/").mkdirs()
-    file("libs/x86_64/").mkdirs()
-    file("libs/x86/").mkdirs()
-    
-    configurations.natives.files.each { jar ->
-      def outputDir = null
-      if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-      if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-      if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
-      if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-      if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-      if(outputDir != null) {
-        copy {
-          from zipTree(jar)
-          into outputDir
-          include "*.so"
-        }
-      }
-    }
-    ${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
-  }
+	doFirst {
+		file("libs/armeabi/").mkdirs()
+		file("libs/armeabi-v7a/").mkdirs()
+		file("libs/arm64-v8a/").mkdirs()
+		file("libs/x86_64/").mkdirs()
+		file("libs/x86/").mkdirs()
+		
+		configurations.natives.files.each { jar ->
+			def outputDir = null
+			if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+			if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+			if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
+			if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+			if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+			if(outputDir != null) {
+				copy {
+					from zipTree(jar)
+					into outputDir
+					include "*.so"
+				}
+			}
+		}
+		${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
+	}
 }
 
 task run(type: Exec) {
-  def path
-  def localProperties = project.file("../local.properties")
-  if (localProperties.exists()) {
-    Properties properties = new Properties()
-    localProperties.withInputStream { instr ->
-      properties.load(instr)
-    }
-    def sdkDir = properties.getProperty('sdk.dir')
-    if (sdkDir) {
-      path = sdkDir
-    } else {
-      path = "${'$'}System.env.ANDROID_HOME"
-    }
-  } else {
-    path = "${'$'}System.env.ANDROID_HOME"
-  }
+	def path
+	def localProperties = project.file("../local.properties")
+	if (localProperties.exists()) {
+		Properties properties = new Properties()
+		localProperties.withInputStream { instr ->
+			properties.load(instr)
+		}
+		def sdkDir = properties.getProperty('sdk.dir')
+		if (sdkDir) {
+			path = sdkDir
+		} else {
+			path = "${'$'}System.env.ANDROID_HOME"
+		}
+	} else {
+		path = "${'$'}System.env.ANDROID_HOME"
+	}
 
-  def adb = path + "/platform-tools/adb"
-  commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
+	def adb = path + "/platform-tools/adb"
+	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
 }
 
 // Sets up the Android Eclipse project using the old Ant based build.
 eclipse {
-  // needs to specify Java source sets explicitly, SpringSource Gradle Eclipse plugin
-  // ignores any nodes added in classpath.file.withXml
-  sourceSets {
-    main {
-      java.srcDirs 'src/main/java', 'gen'
-    }
-  }
+	// needs to specify Java source sets explicitly, SpringSource Gradle Eclipse plugin
+	// ignores any nodes added in classpath.file.withXml
+	sourceSets {
+		main {
+			java.srcDirs 'src/main/java', 'gen'
+		}
+	}
 
-  jdt {
-    sourceCompatibility = ${project.advanced.javaVersion}
-    targetCompatibility = ${project.advanced.javaVersion}
-  }
+	jdt {
+		sourceCompatibility = ${project.advanced.javaVersion}
+		targetCompatibility = ${project.advanced.javaVersion}
+	}
 
-  classpath {
-    plusConfigurations += [ project.configurations.compileClasspath ]
-    containers 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK', 'com.android.ide.eclipse.adt.LIBRARIES'
-  }
+	classpath {
+		plusConfigurations += [ project.configurations.compileClasspath ]
+		containers 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK', 'com.android.ide.eclipse.adt.LIBRARIES'
+	}
 
-  project {
-    name = appName + "-android"
-    natures 'com.android.ide.eclipse.adt.AndroidNature'
-    buildCommands.clear()
-    buildCommand "com.android.ide.eclipse.adt.ResourceManagerBuilder"
-    buildCommand "com.android.ide.eclipse.adt.PreCompilerBuilder"
-    buildCommand "org.eclipse.jdt.core.javabuilder"
-    buildCommand "com.android.ide.eclipse.adt.ApkBuilder"
-  }
+	project {
+		name = appName + "-android"
+		natures 'com.android.ide.eclipse.adt.AndroidNature'
+		buildCommands.clear()
+		buildCommand "com.android.ide.eclipse.adt.ResourceManagerBuilder"
+		buildCommand "com.android.ide.eclipse.adt.PreCompilerBuilder"
+		buildCommand "org.eclipse.jdt.core.javabuilder"
+		buildCommand "com.android.ide.eclipse.adt.ApkBuilder"
+	}
 }
 
 // Sets up the Android Idea project using the old Ant based build.
 idea {
-  module {
-    sourceDirs += file("src/main/java")
-    scopes = [ COMPILE: [plus:[project.configurations.compileClasspath]]]
-    iml {
-      withXml {
-        def node = it.asNode()
-        def builder = NodeBuilder.newInstance()
-        builder.current = node
-        builder.component(name: "FacetManager") {
-          facet(type: "android", name: "Android") {
-            configuration {
-              option(name: "UPDATE_PROPERTY_FILES", value:"true")
-            }
-          }
-        }
-      }
-    }
-  }
+	module {
+		sourceDirs += file("src/main/java")
+		scopes = [ COMPILE: [plus:[project.configurations.compileClasspath]]]
+		iml {
+			withXml {
+				def node = it.asNode()
+				def builder = NodeBuilder.newInstance()
+				builder.current = node
+				builder.component(name: "FacetManager") {
+					facet(type: "android", name: "Android") {
+						configuration {
+							option(name: "UPDATE_PROPERTY_FILES", value:"true")
+						}
+					}
+				}
+			}
+		}
+	}
 }
 """
 }

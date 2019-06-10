@@ -59,18 +59,18 @@ import com.github.czyzby.lml.parser.action.ActionContainer;
 /** The first application's view. See first.lml file for widgets layout. */
 @View(id = "first", value = "ui/templates/first.lml", first = true)
 public class ${project.basic.mainClass} implements ActionContainer {
-    /** Default application size. */
-    public static final int WIDTH = 640, HEIGHT = 480;
-    /** Path to the skin files. */
-    @Skin private final String skinFile = "ui/skin";
+	/** Default application size. */
+	public static final int WIDTH = 640, HEIGHT = 480;
+	/** Path to the skin files. */
+	@Skin private final String skinFile = "ui/skin";
 
-    /** Since this method is annotated with LmlAction and this class implements ActionContainer, this method will be
-     * available in the LML template: first.lml
-     * @param button its text will be changed. */
-    @LmlAction("setClicked")
-    public void changeButtonText(TextButton button) {
-        button.setText("Clicked.");
-    }
+	/** Since this method is annotated with LmlAction and this class implements ActionContainer, this method will be
+	 * available in the LML template: first.lml
+	 * @param button its text will be changed. */
+	@LmlAction("setClicked")
+	public void changeButtonText(TextButton button) {
+		button.setText("Clicked.");
+	}
 }"""
 
     override fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
@@ -84,28 +84,28 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL) application. */
 public class DesktopLauncher {
-    public static void main(String[] args) {
-        createApplication();
-    }
+	public static void main(String[] args) {
+		createApplication();
+	}
 
-    private static LwjglApplication createApplication() {
-        return new LwjglApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
-                getDefaultConfiguration());
-    }
+	private static LwjglApplication createApplication() {
+		return new LwjglApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
+				getDefaultConfiguration());
+	}
 
-    private static LwjglApplicationConfiguration getDefaultConfiguration() {
-        LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
-        configuration.title = "${project.basic.name}";
-        configuration.width = ${project.basic.mainClass}.WIDTH;
-        configuration.height = ${project.basic.mainClass}.HEIGHT;
-        for (int size : new int[] { 128, 64, 32, 16 }) {
-            configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
-        }
-        return configuration;
-    }
+	private static LwjglApplicationConfiguration getDefaultConfiguration() {
+		LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
+		configuration.title = "${project.basic.name}";
+		configuration.width = ${project.basic.mainClass}.WIDTH;
+		configuration.height = ${project.basic.mainClass}.HEIGHT;
+		for (int size : new int[] { 128, 64, 32, 16 }) {
+			configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
+		}
+		return configuration;
+	}
 }"""
 
-    override fun getJglfwLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.jglfw;
+	override fun getJglfwLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.jglfw;
 
 import com.badlogic.gdx.backends.jglfw.JglfwApplication;
 import com.badlogic.gdx.backends.jglfw.JglfwApplicationConfiguration;
@@ -115,26 +115,26 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the desktop (JGLFW) application. */
 public class JglfwLauncher {
-    public static void main(final String[] args) {
-        createApplication();
-    }
+	public static void main(final String[] args) {
+		createApplication();
+	}
 
-    private static JglfwApplication createApplication() {
-        return new JglfwApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
-                getDefaultConfiguration());
-    }
+	private static JglfwApplication createApplication() {
+		return new JglfwApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
+				getDefaultConfiguration());
+	}
 
-    private static JglfwApplicationConfiguration getDefaultConfiguration() {
-        final JglfwApplicationConfiguration configuration = new JglfwApplicationConfiguration();
-        configuration.title = "${project.basic.name}";
-        configuration.width = ${width};
-        configuration.height = ${height};
-        return configuration;
-    }
+	private static JglfwApplicationConfiguration getDefaultConfiguration() {
+		final JglfwApplicationConfiguration configuration = new JglfwApplicationConfiguration();
+		configuration.title = "${project.basic.name}";
+		configuration.width = ${width};
+		configuration.height = ${height};
+		return configuration;
+	}
 }"""
 
 
-    override fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
+	override fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -144,25 +144,25 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
-    public static void main(String[] args) {
-        createApplication();
-    }
+	public static void main(String[] args) {
+		createApplication();
+	}
 
-    private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
-                getDefaultConfiguration());
-    }
+	private static Lwjgl3Application createApplication() {
+		return new Lwjgl3Application(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
+				getDefaultConfiguration());
+	}
 
-    private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
-        Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
-        configuration.setTitle("${project.basic.name}");
-        configuration.setWindowedMode(${project.basic.mainClass}.WIDTH, ${project.basic.mainClass}.HEIGHT);
-        configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
-        return configuration;
-    }
+	private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
+		Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
+		configuration.setTitle("${project.basic.name}");
+		configuration.setWindowedMode(${project.basic.mainClass}.WIDTH, ${project.basic.mainClass}.HEIGHT);
+		configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+		return configuration;
+	}
 }"""
 
-    override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
+	override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -173,19 +173,19 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {
-    @Override
-    public GwtApplicationConfiguration getConfig() {
-        GwtApplicationConfiguration configuration = new GwtApplicationConfiguration(${project.basic.mainClass}.WIDTH, ${project.basic.mainClass}.HEIGHT);
-        return configuration;
-    }
+	@Override
+	public GwtApplicationConfiguration getConfig() {
+		GwtApplicationConfiguration configuration = new GwtApplicationConfiguration(${project.basic.mainClass}.WIDTH, ${project.basic.mainClass}.HEIGHT);
+		return configuration;
+	}
 
-    @Override
-    public ApplicationListener createApplicationListener() {
-        return new AutumnApplication(new GwtClassScanner(), ${project.basic.mainClass}.class);
-    }
+	@Override
+	public ApplicationListener createApplicationListener() {
+		return new AutumnApplication(new GwtClassScanner(), ${project.basic.mainClass}.class);
+	}
 }"""
 
-    override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
+	override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
 
 import android.os.Bundle;
 
@@ -197,15 +197,15 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the Android application. */
 public class AndroidLauncher extends AndroidApplication {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
-        initialize(new AutumnApplication(new AndroidClassScanner(), ${project.basic.mainClass}.class), configuration);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
+		initialize(new AutumnApplication(new AndroidClassScanner(), ${project.basic.mainClass}.class), configuration);
+	}
 }"""
 
-    override fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
+	override fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
@@ -216,24 +216,24 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the headless application. Can be converted into a utilities project or a server application. */
 public class HeadlessLauncher {
-    public static void main(String[] args) {
-        createApplication();
-    }
+	public static void main(String[] args) {
+		createApplication();
+	}
 
-    private static Application createApplication() {
-        // Note: you can use a custom ApplicationListener implementation for the headless project instead of ${project.basic.mainClass}.
-        return new HeadlessApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
-                getDefaultConfiguration());
-    }
+	private static Application createApplication() {
+		// Note: you can use a custom ApplicationListener implementation for the headless project instead of ${project.basic.mainClass}.
+		return new HeadlessApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
+				getDefaultConfiguration());
+	}
 
-    private static HeadlessApplicationConfiguration getDefaultConfiguration() {
-        HeadlessApplicationConfiguration configuration = new HeadlessApplicationConfiguration();
-        configuration.renderInterval = -1f; // When this value is negative, application is never rendered.
-        return configuration;
-    }
+	private static HeadlessApplicationConfiguration getDefaultConfiguration() {
+		HeadlessApplicationConfiguration configuration = new HeadlessApplicationConfiguration();
+		configuration.renderInterval = -1f; // When this value is negative, application is never rendered.
+		return configuration;
+	}
 }"""
 
-    override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
+	override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
@@ -246,23 +246,23 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the iOS (RoboVM) application. */
 public class IOSLauncher extends IOSApplication.Delegate {
-    @Override
-    protected IOSApplication createApplication() {
-        IOSApplicationConfiguration configuration = new IOSApplicationConfiguration();
-        // Note: there is currently no automatic classpath scanning support on iOS. You have to register all component
-        // classes manually with FixedClassScanner. Generated template might not work out of the box because of this.
-        return new IOSApplication(new AutumnApplication(new FixedClassScanner(${project.basic.mainClass}.class),
-                ${project.basic.mainClass}.class), configuration);
-    }
+	@Override
+	protected IOSApplication createApplication() {
+		IOSApplicationConfiguration configuration = new IOSApplicationConfiguration();
+		// Note: there is currently no automatic classpath scanning support on iOS. You have to register all component
+		// classes manually with FixedClassScanner. Generated template might not work out of the box because of this.
+		return new IOSApplication(new AutumnApplication(new FixedClassScanner(${project.basic.mainClass}.class),
+				${project.basic.mainClass}.class), configuration);
+	}
 
-    public static void main(String[] argv) {
-        NSAutoreleasePool pool = new NSAutoreleasePool();
-        UIApplication.main(argv, null, IOSLauncher.class);
-        pool.close();
-    }
+	public static void main(String[] argv) {
+		NSAutoreleasePool pool = new NSAutoreleasePool();
+		UIApplication.main(argv, null, IOSLauncher.class);
+		pool.close();
+	}
 }"""
 
-    override fun getMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage}.moe;
+	override fun getMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage}.moe;
 
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.backends.iosmoe.IOSApplicationConfiguration;
@@ -275,22 +275,22 @@ import apple.uikit.c.UIKit;
 
 public class IOSMoeLauncher extends IOSApplication.Delegate {
 
-    protected IOSMoeLauncher(Pointer peer) {
-        super(peer);
-    }
+	protected IOSMoeLauncher(Pointer peer) {
+		super(peer);
+	}
 
-    @Override
-    protected IOSApplication createApplication() {
-        IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        config.useAccelerometer = false;
-        // Note: there is currently no automatic classpath scanning support on iOS. You have to register all component
-        // classes manually with FixedClassScanner. Generated template might not work out of the box because of this.
-        return new IOSApplication(new AutumnApplication(new FixedClassScanner(${project.basic.mainClass}.class),
-                ${project.basic.mainClass}.class), config);
-    }
+	@Override
+	protected IOSApplication createApplication() {
+		IOSApplicationConfiguration config = new IOSApplicationConfiguration();
+		config.useAccelerometer = false;
+		// Note: there is currently no automatic classpath scanning support on iOS. You have to register all component
+		// classes manually with FixedClassScanner. Generated template might not work out of the box because of this.
+		return new IOSApplication(new AutumnApplication(new FixedClassScanner(${project.basic.mainClass}.class),
+				${project.basic.mainClass}.class), config);
+	}
 
-    public static void main(String[] argv) {
-        UIKit.UIApplicationMain(0, null, null, IOSMoeLauncher.class.getName());
-    }
+	public static void main(String[] argv) {
+		UIKit.UIApplicationMain(0, null, null, IOSMoeLauncher.class.getName());
+	}
 }"""
 }
