@@ -3,7 +3,7 @@
     <table>
         <:for platform="$platforms">
             <:calculate key="mandatory" value="{platform}=core"/>
-            <:calculate key="precheck" value="{platform}=core || {platform}=lwjgl3 || {platform}=android"/>
+            <:calculate key="precheck" value="{platform}=core || {platform}=lwjgl3"/>
             <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="6"
                       tooltip="@{platform}Tip" align="left" row="{= {for:index}%2=1}" onChange="togglePlatform">
                 @{platform}

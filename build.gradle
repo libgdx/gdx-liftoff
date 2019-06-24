@@ -1,3 +1,5 @@
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
 apply plugin: 'kotlin'
 apply plugin: 'java-library'
 apply plugin: 'application'
@@ -14,7 +16,7 @@ buildscript {
   }
 }
 
-version = "1.9.9.2"
+version = "1.9.9.3"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {
@@ -46,10 +48,10 @@ dependencies {
 
 task pack {
   doLast {
-    com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
-            file("raw").absolutePath,
-            file("src/main/resources/skin").absolutePath,
-            "tinted"
+    TexturePacker.process(
+            file("raw/ui").absolutePath,
+            file("assets/ui").absolutePath,
+            "skin"
     )
   }
 }

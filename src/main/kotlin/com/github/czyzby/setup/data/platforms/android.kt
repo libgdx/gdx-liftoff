@@ -16,6 +16,7 @@ class Android : Platform {
     }
 
     override val id = ID
+    override val isStandard = false // user should only jump through android hoops on request
     override fun initiate(project: Project) {
         project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
         project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion

@@ -34,7 +34,7 @@
         <textField id="toolsVersion" tooltip="@toolsVersionTip" value="$getToolsVersion"
                    onChange="setToolsVersion" row="true" />
         @robovmVersion
-        <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.3</textField>
+        <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.6</textField>
         @moeVersion
         <textField id="moeVersion" tooltip="@moeVersionTip" row="true">1.4.0</textField>
         @gwtVersion

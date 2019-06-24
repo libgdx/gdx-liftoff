@@ -268,10 +268,17 @@ class Joice : ThirdPartyExtension() {
 @Extension
 class TypingLabel : ThirdPartyExtension() {
     override val id = "typingLabel"
-    override val defaultVersion = "1.0.7"
+    override val defaultVersion = "1.1.0"
     override val url = "https://github.com/rafaskb/typing-label"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.rafaskoberg.gdx:typing-label")
+        addDependency(project, GWT.ID, "com.rafaskoberg.gdx:typing-label:sources")
+
+        addDependency(project, Core.ID, "com.github.tommyettinger:regexodus")
+        addDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:sources")
+
+        addGwtInherit(project, "com.rafaskoberg.gdx.typinglabel.typinglabel")
+        addGwtInherit(project, "regexodus")
     }
 }
