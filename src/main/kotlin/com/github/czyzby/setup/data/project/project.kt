@@ -174,9 +174,9 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker
 task pack {
 	doLast {
 		com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
-						file("raw").absolutePath,
-						file("src/main/resources/skin").absolutePath,
-						"tinted"
+						file("raw/ui").absolutePath,
+						file("assets/ui").absolutePath,
+						"skin"
 		)
 	}
 }
