@@ -96,6 +96,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
     override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
 	compileSdkVersion ${project.advanced.androidSdkVersion}
@@ -170,9 +171,10 @@ task copyAndroidNatives() {
 				}
 			}
 		}
-		${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
 	}
 }
+
+preBuild.dependsOn(copyAndroidNatives)
 
 task run(type: Exec) {
 	def path
@@ -194,59 +196,6 @@ task run(type: Exec) {
 
 	def adb = path + "/platform-tools/adb"
 	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
-}
-
-// Sets up the Android Eclipse project using the old Ant based build.
-eclipse {
-	// needs to specify Java source sets explicitly, SpringSource Gradle Eclipse plugin
-	// ignores any nodes added in classpath.file.withXml
-	sourceSets {
-		main {
-			java.srcDirs 'src/main/java', 'gen'
-		}
-	}
-
-	jdt {
-		sourceCompatibility = ${project.advanced.javaVersion}
-		targetCompatibility = ${project.advanced.javaVersion}
-	}
-
-	classpath {
-		plusConfigurations += [ project.configurations.compileClasspath ]
-		containers 'com.android.ide.eclipse.adt.ANDROID_FRAMEWORK', 'com.android.ide.eclipse.adt.LIBRARIES'
-	}
-
-	project {
-		name = appName + "-android"
-		natures 'com.android.ide.eclipse.adt.AndroidNature'
-		buildCommands.clear()
-		buildCommand "com.android.ide.eclipse.adt.ResourceManagerBuilder"
-		buildCommand "com.android.ide.eclipse.adt.PreCompilerBuilder"
-		buildCommand "org.eclipse.jdt.core.javabuilder"
-		buildCommand "com.android.ide.eclipse.adt.ApkBuilder"
-	}
-}
-
-// Sets up the Android Idea project using the old Ant based build.
-idea {
-	module {
-		sourceDirs += file("src/main/java")
-		scopes = [ COMPILE: [plus:[project.configurations.compileClasspath]]]
-		iml {
-			withXml {
-				def node = it.asNode()
-				def builder = NodeBuilder.newInstance()
-				builder.current = node
-				builder.component(name: "FacetManager") {
-					facet(type: "android", name: "Android") {
-						configuration {
-							option(name: "UPDATE_PROPERTY_FILES", value:"true")
-						}
-					}
-				}
-			}
-		}
-	}
 }
 """
 }
