@@ -7,7 +7,7 @@ If you've used libGDX for even a short time, you've probably used the official `
 like [czyzby/gdx-setup](https://github.com/czyzby/gdx-setup). The problem these two setup tools share is that they currently use outdated Gradle versions, both old
 enough that they won't work with Java 11 or newer, and neither seems to be updated very often. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 5.4, instead of 4.6 for the official setup or 4.0.2 for czyzby's gdx-setup.
+code, which is built on czyzby's code, gives us working projects that use Gradle 5.5.1, instead of 4.6 for the official setup or 4.0.2 for czyzby's gdx-setup.
 Currently, gdx-liftoff depends on libGDX 1.9.9 by default, and allows using snapshots as well.
 
 Projects default to using LWJGL3 instead of LWJGL2 (the old 'desktop' platform), since code tends to be very similar between the two, but LWJGL3 generally offers
@@ -34,13 +34,15 @@ with iOS, either RoboVM or MOE, will have to be addressed by someone sending a p
       - iOS should probably not be checked if you aren't running MacOS and don't intend to later build an iOS
         app on a Mac. It needs some large dependencies to be downloaded when you first import the project.
       - Android should only be checked if you've set up your computer for Android development. Unlike with some other
-        setup tools, since gdx-liftoff uses Gradle 5.4, having an Android project present shouldn't interfere with
+        setup tools, since gdx-liftoff uses Gradle 5.5.1, having an Android project present shouldn't interfere with
         other platforms or IDE integration.
       - HTML is a more-involved target, with some perfectly-normal code on all other platforms acting completely
         different on HTML due to the tool used, Google Web Toolkit (GWT). It's almost always possible to work around
         these differences and make things like random seeds act the same on all platforms, but it takes work. Mostly,
         you need to be careful with the `long` and `int` number types, and relates to `int` not overflowing as it
         would on desktop, and `long` not being visible to reflection. See [this small guide to GWT](GWT.md) for more.
+        It's very likely that you won't notice any difference unless you try to make behavior identical on GWT and
+        other platforms, and even then there may be nothing apparent.
     - For dependencies, you don't need LibGDX checked (the tool is set up to download LibGDX and set it as a
       dependency in all cases).
     - If you click Advanced, you can choose to generate project files for IntelliJ IDEA
@@ -55,10 +57,15 @@ Now you'll have a project all set up with a sample.
   - The way to run a game project that's probably the most reliable is to use Gradle tasks
     to do any part of the build/run process. The simplest way to do this is in the IDE itself,
     via `View -> Tool Windows -> Gradle`, and selecting tasks to perform, such as
-    `Desktop -> Tasks -> application -> run.` If you try to run a specific class' `main()`
+    `lwjgl3 -> Tasks -> application -> run.` If you try to run a specific class' `main()`
     method, you may encounter strange issues, but this shouldn't happen with Gradle tasks.
   - If you had the LWJGL3 (or Desktop) option checked in the setup and you chose a non-empty
     template in the Templates tab, you can run the LWJGL3 or Desktop module right away.
+    - You can build a runnable jar that includes all it needs to run using
+      `lwjgl3 -> Tasks -> build -> jar`; this jar will be in `lwjgl3/build/libs/` when it finishes.
+      Note: this is the command-line option `gradlew lwjgl3:jar`, not the `dist` command
+      used by the official setup jar. Substitute `desktop` where `lwjgl3` is if you use the legacy
+      LWJGL2 version.
   - If you had the Android option checked in the setup and have a non-empty template,
     you can try to run the Android module on an emulator or a connected Android device.
   - If you had the GWT option checked in the setup and have a non-empty template,
@@ -68,7 +75,7 @@ Now you'll have a project all set up with a sample.
     and you have followed all the steps for iOS development with libGDX, maybe you can run
     an iOS task? I can't try myself without a Mac or iOS device, so if you can get this to
     work, posting an issue with any info for other iOS targeters would be greately appreciated.
-  - All builds currently use Gradle 5.4 with the "api/implementation/compile fiasco" resolved. Adding dependencies
+  - All builds currently use Gradle 5.5.1 with the "api/implementation/compile fiasco" resolved. Adding dependencies
     will use the `api` keyword instead of the `compile` keyword it used in earlier versions. All modules use the
     `java-library` plugin, which enables the `api` keyword for dependencies.
   - You may need to refresh the Gradle project after the initial import if some dependencies timed-out;
@@ -80,5 +87,12 @@ Now you'll have a project all set up with a sample.
     `jcenter()` last in the repositories lists. I don't know if any other tools have done the same, but it's
     an easy fix and I encourage them to do so.
     
+## Known Issues
+
+  - MacOS does not like the legacy desktop apps, showing all sorts of visual glitches.
+    It seems to work fine with LWJGL3, in part because that platform had special attention
+    paid to it so the `gradlew lwjgl3:run` command can work at all on MacOS.
+  - Android hasn't been tested enough, and the generated manifest is probably not very good.
+
 Good luck, and I hope you make something great!
 
