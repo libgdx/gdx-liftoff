@@ -125,6 +125,7 @@ public class GwtLauncher extends GwtApplication {
 		//	class ResizeListener implements ResizeHandler {
 		//		@Override
 		//		public void onResize(ResizeEvent event) {
+        //          if (Gdx.graphics.isFullscreen()) return;
 		//			int width = event.getWidth() - PADDING;
 		//			int height = event.getHeight() - PADDING;
 		//			getRootPanel().setWidth("" + width + "px");

@@ -8,7 +8,7 @@ like [czyzby/gdx-setup](https://github.com/czyzby/gdx-setup). The problem these 
 enough that they won't work with Java 11 or newer, and neither seems to be updated very often. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
 code, which is built on czyzby's code, gives us working projects that use Gradle 5.5.1, instead of 4.6 for the official setup or 4.0.2 for czyzby's gdx-setup.
-Currently, gdx-liftoff depends on libGDX 1.9.9 by default, and allows using snapshots as well.
+Currently, gdx-liftoff depends on libGDX 1.9.10 by default, and allows using snapshots as well.
 
 Projects default to using LWJGL3 instead of LWJGL2 (the old 'desktop' platform), since code tends to be very similar between the two, but LWJGL3 generally offers
 more features. This code is tested for compatibility with GWT, including the various changes that Gradle needs with this version. It is sometimes tested on Android,
@@ -48,7 +48,7 @@ with iOS, either RoboVM or MOE, will have to be addressed by someone sending a p
     - If you click Advanced, you can choose to generate project files for IntelliJ IDEA
       and/or Eclipse, which has some advantages but probably more disadvantages. If you
       know what you're doing, you might want to try it, but be prepared for frustration.
-    - Also in Advanced, you can set the libGDX version (it defaults to 1.9.9, but can be set lower or higher) and
+    - Also in Advanced, you can set the libGDX version (it defaults to 1.9.10, but can be set lower or higher) and
       various other versions.
   - Click generate, and very soon a window should pop up with instructions for what to do.
     
