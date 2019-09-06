@@ -37,14 +37,8 @@
         <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.6</textField>
         @moeVersion
         <textField id="moeVersion" tooltip="@moeVersionTip" row="true">1.4.0</textField>
-        @gwtVersion
-        <selectBox id="gwtVersion" tooltip="@gwtVersionTip" value="$getGwtVersion" onChange="setGwtVersion"
-                   minWidth="20">
-            <:for version="$gwtVersions">{version}
-            </:for>
-        </selectBox>
         @gwtPlugin
-        <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.0.6</textField>
+        <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.0.9</textField>
     </table>
     </scrollPane>
     <table growX="true" defaultPad="2" defaultSpaceRight="10" defaultSpaceLeft="10">
