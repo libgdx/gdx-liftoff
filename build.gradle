@@ -16,7 +16,7 @@ buildscript {
   }
 }
 
-version = "1.9.10.0"
+version = "1.9.10.1"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {

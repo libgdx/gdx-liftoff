@@ -3,7 +3,6 @@ package com.github.czyzby.setup.views
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.annotation.LmlActor
-import com.kotcrab.vis.ui.widget.VisSelectBox
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel
 import com.kotcrab.vis.ui.widget.spinner.Spinner
@@ -21,7 +20,7 @@ class AdvancedData {
     @LmlActor("androidPluginVersion") private lateinit var androidPluginVersionField: VisTextField
     @LmlActor("robovmVersion") private lateinit var robovmVersionField: VisTextField
     @LmlActor("moeVersion") private lateinit var moeVersionField: VisTextField
-    @LmlActor("gwtVersion") private lateinit var gwtVersionField: VisSelectBox<String>
+//    @LmlActor("gwtVersion") private lateinit var gwtVersionField: VisSelectBox<String>
     @LmlActor("gwtPlugin") private lateinit var gwtPluginVersionField: VisTextField
     @LmlActor("serverJavaVersion") private lateinit var serverJavaVersionField: Spinner
     @LmlActor("desktopJavaVersion") private lateinit var desktopJavaVersionField: Spinner
@@ -64,7 +63,9 @@ class AdvancedData {
         get() = moeVersionField.text
 
     val gwtVersion: String
-        get() = gwtVersionField.selected
+        get() = if(gdxVersion.length == 5 && gdxVersion[4] != '9') {
+            if(gdxVersion[4] < '5') "2.6.1" else "2.8.0"
+        } else "2.8.2"
 
     val gwtPluginVersion: String
         get() = gwtPluginVersionField.text

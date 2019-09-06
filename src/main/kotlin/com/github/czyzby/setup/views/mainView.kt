@@ -150,7 +150,7 @@ class MainView : ActionContainer {
     @LmlAction("show") fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
     @LmlAction("hide") fun getTabHidingAction(): Action = Actions.fadeOut(0.1f)
     @LmlAction("gdxVersion") fun getGdxVersion(): String = Version.VERSION
-    @LmlAction("gwtVersions") fun getGwtVersions(): Array<String> = arrayOf("2.6.0", "2.6.1", "2.7.0", "2.8.0", "2.8.1, 2.8.2")
+    @LmlAction("gwtVersions") fun getGwtVersions(): Array<String> = arrayOf("2.8.2")
     @LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesData.languages
     @LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesData.versions
     @LmlAction("templates") fun getOfficialTemplates(): Array<String> =
