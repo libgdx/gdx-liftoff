@@ -8,6 +8,7 @@ build/
 *.war
 *.ear
 hs_err_pid*
+.attach_pid*
 
 ## Android:
 android/libs/armeabi/
@@ -28,6 +29,7 @@ html/war/WEB-INF/classes/
 gwt-unitCache/
 www-test/
 .gwt-tmp/
+*.symbolMap
 
 ## IntelliJ, Android Studio:
 .idea/
@@ -53,7 +55,6 @@ tmp/
 
 ## NetBeans
 **/nbproject/private/
-build/
 nbbuild/
 dist/
 nbdist/
@@ -62,3 +63,8 @@ nb-configuration.xml
 
 ## OS Specific
 .DS_Store
+
+## Miscellaneous
+*~
+*.*#
+*#*#

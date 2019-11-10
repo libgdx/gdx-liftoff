@@ -5,9 +5,9 @@ A modern setup tool for libGDX Gradle projects, forked from czyzby/gdx-setup
 
 If you've used libGDX for even a short time, you've probably used the official `gdx-setup.jar` made by the libGDX team. You may have used alternative setup tools,
 like [czyzby/gdx-setup](https://github.com/czyzby/gdx-setup). The problem these two setup tools share is that they currently use outdated Gradle versions, both old
-enough that they won't work with Java 11 or newer, and neither seems to be updated very often. This project provides another alternative setup tool based on
+enough that they won't work with Java 13 or newer, and neither seems to be updated very often. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 5.5.1, instead of 4.6 for the official setup or 4.0.2 for czyzby's gdx-setup.
+code, which is built on czyzby's code, gives us working projects that use Gradle 6.0, instead of 5.4 for the official setup or 4.0.2 for czyzby's gdx-setup.
 Currently, gdx-liftoff depends on libGDX 1.9.10 by default, and allows using snapshots as well.
 
 Projects default to using LWJGL3 instead of LWJGL2 (the old 'desktop' platform), since code tends to be very similar between the two, but LWJGL3 generally offers
@@ -34,7 +34,7 @@ with iOS, either RoboVM or MOE, will have to be addressed by someone sending a p
       - iOS should probably not be checked if you aren't running MacOS and don't intend to later build an iOS
         app on a Mac. It needs some large dependencies to be downloaded when you first import the project.
       - Android should only be checked if you've set up your computer for Android development. Unlike with some other
-        setup tools, since gdx-liftoff uses Gradle 5.5.1, having an Android project present shouldn't interfere with
+        setup tools, since gdx-liftoff uses Gradle 6.0, having an Android project present shouldn't interfere with
         other platforms or IDE integration.
       - HTML is a more-involved target, with some perfectly-normal code on all other platforms acting completely
         different on HTML due to the tool used, Google Web Toolkit (GWT). It's almost always possible to work around
@@ -69,19 +69,21 @@ Now you'll have a project all set up with a sample.
   - If you had the Android option checked in the setup and have a non-empty template,
     you can try to run the Android module on an emulator or a connected Android device.
   - If you had the GWT option checked in the setup and have a non-empty template,
-    you can go through the lengthy, but simple, build for GWT, probably using the `superDev`
-    task for the `gwt` module, or also possibly the `dist` task in that module. 
+    you can go through the slightly slow, but simple, build for GWT, probably using the `superDev`
+    task for the `gwt` module, or also possibly the `dist` task in that module.
+      - GWT builds have gotten much faster with Gradle 6.0 and some adjustments to configuration, so
+        if you were avoiding GWT builds because of slow compile times, you might want to try again.
   - If you had the iOS option checked in the setup, you're running Mac OS X,
     and you have followed all the steps for iOS development with libGDX, maybe you can run
     an iOS task? I can't try myself without a Mac or iOS device, so if you can get this to
-    work, posting an issue with any info for other iOS targeters would be greately appreciated.
-  - All builds currently use Gradle 5.5.1 with the "api/implementation/compile fiasco" resolved. Adding dependencies
+    work, posting an issue with any info for other iOS targeters would be greatly appreciated.
+  - All builds currently use Gradle 6.0 with the "api/implementation/compile fiasco" resolved. Adding dependencies
     will use the `api` keyword instead of the `compile` keyword it used in earlier versions. All modules use the
     `java-library` plugin, which enables the `api` keyword for dependencies.
   - You may need to refresh the Gradle project after the initial import if some dependencies timed-out;
     JitPack dependencies in particular may take up to 15 minutes to become available if you're using any of those,
-    like SquidLib. In IntelliJ IDEA, the `Refresh all projects` button is a pair of circling arrows in the Gradle
-    tool window, which can be opened with `View -> Tool Windows -> Gradle`.
+    like SquidLib. In IntelliJ IDEA, the `Reimport all Gradle projects` button is a pair of circling arrows in the
+    Gradle tool window, which can be opened with `View -> Tool Windows -> Gradle`.
   - Out of an abundance of caution, [the dependency impersonation issue reported here by Márton
     Braun](https://blog.autsoft.hu/a-confusing-dependency/) is handled the way he handled it, by putting
     `jcenter()` last in the repositories lists. I don't know if any other tools have done the same, but it's
