@@ -1,12 +1,24 @@
-## Based on default LibGDX project settings.
+## Gradle
+.gradle
+gradle-app.setting
+build/
 
-## Java
+## Java:
 *.class
 *.war
 *.ear
 hs_err_pid*
+.attach_pid*
 
-## GWT
+## Android:
+android/libs/armeabi/
+android/libs/armeabi-v7a/
+android/libs/x86/
+android/gen/
+local.properties
+com_crashlytics_export_strings.xml
+
+## GWT:
 war/
 html/war/gwt_bree/
 html/gwt-unitCache/
@@ -17,18 +29,14 @@ html/war/WEB-INF/classes/
 gwt-unitCache/
 www-test/
 .gwt-tmp/
+*.symbolMap
 
-## Android Studio, IntelliJ, Android
-android/libs/armeabi/
-android/libs/armeabi-v7a/
-android/libs/x86/
-android/gen/
+## IntelliJ, Android Studio:
 .idea/
 *.ipr
 *.iws
 *.iml
 out/
-com_crashlytics_export_strings.xml
 
 ## Eclipse
 .classpath
@@ -40,16 +48,23 @@ tmp/
 *.bak
 *.swp
 *~.nib
-local.properties
 .settings/
 .loadpath
 .externalToolBuilders/
 *.launch
 
-## Gradle
-.gradle
-gradle-app.setting
-build/
+## NetBeans
+**/nbproject/private/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 
-## OS-specific, others
+## OS Specific
 .DS_Store
+
+## Miscellaneous
+*~
+*.*#
+*#*#

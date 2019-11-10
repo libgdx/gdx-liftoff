@@ -16,14 +16,13 @@ buildscript {
   }
 }
 
-version = "1.9.10.2-SNAPSHOT"
+version = "1.9.10.2"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {
   manifest {
     attributes 'Main-Class': mainClassName
   }
-  from files(sourceSets.main.output.classesDirs)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
