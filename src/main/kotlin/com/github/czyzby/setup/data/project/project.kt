@@ -30,7 +30,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
     val files = mutableListOf<ProjectFile>()
     val rootGradle: RootGradleFile
     val properties = mutableMapOf(
-            "org.gradle.daemon" to "true",
+            "org.gradle.daemon" to "false", // was having very bad memory usage with daemon+Android
             "org.gradle.jvmargs" to "-Xms128m -Xmx512m",
             "org.gradle.configureondemand" to "false")
     val postGenerationTasks = mutableListOf<(Project) -> Unit>()
