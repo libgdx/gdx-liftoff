@@ -43,22 +43,22 @@ class Android : Platform {
         project.files.add(SourceFile(projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
                 content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="${project.basic.rootPackage}"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="${project.basic.rootPackage}">
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/GdxTheme" >
-        <activity
-            android:name="${project.basic.rootPackage}.android.AndroidLauncher"
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:isGame="true"
+            android:appCategory="game"
             android:label="@string/app_name"
-            android:screenOrientation="landscape"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+            android:theme="@style/GdxTheme">
+        <activity
+                android:name="${project.basic.rootPackage}.android.AndroidLauncher"
+                android:label="@string/app_name"
+                android:screenOrientation="landscape"
+                android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
@@ -96,7 +96,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
     override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
-${if(latePlugin == true)"apply plugin: \'kotlin-android\'" else ""}
+${if(latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
 	compileSdkVersion ${project.advanced.androidSdkVersion}
@@ -130,6 +130,8 @@ android {
 		applicationId '${project.basic.rootPackage}'
 		minSdkVersion 14
 		targetSdkVersion ${project.advanced.androidSdkVersion}
+		versionCode 1
+		versionName "1.0"
 	}
 }
 
