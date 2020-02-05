@@ -37,7 +37,8 @@ class AdvancedData {
         get() = gdxVersionField.text
 
     val javaVersion: String
-        get() = javaVersionField.model.text
+        get() = if(javaVersionField.model.text.length == 1)
+            "1." + javaVersionField.model.text else javaVersionField.model.text
 
     var androidSdkVersion: String
         get() = sdkVersionField.model.text
@@ -71,10 +72,12 @@ class AdvancedData {
         get() = gwtPluginVersionField.text
 
     val serverJavaVersion: String
-        get() = serverJavaVersionField.model.text
-
+        get() = if(serverJavaVersionField.model.text.length == 1)
+            "1." + serverJavaVersionField.model.text else serverJavaVersionField.model.text
+    
     val desktopJavaVersion: String
-        get() = desktopJavaVersionField.model.text
+        get() = if(desktopJavaVersionField.model.text.length == 1)
+            "1." + desktopJavaVersionField.model.text else desktopJavaVersionField.model.text
 
     val generateSkin: Boolean
         get() = generateSkinButton.isChecked
@@ -89,7 +92,7 @@ class AdvancedData {
         get() = gradleWrapperButton.isChecked
 
     val gradleTasks: List<String>
-        get() = if (gradleTasksField.isEmpty) listOf<String>()
+        get() = if (gradleTasksField.isEmpty) listOf()
         else gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter { it.isNotBlank() }
 
     fun forceSkinGeneration() {
