@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
+<module>
+    <source path="" />
+    <inherits name='com.github.czyzby.autumn.GdxAutumn' />
+    <inherits name='com.github.czyzby.lml.GdxLml' />
+    <inherits name='com.github.czyzby.kiwi.GdxKiwi' />
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.asset.AssetService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.i18n.LocaleService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.i18n.processor" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.preferences.PreferencesService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.sfx.MusicService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.sfx.processor" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.ui.InterfaceService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.ui.SkinService" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.ui.processor" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.ui.action.MusicFadingAction" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.autumn.mvc.component.ui.controller.impl" />
+	
+	<!-- Don't even get me started... -->
+	<extend-configuration-property name="gdx.reflect.include" value="java.lang.Class" />
+</module>

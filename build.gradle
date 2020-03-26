@@ -16,7 +16,7 @@ buildscript {
   }
 }
 
-version = "1.9.10.4"
+version = "1.9.10.5"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {
@@ -30,6 +30,7 @@ repositories {
   mavenLocal()
   mavenCentral()
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  maven { url 'https://jitpack.io' }
   jcenter()
 }
 
@@ -38,11 +39,11 @@ dependencies {
   api "org.apache.commons:commons-exec:$commonsExecVersion"
   api 'org.slf4j:slf4j-nop:1.7.25'
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
-  api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  api "com.github.czyzby:gdx-autumn-mvc:$autumnVersion"
-  api "com.github.czyzby:gdx-autumn-fcs:$autumnVersion"
-  api "com.github.czyzby:gdx-lml-vis:$autumnVersion"
+  api "io.github.lukehutch:fast-classpath-scanner:2.21"
+  api "com.kotcrab.vis:vis-ui:1.4.4"
+  api "com.github.czyzby.gdx-lml:gdx-kiwi:$lmlVersion"
 }
 
 task pack {
