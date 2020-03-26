@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
+<module>
+	<source path="" />
+	<inherits name="com.github.czyzby.kiwi.GdxKiwi" />
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.lml.scene2d.ui.reflected" />
+	<!-- These seem to cause problems when not reflected: -->
+	<extend-configuration-property name="gdx.reflect.include" value="com.github.czyzby.lml.parser.impl.AbstractLmlView" />
+</module>

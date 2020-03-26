@@ -32,8 +32,6 @@ import com.github.czyzby.setup.prefs.ToolsVersionPreference
 import com.kotcrab.vis.ui.util.ToastManager
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
-import org.lwjgl.BufferUtils
-import org.lwjgl.glfw.GLFW
 
 /**
  * Main application's view. Displays application's menu.
@@ -185,40 +183,40 @@ class MainView : ActionContainer {
     fun createProject(): Project = Project(basicData, platformsData.getSelectedPlatforms(),
             advancedData, languagesData, extensionsData, templatesData.getSelectedTemplate())
 
-    @LmlAction("minimize") fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
+    //@LmlAction("minimize") fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
 
-    @LmlAction("initTitleTable")
-    fun addWindowDragListener(actor: Actor) {
-        actor.addListener(object : InputListener() {
-            private val context = GLFW.glfwGetCurrentContext()
-            private var startX = 0
-            private var startY = 0
-            private var offsetX = 0
-            private var offsetY = 0
-            private val cursorX = BufferUtils.createDoubleBuffer(1)
-            private val cursorY = BufferUtils.createDoubleBuffer(1)
-            private val windowX = BufferUtils.createIntBuffer(1)
-            private val windowY = BufferUtils.createIntBuffer(1)
-
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
-                GLFW.glfwGetCursorPos(context, cursorX, cursorY)
-                startX = getX()
-                startY = getY()
-                return true
-            }
-
-            override fun touchDragged(event: InputEvent?, x: Float, y: Float, pointer: Int) {
-                GLFW.glfwGetCursorPos(context, cursorX, cursorY)
-                offsetX = getX() - startX
-                offsetY = getY() - startY
-                GLFW.glfwGetWindowPos(context, windowX, windowY)
-                GLFW.glfwSetWindowPos(context, windowX.get(0) + offsetX, windowY.get(0) + offsetY)
-            }
-
-            private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
-            private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
-        })
-    }
+//    @LmlAction("initTitleTable")
+//    fun addWindowDragListener(actor: Actor) {
+//        actor.addListener(object : InputListener() {
+//            private val context = GLFW.glfwGetCurrentContext()
+//            private var startX = 0
+//            private var startY = 0
+//            private var offsetX = 0
+//            private var offsetY = 0
+//            private val cursorX = BufferUtils.createDoubleBuffer(1)
+//            private val cursorY = BufferUtils.createDoubleBuffer(1)
+//            private val windowX = BufferUtils.createIntBuffer(1)
+//            private val windowY = BufferUtils.createIntBuffer(1)
+//
+//            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+//                GLFW.glfwGetCursorPos(context, cursorX, cursorY)
+//                startX = getX()
+//                startY = getY()
+//                return true
+//            }
+//
+//            override fun touchDragged(event: InputEvent?, x: Float, y: Float, pointer: Int) {
+//                GLFW.glfwGetCursorPos(context, cursorX, cursorY)
+//                offsetX = getX() - startX
+//                offsetY = getY() - startY
+//                GLFW.glfwGetWindowPos(context, windowX, windowY)
+//                GLFW.glfwSetWindowPos(context, windowX.get(0) + offsetX, windowY.get(0) + offsetY)
+//            }
+//
+//            private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
+//            private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
+//        })
+//    }
 
     /**
      * Explicitly forces saving of Android SDK versions. They might not be properly updated as change events are not
