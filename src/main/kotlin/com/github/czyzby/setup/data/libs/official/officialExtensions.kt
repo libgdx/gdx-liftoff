@@ -90,7 +90,7 @@ class Box2DLights : OfficialExtension() {
     override val url = "https://github.com/libgdx/box2dlights"
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = "1.4"
+        project.properties[id + "Version"] = "1.5"
 
         addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
 
