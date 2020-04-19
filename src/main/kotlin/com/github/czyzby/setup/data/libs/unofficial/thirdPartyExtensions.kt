@@ -33,28 +33,13 @@ abstract class ThirdPartyExtension : Library {
 }
 
 /**
- * UI and level editor runtime.
- * @author UnderwaterApps
- */
-@Extension
-class Overlap2D : ThirdPartyExtension() {
-    override val id = "overlap2d"
-    override val defaultVersion = "0.1.1"
-    override val url = "http://overlap2d.com/"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx")
-    }
-}
-
-/**
  * High performance Entity-Component-System framework.
  * @author junkdog
  */
 @Extension
 class ArtemisOdb : ThirdPartyExtension() {
     override val id = "artemisOdb"
-    override val defaultVersion = "2.2.0"
+    override val defaultVersion = "2.3.0"
     override val url = "https://github.com/junkdog/artemis-odb"
 
     override fun initiateDependencies(project: Project) {
@@ -70,17 +55,18 @@ class ArtemisOdb : ThirdPartyExtension() {
 /**
  * General LibGDX utilities.
  * @author Dermetfan
+ * @author Maintained by Tommy Ettinger
  */
 @Extension
 class LibgdxUtils : ThirdPartyExtension() {
     override val id = "utils"
-    override val defaultVersion = "0.13.4"
+    override val defaultVersion = "0.13.6"
     override val url = "http://dermetfan.net/libgdx-utils.php"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "net.dermetfan.libgdx-utils:libgdx-utils")
+        addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-utils")
 
-        addDependency(project, GWT.ID, "net.dermetfan.libgdx-utils:libgdx-utils:sources")
+        addDependency(project, GWT.ID, "com.github.tommyettinger:libgdx-utils:sources")
         addGwtInherit(project, "libgdx-utils")
     }
 }
@@ -88,17 +74,18 @@ class LibgdxUtils : ThirdPartyExtension() {
 /**
  * Box2D LibGDX utilities.
  * @author Dermetfan
+ * @author Maintained by Tommy Ettinger
  */
 @Extension
 class LibgdxUtilsBox2D : ThirdPartyExtension() {
     override val id = "utilsBox2d"
-    override val defaultVersion = "0.13.4"
+    override val defaultVersion = "0.13.6"
     override val url = "http://dermetfan.net/libgdx-utils.php"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "net.dermetfan.libgdx-utils:libgdx-utils-box2d")
+        addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-utils-box2d")
 
-        addDependency(project, GWT.ID, "net.dermetfan.libgdx-utils:libgdx-utils-box2d:sources")
+        addDependency(project, GWT.ID, "com.github.tommyettinger:libgdx-utils-box2d:sources")
         addGwtInherit(project, "libgdx-utils-box2d")
 
         LibgdxUtils().initiate(project)
@@ -112,7 +99,7 @@ class LibgdxUtilsBox2D : ThirdPartyExtension() {
 @Extension
 class Facebook : ThirdPartyExtension() {
     override val id = "facebook"
-    override val defaultVersion = "1.3.0"
+    override val defaultVersion = "1.5.0"
     override val url = "https://github.com/TomGrill/gdx-facebook"
 
     override fun initiateDependencies(project: Project) {
@@ -139,7 +126,7 @@ class Facebook : ThirdPartyExtension() {
 @Extension
 class Dialogs : ThirdPartyExtension() {
     override val id = "dialogs"
-    override val defaultVersion = "1.2.0"
+    override val defaultVersion = "1.3.0"
     override val url = "https://github.com/TomGrill/gdx-dialogs"
 
     override fun initiateDependencies(project: Project) {
@@ -235,7 +222,7 @@ class Noise4J : ThirdPartyExtension() {
 @Extension
 class BladeInk : ThirdPartyExtension() {
     override val id = "bladeInk"
-    override val defaultVersion = "0.4.0"
+    override val defaultVersion = "0.7.3"
     override val url = "https://github.com/bladecoder/blade-ink"
 
     override fun initiateDependencies(project: Project) {
@@ -248,9 +235,9 @@ class BladeInk : ThirdPartyExtension() {
  * @author SudoPlayGames
  */
 @Extension
-class Joice : ThirdPartyExtension() {
+class Joise : ThirdPartyExtension() {
     override val id = "joise"
-    override val defaultVersion = "1.0.5"
+    override val defaultVersion = "1.1.0"
     override val url = "https://github.com/SudoPlayGames/Joise"
 
     override fun initiateDependencies(project: Project) {
@@ -262,23 +249,73 @@ class Joice : ThirdPartyExtension() {
 }
 
 /**
+ * Another 2D, 3D, 4D and 6D noise library, supporting some unusual types of noise.
+ * @author Tommy Ettinger
+ */
+@Extension
+class MakeSomeNoise : ThirdPartyExtension() {
+    override val id = "makeSomeNoise"
+    override val defaultVersion = "0.2"
+    override val url = "https://github.com/tommyettinger/make-some-noise"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:make_some_noise")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:make_some_noise:sources")
+        addGwtInherit(project, "make.some.noise")
+    }
+}
+
+/**
  * An animated Label equivalent that appears as if it was being typed in real time.
  * @author Rafa Skoberg
  */
 @Extension
 class TypingLabel : ThirdPartyExtension() {
     override val id = "typingLabel"
-    override val defaultVersion = "1.1.0"
+    override val defaultVersion = "1.2.0"
     override val url = "https://github.com/rafaskb/typing-label"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.rafaskoberg.gdx:typing-label")
+
         addDependency(project, GWT.ID, "com.rafaskoberg.gdx:typing-label:sources")
-
-        addDependency(project, Core.ID, "com.github.tommyettinger:regexodus")
-        addDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:sources")
-
         addGwtInherit(project, "com.rafaskoberg.gdx.typinglabel.typinglabel")
-        addGwtInherit(project, "regexodus")
+    }
+}
+
+/**
+ * A high-performance alternative to libGDX's built-in ShapeRenderer, with smoothing and more shapes.
+ * @author earlygrey
+ */
+@Extension
+class ShapeDrawer : ThirdPartyExtension() {
+    override val id = "shapeDrawer"
+    override val defaultVersion = "2.3.0"
+    override val url = "https://github.com/earlygrey/shapedrawer"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "space.earlygrey:shapedrawer")
+
+        addDependency(project, GWT.ID, "space.earlygrey:shapedrawer:sources")
+        addGwtInherit(project, "space.earlygrey.shapedrawer")
+    }
+}
+
+/**
+ * Provides a replacement for GWT's missing String.format() with its Stringf.format().
+ * @author Tommy Ettinger
+ */
+@Extension
+class Formic : ThirdPartyExtension() {
+    override val id = "formic"
+    override val defaultVersion = "0.1.2"
+    override val url = "https://github.com/tommyettinger/formic"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:formic")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
+        addGwtInherit(project, "text.formic")
     }
 }

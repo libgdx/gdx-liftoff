@@ -43,7 +43,6 @@
     </scrollPane>
     <table growX="true" defaultPad="2" defaultSpaceRight="10" defaultSpaceLeft="10">
         <checkBox id="generateSkin" style="small" tooltip="@generateSkinTip">@generateSkin</checkBox>
-        <checkBox id="generateUsl" style="small" tooltip="@generateUslTip">@generateUsl</checkBox>
         <checkBox id="generateReadme" style="small" tooltip="@generateReadmeTip">@generateReadme</checkBox>
         <checkBox id="gradleWrapper" style="small" tooltip="@gradleWrapperTip" checked="$getGradleWrapper" onChange="setGradleWrapper">
             @gradleWrapper
@@ -51,5 +50,5 @@
     </table>
     <textField id="gradleTasks" message="@gradleTasksPrompt" tooltip="@gradleTasksTip" growX="true"
                value="$getGradleTasks" onChange="setGradleTasks" pad="2"/>
-    <linkLabel url="https://github.com/czyzby/gdx-skins" expandY="true" align="bottom">@gdxSkinsPrompt</linkLabel>
+    <linkLabel url="https://ray3k.wordpress.com/software/skin-composer-for-libgdx/" align="bottom" textAlign="center">@gdxSkinsPrompt</linkLabel>
 </tab>
