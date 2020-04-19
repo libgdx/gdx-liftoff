@@ -47,19 +47,3 @@ class VisRuntime : ThirdPartyExtension() {
     }
 }
 
-/**
- * UI styling language extension.
- * @author Kotcrab
- */
-@Extension
-class USL : ThirdPartyExtension() {
-    override val id = "usl"
-    override val defaultVersion = "0.2.1"
-    override val url = "https://github.com/kotcrab/vis-editor/wiki/USL"
-
-    override fun initiateDependencies(project: Project) {
-        project.rootGradle.buildDependencies.add("\"com.kotcrab.vis:vis-usl:\$uslVersion\"");
-
-        addDependency(project, Headless.ID, "com.kotcrab.vis.vis-usl")
-    }
-}

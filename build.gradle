@@ -1,5 +1,3 @@
-import com.badlogic.gdx.tools.texturepacker.TexturePacker
-
 apply plugin: 'kotlin'
 apply plugin: 'java-library'
 apply plugin: 'application'
@@ -12,7 +10,6 @@ buildscript {
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
   }
 }
 
@@ -39,19 +36,9 @@ dependencies {
   api "org.apache.commons:commons-exec:$commonsExecVersion"
   api 'org.slf4j:slf4j-nop:1.7.25'
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
-  api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   api "io.github.lukehutch:fast-classpath-scanner:2.21"
   api "com.kotcrab.vis:vis-ui:1.4.4"
   api "com.github.czyzby.gdx-lml:gdx-kiwi:$lmlVersion"
-}
-
-task pack {
-  doLast {
-    TexturePacker.process(
-            file("raw/ui").absolutePath,
-            file("assets/ui").absolutePath,
-            "skin"
-    )
-  }
 }
