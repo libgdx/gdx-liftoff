@@ -281,6 +281,7 @@ class TypingLabel : ThirdPartyExtension() {
 
         addDependency(project, GWT.ID, "com.rafaskoberg.gdx:typing-label:sources")
         addGwtInherit(project, "com.rafaskoberg.gdx.typinglabel.typinglabel")
+        RegExodus().initiate(project)
     }
 }
 
@@ -317,5 +318,23 @@ class Formic : ThirdPartyExtension() {
 
         addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
         addGwtInherit(project, "text.formic")
+    }
+}
+
+/**
+ * An alternative color model for changing the colors of sprites, including brightening.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Colorful : ThirdPartyExtension() {
+    override val id = "colorful"
+    override val defaultVersion = "0.2.0"
+    override val url = "https://github.com/tommyettinger/colorful-gdx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:colorful")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:colorful:sources")
+        addGwtInherit(project, "com.github.tommyettinger.colorful.colorful")
     }
 }
