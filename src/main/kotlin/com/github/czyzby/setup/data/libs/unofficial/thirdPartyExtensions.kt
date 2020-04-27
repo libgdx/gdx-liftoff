@@ -338,3 +338,22 @@ class Colorful : ThirdPartyExtension() {
         addGwtInherit(project, "com.github.tommyettinger.colorful.colorful")
     }
 }
+
+/**
+ * The libGDX runtime for Spine, a commercial (and very powerful) skeletal-animation editor.
+ * You must have a license for Spine to use the runtime in your code.
+ * @author Esoteric Software
+ */
+@Extension
+class SpineRuntime : ThirdPartyExtension() {
+    override val id = "spineRuntime"
+    override val defaultVersion = "3.5.51.1"
+    override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/3.8/spine-libgdx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.esotericsoftware.spine:spine-libgdx")
+
+        addDependency(project, GWT.ID, "com.esotericsoftware.spine:spine-libgdx:sources")
+        addGwtInherit(project, "com.esotericsoftware.spine")
+    }
+}
