@@ -129,8 +129,17 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 	}
 
 	override fun getContent(): String = """
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'org.gretty:gretty:3.0.2'
+	}
+}
 apply plugin: "gwt"
 apply plugin: "war"
+apply plugin: "org.gretty"
 
 gwt {
 	gwtVersion = "${'$'}gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
@@ -148,8 +157,10 @@ gwt {
 
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
 
-def HttpFileServer server = null
-def httpFilePort = 8080
+gretty.httpPort = 8080
+gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
+gretty.contextPath = "/"
+
 task startHttpServer () {
 	dependsOn draftCompileGwt
 	String output = project.buildDir.path + "/gwt/draftOut"
@@ -162,10 +173,10 @@ task startHttpServer () {
 			from "war"
 			into output
 		}
-		server = new SimpleHttpFileServerFactory().start(new File(output), httpFilePort)
-		println "Server started in directory " + server.getContentRoot() + ", http://localhost:" + server.getPort() + "/index.html"
 	}
 }
+
+startHttpServer.finalizedBy 'jettyStart'
 
 dependencies {
 ${joinDependencies(dependencies)}
