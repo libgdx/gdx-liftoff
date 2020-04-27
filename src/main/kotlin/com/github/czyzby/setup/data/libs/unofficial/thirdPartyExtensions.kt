@@ -340,6 +340,24 @@ class Colorful : ThirdPartyExtension() {
 }
 
 /**
+ * Bonus features for 9-patch images, filling significant gaps in normal 9-patch functionality.
+ * @author Raymond Buckley
+ */
+@Extension
+class TenPatch : ThirdPartyExtension() {
+    override val id = "tenPatch"
+    override val defaultVersion = "5.0.0"
+    override val url = "https://github.com/raeleus/TenPatch"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.raeleus.TenPatch:tenpatch")
+
+        addDependency(project, GWT.ID, "com.github.raeleus.TenPatch:tenpatch:sources")
+        addGwtInherit(project, "com.ray3k.tenpatch.tenpatch")
+    }
+}
+
+/**
  * The libGDX runtime for Spine, a commercial (and very powerful) skeletal-animation editor.
  * You must have a license for Spine to use the runtime in your code.
  * @author Esoteric Software
