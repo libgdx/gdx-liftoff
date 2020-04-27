@@ -188,6 +188,7 @@ task superDev(type: GwtSuperDev) {
 				gwt.modules = gwt.devModules
 		}
 }
+superDev.finalizedBy 'jettyStop'
 
 task dist(dependsOn: [clean, compileGwt]) {
     doLast {
