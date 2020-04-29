@@ -1,6 +1,8 @@
 package com.github.czyzby.lml.vis.parser.impl.tag;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.actor.ScrollPaneLmlTag;
 import com.github.czyzby.lml.parser.tag.LmlActorBuilder;
@@ -17,7 +19,15 @@ public class VisScrollPaneLmlTag extends ScrollPaneLmlTag {
     }
 
     @Override
-    protected Actor getNewInstanceOfActor(final LmlActorBuilder builder) {
-        return new VisScrollPane(null, builder.getStyleName());
+    protected Actor getNewInstanceOfActor(final LmlActorBuilder builder) {         
+        VisScrollPane scrollPane = new VisScrollPane(null, builder.getStyleName());
+        scrollPane.addListener(new InputListener(){
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                scrollPane.getStage().setScrollFocus(event.getListenerActor());
+            }
+        });
+        return scrollPane;
+
     }
 }

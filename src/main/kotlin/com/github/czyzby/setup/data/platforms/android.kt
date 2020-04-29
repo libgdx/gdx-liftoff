@@ -11,37 +11,37 @@ import com.github.czyzby.setup.views.GdxPlatform
  */
 @GdxPlatform
 class Android : Platform {
-    companion object {
-        const val ID = "android"
-    }
+	companion object {
+		const val ID = "android"
+	}
 
-    override val id = ID
-    override val isStandard = false // user should only jump through android hoops on request
-    override fun initiate(project: Project) {
-        project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
-        project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
+	override val id = ID
+	override val isStandard = false // user should only jump through android hoops on request
+	override fun initiate(project: Project) {
+		project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
+		project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
 
-        addGradleTaskDescription(project, "lint", "performs Android project validation.")
+		addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
-        addCopiedFile(project, "ic_launcher-web.png")
-        addCopiedFile(project, "proguard-project.txt")
-        addCopiedFile(project, "project.properties")
-        addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "values", "styles.xml")
+		addCopiedFile(project, "ic_launcher-web.png")
+		addCopiedFile(project, "proguard-project.txt")
+		addCopiedFile(project, "project.properties")
+		addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "values", "styles.xml")
 
-        project.files.add(SourceFile(projectName = "", sourceFolderPath = "", packageName = "", fileName = "local.properties",
-                content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"))
-        project.files.add(SourceFile(projectName = ID, sourceFolderPath = "res", packageName = "values", fileName = "strings.xml",
-                content = """<?xml version="1.0" encoding="utf-8"?>
+		project.files.add(SourceFile(projectName = "", sourceFolderPath = "", packageName = "", fileName = "local.properties",
+				content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"))
+		project.files.add(SourceFile(projectName = ID, sourceFolderPath = "res", packageName = "values", fileName = "strings.xml",
+				content = """<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">${project.basic.name}</string>
 </resources>
 """))
-        project.files.add(SourceFile(projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
-                content = """<?xml version="1.0" encoding="utf-8"?>
+		project.files.add(SourceFile(projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
+				content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="${project.basic.rootPackage}">
     <application
@@ -65,9 +65,9 @@ class Android : Platform {
 ${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permission android:name=\"${it}\" />" }}
 </manifest>
 """))
-    }
+	}
 
-    override fun createGradleFile(project: Project): GradleFile = AndroidGradleFile(project)
+	override fun createGradleFile(project: Project): GradleFile = AndroidGradleFile(project)
 }
 
 /**
@@ -75,31 +75,32 @@ ${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permiss
  * @author MJ
  */
 class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
-    val plugins = mutableListOf<String>()
-    val nativeDependencies = mutableSetOf<String>()
-    var latePlugin = false
-    init {
-        dependencies.add("project(':${Core.ID}')")
-        addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
-        plugins.add("com.android.application")
-    }
-    
-    fun insertLatePlugin() { latePlugin = true }
-    /**
-     * @param dependency will be added as "natives" dependency, quoted.
-     */
-    fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
+	val plugins = mutableListOf<String>()
+	val nativeDependencies = mutableSetOf<String>()
+	var latePlugin = false
+	init {
+		dependencies.add("project(':${Core.ID}')")
+		addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
+		plugins.add("com.android.application")
+	}
 
-    override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+	fun insertLatePlugin() { latePlugin = true }
+	/**
+	 * @param dependency will be added as "natives" dependency, quoted.
+	 */
+	fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
+
+	override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if(latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
 	compileSdkVersion ${project.advanced.androidSdkVersion}
+	buildToolsVersion '${project.advanced.androidToolsVersion}'
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'

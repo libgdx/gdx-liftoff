@@ -1,6 +1,8 @@
 package com.github.czyzby.lml.parser.impl.tag.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.AbstractActorLmlTag;
@@ -18,7 +20,14 @@ public class ScrollPaneLmlTag extends AbstractActorLmlTag {
 
     @Override
     protected Actor getNewInstanceOfActor(final LmlActorBuilder builder) {
-        return new ScrollPane(null, getSkin(builder), builder.getStyleName());
+        ScrollPane scrollPane = new ScrollPane(null, getSkin(builder), builder.getStyleName());
+        scrollPane.addListener(new InputListener(){
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                scrollPane.getStage().setScrollFocus(event.getListenerActor());
+            }
+        });
+        return scrollPane;
     }
 
     @Override
@@ -29,10 +38,10 @@ public class ScrollPaneLmlTag extends AbstractActorLmlTag {
     /** @param child will be set as the managed child. */
     protected void setChild(final Actor child) {
         final ScrollPane scrollPane = getScrollPane();
-        if (scrollPane.getWidget() != null) {
+        if (scrollPane.getActor() != null) {
             getParser().throwErrorIfStrict("Scroll pane can have only one child. Received another child: " + child);
         }
-        scrollPane.setWidget(child);
+        scrollPane.setActor(child);
     }
 
     /** @return casted actor. */
