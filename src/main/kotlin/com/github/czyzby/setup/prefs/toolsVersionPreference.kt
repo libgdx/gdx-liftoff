@@ -8,5 +8,5 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.Property
  */
 @Property("ToolsVersion")
 class ToolsVersionPreference : AbstractStringPreference() {
-    override fun getDefault(): String = "25.0.2"
+    override fun getDefault(): String = "28.0.3"
 }
