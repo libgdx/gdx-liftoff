@@ -155,41 +155,47 @@ gwt {
 	compiler.disableCastChecking = true
 }
 
+dependencies {
+${joinDependencies(dependencies)}
+}
+
+import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
 
 gretty.httpPort = 8080
 gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
 gretty.contextPath = "/"
+gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 
-task startHttpServer () {
-	dependsOn draftCompileGwt
-	String output = project.buildDir.path + "/gwt/draftOut"
-	doLast {
+task startHttpServer (dependsOn: [draftCompileGwt]) {
+	doFirst {
 		copy {
 			from "webapp"
-			into output
+			into gretty.resourceBase
 		}
 		copy {
 			from "war"
-			into output
+			into gretty.resourceBase
 		}
 	}
 }
-
-startHttpServer.finalizedBy 'jettyStart'
-
-dependencies {
-${joinDependencies(dependencies)}
+task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
+    // The next line allows ports to be reused instead of
+    // needing a process to be manually terminated.
+	file("build/TEMP_PORTS.properties").delete()
+	// Somewhat of a hack; uses Gretty's support for wrapping a task in
+	// a start and then stop of a Jetty server that serves files while
+	// also running the SuperDev code server.
+	integrationTestTask 'superDev'
+	
+	interactive false
 }
 
 task superDev(type: GwtSuperDev) {
-		dependsOn startHttpServer
-		doFirst {
-				gwt.modules = gwt.devModules
-		}
+	doFirst {
+		gwt.modules = gwt.devModules
+	}
 }
-superDev.finalizedBy 'jettyStop'
-
 task dist(dependsOn: [clean, compileGwt]) {
     doLast {
 		file("build/dist").mkdirs()
@@ -207,18 +213,17 @@ task dist(dependsOn: [clean, compileGwt]) {
 		}
 	}
 }
+
 task addSource {
 	doLast {
-${buildDependencies.joinToString(separator = "") {
-		"		sourceSets.main.compileClasspath += files($it.sourceSets.main.allJava.srcDirs)\n"
-		}}
+		sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
 	}
 }
 
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 
-sourceCompatibility = ${project.advanced.javaVersion}
+sourceCompatibility = 8.0
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
