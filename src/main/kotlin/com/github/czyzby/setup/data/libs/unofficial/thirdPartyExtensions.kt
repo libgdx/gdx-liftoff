@@ -310,7 +310,7 @@ class ShapeDrawer : ThirdPartyExtension() {
 @Extension
 class Formic : ThirdPartyExtension() {
     override val id = "formic"
-    override val defaultVersion = "0.1.2"
+    override val defaultVersion = "0.1.3"
     override val url = "https://github.com/tommyettinger/formic"
 
     override fun initiateDependencies(project: Project) {
@@ -375,3 +375,92 @@ class SpineRuntime : ThirdPartyExtension() {
         addGwtInherit(project, "com.esotericsoftware.spine")
     }
 }
+
+
+/**
+ * MrStahlfelge's fantastic upgrades to controller support for desktop, Android, and GWT.
+ * If something doesn't work in the official controller extension, it's probably been fixed here.
+ * @author MrStahlfelge
+ */
+@Extension
+class ControllerUtils : ThirdPartyExtension() {
+    override val id = "controllerUtils"
+    override val defaultVersion = "1.0.0"
+    override val url = "https://github.com/MrStahlfelge/gdx-controllerutils"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced")
+        addDependency(project, Desktop.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
+        addDependency(project, LWJGL3.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
+        addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
+        addDependency(project, iOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
+
+        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt")
+        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:sources")
+        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:sources")
+        addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
+    }
+}
+
+
+/**
+ * MrStahlfelge's controller-imitating Scene2D widgets, for players who don't have a controller.
+ * <a href="https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d">See the docs before using</a>.
+ * @author MrStahlfelge
+ */
+@Extension
+class ControllerScene2D : ThirdPartyExtension() {
+    override val id = "controllerScene2D"
+    override val defaultVersion = "1.0.0"
+    override val url = "https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d")
+
+        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d:sources")
+        addGwtInherit(project, "de.golfgl.gdx.controllers.controller_scene2d")
+    }
+}
+
+/**
+ * Code for making post-processing effects without so much hassle.
+ * @author crashinvaders
+ * @author metaphore
+ */
+@Extension
+class GdxVfxCore : ThirdPartyExtension() {
+    override val id = "gdxVfxCore"
+    override val defaultVersion = "0.4.3"
+    override val url = "https://github.com/crashinvaders/gdx-vfx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.crashinvaders.vfx:gdx-vfx-core")
+
+        addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-core:sources")
+        addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt")
+        addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt:sources")
+        addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxCore")
+        addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxGwt")
+    }
+}
+
+/**
+ * A wide range of predefined post-processing effects using gdx-vfx core.
+ * @author crashinvaders
+ * @author metaphore
+ */
+@Extension
+class GdxVfxStandardEffects : ThirdPartyExtension() {
+    override val id = "gdxVfxEffects"
+    override val defaultVersion = "0.4.3"
+    override val url = "https://github.com/crashinvaders/gdx-vfx"
+
+    override fun initiateDependencies(project: Project) {
+        GdxVfxCore().initiate(project)
+        addDependency(project, Core.ID, "com.crashinvaders.vfx:gdx-vfx-effects")
+
+        addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-effects:sources")
+        addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxEffects")
+    }
+}
+
