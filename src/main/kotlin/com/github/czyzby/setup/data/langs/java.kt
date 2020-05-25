@@ -10,7 +10,7 @@ import com.github.czyzby.setup.data.project.Project
  */
 class Java : Language {
     override val id = "java-library"
-    override val version = "1.7"
+    override val version = "1.8"
 
     override fun initiate(project: Project) {
         project.rootGradle.plugins.add(id)

@@ -15,7 +15,7 @@ data class LibGdxVersion(
         fun parseLibGdxVersion(version: String): LibGdxVersion? {
             val trimmed = version.trim().removeSuffix("-SNAPSHOT")
             val parts = trimmed.split('.')
-            return if (parts.size != 3 || parts.any { it.toIntOrNull() == null }) {
+            return if (parts.size < 3 || parts.any { it.toIntOrNull() == null }) {
                 null
             } else {
                 LibGdxVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt())
