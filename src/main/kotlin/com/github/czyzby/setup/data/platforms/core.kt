@@ -39,7 +39,7 @@ class CoreGradleFile : GradleFile(Core.ID) {
 eclipse.project.name = appName + '-core'
 
 dependencies {
-${joinDependencies(dependencies)}}
+${joinDependencies(dependencies, "api")}}
 """
     }
 }
