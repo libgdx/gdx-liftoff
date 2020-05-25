@@ -22,8 +22,8 @@ class Kotlin : Language {
         project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "kotlin"))) }
         if (project.hasPlatform(Android.ID)) {
             val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
-//            gradleFile.plugins.add("kotlin-android")
             gradleFile.insertLatePlugin()
+            gradleFile.srcFolders.add("'src/main/kotlin'")
         }
         addDependency(project, "org.jetbrains.kotlin:kotlin-stdlib:\$kotlinVersion")
     }

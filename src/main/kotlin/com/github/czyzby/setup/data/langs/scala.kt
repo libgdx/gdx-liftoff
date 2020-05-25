@@ -12,7 +12,7 @@ import com.github.czyzby.setup.views.JvmLanguage
 @JvmLanguage
 class Scala : Language {
     override val id = "scala"
-    override val version = "2.12.+"
+    override val version = "2.13.+"
 
     override fun initiate(project: Project) {
         project.rootGradle.plugins.add(id)
