@@ -76,6 +76,7 @@ ${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permiss
  */
 class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
 	val plugins = mutableListOf<String>()
+	val srcFolders = mutableListOf("'src/main/java'")
 	val nativeDependencies = mutableSetOf<String>()
 	var latePlugin = false
 	init {
@@ -104,9 +105,9 @@ android {
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
-			java.srcDirs = ['src/main/java']
-			aidl.srcDirs = ['src/main/java']
-			renderscript.srcDirs = ['src/main/java']
+			java.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
+			aidl.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
+			renderscript.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
 			res.srcDirs = ['res']
 			assets.srcDirs = ['../assets']
 			jniLibs.srcDirs = ['libs']
