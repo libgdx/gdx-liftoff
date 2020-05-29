@@ -340,6 +340,24 @@ class Colorful : ThirdPartyExtension() {
 }
 
 /**
+ * Support for writing animated GIF and animated PNG images from libGDX, as well as 8-bit-palette PNGs.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Anim8 : ThirdPartyExtension() {
+    override val id = "anim8"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/tommyettinger/anim8-gdx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:anim8-gdx")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:anim8-gdx:sources")
+        addGwtInherit(project, "com.github.tommyettinger.anim8")
+    }
+}
+
+/**
  * Bonus features for 9-patch images, filling significant gaps in normal 9-patch functionality.
  * @author Raymond Buckley
  */
