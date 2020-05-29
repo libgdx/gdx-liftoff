@@ -48,7 +48,7 @@ dependencies {
 ${joinDependencies(dependencies)}}
 
 jar {
-	archiveFileName = "${'$'}{appName}-${'$'}{version}.jar"
+	archiveFileName = "${'$'}{appName}-${'$'}{archiveVersion}.jar"
 	from files(sourceSets.main.output.classesDirs)
 	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } } 
 	manifest {
