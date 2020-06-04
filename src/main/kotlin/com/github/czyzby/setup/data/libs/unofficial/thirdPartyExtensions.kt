@@ -310,14 +310,14 @@ class ShapeDrawer : ThirdPartyExtension() {
 @Extension
 class Formic : ThirdPartyExtension() {
     override val id = "formic"
-    override val defaultVersion = "0.1.3"
+    override val defaultVersion = "0.1.4"
     override val url = "https://github.com/tommyettinger/formic"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.tommyettinger:formic")
 
         addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
-        addGwtInherit(project, "text.formic")
+        addGwtInherit(project, "formic")
     }
 }
 
