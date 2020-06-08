@@ -217,6 +217,7 @@ task dist(dependsOn: [clean, compileGwt]) {
 task addSource {
 	doLast {
 		sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
+		${if(project.hasPlatform(Shared.ID)) "sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
 	}
 }
 
