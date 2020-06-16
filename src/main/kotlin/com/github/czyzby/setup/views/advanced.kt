@@ -19,7 +19,6 @@ class AdvancedData {
     @LmlActor("toolsVersion") private lateinit var toolsVersionField: VisTextField
     @LmlActor("androidPluginVersion") private lateinit var androidPluginVersionField: VisTextField
     @LmlActor("robovmVersion") private lateinit var robovmVersionField: VisTextField
-    @LmlActor("moeVersion") private lateinit var moeVersionField: VisTextField
 //    @LmlActor("gwtVersion") private lateinit var gwtVersionField: VisSelectBox<String>
     @LmlActor("gwtPlugin") private lateinit var gwtPluginVersionField: VisTextField
     @LmlActor("serverJavaVersion") private lateinit var serverJavaVersionField: Spinner
@@ -58,9 +57,6 @@ class AdvancedData {
 
     val robovmVersion: String
         get() = robovmVersionField.text
-
-    val moeVersion: String
-        get() = moeVersionField.text
 
     val gwtVersion: String
         get() = if(gdxVersion.length == 5 && gdxVersion[4] != '9') {

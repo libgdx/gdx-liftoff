@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-const val SQUID_LIB_VERSION = "88360e8df6"
+const val SQUID_LIB_VERSION = "22885101ae"
 
 /**
  * URL of SquidLib libraries.
@@ -23,23 +23,6 @@ const val SQUID_LIB_URL = "https://github.com/SquidPony/SquidLib"
 const val REPO_PATH = "com.github.SquidPony.SquidLib"
 //const val REPO_PATH = "com.squidpony"
 
-/**
- * Cross-platform regex utilities.
- * @author Tommy Ettinger
- */
-@Extension()
-class RegExodus : ThirdPartyExtension() {
-    override val id = "regExodus"
-    override val defaultVersion = "0.1.10"
-    override val url = "https://github.com/tommyettinger/RegExodus"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "com.github.tommyettinger:regexodus")
-
-        addDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:sources")
-        addGwtInherit(project, "regexodus")
-    }
-}
 /**
  * Utilities for grid-based games.
  * @author Eben Howard
@@ -79,6 +62,8 @@ class SquidLib : ThirdPartyExtension() {
         addGwtInherit(project, "squidlib")
 
         SquidLibUtil().initiate(project)
+        Anim8().initiate(project)
+        
         defaultVersion = SQUID_LIB_VERSION
     }
 }

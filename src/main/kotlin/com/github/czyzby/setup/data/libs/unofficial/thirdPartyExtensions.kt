@@ -110,7 +110,6 @@ class Facebook : ThirdPartyExtension() {
         addDesktopDependency(project, "de.tomgrill.gdxfacebook:gdx-facebook-desktop")
 
         addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
-        addDependency(project, MOE.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios-moe")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html")
@@ -137,7 +136,6 @@ class Dialogs : ThirdPartyExtension() {
         addDesktopDependency(project, "de.tomgrill.gdxdialogs:gdx-dialogs-desktop")
 
         addDependency(project, iOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
-        addDependency(project, MOE.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios-moe")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-dialogs-core:sources")
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-dialogs-html")
@@ -346,14 +344,14 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.1.1"
+    override val defaultVersion = "0.1.3"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.tommyettinger:anim8-gdx")
 
         addDependency(project, GWT.ID, "com.github.tommyettinger:anim8-gdx:sources")
-        addGwtInherit(project, "com.github.tommyettinger.anim8")
+        addGwtInherit(project, "anim8")
     }
 }
 
@@ -481,4 +479,23 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
         addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxEffects")
     }
 }
+
+/**
+ * Cross-platform regex utilities.
+ * @author Tommy Ettinger
+ */
+@Extension()
+class RegExodus : ThirdPartyExtension() {
+    override val id = "regExodus"
+    override val defaultVersion = "0.1.10"
+    override val url = "https://github.com/tommyettinger/RegExodus"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:regexodus")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:sources")
+        addGwtInherit(project, "regexodus")
+    }
+}
+
 
