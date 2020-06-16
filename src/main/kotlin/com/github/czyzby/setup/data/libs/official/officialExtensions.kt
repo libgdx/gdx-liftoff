@@ -24,7 +24,7 @@ class AI : OfficialExtension() {
     override val url = "https://github.com/libgdx/gdx-ai"
 
     override fun initiate(project: Project) {
-        project.properties["aiVersion"] = "1.8.1"
+        project.properties["aiVersion"] = "1.8.2"
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion")
 
@@ -77,7 +77,6 @@ class Box2D : OfficialExtension() {
         addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
-        addNativeMoeDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
     }
 }
 
@@ -122,8 +121,7 @@ class Bullet : OfficialExtension() {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
-        addNativeMoeDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
-
+        
         // Other platforms are not officially supported (GWT).
     }
 }
@@ -178,7 +176,6 @@ class Freetype : OfficialExtension() {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
-        addNativeMoeDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
 
         // Other platforms are not officially supported (GWT).
     }
@@ -195,6 +192,7 @@ class Tools : OfficialExtension() {
     override fun initiate(project: Project) {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
 
-        addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
+        //// Headless is unlikely to work because gdx-tools relies on graphics classes.
+        // addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
     }
 }

@@ -137,7 +137,6 @@ class Websocket : ThirdPartyExtension() {
         addDesktopDependency(project, "com.github.czyzby:gdx-websocket-common")
         addDependency(project, Headless.ID, "com.github.czyzby:gdx-websocket-common")
         addDependency(project, iOS.ID, "com.github.czyzby:gdx-websocket-common")
-        addDependency(project, MOE.ID, "com.github.czyzby:gdx-websocket-common")
 
         addDependency(project, Android.ID, "com.github.czyzby:gdx-websocket-common")
         addAndroidPermission(project, "android.permission.INTERNET")

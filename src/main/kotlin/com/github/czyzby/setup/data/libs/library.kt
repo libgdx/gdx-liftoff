@@ -35,13 +35,6 @@ interface Library {
         }
     }
 
-    fun addNativeMoeDependency(project: Project, dependency: String) {
-        if (project.hasPlatform(MOE.ID)) {
-            val gradle = project.getGradleFile(MOE.ID) as MOEGradleFile
-            gradle.addNativeDependency(dependency)
-        }
-    }
-
     fun addGwtInherit(project: Project, inherit: String) {
         if (project.hasPlatform(GWT.ID)) {
             project.gwtInherits.add(inherit)

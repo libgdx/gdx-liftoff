@@ -34,7 +34,6 @@ interface Template {
 		addIOSLauncher(project)
 		addJglfwLauncher(project)
 		addLwjgl3Launcher(project)
-		addMOELauncher(project)
 		addServerLauncher(project)
 		project.readmeDescription = description
 	}
@@ -286,38 +285,6 @@ public class JglfwLauncher {
 		configuration.width = ${width};
 		configuration.height = ${height};
 		return configuration;
-	}
-}"""
-
-	fun addMOELauncher(project: Project) {
-		addSourceFile(project = project, platform = MOE.ID, packageName = project.basic.rootPackage,
-				fileName = "IOSMoeLauncher.java", content = getMOELauncherContent(project))
-	}
-
-	fun getMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage};
-
-import com.badlogic.gdx.backends.iosmoe.IOSApplication;
-import com.badlogic.gdx.backends.iosmoe.IOSApplicationConfiguration;
-import org.moe.natj.general.Pointer;
-import ${project.basic.rootPackage}.${project.basic.mainClass};
-
-import apple.uikit.c.UIKit;
-
-public class IOSMoeLauncher extends IOSApplication.Delegate {
-
-	protected IOSMoeLauncher(Pointer peer) {
-		super(peer);
-	}
-
-	@Override
-	protected IOSApplication createApplication() {
-		IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-		config.useAccelerometer = false;
-		return new IOSApplication(new ${project.basic.mainClass}(), config);
-	}
-
-	public static void main(String[] argv) {
-		UIKit.UIApplicationMain(0, null, null, IOSMoeLauncher.class.getName());
 	}
 }"""
 

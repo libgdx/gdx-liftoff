@@ -130,7 +130,7 @@ android {
 	}
 	defaultConfig {
 		applicationId '${project.basic.rootPackage}'
-		minSdkVersion 14
+		minSdkVersion 19
 		targetSdkVersion ${project.advanced.androidSdkVersion}
 		versionCode 1
 		versionName "1.0"
