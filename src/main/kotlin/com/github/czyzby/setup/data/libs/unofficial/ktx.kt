@@ -7,29 +7,6 @@ import com.github.czyzby.setup.data.platforms.Core
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
 
-/*
-ktx-vis-style
-‎ktx-vis
-‎ktx-tiled
-‎ktx-style
-‎ktx-scene2d
-‎ktx-preferences
-‎ktx-math
-‎ktx-log
-‎ktx-json
-‎ktx-inject
-‎ktx-i18n
-‎ktx-graphics
-‎ktx-freetype-async
-‎ktx-freetype
-‎ktx-collections
-‎ktx-box2d
-‎ktx-async
-‎ktx-assets-async
-‎ktx-assets
-‎ktx-ashley
-‎
- */
 /**
  * Current version of KTX libraries.
  * @author MJ

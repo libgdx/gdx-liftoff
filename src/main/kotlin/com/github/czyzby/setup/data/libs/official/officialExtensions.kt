@@ -141,8 +141,6 @@ class Controllers : OfficialExtension() {
 
         addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-controllers-desktop:\$gdxVersion")
         addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-controllers-platform:\$gdxVersion:natives-desktop")
-        addDependency(project, JGLFW.ID, "com.badlogicgames.gdx:gdx-controllers-desktop:\$gdxVersion")
-        addDependency(project, JGLFW.ID, "com.badlogicgames.gdx:gdx-controllers-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx:gdx-controllers-lwjgl3:\$gdxVersion")
         // addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx:gdx-controllers-platform:\$gdxVersion:natives-desktop")

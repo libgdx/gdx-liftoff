@@ -105,34 +105,6 @@ public class DesktopLauncher {
 	}
 }"""
 
-	override fun getJglfwLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.jglfw;
-
-import com.badlogic.gdx.backends.jglfw.JglfwApplication;
-import com.badlogic.gdx.backends.jglfw.JglfwApplicationConfiguration;
-import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner;
-import com.github.czyzby.autumn.mvc.application.AutumnApplication;
-import ${project.basic.rootPackage}.${project.basic.mainClass};
-
-/** Launches the desktop (JGLFW) application. */
-public class JglfwLauncher {
-	public static void main(final String[] args) {
-		createApplication();
-	}
-
-	private static JglfwApplication createApplication() {
-		return new JglfwApplication(new AutumnApplication(new DesktopClassScanner(), ${project.basic.mainClass}.class),
-				getDefaultConfiguration());
-	}
-
-	private static JglfwApplicationConfiguration getDefaultConfiguration() {
-		final JglfwApplicationConfiguration configuration = new JglfwApplicationConfiguration();
-		configuration.title = "${project.basic.name}";
-		configuration.width = ${width};
-		configuration.height = ${height};
-		return configuration;
-	}
-}"""
-
 
 	override fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
 
