@@ -25,7 +25,8 @@ interface Library {
     }
 
     fun addDesktopDependency(project: Project, dependency: String) {
-        arrayOf(Desktop.ID, JGLFW.ID, LWJGL3.ID).forEach { addDependency(project, it, dependency) }
+        addDependency(project, Desktop.ID, dependency)
+        addDependency(project, LWJGL3.ID, dependency)
     }
 
     fun addNativeAndroidDependency(project: Project, dependency: String) {
