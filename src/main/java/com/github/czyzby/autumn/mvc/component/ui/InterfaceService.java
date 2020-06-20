@@ -1,7 +1,5 @@
 package com.github.czyzby.autumn.mvc.component.ui;
 
-import java.util.Locale;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,7 +13,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Initiate;
@@ -23,21 +21,8 @@ import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.asset.AssetService;
 import com.github.czyzby.autumn.mvc.component.i18n.LocaleService;
 import com.github.czyzby.autumn.mvc.component.sfx.MusicService;
-import com.github.czyzby.autumn.mvc.component.ui.action.ActionProvider;
-import com.github.czyzby.autumn.mvc.component.ui.action.ApplicationExitAction;
-import com.github.czyzby.autumn.mvc.component.ui.action.ApplicationPauseAction;
-import com.github.czyzby.autumn.mvc.component.ui.action.ApplicationResumeAction;
-import com.github.czyzby.autumn.mvc.component.ui.action.CommonActionRunnables;
-import com.github.czyzby.autumn.mvc.component.ui.action.DialogShowingAction;
-import com.github.czyzby.autumn.mvc.component.ui.action.MusicFadingAction;
-import com.github.czyzby.autumn.mvc.component.ui.action.ScreenTransitionAction;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewController;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogController;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewInitializer;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewPauser;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
-import com.github.czyzby.autumn.mvc.component.ui.controller.ViewShower;
+import com.github.czyzby.autumn.mvc.component.ui.action.*;
+import com.github.czyzby.autumn.mvc.component.ui.controller.*;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.AnnotatedViewDialogController;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewResizer;
@@ -56,6 +41,9 @@ import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 import com.github.czyzby.lml.parser.action.ActorConsumer;
 import com.github.czyzby.lml.util.Lml;
+import com.github.czyzby.setup.config.Configuration;
+
+import java.util.Locale;
 
 /** Manages view controllers and a LML parser.
  *
@@ -617,7 +605,7 @@ public class InterfaceService {
         return new ObjectProvider<Viewport>() {
             @Override
             public Viewport provide() {
-                return new ScreenViewport();
+                return new StretchViewport(Configuration.WIDTH, Configuration.HEIGHT);
             }
         };
     }
