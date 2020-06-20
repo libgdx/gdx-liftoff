@@ -61,7 +61,7 @@ class ArtemisOdb : ThirdPartyExtension() {
 class LibgdxUtils : ThirdPartyExtension() {
     override val id = "utils"
     override val defaultVersion = "0.13.6"
-    override val url = "http://dermetfan.net/libgdx-utils.php"
+    override val url = "https://github.com/tommyettinger/gdx-utils"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-utils")
@@ -80,7 +80,7 @@ class LibgdxUtils : ThirdPartyExtension() {
 class LibgdxUtilsBox2D : ThirdPartyExtension() {
     override val id = "utilsBox2d"
     override val defaultVersion = "0.13.6"
-    override val url = "http://dermetfan.net/libgdx-utils.php"
+    override val url = "https://github.com/tommyettinger/gdx-utils"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-utils-box2d")
@@ -498,4 +498,22 @@ class RegExodus : ThirdPartyExtension() {
     }
 }
 
+
+/**
+ * UI toolkit with extra widgets and a different theme style.
+ * @author Kotcrab
+ */
+@Extension
+class VisUI : ThirdPartyExtension() {
+    override val id = "visUi"
+    override val defaultVersion = "1.4.4"
+    override val url = "https://github.com/kotcrab/vis-ui"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.kotcrab.vis:vis-ui")
+
+        addDependency(project, GWT.ID, "com.kotcrab.vis:vis-ui:sources")
+        addGwtInherit(project, "com.kotcrab.vis.vis-ui")
+    }
+}
 
