@@ -23,7 +23,7 @@
         <floatSpinner id="serverJavaVersion" min="7" max="14" value="8" step="1" precision="1" row="true"
                       tooltip="@serverJavaVersionTip"/>
         @androidPluginVersion
-        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">3.6.2</textField>
+        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">4.0.0</textField>
         @desktopJavaVersion
         <floatSpinner id="desktopJavaVersion" min="7" max="14" value="8" step="1" precision="1" row="true"
                       tooltip="@desktopJavaVersionTip"/>
@@ -34,7 +34,7 @@
         <textField id="toolsVersion" tooltip="@toolsVersionTip" value="$getToolsVersion"
                    onChange="setToolsVersion" row="true" />
         @robovmVersion
-        <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.7</textField>
+        <textField id="robovmVersion" tooltip="@robovmVersionTip">2.3.9</textField>
         @gwtPlugin
         <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.0.13</textField>
     </table>
