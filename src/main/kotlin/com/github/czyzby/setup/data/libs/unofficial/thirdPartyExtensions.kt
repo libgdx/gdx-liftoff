@@ -326,7 +326,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.2.0"
+    override val defaultVersion = "0.2.1"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.1.4"
+    override val defaultVersion = "0.1.6"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
