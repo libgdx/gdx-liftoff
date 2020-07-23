@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-const val SQUID_LIB_VERSION = "76aa10749b"
+const val SQUID_LIB_VERSION = "3.0.0"
 
 /**
  * URL of SquidLib libraries.
@@ -20,8 +20,8 @@ const val SQUID_LIB_VERSION = "76aa10749b"
  */
 const val SQUID_LIB_URL = "https://github.com/SquidPony/SquidLib"
 
-const val REPO_PATH = "com.github.SquidPony.SquidLib"
-//const val REPO_PATH = "com.squidpony"
+//const val REPO_PATH = "com.github.SquidPony.SquidLib"
+const val REPO_PATH = "com.squidpony"
 
 /**
  * Utilities for grid-based games.

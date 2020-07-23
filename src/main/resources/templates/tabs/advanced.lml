@@ -13,7 +13,7 @@
         <:column column="1" growX="true" minWidth="50"/>
         <:column column="3" growX="true" minWidth="50"/>
         @gdxVersion
-        <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.10</textField>
+        <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.11</textField>
         @version
         <textField id="version" tooltip="@versionTip" row="true">0.0.1-SNAPSHOT</textField>
         @javaVersion
