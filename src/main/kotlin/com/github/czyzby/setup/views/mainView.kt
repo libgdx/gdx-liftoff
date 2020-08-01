@@ -28,7 +28,6 @@ import com.github.czyzby.setup.config.Configuration
 import com.github.czyzby.setup.data.platforms.Android
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.prefs.SdkVersionPreference
-import com.github.czyzby.setup.prefs.ToolsVersionPreference
 import com.kotcrab.vis.ui.util.ToastManager
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
@@ -100,13 +99,11 @@ class MainView : ActionContainer {
     @LmlAction("useLatestSdk")
     fun extractLatestAndroidApiVersions() {
         advancedData.androidSdkVersion = basicData.getLatestAndroidApiVersion().toString()
-        advancedData.androidToolsVersion = basicData.getLatestBuildToolsVersion()
     }
 
     @LmlAction("useOldestSdk")
     fun extractOldestAndroidApiVersions() {
         advancedData.androidSdkVersion = basicData.getOldestAndroidApiVersion().toString()
-        advancedData.androidToolsVersion = basicData.getOldestBuildToolsVersion()
     }
 
     @LmlAfter fun initiateVersions(parser: LmlParser) {
@@ -225,9 +222,8 @@ class MainView : ActionContainer {
      * fired on programmatic SDK and tools versions changes.
      */
     @Destroy(priority = AutumnActionPriority.TOP_PRIORITY)
-    fun saveAndroidSdkVersions(api: SdkVersionPreference, tools: ToolsVersionPreference) {
-        api.set(advancedData.androidSdkVersion)
-        tools.set(advancedData.androidToolsVersion)
+    fun saveAndroidSdkVersions(api: SdkVersionPreference) {
+        api.set(advancedData.androidSdkVersion) 
     }
 }
 

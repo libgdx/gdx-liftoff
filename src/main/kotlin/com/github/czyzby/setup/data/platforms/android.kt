@@ -101,7 +101,6 @@ ${if(latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
 	compileSdkVersion ${project.advanced.androidSdkVersion}
-	buildToolsVersion '${project.advanced.androidToolsVersion}'
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -160,21 +159,21 @@ task copyAndroidNatives() {
 		file("libs/x86_64/").mkdirs()
 		file("libs/x86/").mkdirs()
 		
-		configurations.natives.files.each { jar ->
-			def outputDir = null
-			if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-			if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-			if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
-			if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-			if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-			if(outputDir != null) {
-				copy {
-					from zipTree(jar)
-					into outputDir
-					include "*.so"
-				}
-			}
-		}
+		configurations.getByName("natives").copy().files.each { jar ->
+    	    def outputDir = null
+    	    if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+    	    if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+    	    if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
+    	    if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+    	    if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+    	    if(outputDir != null) {
+    	        copy {
+    	            from zipTree(jar)
+    	            into outputDir
+    	            include "*.so"
+    	        }
+    	    }
+    	}
 	}
 }
 

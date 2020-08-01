@@ -16,7 +16,6 @@ class AdvancedData {
     @LmlActor("gdxVersion") private lateinit var gdxVersionField: VisTextField
     @LmlActor("javaVersion") private lateinit var javaVersionField: Spinner
     @LmlActor("sdkVersion") private lateinit var sdkVersionField: Spinner
-    @LmlActor("toolsVersion") private lateinit var toolsVersionField: VisTextField
     @LmlActor("androidPluginVersion") private lateinit var androidPluginVersionField: VisTextField
     @LmlActor("robovmVersion") private lateinit var robovmVersionField: VisTextField
 //    @LmlActor("gwtVersion") private lateinit var gwtVersionField: VisSelectBox<String>
@@ -44,12 +43,6 @@ class AdvancedData {
             val model = sdkVersionField.model as IntSpinnerModel
             model.value = value.toInt()
             sdkVersionField.notifyValueChanged(false)
-        }
-
-    var androidToolsVersion: String
-        get() = toolsVersionField.text
-        set(value) {
-            toolsVersionField.text = value
         }
 
     val androidPluginVersion: String

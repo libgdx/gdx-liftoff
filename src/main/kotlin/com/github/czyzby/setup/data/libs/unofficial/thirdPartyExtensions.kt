@@ -220,7 +220,7 @@ class Noise4J : ThirdPartyExtension() {
 @Extension
 class BladeInk : ThirdPartyExtension() {
     override val id = "bladeInk"
-    override val defaultVersion = "0.7.3"
+    override val defaultVersion = "0.7.4"
     override val url = "https://github.com/bladecoder/blade-ink"
 
     override fun initiateDependencies(project: Project) {
