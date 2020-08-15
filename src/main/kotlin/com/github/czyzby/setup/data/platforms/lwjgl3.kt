@@ -41,7 +41,6 @@ class LWJGL3 : Platform {
 class Lwjgl3GradleFile(val project: Project) : GradleFile(LWJGL3.ID) {
 	init {
 		dependencies.add("project(':${Core.ID}')")
-		addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl3:\$gdxVersion")
 		addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
 	}
 
@@ -53,7 +52,41 @@ eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
-${joinDependencies(dependencies)}}
+${joinDependencies(dependencies)}
+	implementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:${'$'}gdxVersion") {
+		exclude group: 'org.lwjgl'
+	}
+	implementation 'org.lwjgl:lwjgl:3.2.3'
+	implementation 'org.lwjgl:lwjgl-glfw:3.2.3'
+	implementation 'org.lwjgl:lwjgl-opengl:3.2.3'
+	implementation 'org.lwjgl:lwjgl-openal:3.2.3'
+	implementation 'org.lwjgl:lwjgl-jemalloc:3.2.3'
+	// If you only want to target some desktop platforms, you can comment out
+	// or delete the 5 'natives' dependencies for that platform.
+	// For instance, if you don't want to target 32-bit Windows, you can
+	// delete the 'natives-windows-x86' dependencies.
+	// This always removes LWJGL3's ARM natives, since libGDX can't use them.
+	implementation 'org.lwjgl:lwjgl:3.2.3:natives-windows'
+	implementation 'org.lwjgl:lwjgl-glfw:3.2.3:natives-windows'
+	implementation 'org.lwjgl:lwjgl-opengl:3.2.3:natives-windows'
+	implementation 'org.lwjgl:lwjgl-openal:3.2.3:natives-windows'
+	implementation 'org.lwjgl:lwjgl-jemalloc:3.2.3:natives-windows'
+	implementation 'org.lwjgl:lwjgl:3.2.3:natives-windows-x86'
+	implementation 'org.lwjgl:lwjgl-glfw:3.2.3:natives-windows-x86'
+	implementation 'org.lwjgl:lwjgl-opengl:3.2.3:natives-windows-x86'
+	implementation 'org.lwjgl:lwjgl-openal:3.2.3:natives-windows-x86'
+	implementation 'org.lwjgl:lwjgl-jemalloc:3.2.3:natives-windows-x86'
+	implementation 'org.lwjgl:lwjgl:3.2.3:natives-linux'
+	implementation 'org.lwjgl:lwjgl-glfw:3.2.3:natives-linux'
+	implementation 'org.lwjgl:lwjgl-opengl:3.2.3:natives-linux'
+	implementation 'org.lwjgl:lwjgl-openal:3.2.3:natives-linux'
+	implementation 'org.lwjgl:lwjgl-jemalloc:3.2.3:natives-linux'
+	implementation 'org.lwjgl:lwjgl:3.2.3:natives-macos'
+	implementation 'org.lwjgl:lwjgl-glfw:3.2.3:natives-macos'
+	implementation 'org.lwjgl:lwjgl-opengl:3.2.3:natives-macos'
+	implementation 'org.lwjgl:lwjgl-openal:3.2.3:natives-macos'
+	implementation 'org.lwjgl:lwjgl-jemalloc:3.2.3:natives-macos'
+}
 
 import org.gradle.internal.os.OperatingSystem
 
