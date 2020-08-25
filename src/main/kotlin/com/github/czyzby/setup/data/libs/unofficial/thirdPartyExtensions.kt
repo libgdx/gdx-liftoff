@@ -446,7 +446,7 @@ class ControllerScene2D : ThirdPartyExtension() {
 @Extension
 class GdxVfxCore : ThirdPartyExtension() {
     override val id = "gdxVfxCore"
-    override val defaultVersion = "0.4.3"
+    override val defaultVersion = "0.5.0"
     override val url = "https://github.com/crashinvaders/gdx-vfx"
 
     override fun initiateDependencies(project: Project) {
@@ -468,7 +468,7 @@ class GdxVfxCore : ThirdPartyExtension() {
 @Extension
 class GdxVfxStandardEffects : ThirdPartyExtension() {
     override val id = "gdxVfxEffects"
-    override val defaultVersion = "0.4.3"
+    override val defaultVersion = "0.5.0"
     override val url = "https://github.com/crashinvaders/gdx-vfx"
 
     override fun initiateDependencies(project: Project) {
