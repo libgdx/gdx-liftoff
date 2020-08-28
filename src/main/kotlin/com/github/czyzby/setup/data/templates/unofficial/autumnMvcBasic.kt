@@ -62,7 +62,7 @@ public class ${project.basic.mainClass} implements ActionContainer {
 	/** Default application size. */
 	public static final int WIDTH = 640, HEIGHT = 480;
 	/** Path to the skin files. */
-	@Skin private final String skinFile = "ui/skin";
+	@Skin private final String skinFile = "ui/uiskin";
 
 	/** Since this method is annotated with LmlAction and this class implements ActionContainer, this method will be
 	 * available in the LML template: first.lml
