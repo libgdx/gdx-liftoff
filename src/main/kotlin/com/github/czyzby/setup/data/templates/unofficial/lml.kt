@@ -66,7 +66,7 @@ public class ${project.basic.mainClass} extends AbstractApplicationListener {
 	@Override
 	public void create() {
 		stage = new Stage(new FitViewport(WIDTH, HEIGHT));
-		skin = new Skin(Gdx.files.internal("ui/skin.json"));
+		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
 		LmlParser parser = Lml.parser(skin)
 			// Adding action for the button listener:

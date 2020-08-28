@@ -135,12 +135,20 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
             // Adding GUI assets directory:
             files.add(SourceDirectory(Assets.ID, "ui"))
 
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "skin.atlas"),
-                    original = path("generator", "assets", "ui", "skin.atlas")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "skin.json"),
-                    original = path("generator", "assets", "ui", "skin.json")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "skin.png"),
-                    original = path("generator", "assets", "ui", "skin.png")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.atlas"),
+                    original = path("generator", "assets", "ui", "uiskin.atlas")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.json"),
+                    original = path("generator", "assets", "ui", "uiskin.json")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.png"),
+                    original = path("generator", "assets", "ui", "uiskin.png")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font.fnt"),
+                    original = path("generator", "assets", "ui", "font.fnt")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-list.fnt"),
+                    original = path("generator", "assets", "ui", "font-list.fnt")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-subtitle.fnt"),
+                    original = path("generator", "assets", "ui", "font-subtitle.fnt")))
+            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-window.fnt"),
+                    original = path("generator", "assets", "ui", "font-window.fnt")))
 
             // Android does not support classpath fonts loading through skins.
             // Explicitly copying Arial font if Android platform is included:
