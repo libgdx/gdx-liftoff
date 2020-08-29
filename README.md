@@ -146,5 +146,15 @@ see [libGDX's documentation](https://libgdx.badlogicgames.com/documentation/gett
     - You can modify the manifest, and probably need to do so if you want to submit an app to the Play store.
     - Android Studio should have better support for recent Gradle versions if you use a beta release. 
 
+## Credits
+
+Huge thanks to [czyzby](https://github.com/czyzby) for writing the original tool this is based on, as well as much of
+the code gdx-liftoff depends on. Thanks also to Raymond Buckley for making the
+[Particle Park skin for scene2d.ui](https://ray3k.wordpress.com/particle-park-ui-skin-for-scene2d-ui/), which was
+adapted to be the skin added to new projects (if you choose the "Generate UI Assets" option in the Advanced tab). More
+thanks to "Accademia di Belle Arti di Urbino and students of MA course of Visual design" for making the Titillium Web
+font that the skin uses (SIL OFL license). And of course, thanks to all the early adopters, for putting up with any
+partially-working releases I churned out.
+
 Good luck, and I hope you make something great!
 
