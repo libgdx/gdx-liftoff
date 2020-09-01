@@ -9,9 +9,8 @@ import java.lang.annotation.Target;
  * selected array as LML attribute "locales" (by default, can be changed with view argument name parameter), making it
  * easier to create locale changing buttons, for example. Additionally, it registers view methods with the selected
  * prefix that allow to change the current locale upon invocation (be careful though - this will reload views if the
- * locale does match the current one). For example, using default settings, annotated { "en-US", "pl" } array will
- * register "locale:en-US" and "locale:pl" locale changing actions and assign "en-US;pl" LML view array argument to
- * ${locales}.
+ * locale does match the current one). For example, using default settings, annotated { "en-US" } array will
+ * register "locale:en-US" locale changing actions and assign "en-US" LML view array argument to ${locales}.
  *
  * @author MJ */
 @Target({ ElementType.FIELD })

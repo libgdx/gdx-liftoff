@@ -1,13 +1,4 @@
 <tab text="@advanced" closeable="false" oneColumn="true" tablePadTop="4">
-    <table defaultPad="2">
-        <label padRight="20">@localePrompt</label>
-        <:each locale="{locales}">
-            <:if test="{locale} != {currentLocale}">
-                <textButton onClick="locale:{locale}">@{locale}</textButton>
-            </:if>
-        </:each>
-        <label style="small" color="vis-blue" padLeft="20">@localeWarn</label>
-    </table>
     <scrollPane growX="true" expand="true" fadeBars="false" disableX="true" height="160" overscroll="false" flickScroll="false">
     <table defaultPad="3" tablePadTop="4" tablePadBottom="4" tablePadRight="3">
         <:column column="1" growX="true" minWidth="50"/>
