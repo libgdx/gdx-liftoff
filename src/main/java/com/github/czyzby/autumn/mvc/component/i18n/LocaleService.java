@@ -1,7 +1,5 @@
 package com.github.czyzby.autumn.mvc.component.i18n;
 
-import java.util.Locale;
-
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -20,7 +18,9 @@ import com.github.czyzby.kiwi.util.gdx.preference.ApplicationPreferences;
 import com.github.czyzby.kiwi.util.gdx.reflection.Reflection;
 import com.github.czyzby.kiwi.util.tuple.mutable.MutableSingle;
 
-/** Manages i18n. Reads locale from preferences and allows to easily save it. Provides informations about current
+import java.util.Locale;
+
+/** Manages i18n. Reads locale from preferences and allows to easily save it. Provides information about current
  * locale.
  *
  * @author MJ */

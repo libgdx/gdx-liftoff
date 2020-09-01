@@ -39,7 +39,7 @@ class Configuration {
 
     @I18nBundle val bundle = "i18n/nls"
     @I18nLocale(propertiesPath = PREFERENCES_PATH, defaultLocale = "en") val localePreference = "locale"
-    @AvailableLocales val availableLocales = arrayOf("en", "pl")
+    @AvailableLocales val availableLocales = arrayOf("en")
     @Preference val preferencesPath = PREFERENCES_PATH;
 
     @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)

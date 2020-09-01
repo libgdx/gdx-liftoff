@@ -103,7 +103,7 @@ public class Configuration {
 	/** These i18n-related fields will allow LocaleService to save game's locale in preferences file. Locale changing
 	 * actions will be automatically added to LML templates - see settings.lml template. */
 	@I18nLocale(propertiesPath = PREFERENCES, defaultLocale = "en") private final String localePreference = "locale";
-	@AvailableLocales private final String[] availableLocales = new String[] { "en", "pl" };
+	@AvailableLocales private final String[] availableLocales = new String[] { "en" };
 
 	/** Setting the default Preferences object path. */
 	@Preference private final String preferencesPath = PREFERENCES;
