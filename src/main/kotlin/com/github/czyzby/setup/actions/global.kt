@@ -6,7 +6,6 @@ import com.github.czyzby.kiwi.util.common.Exceptions
 import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.annotation.LmlAction
 import com.github.czyzby.lml.parser.action.ActionContainer
-import com.kotcrab.vis.ui.widget.VisTextField
 
 
 /**
@@ -15,7 +14,8 @@ import com.kotcrab.vis.ui.widget.VisTextField
  */
 @ViewActionContainer("global")
 class GlobalActionContainer : ActionContainer {
-    @LmlAction("showSite") fun showLibGdxWebsite() = Gdx.net.openURI("http://libgdx.badlogicgames.com/")
+    @LmlAction("showSite")
+    fun showLibGdxWebsite() = Gdx.net.openURI("https://libgdx.com/")
 
     @LmlAction("fileNameFilter")
     fun isValidFileNameCharacter(character: Char): Boolean = Character.isDigit(character) ||
@@ -31,7 +31,7 @@ class GlobalActionContainer : ActionContainer {
             if (file.isDirectory) {
                 return file.child("tools").isDirectory && file.child("platforms").isDirectory
             }
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             Exceptions.ignore(exception) // Probably not the Android SDK.
         }
         return false
