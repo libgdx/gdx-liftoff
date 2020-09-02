@@ -1,8 +1,8 @@
 <tab text="@extensions" closeable="false" defaultPad="1">
     <:cell colspan="3" expandY="true" row="true"/>
     <:for lib="$officialExtensions" url="$officialExtensionsUrls">
-        <checkBox id="{lib}" align="left">@{lib}</checkBox>
-        <label style="small" padRight="5">@{lib}Tip</label>
+        <checkBox id="{lib}" align="left" padRight="20">@{lib}</checkBox>
+        <label style="small" padRight="5" align="left">@{lib}Tip</label>
         <linkLabel row="true" url="{url}">?</linkLabel>
     </:for>
     <linkLabel colspan="3" url="https://github.com/libgdx/gdx-pay" align="bottom" expandY="true">
