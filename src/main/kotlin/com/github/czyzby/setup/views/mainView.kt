@@ -78,9 +78,6 @@ class MainView : ActionContainer {
         }
     }
 
-    @LmlAction("toggleStandard") fun toggleStandardPlatforms() = platformsData.toggleStandardPlatforms()
-    @LmlAction("toggleAll") fun toggleAllPlatforms() = platformsData.togglePlatforms()
-
     @LmlAction("mkdirs") fun createDestinationDirectory() {
         basicData.destination.mkdirs()
         revalidateForm()
@@ -223,7 +220,7 @@ class MainView : ActionContainer {
      */
     @Destroy(priority = AutumnActionPriority.TOP_PRIORITY)
     fun saveAndroidSdkVersions(api: SdkVersionPreference) {
-        api.set(advancedData.androidSdkVersion) 
+        api.set(advancedData.androidSdkVersion)
     }
 }
 
