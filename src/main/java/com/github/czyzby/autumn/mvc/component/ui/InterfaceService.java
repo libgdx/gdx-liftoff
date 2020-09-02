@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.github.czyzby.autumn.annotation.Destroy;
 import com.github.czyzby.autumn.annotation.Initiate;
@@ -605,7 +605,7 @@ public class InterfaceService {
         return new ObjectProvider<Viewport>() {
             @Override
             public Viewport provide() {
-                return new StretchViewport(Configuration.WIDTH, Configuration.HEIGHT);
+                return new FitViewport(Configuration.WIDTH, Configuration.HEIGHT);
             }
         };
     }
