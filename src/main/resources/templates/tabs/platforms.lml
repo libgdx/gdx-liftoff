@@ -10,8 +10,4 @@
             </checkBox>
         </:for>
     </table>
-    <table oneColumn="true" defaultPad="4" defaultGrowX="true">
-        <textButton onChange="toggleStandard">@toggleStandardPlatforms</textButton>
-        <textButton onChange="toggleAll">@toggleAllPlatforms</textButton>
-    </table>
 </tab>
