@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
     config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
     config.disableAudio(true)
 //    config.setDecorated(false)
-    config.setResizable(true)
+    config.setResizable(false)
     config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
 
     try {
