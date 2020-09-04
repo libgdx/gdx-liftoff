@@ -73,7 +73,7 @@ public class MessageDispatcher extends AbstractAnnotationProcessor<OnMessage> {
     /**
      * @param listener will be registered.
      * @param messageContent content of handled message. If the message is posted, listener will be invoked.
-     * @param forceMainThread if true, listener will be invoked only on main LibGDX thread with
+     * @param forceMainThread if true, listener will be invoked only on main libGDX thread with
      * Gdx.app.postRunnable(Runnable). Otherwise the listener is invoked as soon as the message is posted.
      */
     public void addListener(final MessageListener listener, final String messageContent,

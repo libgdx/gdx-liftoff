@@ -1,7 +1,7 @@
 package com.github.czyzby.setup.config
 
 /**
- * Used to represent and compare LibGDX versions using major.minor.revision schema.
+ * Used to represent and compare libGDX versions using major.minor.revision schema.
  */
 data class LibGdxVersion(
         val major: Int,

@@ -323,7 +323,7 @@ public class AssetService extends AbstractAnnotationProcessor<Asset> {
     private void handleRegularAssetInjection(final Object component, final Field field, final Asset assetData) {
         if (assetData.value().length != 1) {
             throw new GdxRuntimeException(
-                    "Regular fields can store only 1 asset. If the field is a collection, its type is not currently supported: only LibGDX Array, ObjectSet and ObjectMap are permitted. Regular arrays will not be supported. Found multiple assets in field: "
+                    "Regular fields can store only 1 asset. If the field is a collection, its type is not currently supported: only libGDX Array, ObjectSet and ObjectMap are permitted. Regular arrays will not be supported. Found multiple assets in field: "
                             + field + " of component: " + component);
         }
         final String assetPath = assetData.value()[0];

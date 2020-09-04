@@ -76,7 +76,7 @@ public class EventDispatcher extends AbstractAnnotationProcessor<OnEvent> {
     /**
      * @param listener will be registered.
      * @param eventType type of handled events.
-     * @param forceMainThread if true, listener will be invoked only on main LibGDX thread with
+     * @param forceMainThread if true, listener will be invoked only on main libGDX thread with
      * Gdx.app.postRunnable(Runnable). Otherwise the listener is invoked as soon as the event is posted.
      */
     public void addListener(final EventListener<?> listener, final Class<?> eventType, final boolean forceMainThread) {

@@ -33,7 +33,7 @@ public class ObjectMapAssetProvider implements ObjectProvider<ObjectMap<String, 
                 continue;
             }
             if (!assetService.isLoaded(assetPaths[assetIndex])) {
-                // LibGDX method that should load a specific asset immediately does pretty much the same.
+                // libGDX method that should load a specific asset immediately does pretty much the same.
                 assetService.finishLoading();
             }
             assets.put(assetKeys[assetIndex], assetService.get(assetPaths[assetIndex], assetClass));

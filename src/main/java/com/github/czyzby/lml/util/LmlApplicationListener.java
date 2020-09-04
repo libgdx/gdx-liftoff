@@ -37,7 +37,7 @@ import com.github.czyzby.lml.parser.impl.tag.Dtd;
  * sure to include their classes in GWT reflection mechanism.
  *
  * <p>
- * What LibGDX {@link com.badlogic.gdx.Game Game} is to {@link com.badlogic.gdx.Screen Screen}, this class is the same
+ * What libGDX {@link com.badlogic.gdx.Game Game} is to {@link com.badlogic.gdx.Screen Screen}, this class is the same
  * thing to {@link AbstractLmlView}. Except it adds much more functionalities.
  *
  * @author MJ */

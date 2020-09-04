@@ -122,7 +122,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
     }
 
     private fun saveProperties() {
-        // Adding LibGDX version property:
+        // Adding libGDX version property:
         properties["gdxVersion"] = advanced.gdxVersion
         PropertiesFile(properties).save(basic.destination)
     }
@@ -163,7 +163,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
         if (advanced.generateReadme) {
             files.add(SourceFile(projectName = "", fileName = "README.md", content = """# ${basic.name}
 
-A [LibGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
+A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
 ${readmeDescription}
 

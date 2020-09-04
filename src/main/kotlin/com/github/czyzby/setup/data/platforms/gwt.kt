@@ -105,11 +105,11 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 	private fun addSoundManagerSource(project: Project) {
 		val version = LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion)
 		val soundManagerSource = when {
-		// Invalid, user-entered LibGDX version - defaulting to current SoundManager:
+		// Invalid, user-entered libGDX version - defaulting to current SoundManager:
 			version == null -> "soundmanager2-jsmin.js"
 		// Pre-1.9.6: using old SoundManager sources:
 			version < LibGdxVersion(major = 1, minor = 9, revision = 6) -> "soundmanager2-jsmin_old.js"
-		// Recent LibGDX version - using latest SoundManager:
+		// Recent libGDX version - using latest SoundManager:
 			else -> "soundmanager2-jsmin.js"
 		}
 		project.files.add(CopiedFile(projectName = id,

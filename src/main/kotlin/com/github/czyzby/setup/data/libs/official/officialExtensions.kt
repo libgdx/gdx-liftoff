@@ -180,7 +180,7 @@ class Freetype : OfficialExtension() {
 }
 
 /**
- * Official LibGDX tools extension.
+ * Official libGDX tools extension.
  */
 @Extension(official = true)
 class Tools : OfficialExtension() {

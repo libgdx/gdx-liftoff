@@ -231,7 +231,7 @@ public class ${project.basic.mainClass} {
 		@Override
 		public void render(final Stage stage, final float delta) {
 			// As a proof of concept that you can pair custom logic with Autumn MVC views, this class implements
-			// ViewRenderer and handles view rendering manually. It renders LibGDX logo before drawing the stage.
+			// ViewRenderer and handles view rendering manually. It renders libGDX logo before drawing the stage.
 			stage.act(delta);
 
 			final Batch batch = stage.getBatch();

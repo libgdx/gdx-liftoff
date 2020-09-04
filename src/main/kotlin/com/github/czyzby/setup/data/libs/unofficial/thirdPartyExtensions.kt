@@ -53,7 +53,7 @@ class ArtemisOdb : ThirdPartyExtension() {
 }
 
 /**
- * General LibGDX utilities.
+ * General libGDX utilities.
  * @author Dermetfan
  * @author Maintained by Tommy Ettinger
  */
@@ -72,7 +72,7 @@ class LibgdxUtils : ThirdPartyExtension() {
 }
 
 /**
- * Box2D LibGDX utilities.
+ * Box2D libGDX utilities.
  * @author Dermetfan
  * @author Maintained by Tommy Ettinger
  */
