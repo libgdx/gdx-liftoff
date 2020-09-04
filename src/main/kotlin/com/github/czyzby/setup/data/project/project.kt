@@ -32,7 +32,6 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
             "org.gradle.daemon" to "false", // was having very bad memory usage with daemon+Android
             "org.gradle.jvmargs" to "-Xms512M -Xmx4G -XX:MaxPermSize=1G -XX:MaxMetaspaceSize=1G",
             "org.gradle.configureondemand" to "false")
-    val postGenerationTasks = mutableListOf<(Project) -> Unit>()
     val gwtInherits = mutableSetOf<String>()
     val androidPermissions = mutableSetOf<String>()
 
@@ -88,8 +87,6 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
         addReadmeFile()
         saveProperties()
         saveFiles()
-        // Invoking post-generation tasks:
-        postGenerationTasks.forEach { it(this) }
     }
 
     private fun addBasicFiles() {
@@ -166,7 +163,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
         if (advanced.generateReadme) {
             files.add(SourceFile(projectName = "", fileName = "README.md", content = """# ${basic.name}
 
-A [LibGDX](http://libgdx.badlogicgames.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
+A [LibGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
 ${readmeDescription}
 
