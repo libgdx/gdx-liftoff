@@ -16,7 +16,7 @@ public class Lml {
      * {@link com.github.czyzby.lml.parser.action.ActionContainer ActionContainer}'s containing the referenced action.
      * When none of action container's methods match the key, normally container's field with the given name is
      * returned, provided it exists. The action - instead of invoking a method - will extract and return current field's
-     * value. However, extracting fields causes problems on GWT (probably due to LibGDX reflection implementation), so
+     * value. However, extracting fields causes problems on GWT (probably due to libGDX reflection implementation), so
      * this functionality can be globally turned off by setting this variable to false (default state). The rule of
      * thumb is: if you use multiple action containers and plan on releasing GWT client, keep this variable as false. If
      * you need field extraction, set it to true. */

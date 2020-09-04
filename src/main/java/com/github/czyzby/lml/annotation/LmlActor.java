@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * the parser to let it inject its actor dependencies.
  *
  * <p>
- * Parsers handle both single actor injection or merging multiple actors with LibGDX collections and injecting them into
+ * Parsers handle both single actor injection or merging multiple actors with libGDX collections and injecting them into
  * one field. {@link com.badlogic.gdx.utils.Array}, {@link com.badlogic.gdx.utils.ObjectSet} and
  * {@link com.badlogic.gdx.utils.ObjectMap} (of strings) are supported. If an Array is used, order of actors is
  * preserved and matches the order of given IDs. ObjectSet provides no such guarantees, but it should be used if you

@@ -16,7 +16,7 @@ interface Platform {
     val id: String
 
     /**
-     * This value is set to true if the platform is a standard graphical LibGDX backend. False otherwise.
+     * This value is set to true if the platform is a standard graphical libGDX backend. False otherwise.
      */
     val isStandard: Boolean
         get() = true

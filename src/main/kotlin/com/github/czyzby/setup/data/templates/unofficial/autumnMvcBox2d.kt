@@ -18,7 +18,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
     override val id = "autumnMvcBox2dTemplate"
     override val description: String
-        get() = "Project template included launchers with [Autumn](https://github.com/czyzby/gdx-lml/tree/master/autumn) class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application showing usage of Box2D and Controllers LibGDX extensions. A simple GUI consisting of several screens and dialogs was provided, including a settings view that allows the players to choose their controls."
+        get() = "Project template included launchers with [Autumn](https://github.com/czyzby/gdx-lml/tree/master/autumn) class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens and dialogs was provided, including a settings view that allows the players to choose their controls."
 
     override fun apply(project: Project) {
         super.apply(project)
@@ -136,7 +136,7 @@ public class Configuration {
 
 import ${project.basic.rootPackage}.service.controls.ControlType;
 
-/** JSON-encoded class. Uses public fields to support LibGDX JSON utilities. */
+/** JSON-encoded class. Uses public fields to support libGDX JSON utilities. */
 public class ControlsData {
 	/** Up movement shortcut. */
 	public int up;

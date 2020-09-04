@@ -28,7 +28,7 @@ public class AssetProvider implements ObjectProvider<Object> {
         if (!assetService.isLoaded(assetPath)) {
             // This will also schedule loading of the asset if it was previously unloaded.
             while (!assetService.isLoaded(assetPath)) {
-                // Believe it or not, this is what LibGDX AssetManager does in finishLoading(String).
+                // Believe it or not, this is what libGDX AssetManager does in finishLoading(String).
                 assetService.update();
             }
         }

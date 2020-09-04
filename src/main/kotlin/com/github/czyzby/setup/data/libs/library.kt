@@ -4,7 +4,7 @@ import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
 
 /**
- * Interface shared by all LibGDX extensions.
+ * Interface shared by all libGDX extensions.
  * @author MJ
  */
 interface Library {

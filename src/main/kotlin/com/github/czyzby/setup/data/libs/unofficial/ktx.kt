@@ -125,7 +125,7 @@ class KtxBox2D : ThirdPartyExtension() {
 }
 
 /**
- * Kotlin utilities for LibGDX collections.
+ * Kotlin utilities for libGDX collections.
  * @author MJ
  */
 @Extension
@@ -173,7 +173,7 @@ class KtxFreetypeAsync : ThirdPartyExtension() {
 }
 
 /**
- * Kotlin utilities for handling graphics in LibGDX applications.
+ * Kotlin utilities for handling graphics in libGDX applications.
  * @author MJ
  */
 @Extension
@@ -218,7 +218,7 @@ class KtxInject : ThirdPartyExtension() {
 }
 
 /**
- * LibGDX JSON serialization utilities for Kotlin applications.
+ * libGDX JSON serialization utilities for Kotlin applications.
  * @author MJ
  */
 @Extension
@@ -263,7 +263,7 @@ class KtxMath : ThirdPartyExtension() {
 }
 
 /**
- * LibGDX preferences utilities for applications developed with Kotlin.
+ * libGDX preferences utilities for applications developed with Kotlin.
  * @author MJ
  */
 @Extension
@@ -308,7 +308,7 @@ class KtxStyle : ThirdPartyExtension() {
 }
 
 /**
- * Tiled utilities for LibGDX applications written with Kotlin.
+ * Tiled utilities for libGDX applications written with Kotlin.
  * @author MJ
  */
 @Extension

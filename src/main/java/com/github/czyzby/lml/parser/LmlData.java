@@ -85,7 +85,7 @@ public interface LmlData {
      * @return manager associated with the passed ID. */
     TooltipManager getTooltipManager(String name);
 
-    /** @return tooltip manager associated with the default ID. By default, returns LibGDX static tooltip manager
+    /** @return tooltip manager associated with the default ID. By default, returns libGDX static tooltip manager
      *         instance. */
     TooltipManager getDefaultTooltipManager();
 

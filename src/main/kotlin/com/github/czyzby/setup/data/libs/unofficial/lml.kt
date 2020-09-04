@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
 const val AUTUMN_VERSION = "1.9.1.9.10-SNAPSHOT"
 
 /**
- * Guava-inspired LibGDX utilities.
+ * Guava-inspired libGDX utilities.
  * @author MJ
  */
 @Extension
@@ -71,7 +71,7 @@ class LMLVis : ThirdPartyExtension() {
 }
 
 /**
- * Dependency injection mechanism with component scan using LibGDX reflection API.
+ * Dependency injection mechanism with component scan using libGDX reflection API.
  * @author MJ
  */
 @Extension
@@ -99,7 +99,7 @@ class Autumn : ThirdPartyExtension() {
 }
 
 /**
- * Model-view-controller framework on top of Autumn DI and LibGDX.
+ * Model-view-controller framework on top of Autumn DI and libGDX.
  * @author MJ
  */
 @Extension

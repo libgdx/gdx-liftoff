@@ -343,7 +343,7 @@ public class VisLmlSyntax extends DefaultLmlSyntax {
     @Override
     protected void registerTooltipAttributes() {
         super.registerTooltipAttributes();
-        // Tooltip (VisUI pre-LibGDX 1.6.5 implementation):
+        // Tooltip (VisUI pre-libGDX 1.6.5 implementation):
         addAttributeProcessor(new DelayLmlAttribute(), "delay", "appearDelay");
         addAttributeProcessor(new MouseMoveFadeOutLmlAttribute(), "mouseMoveFadeOut");
         addAttributeProcessor(new TooltipFadeTimeLmlAttribute(), "fadeTime", "fadingTime");

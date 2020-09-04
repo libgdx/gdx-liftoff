@@ -31,7 +31,7 @@ public class ArrayAssetProvider implements ObjectProvider<Array<Object>> {
                 continue;
             }
             if (!assetService.isLoaded(assetPath)) {
-                // LibGDX method that should load a specific asset immediately does pretty much the same.
+                // libGDX method that should load a specific asset immediately does pretty much the same.
                 assetService.finishLoading();
             }
             assets.add(assetService.get(assetPath, assetClass));

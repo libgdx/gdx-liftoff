@@ -45,7 +45,7 @@ class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
 }
 
 /**
- * Should annotate all LibGDX platforms.
+ * Should annotate all libGDX platforms.
  * @author MJ
  */
 @Target(AnnotationTarget.CLASS)

@@ -23,7 +23,7 @@ public @interface Asset {
     String[]keys() default {};
 
     /** @return class of the asset. Ignored and taken from the variable type if asset is not wrapped in
-     *         {@link com.github.czyzby.kiwi.util.gdx.asset.lazy.Lazy} or LibGDX collection container. */
+     *         {@link com.github.czyzby.kiwi.util.gdx.asset.lazy.Lazy} or libGDX collection container. */
     Class<?>type() default void.class;
 
     /** Determines the behavior of asset loading. 4 states are possible:
@@ -55,7 +55,7 @@ public @interface Asset {
     boolean loadOnDemand() default false;
 
     /** @return type of collection stored in a {@link com.github.czyzby.kiwi.util.gdx.asset.lazy.Lazy} wrapper. This
-     *         setting is needed only if the annotated field is a Lazy that stores a LibGDX collection of assets. Only
+     *         setting is needed only if the annotated field is a Lazy that stores a libGDX collection of assets. Only
      *         {@link com.badlogic.gdx.utils.ObjectMap}, {@link com.badlogic.gdx.utils.Array} or
      *         {@link com.badlogic.gdx.utils.ObjectSet} are accepted. */
     Class<?>lazyCollection() default void.class;

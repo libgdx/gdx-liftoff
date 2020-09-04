@@ -329,7 +329,7 @@ public class LmlUtilities {
      *            {@link Table} parent width. If a string value, will look for static values registered with
      *            {@link #registerStaticTableValue(String, Value)} (there are some default values; see this class
      *            sources for more info).
-     * @return LibGDX Scene2D float value provider parsed from the raw attribute. */
+     * @return libGDX Scene2D float value provider parsed from the raw attribute. */
     public static Value parseVerticalValue(final LmlParser parser, final LmlTag parent, final Actor actor,
             final String rawAttributeData) {
         final Object valueToParse = determineValueObjectName(parser, actor, rawAttributeData);
@@ -377,7 +377,7 @@ public class LmlUtilities {
      *            {@link Table} parent width. If a string value, will look for static values registered with
      *            {@link #registerStaticTableValue(String, Value)} (there are some default values; see this class
      *            sources for more info).
-     * @return LibGDX Scene2D float value provider parsed from the raw attribute. */
+     * @return libGDX Scene2D float value provider parsed from the raw attribute. */
     public static Value parseHorizontalValue(final LmlParser parser, final LmlTag parent, final Actor actor,
             final String rawAttributeData) {
         final Object valueToParse = determineValueObjectName(parser, actor, rawAttributeData);

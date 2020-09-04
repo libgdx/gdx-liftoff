@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation;
 
 /** Default, efficient class scanner for desktop. Does not rely on reflection and does not load scanned classes. Uses
  * {@link FastClasspathScanner} wrapped with and adapted to {@link ClassScanner} interface to serve as default class
- * scanner for desktop LibGDX applications using Autumn. If for some reason this scanner does not work for you, try
+ * scanner for desktop libGDX applications using Autumn. If for some reason this scanner does not work for you, try
  * {@link com.github.czyzby.autumn.nongwt.scanner.FallbackDesktopClassScanner} (which is much slower, as it depends on
  * reflection) or {@link com.github.czyzby.autumn.scanner.FixedClassScanner} (which will force you to register class
  * pool to scan, sacrificing true component scanning).
