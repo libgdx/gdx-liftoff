@@ -517,3 +517,21 @@ class VisUI : ThirdPartyExtension() {
     }
 }
 
+/**
+ * A library to obtain a circular WidgetGroup or context menu using scene2d.ui.
+ * @author Jérémi Grenier-Berthiaume
+ */
+@Extension
+class PieMenu : ThirdPartyExtension() {
+    override val id = "pieMenu"
+    override val defaultVersion = "4.2.0"
+    override val url = "https://github.com/payne911/PieMenu"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.payne911:PieMenu")
+
+        addDependency(project, GWT.ID, "com.github.payne911:PieMenu:sources")
+        addGwtInherit(project, "PieMenu")
+        ShapeDrawer().initiate(project)
+    }
+}
