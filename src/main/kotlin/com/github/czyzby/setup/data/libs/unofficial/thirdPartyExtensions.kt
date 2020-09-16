@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.1.7"
+    override val defaultVersion = "0.2.0"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -533,5 +533,21 @@ class PieMenu : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.github.payne911:PieMenu:sources")
         addGwtInherit(project, "PieMenu")
         ShapeDrawer().initiate(project)
+    }
+}
+
+/**
+ * A Java library that provides a clean and simple API for efficient network communication, using Kryo.
+ * @author Nathan Sweet
+ * @author damios/crykn
+ */
+@Extension
+class KryoNet : ThirdPartyExtension() {
+    override val id = "kryoNet"
+    override val defaultVersion = "2.22.6"
+    override val url = "kryoNet"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.crykn:kryonet")
     }
 }
