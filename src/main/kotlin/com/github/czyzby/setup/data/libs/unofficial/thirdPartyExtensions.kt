@@ -537,6 +537,21 @@ class PieMenu : ThirdPartyExtension() {
 }
 
 /**
+ * A fast and efficient binary object graph serialization framework for Java.
+ * @author Nathan Sweet
+ */
+@Extension
+class Kryo : ThirdPartyExtension() {
+    override val id = "kryo"
+    override val defaultVersion = "5.0.0-RC9"
+    override val url = "https://github.com/EsotericSoftware/kryo"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.esotericsoftware:kryo")
+    }
+}
+
+/**
  * A Java library that provides a clean and simple API for efficient network communication, using Kryo.
  * @author Nathan Sweet
  * @author damios/crykn
@@ -545,7 +560,7 @@ class PieMenu : ThirdPartyExtension() {
 class KryoNet : ThirdPartyExtension() {
     override val id = "kryoNet"
     override val defaultVersion = "2.22.6"
-    override val url = "kryoNet"
+    override val url = "https://github.com/crykn/kryonet"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn:kryonet")
