@@ -24,8 +24,5 @@ interface Language {
         if (project.hasPlatform(Shared.ID)) {
             project.getGradleFile(Shared.ID).addDependency(dependency)
         }
-        if (project.hasPlatform(Shared.ID)) {
-            project.getGradleFile(Shared.ID).addDependency(dependency)
-        }
     }
 }
