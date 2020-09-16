@@ -8,7 +8,7 @@ import com.github.czyzby.setup.views.Extension
  * Version of Czyzby's libraries; this is a snapshot release because Czyzby is unlikely to make a stable release.
  * @author MJ
  */
-const val AUTUMN_VERSION = "1.9.1.9.10-SNAPSHOT"
+const val AUTUMN_VERSION = "1.9.1.9.11-SNAPSHOT"
 
 /**
  * Guava-inspired libGDX utilities.
