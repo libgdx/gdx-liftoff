@@ -23,9 +23,9 @@ public abstract class KeyNormalizingObjectMap<Key, Value> extends ObjectMap<Key,
     }
 
     @Override
-    public Value get(Key key) {
+    public <T extends Key> Value get(T key) {
         if (key != null) {
-            key = normalizeKey(key);
+            return super.get(normalizeKey(key));
         }
         return super.get(key);
     }

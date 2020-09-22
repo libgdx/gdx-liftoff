@@ -4,7 +4,6 @@ apply plugin: 'application'
 
 buildscript {
   repositories {
-    mavenLocal()
     mavenCentral()
     jcenter()
   }
@@ -24,7 +23,6 @@ jar {
 }
 
 repositories {
-  mavenLocal()
   mavenCentral()
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
   maven { url 'https://jitpack.io' }
@@ -40,5 +38,4 @@ dependencies {
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   api "io.github.lukehutch:fast-classpath-scanner:2.21"
   api "com.kotcrab.vis:vis-ui:1.4.4"
-  api "com.github.czyzby.gdx-lml:gdx-kiwi:$lmlVersion"
 }
