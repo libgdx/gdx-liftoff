@@ -28,7 +28,7 @@ class iOS : Platform {
         // Including RoboVM config files:
         project.files.add(CopiedFile(projectName = ID, path = "Info.plist.xml",
                 original = path("generator", "ios", "Info.plist.xml")))
-        project.files.add(SourceFile(projectName = ID, fileName = "robovm.properties", content = """app.version=${project.advanced.version}
+        project.files.add(SourceFile(projectName = ID, fileName = "robovm.properties", content = """app.version=${project.advanced.version.replace("[^0-9\\.]", "")}
 app.id=${project.basic.rootPackage}
 app.mainclass=${project.basic.rootPackage}.ios.IOSLauncher
 app.executable=IOSLauncher
@@ -89,6 +89,43 @@ app.name=${project.basic.name}"""))
             project.files.add(CopiedFile(projectName = ID, path = path("data", it),
                     original = path("generator", "ios", "data", it)))
         }
+        project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "Contents.json"),
+                original = path("generator", "ios", "data", "Media.xcassets")))
+        arrayOf(
+                "app-store-icon-1024@1x.png",
+                "Contents.json",
+                "ipad-app-icon-76@1x.png",
+                "ipad-app-icon-76@2x.png",
+                "ipad-notifications-icon-20@1x.png",
+                "ipad-notifications-icon-20@2x.png",
+                "ipad-pro-app-icon-83.5@2x.png",
+                "ipad-settings-icon-29@1x.png",
+                "ipad-settings-icon-29@2x.png",
+                "ipad-spotlight-icon-40@1x.png",
+                "ipad-spotlight-icon-40@2x.png",
+                "iphone-app-icon-60@2x.png",
+                "iphone-app-icon-60@3x.png",
+                "iphone-notification-icon-20@2x.png",
+                "iphone-notification-icon-20@3x.png",
+                "iphone-spotlight-icon-40@2x.png",
+                "iphone-spotlight-icon-40@3x.png",
+                "iphone-spotlight-settings-icon-29@2x.png",
+                "iphone-spotlight-settings-icon-29@3x.png"
+        ).forEach {
+            project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "AppIcon.appiconset", it),
+                    original = path("generator", "ios", "data", "Media.xcassets", "AppIcon.appiconset", it)))
+        }
+        arrayOf(
+                "Contents.json",
+                "libgdx@1x.png",
+                "libgdx@2x.png",
+                "libgdx@3x.png"
+        ).forEach {
+            project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "Logo.imageset", it),
+                    original = path("generator", "ios", "data", "Media.xcassets", "Logo.imageset", it)))
+        }
+        project.files.add(CopiedFile(projectName = ID, path = path("data", "Base.lproj", "LaunchScreen.storyboard"),
+                original = path("generator", "ios", "data", "Base.lproj")))
 
         // Including reflected classes:
         if (project.reflectedClasses.isNotEmpty() || project.reflectedPackages.isNotEmpty()) {

@@ -19,7 +19,7 @@ abstract class GradleFile private constructor(override val path: String) : Proje
             else dependencies.joinToString(prefix = "$tab$type ", separator = "\n$tab$type ", postfix = "\n")
 
     /**
-     * @param dependency will be added as "compile" dependency, quoted.
+     * @param dependency will be added as an "implementation" or "api" dependency, quoted.
      */
     fun addDependency(dependency: String) = dependencies.add("\"$dependency\"")
 
