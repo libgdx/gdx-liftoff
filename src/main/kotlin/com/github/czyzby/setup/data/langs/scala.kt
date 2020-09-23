@@ -2,6 +2,8 @@ package com.github.czyzby.setup.data.langs
 
 import com.github.czyzby.setup.data.files.SourceDirectory
 import com.github.czyzby.setup.data.files.path
+import com.github.czyzby.setup.data.platforms.Android
+import com.github.czyzby.setup.data.platforms.AndroidGradleFile
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.JvmLanguage
 
@@ -17,6 +19,10 @@ class Scala : Language {
     override fun initiate(project: Project) {
         project.rootGradle.plugins.add(id)
         project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "scala"))) }
+        if (project.hasPlatform(Android.ID)) {
+            val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
+            gradleFile.srcFolders.add("'src/main/scala'")
+        }
         addDependency(project, "org.scala-lang:scala-library:\$scalaVersion")
     }
 }
