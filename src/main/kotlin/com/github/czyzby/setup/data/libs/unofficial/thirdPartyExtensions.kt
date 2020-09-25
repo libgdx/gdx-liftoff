@@ -566,3 +566,25 @@ class KryoNet : ThirdPartyExtension() {
         addDependency(project, Core.ID, "com.github.crykn:kryonet")
     }
 }
+
+/**
+ * A small collection of some common and very basic utilities for libGDX games.
+ * @author damios/crykn
+ */
+@Extension
+class Guacamole : ThirdPartyExtension() {
+    override val id = "guacamole"
+    override val defaultVersion = "0.2.2"
+    override val url = "https://github.com/crykn/guacamole"
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.crykn.guacamole:core")
+        addDependency(project, Core.ID, "com.github.crykn.guacamole:gdx")
+        addDependency(project, Desktop.ID, "com.github.crykn.guacamole:gdx-desktop")
+        addDependency(project, LWJGL3.ID, "com.github.crykn.guacamole:gdx-desktop")
+        addDependency(project, GWT.ID, "com.github.crykn.guacamole:core:sources")
+        addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
+        addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
+        addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
+        addGwtInherit(project, "guacamole_gdx_gwt")
+    }
+}
