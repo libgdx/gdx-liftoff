@@ -1,5 +1,6 @@
 package com.github.czyzby.setup.data.templates
 
+import com.github.czyzby.setup.config.LibGdxVersion
 import com.github.czyzby.setup.data.files.SourceFile
 import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.platforms.*
@@ -99,7 +100,8 @@ import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the GWT application. */
-public class GwtLauncher extends GwtApplication {
+public class GwtLauncher extends GwtApplication {""" + (if(LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion) != null && LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion)!! < LibGdxVersion(1, 9, 12))
+"""
 		////USE THIS CODE FOR A FIXED SIZE APPLICATION
 		@Override
 		public GwtApplicationConfiguration getConfig () {
@@ -136,7 +138,17 @@ public class GwtLauncher extends GwtApplication {
 		//		}
 		//	}
 		////END OF CODE FOR RESIZABLE APPLICATION
-
+"""
+else """
+		@Override
+		public GwtApplicationConfiguration getConfig () {
+			// Resizable application, uses available space in browser
+			return new GwtApplicationConfiguration(true);
+			// Fixed size application:
+			//return new GwtApplicationConfiguration(480, 320);
+		}
+""") + 
+"""
 		@Override
 		public ApplicationListener createApplicationListener () { 
 			return new ${project.basic.mainClass}();
