@@ -48,7 +48,7 @@ class GWT : Platform {
 		// Adding GWT definition to core project:
 		project.files.add(SourceFile(projectName = Core.ID, packageName = project.basic.rootPackage,
 				fileName = "${project.basic.mainClass}.gwt.xml", content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module>
 	<source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "    <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
 </module>"""))
@@ -58,7 +58,7 @@ class GWT : Platform {
 		if (project.hasPlatform(Shared.ID)) {
 			project.files.add(SourceFile(projectName = Shared.ID, packageName = project.basic.rootPackage,
 					fileName = "Shared.gwt.xml", content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module>
 	<source path="" />
 </module>"""))
@@ -68,7 +68,7 @@ class GWT : Platform {
 		// Adding GWT definition:
 		project.files.add(SourceFile(projectName = ID, packageName = project.basic.rootPackage,
 				fileName = "GdxDefinition.gwt.xml", content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module rename-to="html">
 	<source path="" />
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "\t<inherits name=\"$it\" />" }}
@@ -84,7 +84,7 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 		// Adding SuperDev definition:
 		project.files.add(SourceFile(projectName = ID, packageName = project.basic.rootPackage,
 				fileName = "GdxDefinitionSuperdev.gwt.xml", content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module rename-to="html">
 	<inherits name="${project.basic.rootPackage}.GdxDefinition" />
 	<collapse-all-properties />
@@ -96,7 +96,9 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 		// Copying webapp files:
 		addCopiedFile(project, "webapp", "index.html")
 		addCopiedFile(project, "webapp", "refresh.png")
-		addCopiedFile(project, "webapp", "soundmanager2-setup.js")
+		val version = LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion)
+		if(version != null && version < LibGdxVersion(major = 1, minor = 9, revision = 12))
+			addCopiedFile(project, "webapp", "soundmanager2-setup.js")
 		addSoundManagerSource(project)
 		addCopiedFile(project, "webapp", "styles.css")
 		addCopiedFile(project, "webapp", "WEB-INF", "web.xml")
@@ -105,14 +107,17 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 	private fun addSoundManagerSource(project: Project) {
 		val version = LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion)
 		val soundManagerSource = when {
-		// Invalid, user-entered libGDX version - defaulting to current SoundManager:
-			version == null -> "soundmanager2-jsmin.js"
+		// Invalid, user-entered libGDX version - defaulting to current lack of SoundManager:
+			version == null -> ""
 		// Pre-1.9.6: using old SoundManager sources:
 			version < LibGdxVersion(major = 1, minor = 9, revision = 6) -> "soundmanager2-jsmin_old.js"
 		// Recent libGDX version - using latest SoundManager:
-			else -> "soundmanager2-jsmin.js"
+			version < LibGdxVersion(major = 1, minor = 9, revision = 12) -> "soundmanager2-jsmin.js"
+		// after 1.9.11, soundmanager is no longer used
+			else -> ""
 		}
-		project.files.add(CopiedFile(projectName = id,
+		if(soundManagerSource.isNotEmpty()) 
+			project.files.add(CopiedFile(projectName = id,
 				original = path("generator", id, "webapp", soundManagerSource),
 				path = path("webapp", "soundmanager2-jsmin.js")))
 	}
