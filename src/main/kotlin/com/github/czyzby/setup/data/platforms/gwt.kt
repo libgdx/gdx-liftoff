@@ -94,11 +94,17 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 </module>"""))
 
 		// Copying webapp files:
-		addCopiedFile(project, "webapp", "index.html")
 		addCopiedFile(project, "webapp", "refresh.png")
 		val version = LibGdxVersion.parseLibGdxVersion(project.advanced.gdxVersion)
 		if(version != null && version < LibGdxVersion(major = 1, minor = 9, revision = 12))
+		{
 			addCopiedFile(project, "webapp", "soundmanager2-setup.js")
+			project.files.add(CopiedFile(projectName = id,
+					original = path("generator", id, "webapp", "index_old.html"), 
+					path = path("webapp", "index.html")))
+		}
+		else
+			addCopiedFile(project, "webapp", "index.html")
 		addSoundManagerSource(project)
 		addCopiedFile(project, "webapp", "styles.css")
 		addCopiedFile(project, "webapp", "WEB-INF", "web.xml")
