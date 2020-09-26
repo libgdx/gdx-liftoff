@@ -71,7 +71,7 @@ fun startNewJvmIfRequired(): Boolean {
     return true
 }
 
-fun main(args: Array<String>) {
+fun main() {
     if(startNewJvmIfRequired()) return
     val config = Lwjgl3ApplicationConfiguration()
     config.setTitle("gdx-liftoff")
