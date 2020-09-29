@@ -67,11 +67,11 @@ run {
 	}
 }
 jar {
-	archiveFileName = "${'$'}{appName}-${'$'}{archiveVersion.get()}.jar"
-	//// These can excluded because they add to the jar size but libGDX 1.9.11 can't use them.
+	archiveFileName = "${'$'}{appName}.jar"
+	//// These can be excluded because they add to the jar size but libGDX 1.9.11 can't use them.
 	//// If your libGDX version is 1.9.10 or earlier, or is 1.9.12-SNAPSHOT or later, you can leave
 	//// the following line commented; if you use 1.9.11 exactly, or if you use 1.9.12-SNAPSHOT but
-    //// don't need ARM Linux support, you can uncomment it safely.
+	//// don't need ARM Linux support, you can uncomment it safely.
 	//// It's always safe to keep that line commented out; it only affects JAR size.
 	//exclude('linux/arm32/**', 'linux/arm64/**')
 	dependsOn configurations.runtimeClasspath
@@ -79,7 +79,11 @@ jar {
 	manifest {
 		attributes 'Main-Class': project.mainClassName
 	}
+	doLast {
+		file(archivePath).setExecutable(true, false)
+	}
 }
+
 """
 
 }
