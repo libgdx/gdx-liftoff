@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.0"
+    override val defaultVersion = "0.2.1"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -396,12 +396,13 @@ class SpineRuntime : ThirdPartyExtension() {
 /**
  * MrStahlfelge's fantastic upgrades to controller support for desktop, Android, and GWT.
  * If something doesn't work in the official controller extension, it's probably been fixed here.
+ * Change the version to 1.0.1 if you use libGDX 1.9.10 or earlier!
  * @author MrStahlfelge
  */
 @Extension
 class ControllerUtils : ThirdPartyExtension() {
     override val id = "controllerUtils"
-    override val defaultVersion = "1.0.0"
+    override val defaultVersion = "2.1.0"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils"
 
     override fun initiateDependencies(project: Project) {
@@ -422,12 +423,13 @@ class ControllerUtils : ThirdPartyExtension() {
 /**
  * MrStahlfelge's controller-imitating Scene2D widgets, for players who don't have a controller.
  * <a href="https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d">See the docs before using</a>.
+ * Change the version to 1.0.1 if you use libGDX 1.9.10 or earlier!
  * @author MrStahlfelge
  */
 @Extension
 class ControllerScene2D : ThirdPartyExtension() {
     override val id = "controllerScene2D"
-    override val defaultVersion = "1.0.0"
+    override val defaultVersion = "2.1.0"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d"
 
     override fun initiateDependencies(project: Project) {
@@ -533,6 +535,24 @@ class PieMenu : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.github.payne911:PieMenu:sources")
         addGwtInherit(project, "PieMenu")
         ShapeDrawer().initiate(project)
+    }
+}
+
+/**
+ * A 2D AABB collision detection and response library; like a basic/easy version of box2d.
+ * @author implicit-invocation
+ * @author Raymond Buckley
+ */
+@Extension
+class JBump : ThirdPartyExtension() {
+    override val id = "jbump"
+    override val defaultVersion = "v1.0.0"
+    override val url = "https://github.com/tommyettinger/jbump"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:jbump")
+        addDependency(project, GWT.ID, "com.github.tommyettinger:jbump:sources")
+        addGwtInherit(project, "com.dongbat.jbump")
     }
 }
 
