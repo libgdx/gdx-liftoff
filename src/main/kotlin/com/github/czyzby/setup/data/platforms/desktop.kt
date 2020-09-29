@@ -56,11 +56,14 @@ dependencies {
 ${joinDependencies(dependencies)}}
 
 jar {
-	archiveFileName = "${'$'}{appName}-${'$'}{archiveVersion.get()}.jar"
+	archiveFileName = "${'$'}{appName}.jar"
 	dependsOn configurations.runtimeClasspath
 	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } } 
 	manifest {
 		attributes 'Main-Class': project.mainClassName
+	}
+	doLast {
+		file(archivePath).setExecutable(true, false)
 	}
 }
 

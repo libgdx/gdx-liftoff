@@ -232,6 +232,12 @@ task addSource {
 	}
 }
 
+task distZip(type: Zip, dependsOn: dist){
+	from 'build/dist/'
+	archiveName "dist-${'$'}{version}.zip"
+	destinationDir(file("build"))
+}
+
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 
