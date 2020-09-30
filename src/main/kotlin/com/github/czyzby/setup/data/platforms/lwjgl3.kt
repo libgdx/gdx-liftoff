@@ -67,7 +67,7 @@ run {
 	}
 }
 jar {
-	archiveFileName = "${'$'}{appName}.jar"
+	archiveBaseName = appName
 	//// These can be excluded because they add to the jar size but libGDX 1.9.11 can't use them.
 	//// If your libGDX version is 1.9.10 or earlier, or is 1.9.12-SNAPSHOT or later, you can leave
 	//// the following line commented; if you use 1.9.11 exactly, or if you use 1.9.12-SNAPSHOT but
