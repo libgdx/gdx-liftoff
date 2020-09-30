@@ -233,8 +233,17 @@ task addSource {
 }
 
 task distZip(type: Zip, dependsOn: dist){
-	from 'build/dist/'
-	archiveName "dist-${'$'}{version}.zip"
+	//// The next lines copy the dist but remove the recompile button (circling arrow) from the HTML page.
+	from('build/dist/') {
+		exclude '**/*.html'
+	}
+	from('build/dist/') {
+		include '**/*.html'
+		filter { String line -> line.replaceAll('<a class="superdev" .+', '') }
+	}
+	//// The next line attempts to name the zip with a unique timestamp, removing spaces and ':' for compatibility.
+	archiveName "dist-${'$'}{(new Date().toString()).replace(' ', '-').replace(':', '-')}.zip"
+	//// The result will be in html/build/ with a name containing the above probably-unique timestamp.
 	destinationDir(file("build"))
 }
 
