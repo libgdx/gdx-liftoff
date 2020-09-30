@@ -200,5 +200,7 @@ task run(type: Exec) {
 	def adb = path + "/platform-tools/adb"
 	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
 }
+
+eclipse.project.name = appName + "-android"
 """
 }
