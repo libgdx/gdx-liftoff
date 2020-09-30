@@ -56,6 +56,7 @@ subprojects {
 	}
 }
 
+eclipse.project.name = appName + '-parent'
 """
 
 }
