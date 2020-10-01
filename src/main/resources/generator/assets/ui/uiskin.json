@@ -71,7 +71,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable: {
 	progress-bar-knob-t: {
 		region: progress-bar-knob
-		color: white
 		minWidth: 0
 		minHeight: 5
 	}
