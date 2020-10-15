@@ -29,8 +29,8 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
     val files = mutableListOf<ProjectFile>()
     val rootGradle: RootGradleFile
     val properties = mutableMapOf(
-            "org.gradle.daemon" to "false", // was having very bad memory usage with daemon+Android
-            "org.gradle.jvmargs" to "-Xms512M -Xmx4G -XX:MaxPermSize=1G -XX:MaxMetaspaceSize=1G",
+            "org.gradle.daemon" to "true",
+            "org.gradle.jvmargs" to "-Xms512M -Xmx1G -XX:MaxPermSize=1G -XX:MaxMetaspaceSize=1G",
             "org.gradle.configureondemand" to "false")
     val gwtInherits = mutableSetOf<String>()
     val androidPermissions = mutableSetOf<String>()

@@ -90,7 +90,7 @@ public abstract class InputAwareApplicationListener implements ApplicationListen
     }
 
     @Override
-    public boolean scrolled(final int amount) {
+    public boolean scrolled(final float amountX, final float amountY) {
         return false;
     }
 }
