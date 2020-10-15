@@ -56,7 +56,7 @@ subprojects {
 	}
 }
 
-eclipse.project.name = appName + '-parent'
+eclipse.project.name = '${project.basic.name}' + '-parent'
 """
 
 }

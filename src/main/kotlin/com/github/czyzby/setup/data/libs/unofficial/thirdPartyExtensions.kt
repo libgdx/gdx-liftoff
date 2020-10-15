@@ -93,7 +93,7 @@ class LibgdxUtilsBox2D : ThirdPartyExtension() {
 }
 
 /**
- * Facebook graph API wrapper.
+ * Facebook graph API wrapper. May be out-of-date.
  * @author Tom Grill
  */
 @Extension
@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.1"
+    override val defaultVersion = "0.2.2"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
