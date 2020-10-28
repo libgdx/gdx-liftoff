@@ -4,6 +4,7 @@ apply plugin: 'application'
 
 buildscript {
   repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
   }
