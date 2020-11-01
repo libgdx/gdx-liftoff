@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * @author MJ
  */
 abstract class OfficialExtension : Library {
-    override val defaultVersion = Version.VERSION
+    override val defaultVersion = "1.9.12"// Version.VERSION
     override val official = true
 }
 
