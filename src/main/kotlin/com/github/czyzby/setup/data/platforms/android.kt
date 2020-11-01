@@ -133,7 +133,14 @@ android {
 		targetSdkVersion ${project.advanced.androidSdkVersion}
 		versionCode 1
 		versionName "1.0"
+		multiDexEnabled true
 	}
+	compileOptions {
+		sourceCompatibility "${project.advanced.javaVersion}"
+		targetCompatibility "${project.advanced.javaVersion}"
+		${if(project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaringEnabled true" else ""}
+	}
+	${if(latePlugin && project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"kotlinOptions.jvmTarget = \"1.8\"" else ""}
 }
 
 repositories {
@@ -144,6 +151,7 @@ repositories {
 configurations { natives }
 
 dependencies {
+	${if(project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
 }
