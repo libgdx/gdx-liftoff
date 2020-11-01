@@ -164,6 +164,8 @@ gwt {
 
 	compiler.strict = true
 	compiler.disableCastChecking = true
+	//// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
+//	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
 
 dependencies {
