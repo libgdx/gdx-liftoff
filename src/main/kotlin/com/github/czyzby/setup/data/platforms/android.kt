@@ -52,7 +52,7 @@ class Android : Platform {
             android:label="@string/app_name"
             android:theme="@style/GdxTheme">
         <activity
-                android:name="${project.basic.rootPackage}.android.AndroidLauncher"
+                android:name="${project.basic.rootPackage}.AndroidLauncher"
                 android:label="@string/app_name"
                 android:screenOrientation="landscape"
                 android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
@@ -141,6 +141,13 @@ android {
 		${if(project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaringEnabled true" else ""}
 	}
 	${if(latePlugin && project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"kotlinOptions.jvmTarget = \"1.8\"" else ""}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+
 }
 
 repositories {
@@ -185,7 +192,11 @@ task copyAndroidNatives() {
 	}
 }
 
-preBuild.dependsOn(copyAndroidNatives)
+tasks.whenTaskAdded { packageTask ->
+  if (packageTask.name.contains("package")) {
+    packageTask.dependsOn 'copyAndroidNatives'
+  }
+}
 
 task run(type: Exec) {
 	def path
@@ -206,7 +217,7 @@ task run(type: Exec) {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
+	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
