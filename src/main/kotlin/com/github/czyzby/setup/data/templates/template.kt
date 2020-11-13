@@ -157,11 +157,11 @@ else """
 """
 
 	fun addAndroidLauncher(project: Project) {
-		addSourceFile(project = project, platform = Android.ID, packageName = "${project.basic.rootPackage}.android",
+		addSourceFile(project = project, platform = Android.ID, packageName = project.basic.rootPackage,
 				fileName = "AndroidLauncher.java", content = getAndroidLauncherContent(project));
 	}
 
-	fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
+	fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import android.os.Bundle;
 
