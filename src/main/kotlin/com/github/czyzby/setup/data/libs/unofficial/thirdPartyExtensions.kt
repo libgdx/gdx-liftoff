@@ -60,7 +60,7 @@ class ArtemisOdb : ThirdPartyExtension() {
 @Extension
 class LibgdxUtils : ThirdPartyExtension() {
     override val id = "utils"
-    override val defaultVersion = "0.13.6"
+    override val defaultVersion = "0.13.7"
     override val url = "https://github.com/tommyettinger/gdx-utils"
 
     override fun initiateDependencies(project: Project) {
@@ -79,7 +79,7 @@ class LibgdxUtils : ThirdPartyExtension() {
 @Extension
 class LibgdxUtilsBox2D : ThirdPartyExtension() {
     override val id = "utilsBox2d"
-    override val defaultVersion = "0.13.6"
+    override val defaultVersion = "0.13.7"
     override val url = "https://github.com/tommyettinger/gdx-utils"
 
     override fun initiateDependencies(project: Project) {
@@ -320,13 +320,13 @@ class Formic : ThirdPartyExtension() {
 }
 
 /**
- * An alternative color model for changing the colors of sprites and scenes, including brightening.
+ * Alternative color models for changing the colors of sprites and scenes, including brightening.
  * @author Tommy Ettinger
  */
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.2.2"
+    override val defaultVersion = "0.3.0"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.2"
+    override val defaultVersion = "0.2.3"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -402,7 +402,7 @@ class SpineRuntime : ThirdPartyExtension() {
 @Extension
 class ControllerUtils : ThirdPartyExtension() {
     override val id = "controllerUtils"
-    override val defaultVersion = "2.1.0"
+    override val defaultVersion = "2.2.0"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils"
 
     override fun initiateDependencies(project: Project) {
@@ -429,7 +429,7 @@ class ControllerUtils : ThirdPartyExtension() {
 @Extension
 class ControllerScene2D : ThirdPartyExtension() {
     override val id = "controllerScene2D"
-    override val defaultVersion = "2.1.0"
+    override val defaultVersion = "2.2.0"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d"
 
     override fun initiateDependencies(project: Project) {
