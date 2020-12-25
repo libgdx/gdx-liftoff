@@ -326,7 +326,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.3.0"
+    override val defaultVersion = "0.4.0"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.3"
+    override val defaultVersion = "0.2.4"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -397,6 +397,7 @@ class SpineRuntime : ThirdPartyExtension() {
  * MrStahlfelge's fantastic upgrades to controller support for desktop, Android, and GWT.
  * If something doesn't work in the official controller extension, it's probably been fixed here.
  * Change the version to 1.0.1 if you use libGDX 1.9.10 or earlier!
+ * This will replace the official gdx-controllers in the next libGDX release, and the dependency will change.
  * @author MrStahlfelge
  */
 @Extension
@@ -563,7 +564,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
     override val id = "kryo"
-    override val defaultVersion = "5.0.0"
+    override val defaultVersion = "5.0.3"
     override val url = "https://github.com/EsotericSoftware/kryo"
 
     override fun initiateDependencies(project: Project) {
@@ -595,7 +596,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
-    override val defaultVersion = "0.2.2"
+    override val defaultVersion = "0.2.3"
     override val url = "https://github.com/crykn/guacamole"
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn.guacamole:core")
