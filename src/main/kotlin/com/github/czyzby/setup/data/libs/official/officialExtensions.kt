@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * @author MJ
  */
 abstract class OfficialExtension : Library {
-    override val defaultVersion = "1.9.12"// Version.VERSION
+    override val defaultVersion = Version.VERSION
     override val official = true
 }
 
@@ -127,30 +127,30 @@ class Bullet : OfficialExtension() {
 }
 
 /**
- * Official controllers support.
+ * Official controllers support. See https://github.com/libgdx/gdx-controllers for Android ProGuard info.
  */
 @Extension(official = true)
 class Controllers : OfficialExtension() {
     override val id = "gdx-controllers"
-    override val url = "https://github.com/libgdx/libgdx/wiki/Controllers"
+    override val url = "https://github.com/libgdx/gdx-controllers"
 
     override fun initiate(project: Project) {
-        addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-controllers:\$gdxVersion")
+        project.properties["gdxControllersVersion"] = "2.0.0"
 
-        addDependency(project, Android.ID, "com.badlogicgames.gdx:gdx-controllers-android:\$gdxVersion")
+        addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 
-        addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-controllers-desktop:\$gdxVersion")
-        addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-controllers-platform:\$gdxVersion:natives-desktop")
+        addDependency(project, Android.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-android:\$gdxControllersVersion")
 
-        addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx:gdx-controllers-lwjgl3:\$gdxVersion")
-        // addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx:gdx-controllers-platform:\$gdxVersion:natives-desktop")
+        addDependency(project, Desktop.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-controllers:\$gdxVersion:sources")
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-controllers-gwt:\$gdxVersion")
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-controllers-gwt:\$gdxVersion:sources")
+        addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
+
+        addDependency(project, GWT.ID,"com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
+        addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
+        addGwtInherit(project, "com.badlogic.gdx.controllers")
         addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
 
-        // "Works" on iOS, but does not report any controllers.
+        addDependency(project, iOS.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-ios:\$gdxControllersVersion")
     }
 }
 
