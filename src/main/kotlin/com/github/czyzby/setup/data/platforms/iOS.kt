@@ -4,6 +4,8 @@ import com.github.czyzby.setup.data.files.CopiedFile
 import com.github.czyzby.setup.data.files.SourceFile
 import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.gradle.GradleFile
+import com.github.czyzby.setup.data.libs.official.Controllers
+import com.github.czyzby.setup.data.libs.official.OfficialExtension
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.GdxPlatform
 
@@ -67,6 +69,7 @@ app.name=${project.basic.name}"""))
 		<pattern>com.android.org.bouncycastle.crypto.digests.AndroidDigestFactoryOpenSSL</pattern>
 		<pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
 		<pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
+${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-controllers" } != null) "\t\t<pattern>com.badlogic.gdx.controllers.IosControllerManager</pattern>" else ""}
 	</forceLinkClasses>
 	<libs>
 			<lib>z</lib>
@@ -79,6 +82,7 @@ app.name=${project.basic.name}"""))
 		<framework>OpenAL</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
+${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-controllers" } != null) "\t\t<framework>GameKit</framework>" else ""}
 	</frameworks>
 </config>"""))
 
