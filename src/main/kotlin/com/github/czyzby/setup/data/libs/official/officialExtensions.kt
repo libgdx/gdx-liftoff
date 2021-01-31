@@ -135,7 +135,7 @@ class Controllers : OfficialExtension() {
     override val url = "https://github.com/libgdx/gdx-controllers"
 
     override fun initiate(project: Project) {
-        project.properties["gdxControllersVersion"] = "2.0.0"
+        project.properties["gdxControllersVersion"] = "2.1.0"
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 
