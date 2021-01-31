@@ -20,8 +20,8 @@ abstract class ThirdPartyExtension : Library {
     abstract fun initiateDependencies(project: Project)
 
     override fun addDependency(project: Project, platform: String, dependency: String) {
-        if (dependency.endsWith(":sources")) {
-            super.addDependency(project, platform, dependency.replace(":sources", ":\$${id}Version:sources"))
+        if(dependency.count { it == ':' } > 1) {
+            super.addDependency(project, platform, dependency.substringBeforeLast(':') + ":\$${id}Version:" + dependency.substringAfterLast(':'))
         } else {
             super.addDependency(project, platform, dependency + ":\$${id}Version")
         }
@@ -326,7 +326,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.4.0"
+    override val defaultVersion = "0.5.0"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -344,7 +344,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.4"
+    override val defaultVersion = "0.2.6"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -609,4 +609,36 @@ class Guacamole : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
         addGwtInherit(project, "guacamole_gdx_gwt")
     }
+}
+
+/**
+ * Support for the Basis Universal supercompressed texture format.
+ * You may need to change the dependencies for Desktop, LWJGL3, Headless,
+ * and/or iOS from `implementation` to `runtimeOnly`.
+ * @author Anton Chekulaev/metaphore
+ */
+@Extension
+class GdxBasisUniversal : ThirdPartyExtension() {
+    override val id = "gdxBasisUniversal"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/crashinvaders/gdx-basis-universal"
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.crashinvaders.basisu:basisu-wrapper")
+        addDependency(project, Core.ID, "com.crashinvaders.basisu:basisu-gdx")
+        addDependency(project, Desktop.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
+        addDependency(project, LWJGL3.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
+        addDependency(project, Headless.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
+        addDependency(project, iOS.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-ios")
+        addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-armeabi-v7a")
+        addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
+        addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
+        addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86_64")
+        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt")
+        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt:sources")
+        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx:sources")
+        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:sources")
+        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
+        addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
+    }
+
 }
