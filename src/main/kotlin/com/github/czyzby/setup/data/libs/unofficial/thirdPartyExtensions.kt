@@ -1,6 +1,7 @@
 package com.github.czyzby.setup.data.libs.unofficial
 
 import com.github.czyzby.setup.data.libs.Library
+import com.github.czyzby.setup.data.libs.official.Controllers
 import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
@@ -394,16 +395,15 @@ class SpineRuntime : ThirdPartyExtension() {
 
 
 /**
- * MrStahlfelge's fantastic upgrades to controller support for desktop, Android, and GWT.
- * If something doesn't work in the official controller extension, it's probably been fixed here.
+ * Legacy: MrStahlfelge's upgrades to controller support, now part of the official controllers extension.
+ * This is here so older projects that don't use the official controllers can be ported more easily.
  * Change the version to 1.0.1 if you use libGDX 1.9.10 or earlier!
- * This will replace the official gdx-controllers in the next libGDX release, and the dependency will change.
  * @author MrStahlfelge
  */
 @Extension
 class ControllerUtils : ThirdPartyExtension() {
     override val id = "controllerUtils"
-    override val defaultVersion = "2.2.0"
+    override val defaultVersion = "2.2.1"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils"
 
     override fun initiateDependencies(project: Project) {
@@ -430,7 +430,7 @@ class ControllerUtils : ThirdPartyExtension() {
 @Extension
 class ControllerScene2D : ThirdPartyExtension() {
     override val id = "controllerScene2D"
-    override val defaultVersion = "2.2.0"
+    override val defaultVersion = "2.3.0"
     override val url = "https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Button-operable-Scene2d"
 
     override fun initiateDependencies(project: Project) {
@@ -438,6 +438,26 @@ class ControllerScene2D : ThirdPartyExtension() {
 
         addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d:sources")
         addGwtInherit(project, "de.golfgl.gdx.controllers.controller_scene2d")
+        Controllers().initiate(project)
+    }
+}
+
+/**
+ * MrStahlfelge's configurable mapping for game controllers.
+ * Not compatible with libGDX 1.9.10 or older!
+ * @author MrStahlfelge
+ */
+@Extension
+class ControllerMapping : ThirdPartyExtension() {
+    override val id = "controllerMapping"
+    override val defaultVersion = "2.3.0"
+    override val url = "https://github.com/MrStahlfelge/gdx-controllerutils/wiki/Configurable-Game-Controller-Mappings"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-mapping")
+
+        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-mapping:sources")
+        Controllers().initiate(project)
     }
 }
 
@@ -490,7 +510,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension()
 class RegExodus : ThirdPartyExtension() {
     override val id = "regExodus"
-    override val defaultVersion = "0.1.10"
+    override val defaultVersion = "0.1.11"
     override val url = "https://github.com/tommyettinger/RegExodus"
 
     override fun initiateDependencies(project: Project) {
@@ -509,7 +529,7 @@ class RegExodus : ThirdPartyExtension() {
 @Extension
 class VisUI : ThirdPartyExtension() {
     override val id = "visUi"
-    override val defaultVersion = "1.4.6"
+    override val defaultVersion = "1.4.8"
     override val url = "https://github.com/kotcrab/vis-ui"
 
     override fun initiateDependencies(project: Project) {
@@ -596,7 +616,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
-    override val defaultVersion = "0.2.3"
+    override val defaultVersion = "0.2.4"
     override val url = "https://github.com/crykn/guacamole"
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn.guacamole:core")

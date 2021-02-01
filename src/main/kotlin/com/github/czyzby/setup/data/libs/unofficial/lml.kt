@@ -120,51 +120,54 @@ class AutumnMVC : ThirdPartyExtension() {
 }
 
 /**
- * Cross-platform web sockets support.
+ * Cross-platform web sockets support; MrStahlfelge's fork.
  * @author MJ
+ * @author MrStahlfelge
  */
 @Extension
 class Websocket : ThirdPartyExtension() {
     override val id = "websocket"
-    override val defaultVersion = AUTUMN_VERSION
-    override val url = "https://github.com/czyzby/gdx-lml/tree/master/websocket"
+    override val defaultVersion = "1.9.10.1"
+    override val url = "https://github.com/MrStahlfelge/gdx-websockets"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "com.github.czyzby:gdx-websocket")
+        addDependency(project, Core.ID, "com.github.MrStahlfelge.gdx-websockets:core")
 
-        addDependency(project, Shared.ID, "com.github.czyzby:gdx-websocket")
+        addDependency(project, Shared.ID, "com.github.MrStahlfelge.gdx-websockets:core")
 
-        addDesktopDependency(project, "com.github.czyzby:gdx-websocket-common")
-        addDependency(project, Headless.ID, "com.github.czyzby:gdx-websocket-common")
-        addDependency(project, iOS.ID, "com.github.czyzby:gdx-websocket-common")
+        addDesktopDependency(project, "com.github.MrStahlfelge.gdx-websockets:common")
+        addDependency(project, Headless.ID, "com.github.MrStahlfelge.gdx-websockets:common")
+        addDependency(project, iOS.ID, "com.github.MrStahlfelge.gdx-websockets:common")
 
-        addDependency(project, Android.ID, "com.github.czyzby:gdx-websocket-common")
+        addDependency(project, Android.ID, "com.github.MrStahlfelge.gdx-websockets:common")
         addAndroidPermission(project, "android.permission.INTERNET")
 
-        addDependency(project, GWT.ID, "com.github.czyzby:gdx-websocket:sources")
-        addDependency(project, GWT.ID, "com.github.czyzby:gdx-websocket-gwt")
-        addDependency(project, GWT.ID, "com.github.czyzby:gdx-websocket-gwt:sources")
+        addDependency(project, GWT.ID, "com.github.MrStahlfelge.gdx-websockets:core:sources")
+        addDependency(project, GWT.ID, "com.github.MrStahlfelge.gdx-websockets:html")
+        addDependency(project, GWT.ID, "com.github.MrStahlfelge.gdx-websockets:html:sources")
+        addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
         addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
     }
 }
 
 /**
- * Cross-platform efficient serialization without reflection.
+ * Cross-platform efficient serialization without reflection; MrStahlfelge's fork.
  * @author MJ
+ * @author MrStahlfelge
  */
 @Extension
 class WebsocketSerialization : ThirdPartyExtension() {
     override val id = "websocketSerialization"
-    override val defaultVersion = AUTUMN_VERSION
-    override val url = "https://github.com/czyzby/gdx-lml/tree/master/websocket/natives/serialization"
+    override val defaultVersion = "1.9.10.1"
+    override val url = "https://github.com/MrStahlfelge/gdx-websockets/tree/master/serialization"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "com.github.czyzby:gdx-websocket-serialization")
+        addDependency(project, Core.ID, "com.github.MrStahlfelge.gdx-websockets:serialization")
 
-        addDependency(project, Shared.ID, "com.github.czyzby:gdx-websocket-serialization")
-        addDependency(project, Server.ID, "com.github.czyzby:gdx-websocket-serialization")
+        addDependency(project, Shared.ID, "com.github.MrStahlfelge.gdx-websockets:serialization")
+        addDependency(project, Server.ID, "com.github.MrStahlfelge.gdx-websockets:serialization")
 
-        addDependency(project, GWT.ID, "com.github.czyzby:gdx-websocket-serialization:sources")
+        addDependency(project, GWT.ID, "com.github.MrStahlfelge.gdx-websockets:serialization:sources")
         addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketSerialization")
 
         Websocket().initiate(project)

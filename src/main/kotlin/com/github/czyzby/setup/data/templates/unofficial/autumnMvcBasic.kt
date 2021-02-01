@@ -98,6 +98,9 @@ public class DesktopLauncher {
 		configuration.title = "${project.basic.name}";
 		configuration.width = ${project.basic.mainClass}.WIDTH;
 		configuration.height = ${project.basic.mainClass}.HEIGHT;
+		//// This prevents a confusing error that would appear after exiting normally.
+		configuration.forceExit = false;
+
 		for (int size : new int[] { 128, 64, 32, 16 }) {
 			configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
 		}
