@@ -37,9 +37,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketAdapter;
 import com.github.czyzby.websocket.WebSocketListener;
+import com.github.czyzby.websocket.WebSockets;
 import com.github.czyzby.websocket.data.WebSocketCloseCode;
 import com.github.czyzby.websocket.data.WebSocketException;
-import com.github.czyzby.websocket.net.ExtendedNet;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.util.TableUtils;
 import com.kotcrab.vis.ui.widget.VisCheckBox;
@@ -157,11 +157,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 		} else if (webSocket == null || !webSocket.isOpen()) {
 			String host = hostInput.getText();
 			int port = Integer.parseInt(portInput.getText());
-			ExtendedNet net = ExtendedNet.getNet();
 			if (secureButton.isChecked()) {
-				webSocket = net.newSecureWebSocket(host, port);
+				webSocket = WebSockets.newSocket(WebSockets.toSecureWebSocketUrl(host, port));
 			} else {
-				webSocket = net.newWebSocket(host, port);
+				webSocket = WebSockets.newSocket(WebSockets.toWebSocketUrl(host, port));
 			}
 			webSocket.addListener(getWebSocketListener());
 			status.setText("Connecting...");
@@ -244,7 +243,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 		stage.dispose();
 		disconnect();
 	}
-}"""
+}
+"""
 
 	override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
 
@@ -292,6 +292,9 @@ public class DesktopLauncher {
 		configuration.title = "${project.basic.name}";
 		configuration.width = ${project.basic.mainClass}.WIDTH;
 		configuration.height = ${project.basic.mainClass}.HEIGHT;
+		//// This prevents a confusing error that would appear after exiting normally.
+		configuration.forceExit = false;
+
 		for (int size : new int[] { 128, 64, 32, 16 }) {
 			configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
 		}
