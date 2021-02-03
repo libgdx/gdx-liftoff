@@ -4,19 +4,19 @@
         <:column column="1" growX="true" minWidth="50"/>
         <:column column="3" growX="true" minWidth="50"/>
         @gdxVersion
-        <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.13</textField>
+        <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.14</textField>
         @version
-        <textField id="version" tooltip="@versionTip" row="true">0.0.1-SNAPSHOT</textField>
+1        <textField id="version" tooltip="@versionTip" row="true">0.0.1-SNAPSHOT</textField>
         @javaVersion
-        <floatSpinner id="javaVersion" min="7" max="16" value="8" step="1" precision="1"
+        <floatSpinner id="javaVersion" min="7" max="17" value="8" step="1" precision="1"
                       tooltip="@javaVersionTip"/>
         @serverJavaVersion
-        <floatSpinner id="serverJavaVersion" min="7" max="16" value="8" step="1" precision="1" row="true"
+        <floatSpinner id="serverJavaVersion" min="7" max="17" value="8" step="1" precision="1" row="true"
                       tooltip="@serverJavaVersionTip"/>
         @androidPluginVersion
         <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">4.0.2</textField>
         @desktopJavaVersion
-        <floatSpinner id="desktopJavaVersion" min="7" max="16" value="8" step="1" precision="1" row="true"
+        <floatSpinner id="desktopJavaVersion" min="7" max="17" value="8" step="1" precision="1" row="true"
                       tooltip="@desktopJavaVersionTip"/>
         @sdkVersion
         <intSpinner id="sdkVersion" min="9" max="30" value="$getSdkVersion" onChange="setSdkVersion" step="1"
