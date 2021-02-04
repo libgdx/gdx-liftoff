@@ -13,7 +13,7 @@ buildscript {
   }
 }
 
-version = "1.9.14.0"
+version = "1.9.14.1-SNAPSHOT"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {
@@ -38,5 +38,5 @@ dependencies {
   api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   api "io.github.lukehutch:fast-classpath-scanner:2.21"
-  api "com.kotcrab.vis:vis-ui:1.4.6"
+  api "com.kotcrab.vis:vis-ui:1.4.9-SNAPSHOT"
 }
