@@ -291,7 +291,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class ShapeDrawer : ThirdPartyExtension() {
     override val id = "shapeDrawer"
-    override val defaultVersion = "2.3.0"
+    override val defaultVersion = "2.4.0"
     override val url = "https://github.com/earlygrey/shapedrawer"
 
     override fun initiateDependencies(project: Project) {
@@ -616,7 +616,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
-    override val defaultVersion = "0.2.4"
+    override val defaultVersion = "0.3.0"
     override val url = "https://github.com/crykn/guacamole"
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn.guacamole:core")
