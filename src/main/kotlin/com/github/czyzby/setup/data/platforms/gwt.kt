@@ -243,9 +243,8 @@ task distZip(type: Zip, dependsOn: dist){
 		include '**/*.html'
 		filter { String line -> line.replaceAll('<a class="superdev" .+', '') }
 	}
-	//// The next line attempts to name the zip with a unique timestamp, removing spaces and ':' for compatibility.
-	archiveName "dist-${'$'}{(new Date().toString()).replace(' ', '-').replace(':', '-')}.zip"
-	//// The result will be in html/build/ with a name containing the above probably-unique timestamp.
+	archiveBaseName.set("${'$'}{appName}-dist")
+	//// The result will be in html/build/ with a name containing "dist".
 	destinationDir(file("build"))
 }
 

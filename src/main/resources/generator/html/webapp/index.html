@@ -15,17 +15,16 @@
 
 <script>
 function handleMouseDown(evt) {
-	evt.preventDefault();
-	evt.stopPropagation();
-	window.focus();
+  evt.preventDefault();
+  evt.stopPropagation();
+  window.focus();
 }
 
 function handleMouseUp(evt) {
-	evt.preventDefault();
-	evt.stopPropagation();
+  evt.preventDefault();
+  evt.stopPropagation();
 }
 document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
 document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
-
 </script>
 </html>
