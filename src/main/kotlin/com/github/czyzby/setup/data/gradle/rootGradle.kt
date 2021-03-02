@@ -15,7 +15,7 @@ class RootGradleFile(val project: Project) : GradleFile("") {
         buildRepositories.add("mavenLocal()")
         buildRepositories.add("mavenCentral()")
         buildRepositories.add("google()")
-        buildRepositories.add("maven { url 'https://plugins.gradle.org/m2/' }")
+        buildRepositories.add("gradlePluginPortal()")
         buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
     }
 
@@ -50,7 +50,7 @@ subprojects {
 	repositories {
 		mavenLocal()
 		mavenCentral()
-		maven { url 'https://plugins.gradle.org/m2/' }
+		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://jitpack.io' }
 	}

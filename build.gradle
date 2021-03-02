@@ -6,7 +6,7 @@ buildscript {
   repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://plugins.gradle.org/m2/' }
+    gradlePluginPortal()
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -26,7 +26,7 @@ jar {
 repositories {
   mavenCentral()
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url 'https://plugins.gradle.org/m2/' }
+  gradlePluginPortal()
   maven { url 'https://jitpack.io' }
 }
 
