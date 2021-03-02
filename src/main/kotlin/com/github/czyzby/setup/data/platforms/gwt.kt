@@ -142,7 +142,7 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 	override fun getContent(): String = """
 buildscript {
 	repositories {
-		maven { url 'https://plugins.gradle.org/m2/' }
+		gradlePluginPortal()
 	}
 	dependencies {
 		classpath 'org.gretty:gretty:3.0.2'
