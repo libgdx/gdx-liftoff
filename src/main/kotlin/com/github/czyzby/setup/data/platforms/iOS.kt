@@ -94,7 +94,7 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
                     original = path("generator", "ios", "data", it)))
         }
         project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "Contents.json"),
-                original = path("generator", "ios", "data", "Media.xcassets")))
+                original = path("generator", "ios", "data", "Media.xcassets", "Contents.json")))
         arrayOf(
                 "app-store-icon-1024@1x.png",
                 "Contents.json",
