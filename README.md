@@ -10,7 +10,11 @@ The official setup may transition to a web-based tool soon, but any user of the 
 formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
 code, which is built on czyzby's code, gives us working projects that use Gradle 6.8.1, the same as the official setup, but ahead of 4.0.2 for czyzby's gdx-setup.
-Currently, gdx-liftoff projects depend on libGDX 1.9.14 by default, and allow using snapshots as well.
+Currently, gdx-liftoff projects depend on libGDX 1.9.13 by default, and allow using snapshots as well.
+The current version of libGDX is 1.9.14, but that particular release has some very problematic bugs, while 1.9.13 and
+the current 1.9.15-SNAPSHOT nightly releases should work fine. You can choose any released version of libGDX (or a
+nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import the Gradle
+project into your IDE or run one of most Gradle tasks.
 
 Projects default to using LWJGL3 instead of LWJGL2 (the old 'desktop' platform), since code tends to be very similar between the two, but LWJGL3 generally offers
 more features. This code is tested for compatibility with GWT, including the various changes that Gradle needs with this version. It is sometimes tested on Android,
@@ -173,9 +177,9 @@ see [libGDX's documentation](https://libgdx.badlogicgames.com/documentation/gett
     - You can modify the manifest, and probably need to do so if you want to submit an app to the Play store.
     - Android Studio should have better support for recent Gradle versions if you use a beta release. 
     - Android Studio should be at least version 4.0, but 4.1 is untested so far.
-  - The default release is libGDX 1.9.14, but various parts of the 3D model code in that release don't work.
-    If you use 3D models in libGDX, you should probably switch to 1.9.13 for now. You can select the libGDX version
-    from the Advanced tab in the current gdx-liftoff release.
+  - The default release is libGDX 1.9.14, but various parts of the 3D model code, framebuffer handling (which affects a
+    lot), and iOS support in that release don't work. You should probably stick with 1.9.13 for now. You can select the
+    libGDX version from the Advanced tab in the current gdx-liftoff release.
 
 ## Credits
 
