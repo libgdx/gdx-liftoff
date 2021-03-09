@@ -129,7 +129,7 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
                     original = path("generator", "ios", "data", "Media.xcassets", "Logo.imageset", it)))
         }
         project.files.add(CopiedFile(projectName = ID, path = path("data", "Base.lproj", "LaunchScreen.storyboard"),
-                original = path("generator", "ios", "data", "Base.lproj")))
+                original = path("generator", "ios", "data", "Base.lproj", "LaunchScreen.storyboard")))
 
         // Including reflected classes:
         if (project.reflectedClasses.isNotEmpty() || project.reflectedPackages.isNotEmpty()) {
