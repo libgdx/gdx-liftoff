@@ -6,7 +6,7 @@
         @gdxVersion
         <textField id="gdxVersion" tooltip="@gdxVersionTip|$gdxVersion">1.9.13</textField>
         @version
-        <textField id="version" tooltip="@versionTip" row="true">0.0.1-SNAPSHOT</textField>
+        <textField id="version" tooltip="@versionTip" row="true">0.0.1</textField>
         @javaVersion
         <floatSpinner id="javaVersion" min="7" max="17" value="8" step="1" precision="1"
                       tooltip="@javaVersionTip"/>

@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * Current version of KTX libraries.
  * @author MJ
  */
+// this is a version behind, because 1.9.14-b1 depends on libGDX 1.9.14...
 const val KTX_VERSION = "1.9.13-b1"
 
 /**
