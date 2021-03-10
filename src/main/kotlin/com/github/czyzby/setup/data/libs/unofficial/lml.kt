@@ -127,7 +127,7 @@ class AutumnMVC : ThirdPartyExtension() {
 @Extension
 class Websocket : ThirdPartyExtension() {
     override val id = "websocket"
-    override val defaultVersion = "1.9.10.1"
+    override val defaultVersion = "1.9.10.3"
     override val url = "https://github.com/MrStahlfelge/gdx-websockets"
 
     override fun initiateDependencies(project: Project) {
@@ -158,7 +158,7 @@ class Websocket : ThirdPartyExtension() {
 @Extension
 class WebsocketSerialization : ThirdPartyExtension() {
     override val id = "websocketSerialization"
-    override val defaultVersion = "1.9.10.1"
+    override val defaultVersion = "1.9.10.3"
     override val url = "https://github.com/MrStahlfelge/gdx-websockets/tree/master/serialization"
 
     override fun initiateDependencies(project: Project) {
