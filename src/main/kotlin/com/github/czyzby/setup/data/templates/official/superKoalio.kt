@@ -274,7 +274,7 @@ public class ${project.basic.mainClass} extends InputAdapter implements Applicat
 		// Check for touch inputs between startX and endX
 		// startX/endX are given between 0 (left edge of the screen) and 1 (right edge of the screen)
 		for (int i = 0; i < 2; i++) {
-			float x = Gdx.input.getX(i) / (float)Gdx.graphics.getWidth();
+			float x = Gdx.input.getX(i) / (float)Gdx.graphics.getBackBufferWidth();
 			if (Gdx.input.isTouched(i) && (x >= startX && x <= endX)) {
 				return true;
 			}

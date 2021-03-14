@@ -88,7 +88,8 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
 
         // Copying data images:
         arrayOf("Default.png", "Default@2x.png", "Default@2x~ipad.png", "Default-375w-667h@2x.png",
-                "Default-414w-736h@3x.png", "Default-568h@2x.png", "Default-1024w-1366h@2x~ipad.png",
+            "Default-375w-812h@3x.png", "Default-414w-736h@3x.png", "Default-568h@2x.png",
+            "Default-1024w-1366h@2x~ipad.png",
                 "Default~ipad.png", "Icon.png", "Icon@2x.png", "Icon-72.png", "Icon-72@2x.png").forEach {
             project.files.add(CopiedFile(projectName = ID, path = path("data", it),
                     original = path("generator", "ios", "data", it)))
@@ -96,25 +97,25 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
         project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "Contents.json"),
                 original = path("generator", "ios", "data", "Media.xcassets", "Contents.json")))
         arrayOf(
-                "app-store-icon-1024@1x.png",
-                "Contents.json",
-                "ipad-app-icon-76@1x.png",
-                "ipad-app-icon-76@2x.png",
-                "ipad-notifications-icon-20@1x.png",
-                "ipad-notifications-icon-20@2x.png",
-                "ipad-pro-app-icon-83.5@2x.png",
-                "ipad-settings-icon-29@1x.png",
-                "ipad-settings-icon-29@2x.png",
-                "ipad-spotlight-icon-40@1x.png",
-                "ipad-spotlight-icon-40@2x.png",
-                "iphone-app-icon-60@2x.png",
-                "iphone-app-icon-60@3x.png",
-                "iphone-notification-icon-20@2x.png",
-                "iphone-notification-icon-20@3x.png",
-                "iphone-spotlight-icon-40@2x.png",
-                "iphone-spotlight-icon-40@3x.png",
-                "iphone-spotlight-settings-icon-29@2x.png",
-                "iphone-spotlight-settings-icon-29@3x.png"
+            "app-store-icon-1024@1x.png",
+            "Contents.json",
+            "ipad-app-icon-76@1x.png",
+            "ipad-app-icon-76@2x.png",
+            "ipad-notifications-icon-20@1x.png",
+            "ipad-notifications-icon-20@2x.png",
+            "ipad-pro-app-icon-83.5@2x.png",
+            "ipad-settings-icon-29@1x.png",
+            "ipad-settings-icon-29@2x.png",
+            "ipad-spotlight-icon-40@1x.png",
+            "ipad-spotlight-icon-40@2x.png",
+            "iphone-app-icon-60@2x.png",
+            "iphone-app-icon-60@3x.png",
+            "iphone-notification-icon-20@2x.png",
+            "iphone-notification-icon-20@3x.png",
+            "iphone-spotlight-icon-40@2x.png",
+            "iphone-spotlight-icon-40@3x.png",
+            "iphone-spotlight-settings-icon-29@2x.png",
+            "iphone-spotlight-settings-icon-29@3x.png"
         ).forEach {
             project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "AppIcon.appiconset", it),
                     original = path("generator", "ios", "data", "Media.xcassets", "AppIcon.appiconset", it)))
