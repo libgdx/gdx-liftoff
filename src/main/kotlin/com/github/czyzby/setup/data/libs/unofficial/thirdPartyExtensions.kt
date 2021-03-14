@@ -303,6 +303,24 @@ class ShapeDrawer : ThirdPartyExtension() {
 }
 
 /**
+ * Provides various frequently-used graph algorithms, aiming to be lightweight, fast, and intuitive.
+ * @author earlygrey
+ */
+@Extension
+class SimpleGraphs : ThirdPartyExtension() {
+    override val id = "simpleGraphs"
+    override val defaultVersion = "3.0.0"
+    override val url = "https://github.com/earlygrey/simple-graphs"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "space.earlygrey:simple-graphs")
+
+        addDependency(project, GWT.ID, "space.earlygrey:simple-graphs:sources")
+        addGwtInherit(project, "simple_graphs")
+    }
+}
+
+/**
  * Provides a replacement for GWT's missing String.format() with its Stringf.format().
  * @author Tommy Ettinger
  */
