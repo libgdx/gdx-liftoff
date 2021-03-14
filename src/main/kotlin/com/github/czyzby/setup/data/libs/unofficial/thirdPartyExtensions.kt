@@ -345,7 +345,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.5.0"
+    override val defaultVersion = "0.5.1"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -363,7 +363,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.7"
+    override val defaultVersion = "0.2.8"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -588,7 +588,7 @@ class PieMenu : ThirdPartyExtension() {
 @Extension
 class JBump : ThirdPartyExtension() {
     override val id = "jbump"
-    override val defaultVersion = "v1.0.0"
+    override val defaultVersion = "v1.0.1"
     override val url = "https://github.com/tommyettinger/jbump"
 
     override fun initiateDependencies(project: Project) {
@@ -605,7 +605,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
     override val id = "kryo"
-    override val defaultVersion = "5.0.3"
+    override val defaultVersion = "5.0.4"
     override val url = "https://github.com/EsotericSoftware/kryo"
 
     override fun initiateDependencies(project: Project) {
