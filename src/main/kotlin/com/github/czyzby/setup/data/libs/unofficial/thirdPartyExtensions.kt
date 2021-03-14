@@ -94,7 +94,7 @@ class LibgdxUtilsBox2D : ThirdPartyExtension() {
 }
 
 /**
- * Facebook graph API wrapper. May be out-of-date.
+ * Facebook graph API wrapper. iOS-incompatible! Also, out-of-date.
  * @author Tom Grill
  */
 @Extension
@@ -109,8 +109,8 @@ class Facebook : ThirdPartyExtension() {
         addDependency(project, Android.ID, "de.tomgrill.gdxfacebook:gdx-facebook-android")
 
         addDesktopDependency(project, "de.tomgrill.gdxfacebook:gdx-facebook-desktop")
-
-        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
+//// This is a problem for the App Store, removed.
+//        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html")
