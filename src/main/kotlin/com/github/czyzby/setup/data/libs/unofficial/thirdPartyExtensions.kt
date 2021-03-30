@@ -528,7 +528,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension()
 class RegExodus : ThirdPartyExtension() {
     override val id = "regExodus"
-    override val defaultVersion = "0.1.11"
+    override val defaultVersion = "0.1.12"
     override val url = "https://github.com/tommyettinger/RegExodus"
 
     override fun initiateDependencies(project: Project) {
@@ -545,6 +545,7 @@ class RegExodus : ThirdPartyExtension() {
  * Check the vis-ui changelog for what vis-ui versions are compatible
  * with which libGDX versions; vis-ui 1.4.9 is the default, and is
  * compatible with libGDX 1.9.12 and 1.9.13, but not 1.9.14 or higher.
+ * You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
  * @author Kotcrab
  */
 @Extension

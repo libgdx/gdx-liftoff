@@ -43,6 +43,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		VisUI.setSkipGdxVersionCheck(true);
 		VisUI.load(SkinScale.X1);
 
 		stage = new Stage(new ScreenViewport());
