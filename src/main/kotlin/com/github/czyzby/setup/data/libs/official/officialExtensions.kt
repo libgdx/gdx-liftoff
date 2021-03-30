@@ -128,6 +128,8 @@ class Bullet : OfficialExtension() {
 
 /**
  * Official controllers support. See https://github.com/libgdx/gdx-controllers for Android ProGuard info.
+ * Note, the code for gdx-controllers (and its version) are separate from the earlier gdx-controllers extension.
+ * If you used a version of gdx-controllers before 2.0.0, there may be some important changes.
  */
 @Extension(official = true)
 class Controllers : OfficialExtension() {
@@ -135,7 +137,7 @@ class Controllers : OfficialExtension() {
     override val url = "https://github.com/libgdx/gdx-controllers"
 
     override fun initiate(project: Project) {
-        project.properties["gdxControllersVersion"] = "2.1.0"
+        project.properties["gdxControllersVersion"] = "2.2.0"
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 
