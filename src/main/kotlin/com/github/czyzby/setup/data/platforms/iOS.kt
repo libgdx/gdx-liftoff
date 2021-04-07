@@ -40,9 +40,9 @@ app.name=${project.basic.name}"""))
 	<executableName>${'$'}{app.executable}</executableName>
 	<mainClass>${'$'}{app.mainclass}</mainClass>
 	<os>ios</os>
-	<arch>thumbv7</arch>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<treeShaker>conservative</treeShaker>
 	<resources>
 		<resource>
 			<directory>../assets</directory>
@@ -82,18 +82,11 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
 		<framework>OpenAL</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
+		<framework>GameController</framework>
 ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-controllers" } != null) "\t\t<framework>GameKit</framework>" else ""}
 	</frameworks>
 </config>"""))
 
-        // Copying data images:
-        arrayOf("Default.png", "Default@2x.png", "Default@2x~ipad.png", "Default-375w-667h@2x.png",
-            "Default-375w-812h@3x.png", "Default-414w-736h@3x.png", "Default-568h@2x.png",
-            "Default-1024w-1366h@2x~ipad.png",
-                "Default~ipad.png", "Icon.png", "Icon@2x.png", "Icon-72.png", "Icon-72@2x.png").forEach {
-            project.files.add(CopiedFile(projectName = ID, path = path("data", it),
-                    original = path("generator", "ios", "data", it)))
-        }
         project.files.add(CopiedFile(projectName = ID, path = path("data", "Media.xcassets", "Contents.json"),
                 original = path("generator", "ios", "data", "Media.xcassets", "Contents.json")))
         arrayOf(
