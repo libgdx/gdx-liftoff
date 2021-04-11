@@ -606,7 +606,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
     override val id = "kryo"
-    override val defaultVersion = "5.0.4"
+    override val defaultVersion = "5.1.0"
     override val url = "https://github.com/EsotericSoftware/kryo"
 
     override fun initiateDependencies(project: Project) {
