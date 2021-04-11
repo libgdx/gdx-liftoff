@@ -66,18 +66,18 @@ run {
 		jvmArgs += "-XstartOnFirstThread"
 	}
 }
+
 jar {
-	archiveBaseName = appName
+	archiveBaseName.set(appName)
 	dependsOn configurations.runtimeClasspath
-	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } } 
+	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 	manifest {
 		attributes 'Main-Class': project.mainClassName
 	}
 	doLast {
-		file(archivePath).setExecutable(true, false)
+		file(archiveFile).setExecutable(true, false)
 	}
 }
-
 """
 
 }
