@@ -1,6 +1,9 @@
 package com.github.czyzby.setup.data.templates.unofficial
 
+import com.github.czyzby.setup.data.files.CopiedFile
+import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.libs.unofficial.VisUI
+import com.github.czyzby.setup.data.platforms.Assets
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate
@@ -17,6 +20,10 @@ class VisUIBasicTemplate : Template {
 
 	override fun apply(project: Project) {
 		super.apply(project)
+		project.files.add(
+			CopiedFile(projectName = Assets.ID, original = path("generator", "assets",
+				".gitkeep"), path = ".gitkeep")
+		)
 		VisUI().initiate(project)
 	}
 
