@@ -1,5 +1,8 @@
 package com.github.czyzby.setup.data.templates.official
 
+import com.github.czyzby.setup.data.files.CopiedFile
+import com.github.czyzby.setup.data.files.path
+import com.github.czyzby.setup.data.platforms.Assets
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate

@@ -1,6 +1,9 @@
 package com.github.czyzby.setup.data.templates.unofficial
 
+import com.github.czyzby.setup.data.files.CopiedFile
+import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.libs.unofficial.Noise4J
+import com.github.czyzby.setup.data.platforms.Assets
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate
@@ -19,6 +22,10 @@ class Noise4JTemplate : Template {
 	override fun apply(project: Project) {
 		mainClass = project.basic.mainClass
 		super.apply(project)
+		project.files.add(
+			CopiedFile(projectName = Assets.ID, original = path("generator", "assets",
+				".gitkeep"), path = ".gitkeep")
+		)
 		// Including noise4j dependency:
 		Noise4J().initiate(project)
 	}

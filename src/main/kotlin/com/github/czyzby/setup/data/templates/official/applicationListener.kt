@@ -1,5 +1,8 @@
 package com.github.czyzby.setup.data.templates.official
 
+import com.github.czyzby.setup.data.files.CopiedFile
+import com.github.czyzby.setup.data.files.path
+import com.github.czyzby.setup.data.platforms.Assets
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate
@@ -13,6 +16,14 @@ class ApplicationListenerTemplate : Template {
 	override val id = "applicationListener"
 	override val description: String
 		get() = "Project template included simple launchers and an empty `ApplicationListener` implementation."
+
+	override fun apply(project: Project) {
+		super.apply(project)
+		project.files.add(
+			CopiedFile(projectName = Assets.ID, original = path("generator", "assets",
+				".gitkeep"), path = ".gitkeep")
+		)
+	}
 
 	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
