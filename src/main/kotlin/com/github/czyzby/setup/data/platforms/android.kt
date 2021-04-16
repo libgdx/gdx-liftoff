@@ -24,7 +24,7 @@ class Android : Platform {
 		addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
 		addCopiedFile(project, "ic_launcher-web.png")
-		addCopiedFile(project, "proguard-project.txt")
+		addCopiedFile(project, "proguard-rules.pro")
 		addCopiedFile(project, "project.properties")
 		addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
 		addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
