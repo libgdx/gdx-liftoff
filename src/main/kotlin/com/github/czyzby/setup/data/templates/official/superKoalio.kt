@@ -103,9 +103,9 @@ public class ${project.basic.mainClass} extends InputAdapter implements Applicat
 		// load the koala frames, split them, and assign them to Animations
 		koalaTexture = new Texture("koalio.png");
 		TextureRegion[] regions = TextureRegion.split(koalaTexture, 18, 26)[0];
-		stand = new Animation(0, regions[0]);
-		jump = new Animation(0, regions[1]);
-		walk = new Animation(0.15f, regions[2], regions[3], regions[4]);
+		stand = new Animation<TextureRegion>(0, regions[0]);
+		jump = new Animation<TextureRegion>(0, regions[1]);
+		walk = new Animation<TextureRegion>(0.15f, regions[2], regions[3], regions[4]);
 		walk.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
 		// figure out the width and height of the koala for collision

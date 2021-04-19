@@ -1,6 +1,7 @@
 package com.github.czyzby.lml.parser.impl.attribute.image;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.github.czyzby.kiwi.util.common.Exceptions;
 import com.github.czyzby.lml.parser.LmlParser;
@@ -22,18 +23,29 @@ public class ScalingLmlAttribute implements LmlAttribute<Image> {
         actor.setScaling(parseScaling(parser, parser.parseString(rawAttributeData, actor)));
     }
 
+    private static final ObjectMap<String, Scaling> scalingMap = new ObjectMap<>();
+    static {
+        scalingMap.put("fit", Scaling.fit);
+        scalingMap.put("fill", Scaling.fill);
+        scalingMap.put("fillX", Scaling.fillX);
+        scalingMap.put("fillY", Scaling.fillY);
+        scalingMap.put("stretch", Scaling.stretch);
+        scalingMap.put("stretchX", Scaling.stretchX);
+        scalingMap.put("stretchY", Scaling.stretchY);
+        scalingMap.put("none", Scaling.none);
+    }
     private static Scaling parseScaling(final LmlParser parser, final String parsedData) {
         try {
-            final Scaling scaling = Scaling.valueOf(parsedData);
+            final Scaling scaling = scalingMap.get(parsedData, Scaling.none);
             if (scaling != null) {
                 return scaling;
             }
         } catch (final Exception exception) {
             Exceptions.ignore(exception); // Somewhat expected. Invalid name.
         }
-        for (final Scaling scaling : Scaling.values()) {
-            if (parsedData.equalsIgnoreCase(scaling.name())) {
-                return scaling;
+        for (final ObjectMap.Entry<String, Scaling> entry : scalingMap.entries()) {
+            if (parsedData.equalsIgnoreCase(entry.key)) {
+                return entry.value;
             }
         }
         parser.throwErrorIfStrict("Unable to find Scaling enum constant with name: " + parsedData);

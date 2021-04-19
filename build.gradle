@@ -13,14 +13,22 @@ buildscript {
   }
 }
 
-version = "1.9.14.4-SNAPSHOT"
+version = "1.10.0.0"
 mainClassName = 'com.github.czyzby.setup.MainKt'
 
 jar {
   manifest {
     attributes 'Main-Class': mainClassName
   }
+  duplicatesStrategy(DuplicatesStrategy.INCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+  dependencies {
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
+  }
+  doLast {
+    file(archiveFile).setExecutable(true, false)
+  }
 }
 
 repositories {
@@ -38,5 +46,5 @@ dependencies {
   api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   api "io.github.lukehutch:fast-classpath-scanner:2.21"
-  api "com.kotcrab.vis:vis-ui:1.4.9"
+  api "com.kotcrab.vis:vis-ui:1.4.11"
 }
