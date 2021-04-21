@@ -16,7 +16,7 @@ import com.kotcrab.vis.ui.widget.VisTextField
  */
 class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, styleName) {
     init {
-        style.font.data.markupEnabled = true;
+        style.font.data.markupEnabled = true
     }
     override fun getPrefWidth(): Float {
         return width

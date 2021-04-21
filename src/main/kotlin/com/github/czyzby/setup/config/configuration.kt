@@ -28,7 +28,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser
 @Component
 class Configuration {
     companion object {
-        const val VERSION = "1.10.0.0"
+        const val VERSION = "1.10.0.1-SNAPSHOT"
         const val WIDTH = 600
         const val HEIGHT = 700
         const val PREFERENCES_PATH = "gdx-liftoff-prefs"
