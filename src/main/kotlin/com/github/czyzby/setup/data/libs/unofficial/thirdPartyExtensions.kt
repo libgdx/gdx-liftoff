@@ -146,7 +146,7 @@ class Dialogs : ThirdPartyExtension() {
 }
 
 /**
- * In-game console implementation.
+ * In-game console implementation; GWT-incompatible. If you target GWT, you can use JACI GWT.
  * @author StrongJoshua
  */
 @Extension
@@ -157,14 +157,11 @@ class InGameConsole : ThirdPartyExtension() {
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.strongjoshua:libgdx-inGameConsole")
-
-        addDependency(project, GWT.ID, "com.strongjoshua:libgdx-inGameConsole:sources")
-        addGwtInherit(project, "com.strongjoshua.console")
     }
 }
 
 /**
- * Java Annotation Console Interface. In-game console implementation.
+ * Java Annotation Console Interface. In-game console implementation, for non-GWT usage.
  * @author Yevgeny Krasik
  */
 @Extension
@@ -180,6 +177,7 @@ class Jaci : ThirdPartyExtension() {
 
 /**
  * Java Annotation Console Interface. GWT-compatible in-game console implementation.
+ * Don't use this at the same time as JACI (the non-GWT version).
  * @author Yevgeny Krasik
  */
 @Extension
