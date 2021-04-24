@@ -20,7 +20,7 @@ jar {
   manifest {
     attributes 'Main-Class': mainClassName
   }
-  duplicatesStrategy(DuplicatesStrategy.INCLUDE)
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
