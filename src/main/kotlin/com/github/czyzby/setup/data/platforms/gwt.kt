@@ -142,10 +142,12 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 	override fun getContent(): String = """
 buildscript {
 	repositories {
-		gradlePluginPortal()
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
 	}
 	dependencies {
-		classpath 'org.gretty:gretty:3.0.2'
+	// temporarily uses a JitPack dependency on a working version of Gretty until the next 3.x release
+		classpath "com.github.tommyettinger.gretty:gretty:3.0.4.5"
 	}
 }
 apply plugin: "gwt"
