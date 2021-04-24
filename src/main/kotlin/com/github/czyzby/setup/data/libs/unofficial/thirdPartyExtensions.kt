@@ -668,6 +668,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addDependency(project, LWJGL3.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
         addDependency(project, Headless.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
         addDependency(project, iOS.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-ios")
+        addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-armeabi-v7a")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86_64")

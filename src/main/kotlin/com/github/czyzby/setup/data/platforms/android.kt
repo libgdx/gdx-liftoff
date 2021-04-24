@@ -82,6 +82,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
 	init {
 		dependencies.add("project(':${Core.ID}')")
 		addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
 		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
 		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
 		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
@@ -166,12 +167,14 @@ ${joinDependencies(nativeDependencies, "natives")}
 // so they get packed with the APK.
 task copyAndroidNatives() {
 	doFirst {
+		file("libs/armeabi-v7a/").mkdirs()
 		file("libs/arm64-v8a/").mkdirs()
 		file("libs/x86_64/").mkdirs()
 		file("libs/x86/").mkdirs()
 		
 		configurations.getByName("natives").copy().files.each { jar ->
     	    def outputDir = null
+    	    if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
     	    if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
     	    if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
     	    if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
