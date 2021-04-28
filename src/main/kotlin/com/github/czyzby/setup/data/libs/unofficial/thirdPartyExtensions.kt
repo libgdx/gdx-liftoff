@@ -1,9 +1,12 @@
 package com.github.czyzby.setup.data.libs.unofficial
 
+import com.github.czyzby.setup.data.files.CopiedFile
+import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.libs.Library
 import com.github.czyzby.setup.data.libs.official.Controllers
 import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
+import com.github.czyzby.setup.prefs.GwtVersionPreference
 import com.github.czyzby.setup.views.Extension
 
 /**
@@ -50,6 +53,16 @@ class ArtemisOdb : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt:sources")
         addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:sources")
         addGwtInherit(project, "com.artemis.backends.artemis_backends_gwt")
+        if (project.hasPlatform(GWT.ID)) {
+            project.files.add(
+                CopiedFile(
+                    projectName = GWT.ID,
+                    original = path("generator", GWT.ID, "jsr305.gwt.xml"),
+                    path = path("src", "main", "java", "jsr305.gwt.xml")
+                )
+            )
+            addGwtInherit(project, "jsr305")
+        }
     }
 }
 
