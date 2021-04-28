@@ -10,7 +10,7 @@ import com.github.czyzby.setup.data.platforms.Platform
 class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
     override val path = "settings.gradle"
     override fun save(destination: FileHandle) {
-        val content = platforms.joinToString(prefix = "include ", separator = ", ") { "'${it.id}'" }
+        val content = platforms.joinToString(prefix = "include ", separator = ", ", postfix = "\n") { "'${it.id}'" }
         destination.child(path).writeString(content, false, "UTF-8")
     }
 }
