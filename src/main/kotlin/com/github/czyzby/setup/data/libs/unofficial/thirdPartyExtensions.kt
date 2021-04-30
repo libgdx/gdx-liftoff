@@ -6,7 +6,6 @@ import com.github.czyzby.setup.data.libs.Library
 import com.github.czyzby.setup.data.libs.official.Controllers
 import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
-import com.github.czyzby.setup.prefs.GwtVersionPreference
 import com.github.czyzby.setup.views.Extension
 
 /**
