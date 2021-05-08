@@ -252,6 +252,8 @@ task distZip(type: Zip, dependsOn: dist){
 
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
+tasks.checkGwt.dependsOn(addSource)
+checkGwt.war = file("war")
 
 sourceCompatibility = 8.0
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
