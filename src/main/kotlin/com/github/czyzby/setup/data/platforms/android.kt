@@ -157,7 +157,7 @@ repositories {
 configurations { natives }
 
 dependencies {
-	${if(project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'" else ""}
+	${if(project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
 }
