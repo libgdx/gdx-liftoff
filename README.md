@@ -15,7 +15,7 @@ This allows new projects to "just work" on machines where Java 16 is the default
 changes needed for Gradle 7.0 are all handled by gdx-liftoff. There is an oddity with gdx-liftoff 1.10.0.1 through 1.10.0.3; HTML projects wouldn't build
 correctly with Gradle 7.0 and the current version of the "gretty" Gradle plugin, 3.0.4. This has been addressed, somewhat clumsily, by
 using [a fork of gretty](https://github.com/tommyettinger/gretty) and depending on it with JitPack, at least until the next gretty release.
-This fork, like future versions of gretty, requires Gradle 7.0, but unlike gretty 4.x, it only requires a JDK 8 or higher, and it includes needed fixes.
+This fork, like future versions of gretty, requires Gradle 7.0 or higher, but unlike gretty 4.x, it only requires a JDK 8 or higher, and it includes needed fixes.
 Currently, gdx-liftoff projects depend on libGDX 1.10.0 by default, and allow using snapshots as well.
 The current version of libGDX is 1.10.0, which had a longer release cycle because there was an emphasis on fixing bugs
 in earlier releases. You can choose any released version of libGDX (or a nightly version) in the Advanced tab of the
