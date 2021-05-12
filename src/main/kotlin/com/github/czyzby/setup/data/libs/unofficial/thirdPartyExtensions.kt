@@ -373,7 +373,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.8"
+    override val defaultVersion = "0.2.9"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
 
     override fun initiateDependencies(project: Project) {
@@ -616,7 +616,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
     override val id = "kryo"
-    override val defaultVersion = "5.1.0"
+    override val defaultVersion = "5.1.1"
     override val url = "https://github.com/EsotericSoftware/kryo"
 
     override fun initiateDependencies(project: Project) {
@@ -692,5 +692,23 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
         addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
     }
+
+    //TODO: Imgui appears to have all incorrect dependency info, and their repo's docs are a maze. Omitting for now.
+//    /**
+//     * An immediate-mode GUI library (LWJGL3-only!); written in Kotlin and compatible with Java as well.
+//     * @author elect86
+//     */
+//    @Extension
+//    class Imgui : ThirdPartyExtension() {
+//        override val id = "imgui"
+//        override val defaultVersion = "v1.79"
+//        override val url = "https://github.com/kotlin-graphics/imgui"
+//
+//        override fun initiateDependencies(project: Project) {
+//            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
+//            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
+//            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
+//        }
+//    }
 
 }
