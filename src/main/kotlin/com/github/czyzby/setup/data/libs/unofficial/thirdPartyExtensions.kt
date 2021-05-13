@@ -693,22 +693,32 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
     }
 
-    //TODO: Imgui appears to have all incorrect dependency info, and their repo's docs are a maze. Omitting for now.
-//    /**
-//     * An immediate-mode GUI library (LWJGL3-only!); written in Kotlin and compatible with Java as well.
-//     * @author elect86
-//     */
-//    @Extension
-//    class Imgui : ThirdPartyExtension() {
-//        override val id = "imgui"
-//        override val defaultVersion = "v1.79"
-//        override val url = "https://github.com/kotlin-graphics/imgui"
-//
-//        override fun initiateDependencies(project: Project) {
+    /**
+     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
+     * NOTE: this is only accessible from the lwjgl3 project, and may require unusual
+     * project configuration to use.
+     * @author SpaiR
+     */
+    @Extension
+    class Imgui : ThirdPartyExtension() {
+        override val id = "imgui"
+        override val defaultVersion = "1.82.2"
+        override val url = "https://github.com/SpaiR/imgui-java"
+
+        override fun initiateDependencies(project: Project) {
+
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-binding");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-lwjgl3");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux-x86");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-macos");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows");
+            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows-x86");
+
 //            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
 //            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
 //            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
-//        }
-//    }
+        }
+    }
 
 }
