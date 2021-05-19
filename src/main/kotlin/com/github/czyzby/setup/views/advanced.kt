@@ -24,7 +24,6 @@ class AdvancedData {
     @LmlActor("desktopJavaVersion") private lateinit var desktopJavaVersionField: Spinner
     @LmlActor("generateSkin") private lateinit var generateSkinButton: Button
     @LmlActor("generateReadme") private lateinit var generateReadmeButton: Button
-    @LmlActor("gradleWrapper") private lateinit var gradleWrapperButton: Button
     @LmlActor("gradleTasks") private lateinit var gradleTasksField: VisTextField
 
     val version: String
@@ -74,7 +73,7 @@ class AdvancedData {
         get() = generateReadmeButton.isChecked
 
     val addGradleWrapper: Boolean
-        get() = gradleWrapperButton.isChecked
+        get() = true
 
     val gradleTasks: List<String>
         get() = if (gradleTasksField.isEmpty) listOf()
