@@ -57,7 +57,7 @@ ${joinDependencies(dependencies)}}
 
 jar {
 	archiveBaseName.set(appName)
-// the duplicatesStrategy will matter starting in Gradle 7.0; this setting works.
+// the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
 	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 	dependsOn configurations.runtimeClasspath
 	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }

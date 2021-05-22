@@ -11,7 +11,9 @@ import com.github.czyzby.setup.views.Extension
 const val AUTUMN_VERSION = "1.9.1.9.11-SNAPSHOT"
 
 /**
- * Guava-inspired libGDX utilities.
+ * Guava-inspired libGDX utilities; no longer maintained.
+ * Kiwi is actually used by gdx-liftoff and you can pull an updated fork of Kiwi code from the "com.github.czyzby.kiwi"
+ * Java package in gdx-liftoff's repo.
  * @author MJ
  */
 @Extension
@@ -29,7 +31,9 @@ class Kiwi : ThirdPartyExtension() {
 }
 
 /**
- * Parser of HTML-like templates that produces Scene2D widgets.
+ * Parser of HTML-like templates that produces Scene2D widgets; no longer maintained.
+ * LML is actually used by gdx-liftoff and you can pull an updated fork of LML code from the "com.github.czyzby.lml"
+ * Java package in gdx-liftoff's repo.
  * @author MJ
  */
 @Extension
@@ -49,7 +53,9 @@ class LML : ThirdPartyExtension() {
 }
 
 /**
- * Parser of HTML-like templates that produces VisUI widgets.
+ * Parser of HTML-like templates that produces VisUI widgets; no longer maintained.
+ * LMLVis is actually used by gdx-liftoff and you can pull an updated fork of LMLVis code from the
+ * "com.github.czyzby.lml" Java package in gdx-liftoff's repo.
  * @author MJ
  * @author Kotcrab
  */
@@ -71,7 +77,9 @@ class LMLVis : ThirdPartyExtension() {
 }
 
 /**
- * Dependency injection mechanism with component scan using libGDX reflection API.
+ * Dependency injection mechanism with component scan using libGDX reflection API; no longer maintained.
+ * Autumn is actually used by gdx-liftoff and you can pull an updated fork of Autumn code from the
+ * "com.github.czyzby.autumn" Java package in gdx-liftoff's repo.
  * @author MJ
  */
 @Extension
@@ -99,7 +107,9 @@ class Autumn : ThirdPartyExtension() {
 }
 
 /**
- * Model-view-controller framework on top of Autumn DI and libGDX.
+ * Model-view-controller framework on top of Autumn DI and libGDX; no longer maintained.
+ * AutumnMVC is actually used by gdx-liftoff and you can pull an updated fork of AutumnMVC code from the
+ * "com.github.czyzby.autumn" Java package in gdx-liftoff's repo.
  * @author MJ
  */
 @Extension
