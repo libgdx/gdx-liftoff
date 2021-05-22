@@ -207,7 +207,8 @@ class JaciGwt : ThirdPartyExtension() {
 }
 
 /**
- * Simple map generators.
+ * Simple map generators. Noise4J can be used as a continuous noise generator, but you're better served by
+ * joise or make-some-noise in that case. There are also many kinds of map generator in squidlib-util.
  * @author MJ
  */
 @Extension
@@ -241,6 +242,7 @@ class BladeInk : ThirdPartyExtension() {
 
 /**
  * 2D, 3D, 4D and 6D modular noise library written in Java.
+ * Joise can combine noise in versatile ways, and can serialize the "recipes" for a particular type of noise generator.
  * @author SudoPlayGames
  */
 @Extension
@@ -258,7 +260,10 @@ class Joise : ThirdPartyExtension() {
 }
 
 /**
- * Another 2D, 3D, 4D and 6D noise library, supporting some unusual types of noise.
+ * Another 2D, 3D, 4D, 5D, and 6D noise library, supporting some unusual types of noise.
+ * The API is more "raw" than Joise, and is meant as a building block for things that use noise, rather
+ * than something that generates immediately-usable content. It is still a more convenient API than
+ * Noise4J when making fields of noise.
  * @author Tommy Ettinger
  */
 @Extension
