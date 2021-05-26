@@ -5,7 +5,8 @@ import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
 
 /**
- * Version of Czyzby's libraries; this is a snapshot release because Czyzby is unlikely to make a stable release.
+ * Version of Czyzby's libraries; there is no chance of a newer stable release (by Czyzby).
+ * Some libraries in this file are maintained by other people and are still getting updates.
  * @author MJ
  */
 const val AUTUMN_VERSION = "1.9.1.9.11-SNAPSHOT"
