@@ -319,6 +319,7 @@ class ShapeDrawer : ThirdPartyExtension() {
 
 /**
  * Provides various frequently-used graph algorithms, aiming to be lightweight, fast, and intuitive.
+ * A good substitute for the pathfinding in gdx-ai.
  * @author earlygrey
  */
 @Extension
@@ -471,7 +472,6 @@ class ControllerScene2D : ThirdPartyExtension() {
 
         addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d:sources")
         addGwtInherit(project, "de.golfgl.gdx.controllers.controller_scene2d")
-        Controllers().initiate(project)
     }
 }
 
