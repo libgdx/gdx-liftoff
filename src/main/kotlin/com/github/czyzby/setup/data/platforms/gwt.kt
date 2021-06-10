@@ -141,13 +141,25 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 
 	override fun getContent(): String = """
 buildscript {
+	ext.grettyCommit = "749988a"
 	repositories {
 		mavenCentral()
 		maven { url 'https://jitpack.io' }
 	}
 	dependencies {
-	// temporarily uses a JitPack dependency on a working version of Gretty until the next 3.x release
-		classpath "com.github.tommyettinger.gretty:gretty:3.0.4.5"
+		// This is a complicated solution to Gradle 7.x being partly incompatible with the latest Gretty 3.x release.
+		// Gretty 4.x isn't compatible with Java 8, so it can't be used for many libGDX projects.
+		// The Gradle code to depend on a specific Gretty version came from https://github.com/f4lco/gretty-jitpack
+		classpath "com.github.gretty-gradle-plugin.gretty:gretty:${'$'}grettyCommit"
+
+		configurations.all {
+			resolutionStrategy {
+				if (org.gradle.util.GradleVersion.current().version.startsWith('7.')) {
+					force "org.spockframework:spock-core:2.0-M5-groovy-3.0"
+					force "org.gebish:geb-spock:5.0-milestone-1"
+				}
+			}
+		}
 	}
 }
 apply plugin: "gwt"
@@ -168,6 +180,18 @@ gwt {
 	compiler.disableCastChecking = true
 	//// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
 //	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
+}
+
+// This continues the complicated solution to Gretty issues.
+configurations.all {
+	resolutionStrategy {
+		dependencySubstitution.all { dependency ->
+			// see https://docs.gradle.org/current/userguide/resolution_rules.html#sub:conditional_dependency_substitution
+			if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == "org.gretty") {
+				dependency.useTarget "com.github.gretty-gradle-plugin.gretty:${'$'}{dependency.requested.module}:${'$'}grettyCommit"
+			}
+		}
+	}
 }
 
 dependencies {
