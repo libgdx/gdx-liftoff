@@ -55,13 +55,13 @@ sourceCompatibility = ${project.advanced.desktopJavaVersion}
 dependencies {
 ${joinDependencies(dependencies)}}
 
-import org.gradle.internal.os.OperatingSystem
+def os = System.properties['os.name'].toLowerCase()
 
 run {
 	workingDir = rootProject.file('assets').path
 	setIgnoreExitValue(true)
 	
-	if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
+	if (os.contains('mac')) {
 		// Required to run LWJGL3 Java apps on MacOS
 		jvmArgs += "-XstartOnFirstThread"
 	}
