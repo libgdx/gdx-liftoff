@@ -422,7 +422,7 @@ class TenPatch : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
     override val id = "gdxGltf"
-    override val defaultVersion = "1.0.0"
+    override val defaultVersion = "ceb15133b9"
     override val url = "https://github.com/mgsx-dev/gdx-gltf"
 
     override fun initiateDependencies(project: Project) {
