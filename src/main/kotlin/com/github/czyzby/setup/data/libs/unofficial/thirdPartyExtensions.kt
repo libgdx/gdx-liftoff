@@ -36,7 +36,8 @@ abstract class ThirdPartyExtension : Library {
 }
 
 /**
- * High performance Entity-Component-System framework.
+ * A high performance Entity-Component-System framework.
+ * If you target GWT, this setup tool handles some of this library's complicated steps for you.
  * @author junkdog
  */
 @Extension
@@ -174,6 +175,7 @@ class InGameConsole : ThirdPartyExtension() {
 
 /**
  * Java Annotation Console Interface. In-game console implementation, for non-GWT usage.
+ * If you target GWT, use JaciGwt instead.
  * @author Yevgeny Krasik
  */
 @Extension
@@ -282,6 +284,7 @@ class MakeSomeNoise : ThirdPartyExtension() {
 
 /**
  * An animated Label equivalent that appears as if it was being typed in real time.
+ * This is really just a wonderful set of effects for games to have.
  * @author Rafa Skoberg
  */
 @Extension
@@ -301,6 +304,7 @@ class TypingLabel : ThirdPartyExtension() {
 
 /**
  * A high-performance alternative to libGDX's built-in ShapeRenderer, with smoothing and more shapes.
+ * Better in just about every way when compared with ShapeRenderer.
  * @author earlygrey
  */
 @Extension
@@ -319,7 +323,8 @@ class ShapeDrawer : ThirdPartyExtension() {
 
 /**
  * Provides various frequently-used graph algorithms, aiming to be lightweight, fast, and intuitive.
- * A good substitute for the pathfinding in gdx-ai.
+ * A good substitute for the pathfinding in gdx-ai, but it doesn't include path smoothing or any of the
+ * non-pathfinding AI tools in gdx-ai.
  * @author earlygrey
  */
 @Extension
@@ -338,6 +343,7 @@ class SimpleGraphs : ThirdPartyExtension() {
 
 /**
  * Provides a replacement for GWT's missing String.format() with its Stringf.format().
+ * Only relevant if you target the HTML platform or intend to in the future.
  * @author Tommy Ettinger
  */
 @Extension
@@ -374,6 +380,7 @@ class Colorful : ThirdPartyExtension() {
 
 /**
  * Support for writing animated GIF and animated PNG images from libGDX, as well as 8-bit-palette PNGs.
+ * This can be useful for making short captures of gameplay, or making animated characters into GIFs.
  * @author Tommy Ettinger
  */
 @Extension
@@ -405,6 +412,23 @@ class TenPatch : ThirdPartyExtension() {
 
         addDependency(project, GWT.ID, "com.github.raeleus.TenPatch:tenpatch:sources")
         addGwtInherit(project, "com.ray3k.tenpatch.tenpatch")
+    }
+}
+
+/**
+ * Support for the GLTF format for 3D models and physically-based rendering; a huge time-saver for 3D handling.
+ * @author mgsx
+ */
+@Extension
+class GdxGltf : ThirdPartyExtension() {
+    override val id = "gdxGltf"
+    override val defaultVersion = "1.0.0"
+    override val url = "https://github.com/mgsx-dev/gdx-gltf"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.mgsx-dev.gdx-gltf:gltf")
+        addDependency(project, GWT.ID, "com.github.mgsx-dev.gdx-gltf:gltf:sources")
+        addGwtInherit(project, "GLTF")
     }
 }
 
@@ -537,8 +561,10 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 }
 
 /**
- * Cross-platform regex utilities.
+ * Cross-platform regex utilities that work the same on HTML as they do on desktop or mobile platforms.
+ * This is not 100% the same as the java.util.regex package, but is similar, and sometimes offers more.
  * @author Tommy Ettinger
+ * @author based on JRegex by Sergey A. Samokhodkin
  */
 @Extension()
 class RegExodus : ThirdPartyExtension() {
@@ -579,6 +605,7 @@ class VisUI : ThirdPartyExtension() {
 
 /**
  * A library to obtain a circular WidgetGroup or context menu using scene2d.ui.
+ * Pie menus can be easier for players to navigate with a mouse than long lists.
  * @author Jérémi Grenier-Berthiaume
  */
 @Extension
@@ -598,6 +625,7 @@ class PieMenu : ThirdPartyExtension() {
 
 /**
  * A 2D AABB collision detection and response library; like a basic/easy version of box2d.
+ * Note, AABB means this only handles non-rotated rectangular collision boxes.
  * @author implicit-invocation
  * @author Raymond Buckley
  */
@@ -653,7 +681,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
-    override val defaultVersion = "0.3.0"
+    override val defaultVersion = "0.3.1"
     override val url = "https://github.com/crykn/guacamole"
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn.guacamole:core")
@@ -670,6 +698,8 @@ class Guacamole : ThirdPartyExtension() {
 
 /**
  * Support for the Basis Universal supercompressed texture format.
+ * This form of texture compression works best for extremely large 3D textures, and works
+ * quite badly on pixel art. You might see big improvements in memory usage, you might not.
  * You may need to change the dependencies for Desktop, LWJGL3, Headless,
  * and/or iOS from `implementation` to `runtimeOnly`.
  * @author Anton Chekulaev/metaphore
@@ -697,33 +727,33 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
         addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
     }
-
-    /**
-     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
-     * NOTE: this is only accessible from the lwjgl3 project, and may require unusual
-     * project configuration to use.
-     * @author SpaiR
-     */
-    @Extension
-    class Imgui : ThirdPartyExtension() {
-        override val id = "imgui"
-        override val defaultVersion = "1.82.2"
-        override val url = "https://github.com/SpaiR/imgui-java"
-
-        override fun initiateDependencies(project: Project) {
-
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-binding");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-lwjgl3");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux-x86");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-macos");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows");
-            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows-x86");
-
-//            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
-//            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
-//            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
-        }
-    }
+//
+//    /**
+//     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
+//     * NOTE: this is only accessible from the lwjgl3 project, and may require unusual
+//     * project configuration to use.
+//     * @author SpaiR
+//     */
+//    @Extension
+//    class Imgui : ThirdPartyExtension() {
+//        override val id = "imgui"
+//        override val defaultVersion = "1.82.2"
+//        override val url = "https://github.com/SpaiR/imgui-java"
+//
+//        override fun initiateDependencies(project: Project) {
+//
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-binding");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-lwjgl3");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-linux-x86");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-macos");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows");
+//            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows-x86");
+//
+////            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
+////            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
+////            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
+//        }
+//    }
 
 }
