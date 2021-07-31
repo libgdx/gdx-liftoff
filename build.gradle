@@ -41,10 +41,10 @@ repositories {
 dependencies {
   api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
   api "org.apache.commons:commons-exec:$commonsExecVersion"
-  api 'org.slf4j:slf4j-nop:1.7.25'
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   api "io.github.lukehutch:fast-classpath-scanner:2.21"
   api "com.kotcrab.vis:vis-ui:1.5.0"
+//  api 'org.slf4j:slf4j-nop:1.7.32'
 }

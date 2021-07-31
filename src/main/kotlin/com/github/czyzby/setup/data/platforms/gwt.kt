@@ -143,11 +143,9 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 buildscript {
 	repositories {
 		mavenCentral()
-		maven { url 'https://jitpack.io' }
 	}
 	dependencies {
-	// temporarily uses a JitPack dependency on a working version of Gretty until the next 3.x release
-		classpath "com.github.tommyettinger.gretty:gretty:3.0.4.5"
+		classpath "org.gretty:gretty:3.0.6"
 	}
 }
 apply plugin: "gwt"
