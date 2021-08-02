@@ -43,21 +43,25 @@ class Android : Platform {
 		project.files.add(SourceFile(projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
 				content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    	xmlns:tools="http://schemas.android.com/tools"
 		package="${project.basic.rootPackage}">
 	<uses-feature android:glEsVersion="0x00020000" android:required="true"/>
 	<application
 			android:allowBackup="true"
+        	android:fullBackupContent="true"
 			android:icon="@drawable/ic_launcher"
 			android:isGame="true"
 			android:appCategory="game"
-			android:label="@string/app_name"
+        	android:label="@string/app_name"
+        	tools:ignore="UnusedAttribute"
 			android:theme="@style/GdxTheme">
 		<activity
 				android:name="${project.basic.rootPackage}.AndroidLauncher"
 				android:label="@string/app_name"
 				android:screenOrientation="landscape"
-				android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
-			<intent-filter>
+				android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+          		android:exported="true">
+				<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
