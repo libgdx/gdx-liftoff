@@ -1,11 +1,15 @@
 package com.github.czyzby.setup.views.widgets
 
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea
+import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.parser.LmlParser
 import com.github.czyzby.lml.parser.impl.tag.builder.TextLmlActorBuilder
 import com.github.czyzby.lml.parser.tag.LmlTag
 import com.github.czyzby.lml.parser.tag.LmlTagProvider
+import com.github.czyzby.lml.vis.parser.impl.tag.BasicVisTextAreaLmlTag
 import com.github.czyzby.lml.vis.parser.impl.tag.VisTextAreaLmlTag
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisTextArea
 import com.kotcrab.vis.ui.widget.VisTextField
 
@@ -14,9 +18,10 @@ import com.kotcrab.vis.ui.widget.VisTextField
 
  * @author Kotcrab
  */
-class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, styleName) {
+class ScrollableTextArea(text: String, styleName: String) : TextArea(text, VisUI.getSkin(), styleName) {
     init {
         style.font.data.markupEnabled = true
+        isDisabled = false;
     }
     override fun getPrefWidth(): Float {
         return width
@@ -48,8 +53,8 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
      * @author Kotcrab
      */
     class ScrollableTextAreaLmlTag(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder) :
-            VisTextAreaLmlTag(parser, parentTag, rawTagData) {
-        override protected fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
+            BasicVisTextAreaLmlTag(parser, parentTag, rawTagData) {
+        override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): TextField =
                 ScrollableTextArea(textBuilder.text, textBuilder.styleName)
     }
 }

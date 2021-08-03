@@ -3,6 +3,7 @@ package com.github.czyzby.setup.views.dialogs
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea
 import com.badlogic.gdx.scenes.scene2d.ui.Window
 import com.badlogic.gdx.utils.ObjectSet
 import com.github.czyzby.autumn.annotation.Destroy
@@ -30,7 +31,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
     @Inject private lateinit var mainView: MainView
 
     @LmlActor("close", "exit") private lateinit var buttons: ObjectSet<Button>
-    @LmlActor("console") private lateinit var console: VisTextArea
+    @LmlActor("console") private lateinit var console: TextArea
     @LmlActor("scroll") private lateinit var scrollPane: ScrollPane
 
     private val executor = Executors.newSingleThreadExecutor(PrefixedThreadFactory("ProjectGenerator"))

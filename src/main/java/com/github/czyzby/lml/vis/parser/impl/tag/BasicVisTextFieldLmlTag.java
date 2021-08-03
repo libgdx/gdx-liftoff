@@ -16,8 +16,8 @@ import com.kotcrab.vis.ui.widget.VisTextField;
  * "visTextField".
  *
  * @author MJ */
-public class VisTextFieldLmlTag extends AbstractNonParentalActorLmlTag {
-    public VisTextFieldLmlTag(final LmlParser parser, final LmlTag parentTag, final StringBuilder rawTagData) {
+public class BasicVisTextFieldLmlTag extends AbstractNonParentalActorLmlTag {
+    public BasicVisTextFieldLmlTag(final LmlParser parser, final LmlTag parentTag, final StringBuilder rawTagData) {
         super(parser, parentTag, rawTagData);
     }
 
@@ -34,8 +34,8 @@ public class VisTextFieldLmlTag extends AbstractNonParentalActorLmlTag {
 
     /** @param textBuilder contains initial text data and style.
      * @return a new instance of {@link TextField}. */
-    protected VisTextField getNewInstanceOfTextField(final TextLmlActorBuilder textBuilder) {
-        return new VisTextField(textBuilder.getText(), textBuilder.getStyleName());
+    protected TextField getNewInstanceOfTextField(final TextLmlActorBuilder textBuilder) {
+        return new TextField(textBuilder.getText(), VisUI.getSkin(), textBuilder.getStyleName());
     }
 
     /** @return casted actor. */
