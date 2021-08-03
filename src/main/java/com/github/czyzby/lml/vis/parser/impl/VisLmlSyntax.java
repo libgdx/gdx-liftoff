@@ -254,7 +254,6 @@ public class VisLmlSyntax extends DefaultLmlSyntax {
         addTagProvider(new MenuSeparatorLmlTagProvider(), "menuSeparator");
         addTagProvider(new MultiSplitPaneLmlTagProvider(), "multiSplitPane");
         addTagProvider(new ScrollableTextAreaLmlTagProvider(), "scrollableTextArea");
-        addTagProvider(new BasicScrollableTextAreaLmlTagProvider(), "basicScrollableTextArea");
         addTagProvider(new SeparatorLmlTagProvider(), "separator");
         addTagProvider(new TabbedPaneLmlTagProvider(), "tabbedPane");
         addTagProvider(new TabLmlTagProvider(), "tab");
@@ -263,7 +262,6 @@ public class VisLmlSyntax extends DefaultLmlSyntax {
         addTagProvider(new VisTooltipLmlTagProvider(), "visTooltip");
         addTagProvider(new VisValidatableTextFieldLmlTagProvider(), "validatable", "validatableTextField",
                 "visValidatableTextField");
-        addTagProvider(new BasicVisValidatableTextFieldLmlTagProvider(), "basicValidatable");
 
         // Vis spinners:
         addTagProvider(new ArraySpinnerLmlTagProvider(), "arraySpinner");
