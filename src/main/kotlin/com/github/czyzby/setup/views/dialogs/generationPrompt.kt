@@ -15,6 +15,7 @@ import com.github.czyzby.kiwi.util.common.Exceptions
 import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.setup.data.project.ProjectLogger
 import com.github.czyzby.setup.views.MainView
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTextArea
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
@@ -31,7 +32,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
     @Inject private lateinit var mainView: MainView
 
     @LmlActor("close", "exit") private lateinit var buttons: ObjectSet<Button>
-    @LmlActor("console") private lateinit var console: TextArea
+    @LmlActor("console") private lateinit var console: VisLabel
     @LmlActor("scroll") private lateinit var scrollPane: ScrollPane
 
     private val executor = Executors.newSingleThreadExecutor(PrefixedThreadFactory("ProjectGenerator"))
@@ -64,8 +65,8 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
         loggingBuffer.offer(message)
         Gdx.app.postRunnable {
             while (loggingBuffer.isNotEmpty()) {
-                if (console.text.isNotBlank()) console.text += '\n'
-                console.text += loggingBuffer.poll()
+                if (console.text.isNotBlank()) console.text.append('\n')
+                console.text.append(loggingBuffer.poll())
             }
             Gdx.app.postRunnable {
                 console.invalidateHierarchy()
