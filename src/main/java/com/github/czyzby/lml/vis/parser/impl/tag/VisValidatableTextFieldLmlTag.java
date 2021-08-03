@@ -1,6 +1,5 @@
 package com.github.czyzby.lml.vis.parser.impl.tag;
 
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.builder.TextLmlActorBuilder;
 import com.github.czyzby.lml.parser.tag.LmlTag;

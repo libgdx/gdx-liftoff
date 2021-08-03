@@ -1,7 +1,6 @@
 package com.github.czyzby.lml.vis.parser.impl.tag;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.github.czyzby.kiwi.util.common.Strings;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.AbstractNonParentalActorLmlTag;
@@ -9,7 +8,6 @@ import com.github.czyzby.lml.parser.impl.tag.builder.TextLmlActorBuilder;
 import com.github.czyzby.lml.parser.tag.LmlActorBuilder;
 import com.github.czyzby.lml.parser.tag.LmlTag;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 /** Handles {@link VisTextField} actor. Appends plain text between tags to itself. Mapped to "textField",
@@ -33,7 +31,7 @@ public class VisTextFieldLmlTag extends AbstractNonParentalActorLmlTag {
     }
 
     /** @param textBuilder contains initial text data and style.
-     * @return a new instance of {@link TextField}. */
+     * @return a new instance of {@link VisTextField}. */
     protected VisTextField getNewInstanceOfTextField(final TextLmlActorBuilder textBuilder) {
         return new VisTextField(textBuilder.getText(), textBuilder.getStyleName());
     }

@@ -153,8 +153,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {font: default-font, fontColor: white, disabledFontColor: grey, selection: selection, background: textfield, cursor: cursor, messageFont: default-font, messageFontColor: grey },
-	small: {font: small-font, fontColor: white, disabledFontColor: grey, selection: selection, background: textfield, cursor: cursor, messageFont: default-font, messageFontColor: grey },
-	read-only: {font: small-font, fontColor: white, disabledFontColor: grey, selection: selection }
+	small: {font: small-font, fontColor: white, disabledFontColor: grey, selection: selection, background: textfield, cursor: cursor, messageFont: default-font, messageFontColor: grey }
 },
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {fontColorUnselected: white, selection: padded-list-selection, fontColorSelected: white, font: default-font }
