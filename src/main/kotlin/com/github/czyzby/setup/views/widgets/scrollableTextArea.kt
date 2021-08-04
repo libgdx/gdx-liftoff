@@ -1,5 +1,6 @@
 package com.github.czyzby.setup.views.widgets
 
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.parser.LmlParser
 import com.github.czyzby.lml.parser.impl.tag.builder.TextLmlActorBuilder
@@ -31,6 +32,14 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
         // lines. Although example templates files are using '\n', Git (when cloning the repository) may replace them
         // with '\r\n' on Windows.
         super.setText(Strings.stripCharacter(str, '\r'))
+    }
+
+    override fun draw(batch: Batch?, parentAlpha: Float) {
+        try {
+            super.draw(batch, parentAlpha)
+        } catch (getYourActTogetherScene2D: IndexOutOfBoundsException) {
+            copy();
+        }
     }
 
     /** Provides [CodeTextArea] tags.
