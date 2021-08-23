@@ -1,6 +1,12 @@
 Guide to HTML Deployment with GWT
 #####
 
+NOTE
+###
+
+This guide has been mostly superseded by [this libGDX wiki page](https://github.com/libgdx/libgdx/wiki/HTML5-Backend-and-GWT-Specifics).
+It is here as just another source that might help.
+
 Google Web Toolkit is nice to have because it gives libGDX applications the option to deploy to a web target.
 But, it's incredibly finicky. All sorts of parts of a program can act differently when GWT is the target.
 gdx-liftoff allows the HTML platform to be selected on the first screen, and when the project is generated, the
@@ -32,12 +38,14 @@ way to work around GWT's oddities, though.
     effectively a `double`. Math with `int` is as fast as it gets on HTML, but instead of a result overflowing
     numerically, which all other platforms do in a standardized way (on desktop, Android, and iOS, you can rely on
     `Integer.MAX_VALUE + 1 == Integer.MIN_VALUE` being `true`), the value will go up to a number that can't be
-    written in Java code as one value, will print as being larger than `Integer.MAX_VALUE` or smaller than
+    written in Java code as one value. This Number will print as being larger than `Integer.MAX_VALUE` or smaller than
     `Integer.MIN_VALUE`, and, if it gets far enough away from 0, will lose precision, eventually being unable to
-    represent large spans of valid integers. You can force a Number that has gone out-of-range back into a 32-bit
-    value between `Integer.MIN_VALUE` and `Integer.MAX_VALUE` by using any bitwise math on it. The simplest thing
-    to recommend is when a value `int over;` has potentially overflowed, to assign it `over = over | 0`, which
-    works like overflow on desktop as long as `over` hasn't already lost precision from going too far from 0.
-    Multipliers should be used carefully with ints on GWT; if a multiplier is larger than about 2000000 (0x1fffff,
-    specifically) or smaller than about -2000000, and it is multiplied by an arbitrary int (one which can be any
-    32-bit value), then precision loss may occur even if you do a bitwise operation afterwards.
+    represent large spans of valid integers. Initially, this manifests as very large odd numbers being impossible to
+    store, meaning something like `i++` in a loop just won't change `i`.
+    - You can force an int/Number that has gone out-of-range back into a 32-bit value between `Integer.MIN_VALUE` and
+      `Integer.MAX_VALUE` by using any bitwise math on it. The simplest thing to recommend is when a value `int over;` 
+      has potentially overflowed, to assign it `over = over | 0`, which works like overflow on desktop as long as `over`
+      hasn't already lost precision from going too far from 0. Large multipliers should be used carefully with ints on
+      GWT; if a multiplier is larger than about 2000000 (0x1fffff, specifically) or smaller than about -2000000, and it
+      is multiplied by an arbitrary int (one which can be any 32-bit value), then precision loss may occur even if you
+      do a bitwise operation afterwards.
