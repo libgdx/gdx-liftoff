@@ -111,7 +111,7 @@ fun main() {
                 println("Application was not launched on first thread. " +
                         "Add VM argument -XstartOnFirstThread to avoid this.")
             }
-        }         
+        }
         throw error
     }
 }
