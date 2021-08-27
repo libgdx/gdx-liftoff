@@ -1,5 +1,6 @@
 package com.github.czyzby.setup
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
@@ -89,6 +90,14 @@ fun main() {
                 super.registerDefaultComponentAnnotations(initializer)
                 initializer.scanFor(Extension::class.java, ProjectTemplate::class.java, JvmLanguage::class.java,
                         GdxPlatform::class.java)
+            }
+            override fun pause() {
+                super.pause()
+                Gdx.graphics.isContinuousRendering = false
+            }
+            override fun resume() {
+                super.resume()
+                Gdx.graphics.isContinuousRendering = true
             }
         }, config)
     } catch (error: ExceptionInInitializerError) {
