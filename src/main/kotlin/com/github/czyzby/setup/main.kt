@@ -3,6 +3,8 @@ package com.github.czyzby.setup
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
@@ -83,6 +85,17 @@ fun main() {
     config.setForegroundFPS(16)
     config.setIdleFPS(8)
     config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
+    val windowListener: Lwjgl3WindowListener = object : Lwjgl3WindowListener {
+        override fun focusLost() { Gdx.graphics.isContinuousRendering = false }
+        override fun focusGained() { Gdx.graphics.isContinuousRendering = true }
+        override fun created(window: Lwjgl3Window) {}
+        override fun iconified(isIconified: Boolean) {}
+        override fun maximized(isMaximized: Boolean) {}
+        override fun closeRequested(): Boolean { return true }
+        override fun filesDropped(files: Array<String>) {}
+        override fun refreshRequested() {}
+    }
+    config.setWindowListener(windowListener)
 
     try {
         Lwjgl3Application(object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
@@ -90,14 +103,6 @@ fun main() {
                 super.registerDefaultComponentAnnotations(initializer)
                 initializer.scanFor(Extension::class.java, ProjectTemplate::class.java, JvmLanguage::class.java,
                         GdxPlatform::class.java)
-            }
-            override fun pause() {
-                super.pause()
-                Gdx.graphics.isContinuousRendering = false
-            }
-            override fun resume() {
-                super.resume()
-                Gdx.graphics.isContinuousRendering = true
             }
         }, config)
     } catch (error: ExceptionInInitializerError) {
