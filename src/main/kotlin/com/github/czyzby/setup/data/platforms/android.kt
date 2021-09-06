@@ -212,10 +212,10 @@ task run(type: Exec) {
 		if (sdkDir) {
 			path = sdkDir
 		} else {
-			path = "${'$'}System.env.ANDROID_HOME"
+			path = "${'$'}System.env.ANDROID_SDK_ROOT"
 		}
 	} else {
-		path = "${'$'}System.env.ANDROID_HOME"
+		path = "${'$'}System.env.ANDROID_SDK_ROOT"
 	}
 
 	def adb = path + "/platform-tools/adb"

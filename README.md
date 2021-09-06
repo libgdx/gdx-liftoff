@@ -223,7 +223,13 @@ other projects or older versions.
     - You can modify the manifest, and probably need to do so if you want to submit an app to the Play store.
     - Android Studio should have better support for recent Gradle versions if you use a beta release. 
     - As mentioned earlier, Android tools don't support Java 16 yet, so you have to have your project use 15 or lower.
-
+    - The default path to the Android SDK is determined by your `ANDROID_SDK_ROOT` variable. If this variable wasn't set
+      on the first time you ran gdx-liftoff, then the latest value entered for the Android SDK path will be saved in 
+      `~/.prefs/gdx-liftoff-prefs` (that is, inside `.prefs/` in your user home directory). Starting in 1.10.0.7,
+      gdx-liftoff will pre-fill the Android SDK path with `ANDROID_SDK_ROOT` if it hasn't been set yet, but will use the
+      last used path if there's a historical path. You can change any and all settings history by either editing
+      `~/.prefs/gdx-liftoff-prefs` or just deleting that file and having gdx-liftoff remake it.
+  
 ## Credits
 
 Huge thanks to [czyzby](https://github.com/czyzby) for writing the original tool this is based on, as well as much of
