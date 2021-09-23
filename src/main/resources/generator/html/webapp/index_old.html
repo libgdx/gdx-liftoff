@@ -31,6 +31,7 @@ function handleMouseUp(evt) {
 	evt.stopPropagation();
 	evt.target.style.cursor = '';
 }
+document.addEventListener('contextmenu', event => event.preventDefault());
 document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
 document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
 
