@@ -24,6 +24,12 @@ interface Library {
         }
     }
 
+    fun addSpecialDependency(project: Project, platform: String, dependency: String) {
+        if (project.hasPlatform(platform)) {
+            project.getGradleFile(platform).addSpecialDependency(dependency)
+        }
+    }
+
     fun addDesktopDependency(project: Project, dependency: String) {
         addDependency(project, Desktop.ID, dependency)
         addDependency(project, LWJGL3.ID, dependency)

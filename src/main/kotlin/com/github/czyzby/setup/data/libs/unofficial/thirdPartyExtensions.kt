@@ -30,6 +30,14 @@ abstract class ThirdPartyExtension : Library {
         }
     }
 
+    /**
+     * Normal usage:
+     * <code>"annotationProcessor \"org.projectlombok:lombok:\$${id}Version\""</code>
+     */
+    override fun addSpecialDependency(project: Project, platform: String, dependency: String) {
+        super.addSpecialDependency(project, platform, dependency)
+    }
+
     fun addExternalDependency(project: Project, platform: String, dependency: String) {
         super.addDependency(project, platform, dependency)
     }
@@ -727,6 +735,21 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
         addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
     }
+}
+/**
+ * Adds support for Lombok annotations in the core module; meant to reduce boilerplate code.
+ * @author The Project Lombok Authors
+ */
+@Extension
+class Lombok : ThirdPartyExtension() {
+    override val id = "lombok"
+    override val defaultVersion = "1.18.20"
+    override val url = "https://projectlombok.org/"
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "org.projectlombok:lombok")
+        addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
+    }
+}
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
@@ -755,5 +778,3 @@ class GdxBasisUniversal : ThirdPartyExtension() {
 ////            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
 //        }
 //    }
-
-}

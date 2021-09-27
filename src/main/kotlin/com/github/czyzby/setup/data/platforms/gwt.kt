@@ -5,6 +5,7 @@ import com.github.czyzby.setup.data.files.CopiedFile
 import com.github.czyzby.setup.data.files.SourceFile
 import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.gradle.GradleFile
+import com.github.czyzby.setup.data.libs.unofficial.Lombok
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.GdxPlatform
 import java.util.*
@@ -275,5 +276,31 @@ sourceCompatibility = 8.0
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
-"""
+""" + (if(project.extensions.hasExtensionSelected("lombok")) """
+
+configurations { lom }
+dependencies {
+	lom "org.projectlombok:lombok:${'$'}{lombokVersion}"
+	implementation configurations.lom.dependencies
+	annotationProcessor "org.projectlombok:lombok:${'$'}{lombokVersion}"
+}
+
+draftCompileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+	}
+}
+
+compileGwt {
+	doFirst {
+		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+	}
+}
+
+superDev {
+	doFirst {
+		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+	}
+}
+""" else "")
 }
