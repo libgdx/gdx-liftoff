@@ -32,9 +32,12 @@ class AdvancedData {
     val gdxVersion: String
         get() = gdxVersionField.text
 
+    fun wrangleVersion(text : String) : String = (if(text.length == 1 || text == "10")
+        "1.$text" else if(text.startsWith("1."))
+        text.substring(2) else text)
+
     val javaVersion: String
-        get() = if(javaVersionField.model.text.length == 1)
-            "1." + javaVersionField.model.text else javaVersionField.model.text
+        get() = wrangleVersion(javaVersionField.model.text.removeSuffix(".0"))
 
     var androidSdkVersion: String
         get() = sdkVersionField.model.text
@@ -59,12 +62,10 @@ class AdvancedData {
         get() = gwtPluginVersionField.text
 
     val serverJavaVersion: String
-        get() = if(serverJavaVersionField.model.text.length == 1)
-            "1." + serverJavaVersionField.model.text else serverJavaVersionField.model.text
-    
+        get() = wrangleVersion(serverJavaVersionField.model.text.removeSuffix(".0"))
+
     val desktopJavaVersion: String
-        get() = if(desktopJavaVersionField.model.text.length == 1)
-            "1." + desktopJavaVersionField.model.text else desktopJavaVersionField.model.text
+        get() = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
 
     val generateSkin: Boolean
         get() = generateSkinButton.isChecked
