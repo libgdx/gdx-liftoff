@@ -279,7 +279,7 @@ class Joise : ThirdPartyExtension() {
 @Extension
 class MakeSomeNoise : ThirdPartyExtension() {
     override val id = "makeSomeNoise"
-    override val defaultVersion = "0.2"
+    override val defaultVersion = "0.3"
     override val url = "https://github.com/tommyettinger/make-some-noise"
 
     override fun initiateDependencies(project: Project) {
@@ -577,7 +577,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension()
 class RegExodus : ThirdPartyExtension() {
     override val id = "regExodus"
-    override val defaultVersion = "0.1.12"
+    override val defaultVersion = "0.1.13"
     override val url = "https://github.com/tommyettinger/RegExodus"
 
     override fun initiateDependencies(project: Project) {
@@ -748,8 +748,11 @@ class Lombok : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "org.projectlombok:lombok")
         addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
+        // Lombok has special additional code that it needs for GWT.
+        // That code is conditionally supplied in the gwt.kt file, in the platforms.
     }
 }
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
