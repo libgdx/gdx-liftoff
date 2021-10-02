@@ -278,6 +278,21 @@ class KtxPreferences : ThirdPartyExtension() {
 }
 
 /**
+ * libGDX reflection utilities for applications developed with Kotlin.
+ * @author MJ
+ */
+@Extension
+class KtxReflect : ThirdPartyExtension() {
+    override val id = "ktxReflect"
+    override val defaultVersion = KTX_VERSION
+    override val url = "https://github.com/libktx/ktx/tree/master/reflect"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "io.github.libktx:ktx-reflect")
+    }
+}
+
+/**
  * Kotlin type-safe builders for Scene2D GUI.
  * @author MJ
  */
