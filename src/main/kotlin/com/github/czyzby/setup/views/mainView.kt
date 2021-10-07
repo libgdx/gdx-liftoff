@@ -97,11 +97,16 @@ class MainView : ActionContainer {
         val pathPointer = memAllocPointer(1);
 
         try {
-            val picked = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
+            val status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
 
-            if (picked != NativeFileDialog.NFD_OKAY) {
+            if (status == NativeFileDialog.NFD_CANCEL) {
                 callback.canceled()
                 return
+            }
+
+            // unexpected error -> show visui dialog
+            if (status != NativeFileDialog.NFD_OKAY) {
+                throw Throwable("Native file dialog errored")
             }
 
             val folder = pathPointer.getStringUTF8(0)
