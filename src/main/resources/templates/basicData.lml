@@ -23,7 +23,7 @@
             onChange="mkdirs" visTooltip="@mkdirsTip"/>
         <imageButton id="clearFolder" style="dark" image="icon-trash" generateDisabledImage="true" size="27" disabled="true"
             onChange="show:deletePrompt" visTooltip="@clearFolderTip"/>
-        <imageButton size="27" directoryChooser="chooseDirectory"/>
+        <imageButton size="27" onChange="chooseDirectory"/>
     </table>
     <table>
         <validatable id="androidSdk" growX="true" message="@androidSdkPrompt" disabled="true" tooltip="@sdkTip"
@@ -36,7 +36,7 @@
         <imageButton id="useLatestSdk" style="dark" disabled="true" generateDisabledImage="true" padLeft="3" size="27"
                      image="icon-arrow-up" onChange="useLatestSdk" tooltip="@useLatestSdkTip"/>
         <imageButton id="androidSdkButton" style="dark" disabled="true" generateDisabledImage="true" padLeft="3" size="27"
-                     directoryChooser="chooseSdkDirectory"/>
+                     onChange="chooseSdkDirectory"/>
     </table>
     <label errorLabel="true" style="small" fill="false"/>
 </:root>
