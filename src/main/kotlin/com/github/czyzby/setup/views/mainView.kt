@@ -29,11 +29,15 @@ import com.github.czyzby.setup.data.platforms.Android
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.prefs.SdkVersionPreference
 import com.kotcrab.vis.ui.util.ToastManager
+import com.kotcrab.vis.ui.widget.file.FileChooser
+import com.kotcrab.vis.ui.widget.file.FileChooserAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.util.tinyfd.TinyFileDialogs
+import com.badlogic.gdx.utils.Array as GdxArray
+
 
 /**
  * Main application's view. Displays application's menu.
@@ -59,27 +63,55 @@ class MainView : ActionContainer {
 
     @LmlAction("chooseDirectory")
     fun chooseDirectory() {
-        val file = pickDirectory("Choose directory", getDestination())
-        if (file != null) {
-            basicData.setDestination(file)
-        }
+        pickDirectory(getDestination(), object : FileChooserAdapter() {
+            override fun selected(files: GdxArray<FileHandle>?) {
+                val file = files?.first()
+                if (file != null) {
+                    basicData.setDestination(file.path())
+                }
+            }
+        })
     }
 
     @LmlAction("chooseSdkDirectory")
     fun chooseSdkDirectory() {
-        val file = pickDirectory("Choose directory", getAndroidSdkVersion())
-        if (file != null) {
-            basicData.setAndroidSdkPath(file)
-        }
+        pickDirectory(getAndroidSdkVersion(), object : FileChooserAdapter() {
+            override fun selected(files: GdxArray<FileHandle>?) {
+                val file = files?.first()
+                if (file != null) {
+                    basicData.setAndroidSdkPath(file.path())
+                }
+            }
+        })
     }
 
-    private fun pickDirectory(title: String, initialFolder: FileHandle): String? {
-        var oldPath = initialFolder.path()
+    private fun pickDirectory(initialFolder: FileHandle, callback: FileChooserAdapter) {
+        var initialPath = initialFolder.path()
 
-        if (System.getProperty("os.name").lowercase().contains("win"))
-            oldPath = oldPath.replace("/", "\\")
+        if (System.getProperty("os.name").lowercase().contains("win")) {
+            initialPath = initialPath.replace("/", "\\")
+        }
 
-        return TinyFileDialogs.tinyfd_selectFolderDialog(title, oldPath)
+        try {
+            val folder = TinyFileDialogs.tinyfd_selectFolderDialog("Choose Directory", initialPath)
+
+            if (folder == null) {
+                callback.canceled()
+                return
+            }
+
+            val array = GdxArray<FileHandle>()
+            array.add(Gdx.files.absolute(folder))
+
+            callback.selected(array)
+        } catch (e: Exception) {
+            val fileChooser = FileChooser(FileChooser.Mode.OPEN)
+            fileChooser.selectionMode = FileChooser.SelectionMode.DIRECTORIES
+            fileChooser.setDirectory(initialPath)
+            fileChooser.setListener(callback)
+
+            form.stage.addActor(fileChooser.fadeIn())
+        }
     }
 
     @LmlAction("togglePlatform")
