@@ -104,7 +104,7 @@ class MainView : ActionContainer {
             array.add(Gdx.files.absolute(folder))
 
             callback.selected(array)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             val fileChooser = FileChooser(FileChooser.Mode.OPEN)
             fileChooser.selectionMode = FileChooser.SelectionMode.DIRECTORIES
             fileChooser.setDirectory(initialPath)
