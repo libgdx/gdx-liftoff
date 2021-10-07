@@ -48,6 +48,7 @@ dependencies {
   api "com.kotcrab.vis:vis-ui:1.5.0"
   api "org.lwjgl:lwjgl-tinyfd:3.2.3"
   api "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-windows"
+  api "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-windows-x86"
   api "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-linux"
   api "org.lwjgl:lwjgl-tinyfd:3.2.3:natives-macos"
 //  api 'org.slf4j:slf4j-nop:1.7.32'
