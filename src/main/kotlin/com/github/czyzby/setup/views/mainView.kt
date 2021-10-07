@@ -33,6 +33,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
+import org.lwjgl.util.tinyfd.TinyFileDialogs
 
 /**
  * Main application's view. Displays application's menu.
@@ -57,17 +58,28 @@ class MainView : ActionContainer {
     @LmlActor("notLatestVersion") private lateinit var notUpToDateToast: ToastTable
 
     @LmlAction("chooseDirectory")
-    fun chooseDirectory(file: FileHandle?) {
+    fun chooseDirectory() {
+        val file = pickDirectory("Choose directory", getDestination())
         if (file != null) {
-            basicData.setDestination(file.path())
+            basicData.setDestination(file)
         }
     }
 
     @LmlAction("chooseSdkDirectory")
-    fun chooseSdkDirectory(file: FileHandle?) {
+    fun chooseSdkDirectory() {
+        val file = pickDirectory("Choose directory", getAndroidSdkVersion())
         if (file != null) {
-            basicData.setAndroidSdkPath(file.path())
+            basicData.setAndroidSdkPath(file)
         }
+    }
+
+    private fun pickDirectory(title: String, initialFolder: FileHandle): String? {
+        var oldPath = initialFolder.path()
+
+        if (System.getProperty("os.name").lowercase().contains("win"))
+            oldPath = oldPath.replace("/", "\\")
+
+        return TinyFileDialogs.tinyfd_selectFolderDialog(title, oldPath)
     }
 
     @LmlAction("togglePlatform")
@@ -175,6 +187,7 @@ class MainView : ActionContainer {
     }
 
     fun getDestination(): FileHandle = basicData.destination
+    fun getAndroidSdkVersion(): FileHandle = basicData.androidSdk
 
     fun createProject(): Project = Project(basicData, platformsData.getSelectedPlatforms(),
             advancedData, languagesData, extensionsData, templatesData.getSelectedTemplate())
