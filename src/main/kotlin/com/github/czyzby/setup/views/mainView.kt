@@ -35,7 +35,9 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
-import org.lwjgl.util.tinyfd.TinyFileDialogs
+import org.lwjgl.system.MemoryUtil.*
+import org.lwjgl.util.nfd.NativeFileDialog
+import kotlin.Array
 import com.badlogic.gdx.utils.Array as GdxArray
 
 
@@ -92,13 +94,18 @@ class MainView : ActionContainer {
             initialPath = initialPath.replace("/", "\\")
         }
 
-        try {
-            val folder = TinyFileDialogs.tinyfd_selectFolderDialog("Choose Directory", initialPath)
+        val pathPointer = memAllocPointer(1);
 
-            if (folder == null) {
+        try {
+            val picked = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
+
+            if (picked != NativeFileDialog.NFD_OKAY) {
                 callback.canceled()
                 return
             }
+
+            val folder = pathPointer.getStringUTF8(0)
+            NativeFileDialog.nNFD_Free(pathPointer.get(0))
 
             val array = GdxArray<FileHandle>()
             array.add(Gdx.files.absolute(folder))
@@ -111,6 +118,8 @@ class MainView : ActionContainer {
             fileChooser.setListener(callback)
 
             form.stage.addActor(fileChooser.fadeIn())
+        } finally {
+            memFree(pathPointer)
         }
     }
 
