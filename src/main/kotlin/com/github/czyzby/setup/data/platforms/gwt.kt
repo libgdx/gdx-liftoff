@@ -283,7 +283,7 @@ configurations { lom }
 dependencies {
 	lom "org.projectlombok:lombok:${'$'}{lombokVersion}"
 	implementation configurations.lom.dependencies
-	annotationProcessor "org.projectlombok:lombok:${'$'}{lombokVersion}"
+	annotationProcessor configurations.lom.dependencies
 }
 
 draftCompileGwt {
