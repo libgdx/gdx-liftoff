@@ -29,10 +29,17 @@ import com.github.czyzby.setup.data.platforms.Android
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.prefs.SdkVersionPreference
 import com.kotcrab.vis.ui.util.ToastManager
+import com.kotcrab.vis.ui.widget.file.FileChooser
+import com.kotcrab.vis.ui.widget.file.FileChooserAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
+import org.lwjgl.system.MemoryUtil.*
+import org.lwjgl.util.nfd.NativeFileDialog
+import kotlin.Array
+import com.badlogic.gdx.utils.Array as GdxArray
+
 
 /**
  * Main application's view. Displays application's menu.
@@ -57,16 +64,67 @@ class MainView : ActionContainer {
     @LmlActor("notLatestVersion") private lateinit var notUpToDateToast: ToastTable
 
     @LmlAction("chooseDirectory")
-    fun chooseDirectory(file: FileHandle?) {
-        if (file != null) {
-            basicData.setDestination(file.path())
-        }
+    fun chooseDirectory() {
+        pickDirectory(getDestination(), object : FileChooserAdapter() {
+            override fun selected(files: GdxArray<FileHandle>?) {
+                val file = files?.first()
+                if (file != null) {
+                    basicData.setDestination(file.path())
+                }
+            }
+        })
     }
 
     @LmlAction("chooseSdkDirectory")
-    fun chooseSdkDirectory(file: FileHandle?) {
-        if (file != null) {
-            basicData.setAndroidSdkPath(file.path())
+    fun chooseSdkDirectory() {
+        pickDirectory(getAndroidSdkVersion(), object : FileChooserAdapter() {
+            override fun selected(files: GdxArray<FileHandle>?) {
+                val file = files?.first()
+                if (file != null) {
+                    basicData.setAndroidSdkPath(file.path())
+                }
+            }
+        })
+    }
+
+    private fun pickDirectory(initialFolder: FileHandle, callback: FileChooserAdapter) {
+        var initialPath = initialFolder.path()
+
+        if (System.getProperty("os.name").lowercase().contains("win")) {
+            initialPath = initialPath.replace("/", "\\")
+        }
+
+        val pathPointer = memAllocPointer(1);
+
+        try {
+            val status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
+
+            if (status == NativeFileDialog.NFD_CANCEL) {
+                callback.canceled()
+                return
+            }
+
+            // unexpected error -> show visui dialog
+            if (status != NativeFileDialog.NFD_OKAY) {
+                throw Throwable("Native file dialog errored")
+            }
+
+            val folder = pathPointer.getStringUTF8(0)
+            NativeFileDialog.nNFD_Free(pathPointer.get(0))
+
+            val array = GdxArray<FileHandle>()
+            array.add(Gdx.files.absolute(folder))
+
+            callback.selected(array)
+        } catch (e: Throwable) {
+            val fileChooser = FileChooser(FileChooser.Mode.OPEN)
+            fileChooser.selectionMode = FileChooser.SelectionMode.DIRECTORIES
+            fileChooser.setDirectory(initialPath)
+            fileChooser.setListener(callback)
+
+            form.stage.addActor(fileChooser.fadeIn())
+        } finally {
+            memFree(pathPointer)
         }
     }
 
@@ -175,6 +233,7 @@ class MainView : ActionContainer {
     }
 
     fun getDestination(): FileHandle = basicData.destination
+    fun getAndroidSdkVersion(): FileHandle = basicData.androidSdk
 
     fun createProject(): Project = Project(basicData, platformsData.getSelectedPlatforms(),
             advancedData, languagesData, extensionsData, templatesData.getSelectedTemplate())
