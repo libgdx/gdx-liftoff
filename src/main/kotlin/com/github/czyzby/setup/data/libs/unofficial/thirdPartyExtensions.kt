@@ -430,7 +430,7 @@ class TenPatch : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
     override val id = "gdxGltf"
-    override val defaultVersion = "dbe96d07a2"
+    override val defaultVersion = "358227c533"
     override val url = "https://github.com/mgsx-dev/gdx-gltf"
 
     override fun initiateDependencies(project: Project) {
@@ -448,8 +448,8 @@ class GdxGltf : ThirdPartyExtension() {
 @Extension
 class SpineRuntime : ThirdPartyExtension() {
     override val id = "spineRuntime"
-    override val defaultVersion = "3.8.55.1"
-    override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/3.8/spine-libgdx"
+    override val defaultVersion = "4.0.18.1"
+    override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/4.0/spine-libgdx"
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.esotericsoftware.spine:spine-libgdx")

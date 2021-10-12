@@ -11,7 +11,7 @@ import com.github.czyzby.setup.views.Extension
  * Current version of KTX libraries.
  * @author MJ
  */
-const val KTX_VERSION = "1.10.0-b3"
+const val KTX_VERSION = "1.10.0-b4"
 
 /**
  * Kotlin utilities for Scene2D actors API.
