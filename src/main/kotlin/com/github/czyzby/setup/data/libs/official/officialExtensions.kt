@@ -2,17 +2,22 @@ package com.github.czyzby.setup.data.libs.official
 
 import com.badlogic.gdx.Version
 import com.github.czyzby.setup.data.libs.Library
+import com.github.czyzby.setup.data.libs.Repository
 import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
+import com.github.czyzby.setup.views.fetchVersionFromMavenCentral
 
 /**
  * Abstract base for official extensions.
- * @author MJ
  */
 abstract class OfficialExtension : Library {
     override val defaultVersion = Version.VERSION
     override val official = true
+    override val repository = Repository.MAVEN_CENTRAL
+    override val group = "com.badlogicgames.gdx"
+    override val name: String
+        get() = id
 }
 
 /**
@@ -22,9 +27,10 @@ abstract class OfficialExtension : Library {
 class AI : OfficialExtension() {
     override val id = "gdx-ai"
     override val url = "https://github.com/libgdx/gdx-ai"
+    override val defaultVersion = "1.8.2"
 
     override fun initiate(project: Project) {
-        project.properties["aiVersion"] = "1.8.2"
+        project.properties["aiVersion"] = fetchVersionFromMavenCentral(this)
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion")
 
@@ -40,9 +46,11 @@ class AI : OfficialExtension() {
 class Ashley : OfficialExtension() {
     override val id = "ashley"
     override val url = "https://github.com/libgdx/ashley"
+    override val group = "com.badlogicgames.ashley"
+    override val defaultVersion = "1.7.4"
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = "1.7.3"
+        project.properties[id + "Version"] = fetchVersionFromMavenCentral(this)
 
         addDependency(project, Core.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion")
 
@@ -86,9 +94,11 @@ class Box2D : OfficialExtension() {
 class Box2DLights : OfficialExtension() {
     override val id = "box2dlights"
     override val url = "https://github.com/libgdx/box2dlights"
+    override val group = "com.badlogicgames.box2dlights"
+    override val defaultVersion = "1.5"
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = "1.5"
+        project.properties[id + "Version"] = fetchVersionFromMavenCentral(this)
 
         addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
 
@@ -133,9 +143,12 @@ class Bullet : OfficialExtension() {
 class Controllers : OfficialExtension() {
     override val id = "gdx-controllers"
     override val url = "https://github.com/libgdx/gdx-controllers"
+    override val group = "com.badlogicgames.gdx-controllers"
+    override val name = "gdx-controllers-core"
+    override val defaultVersion = "2.2.1"
 
     override fun initiate(project: Project) {
-        project.properties["gdxControllersVersion"] = "2.2.0"
+        project.properties["gdxControllersVersion"] = fetchVersionFromMavenCentral(this)
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 

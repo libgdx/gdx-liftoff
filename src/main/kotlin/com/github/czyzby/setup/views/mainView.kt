@@ -222,9 +222,6 @@ class MainView : ActionContainer {
     @LmlAction("thirdPartyExtensions") fun getThirdPartyExtensions(): Array<String> =
             extensionsData.thirdParty.map { it.id }.sorted().toTypedArray()
 
-    @LmlAction("thirdPartyExtensionsVersions") fun getThirdPartyExtensionsVersions(): Array<String> =
-            extensionsData.thirdParty.sortedBy { it.id }.map { it.defaultVersion }.toTypedArray()
-
     @LmlAction("thirdPartyExtensionsUrls") fun getThirdPartyExtensionsUrls(): Array<String> =
             extensionsData.thirdParty.sortedBy { it.id }.map { it.url }.toTypedArray()
 
