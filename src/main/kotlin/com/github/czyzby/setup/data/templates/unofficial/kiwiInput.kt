@@ -9,7 +9,8 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Classic project template using Kiwi utilities and listening to user input.
  */
 @ProjectTemplate
-class KiwiInputTemplate : ClassicTemplate(){
+@Suppress("unused") // Referenced via reflection.
+class KiwiInputTemplate : ClassicTemplate() {
 	override val id = "kiwiInputTemplate"
 	private lateinit var mainClass: String
 	override val width: String

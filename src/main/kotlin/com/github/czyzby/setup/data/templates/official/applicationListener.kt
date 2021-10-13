@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Adds empty implementation of all ApplicationListener methods. Application does nothing.
  */
 @ProjectTemplate(official = true)
+@Suppress("unused") // Referenced via reflection.
 class ApplicationListenerTemplate : Template {
 	override val id = "applicationListener"
 	override val description: String

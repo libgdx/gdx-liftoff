@@ -15,7 +15,6 @@ import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.setup.data.project.ProjectLogger
 import com.github.czyzby.setup.views.MainView
 import com.github.czyzby.setup.views.widgets.ScrollableTextArea
-import com.kotcrab.vis.ui.widget.VisTextArea
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
@@ -25,8 +24,9 @@ import java.util.concurrent.atomic.AtomicLong
  * Displayed after generation request was sent.
  */
 @ViewDialog(id = "generation", value = "templates/dialogs/generation.lml", cacheInstance = false)
+@Suppress("unused") // Referenced via reflection.
 class GenerationPrompt : ViewDialogShower, ProjectLogger {
-    @Inject private lateinit var locale: LocaleService;
+    @Inject private lateinit var locale: LocaleService
     @Inject private lateinit var mainView: MainView
 
     @LmlActor("close", "exit") private lateinit var buttons: ObjectSet<Button>
@@ -74,7 +74,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
         }
     }
 
-    @Destroy()
+    @Destroy
     fun shutdownExecutor() {
         try {
             executor.shutdownNow()
@@ -93,7 +93,7 @@ private class PrefixedThreadFactory(threadPrefix: String) : ThreadFactory {
     private val threadPrefix: String
 
     init {
-        this.threadPrefix = threadPrefix + "-"
+        this.threadPrefix = "$threadPrefix-"
     }
 
     override fun newThread(runnable: Runnable): Thread {

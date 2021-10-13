@@ -10,9 +10,9 @@ import com.github.czyzby.lml.vis.parser.impl.tag.VisTextAreaLmlTag
 import com.kotcrab.vis.ui.widget.VisTextArea
 import com.kotcrab.vis.ui.widget.VisTextField
 
-/** Custom [VisTextArea] used to display logs in the generation prompt. Supports embedding in scroll pane by calculating
+/**
+ * Custom [VisTextArea] used to display logs in the generation prompt. Supports embedding in scroll pane by calculating
  * required space needed for current text.
-
  * @author Kotcrab
  */
 class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, styleName) {
@@ -38,27 +38,26 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
         try {
             super.draw(batch, parentAlpha)
         } catch (getYourActTogetherScene2D: IndexOutOfBoundsException) {
-            copy();
+            copy()
         }
     }
 
-    /** Provides [CodeTextArea] tags.
-
+    /**
+     * Provides CodeTextArea tags.
      * @author Kotcrab
      */
     class ScrollableTextAreaLmlTagProvider : LmlTagProvider {
         override fun create(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder): LmlTag
                 = ScrollableTextAreaLmlTag(parser, parentTag, rawTagData)
-
     }
 
-    /** Handles [CodeTextArea] actor.
-
+    /**
+     * Handles CodeTextArea actor.
      * @author Kotcrab
      */
     class ScrollableTextAreaLmlTag(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder) :
             VisTextAreaLmlTag(parser, parentTag, rawTagData) {
-        override protected fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
+        override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
                 ScrollableTextArea(textBuilder.text, textBuilder.styleName)
     }
 }

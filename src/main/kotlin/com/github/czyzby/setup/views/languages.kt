@@ -40,7 +40,7 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
     fun getVersion(id: String): String = languageVersions[id].text
 
     fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
-        jvmLanguages.get(it.name)!!
+        jvmLanguages[it.name]!!
     }.toList()
 
     fun appendSelectedLanguagesVersions(project: Project) {

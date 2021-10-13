@@ -36,7 +36,7 @@ open class AutumnMvcBasicTemplate : Template {
             arrayOf("${project.basic.rootPackage}.${project.basic.mainClass}")
 
     protected open fun getReflectedPackages(project: Project): Array<String> =
-            arrayOf<String>()
+            arrayOf()
 
     protected open fun addViews(project: Project) {
         project.files.add(SourceFile(projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",

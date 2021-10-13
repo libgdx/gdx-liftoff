@@ -72,9 +72,6 @@ class AdvancedData {
     val generateReadme: Boolean
         get() = generateReadmeButton.isChecked
 
-    val addGradleWrapper: Boolean
-        get() = true
-
     val gradleTasks: List<String>
         get() = if (gradleTasksField.isEmpty) listOf()
         else gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter { it.isNotBlank() }

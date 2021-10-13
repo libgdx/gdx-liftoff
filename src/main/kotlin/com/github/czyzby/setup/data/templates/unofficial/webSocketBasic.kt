@@ -13,6 +13,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Shows basic web sockets extension usage. Uses VisUI to create simple GUI.
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class WebSocketBasicTemplate : Template {
 	override val id = "webSocketBasicTemplate"
 	override val description: String

@@ -14,6 +14,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * @author Kotcrab
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class VisUIShowcaseTemplate : Template {
 	override val id = "visUiShowcaseTemplate"
 	override val width: String

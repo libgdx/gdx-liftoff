@@ -1,8 +1,5 @@
 package com.github.czyzby.setup.data.templates.official
 
-import com.github.czyzby.setup.data.files.CopiedFile
-import com.github.czyzby.setup.data.files.path
-import com.github.czyzby.setup.data.platforms.Assets
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate
@@ -11,6 +8,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Sets up a simple Scene2D stage. Forces generation of GUI skin.
  */
 @ProjectTemplate(official = true)
+@Suppress("unused") // Referenced via reflection.
 class Scene2DTemplate : Template {
     override val id = "scene2dTemplate"
     override val description: String

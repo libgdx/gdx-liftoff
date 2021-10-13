@@ -25,6 +25,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser
  * Configures Autumn MVC application.
  */
 @Component
+@Suppress("unused") // Fields accessed via reflection.
 class Configuration {
     companion object {
         const val VERSION = "1.10.0.6-SNAPSHOT"
@@ -39,7 +40,7 @@ class Configuration {
     @I18nBundle val bundle = "i18n/nls"
     @I18nLocale(propertiesPath = PREFERENCES_PATH, defaultLocale = "en") val localePreference = "locale"
     @AvailableLocales val availableLocales = arrayOf("en")
-    @Preference val preferencesPath = PREFERENCES_PATH;
+    @Preference val preferencesPath = PREFERENCES_PATH
 
     @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
     fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
@@ -65,11 +66,11 @@ class Configuration {
             override fun process(parser: LmlParser, tag: LmlTag, actor: Actor, rawAttributeData: String) {
                 val tooltip = Tooltip()
                 val label = VisLabel(parser.parseString(rawAttributeData, actor), "small")
-                label.setWrap(true)
+                label.wrap = true
                 tooltip.clear()
                 tooltip.add(label).width(200f)
                 tooltip.pad(3f)
-                tooltip.setTarget(actor)
+                tooltip.target = actor
                 tooltip.pack()
             }
         }, "tooltip")

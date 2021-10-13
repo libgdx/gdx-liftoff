@@ -13,6 +13,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * @author Kotcrab
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class VisUIBasicTemplate : Template {
 	override val id = "visUiBasicTemplate"
 	override val description: String

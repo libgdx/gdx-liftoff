@@ -23,8 +23,11 @@ class LWJGL3 : Platform {
 		arrayOf(16, 32, 64, 128)
 			.map { "libgdx${it}.png" }
 			.forEach { icon ->
-				project.files.add(CopiedFile(projectName = LWJGL3.ID, path = path("src", "main", "resources", icon),
-					original = path("icons", icon)))
+				project.files.add(CopiedFile(
+					projectName = ID,
+					path = path("src", "main", "resources", icon),
+					original = path("icons", icon)
+				))
 			}
 
 		addGradleTaskDescription(project, "run", "starts the application.")

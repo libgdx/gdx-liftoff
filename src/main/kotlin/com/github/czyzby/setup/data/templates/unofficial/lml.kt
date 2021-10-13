@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Uses LML to generate GUI similar to the one presented in the official Scene2D template. Forces skin generation.
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class LmlTemplate : Template {
 	override val id: String = "lmlTemplate"
 	private lateinit var mainClass: String

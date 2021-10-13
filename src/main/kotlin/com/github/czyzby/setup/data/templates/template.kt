@@ -40,7 +40,7 @@ interface Template {
 
 	fun addApplicationListener(project: Project) {
 		addSourceFile(project = project, platform = Core.ID, packageName = project.basic.rootPackage,
-				fileName = "${project.basic.mainClass}.java", content = getApplicationListenerContent(project));
+				fileName = "${project.basic.mainClass}.java", content = getApplicationListenerContent(project))
 	}
 
 	/**
@@ -51,7 +51,7 @@ interface Template {
 
 	fun addDesktopLauncher(project: Project) {
 		addSourceFile(project = project, platform = Desktop.ID, packageName = "${project.basic.rootPackage}.desktop",
-				fileName = "DesktopLauncher.java", content = getDesktopLauncherContent(project));
+				fileName = "DesktopLauncher.java", content = getDesktopLauncherContent(project))
 	}
 
 	fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
@@ -88,7 +88,7 @@ public class DesktopLauncher {
 
 	fun addGwtLauncher(project: Project) {
 		addSourceFile(project = project, platform = GWT.ID, packageName = "${project.basic.rootPackage}.gwt",
-				fileName = "GwtLauncher.java", content = getGwtLauncherContent(project));
+				fileName = "GwtLauncher.java", content = getGwtLauncherContent(project))
 	}
 
 	fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
@@ -161,10 +161,10 @@ else """
 
 	fun addAndroidLauncher(project: Project) {
 		addSourceFile(project = project, platform = Android.ID, packageName = project.basic.rootPackage,
-				fileName = "AndroidLauncher.java", content = getAndroidLauncherContent(project));
+				fileName = "AndroidLauncher.java", content = getAndroidLauncherContent(project))
 	}
 
-	fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage};
+	fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}
 
 import android.os.Bundle;
 
@@ -184,7 +184,7 @@ public class AndroidLauncher extends AndroidApplication {
 
 	fun addHeadlessLauncher(project: Project) {
 		addSourceFile(project = project, platform = Headless.ID, packageName = "${project.basic.rootPackage}.headless",
-				fileName = "HeadlessLauncher.java", content = getHeadlessLauncherContent(project));
+				fileName = "HeadlessLauncher.java", content = getHeadlessLauncherContent(project))
 	}
 
 	fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
@@ -217,7 +217,7 @@ public class HeadlessLauncher {
 
 	fun addIOSLauncher(project: Project) {
 		addSourceFile(project = project, platform = iOS.ID, packageName = "${project.basic.rootPackage}.ios",
-				fileName = "IOSLauncher.java", content = getIOSLauncherContent(project));
+				fileName = "IOSLauncher.java", content = getIOSLauncherContent(project))
 	}
 
 	fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
@@ -247,7 +247,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
 
 	fun addLwjgl3Launcher(project: Project) {
 		addSourceFile(project = project, platform = LWJGL3.ID, packageName = "${project.basic.rootPackage}.lwjgl3",
-				fileName = "Lwjgl3Launcher.java", content = getLwjgl3LauncherContent(project));
+				fileName = "Lwjgl3Launcher.java", content = getLwjgl3LauncherContent(project))
 	}
 
 	fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
@@ -283,7 +283,7 @@ public class Lwjgl3Launcher {
 
 	fun addServerLauncher(project: Project) {
 		addSourceFile(project = project, platform = Server.ID, packageName = "${project.basic.rootPackage}.server",
-				fileName = "ServerLauncher.java", content = getServerLauncherContent(project));
+				fileName = "ServerLauncher.java", content = getServerLauncherContent(project))
 	}
 
 	fun getServerLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.server;
