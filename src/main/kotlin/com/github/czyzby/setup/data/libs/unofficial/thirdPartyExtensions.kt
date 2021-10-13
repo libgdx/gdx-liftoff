@@ -236,6 +236,7 @@ class JaciGwt : ThirdPartyExtension() {
 /**
  * Simple map generators. Noise4J can be used as a continuous noise generator, but you're better served by
  * joise or make-some-noise in that case. There are also many kinds of map generator in squidlib-util.
+ * @author czyzby
  */
 @Extension
 class Noise4J : ThirdPartyExtension() {

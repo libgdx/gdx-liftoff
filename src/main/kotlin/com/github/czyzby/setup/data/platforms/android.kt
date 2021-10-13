@@ -7,7 +7,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents Android backend.
- * @author MJ
  */
 @GdxPlatform
 class Android : Platform {
@@ -77,7 +76,6 @@ ${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permiss
 
 /**
  * Gradle file of the Android project.
- * @author MJ
  */
 class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
 	val plugins = mutableListOf<String>()

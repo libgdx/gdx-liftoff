@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Displayed after generation request was sent.
- * @author MJ
  */
 @ViewDialog(id = "generation", value = "templates/dialogs/generation.lml", cacheInstance = false)
 class GenerationPrompt : ViewDialogShower, ProjectLogger {

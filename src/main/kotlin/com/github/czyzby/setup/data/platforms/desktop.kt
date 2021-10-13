@@ -8,7 +8,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents the legacy Desktop backend, which has been replaced in practice by LWJGL3.
- * @author MJ
  */
 @GdxPlatform
 class Desktop : Platform {
@@ -36,7 +35,6 @@ class Desktop : Platform {
 
 /**
  * Gradle file of the desktop project.
- * @author MJ
  */
 class DesktopGradleFile(val project: Project) : GradleFile(Desktop.ID) {
 	init {

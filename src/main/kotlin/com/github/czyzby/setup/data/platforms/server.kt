@@ -6,7 +6,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents server application project.
- * @author MJ
  */
 @GdxPlatform
 class Server : Platform {
@@ -29,7 +28,6 @@ class Server : Platform {
 /**
  * Represents the Gradle file of server project. Allows to set up a different Java version and launch the application
  * with "run" task.
- * @author MJ
  */
 class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
     override fun getContent(): String = """apply plugin: 'application'

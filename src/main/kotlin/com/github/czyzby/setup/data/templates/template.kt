@@ -8,7 +8,6 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Interface shared by all project templates. Templates should be annotated with ProjectTemplate.
- * @author MJ
  */
 interface Template {
 	val id: String

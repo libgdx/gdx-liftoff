@@ -9,8 +9,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Draws Badlogic Games logo at the center of the screen.
- * @author MJ
- * @author Original gdx-setup maintainers
  */
 @ProjectTemplate(official = true)
 open class ClassicTemplate : Template {

@@ -6,7 +6,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents headless application project.
- * @author MJ
  */
 @GdxPlatform
 class Headless : Platform {
@@ -29,7 +28,6 @@ class Headless : Platform {
 /**
  * Represents the Gradle file of the headless project. Allows to set up a different Java version and launch the application
  * with "run" task.
- * @author MJ
  */
 class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
     init {

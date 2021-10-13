@@ -12,7 +12,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Advanced Autumn MVC template showing VisUI, Controllers and Box2D usage.
- * @author MJ
  */
 @ProjectTemplate
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {

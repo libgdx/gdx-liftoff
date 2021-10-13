@@ -8,7 +8,6 @@ import java.io.File
 
 /**
  * Common interface of files generated or copied during project creation.
- * @author MJ
  */
 interface ProjectFile {
     /**
@@ -25,7 +24,6 @@ interface ProjectFile {
 
 /**
  * Represents a directory with source files.
- * @author MJ
  */
 open class SourceDirectory(val projectName: String, val sourcePath: String = path("src", "main", "java")) : ProjectFile {
     override val path: String = projectName + File.separator + sourcePath
@@ -39,7 +37,6 @@ fun path(vararg directories: String) = directories.joinToString(separator = File
 
 /**
  * Base class for source files.
- * @author MJ
  */
 open class SourceFile private constructor(val content: String, override val path: String) : ProjectFile {
     /**
@@ -87,7 +84,6 @@ fun toRelativePath(projectName: String, sourceFolderPath: String, packageName: S
 
 /**
  * Base class for copied project resources.
- * @author MJ
  */
 open class CopiedFile private constructor(override val path: String, val original: String, val fileType: Files.FileType) : ProjectFile {
     /**

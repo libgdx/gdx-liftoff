@@ -6,7 +6,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents shared project, accessible by both client and server application.
- * @author MJ
  */
 @GdxPlatform
 class Shared : Platform {
@@ -34,7 +33,6 @@ class Shared : Platform {
 /**
  * Represents shared project Gradle file. Should include dependencies that should be available for both server and
  * client applications.
- * @author MJ
  */
 class SharedGradleFile(val project: Project) : GradleFile(Shared.ID) {
     override fun getContent(): String = """eclipse.project.name = appName + '-shared'

@@ -93,7 +93,6 @@ fun fetchSnapshotVersion(library: Library): String {
 
 /**
  * Should annotate all third-party extensions.
- * @author MJ
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

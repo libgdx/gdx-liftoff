@@ -6,7 +6,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents core application's project, used by all backends.
- * @author MJ
  */
 @GdxPlatform
 class Core : Platform {
@@ -27,7 +26,6 @@ class Core : Platform {
 
 /**
  * Gradle file of the core project. Should contain all multi-platform dependencies, like "gdx" itself.
- * @author MJ
  */
 class CoreGradleFile : GradleFile(Core.ID) {
     init {

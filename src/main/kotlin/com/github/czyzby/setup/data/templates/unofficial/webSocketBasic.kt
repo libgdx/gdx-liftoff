@@ -11,7 +11,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Shows basic web sockets extension usage. Uses VisUI to create simple GUI.
- * @author MJ
  */
 @ProjectTemplate
 class WebSocketBasicTemplate : Template {

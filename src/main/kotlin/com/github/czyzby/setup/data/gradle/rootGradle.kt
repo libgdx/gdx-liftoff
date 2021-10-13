@@ -5,7 +5,6 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Gradle file of the root project. Manages build script and global settings.
- * @author MJ
  */
 class RootGradleFile(val project: Project) : GradleFile("") {
     val plugins = mutableSetOf<String>()

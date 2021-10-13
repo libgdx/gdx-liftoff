@@ -16,7 +16,6 @@ import com.kotcrab.vis.ui.widget.VisTextField
 
 /**
  * Holds additional JVM languages data.
- * @author MJ
  */
 @Processor
 class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
@@ -61,7 +60,6 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
 
 /**
  * Should annotate all additional JVM languages.
- * @author MJ
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
