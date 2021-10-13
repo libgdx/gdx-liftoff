@@ -5,13 +5,17 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Interface shared by all libGDX extensions.
- * @author MJ
  */
 interface Library {
     val id: String
     val defaultVersion: String
     val url: String
     val official: Boolean
+    val repository: Repository
+    /** Group of the main dependency used to determine the version. */
+    val group: String
+    /** Name of the main dependency used to determine the version. */
+    val name: String
 
     /**
      * @param project is currently generated and should have this library included.
@@ -54,3 +58,10 @@ interface Library {
         }
     }
 }
+
+enum class Repository {
+    MAVEN_CENTRAL, JITPACK, MAVEN_SNAPSHOTS
+}
+
+private val camelCase = Regex("(.)(\\p{Upper})")
+fun String.camelCaseToKebabCase(): String = replace(camelCase, "$1-$2").lowercase()

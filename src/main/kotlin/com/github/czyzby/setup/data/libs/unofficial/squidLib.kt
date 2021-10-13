@@ -1,43 +1,37 @@
 package com.github.czyzby.setup.data.libs.unofficial
 
+import com.github.czyzby.setup.data.libs.camelCaseToKebabCase
 import com.github.czyzby.setup.data.platforms.Core
 import com.github.czyzby.setup.data.platforms.GWT
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
 
-
 /**
- * Version of SquidLib libraries.
+ * Base class of SquidLib libraries.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-const val SQUID_LIB_VERSION = "3.0.4"
-
-/**
- * URL of SquidLib libraries.
- * @author Eben Howard
- * @author Tommy Ettinger
- */
-const val SQUID_LIB_URL = "https://github.com/SquidPony/SquidLib"
-
-//const val REPO_PATH = "com.github.SquidPony.SquidLib"
-const val REPO_PATH = "com.squidpony"
+abstract class SquidLibExtension: ThirdPartyExtension() {
+    override val defaultVersion = "3.0.4"
+    override val group = "com.squidpony"
+    override val name: String
+        get() = id.camelCaseToKebabCase()
+    override val url = "https://github.com/SquidPony/SquidLib"
+}
 
 /**
  * Utilities for grid-based games.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-@Extension()
-class SquidLibUtil : ThirdPartyExtension() {
-    override val id = "squidLibUtil"
-    override var defaultVersion = SQUID_LIB_VERSION
-    override val url = SQUID_LIB_URL
+@Extension
+class SquidLibUtil : SquidLibExtension() {
+    override val id = "squidlibUtil"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$REPO_PATH:squidlib-util")
+        addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$REPO_PATH:squidlib-util:sources")
+        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "squidlib-util")
 
         RegExodus().initiate(project)
@@ -50,21 +44,17 @@ class SquidLibUtil : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 @Extension()
-class SquidLib : ThirdPartyExtension() {
-    override val id = "squidLib"
-    override var defaultVersion = SQUID_LIB_VERSION
-    override val url = SQUID_LIB_URL
+class SquidLib : SquidLibExtension() {
+    override val id = "squidlib"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$REPO_PATH:squidlib")
+        addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$REPO_PATH:squidlib:sources")
+        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "squidlib")
 
         SquidLibUtil().initiate(project)
         Anim8().initiate(project)
-        
-        defaultVersion = SQUID_LIB_VERSION
     }
 }
 
@@ -73,19 +63,16 @@ class SquidLib : ThirdPartyExtension() {
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-@Extension()
-class SquidLibExtra : ThirdPartyExtension() {
-    override val id = "squidLibExtra"
-    override var defaultVersion = SQUID_LIB_VERSION
-    override val url = SQUID_LIB_URL
+@Extension
+class SquidLibExtra : SquidLibExtension() {
+    override val id = "squidlibExtra"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$REPO_PATH:squidlib-extra")
+        addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$REPO_PATH:squidlib-extra:sources")
+        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "squidlib-extra")
 
         SquidLibUtil().initiate(project)
-        defaultVersion = SQUID_LIB_VERSION
     }
 }
