@@ -1,7 +1,7 @@
 package gdx.liftoff.data.templates.unofficial
 
 import gdx.liftoff.data.files.SourceFile
-import gdx.liftoff.data.libs.unofficial.LML
+import gdx.liftoff.data.libraries.unofficial.LML
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.templates.Template

@@ -1,13 +1,13 @@
 @file:Suppress("unused") // Extension classes accessed via reflection.
 
-package gdx.liftoff.data.libs.unofficial
+package gdx.liftoff.data.libraries.unofficial
 
 import com.badlogic.gdx.Gdx
-import gdx.liftoff.data.libs.Repository
-import gdx.liftoff.data.libs.camelCaseToKebabCase
-import gdx.liftoff.data.libs.official.Ashley
-import gdx.liftoff.data.libs.official.Box2D
-import gdx.liftoff.data.libs.official.Freetype
+import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.camelCaseToKebabCase
+import gdx.liftoff.data.libraries.official.Ashley
+import gdx.liftoff.data.libraries.official.Box2D
+import gdx.liftoff.data.libraries.official.Freetype
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension

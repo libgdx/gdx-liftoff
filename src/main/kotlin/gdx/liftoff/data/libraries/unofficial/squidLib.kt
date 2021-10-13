@@ -1,8 +1,8 @@
 @file:Suppress("unused") // Extension classes accessed via reflection.
 
-package gdx.liftoff.data.libs.unofficial
+package gdx.liftoff.data.libraries.unofficial
 
-import gdx.liftoff.data.libs.camelCaseToKebabCase
+import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.project.Project

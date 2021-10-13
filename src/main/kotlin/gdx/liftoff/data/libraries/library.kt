@@ -1,4 +1,4 @@
-package gdx.liftoff.data.libs
+package gdx.liftoff.data.libraries
 
 import gdx.liftoff.data.platforms.*
 import gdx.liftoff.data.project.Project

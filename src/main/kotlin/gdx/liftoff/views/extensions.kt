@@ -9,9 +9,9 @@ import com.github.czyzby.autumn.context.ContextDestroyer
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
-import gdx.liftoff.data.libs.Library
-import gdx.liftoff.data.libs.Repository
-import gdx.liftoff.libs.unofficial.latestKtxVersion
+import gdx.liftoff.data.libraries.Library
+import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.unofficial.latestKtxVersion
 import devcsrj.mvnrepository.MvnRepositoryApi
 import khttp.get
 

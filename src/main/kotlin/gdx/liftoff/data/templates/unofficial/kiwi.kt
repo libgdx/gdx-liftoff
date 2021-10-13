@@ -1,6 +1,6 @@
 package gdx.liftoff.data.templates.unofficial
 
-import gdx.liftoff.data.libs.unofficial.Kiwi
+import gdx.liftoff.data.libraries.unofficial.Kiwi
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.views.ProjectTemplate
