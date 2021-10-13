@@ -26,20 +26,8 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
 
     @LmlActor("\$officialExtensions") private lateinit var officialButtons: ObjectMap<String, Button>
     @LmlActor("\$thirdPartyExtensions") private lateinit var thirdPartyButtons: ObjectMap<String, Button>
-    private val thirdPartyVersions = ObjectMap<String, VisTextField>()
-
-    fun assignVersions(parser: LmlParser) {
-        thirdParty.forEach {
-            thirdPartyVersions.put(it.id,
-                    parser.actorsMappedByIds.get(it.id + "Version") as VisTextField)
-        }
-    }
 
     fun getVersion(library: Library): String {
-        val customVersion = thirdPartyVersions.get(library.id).text
-        if (customVersion.isNotBlank()) {
-            return customVersion.trim()
-        }
         return when(library.repository) {
             Repository.MAVEN_CENTRAL -> fetchVersionFromMavenCentral(library)
             Repository.JITPACK -> fetchVersionFromJitPack(library)
@@ -49,10 +37,9 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
 
     fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
     fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
-
     fun hasExtensionSelected(id: String) : Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
-    // Automatic scanning of extensions:
 
+    // Automatic scanning of extensions:
     override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
     override fun isSupportingTypes(): Boolean = true
     override fun processType(type: Class<*>, annotation: Extension, component: Any, context: Context,

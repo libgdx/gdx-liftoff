@@ -6,7 +6,6 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Adds Java support to the project.
- * @author MJ
  */
 class Java : Language {
     override val id = "java-library"

@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.JvmLanguage
 
 /**
  * Adds Scala support to the project.
- * @author MJ
  */
 @JvmLanguage
 class Scala : Language {
