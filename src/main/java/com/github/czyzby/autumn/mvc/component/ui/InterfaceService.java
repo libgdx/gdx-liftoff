@@ -41,7 +41,7 @@ import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 import com.github.czyzby.lml.parser.action.ActorConsumer;
 import com.github.czyzby.lml.util.Lml;
-import com.github.czyzby.setup.config.Configuration;
+import gdx.liftoff.config.Configuration;
 
 import java.util.Locale;
 
