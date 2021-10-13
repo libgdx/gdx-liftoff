@@ -1,4 +1,4 @@
-package gdx.liftoff.data.langs
+package gdx.liftoff.data.languages
 
 import gdx.liftoff.data.files.SourceDirectory
 import gdx.liftoff.data.files.path

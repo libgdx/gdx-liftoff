@@ -18,6 +18,8 @@ import gdx.liftoff.views.ProjectTemplate
 import org.lwjgl.system.macosx.LibC
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.lang.management.ManagementFactory
 
 private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
@@ -102,8 +104,11 @@ fun main() {
             object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
                 override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
                     super.registerDefaultComponentAnnotations(initializer)
+                    // Classes with these annotations will be automatically scanned for and initiated as singletons:
                     initializer.scanFor(
-                        Extension::class.java, ProjectTemplate::class.java, JvmLanguage::class.java,
+                        Extension::class.java,
+                        ProjectTemplate::class.java,
+                        JvmLanguage::class.java,
                         GdxPlatform::class.java
                     )
                 }
@@ -121,6 +126,13 @@ fun main() {
         }
         throw error
     }
+}
+
+fun Throwable.stackTraceToString(): String {
+    val stringWriter = StringWriter()
+    val printWriter = PrintWriter(stringWriter, true)
+    printStackTrace(printWriter)
+    return stringWriter.buffer.toString()
 }
 
 /**

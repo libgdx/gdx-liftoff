@@ -12,7 +12,7 @@ import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.gradle.RootGradleFile
 import gdx.liftoff.data.files.path
-import gdx.liftoff.data.langs.Java
+import gdx.liftoff.data.languages.Java
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Platform
