@@ -1,11 +1,11 @@
+@file:Suppress("ClassName") // iOS starts with a lowercase letter.
+
 package com.github.czyzby.setup.data.platforms
 
 import com.github.czyzby.setup.data.files.CopiedFile
 import com.github.czyzby.setup.data.files.SourceFile
 import com.github.czyzby.setup.data.files.path
 import com.github.czyzby.setup.data.gradle.GradleFile
-import com.github.czyzby.setup.data.libs.official.Controllers
-import com.github.czyzby.setup.data.libs.official.OfficialExtension
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.GdxPlatform
 

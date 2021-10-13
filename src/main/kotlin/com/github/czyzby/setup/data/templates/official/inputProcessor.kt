@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Extends InputAdapter, overriding no methods. Sets itself as the input processor.
  */
 @ProjectTemplate(official = true)
+@Suppress("unused") // Referenced via reflection.
 class InputProcessorTemplate : Template {
     override val id = "inputProcessor"
     override val description: String

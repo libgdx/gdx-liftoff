@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.JvmLanguage
  * Adds Scala support to the project.
  */
 @JvmLanguage
+@Suppress("unused") // Class accessed via reflection.
 class Scala : Language {
     override val id = "scala"
     override val version = "2.13.+"

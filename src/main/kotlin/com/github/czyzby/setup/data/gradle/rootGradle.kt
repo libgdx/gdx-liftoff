@@ -8,7 +8,7 @@ import com.github.czyzby.setup.data.project.Project
  */
 class RootGradleFile(val project: Project) : GradleFile("") {
     val plugins = mutableSetOf<String>()
-    val buildRepositories = mutableSetOf<String>()
+    private val buildRepositories = mutableSetOf<String>()
 
     init {
         buildRepositories.add("mavenLocal()")

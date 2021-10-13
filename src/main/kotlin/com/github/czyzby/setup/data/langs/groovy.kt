@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.JvmLanguage
  * Adds Groovy support to the project.
  */
 @JvmLanguage
+@Suppress("unused") // Class accessed via reflection.
 class Groovy : Language {
     override val id = "groovy"
     override val version = "3.0.+"

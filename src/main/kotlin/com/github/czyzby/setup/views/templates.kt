@@ -8,7 +8,6 @@ import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.scene2d.ui.reflected.ButtonTable
 import com.github.czyzby.setup.data.templates.Template
-import com.github.czyzby.setup.data.templates.official.*
 
 /**
  * Handles templates tab.

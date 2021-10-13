@@ -12,6 +12,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * @author mzechner
  */
 @ProjectTemplate(official = true)
+@Suppress("unused") // Referenced via reflection.
 class SuperKoalio : Template {
     override val id = "superKoalio"
     override val description: String

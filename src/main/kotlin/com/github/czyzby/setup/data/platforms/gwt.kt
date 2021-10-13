@@ -17,7 +17,7 @@ class GWT : Platform {
 	companion object {
 		const val ID = "html"
 		const val BASIC_INHERIT = "com.badlogic.gdx.backends.gdx_backends_gwt"
-		val INHERIT_COMPARATOR = Comparator<kotlin.String> { a, b ->
+		val INHERIT_COMPARATOR = Comparator<String> { a, b ->
 			// Basic GWT inherit has to be first:
 			if (a == BASIC_INHERIT) {
 				-1

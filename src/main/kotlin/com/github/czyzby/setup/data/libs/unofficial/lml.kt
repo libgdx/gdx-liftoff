@@ -1,3 +1,5 @@
+@file:Suppress("unused") // Extension classes accessed via reflection.
+
 package com.github.czyzby.setup.data.libs.unofficial
 
 import com.github.czyzby.setup.data.libs.Repository

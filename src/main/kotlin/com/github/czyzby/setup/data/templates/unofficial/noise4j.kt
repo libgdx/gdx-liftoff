@@ -9,6 +9,7 @@ import com.github.czyzby.setup.data.templates.Template
 import com.github.czyzby.setup.views.ProjectTemplate
 
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class Noise4JTemplate : Template {
 	override val id = "noise4jTemplate"
 	private lateinit var mainClass: String

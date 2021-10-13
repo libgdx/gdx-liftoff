@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.JvmLanguage
  * Adds Kotlin support to the project.
  */
 @JvmLanguage
+@Suppress("unused") // Class accessed via reflection.
 class Kotlin : Language {
     override val id = "kotlin"
     override val version = "1.5.+"

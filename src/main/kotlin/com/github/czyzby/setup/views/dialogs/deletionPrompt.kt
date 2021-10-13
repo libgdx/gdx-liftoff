@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.MainView
  * Allows to clear destination folder.
  */
 @ViewDialog(id = "deletePrompt", value = "templates/dialogs/delete.lml", cacheInstance = true)
+@Suppress("unused") // Referenced via reflection.
 class DeletionPrompt : ActionContainer {
     @Inject private lateinit var interfaceService: InterfaceService
     @Inject private lateinit var mainView: MainView

@@ -9,6 +9,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Classic project template using Kiwi utilities.
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class KiwiTemplate : ClassicTemplate() {
 	override val id = "kiwiTemplate"
 	private lateinit var mainClass: String

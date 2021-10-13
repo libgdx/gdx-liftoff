@@ -1,3 +1,5 @@
+@file:Suppress("unused") // Extension classes accessed via reflection.
+
 package com.github.czyzby.setup.data.libs.official
 
 import com.badlogic.gdx.Version

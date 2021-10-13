@@ -12,6 +12,7 @@ import com.github.czyzby.lml.parser.action.ActionContainer
  * Contains actions available for all dialogs and views.
  */
 @ViewActionContainer("global")
+@Suppress("unused")// Class accessed via reflection.
 class GlobalActionContainer : ActionContainer {
     @LmlAction("showSite")
     fun showLibGdxWebsite() = Gdx.net.openURI("https://libgdx.com/")
@@ -49,7 +50,7 @@ class GlobalActionContainer : ActionContainer {
         } else if (input.length == 1) {
             return true
         }
-        for (id in 1..input.length - 1) {
+        for (id in 1 until input.length) {
             if (!Character.isJavaIdentifierPart(input[id])) {
                 return false
             }
@@ -64,7 +65,7 @@ class GlobalActionContainer : ActionContainer {
         } else if (input.length == 1) {
             return true
         }
-        for (id in 1..input.length - 1) {
+        for (id in 1 until input.length) {
             if (!Character.isJavaIdentifierPart(input[id]) && input[id] != '.') {
                 return false
             }

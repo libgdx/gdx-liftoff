@@ -14,6 +14,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Advanced Autumn MVC template showing VisUI, Controllers and Box2D usage.
  */
 @ProjectTemplate
+@Suppress("unused") // Referenced via reflection.
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
     override val id = "autumnMvcBox2dTemplate"
     override val description: String

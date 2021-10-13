@@ -1,3 +1,5 @@
+@file:Suppress("unused") // Extension classes accessed via reflection.
+
 package com.github.czyzby.setup.data.libs.unofficial
 
 import com.github.czyzby.setup.data.libs.camelCaseToKebabCase
@@ -43,7 +45,7 @@ class SquidLibUtil : SquidLibExtension() {
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-@Extension()
+@Extension
 class SquidLib : SquidLibExtension() {
     override val id = "squidlib"
 

@@ -11,6 +11,7 @@ import com.github.czyzby.setup.views.ProjectTemplate
  * Generates no source files.
  */
 @ProjectTemplate(official = true)
+@Suppress("unused") // Referenced via reflection.
 class EmptyTemplate : Template {
     override val id = "emptyTemplate"
     override val description: String

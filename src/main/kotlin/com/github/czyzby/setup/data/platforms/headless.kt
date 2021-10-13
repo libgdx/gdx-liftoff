@@ -20,8 +20,11 @@ class Headless : Platform {
 
     override fun initiate(project: Project) {
         // Headless project has no additional dependencies.
-
-        addGradleTaskDescription(project, "run", "starts the ${id} application. Note: if ${id} sources were not modified - and the application still creates `ApplicationListener` from `core` project - this task might fail due to no graphics support.")
+        addGradleTaskDescription(
+            project,
+            "run",
+            "starts the $id application. Note: if $id sources were not modified - and the application still creates `ApplicationListener` from `core` project - this task might fail due to no graphics support."
+        )
     }
 }
 

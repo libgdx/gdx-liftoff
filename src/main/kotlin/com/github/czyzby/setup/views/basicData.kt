@@ -5,11 +5,9 @@ import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.utils.ObjectSet
 import com.github.czyzby.kiwi.util.common.Strings
-import com.github.czyzby.lml.annotation.LmlAction
 import com.github.czyzby.lml.annotation.LmlActor
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
-import javax.print.attribute.standard.Destination
 
 /**
  * Filled by the LML parser, this class contains references to basic project data widgets.
@@ -73,7 +71,7 @@ class BasicProjectData {
         if (!androidSdkPathField.isInputValid) {
             return 0
         }
-        var apiLevel: Int? = null;
+        var apiLevel: Int? = null
         androidSdk.child("platforms").list().forEach {
             val level = findProperty(it, "AndroidVersion.ApiLevel")
             if (apiLevel == null || (level != null && comparator(apiLevel!!, level.toInt()) < 0)) {

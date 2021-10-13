@@ -1,3 +1,5 @@
+
+
 package com.github.czyzby.setup.views
 
 import com.badlogic.gdx.Gdx
@@ -45,6 +47,7 @@ import com.badlogic.gdx.utils.Array as GdxArray
  * Main application's view. Displays application's menu.
  */
 @View(id = "main", value = "templates/main.lml", first = true)
+@Suppress("unused") // Methods and fields accessed via reflection.
 class MainView : ActionContainer {
     val toastManager: Lazy<ToastManager> = lazy {
         val manager = ToastManager(form.stage)
@@ -93,7 +96,7 @@ class MainView : ActionContainer {
             initialPath = initialPath.replace("/", "\\")
         }
 
-        val pathPointer = memAllocPointer(1);
+        val pathPointer = memAllocPointer(1)
 
         try {
             val status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
@@ -166,7 +169,7 @@ class MainView : ActionContainer {
 
     @LmlAfter fun checkSetupVersion() {
         // When using snapshots, we don't care if the version matches latest stable.
-        if (Configuration.VERSION.endsWith("SNAPSHOT")) return;
+        if (Configuration.VERSION.endsWith("SNAPSHOT")) return
 
         val request = Net.HttpRequest(Net.HttpMethods.GET)
         request.url = "https://raw.githubusercontent.com/tommyettinger/gdx-liftoff/master/version.txt"
@@ -204,9 +207,8 @@ class MainView : ActionContainer {
     @LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesData.languages
     @LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesData.versions
     @LmlAction("templates") fun getOfficialTemplates(): Array<String> =
-            templatesData.officialTemplates.map { it.id }.sortedWith(Comparator
-            { left, right -> left.compareTo(right) })
-                    .toTypedArray()
+            templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> left.compareTo(right) }
+                .toTypedArray()
 
     @LmlAction("thirdPartyTemplates") fun getThirdPartyTemplates(): Array<String> =
             templatesData.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()

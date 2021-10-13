@@ -25,7 +25,7 @@ interface ProjectFile {
 /**
  * Represents a directory with source files.
  */
-open class SourceDirectory(val projectName: String, val sourcePath: String = path("src", "main", "java")) : ProjectFile {
+open class SourceDirectory(val projectName: String, sourcePath: String = path("src", "main", "java")) : ProjectFile {
     override val path: String = projectName + File.separator + sourcePath
 
     override fun save(destination: FileHandle) {

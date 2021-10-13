@@ -16,7 +16,6 @@ import com.github.czyzby.setup.views.ExtensionsData
 import com.github.czyzby.setup.views.LanguagesData
 import com.kotcrab.vis.ui.util.OsUtils
 import java.io.BufferedReader
-import java.io.File
 import java.io.InputStreamReader
 
 /**
@@ -42,7 +41,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
     val gradleTaskDescriptions = mutableMapOf<String, String>()
 
     init {
-        gradleFiles = mutableMapOf<String, GradleFile>()
+        gradleFiles = mutableMapOf()
         rootGradle = RootGradleFile(this)
         platforms.forEach { gradleFiles[it.key] = it.value.createGradleFile(this) }
         addBasicGradleTasksDescriptions()
@@ -67,7 +66,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
 
     fun hasPlatform(id: String): Boolean = platforms.containsKey(id)
 
-    fun getGradleFile(id: String): GradleFile = gradleFiles.get(id)!!
+    fun getGradleFile(id: String): GradleFile = gradleFiles[id]!!
 
     fun addGradleTaskDescription(task: String, description: String) {
         if (advanced.generateReadme) {
@@ -164,7 +163,7 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
-${readmeDescription}
+$readmeDescription
 
 ## Gradle
 
@@ -197,10 +196,10 @@ For example, `core:clean` removes `build` folder only from the `core` project.""
             val process = ProcessBuilder(*commands).directory(basic.destination.file())
                 .redirectErrorStream(true).start()
             val stream = BufferedReader(InputStreamReader(process.inputStream))
-            var line = stream.readLine();
+            var line = stream.readLine()
             while (line != null) {
                 logger.log(line)
-                line = stream.readLine();
+                line = stream.readLine()
             }
             process.waitFor()
             if (process.exitValue() != 0) {

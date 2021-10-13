@@ -13,17 +13,12 @@ import com.kotcrab.vis.ui.widget.spinner.Spinner
  */
 open class AbstractStringPreference : AbstractPreference<String>() {
     override fun extractFromActor(actor: Actor): String {
-        if (actor is VisTextField) {
-            return actor.text
-        } else if (actor is Spinner) {
-            return actor.model.text
-        } else if (actor is SelectBox<*>) {
-            if (actor.selectedIndex > 0) {
-                return actor.selected.toString()
-            }
-            return get()
+        return when (actor) {
+            is VisTextField -> actor.text
+            is Spinner -> actor.model.text
+            is SelectBox<*> -> if (actor.selectedIndex > 0) actor.selected.toString() else get()
+            else -> throw GdxRuntimeException("Actor type unsupported: " + actor.javaClass)
         }
-        throw GdxRuntimeException("Actor type unsupported: " + actor.javaClass)
     }
 
     override fun getDefault(): String = Strings.EMPTY_STRING

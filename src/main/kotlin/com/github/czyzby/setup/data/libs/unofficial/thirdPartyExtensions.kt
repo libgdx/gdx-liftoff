@@ -1,3 +1,5 @@
+@file:Suppress("unused") // Extension classes accessed via reflection.
+
 package com.github.czyzby.setup.data.libs.unofficial
 
 import com.github.czyzby.setup.data.files.CopiedFile
@@ -31,14 +33,6 @@ abstract class ThirdPartyExtension : Library {
         }
     }
 
-    /**
-     * Normal usage:
-     * <code>"annotationProcessor \"org.projectlombok:lombok:\$${id}Version\""</code>
-     */
-    override fun addSpecialDependency(project: Project, platform: String, dependency: String) {
-        super.addSpecialDependency(project, platform, dependency)
-    }
-
     fun addExternalDependency(project: Project, platform: String, dependency: String) {
         super.addDependency(project, platform, dependency)
     }
@@ -58,7 +52,7 @@ class ArtemisOdb : ThirdPartyExtension() {
     override val name = "artemis-odb"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb");
+        addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb")
 
         addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt")
         addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt:sources")
