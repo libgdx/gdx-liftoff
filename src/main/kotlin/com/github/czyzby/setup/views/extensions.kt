@@ -69,7 +69,7 @@ fun fetchVersionFromMavenCentral(library: Library): String {
     try {
         val response = get("https://search.maven.org/solrsearch/select", timeout = 10.0, params = mapOf(
             "q" to """g:"${library.group}"+AND+a:"${library.name}"""",
-            "rows" to "20",
+            "rows" to "1",
             "wt" to "json",
         ))
         val results = response.jsonObject.getJSONObject("response").getJSONArray("docs")
