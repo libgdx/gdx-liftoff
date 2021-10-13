@@ -7,17 +7,18 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.GdxPlatform
 
 /**
- * Represents the LWJGL3 backend, which runs on all desktop platforms and supports more features than LWJGL2.
+ * Represents the legacy Desktop backend, which has been replaced in practice by LWJGL3.
  */
 @GdxPlatform
-class LWJGL3 : Platform {
+class Desktop : Platform {
     companion object {
-        const val ID = "lwjgl3"
+        const val ID = "desktop"
     }
 
     override val id = ID
-    // override val isStandard = true // true is the default, and we want to prefer this to desktop
-    override fun createGradleFile(project: Project): GradleFile = Lwjgl3GradleFile(project)
+    override val isStandard = false // use lwjgl3 instead
+    override fun createGradleFile(project: Project): GradleFile = DesktopGradleFile(project)
+
     override fun initiate(project: Project) {
         // Adding game icons:
         arrayOf(16, 32, 64, 128)
@@ -38,39 +39,26 @@ class LWJGL3 : Platform {
 }
 
 /**
- * Gradle file of the LWJGL3 project.
+ * Gradle file of the desktop project.
  */
-class Lwjgl3GradleFile(val project: Project) : GradleFile(LWJGL3.ID) {
+class DesktopGradleFile(val project: Project) : GradleFile(Desktop.ID) {
     init {
         dependencies.add("project(':${Core.ID}')")
-        addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl3:\$gdxVersion")
+        addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl:\$gdxVersion")
         addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
     }
 
     override fun getContent(): String = """apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
-eclipse.project.name = appName + '-lwjgl3'
+mainClassName = '${project.basic.rootPackage}.desktop.DesktopLauncher'
+eclipse.project.name = appName + '-desktop'
 sourceCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
 ${joinDependencies(dependencies)}}
 
-def os = System.properties['os.name'].toLowerCase()
-
-run {
-	workingDir = rootProject.file('assets').path
-	setIgnoreExitValue(true)
-	
-	if (os.contains('mac')) {
-		// Required to run LWJGL3 Java apps on MacOS
-		jvmArgs += "-XstartOnFirstThread"
-	}
-}
-
 jar {
-// sets the name of the .jar file this produces to the name of the game or app.
 	archiveBaseName.set(appName)
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
 	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
@@ -89,6 +77,10 @@ jar {
 	doLast {
 		file(archiveFile).setExecutable(true, false)
 	}
+}
+
+run {
+	ignoreExitValue = true
 }
 """
 }

@@ -5,7 +5,13 @@ package gdx.liftoff.data.libraries.official
 import com.badlogic.gdx.Version
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
-import gdx.liftoff.data.platforms.*
+import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.Core
+import gdx.liftoff.data.platforms.Desktop
+import gdx.liftoff.data.platforms.GWT
+import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 import gdx.liftoff.views.fetchVersionFromMavenCentral
@@ -131,7 +137,7 @@ class Bullet : OfficialExtension() {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
-        
+
         // Other platforms are not officially supported (GWT).
     }
 }
@@ -160,7 +166,7 @@ class Controllers : OfficialExtension() {
 
         addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
-        addDependency(project, GWT.ID,"com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
+        addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
         addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
         addGwtInherit(project, "com.badlogic.gdx.controllers")
         addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
@@ -204,7 +210,7 @@ class Tools : OfficialExtension() {
     override fun initiate(project: Project) {
         addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
 
-        //// Headless is unlikely to work because gdx-tools relies on graphics classes.
+        // Headless is unlikely to work because gdx-tools relies on graphics classes.
         // addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
     }
 }

@@ -47,7 +47,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
                 mainView.revalidateForm()
                 project.includeGradleWrapper(this)
                 logNls("generationEnd")
-            } catch(exception: Exception) {
+            } catch (exception: Exception) {
                 log(exception.javaClass.name + ": " + exception.message)
                 exception.stackTrace.forEach { log("  at $it") }
                 exception.printStackTrace()
@@ -78,7 +78,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
     fun shutdownExecutor() {
         try {
             executor.shutdownNow()
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             Exceptions.ignore(exception)
         }
     }

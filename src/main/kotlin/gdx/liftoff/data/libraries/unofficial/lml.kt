@@ -4,7 +4,13 @@ package gdx.liftoff.data.libraries.unofficial
 
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
-import gdx.liftoff.data.platforms.*
+import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.Core
+import gdx.liftoff.data.platforms.GWT
+import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.Server
+import gdx.liftoff.data.platforms.Shared
+import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -13,7 +19,7 @@ import gdx.liftoff.views.Extension
  * @author czyzby
  * @author metaphore (CrashInvaders)
  */
-abstract class LmlExtension: ThirdPartyExtension() {
+abstract class LmlExtension : ThirdPartyExtension() {
     /**
      * Latest version of gdx-lml libraries from the CrashInvaders fork.
      */
@@ -135,7 +141,7 @@ class AutumnMVC : LmlExtension() {
 /**
  * Base class for MrStahlfelge's fork of gdx-lml websocket libraries.
  */
-abstract class WebsocketExtension: ThirdPartyExtension() {
+abstract class WebsocketExtension : ThirdPartyExtension() {
     override val defaultVersion = "1.9.10.3"
     override val group = "com.github.MrStahlfelge" // Matches JitPack root group.
     override val name = "gdx-websockets" // Matches JitPack root name.
