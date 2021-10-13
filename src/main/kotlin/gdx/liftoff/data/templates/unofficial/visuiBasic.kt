@@ -2,7 +2,7 @@ package gdx.liftoff.data.templates.unofficial
 
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.path
-import gdx.liftoff.data.libs.unofficial.VisUI
+import gdx.liftoff.data.libraries.unofficial.VisUI
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.templates.Template

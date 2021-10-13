@@ -3,8 +3,8 @@ package gdx.liftoff.data.templates.unofficial
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.path
-import gdx.liftoff.data.libs.official.Box2D
-import gdx.liftoff.data.libs.official.Controllers
+import gdx.liftoff.data.libraries.official.Box2D
+import gdx.liftoff.data.libraries.official.Controllers
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project

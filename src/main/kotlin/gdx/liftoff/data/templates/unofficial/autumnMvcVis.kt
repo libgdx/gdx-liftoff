@@ -3,7 +3,7 @@ package gdx.liftoff.data.templates.unofficial
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.path
-import gdx.liftoff.data.libs.unofficial.LMLVis
+import gdx.liftoff.data.libraries.unofficial.LMLVis
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project

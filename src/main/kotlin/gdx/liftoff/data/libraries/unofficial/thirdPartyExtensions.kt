@@ -1,12 +1,12 @@
 @file:Suppress("unused") // Extension classes accessed via reflection.
 
-package gdx.liftoff.data.libs.unofficial
+package gdx.liftoff.data.libraries.unofficial
 
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.path
-import gdx.liftoff.data.libs.Library
-import gdx.liftoff.data.libs.Repository
-import gdx.liftoff.data.libs.official.Controllers
+import gdx.liftoff.data.libraries.Library
+import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.official.Controllers
 import gdx.liftoff.data.platforms.*
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
