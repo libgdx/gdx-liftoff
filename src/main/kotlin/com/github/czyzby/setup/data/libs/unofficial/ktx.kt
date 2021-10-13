@@ -1,5 +1,6 @@
 package com.github.czyzby.setup.data.libs.unofficial
 
+import com.github.czyzby.setup.data.libs.camelCaseToKebabCase
 import com.github.czyzby.setup.data.libs.official.Ashley
 import com.github.czyzby.setup.data.libs.official.Box2D
 import com.github.czyzby.setup.data.libs.official.Freetype
@@ -7,363 +8,317 @@ import com.github.czyzby.setup.data.platforms.Core
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
 
-/**
- * Current version of KTX libraries.
- * @author MJ
- */
-const val KTX_VERSION = "1.10.0-b4"
+abstract class KtxExtension : ThirdPartyExtension() {
+    override val defaultVersion = "1.10.0-b4"
+    override val group = "io.github.libktx"
+    override val name
+        get() = id.camelCaseToKebabCase()
+}
 
 /**
  * Kotlin utilities for Scene2D actors API.
- * @author MJ
  */
 @Extension
-class KtxActors : ThirdPartyExtension() {
+class KtxActors : KtxExtension() {
     override val id = "ktxActors"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/actors"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-actors")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * General application listener utilities for Kotlin applications.
- * @author MJ
  */
 @Extension
-class KtxApp : ThirdPartyExtension() {
+class KtxApp : KtxExtension() {
     override val id = "ktxApp"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/app"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-app")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Utilities for Ashley entity component system.
- * @author Jkly
  */
 @Extension
-class KtxAshley : ThirdPartyExtension() {
+class KtxAshley : KtxExtension() {
     override val id = "ktxAshley"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/ashley"
 
     override fun initiateDependencies(project: Project) {
         Ashley().initiate(project)
 
-        addDependency(project, Core.ID, "io.github.libktx:ktx-ashley")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for assets management.
- * @author MJ
  */
 @Extension
-class KtxAssets : ThirdPartyExtension() {
+class KtxAssets : KtxExtension() {
     override val id = "ktxAssets"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/assets"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-assets")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for asynchronous assets management.
- * @author MJ
  */
 @Extension
-class KtxAssetsAsync : ThirdPartyExtension() {
+class KtxAssetsAsync : KtxExtension() {
     override val id = "ktxAssetsAsync"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/assets-async"
 
     override fun initiateDependencies(project: Project) {
         KtxAssets().initiate(project)
         KtxAsync().initiate(project)
-        addDependency(project, Core.ID, "io.github.libktx:ktx-assets-async")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin coroutines context and utilities for asynchronous operations.
- * @author MJ
  */
 @Extension
-class KtxAsync : ThirdPartyExtension() {
+class KtxAsync : KtxExtension() {
     override val id = "ktxAsync"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/async"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-async")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
- * Kotlin Box2D utilities and type-safe builders
- * @author MJ
+ * Kotlin Box2D utilities and type-safe builders.
  */
 @Extension
-class KtxBox2D : ThirdPartyExtension() {
+class KtxBox2D : KtxExtension() {
     override val id = "ktxBox2d"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/box2d"
 
     override fun initiateDependencies(project: Project) {
         Box2D().initiate(project)
 
-        addDependency(project, Core.ID, "io.github.libktx:ktx-box2d")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for libGDX collections.
- * @author MJ
  */
 @Extension
-class KtxCollections : ThirdPartyExtension() {
+class KtxCollections : KtxExtension() {
     override val id = "ktxCollections"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/collections"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-collections")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for loading TrueType fonts via Freetype.
- * @author MJ
  */
 @Extension
-class KtxFreetype : ThirdPartyExtension() {
+class KtxFreetype : KtxExtension() {
     override val id = "ktxFreetype"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/freetype"
 
     override fun initiateDependencies(project: Project) {
         Freetype().initiate(project)
-        addDependency(project, Core.ID, "io.github.libktx:ktx-freetype")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for asynchronous loading of TrueType fonts via Freetype.
- * @author MJ
  */
 @Extension
-class KtxFreetypeAsync : ThirdPartyExtension() {
+class KtxFreetypeAsync : KtxExtension() {
     override val id = "ktxFreetypeAsync"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/freetype-aync"
 
     override fun initiateDependencies(project: Project) {
         KtxFreetype().initiate(project)
         KtxAsync().initiate(project)
-        addDependency(project, Core.ID, "io.github.libktx:ktx-freetype-async")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for handling graphics in libGDX applications.
- * @author MJ
  */
 @Extension
-class KtxGraphics : ThirdPartyExtension() {
+class KtxGraphics : KtxExtension() {
     override val id = "ktxGraphics"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/graphics"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-graphics")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for internationalization.
- * @author MJ
  */
 @Extension
-class KtxI18n : ThirdPartyExtension() {
+class KtxI18n : KtxExtension() {
     override val id = "ktxI18n"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/i18n"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-i18n")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin dependency injection without reflection usage.
- * @author MJ
  */
 @Extension
-class KtxInject : ThirdPartyExtension() {
+class KtxInject : KtxExtension() {
     override val id = "ktxInject"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/inject"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-inject")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * libGDX JSON serialization utilities for Kotlin applications.
- * @author MJ
  */
 @Extension
-class KtxJson : ThirdPartyExtension() {
+class KtxJson : KtxExtension() {
     override val id = "ktxJson"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/collections"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-json")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for zero-overhead logging.
- * @author MJ
  */
 @Extension
-class KtxLog : ThirdPartyExtension() {
+class KtxLog : KtxExtension() {
     override val id = "ktxLog"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/log"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-log")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin utilities for math-related classes.
- * @author MJ
  */
 @Extension
-class KtxMath : ThirdPartyExtension() {
+class KtxMath : KtxExtension() {
     override val id = "ktxMath"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/math"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-math")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * libGDX preferences utilities for applications developed with Kotlin.
- * @author MJ
  */
 @Extension
-class KtxPreferences : ThirdPartyExtension() {
+class KtxPreferences : KtxExtension() {
     override val id = "ktxPreferences"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/preferences"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-preferences")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * libGDX reflection utilities for applications developed with Kotlin.
- * @author MJ
  */
 @Extension
-class KtxReflect : ThirdPartyExtension() {
+class KtxReflect : KtxExtension() {
     override val id = "ktxReflect"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/reflect"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-reflect")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin type-safe builders for Scene2D GUI.
- * @author MJ
  */
 @Extension
-class KtxScene2D : ThirdPartyExtension() {
-    override val id = "ktxScene2D"
-    override val defaultVersion = KTX_VERSION
+class KtxScene2D : KtxExtension() {
+    override val id = "ktxScene2d"
     override val url = "https://github.com/libktx/ktx/tree/master/scene2d"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-scene2d")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin type-safe builders for Scene2D widget styles.
- * @author MJ
  */
 @Extension
-class KtxStyle : ThirdPartyExtension() {
+class KtxStyle : KtxExtension() {
     override val id = "ktxStyle"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/style"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-style")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Tiled utilities for libGDX applications written with Kotlin.
- * @author MJ
  */
 @Extension
-class KtxTiled : ThirdPartyExtension() {
+class KtxTiled : KtxExtension() {
     override val id = "ktxTiled"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/tiled"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-tiled")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin type-safe builders for VisUI widgets.
- * @author Kotcrab
  */
 @Extension
-class KtxVis : ThirdPartyExtension() {
+class KtxVis : KtxExtension() {
     override val id = "ktxVis"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/vis"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-vis")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
 /**
  * Kotlin type-safe builders for VisUI widget styles.
- * @author MJ
- * @author Kotcrab
  */
 @Extension
-class KtxVisStyle : ThirdPartyExtension() {
+class KtxVisStyle : KtxExtension() {
     override val id = "ktxVisStyle"
-    override val defaultVersion = KTX_VERSION
     override val url = "https://github.com/libktx/ktx/tree/master/vis-style"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "io.github.libktx:ktx-vis-style")
+        addDependency(project, Core.ID, "$group:$name")
     }
 }
