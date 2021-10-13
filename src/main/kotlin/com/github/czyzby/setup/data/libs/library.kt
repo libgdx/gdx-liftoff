@@ -60,7 +60,14 @@ interface Library {
 }
 
 enum class Repository {
-    MAVEN_CENTRAL, JITPACK, MAVEN_SNAPSHOTS
+    /** For libraries available via Maven Central. */
+    MAVEN_CENTRAL,
+    /** For libraries available only via JitPack. */
+    JITPACK,
+    /** For libraries available only via the snapshot repository. */
+    MAVEN_SNAPSHOTS,
+    /** For KTX libraries, which use the same versioning. Uses version cache for faster project generation. */
+    KTX
 }
 
 private val camelCase = Regex("(.)(\\p{Upper})")

@@ -12,7 +12,8 @@ import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.parser.LmlParser
 import com.github.czyzby.setup.data.libs.Library
 import com.github.czyzby.setup.data.libs.Repository
-import com.kotcrab.vis.ui.widget.VisTextField
+import com.github.czyzby.setup.data.libs.unofficial.latestKtxVersion
+import devcsrj.mvnrepository.MvnRepositoryApi
 import khttp.get
 
 
@@ -32,6 +33,7 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
             Repository.MAVEN_CENTRAL -> fetchVersionFromMavenCentral(library)
             Repository.JITPACK -> fetchVersionFromJitPack(library)
             Repository.MAVEN_SNAPSHOTS -> fetchSnapshotVersion(library)
+            Repository.KTX -> latestKtxVersion
         }
     }
 
@@ -53,8 +55,13 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
 }
 
 fun fetchVersionFromMavenCentral(library: Library): String {
+    val versions = MvnRepositoryApi.create().getArtifactVersions(library.group, library.name)
+    if (versions.isNotEmpty()) return versions.first()
+    // mvnrepository.com is much faster than Maven Central search, but it does not report
+    // beta versions and release candidates. If no version was found, the application fallbacks
+    // to the slower Maven Central search:
     try {
-        val response = get("https://search.maven.org/solrsearch/select", timeout = 10.0, params = mapOf(
+        val response = get("https://search.maven.org/solrsearch/select", timeout = 15.0, params = mapOf(
             "q" to """g:"${library.group}"+AND+a:"${library.name}"""",
             "rows" to "1",
             "wt" to "json",
@@ -71,7 +78,7 @@ fun fetchVersionFromMavenCentral(library: Library): String {
 
 fun fetchVersionFromJitPack(library: Library): String {
     try {
-        val response = get("https://jitpack.io/api/builds/${library.group}/${library.name}/latest", timeout = 10.0)
+        val response = get("https://jitpack.io/api/builds/${library.group}/${library.name}/latest", timeout = 15.0)
         return response.jsonObject.getString("version")
     } catch (exception: Exception) {
         Gdx.app.error("gdx-liftoff", "Unable to perform a HTTP request to JitPack.", exception)

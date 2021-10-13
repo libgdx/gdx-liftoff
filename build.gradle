@@ -53,5 +53,6 @@ dependencies {
   api "org.lwjgl:lwjgl-nfd:3.2.3:natives-linux"
   api "org.lwjgl:lwjgl-nfd:3.2.3:natives-macos"
   api "khttp:khttp:1.0.0"
-//  api 'org.slf4j:slf4j-nop:1.7.32'
+  api 'com.github.devcsrj:mvnrepository-api-client:1.1.1'
+  api 'org.slf4j:slf4j-nop:1.7.32'
 }
