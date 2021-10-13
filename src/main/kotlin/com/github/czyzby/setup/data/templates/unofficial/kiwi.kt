@@ -7,7 +7,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Classic project template using Kiwi utilities.
- * @author MJ
  */
 @ProjectTemplate
 class KiwiTemplate : ClassicTemplate() {

@@ -12,6 +12,10 @@ import com.github.czyzby.setup.views.Extension
 import com.github.czyzby.setup.views.fetchVersionFromMavenCentral
 import khttp.get
 
+/**
+ * Modular Kotlin utilities.
+ * @author libKTX organization
+ */
 abstract class KtxExtension : ThirdPartyExtension() {
     override val defaultVersion = "1.10.0-b4"
     override val repository = Repository.KTX

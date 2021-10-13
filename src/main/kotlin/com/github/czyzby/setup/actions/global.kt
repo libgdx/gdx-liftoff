@@ -10,7 +10,6 @@ import com.github.czyzby.lml.parser.action.ActionContainer
 
 /**
  * Contains actions available for all dialogs and views.
- * @author MJ
  */
 @ViewActionContainer("global")
 class GlobalActionContainer : ActionContainer {

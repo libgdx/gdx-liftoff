@@ -13,7 +13,6 @@ import javax.print.attribute.standard.Destination
 
 /**
  * Filled by the LML parser, this class contains references to basic project data widgets.
- * @author MJ
  */
 class BasicProjectData {
     @LmlActor("name") private lateinit var nameField: VisTextField

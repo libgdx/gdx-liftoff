@@ -10,7 +10,6 @@ import com.kotcrab.vis.ui.widget.spinner.Spinner
 
 /**
  * Abstract base for all application's preferences.
- * @author MJ
  */
 open class AbstractStringPreference : AbstractPreference<String>() {
     override fun extractFromActor(actor: Actor): String {

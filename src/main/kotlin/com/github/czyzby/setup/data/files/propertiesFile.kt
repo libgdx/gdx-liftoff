@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle
 
 /**
  * Saves gradle.properties file.
- * @author MJ
  */
 class PropertiesFile(val properties: Map<String, String>) : ProjectFile {
     override val path = "gradle.properties"

@@ -7,16 +7,15 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Classic project template using Kiwi utilities and listening to user input.
- * @author MJ
  */
 @ProjectTemplate
 class KiwiInputTemplate : ClassicTemplate(){
 	override val id = "kiwiInputTemplate"
 	private lateinit var mainClass: String
 	override val width: String
-		get() = mainClass + ".WIDTH"
+		get() = "$mainClass.WIDTH"
 	override val height: String
-		get() = mainClass + ".HEIGHT"
+		get() = "$mainClass.HEIGHT"
 	override val description: String
 		get() = "Project template included simple launchers and an `InputAwareApplicationListener` extension (from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws BadLogic logo and changes its color after the application is clicked/touched."
 

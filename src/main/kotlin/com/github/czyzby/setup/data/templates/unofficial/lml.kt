@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Uses LML to generate GUI similar to the one presented in the official Scene2D template. Forces skin generation.
- * @author MJ
  */
 @ProjectTemplate
 class LmlTemplate : Template {

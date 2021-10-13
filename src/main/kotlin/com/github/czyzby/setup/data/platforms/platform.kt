@@ -7,7 +7,6 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Common interface for all supported platforms. Implementation should be annotated with GdxPlatform.
- * @author MJ
  */
 interface Platform {
     /**

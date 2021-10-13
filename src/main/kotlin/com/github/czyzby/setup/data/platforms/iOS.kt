@@ -11,7 +11,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents iOS backend.
- * @author MJ
  */
 @GdxPlatform
 class iOS : Platform {

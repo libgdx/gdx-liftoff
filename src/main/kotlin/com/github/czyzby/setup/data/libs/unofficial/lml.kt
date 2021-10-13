@@ -6,6 +6,11 @@ import com.github.czyzby.setup.data.platforms.*
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
 
+/**
+ * Various utilities for libGDX APIs including GUI building and dependency injection.
+ * @author czyzby
+ * @author metaphore (CrashInvaders)
+ */
 abstract class LmlExtension: ThirdPartyExtension() {
     /**
      * Latest version of gdx-lml libraries from the CrashInvaders fork.

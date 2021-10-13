@@ -5,7 +5,6 @@ import com.github.czyzby.setup.data.platforms.Platform
 
 /**
  * Creates settings.gradle file.
- * @author MJ
  */
 class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
     override val path = "settings.gradle"

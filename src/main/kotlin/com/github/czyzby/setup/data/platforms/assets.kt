@@ -5,7 +5,6 @@ import com.github.czyzby.setup.data.project.Project
 
 /**
  * Mock-up platform. Represents assets folder.
- * @author MJ
  */
 class Assets : Platform {
     companion object {

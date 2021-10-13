@@ -117,7 +117,6 @@ fun main() {
 }
 
 /**
- * Application's scanning root.
- * @author MJ
+ * Application's scanning root for Autumn dependency injection framework.
  */
 class Root

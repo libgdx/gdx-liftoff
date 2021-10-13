@@ -9,7 +9,6 @@ import com.kotcrab.vis.ui.widget.spinner.Spinner
 
 /**
  * Stores data from "advanced" tab.
- * @author MJ
  */
 class AdvancedData {
     @LmlActor("version") private lateinit var versionField: VisTextField

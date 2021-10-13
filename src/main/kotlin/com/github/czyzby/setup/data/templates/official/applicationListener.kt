@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Adds empty implementation of all ApplicationListener methods. Application does nothing.
- * @author MJ
  */
 @ProjectTemplate(official = true)
 class ApplicationListenerTemplate : Template {

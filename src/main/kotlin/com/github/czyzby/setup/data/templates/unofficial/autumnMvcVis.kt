@@ -11,7 +11,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * A solid application base using Autumn MVC.
- * @author MJ
  */
 @ProjectTemplate
 open class AutumnMvcVisTemplate : AutumnMvcBasicTemplate() {

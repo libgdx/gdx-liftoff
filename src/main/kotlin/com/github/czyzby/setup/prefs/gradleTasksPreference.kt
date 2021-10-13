@@ -5,7 +5,6 @@ import com.github.czyzby.kiwi.util.common.Strings
 
 /**
  * These tasks will be run after the project generation.
- * @author MJ
  */
 @Property("GradleTasks")
 class GradleTasksPreference : AbstractStringPreference() {

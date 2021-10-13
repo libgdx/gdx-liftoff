@@ -8,7 +8,6 @@ import com.github.czyzby.setup.views.GdxPlatform
 
 /**
  * Represents the LWJGL3 backend, which runs on all desktop platforms and supports more features than LWJGL2.
- * @author MJ
  */
 @GdxPlatform
 class LWJGL3 : Platform {
@@ -36,7 +35,6 @@ class LWJGL3 : Platform {
 
 /**
  * Gradle file of the LWJGL3 project.
- * @author MJ
  */
 class Lwjgl3GradleFile(val project: Project) : GradleFile(LWJGL3.ID) {
 	init {

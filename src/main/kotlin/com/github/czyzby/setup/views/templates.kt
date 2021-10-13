@@ -12,7 +12,6 @@ import com.github.czyzby.setup.data.templates.official.*
 
 /**
  * Handles templates tab.
- * @author MJ
  */
 @Processor
 class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
@@ -41,7 +40,6 @@ class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
 
 /**
  * Should annotate all project templates. Marks if the template is official.
- * @author MJ
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

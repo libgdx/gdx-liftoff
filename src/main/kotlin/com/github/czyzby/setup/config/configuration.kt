@@ -23,7 +23,6 @@ import com.kotcrab.vis.ui.widget.file.FileChooser
 
 /**
  * Configures Autumn MVC application.
- * @author MJ
  */
 @Component
 class Configuration {

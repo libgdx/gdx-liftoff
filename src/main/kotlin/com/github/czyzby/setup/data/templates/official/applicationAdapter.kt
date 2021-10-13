@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Extends ApplicationAdapter, overriding no methods. Application does nothing.
- * @author MJ
  */
 @ProjectTemplate(official = true)
 class ApplicationAdapterTemplate : Template {

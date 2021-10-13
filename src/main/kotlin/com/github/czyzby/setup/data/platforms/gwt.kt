@@ -11,7 +11,6 @@ import java.util.*
 
 /**
  * Represents GWT backend.
- * @author MJ
  */
 @GdxPlatform
 class GWT : Platform {

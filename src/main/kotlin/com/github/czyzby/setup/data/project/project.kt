@@ -21,7 +21,6 @@ import java.io.InputStreamReader
 
 /**
  * Contains data about the generated project.
- * @author MJ
  */
 class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>, val advanced: AdvancedData,
               val languages: LanguagesData, val extensions: ExtensionsData, val template: Template) {

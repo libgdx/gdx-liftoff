@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.MainView
 
 /**
  * Allows to clear destination folder.
- * @author MJ
  */
 @ViewDialog(id = "deletePrompt", value = "templates/dialogs/delete.lml", cacheInstance = true)
 class DeletionPrompt : ActionContainer {
@@ -32,6 +31,5 @@ class DeletionPrompt : ActionContainer {
 
 /**
  * Deletion error dialog. Shown if an unexpected exception is thrown during folder clearing.
- * @author MJ
  */
 @ViewDialog(id = "deleteError", value = "templates/dialogs/deleteError.lml", cacheInstance = true) class DeletionError

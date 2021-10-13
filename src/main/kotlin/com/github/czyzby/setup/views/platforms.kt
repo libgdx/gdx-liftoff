@@ -13,7 +13,6 @@ import com.github.czyzby.setup.data.platforms.Platform
 
 /**
  * Handles platform-related input.
- * @author MJ
  */
 @Processor
 class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
@@ -46,7 +45,6 @@ class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
 
 /**
  * Should annotate all libGDX platforms.
- * @author MJ
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

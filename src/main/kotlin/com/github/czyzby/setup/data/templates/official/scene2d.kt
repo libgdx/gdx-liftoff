@@ -9,7 +9,6 @@ import com.github.czyzby.setup.views.ProjectTemplate
 
 /**
  * Sets up a simple Scene2D stage. Forces generation of GUI skin.
- * @author MJ
  */
 @ProjectTemplate(official = true)
 class Scene2DTemplate : Template {
