@@ -22,7 +22,7 @@ class DeletionPrompt : ActionContainer {
         try {
             folder.deleteDirectory()
             folder.mkdirs()
-        } catch(exception: Exception) {
+        } catch (exception: Exception) {
             exception.printStackTrace()
             interfaceService.showDialog(DeletionError::class.java)
         }

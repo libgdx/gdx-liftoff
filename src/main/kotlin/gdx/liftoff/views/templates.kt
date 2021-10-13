@@ -25,8 +25,14 @@ class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
 
     override fun getSupportedAnnotationType(): Class<ProjectTemplate> = ProjectTemplate::class.java
     override fun isSupportingTypes(): Boolean = true
-    override fun processType(type: Class<*>, annotation: ProjectTemplate, component: Any, context: Context,
-                             initializer: ContextInitializer, contextDestroyer: ContextDestroyer) {
+    override fun processType(
+        type: Class<*>,
+        annotation: ProjectTemplate,
+        component: Any,
+        context: Context,
+        initializer: ContextInitializer,
+        contextDestroyer: ContextDestroyer
+    ) {
         val template = component as Template
         templates.add(template)
         if (annotation.official) {
