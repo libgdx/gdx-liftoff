@@ -3,6 +3,7 @@
 package gdx.liftoff.data.libraries.unofficial
 
 import com.badlogic.gdx.Gdx
+import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.libraries.official.Ashley
@@ -18,12 +19,31 @@ import khttp.get
  * Modular Kotlin utilities.
  * @author libKTX organization
  */
-abstract class KtxExtension : ThirdPartyExtension() {
+abstract class KtxExtension : Library {
     override val defaultVersion = "1.10.0-b4"
+    override val official = false
     override val repository = Repository.KTX
     override val group = "io.github.libktx"
     override val name
         get() = id.camelCaseToKebabCase()
+    override val url: String
+        get() = "https://github.com/libktx/ktx/tree/master/${id.removeSuffix("ktx").camelCaseToKebabCase()}"
+
+    override fun initiate(project: Project) {
+        project.properties["ktxVersion"] = latestKtxVersion
+        addDependency(project, Core.ID, "$group:$name")
+        initiateDependencies(project)
+    }
+
+    open fun initiateDependencies(project: Project) {}
+
+    override fun addDependency(project: Project, platform: String, dependency: String) {
+        super.addDependency(project, platform, "$dependency:\$ktxVersion")
+    }
+
+    fun addExternalDependency(project: Project, platform: String, dependency: String) {
+        super.addDependency(project, platform, dependency)
+    }
 }
 
 val latestKtxVersion by lazy {
@@ -42,11 +62,6 @@ val latestKtxVersion by lazy {
 @Extension
 class KtxActors : KtxExtension() {
     override val id = "ktxActors"
-    override val url = "https://github.com/libktx/ktx/tree/master/actors"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -55,11 +70,6 @@ class KtxActors : KtxExtension() {
 @Extension
 class KtxApp : KtxExtension() {
     override val id = "ktxApp"
-    override val url = "https://github.com/libktx/ktx/tree/master/app"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -68,12 +78,9 @@ class KtxApp : KtxExtension() {
 @Extension
 class KtxAshley : KtxExtension() {
     override val id = "ktxAshley"
-    override val url = "https://github.com/libktx/ktx/tree/master/ashley"
 
     override fun initiateDependencies(project: Project) {
         Ashley().initiate(project)
-
-        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
@@ -83,11 +90,6 @@ class KtxAshley : KtxExtension() {
 @Extension
 class KtxAssets : KtxExtension() {
     override val id = "ktxAssets"
-    override val url = "https://github.com/libktx/ktx/tree/master/assets"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -96,12 +98,10 @@ class KtxAssets : KtxExtension() {
 @Extension
 class KtxAssetsAsync : KtxExtension() {
     override val id = "ktxAssetsAsync"
-    override val url = "https://github.com/libktx/ktx/tree/master/assets-async"
 
     override fun initiateDependencies(project: Project) {
         KtxAssets().initiate(project)
         KtxAsync().initiate(project)
-        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
@@ -111,10 +111,9 @@ class KtxAssetsAsync : KtxExtension() {
 @Extension
 class KtxAsync : KtxExtension() {
     override val id = "ktxAsync"
-    override val url = "https://github.com/libktx/ktx/tree/master/async"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+        KotlinxCoroutines().initiate(project)
     }
 }
 
@@ -124,12 +123,9 @@ class KtxAsync : KtxExtension() {
 @Extension
 class KtxBox2D : KtxExtension() {
     override val id = "ktxBox2d"
-    override val url = "https://github.com/libktx/ktx/tree/master/box2d"
 
     override fun initiateDependencies(project: Project) {
         Box2D().initiate(project)
-
-        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
@@ -139,11 +135,6 @@ class KtxBox2D : KtxExtension() {
 @Extension
 class KtxCollections : KtxExtension() {
     override val id = "ktxCollections"
-    override val url = "https://github.com/libktx/ktx/tree/master/collections"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -152,11 +143,9 @@ class KtxCollections : KtxExtension() {
 @Extension
 class KtxFreetype : KtxExtension() {
     override val id = "ktxFreetype"
-    override val url = "https://github.com/libktx/ktx/tree/master/freetype"
 
     override fun initiateDependencies(project: Project) {
         Freetype().initiate(project)
-        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
@@ -166,12 +155,10 @@ class KtxFreetype : KtxExtension() {
 @Extension
 class KtxFreetypeAsync : KtxExtension() {
     override val id = "ktxFreetypeAsync"
-    override val url = "https://github.com/libktx/ktx/tree/master/freetype-aync"
 
     override fun initiateDependencies(project: Project) {
         KtxFreetype().initiate(project)
         KtxAsync().initiate(project)
-        addDependency(project, Core.ID, "$group:$name")
     }
 }
 
@@ -181,11 +168,6 @@ class KtxFreetypeAsync : KtxExtension() {
 @Extension
 class KtxGraphics : KtxExtension() {
     override val id = "ktxGraphics"
-    override val url = "https://github.com/libktx/ktx/tree/master/graphics"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -194,11 +176,6 @@ class KtxGraphics : KtxExtension() {
 @Extension
 class KtxI18n : KtxExtension() {
     override val id = "ktxI18n"
-    override val url = "https://github.com/libktx/ktx/tree/master/i18n"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -207,11 +184,6 @@ class KtxI18n : KtxExtension() {
 @Extension
 class KtxInject : KtxExtension() {
     override val id = "ktxInject"
-    override val url = "https://github.com/libktx/ktx/tree/master/inject"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -220,11 +192,6 @@ class KtxInject : KtxExtension() {
 @Extension
 class KtxJson : KtxExtension() {
     override val id = "ktxJson"
-    override val url = "https://github.com/libktx/ktx/tree/master/collections"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -233,11 +200,6 @@ class KtxJson : KtxExtension() {
 @Extension
 class KtxLog : KtxExtension() {
     override val id = "ktxLog"
-    override val url = "https://github.com/libktx/ktx/tree/master/log"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -246,11 +208,6 @@ class KtxLog : KtxExtension() {
 @Extension
 class KtxMath : KtxExtension() {
     override val id = "ktxMath"
-    override val url = "https://github.com/libktx/ktx/tree/master/math"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -259,11 +216,6 @@ class KtxMath : KtxExtension() {
 @Extension
 class KtxPreferences : KtxExtension() {
     override val id = "ktxPreferences"
-    override val url = "https://github.com/libktx/ktx/tree/master/preferences"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -272,11 +224,6 @@ class KtxPreferences : KtxExtension() {
 @Extension
 class KtxReflect : KtxExtension() {
     override val id = "ktxReflect"
-    override val url = "https://github.com/libktx/ktx/tree/master/reflect"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -285,11 +232,6 @@ class KtxReflect : KtxExtension() {
 @Extension
 class KtxScene2D : KtxExtension() {
     override val id = "ktxScene2d"
-    override val url = "https://github.com/libktx/ktx/tree/master/scene2d"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -298,11 +240,6 @@ class KtxScene2D : KtxExtension() {
 @Extension
 class KtxStyle : KtxExtension() {
     override val id = "ktxStyle"
-    override val url = "https://github.com/libktx/ktx/tree/master/style"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -311,11 +248,6 @@ class KtxStyle : KtxExtension() {
 @Extension
 class KtxTiled : KtxExtension() {
     override val id = "ktxTiled"
-    override val url = "https://github.com/libktx/ktx/tree/master/tiled"
-
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-    }
 }
 
 /**
@@ -324,10 +256,9 @@ class KtxTiled : KtxExtension() {
 @Extension
 class KtxVis : KtxExtension() {
     override val id = "ktxVis"
-    override val url = "https://github.com/libktx/ktx/tree/master/vis"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+        VisUI().initiate(project)
     }
 }
 
@@ -337,9 +268,9 @@ class KtxVis : KtxExtension() {
 @Extension
 class KtxVisStyle : KtxExtension() {
     override val id = "ktxVisStyle"
-    override val url = "https://github.com/libktx/ktx/tree/master/vis-style"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+        KtxStyle().initiate(project)
+        VisUI().initiate(project)
     }
 }

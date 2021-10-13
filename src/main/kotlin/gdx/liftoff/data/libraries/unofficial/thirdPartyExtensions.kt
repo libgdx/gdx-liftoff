@@ -234,6 +234,22 @@ class JaciGwt : ThirdPartyExtension() {
 }
 
 /**
+ * Official Kotlin coroutines library.
+ */
+@Extension
+class KotlinxCoroutines : ThirdPartyExtension() {
+    override val id = "kotlinxCoroutines"
+    override val defaultVersion = "1.5.2"
+    override val url = "https://kotlinlang.org/docs/coroutines-overview.html"
+    override val group = "org.jetbrains.kotlinx"
+    override val name = "kotlinx-coroutines-core"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    }
+}
+
+/**
  * Simple map generators. Noise4J can be used as a continuous noise generator, but you're better served by
  * joise or make-some-noise in that case. There are also many kinds of map generator in squidlib-util.
  * @author czyzby

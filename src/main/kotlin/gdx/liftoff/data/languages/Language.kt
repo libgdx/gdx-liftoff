@@ -1,4 +1,4 @@
-package gdx.liftoff.data.langs
+package gdx.liftoff.data.languages
 
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.Shared

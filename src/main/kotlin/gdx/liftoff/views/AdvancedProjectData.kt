@@ -6,24 +6,25 @@ import com.github.czyzby.lml.annotation.LmlActor
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel
 import com.kotcrab.vis.ui.widget.spinner.Spinner
+import gdx.liftoff.config.inject
 
 /**
  * Stores data from "advanced" tab.
  */
 class AdvancedProjectData {
-    @LmlActor("version") private lateinit var versionField: VisTextField
-    @LmlActor("gdxVersion") private lateinit var gdxVersionField: VisTextField
-    @LmlActor("javaVersion") private lateinit var javaVersionField: Spinner
-    @LmlActor("sdkVersion") private lateinit var sdkVersionField: Spinner
-    @LmlActor("androidPluginVersion") private lateinit var androidPluginVersionField: VisTextField
-    @LmlActor("robovmVersion") private lateinit var robovmVersionField: VisTextField
-//    @LmlActor("gwtVersion") private lateinit var gwtVersionField: VisSelectBox<String>
-    @LmlActor("gwtPlugin") private lateinit var gwtPluginVersionField: VisTextField
-    @LmlActor("serverJavaVersion") private lateinit var serverJavaVersionField: Spinner
-    @LmlActor("desktopJavaVersion") private lateinit var desktopJavaVersionField: Spinner
-    @LmlActor("generateSkin") private lateinit var generateSkinButton: Button
-    @LmlActor("generateReadme") private lateinit var generateReadmeButton: Button
-    @LmlActor("gradleTasks") private lateinit var gradleTasksField: VisTextField
+    @LmlActor("version") private val versionField: VisTextField = inject()
+    @LmlActor("gdxVersion") private val gdxVersionField: VisTextField = inject()
+    @LmlActor("javaVersion") private val javaVersionField: Spinner = inject()
+    @LmlActor("sdkVersion") private val sdkVersionField: Spinner = inject()
+    @LmlActor("androidPluginVersion") private val androidPluginVersionField: VisTextField = inject()
+    @LmlActor("robovmVersion") private val robovmVersionField: VisTextField = inject()
+//    @LmlActor("gwtVersion") private val gwtVersionField: VisSelectBox<String> = injected()
+    @LmlActor("gwtPlugin") private val gwtPluginVersionField: VisTextField = inject()
+    @LmlActor("serverJavaVersion") private val serverJavaVersionField: Spinner = inject()
+    @LmlActor("desktopJavaVersion") private val desktopJavaVersionField: Spinner = inject()
+    @LmlActor("generateSkin") private val generateSkinButton: Button = inject()
+    @LmlActor("generateReadme") private val generateReadmeButton: Button = inject()
+    @LmlActor("gradleTasks") private val gradleTasksField: VisTextField = inject()
 
     val version: String
         get() = versionField.text

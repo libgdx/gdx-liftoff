@@ -32,6 +32,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooserAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import gdx.liftoff.config.Configuration
+import gdx.liftoff.config.inject
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.preferences.SdkVersionPreference
@@ -55,15 +56,15 @@ class MainView : ActionContainer {
         manager.alignment = Align.bottomRight
         manager
     }
-    @Inject private lateinit var interfaceService: InterfaceService
-    @LmlInject private lateinit var basicData: BasicProjectData
-    @LmlInject private lateinit var advancedData: AdvancedProjectData
-    @LmlInject @Inject private lateinit var platformsData: PlatformsData
-    @LmlInject @Inject private lateinit var languagesData: LanguagesData
-    @LmlInject @Inject private lateinit var extensionsData: ExtensionsData
-    @LmlInject @Inject private lateinit var templatesData: TemplatesData
-    @LmlActor("form") private lateinit var form: VisFormTable
-    @LmlActor("notLatestVersion") private lateinit var notUpToDateToast: ToastTable
+    @Inject private val interfaceService: InterfaceService = inject()
+    @LmlInject private val basicData: BasicProjectData = inject()
+    @LmlInject private val advancedData: AdvancedProjectData = inject()
+    @LmlInject @Inject private val platformsData: PlatformsData = inject()
+    @LmlInject @Inject private val languagesData: LanguagesData = inject()
+    @LmlInject @Inject private val extensionsData: ExtensionsData = inject()
+    @LmlInject @Inject private val templatesData: TemplatesData = inject()
+    @LmlActor("form") private val form: VisFormTable = inject()
+    @LmlActor("notLatestVersion") private val notUpToDateToast: ToastTable = inject()
 
     @LmlAction("chooseDirectory")
     fun chooseDirectory() {
@@ -144,7 +145,8 @@ class MainView : ActionContainer {
         }
     }
 
-    @LmlAction("mkdirs") fun createDestinationDirectory() {
+    @LmlAction("mkdirs")
+    fun createDestinationDirectory() {
         basicData.destination.mkdirs()
         revalidateForm()
     }
