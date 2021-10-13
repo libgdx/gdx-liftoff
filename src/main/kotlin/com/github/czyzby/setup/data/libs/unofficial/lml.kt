@@ -19,7 +19,7 @@ abstract class LmlExtension: ThirdPartyExtension() {
 
 /**
  * Guava-inspired libGDX utilities; no longer maintained.
- * Kiwi is actually used by gdx-liftoff and you can pull an updated fork of Kiwi code from the "$group.kiwi"
+ * Kiwi is actually used by gdx-liftoff and you can pull an updated fork of Kiwi code from the "com.github.czyzby.kiwi"
  * Java package in gdx-liftoff's repo.
  */
 @Extension
@@ -37,7 +37,7 @@ class Kiwi : LmlExtension() {
 
 /**
  * Parser of HTML-like templates that produces Scene2D widgets; no longer maintained.
- * LML is actually used by gdx-liftoff and you can pull an updated fork of LML code from the "$group.lml"
+ * LML is actually used by gdx-liftoff and you can pull an updated fork of LML code from the "com.github.czyzby.lml"
  * Java package in gdx-liftoff's repo.
  */
 @Extension
@@ -58,7 +58,7 @@ class LML : LmlExtension() {
 /**
  * Parser of HTML-like templates that produces VisUI widgets; no longer maintained.
  * LMLVis is actually used by gdx-liftoff and you can pull an updated fork of LMLVis code from the
- * "$group.lml" Java package in gdx-liftoff's repo.
+ * "com.github.czyzby.lml" Java package in gdx-liftoff's repo.
  */
 @Extension
 class LMLVis : LmlExtension() {
@@ -79,7 +79,7 @@ class LMLVis : LmlExtension() {
 /**
  * Dependency injection mechanism with component scan using libGDX reflection API; no longer maintained.
  * Autumn is actually used by gdx-liftoff and you can pull an updated fork of Autumn code from the
- * "$group.autumn" Java package in gdx-liftoff's repo.
+ * "com.github.czyzby.autumn" Java package in gdx-liftoff's repo.
  */
 @Extension
 class Autumn : LmlExtension() {
@@ -107,7 +107,7 @@ class Autumn : LmlExtension() {
 /**
  * Model-view-controller framework on top of Autumn DI and libGDX; no longer maintained.
  * AutumnMVC is actually used by gdx-liftoff and you can pull an updated fork of AutumnMVC code from the
- * "$group.autumn" Java package in gdx-liftoff's repo.
+ * "com.github.czyzby.autumn" Java package in gdx-liftoff's repo.
  */
 @Extension
 class AutumnMVC : LmlExtension() {
