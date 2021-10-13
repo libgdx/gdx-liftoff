@@ -2,6 +2,8 @@ package gdx.liftoff.config
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.czyzby.autumn.annotation.Component
 import com.github.czyzby.autumn.annotation.Initiate
 import com.github.czyzby.autumn.mvc.component.i18n.LocaleService
@@ -9,6 +11,7 @@ import com.github.czyzby.autumn.mvc.component.ui.InterfaceService
 import com.github.czyzby.autumn.mvc.component.ui.SkinService
 import com.github.czyzby.autumn.mvc.config.AutumnActionPriority
 import com.github.czyzby.autumn.mvc.stereotype.preference.*
+import com.github.czyzby.kiwi.util.gdx.asset.lazy.provider.ObjectProvider
 import com.github.czyzby.lml.parser.LmlParser
 import com.github.czyzby.lml.parser.tag.LmlAttribute
 import com.github.czyzby.lml.parser.tag.LmlTag
@@ -41,6 +44,7 @@ class Configuration {
     @I18nLocale(propertiesPath = PREFERENCES_PATH, defaultLocale = "en") val localePreference = "locale"
     @AvailableLocales val availableLocales = arrayOf("en")
     @Preference val preferencesPath = PREFERENCES_PATH
+    @StageViewport val viewportProvider = ObjectProvider<Viewport> { FitViewport(WIDTH.toFloat(), HEIGHT.toFloat()) }
 
     @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
     fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
