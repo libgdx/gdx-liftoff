@@ -43,7 +43,6 @@ import com.badlogic.gdx.utils.Array as GdxArray
 
 /**
  * Main application's view. Displays application's menu.
- * @author MJ
  */
 @View(id = "main", value = "templates/main.lml", first = true)
 class MainView : ActionContainer {
@@ -163,7 +162,6 @@ class MainView : ActionContainer {
 
     @LmlAfter fun initiateVersions(parser: LmlParser) {
         languagesData.assignVersions(parser)
-        extensionsData.assignVersions(parser)
     }
 
     @LmlAfter fun checkSetupVersion() {

@@ -3,12 +3,10 @@
     <table grow="true">
         <scrollPane grow="true" padLeft="10" padRight="10" prefHeight="100" fadeBars="false" flickScroll="false">
             <table defaultPad="2">
-                <label>@extension</label>
-                <label row="true">@customVersion</label>
                 <:for lib="$thirdPartyExtensions" url="$thirdPartyExtensionsUrls"
                       version="$thirdPartyExtensionsVersions">
-                    <checkBox id="{lib}" tooltip="@{lib}Tip" align="left">@{lib}</checkBox>
-                    <textField id="{lib}Version" tooltip="@{lib}Tip"></textField>
+                    <checkBox id="{lib}" align="left">@{lib}</checkBox>
+                    <label style="small" padRight="5" align="left">@{lib}Tip</label>
                     <linkLabel row="true" url="{url}">?</linkLabel>
                 </:for>
             </table>
