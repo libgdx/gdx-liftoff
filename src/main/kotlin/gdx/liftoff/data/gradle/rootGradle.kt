@@ -1,5 +1,6 @@
 package gdx.liftoff.data.gradle
 
+import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
 
@@ -51,7 +52,10 @@ subprojects {
 		mavenCentral()
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url 'https://jitpack.io' }
+		maven { url 'https://jitpack.io' }${
+            if (project.extensions.thirdParty.any { it.repository == Repository.OTHER }) 
+                "\n\t\tmaven { url 'https://s01.oss.sonatype.org' }" else ""
+        }
 	}
 }
 

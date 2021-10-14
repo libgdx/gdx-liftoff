@@ -64,8 +64,8 @@ enum class Repository {
     MAVEN_CENTRAL,
     /** For libraries available only via JitPack. */
     JITPACK,
-    /** For libraries available only via the snapshot repository. */
-    MAVEN_SNAPSHOTS,
+    /** For libraries in snapshot or alternative repositories that do not support automatic version fetching. */
+    OTHER,
     /** For KTX libraries, which use the same versioning. Uses version cache for faster project generation. */
     KTX
 }
