@@ -1,5 +1,7 @@
 package com.github.czyzby.setup.data.libs.unofficial
 
+import com.badlogic.gdx.Gdx
+import com.github.czyzby.setup.data.libs.Repository
 import com.github.czyzby.setup.data.libs.camelCaseToKebabCase
 import com.github.czyzby.setup.data.libs.official.Ashley
 import com.github.czyzby.setup.data.libs.official.Box2D
@@ -7,12 +9,25 @@ import com.github.czyzby.setup.data.libs.official.Freetype
 import com.github.czyzby.setup.data.platforms.Core
 import com.github.czyzby.setup.data.project.Project
 import com.github.czyzby.setup.views.Extension
+import com.github.czyzby.setup.views.fetchVersionFromMavenCentral
+import khttp.get
 
 abstract class KtxExtension : ThirdPartyExtension() {
     override val defaultVersion = "1.10.0-b4"
+    override val repository = Repository.KTX
     override val group = "io.github.libktx"
     override val name
         get() = id.camelCaseToKebabCase()
+}
+
+val latestKtxVersion by lazy {
+    // Fetching and caching KTX version from the repo:
+    try {
+        get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").content.decodeToString().trim()
+    } catch (exception: Exception) {
+        Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
+        fetchVersionFromMavenCentral(KtxActors())
+    }
 }
 
 /**
