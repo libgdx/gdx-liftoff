@@ -7,7 +7,6 @@ import com.github.czyzby.setup.data.project.Project
 /**
  * Common interface for additional JVM languages. If the language is optional, its class should be annotated with
  * JvmLanguage.
- * @author MJ
  */
 interface Language {
     val id: String
