@@ -14,7 +14,7 @@ buildscript {
 }
 
 version = "1.10.0.7-SNAPSHOT"
-mainClassName = 'com.github.czyzby.setup.MainKt'
+mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 
 jar {
