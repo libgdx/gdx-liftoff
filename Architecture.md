@@ -49,8 +49,8 @@ filled using dependency injection, and registered in the Autumn context as singl
   - Autumn MVC handles application preferences from the [`preferences`](src/main/kotlin/gdx/liftoff/preferences)
   package. They include some values such as package name of the generated project which are cached from the previous
   tool usage.
-  - Custom annotation processors ensure that thisstep  also creates classes that represent official and third-party
-  extensions, project templates, languages, and libGDX platforms. An appropriate annotation is sufficient to register
+  - Custom annotation processors ensure that this step also creates classes representing official and third-party
+  extensions, project templates, languages, and libGDX platforms. A respective annotation is sufficient to register
   them in the application, and they require no further setup.
 - Component methods annotated with `@Initiate` are called after the components are constructed.
   - [Configuration.initiate](src/main/kotlin/gdx/liftoff/config/Configuration.kt) loads a custom VisUI skin and extends
