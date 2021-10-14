@@ -229,7 +229,11 @@ other projects or older versions.
       gdx-liftoff will pre-fill the Android SDK path with `ANDROID_SDK_ROOT` if it hasn't been set yet, but will use the
       last used path if there's a historical path. You can change any and all settings history by either editing
       `~/.prefs/gdx-liftoff-prefs` or just deleting that file and having gdx-liftoff remake it.
-  
+
+## Contributions
+
+When submitting pull requests, please format the code with the `./gradlew ktlintFormat` task.
+
 ## Credits
 
 Huge thanks to [czyzby](https://github.com/czyzby) for writing the original tool this is based on, as well as much of

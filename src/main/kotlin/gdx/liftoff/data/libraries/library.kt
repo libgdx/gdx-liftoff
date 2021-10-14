@@ -1,6 +1,10 @@
 package gdx.liftoff.data.libraries
 
-import gdx.liftoff.data.platforms.*
+import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.AndroidGradleFile
+import gdx.liftoff.data.platforms.Desktop
+import gdx.liftoff.data.platforms.GWT
+import gdx.liftoff.data.platforms.LWJGL3
 import gdx.liftoff.data.project.Project
 
 /**
