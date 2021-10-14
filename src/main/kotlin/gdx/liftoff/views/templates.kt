@@ -7,6 +7,7 @@ import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.scene2d.ui.reflected.ButtonTable
+import gdx.liftoff.config.inject
 import gdx.liftoff.data.templates.Template
 
 /**
@@ -17,7 +18,7 @@ class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
     private val templates = mutableListOf<Template>()
     val officialTemplates = mutableListOf<Template>()
     val thirdPartyTemplates = mutableListOf<Template>()
-    @LmlActor("templatesTable") private lateinit var templatesTable: ButtonTable
+    @LmlActor("templatesTable") private val templatesTable: ButtonTable = inject()
 
     fun getSelectedTemplate(): Template = templates.first { it.id == templatesTable.buttonGroup.checked.name }
 

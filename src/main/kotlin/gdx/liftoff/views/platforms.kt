@@ -9,6 +9,7 @@ import com.github.czyzby.autumn.context.ContextDestroyer
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
+import gdx.liftoff.config.inject
 import gdx.liftoff.data.platforms.Platform
 
 /**
@@ -18,9 +19,9 @@ import gdx.liftoff.data.platforms.Platform
 class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
     val platforms = mutableMapOf<String, Platform>()
 
-    @LmlActor("androidSdk") private lateinit var androidSdk: Disableable
-    @LmlActor("androidSdkButton") private lateinit var androidSdkButton: Disableable
-    @LmlActor("\$platforms") private lateinit var platformButtons: ObjectSet<Button>
+    @LmlActor("androidSdk") private val androidSdk: Disableable = inject()
+    @LmlActor("androidSdkButton") private val androidSdkButton: Disableable = inject()
+    @LmlActor("\$platforms") private val platformButtons: ObjectSet<Button> = inject()
 
     fun toggleAndroidPlatform(active: Boolean) {
         androidSdk.isDisabled = !active
