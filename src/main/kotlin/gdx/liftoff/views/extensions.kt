@@ -35,7 +35,7 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
         return when(library.repository) {
             Repository.MAVEN_CENTRAL -> fetchVersionFromMavenCentral(library)
             Repository.JITPACK -> fetchVersionFromJitPack(library)
-            Repository.MAVEN_SNAPSHOTS -> fetchSnapshotVersion(library)
+            Repository.OTHER -> library.defaultVersion
             Repository.KTX -> latestKtxVersion
         }
     }
@@ -89,11 +89,6 @@ fun fetchVersionFromJitPack(library: Library): String {
     } catch (exception: Exception) {
         Gdx.app.error("gdx-liftoff", "Unable to perform a HTTP request to JitPack.", exception)
     }
-    return library.defaultVersion
-}
-
-fun fetchSnapshotVersion(library: Library): String {
-    // TODO Snapshot version fetching is not implemented. Using the default version.
     return library.defaultVersion
 }
 
