@@ -17,8 +17,8 @@ abstract class LmlExtension: ThirdPartyExtension() {
     /**
      * Latest version of gdx-lml libraries from the CrashInvaders fork.
      */
-    override val defaultVersion = "1.9.1.10.0-SNAPSHOT"
-    override val repository = Repository.MAVEN_SNAPSHOTS
+    override val defaultVersion = "1.9.1.10.0"
+    override val repository = Repository.OTHER
     override val group = "com.crashinvaders.lml"
     override val name: String
         get() = "gdx-" + id.camelCaseToKebabCase()
