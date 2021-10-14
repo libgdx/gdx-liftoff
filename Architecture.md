@@ -49,18 +49,18 @@ filled using dependency injection, and registered in the Autumn context as singl
   - Autumn MVC handles application preferences from the [`preferences`](src/main/kotlin/gdx/liftoff/preferences)
   package. They include some values such as package name of the generated project which are cached from the previous
   tool usage.
-  - Note that due to the custom project annotations, this also creates classes that represent official and third-party
-  extensions, project templates, languages, and libGDX platforms. This is an annotation is sufficient to register them
-  in the application, and they require no further setup.
+  - Custom annotation processors ensure that thisstep  also creates classes that represent official and third-party
+  extensions, project templates, languages, and libGDX platforms. An appropriate annotation is sufficient to register
+  them in the application, and they require no further setup.
 - Component methods annotated with `@Initiate` are called after the components are constructed.
   - [Configuration.initiate](src/main/kotlin/gdx/liftoff/config/Configuration.kt) loads a custom VisUI skin and extends
-  the LML parser with custom tags.
+  the LML parser with custom tags representing additional GUI widgets.
 - Application views and dialogs are constructed from LML templates.
   - `LmlParser` configured in [Configuration.kt](src/main/kotlin/gdx/liftoff/config/Configuration.kt) handles LML
   templates and associated controllers.
   - LML templates are stored in [`resources/templates/`](src/main/resources/templates).
-    - Tags within LML templates represent individual Scene2D widgets displayed in the views. Tags starting with `:` are
-    macros that introduce some basic scripting functionalities such as iteration or conditionals.
+    - Tags within LML templates represent individual Scene2D widgets displayed in the views.
+    - Tags starting with `:` are macros that implement basic scripting functionalities such as iteration or conditionals.
   - Classes annotated with `@ViewActionContainer` such as
   [GlobalActionContainer](src/main/kotlin/gdx/liftoff/actions/GlobalActionContainer.kt) define functions available in
   the LML templates. `@LmlAction` annotation specifies IDs of the functions as they appear in the templates.
@@ -84,7 +84,7 @@ filled using dependency injection, and registered in the Autumn context as singl
 
 The results of the initiation are as follows:
 
-- All annotated application components are created and filled with dependency injection.
+- All annotated application components are created via reflection and filled by a dependency injection framework.
 - All components such as libGDX libraries, platforms, languages, or project templates are created and registered.
 - [MainView](src/main/kotlin/gdx/liftoff/views/MainView.kt) is constructed from a LML template and rendered.
 
@@ -133,7 +133,12 @@ the libGDX version.
 
 The `id` property defines the unique ID of the library throughout the project. To ensure that the library is properly
 described in the tool, add `id=` and `idTip=` entries to the [nls.properties](src/main/resources/i18n/nls.properties)
-file (replacing the `id` with yours) with the formatted library name and short description.
+file (replacing the `id` with a custom one) with the formatted library name and short description. For example:
+
+```properties
+myLibrary=My Library
+myLibraryTip=Generic libGDX utilities.
+```
 
 ### Third-party extension
 
