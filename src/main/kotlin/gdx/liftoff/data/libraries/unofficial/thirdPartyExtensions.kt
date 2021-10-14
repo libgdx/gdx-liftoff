@@ -7,7 +7,13 @@ import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.official.Controllers
-import gdx.liftoff.data.platforms.*
+import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.Core
+import gdx.liftoff.data.platforms.Desktop
+import gdx.liftoff.data.platforms.GWT
+import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -133,7 +139,7 @@ class Facebook : ThirdPartyExtension() {
         addDependency(project, Android.ID, "de.tomgrill.gdxfacebook:gdx-facebook-android")
 
         addDesktopDependency(project, "de.tomgrill.gdxfacebook:gdx-facebook-desktop")
-//// This is a problem for the App Store, removed.
+// // This is a problem for the App Store, removed.
 //        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
@@ -638,7 +644,6 @@ class RegExodus : ThirdPartyExtension() {
     }
 }
 
-
 /**
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
@@ -849,8 +854,8 @@ class Lombok : ThirdPartyExtension() {
 //            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows");
 //            addDependency(project, LWJGL3.ID, "io.github.spair:imgui-java-natives-windows-x86");
 //
-////            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
-////            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
-////            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
+// //            addDependency(project, Core.ID, "com.github.kotlin-graphics.imgui:core")
+// //            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:gl")
+// //            addDependency(project, LWJGL3.ID, "com.github.kotlin-graphics.imgui:glfw")
 //        }
 //    }

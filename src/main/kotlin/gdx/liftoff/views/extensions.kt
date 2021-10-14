@@ -9,10 +9,10 @@ import com.github.czyzby.autumn.context.ContextDestroyer
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
+import devcsrj.mvnrepository.MvnRepositoryApi
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.unofficial.latestKtxVersion
-import devcsrj.mvnrepository.MvnRepositoryApi
 import khttp.get
 
 /**
@@ -32,7 +32,7 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
     @LmlActor("\$thirdPartyExtensions") private lateinit var thirdPartyButtons: ObjectMap<String, Button>
 
     fun getVersion(library: Library): String {
-        return when(library.repository) {
+        return when (library.repository) {
             Repository.MAVEN_CENTRAL -> fetchVersionFromMavenCentral(library)
             Repository.JITPACK -> fetchVersionFromJitPack(library)
             Repository.OTHER -> library.defaultVersion
@@ -42,13 +42,19 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
 
     fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
     fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
-    fun hasExtensionSelected(id: String) : Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
+    fun hasExtensionSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
 
     // Automatic scanning of extensions:
     override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
     override fun isSupportingTypes(): Boolean = true
-    override fun processType(type: Class<*>, annotation: Extension, component: Any, context: Context,
-                             initializer: ContextInitializer, contextDestroyer: ContextDestroyer) {
+    override fun processType(
+        type: Class<*>,
+        annotation: Extension,
+        component: Any,
+        context: Context,
+        initializer: ContextInitializer,
+        contextDestroyer: ContextDestroyer
+    ) {
         if (annotation.official) {
             official.add(component as Library)
         } else {
@@ -64,11 +70,14 @@ fun fetchVersionFromMavenCentral(library: Library): String {
     // beta versions and release candidates. If no version was found, the application fallbacks
     // to the slower Maven Central search:
     try {
-        val response = get("https://search.maven.org/solrsearch/select", timeout = REQUEST_TIMEOUT, params = mapOf(
-            "q" to """g:"${library.group}"+AND+a:"${library.name}"""",
-            "rows" to "1",
-            "wt" to "json",
-        ))
+        val response = get(
+            "https://search.maven.org/solrsearch/select", timeout = REQUEST_TIMEOUT,
+            params = mapOf(
+                "q" to """g:"${library.group}"+AND+a:"${library.name}"""",
+                "rows" to "1",
+                "wt" to "json",
+            )
+        )
         val results = response.jsonObject.getJSONObject("response").getJSONArray("docs")
         if (results.length() > 0) {
             return results.getJSONObject(0).getString("latestVersion")

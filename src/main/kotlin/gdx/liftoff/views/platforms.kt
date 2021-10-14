@@ -30,14 +30,20 @@ class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
     operator fun get(platformId: String): Platform = platforms[platformId]!!
 
     fun getSelectedPlatforms(): Map<String, Platform> =
-            platformButtons.filter { it.isChecked }.map { platforms[it.name]!! }.associateBy { it.id }
+        platformButtons.filter { it.isChecked }.map { platforms[it.name]!! }.associateBy { it.id }
 
     // Automatic scanning of platforms:
 
     override fun getSupportedAnnotationType(): Class<GdxPlatform> = GdxPlatform::class.java
     override fun isSupportingTypes(): Boolean = true
-    override fun processType(type: Class<*>, annotation: GdxPlatform, component: Any, context: Context,
-                             initializer: ContextInitializer, contextDestroyer: ContextDestroyer) {
+    override fun processType(
+        type: Class<*>,
+        annotation: GdxPlatform,
+        component: Any,
+        context: Context,
+        initializer: ContextInitializer,
+        contextDestroyer: ContextDestroyer
+    ) {
         val platform = component as Platform
         platforms[platform.id] = platform
     }

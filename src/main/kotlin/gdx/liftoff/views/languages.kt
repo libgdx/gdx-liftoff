@@ -10,9 +10,9 @@ import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.parser.LmlParser
+import com.kotcrab.vis.ui.widget.VisTextField
 import gdx.liftoff.data.langs.Language
 import gdx.liftoff.data.project.Project
-import com.kotcrab.vis.ui.widget.VisTextField
 
 /**
  * Holds additional JVM languages data.
@@ -32,8 +32,10 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
 
     fun assignVersions(parser: LmlParser) {
         jvmLanguages.values.forEach {
-            languageVersions.put(it.id,
-                    parser.actorsMappedByIds.get(it.id + "Version") as VisTextField)
+            languageVersions.put(
+                it.id,
+                parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
+            )
         }
     }
 
@@ -51,8 +53,14 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
 
     override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
     override fun isSupportingTypes(): Boolean = true
-    override fun processType(type: Class<*>, annotation: JvmLanguage, component: Any, context: Context,
-                             initializer: ContextInitializer, contextDestroyer: ContextDestroyer) {
+    override fun processType(
+        type: Class<*>,
+        annotation: JvmLanguage,
+        component: Any,
+        context: Context,
+        initializer: ContextInitializer,
+        contextDestroyer: ContextDestroyer
+    ) {
         val language = component as Language
         jvmLanguages[language.id] = language
     }

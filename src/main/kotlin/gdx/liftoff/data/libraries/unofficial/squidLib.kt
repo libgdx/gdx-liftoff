@@ -13,7 +13,7 @@ import gdx.liftoff.views.Extension
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-abstract class SquidLibExtension: ThirdPartyExtension() {
+abstract class SquidLibExtension : ThirdPartyExtension() {
     override val defaultVersion = "3.0.4"
     override val group = "com.squidpony"
     override val name: String

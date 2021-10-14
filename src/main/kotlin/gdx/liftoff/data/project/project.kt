@@ -2,34 +2,47 @@ package gdx.liftoff.data.project
 
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.utils.GdxRuntimeException
-import gdx.liftoff.data.files.*
-import gdx.liftoff.data.gradle.GradleFile
-import gdx.liftoff.data.gradle.RootGradleFile
+import com.kotcrab.vis.ui.util.OsUtils
+import gdx.liftoff.data.files.CopiedFile
+import gdx.liftoff.data.files.ProjectFile
+import gdx.liftoff.data.files.PropertiesFile
+import gdx.liftoff.data.files.SettingsFile
+import gdx.liftoff.data.files.SourceDirectory
+import gdx.liftoff.data.files.SourceFile
+import gdx.liftoff.data.files.gradle.GradleFile
+import gdx.liftoff.data.files.gradle.RootGradleFile
+import gdx.liftoff.data.files.path
 import gdx.liftoff.data.langs.Java
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Platform
 import gdx.liftoff.data.templates.Template
-import gdx.liftoff.views.AdvancedData
+import gdx.liftoff.views.AdvancedProjectData
 import gdx.liftoff.views.BasicProjectData
 import gdx.liftoff.views.ExtensionsData
 import gdx.liftoff.views.LanguagesData
-import com.kotcrab.vis.ui.util.OsUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 /**
  * Contains data about the generated project.
  */
-class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>, val advanced: AdvancedData,
-              val languages: LanguagesData, val extensions: ExtensionsData, val template: Template) {
+class Project(
+    val basic: BasicProjectData,
+    val platforms: Map<String, Platform>,
+    val advanced: AdvancedProjectData,
+    val languages: LanguagesData,
+    val extensions: ExtensionsData,
+    val template: Template
+) {
     private val gradleFiles: Map<String, GradleFile>
     val files = mutableListOf<ProjectFile>()
     val rootGradle: RootGradleFile
     val properties = mutableMapOf(
-            "org.gradle.daemon" to "true",
-            "org.gradle.jvmargs" to "-Xms512M -Xmx1G -XX:MaxPermSize=1G -XX:MaxMetaspaceSize=1G",
-            "org.gradle.configureondemand" to "false")
+        "org.gradle.daemon" to "true",
+        "org.gradle.jvmargs" to "-Xms512M -Xmx1G -XX:MaxPermSize=1G -XX:MaxMetaspaceSize=1G",
+        "org.gradle.configureondemand" to "false"
+    )
     val gwtInherits = mutableSetOf<String>()
     val androidPermissions = mutableSetOf<String>()
 
@@ -49,18 +62,21 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
 
     private fun addBasicGradleTasksDescriptions() {
         if (advanced.generateReadme) {
-            arrayOf("idea" to "generates IntelliJ project data.",
-                    "cleanIdea" to "removes IntelliJ project data.",
-                    "eclipse" to "generates Eclipse project data.",
-                    "cleanEclipse" to "removes Eclipse project data.",
-                    "clean" to "removes `build` folders, which store compiled classes and built archives.",
-                    "test" to "runs unit tests (if any).",
-                    "build" to "builds sources and archives of every project.",
-                    "--daemon" to "thanks to this flag, Gradle daemon will be used to run chosen tasks.",
-                    "--offline" to "when using this flag, cached dependency archives will be used.",
-                    "--continue" to "when using this flag, errors will not stop the tasks from running.",
-                    "--refresh-dependencies" to "this flag forces validation of all dependencies. Useful for snapshot versions.")
-                    .forEach { gradleTaskDescriptions[it.first] = it.second }
+            arrayOf(
+                "idea" to "generates IntelliJ project data.",
+                "cleanIdea" to "removes IntelliJ project data.",
+                "eclipse" to "generates Eclipse project data.",
+                "cleanEclipse" to "removes Eclipse project data.",
+                "clean" to "removes `build` folders, which store compiled classes and built archives.",
+                "test" to "runs unit tests (if any).",
+                "build" to "builds sources and archives of every project.",
+                "--daemon" to "thanks to this flag, Gradle daemon will be used to run chosen tasks.",
+                "--offline" to "when using this flag, cached dependency archives will be used.",
+                "--continue" to "when using this flag, errors will not stop the tasks from running.",
+                "--refresh-dependencies" to "this flag forces validation of all dependencies. Useful for snapshot versions."
+            ).forEach {
+                gradleTaskDescriptions[it.first] = it.second
+            }
         }
     }
 
@@ -80,7 +96,6 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
         addExtensions()
         template.apply(this)
         addPlatforms()
-        
         addSkinAssets()
         addReadmeFile()
         saveProperties()
@@ -130,28 +145,60 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
             // Adding GUI assets directory:
             files.add(SourceDirectory(Assets.ID, "ui"))
 
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.atlas"),
-                    original = path("generator", "assets", "ui", "uiskin.atlas")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.json"),
-                    original = path("generator", "assets", "ui", "uiskin.json")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "uiskin.png"),
-                    original = path("generator", "assets", "ui", "uiskin.png")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font.fnt"),
-                    original = path("generator", "assets", "ui", "font.fnt")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-list.fnt"),
-                    original = path("generator", "assets", "ui", "font-list.fnt")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-subtitle.fnt"),
-                    original = path("generator", "assets", "ui", "font-subtitle.fnt")))
-            files.add(CopiedFile(projectName = Assets.ID, path = path("ui", "font-window.fnt"),
-                    original = path("generator", "assets", "ui", "font-window.fnt")))
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "uiskin.atlas"),
+                    original = path("generator", "assets", "ui", "uiskin.atlas")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "uiskin.json"),
+                    original = path("generator", "assets", "ui", "uiskin.json")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "uiskin.png"),
+                    original = path("generator", "assets", "ui", "uiskin.png")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "font.fnt"),
+                    original = path("generator", "assets", "ui", "font.fnt")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "font-list.fnt"),
+                    original = path("generator", "assets", "ui", "font-list.fnt")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "font-subtitle.fnt"),
+                    original = path("generator", "assets", "ui", "font-subtitle.fnt")
+                )
+            )
+            files.add(
+                CopiedFile(
+                    projectName = Assets.ID, path = path("ui", "font-window.fnt"),
+                    original = path("generator", "assets", "ui", "font-window.fnt")
+                )
+            )
 
             // Android does not support classpath fonts loading through skins.
             // Explicitly copying Arial font if Android platform is included:
             if (hasPlatform(Android.ID)) {
                 arrayOf("png", "fnt").forEach {
                     val path = path("com", "badlogic", "gdx", "utils", "arial-15.$it")
-                    files.add(CopiedFile(projectName = Assets.ID, path = path, original = path,
-                            fileType = Files.FileType.Classpath))
+                    files.add(
+                        CopiedFile(
+                            projectName = Assets.ID, path = path, original = path,
+                            fileType = Files.FileType.Classpath
+                        )
+                    )
                 }
             }
         }
@@ -159,7 +206,10 @@ class Project(val basic: BasicProjectData, val platforms: Map<String, Platform>,
 
     private fun addReadmeFile() {
         if (advanced.generateReadme) {
-            files.add(SourceFile(projectName = "", fileName = "README.md", content = """# ${basic.name}
+            files.add(
+                SourceFile(
+                    projectName = "", fileName = "README.md",
+                    content = """# ${basic.name}
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
@@ -174,7 +224,9 @@ Useful Gradle tasks and flags:
 ${gradleTaskDescriptions.map { "- `${it.key}`: ${it.value}" }.sorted().joinToString(separator = "\n")}
 
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project."""))
+For example, `core:clean` removes `build` folder only from the `core` project."""
+                )
+            )
         }
     }
 

@@ -9,17 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
 import com.github.czyzby.autumn.mvc.application.AutumnApplication
+import com.kotcrab.vis.ui.util.OsUtils
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.views.Extension
 import gdx.liftoff.views.GdxPlatform
 import gdx.liftoff.views.JvmLanguage
 import gdx.liftoff.views.ProjectTemplate
-import com.kotcrab.vis.ui.util.OsUtils
 import org.lwjgl.system.macosx.LibC
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.management.ManagementFactory
-import java.util.*
 
 private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
 
@@ -45,7 +44,8 @@ fun startNewJvmIfRequired(): Boolean {
     // avoids looping, but most certainly leads to a crash
     if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
         System.err.println(
-                "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument")
+            "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument"
+        )
         return false
     }
 
@@ -75,7 +75,7 @@ fun startNewJvmIfRequired(): Boolean {
 }
 
 fun main() {
-    if(startNewJvmIfRequired()) return
+    if (startNewJvmIfRequired()) return
     val config = Lwjgl3ApplicationConfiguration()
     config.setTitle("gdx-liftoff")
     config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
@@ -98,18 +98,25 @@ fun main() {
     config.setWindowListener(windowListener)
 
     try {
-        Lwjgl3Application(object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
-            override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
-                super.registerDefaultComponentAnnotations(initializer)
-                initializer.scanFor(Extension::class.java, ProjectTemplate::class.java, JvmLanguage::class.java,
-                        GdxPlatform::class.java)
-            }
-        }, config)
+        Lwjgl3Application(
+            object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
+                override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
+                    super.registerDefaultComponentAnnotations(initializer)
+                    initializer.scanFor(
+                        Extension::class.java, ProjectTemplate::class.java, JvmLanguage::class.java,
+                        GdxPlatform::class.java
+                    )
+                }
+            },
+            config
+        )
     } catch (error: ExceptionInInitializerError) {
         if (OsUtils.isMac() && error.cause is IllegalStateException) {
             if (error.stackTraceToString().contains("XstartOnFirstThread")) {
-                println("Application was not launched on first thread. " +
-                        "Add VM argument -XstartOnFirstThread to avoid this.")
+                println(
+                    "Application was not launched on first thread. " +
+                        "Add VM argument -XstartOnFirstThread to avoid this."
+                )
             }
         }
         throw error
