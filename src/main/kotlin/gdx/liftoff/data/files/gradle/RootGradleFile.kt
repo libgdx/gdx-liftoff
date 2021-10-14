@@ -53,9 +53,9 @@ subprojects {
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://jitpack.io' }${
-            if (project.extensions.thirdParty.any { it.repository == Repository.OTHER }) 
-                "\n\t\tmaven { url 'https://s01.oss.sonatype.org' }" else ""
-        }
+    if (project.extensions.thirdParty.any { it.repository == Repository.OTHER })
+        "\n\t\tmaven { url 'https://s01.oss.sonatype.org' }" else ""
+    }
 	}
 }
 
