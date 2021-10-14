@@ -10,6 +10,7 @@ import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import devcsrj.mvnrepository.MvnRepositoryApi
+import gdx.liftoff.config.inject
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.unofficial.latestKtxVersion
@@ -27,17 +28,22 @@ const val REQUEST_TIMEOUT = 15.0
 class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
     val official = mutableListOf<Library>()
     val thirdParty = mutableListOf<Library>()
+    private val versionCache = mutableMapOf<Pair<String, String>, String>()
 
-    @LmlActor("\$officialExtensions") private lateinit var officialButtons: ObjectMap<String, Button>
-    @LmlActor("\$thirdPartyExtensions") private lateinit var thirdPartyButtons: ObjectMap<String, Button>
+    @LmlActor("\$officialExtensions") private val officialButtons: ObjectMap<String, Button> = inject()
+    @LmlActor("\$thirdPartyExtensions") private val thirdPartyButtons: ObjectMap<String, Button> = inject()
 
     fun getVersion(library: Library): String {
-        return when (library.repository) {
+        val identifier = library.group to library.name
+        if (identifier in versionCache) return versionCache[identifier]!!
+        val version = when (library.repository) {
             Repository.MAVEN_CENTRAL -> fetchVersionFromMavenCentral(library)
             Repository.JITPACK -> fetchVersionFromJitPack(library)
             Repository.OTHER -> library.defaultVersion
             Repository.KTX -> latestKtxVersion
         }
+        versionCache[identifier] = version
+        return version
     }
 
     fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()

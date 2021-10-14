@@ -11,7 +11,8 @@ import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.parser.LmlParser
 import com.kotcrab.vis.ui.widget.VisTextField
-import gdx.liftoff.data.langs.Language
+import gdx.liftoff.config.inject
+import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.project.Project
 
 /**
@@ -21,7 +22,7 @@ import gdx.liftoff.data.project.Project
 class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
     private val jvmLanguages = mutableMapOf<String, Language>()
 
-    @LmlActor("\$jvmLanguages") lateinit var languageButtons: ObjectSet<Button>
+    @LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
     val languageVersions = ObjectMap<String, VisTextField>()
 
     val languages: Array<String>

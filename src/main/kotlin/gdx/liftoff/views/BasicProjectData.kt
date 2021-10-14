@@ -8,21 +8,22 @@ import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.annotation.LmlActor
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
+import gdx.liftoff.config.inject
 
 /**
  * Filled by the LML parser, this class contains references to basic project data widgets.
  */
 class BasicProjectData {
-    @LmlActor("name") private lateinit var nameField: VisTextField
-    @LmlActor("package") private lateinit var rootPackageField: VisTextField
-    @LmlActor("class") private lateinit var mainClassField: VisTextField
-    @LmlActor("destination") private lateinit var destinationField: VisTextField
-    @LmlActor("androidSdk") private lateinit var androidSdkPathField: VisValidatableTextField
+    @LmlActor("name") private val nameField: VisTextField = inject()
+    @LmlActor("package") private val rootPackageField: VisTextField = inject()
+    @LmlActor("class") private val mainClassField: VisTextField = inject()
+    @LmlActor("destination") private val destinationField: VisTextField = inject()
+    @LmlActor("androidSdk") private val androidSdkPathField: VisValidatableTextField = inject()
 
-    @LmlActor("mkdirs") private lateinit var mkdirsButton: Button
-    @LmlActor("clearFolder") private lateinit var clearButton: Button
+    @LmlActor("mkdirs") private val mkdirsButton: Button = inject()
+    @LmlActor("clearFolder") private val clearButton: Button = inject()
 
-    @LmlActor("useOldestSdk", "useLatestSdk") private lateinit var sdkButtons: ObjectSet<Button>
+    @LmlActor("useOldestSdk", "useLatestSdk") private val sdkButtons: ObjectSet<Button> = inject()
 
     val name: String
         get() = nameField.text

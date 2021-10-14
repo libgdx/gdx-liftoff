@@ -12,6 +12,7 @@ import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog
 import com.github.czyzby.kiwi.util.common.Exceptions
 import com.github.czyzby.lml.annotation.LmlActor
+import gdx.liftoff.config.inject
 import gdx.liftoff.data.project.ProjectLogger
 import gdx.liftoff.views.MainView
 import gdx.liftoff.views.widgets.ScrollableTextArea
@@ -26,12 +27,12 @@ import java.util.concurrent.atomic.AtomicLong
 @ViewDialog(id = "generation", value = "templates/dialogs/generation.lml", cacheInstance = false)
 @Suppress("unused") // Referenced via reflection.
 class GenerationPrompt : ViewDialogShower, ProjectLogger {
-    @Inject private lateinit var locale: LocaleService
-    @Inject private lateinit var mainView: MainView
+    @Inject private val locale: LocaleService = inject()
+    @Inject private val mainView: MainView = inject()
 
-    @LmlActor("close", "exit") private lateinit var buttons: ObjectSet<Button>
-    @LmlActor("console") private lateinit var console: ScrollableTextArea
-    @LmlActor("scroll") private lateinit var scrollPane: ScrollPane
+    @LmlActor("close", "exit") private val buttons: ObjectSet<Button> = inject()
+    @LmlActor("console") private val console: ScrollableTextArea = inject()
+    @LmlActor("scroll") private val scrollPane: ScrollPane = inject()
 
     private val executor = Executors.newSingleThreadExecutor(PrefixedThreadFactory("ProjectGenerator"))
     private val loggingBuffer = ConcurrentLinkedQueue<String>()
@@ -42,6 +43,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
             try {
                 logNls("copyStart")
                 val project = mainView.createProject()
+                logNls("generationStart")
                 project.generate()
                 logNls("copyEnd")
                 mainView.revalidateForm()
@@ -86,7 +88,6 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
 
 /**
  * Generates sane thread names for [Executors].
- * @author Kotcrab
  */
 private class PrefixedThreadFactory(threadPrefix: String) : ThreadFactory {
     private val count = AtomicLong(0)
