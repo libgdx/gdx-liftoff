@@ -14,15 +14,15 @@ import gdx.liftoff.views.ProjectTemplate
 open class ClassicTemplate : Template {
     override val id = "classic"
     override val description: String
-        get() = "Project template includes simple launchers and an `ApplicationAdapter` extension that draws BadLogic logo."
+        get() = "Project template includes simple launchers and an `ApplicationAdapter` extension that draws libGDX logo."
 
     override fun apply(project: Project) {
         super.apply(project)
         project.files.add(
             CopiedFile(
                 projectName = Assets.ID,
-                original = path("generator", "templates", "classic", "badlogic.png"),
-                path = "badlogic.png"
+                original = path("generator", "templates", "libgdx.png"),
+                path = "libgdx.png"
             )
         )
     }
@@ -43,15 +43,15 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		image = new Texture("badlogic.png");
+		image = new Texture("libgdx.png");
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(image, 165, 180);
+		batch.draw(image, 140, 210);
 		batch.end();
 	}
 

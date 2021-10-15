@@ -23,11 +23,19 @@ interface Template {
         get() = "640"
     val height: String
         get() = "480"
-    /**
-     * Used as project description in README file. Optional.
-     */
+    /** Used as project description in README file. Optional. */
     val description: String
         get() = ""
+
+    /** File extension of the ApplicationListener implementation. */
+    val applicationListenerExtension: String
+        get() = "java"
+    /** File extension of the application launchers on each platform. */
+    val launcherExtension: String
+        get() = "java"
+
+    val defaultSourceFolder: String
+        get() = path("src", "main", "java")
 
     /**
      * @param project is being created. Should contain sources provided by this template.
@@ -46,8 +54,11 @@ interface Template {
 
     fun addApplicationListener(project: Project) {
         addSourceFile(
-            project = project, platform = Core.ID, packageName = project.basic.rootPackage,
-            fileName = "${project.basic.mainClass}.java", content = getApplicationListenerContent(project)
+            project = project,
+            platform = Core.ID,
+            packageName = project.basic.rootPackage,
+            fileName = "${project.basic.mainClass}.$applicationListenerExtension",
+            content = getApplicationListenerContent(project)
         )
     }
 
@@ -59,8 +70,11 @@ interface Template {
 
     fun addDesktopLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = Desktop.ID, packageName = "${project.basic.rootPackage}.desktop",
-            fileName = "DesktopLauncher.java", content = getDesktopLauncherContent(project)
+            project = project,
+            platform = Desktop.ID,
+            packageName = "${project.basic.rootPackage}.desktop",
+            fileName = "DesktopLauncher.$launcherExtension",
+            content = getDesktopLauncherContent(project)
         )
     }
 
@@ -88,7 +102,7 @@ public class DesktopLauncher {
 		configuration.height = $height;
 		//// This prevents a confusing error that would appear after exiting normally.
 		configuration.forceExit = false;
-		
+
 		for (int size : new int[] { 128, 64, 32, 16 }) {
 			configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
 		}
@@ -98,8 +112,13 @@ public class DesktopLauncher {
 
     fun addGwtLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = GWT.ID, packageName = "${project.basic.rootPackage}.gwt",
-            fileName = "GwtLauncher.java", content = getGwtLauncherContent(project)
+            project = project,
+            platform = GWT.ID,
+            packageName = "${project.basic.rootPackage}.gwt",
+            content = getGwtLauncherContent(project),
+            // GWT supports only Java sources:
+            fileName = "GwtLauncher.java",
+            sourceFolderPath = path("src", "main", "java")
         )
     }
 
@@ -124,7 +143,7 @@ public class GwtLauncher extends GwtApplication {""" + (
 		////UNCOMMENT THIS CODE FOR A RESIZABLE APPLICATION
 		//	PADDING is to avoid scrolling in iframes, set to 20 if you have problems
 		//	private static final int PADDING = 0;
-		//	
+		//
 		//	@Override
 		//	public GwtApplicationConfiguration getConfig() {
 		//		int w = Window.getClientWidth() - PADDING;
@@ -136,7 +155,7 @@ public class GwtLauncher extends GwtApplication {""" + (
 		//		cfg.preferFlash = false;
 		//		return cfg;
 		//	}
-		//	
+		//
 		//	class ResizeListener implements ResizeHandler {
 		//		@Override
 		//		public void onResize(ResizeEvent event) {
@@ -167,7 +186,7 @@ public class GwtLauncher extends GwtApplication {""" + (
         ) +
 """
 		@Override
-		public ApplicationListener createApplicationListener () { 
+		public ApplicationListener createApplicationListener () {
 			return new ${project.basic.mainClass}();
 		}
 }
@@ -175,8 +194,11 @@ public class GwtLauncher extends GwtApplication {""" + (
 
     fun addAndroidLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = Android.ID, packageName = project.basic.rootPackage,
-            fileName = "AndroidLauncher.java", content = getAndroidLauncherContent(project)
+            project = project,
+            platform = Android.ID,
+            packageName = project.basic.rootPackage,
+            fileName = "AndroidLauncher.$launcherExtension",
+            content = getAndroidLauncherContent(project)
         )
     }
 
@@ -200,8 +222,11 @@ public class AndroidLauncher extends AndroidApplication {
 
     fun addHeadlessLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = Headless.ID, packageName = "${project.basic.rootPackage}.headless",
-            fileName = "HeadlessLauncher.java", content = getHeadlessLauncherContent(project)
+            project = project,
+            platform = Headless.ID,
+            packageName = "${project.basic.rootPackage}.headless",
+            fileName = "HeadlessLauncher.$launcherExtension",
+            content = getHeadlessLauncherContent(project)
         )
     }
 
@@ -235,8 +260,11 @@ public class HeadlessLauncher {
 
     fun addIOSLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = iOS.ID, packageName = "${project.basic.rootPackage}.ios",
-            fileName = "IOSLauncher.java", content = getIOSLauncherContent(project)
+            project = project,
+            platform = iOS.ID,
+            packageName = "${project.basic.rootPackage}.ios",
+            fileName = "IOSLauncher.$launcherExtension",
+            content = getIOSLauncherContent(project)
         )
     }
 
@@ -266,8 +294,11 @@ public class IOSLauncher extends IOSApplication.Delegate {
 
     fun addLwjgl3Launcher(project: Project) {
         addSourceFile(
-            project = project, platform = LWJGL3.ID, packageName = "${project.basic.rootPackage}.lwjgl3",
-            fileName = "Lwjgl3Launcher.java", content = getLwjgl3LauncherContent(project)
+            project = project,
+            platform = LWJGL3.ID,
+            packageName = "${project.basic.rootPackage}.lwjgl3",
+            fileName = "Lwjgl3Launcher.$launcherExtension",
+            content = getLwjgl3LauncherContent(project)
         )
     }
 
@@ -304,8 +335,11 @@ public class Lwjgl3Launcher {
 
     fun addServerLauncher(project: Project) {
         addSourceFile(
-            project = project, platform = Server.ID, packageName = "${project.basic.rootPackage}.server",
-            fileName = "ServerLauncher.java", content = getServerLauncherContent(project)
+            project = project,
+            platform = Server.ID,
+            packageName = "${project.basic.rootPackage}.server",
+            fileName = "ServerLauncher.$launcherExtension",
+            content = getServerLauncherContent(project)
         )
     }
 
@@ -324,13 +358,16 @@ public class ServerLauncher {
         packageName: String,
         fileName: String,
         content: String,
-        sourceFolderPath: String = path("src", "main", "java")
+        sourceFolderPath: String = defaultSourceFolder
     ) {
         if (project.hasPlatform(platform)) {
             project.files.add(
                 SourceFile(
-                    projectName = platform, sourceFolderPath = sourceFolderPath,
-                    packageName = packageName, fileName = fileName, content = content
+                    projectName = platform,
+                    sourceFolderPath = sourceFolderPath,
+                    packageName = packageName,
+                    fileName = fileName,
+                    content = content
                 )
             )
         }
