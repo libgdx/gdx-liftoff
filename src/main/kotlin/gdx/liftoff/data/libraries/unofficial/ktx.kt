@@ -5,6 +5,7 @@ package gdx.liftoff.data.libraries.unofficial
 import com.badlogic.gdx.Gdx
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.SingleVersionRepository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.libraries.official.Ashley
 import gdx.liftoff.data.libraries.official.Box2D
@@ -12,25 +13,28 @@ import gdx.liftoff.data.libraries.official.Freetype
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
-import gdx.liftoff.views.fetchVersionFromMavenCentral
 import khttp.get
+
+private const val defaultGroup = "io.github.libktx"
+private const val fallbackVersion = "1.10.0-b4"
 
 /**
  * Modular Kotlin utilities.
- * @author libKTX organization
+ * @author czyzby
+ * @author libKTX group
  */
 abstract class KtxExtension : Library {
-    override val defaultVersion = "1.10.0-b4"
+    override val defaultVersion = fallbackVersion
     override val official = false
-    override val repository = Repository.KTX
-    override val group = "io.github.libktx"
+    override val repository = KtxRepository
+    override val group = defaultGroup
     override val name
         get() = id.camelCaseToKebabCase()
     override val url: String
-        get() = "https://github.com/libktx/ktx/tree/master/${id.removeSuffix("ktx").camelCaseToKebabCase()}"
+        get() = "https://github.com/libktx/ktx/tree/master/" + id.removeSuffix("ktx").camelCaseToKebabCase()
 
     override fun initiate(project: Project) {
-        project.properties["ktxVersion"] = latestKtxVersion
+        project.properties["ktxVersion"] = KtxRepository.version
         addDependency(project, Core.ID, "$group:$name")
         initiateDependencies(project)
     }
@@ -46,13 +50,18 @@ abstract class KtxExtension : Library {
     }
 }
 
-val latestKtxVersion by lazy {
-    // Fetching and caching KTX version from the repo:
-    try {
-        get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").content.decodeToString().trim()
-    } catch (exception: Exception) {
-        Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
-        fetchVersionFromMavenCentral(KtxActors())
+/**
+ * Fetches and caches the latest KTX version.
+ */
+object KtxRepository : SingleVersionRepository(fallbackVersion) {
+    override fun fetchLatestVersion(): String? {
+        return try {
+            // Fetching and caching KTX version from the repo:
+            get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").content.decodeToString().trim()
+        } catch (exception: Exception) {
+            Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
+            Repository.MavenCentral.getLatestVersion(defaultGroup, "ktx-app")
+        }
     }
 }
 

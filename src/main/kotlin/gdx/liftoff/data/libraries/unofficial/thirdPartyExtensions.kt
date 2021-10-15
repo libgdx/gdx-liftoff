@@ -22,10 +22,10 @@ import gdx.liftoff.views.Extension
  */
 abstract class ThirdPartyExtension : Library {
     override val official = false
-    override val repository = Repository.MAVEN_CENTRAL
+    override val repository: Repository = Repository.MavenCentral
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = project.extensions.getVersion(this)
+        project.properties[id + "Version"] = version
         initiateDependencies(project)
     }
 
@@ -363,7 +363,7 @@ class ShapeDrawer : ThirdPartyExtension() {
     override val id = "shapeDrawer"
     override val defaultVersion = "2.4.0"
     override val url = "https://github.com/earlygrey/shapedrawer"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "space.earlygrey"
     override val name = "shapedrawer"
 
@@ -386,7 +386,7 @@ class SimpleGraphs : ThirdPartyExtension() {
     override val id = "simpleGraphs"
     override val defaultVersion = "3.0.0"
     override val url = "https://github.com/earlygrey/simple-graphs"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "space.earlygrey"
     override val name = "simple-graphs"
 
@@ -488,7 +488,7 @@ class TenPatch : ThirdPartyExtension() {
 class GdxGltf : ThirdPartyExtension() {
     override val id = "gdxGltf"
     override val defaultVersion = "358227c533"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val url = "https://github.com/mgsx-dev/gdx-gltf"
     override val group = "com.github.mgsx-dev"
     override val name = "gdx-gltf"
@@ -694,7 +694,7 @@ class PieMenu : ThirdPartyExtension() {
     override val id = "pieMenu"
     override val defaultVersion = "5.0.0"
     override val url = "https://github.com/payne911/PieMenu"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "com.github.payne911"
     override val name = "PieMenu"
 
@@ -718,7 +718,7 @@ class JBump : ThirdPartyExtension() {
     override val id = "jbump"
     override val defaultVersion = "v1.0.1"
     override val url = "https://github.com/tommyettinger/jbump"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "com.github.tommyettinger"
     override val name = "jbump"
 
@@ -757,7 +757,7 @@ class KryoNet : ThirdPartyExtension() {
     override val id = "kryoNet"
     override val defaultVersion = "2.22.7"
     override val url = "https://github.com/crykn/kryonet"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "com.github.crykn"
     override val name = "kryonet"
 
@@ -775,7 +775,7 @@ class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
     override val defaultVersion = "0.3.1"
     override val url = "https://github.com/crykn/guacamole"
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val group = "com.github.crykn"
     override val name = "guacamole"
 

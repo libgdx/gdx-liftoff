@@ -11,15 +11,23 @@ import gdx.liftoff.data.project.Project
  * Interface shared by all libGDX extensions.
  */
 interface Library {
+    /** Unique ID of the library used throughout the project. */
     val id: String
-    val defaultVersion: String
+    /** Project URL. */
     val url: String
+    /** True if this library is maintained by libGDX organization. False otherwise.*/
     val official: Boolean
+    /** Maven repository that contains the artifacts. */
     val repository: Repository
     /** Group of the main dependency used to determine the version. */
     val group: String
     /** Name of the main dependency used to determine the version. */
     val name: String
+    /** Fallback version of the library if unable to fetch the latest one. */
+    val defaultVersion: String
+    /** Latest version of the library fetched from the Maven repository or [defaultVersion]. */
+    val version: String
+        get() = repository.getLatestVersion(group, name) ?: defaultVersion
 
     /**
      * @param project is currently generated and should have this library included.
@@ -62,17 +70,3 @@ interface Library {
         }
     }
 }
-
-enum class Repository {
-    /** For libraries available via Maven Central. */
-    MAVEN_CENTRAL,
-    /** For libraries available only via JitPack. */
-    JITPACK,
-    /** For libraries in snapshot or alternative repositories that do not support automatic version fetching. */
-    OTHER,
-    /** For KTX libraries, which use the same versioning. Uses version cache for faster project generation. */
-    KTX
-}
-
-private val camelCase = Regex("(.)(\\p{Upper})")
-fun String.camelCaseToKebabCase(): String = replace(camelCase, "$1-$2").lowercase()
