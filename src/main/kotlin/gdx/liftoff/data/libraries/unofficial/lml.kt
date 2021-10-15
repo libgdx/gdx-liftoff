@@ -2,7 +2,9 @@
 
 package gdx.liftoff.data.libraries.unofficial
 
+import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.SingleVersionRepository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
@@ -14,34 +16,62 @@ import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
+private const val defaultGroup = "com.crashinvaders.lml"
+private const val fallbackVersion = "1.9.1.10.0"
+
 /**
  * Various utilities for libGDX APIs including GUI building and dependency injection.
  * @author czyzby
  * @author metaphore (CrashInvaders)
  */
-abstract class LmlExtension : ThirdPartyExtension() {
+abstract class LmlExtension : Library {
     /**
      * Latest version of gdx-lml libraries from the CrashInvaders fork.
      */
-    override val defaultVersion = "1.9.1.10.0"
-    override val repository = Repository.OTHER
-    override val group = "com.crashinvaders.lml"
+    override val defaultVersion = fallbackVersion
+    override val repository = LmlRepository
+    override val group = defaultGroup
+    override val official = false
     override val name: String
         get() = "gdx-" + id.camelCaseToKebabCase()
+    override val url: String
+        get() = "https://github.com/crashinvaders/gdx-lml/tree/master/" + id.camelCaseToKebabCase()
+
+    override fun initiate(project: Project) {
+        project.properties["lmlVersion"] = LmlRepository.version
+        addDependency(project, Core.ID, "$group:$name")
+        addDependency(project, GWT.ID, "$group:$name:sources")
+        initiateDependencies(project)
+    }
+
+    open fun initiateDependencies(project: Project) {}
+
+    override fun addDependency(project: Project, platform: String, dependency: String) {
+        super.addDependency(project, platform, "$dependency:\$lmlVersion")
+    }
+
+    fun addExternalDependency(project: Project, platform: String, dependency: String) {
+        super.addDependency(project, platform, dependency)
+    }
 }
 
 /**
- * Guava-inspired libGDX utilities; now maintained in the crashinvaders fork.
+ * Fetches and caches latest gdx-lml libraries version.
+ */
+object LmlRepository : SingleVersionRepository(fallbackVersion) {
+    override fun fetchLatestVersion(): String? {
+        return Repository.MavenCentral.getLatestVersion(defaultGroup, "gdx-lml")
+    }
+}
+
+/**
+ * Guava-inspired general libGDX utilities; now maintained in the crashinvaders fork.
  */
 @Extension
 class Kiwi : LmlExtension() {
     override val id = "kiwi"
-    override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/kiwi"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-
-        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "$group.kiwi.GdxKiwi")
     }
 }
@@ -52,12 +82,8 @@ class Kiwi : LmlExtension() {
 @Extension
 class LML : LmlExtension() {
     override val id = "lml"
-    override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/lml"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-
-        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "$group.lml.GdxLml")
 
         Kiwi().initiate(project)
@@ -70,12 +96,8 @@ class LML : LmlExtension() {
 @Extension
 class LMLVis : LmlExtension() {
     override val id = "lmlVis"
-    override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/lml-vis"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:gdx-lml-vis")
-
-        addDependency(project, GWT.ID, "$group:gdx-lml-vis:sources")
         addGwtInherit(project, "$group.lml.vis.GdxLmlVis")
 
         LML().initiate(project)
@@ -90,18 +112,13 @@ class LMLVis : LmlExtension() {
 @Extension
 class Autumn : LmlExtension() {
     override val id = "autumn"
-    override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/autumn"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:gdx-autumn")
-
         addDesktopDependency(project, "$group:gdx-autumn-fcs")
-
         addDependency(project, Headless.ID, "$group:gdx-autumn-fcs")
 
         addDependency(project, Android.ID, "$group:gdx-autumn-android")
 
-        addDependency(project, GWT.ID, "$group:gdx-autumn:sources")
         addDependency(project, GWT.ID, "$group:gdx-autumn-gwt")
         addDependency(project, GWT.ID, "$group:gdx-autumn-gwt:sources")
         addGwtInherit(project, "$group.autumn.gwt.GdxAutumnGwt")
@@ -119,9 +136,6 @@ class AutumnMVC : LmlExtension() {
     override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/mvc"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
-
-        addDependency(project, GWT.ID, "$group:$name:sources")
         addGwtInherit(project, "$group.autumn.mvc.GdxAutumnMvc")
 
         LML().initiate(project)
@@ -132,11 +146,11 @@ class AutumnMVC : LmlExtension() {
 /**
  * Base class for MrStahlfelge's fork of gdx-lml websocket libraries.
  */
-abstract class WebsocketExtension : ThirdPartyExtension() {
+abstract class WebSocketExtension : ThirdPartyExtension() {
     override val defaultVersion = "1.9.10.3"
     override val group = "com.github.MrStahlfelge" // Matches JitPack root group.
     override val name = "gdx-websockets" // Matches JitPack root name.
-    override val repository = Repository.JITPACK
+    override val repository = Repository.JitPack
     override val url = "https://github.com/MrStahlfelge/gdx-websockets"
 }
 
@@ -144,7 +158,7 @@ abstract class WebsocketExtension : ThirdPartyExtension() {
  * Cross-platform web sockets support; MrStahlfelge's fork.
  */
 @Extension
-class Websocket : WebsocketExtension() {
+class WebSocket : WebSocketExtension() {
     override val id = "websocket"
 
     override fun initiateDependencies(project: Project) {
@@ -171,7 +185,7 @@ class Websocket : WebsocketExtension() {
  * Cross-platform efficient serialization without reflection; MrStahlfelge's fork.
  */
 @Extension
-class WebsocketSerialization : WebsocketExtension() {
+class WebSocketSerialization : WebSocketExtension() {
     override val id = "websocketSerialization"
     override val url = "https://github.com/MrStahlfelge/gdx-websockets/tree/master/serialization"
 
@@ -184,6 +198,6 @@ class WebsocketSerialization : WebsocketExtension() {
         addDependency(project, GWT.ID, "$group.gdx-websockets:serialization:sources")
         addGwtInherit(project, "$group.gdx-websockets.websocket.GdxWebSocketSerialization")
 
-        Websocket().initiate(project)
+        WebSocket().initiate(project)
     }
 }

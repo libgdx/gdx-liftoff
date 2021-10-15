@@ -14,7 +14,6 @@ import gdx.liftoff.data.platforms.LWJGL3
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
-import gdx.liftoff.views.fetchVersionFromMavenCentral
 
 /**
  * Abstract base for official extensions.
@@ -22,7 +21,7 @@ import gdx.liftoff.views.fetchVersionFromMavenCentral
 abstract class OfficialExtension : Library {
     override val defaultVersion = Version.VERSION
     override val official = true
-    override val repository = Repository.MAVEN_CENTRAL
+    override val repository = Repository.MavenCentral
     override val group = "com.badlogicgames.gdx"
     override val name: String
         get() = id
@@ -38,7 +37,7 @@ class AI : OfficialExtension() {
     override val defaultVersion = "1.8.2"
 
     override fun initiate(project: Project) {
-        project.properties["aiVersion"] = fetchVersionFromMavenCentral(this)
+        project.properties["aiVersion"] = version
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion")
 
@@ -58,7 +57,7 @@ class Ashley : OfficialExtension() {
     override val defaultVersion = "1.7.4"
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = fetchVersionFromMavenCentral(this)
+        project.properties[id + "Version"] = version
 
         addDependency(project, Core.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion")
 
@@ -106,7 +105,7 @@ class Box2DLights : OfficialExtension() {
     override val defaultVersion = "1.5"
 
     override fun initiate(project: Project) {
-        project.properties[id + "Version"] = fetchVersionFromMavenCentral(this)
+        project.properties[id + "Version"] = version
 
         addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
 
@@ -156,7 +155,7 @@ class Controllers : OfficialExtension() {
     override val defaultVersion = "2.2.1"
 
     override fun initiate(project: Project) {
-        project.properties["gdxControllersVersion"] = fetchVersionFromMavenCentral(this)
+        project.properties["gdxControllersVersion"] = version
 
         addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 
