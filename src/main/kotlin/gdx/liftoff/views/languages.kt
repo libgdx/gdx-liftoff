@@ -20,7 +20,7 @@ import gdx.liftoff.data.project.Project
  */
 @Processor
 class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
-    private val jvmLanguages = mutableMapOf<String, Language>()
+    val jvmLanguages = mutableMapOf<String, Language>()
 
     @LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
     val languageVersions = ObjectMap<String, VisTextField>()
@@ -64,6 +64,14 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
     ) {
         val language = component as Language
         jvmLanguages[language.id] = language
+    }
+
+    inline fun <reified Lang : Language> selectLanguage() {
+        jvmLanguages
+            .filter { it.value is Lang }
+            .forEach { language ->
+                languageButtons.first { it.name == language.key }.isChecked = true
+            }
     }
 }
 
