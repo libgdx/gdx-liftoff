@@ -33,6 +33,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import com.kotcrab.vis.ui.widget.toast.ToastTable
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.config.inject
+import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.preferences.SdkVersionPreference
@@ -94,6 +95,17 @@ class MainView : ActionContainer {
                 }
             }
         )
+    }
+
+    @LmlAction("prefetchVersion")
+    fun prefetchLibraryVersion(button: Button) {
+        if (button.isChecked) {
+            threadPool.execute {
+                // Prefetching library version - all Maven repositories use group and name cache,
+                // so prefetching the version asynchronously cuts down on project generation time.
+                extensionsData.extensionsById[button.name]?.version
+            }
+        }
     }
 
     private fun pickDirectory(initialFolder: FileHandle, callback: FileChooserAdapter) {

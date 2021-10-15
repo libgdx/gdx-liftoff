@@ -3,7 +3,7 @@ package gdx.liftoff.data.templates.unofficial
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.unofficial.VisUI
-import gdx.liftoff.data.libraries.unofficial.Websocket
+import gdx.liftoff.data.libraries.unofficial.WebSocket
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.templates.Template
@@ -30,7 +30,7 @@ class WebSocketBasicTemplate : Template {
         )
         // Initiating dependencies:
         VisUI().initiate(project)
-        Websocket().initiate(project)
+        WebSocket().initiate(project)
     }
 
     override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};

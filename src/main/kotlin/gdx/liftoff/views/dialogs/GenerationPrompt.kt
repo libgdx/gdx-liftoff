@@ -5,21 +5,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Window
 import com.badlogic.gdx.utils.ObjectSet
-import com.github.czyzby.autumn.annotation.Destroy
 import com.github.czyzby.autumn.annotation.Inject
 import com.github.czyzby.autumn.mvc.component.i18n.LocaleService
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog
-import com.github.czyzby.kiwi.util.common.Exceptions
 import com.github.czyzby.lml.annotation.LmlActor
 import gdx.liftoff.config.inject
+import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.project.ProjectLogger
 import gdx.liftoff.views.MainView
 import gdx.liftoff.views.widgets.ScrollableTextArea
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.Executors
-import java.util.concurrent.ThreadFactory
-import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Displayed after generation request was sent.
@@ -34,12 +30,11 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
     @LmlActor("console") private val console: ScrollableTextArea = inject()
     @LmlActor("scroll") private val scrollPane: ScrollPane = inject()
 
-    private val executor = Executors.newSingleThreadExecutor(PrefixedThreadFactory("ProjectGenerator"))
     private val loggingBuffer = ConcurrentLinkedQueue<String>()
 
     override fun doBeforeShow(dialog: Window) {
         dialog.invalidate()
-        executor.execute {
+        threadPool.execute {
             try {
                 logNls("copyStart")
                 val project = mainView.createProject()
@@ -74,32 +69,5 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
                 scrollPane.scrollPercentY = 1f
             }
         }
-    }
-
-    @Destroy
-    fun shutdownExecutor() {
-        try {
-            executor.shutdownNow()
-        } catch (exception: Exception) {
-            Exceptions.ignore(exception)
-        }
-    }
-}
-
-/**
- * Generates sane thread names for [Executors].
- */
-private class PrefixedThreadFactory(threadPrefix: String) : ThreadFactory {
-    private val count = AtomicLong(0)
-    private val threadPrefix: String
-
-    init {
-        this.threadPrefix = "$threadPrefix-"
-    }
-
-    override fun newThread(runnable: Runnable): Thread {
-        val thread = Executors.defaultThreadFactory().newThread(runnable)
-        thread.name = threadPrefix + count.andIncrement
-        return thread
     }
 }
