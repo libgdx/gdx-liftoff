@@ -92,9 +92,9 @@ class Project(
 
     fun generate() {
         addBasicFiles()
+        template.apply(this)
         addJvmLanguagesSupport()
         addExtensions()
-        template.apply(this)
         addPlatforms()
         addSkinAssets()
         addReadmeFile()
