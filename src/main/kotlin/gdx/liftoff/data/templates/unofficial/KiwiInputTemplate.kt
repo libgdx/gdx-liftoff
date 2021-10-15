@@ -18,7 +18,9 @@ class KiwiInputTemplate : ClassicTemplate() {
     override val height: String
         get() = "$mainClass.HEIGHT"
     override val description: String
-        get() = "Project template included simple launchers and an `InputAwareApplicationListener` extension (from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws BadLogic logo and changes its color after the application is clicked/touched."
+        get() = "Project template included simple launchers and an `InputAwareApplicationListener` extension " +
+            "(from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws libGDX logo " +
+            "and changes its color after the application is clicked/touched."
 
     override fun apply(project: Project) {
         mainClass = project.basic.mainClass
@@ -39,7 +41,6 @@ import com.github.czyzby.kiwi.util.gdx.InputAwareApplicationListener;
 import com.github.czyzby.kiwi.util.gdx.asset.Disposables;
 import com.github.czyzby.kiwi.util.gdx.collection.immutable.ImmutableArray;
 import com.github.czyzby.kiwi.util.gdx.scene2d.Actors;
-import com.github.czyzby.kiwi.util.gdx.viewport.LetterboxingViewport;
 import com.github.czyzby.kiwi.util.gdx.viewport.Viewports;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -57,8 +58,8 @@ public class ${project.basic.mainClass} extends InputAwareApplicationListener {
 
 	@Override
 	public void initiate() {
-		stage = new Stage(new LetterboxingViewport());
-		texture = new Texture("badlogic.png");
+		stage = new Stage();
+		texture = new Texture("libgdx.png");
 		image = new Image(texture);
 		stage.addActor(image);
 		Actors.centerActor(image);
