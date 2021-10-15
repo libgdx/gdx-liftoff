@@ -18,7 +18,8 @@ class KiwiTemplate : ClassicTemplate() {
     override val height: String
         get() = "$mainClass.HEIGHT"
     override val description: String
-        get() = "Project template included simple launchers and an `AbstractApplicationListener` extension (from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws BadLogic logo."
+        get() = "Project template included simple launchers and an `AbstractApplicationListener` extension " +
+            "(from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws libGDX logo."
 
     override fun apply(project: Project) {
         mainClass = project.basic.mainClass
@@ -36,7 +37,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.czyzby.kiwi.util.gdx.AbstractApplicationListener;
 import com.github.czyzby.kiwi.util.gdx.asset.Disposables;
 import com.github.czyzby.kiwi.util.gdx.scene2d.Actors;
-import com.github.czyzby.kiwi.util.gdx.viewport.LetterboxingViewport;
 import com.github.czyzby.kiwi.util.gdx.viewport.Viewports;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -50,8 +50,8 @@ public class ${project.basic.mainClass} extends AbstractApplicationListener {
 
 	@Override
 	public void create() {
-		stage = new Stage(new LetterboxingViewport());
-		texture = new Texture("badlogic.png");
+		stage = new Stage();
+		texture = new Texture("libgdx.png");
 		image = new Image(texture);
 		stage.addActor(image);
 		Actors.centerActor(image);
