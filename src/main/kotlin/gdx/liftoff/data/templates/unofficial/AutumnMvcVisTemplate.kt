@@ -14,10 +14,11 @@ import gdx.liftoff.views.ProjectTemplate
  */
 @ProjectTemplate
 open class AutumnMvcVisTemplate : AutumnMvcBasicTemplate() {
-    override val id = "autumnMvcVisTemplate"
+    override val id = "lmlMvcVisTemplate"
     override val generateSkin = false
     override val description: String
-        get() = "Project template included launchers with [Autumn](https://github.com/czyzby/gdx-lml/tree/master/autumn) class scanners and a basic [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application."
+        get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+            "class scanners and a basic [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application."
 
     override fun getReflectedClasses(project: Project): Array<String> =
         arrayOf("com.github.czyzby.autumn.mvc.component.preferences.dto.AbstractPreference")

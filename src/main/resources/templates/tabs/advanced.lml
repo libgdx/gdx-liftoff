@@ -29,7 +29,7 @@
     </scrollPane>
     <table growX="true" defaultPad="2" defaultSpaceRight="10" defaultSpaceLeft="10">
         <checkBox id="generateSkin" style="small" tooltip="@generateSkinTip">@generateSkin</checkBox>
-        <checkBox id="generateReadme" style="small" tooltip="@generateReadmeTip">@generateReadme</checkBox>
+        <checkBox id="generateReadme" style="small" tooltip="@generateReadmeTip" checked="true">@generateReadme</checkBox>
     </table>
     <textField id="gradleTasks" message="@gradleTasksPrompt" tooltip="@gradleTasksTip" growX="true"
                value="$getGradleTasks" onChange="setGradleTasks" pad="2"/>

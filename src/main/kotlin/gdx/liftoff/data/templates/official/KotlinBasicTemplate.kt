@@ -15,7 +15,8 @@ import gdx.liftoff.views.ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KotlinBasicTemplate : KotlinTemplate {
     override val id = "kotlinTemplate"
-    override val description = "Basic Kotlin project using `ApplicationAdapter`."
+    override val description = "This project was generated with a template that includes Kotlin application " +
+        "launchers and an empty `ApplicationAdapter` implemented in Kotlin."
 
     override fun apply(project: Project) {
         super.apply(project)

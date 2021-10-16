@@ -11,9 +11,11 @@ import gdx.liftoff.views.GdxPlatform
 class Headless : Platform {
     companion object {
         const val ID = "headless"
+        const val ORDER = GWT.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = HeadlessGradleFile(project)

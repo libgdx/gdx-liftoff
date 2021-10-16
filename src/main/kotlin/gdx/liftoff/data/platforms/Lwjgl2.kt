@@ -7,17 +7,19 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.GdxPlatform
 
 /**
- * Represents the legacy Desktop backend, which has been replaced in practice by LWJGL3.
+ * Represents the legacy desktop backend, which has been replaced in practice by LWJGL3.
  */
 @GdxPlatform
-class Desktop : Platform {
+class Lwjgl2 : Platform {
     companion object {
-        const val ID = "desktop"
+        const val ID = "lwjgl2"
+        const val ORDER = Headless.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false // use lwjgl3 instead
-    override fun createGradleFile(project: Project): GradleFile = DesktopGradleFile(project)
+    override fun createGradleFile(project: Project): GradleFile = Lwjgl2GradleFile(project)
 
     override fun initiate(project: Project) {
         // Adding game icons:
@@ -39,9 +41,9 @@ class Desktop : Platform {
 }
 
 /**
- * Gradle file of the desktop project.
+ * Gradle file of the legacy desktop project.
  */
-class DesktopGradleFile(val project: Project) : GradleFile(Desktop.ID) {
+class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
     init {
         dependencies.add("project(':${Core.ID}')")
         addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl:\$gdxVersion")
