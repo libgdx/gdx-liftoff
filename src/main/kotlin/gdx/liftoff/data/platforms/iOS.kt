@@ -16,9 +16,11 @@ import gdx.liftoff.views.GdxPlatform
 class iOS : Platform {
     companion object {
         const val ID = "ios"
+        const val ORDER = Android.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = iOSGradleFile(project)

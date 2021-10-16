@@ -16,7 +16,8 @@ import gdx.liftoff.views.ProjectTemplate
 class GameTemplate : Template {
     override val id = "gameTemplate"
     override val description: String
-        get() = "Project template includes simple launchers and a `Game` extension that sets the first screen."
+        get() = "This project was generated with a template including simple application launchers and " +
+            "a main class extending `Game` that sets the first screen."
 
     override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 

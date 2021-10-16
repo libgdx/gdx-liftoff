@@ -18,7 +18,8 @@ class Noise4JTemplate : Template {
     override val height: String
         get() = "$mainClass.SIZE * 2"
     override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension that draws random maps created using [Noise4J](https://github.com/czyzby/noise4j)."
+        get() = "Project template included simple launchers and an `ApplicationAdapter` extension that draws random " +
+            "maps created using [Noise4J](https://github.com/czyzby/noise4j)."
 
     override fun apply(project: Project) {
         mainClass = project.basic.mainClass

@@ -16,7 +16,8 @@ import gdx.liftoff.views.ProjectTemplate
 class SuperKoalioTemplate : Template {
     override val id = "superKoalio"
     override val description: String
-        get() = "2D platformer project including launchers and a small but playable game."
+        get() = "A sample project implementing a 2D platformer. Includes launchers for each platform and a small " +
+            "but playable game."
 
     override fun apply(project: Project) {
         super.apply(project)

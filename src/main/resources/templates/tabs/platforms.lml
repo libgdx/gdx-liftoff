@@ -1,13 +1,17 @@
 <tab text="@platforms" closeable="false" oneColumn="true">
-    <label style="small">@platformsPrompt</label>
+    <label padBottom="10" align="left" padLeft="50">@primaryPlatforms</label>
     <table>
         <:for platform="$platforms">
             <:calculate key="mandatory" value="{platform}=core"/>
             <:calculate key="precheck" value="{platform}=core || {platform}=lwjgl3"/>
-            <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="6"
-                      tooltip="@{platform}Tip" align="left" row="{= {for:index}%2=1}" onChange="togglePlatform">
+            <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="30" padBottom="5"
+                      align="left" onChange="togglePlatform">
                 @{platform}
             </checkBox>
+            <label style="small" row="true" align="left" padLeft="20" padBottom="5">@{platform}Tip</label>
+            <:if test="{platform}=html">
+                <label pad="10" row="true" colspan="2" align="left" padLeft="50">@secondaryPlatforms</label>
+            </:if>
         </:for>
     </table>
 </tab>

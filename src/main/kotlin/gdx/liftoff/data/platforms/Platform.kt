@@ -15,6 +15,11 @@ interface Platform {
     val id: String
 
     /**
+     * Display order of the platform within the application.
+     */
+    val order: Int
+
+    /**
      * This value is set to true if the platform is a standard graphical libGDX backend. False otherwise.
      */
     val isStandard: Boolean

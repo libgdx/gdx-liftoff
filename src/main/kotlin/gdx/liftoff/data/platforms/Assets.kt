@@ -4,7 +4,7 @@ import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.project.Project
 
 /**
- * Mock-up platform. Represents assets folder.
+ * Mock-up platform. Represents the assets folder.
  */
 class Assets : Platform {
     companion object {
@@ -12,6 +12,7 @@ class Assets : Platform {
     }
 
     override val id = ID
+    override val order = -1
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile =

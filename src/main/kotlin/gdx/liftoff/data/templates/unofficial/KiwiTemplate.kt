@@ -11,7 +11,7 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KiwiTemplate : ClassicTemplate() {
-    override val id = "kiwiTemplate"
+    override val id = "lmlKiwiTemplate"
     private lateinit var mainClass: String
     override val width: String
         get() = "$mainClass.WIDTH"
@@ -19,7 +19,7 @@ class KiwiTemplate : ClassicTemplate() {
         get() = "$mainClass.HEIGHT"
     override val description: String
         get() = "Project template included simple launchers and an `AbstractApplicationListener` extension " +
-            "(from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws libGDX logo."
+            "(from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws libGDX logo."
 
     override fun apply(project: Project) {
         mainClass = project.basic.mainClass

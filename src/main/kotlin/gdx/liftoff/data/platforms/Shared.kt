@@ -11,9 +11,11 @@ import gdx.liftoff.views.GdxPlatform
 class Shared : Platform {
     companion object {
         const val ID = "shared"
+        const val ORDER = Server.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = SharedGradleFile(project)

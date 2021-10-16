@@ -18,7 +18,8 @@ import gdx.liftoff.views.ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KtxTemplate : KotlinTemplate {
     override val id = "ktxTemplate"
-    override val description = "A basic Kotlin project including Kotlin launchers and KTX utilities."
+    override val description = "This project was generated with a Kotlin project template that includes Kotlin " +
+        "application launchers and [KTX](https://libktx.github.io/) utilities."
 
     override fun apply(project: Project) {
         super.apply(project)

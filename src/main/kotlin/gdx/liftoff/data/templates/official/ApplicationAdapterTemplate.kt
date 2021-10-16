@@ -15,7 +15,8 @@ import gdx.liftoff.views.ProjectTemplate
 class ApplicationAdapterTemplate : Template {
     override val id = "applicationAdapter"
     override val description: String
-        get() = "Project template included simple launchers and an empty `ApplicationAdapter` extension."
+        get() = "This project was generated with a template including simple application launchers and an empty " +
+            "`ApplicationAdapter` extension."
 
     override fun apply(project: Project) {
         super.apply(project)

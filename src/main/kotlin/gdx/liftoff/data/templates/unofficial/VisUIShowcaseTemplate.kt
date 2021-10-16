@@ -22,7 +22,8 @@ class VisUIShowcaseTemplate : Template {
     override val height: String
         get() = "600"
     override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension with showcase of widgets created using [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) library."
+        get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
+            "of widgets created using the [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) library."
 
     override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
