@@ -15,7 +15,8 @@ import gdx.liftoff.views.ProjectTemplate
 class InputProcessorTemplate : Template {
     override val id = "inputProcessor"
     override val description: String
-        get() = "Project template included simple launchers and an empty `ApplicationListener` implementation, that also listened to user input."
+        get() = "This project was generated with a template including simple application launchers and " +
+            "an `ApplicationListener` implementation that listens to user input."
 
     override fun apply(project: Project) {
         super.apply(project)

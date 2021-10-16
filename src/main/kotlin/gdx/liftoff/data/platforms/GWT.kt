@@ -15,6 +15,7 @@ import gdx.liftoff.views.GdxPlatform
 class GWT : Platform {
     companion object {
         const val ID = "html"
+        const val ORDER = iOS.ORDER + 1
         const val BASIC_INHERIT = "com.badlogic.gdx.backends.gdx_backends_gwt"
         val INHERIT_COMPARATOR = Comparator<String> { a, b ->
             // Basic GWT inherit has to be first:
@@ -29,6 +30,7 @@ class GWT : Platform {
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = GWTGradleFile(project)
@@ -229,7 +231,7 @@ task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
 	// a start and then stop of a Jetty server that serves files while
 	// also running the SuperDev code server.
 	integrationTestTask 'superDev'
-	
+
 	interactive false
 }
 

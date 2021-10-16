@@ -31,7 +31,7 @@ link-label:t-highlight
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable:{
 dialogDim:{name:t-dot,color:t-alpha},
-border:{name:t-border,color:t-light},
+border:{name:t-border,color:t-medium},
 border-circle:{name:t-border-circle,color:t-highlight},
 border-circle-error:{name:t-border-circle,color:t-warn},
 border-dark-blue:{name:t-border,color:t-highlight-dark},

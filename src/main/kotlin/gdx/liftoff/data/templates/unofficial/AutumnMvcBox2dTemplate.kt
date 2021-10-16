@@ -16,9 +16,12 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
-    override val id = "autumnMvcBox2dTemplate"
+    override val id = "lmlMvcBox2dTemplate"
     override val description: String
-        get() = "Project template included launchers with [Autumn](https://github.com/czyzby/gdx-lml/tree/master/autumn) class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens and dialogs was provided, including a settings view that allows the players to choose their controls."
+        get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+            "class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application " +
+            "showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens " +
+            "and dialogs was provided, including a settings view that allows the players to choose their controls."
 
     override fun apply(project: Project) {
         super.apply(project)

@@ -10,12 +10,14 @@ import gdx.liftoff.views.GdxPlatform
  * Represents the LWJGL3 backend, which runs on all desktop platforms and supports more features than LWJGL2.
  */
 @GdxPlatform
-class LWJGL3 : Platform {
+class Lwjgl3 : Platform {
     companion object {
         const val ID = "lwjgl3"
+        const val ORDER = Core.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     // override val isStandard = true // true is the default, and we want to prefer this to desktop
     override fun createGradleFile(project: Project): GradleFile = Lwjgl3GradleFile(project)
     override fun initiate(project: Project) {
@@ -40,7 +42,7 @@ class LWJGL3 : Platform {
 /**
  * Gradle file of the LWJGL3 project.
  */
-class Lwjgl3GradleFile(val project: Project) : GradleFile(LWJGL3.ID) {
+class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
     init {
         dependencies.add("project(':${Core.ID}')")
         addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl3:\$gdxVersion")
@@ -62,7 +64,7 @@ def os = System.properties['os.name'].toLowerCase()
 run {
 	workingDir = rootProject.file('assets').path
 	setIgnoreExitValue(true)
-	
+
 	if (os.contains('mac')) {
 		// Required to run LWJGL3 Java apps on MacOS
 		jvmArgs += "-XstartOnFirstThread"
