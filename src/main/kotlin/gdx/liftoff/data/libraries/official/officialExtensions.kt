@@ -7,10 +7,10 @@ import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
-import gdx.liftoff.data.platforms.Desktop
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
-import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.Lwjgl2
+import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
@@ -161,9 +161,9 @@ class Controllers : OfficialExtension() {
 
         addDependency(project, Android.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-android:\$gdxControllersVersion")
 
-        addDependency(project, Desktop.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
+        addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
-        addDependency(project, LWJGL3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
+        addDependency(project, Lwjgl3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
         addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
         addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
@@ -207,7 +207,7 @@ class Tools : OfficialExtension() {
     override val url = "https://github.com/libgdx/libgdx/wiki/Texture-packer"
 
     override fun initiate(project: Project) {
-        addDependency(project, Desktop.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
+        addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
 
         // Headless is unlikely to work because gdx-tools relies on graphics classes.
         // addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")

@@ -11,9 +11,11 @@ import gdx.liftoff.views.GdxPlatform
 class Server : Platform {
     companion object {
         const val ID = "server"
+        const val ORDER = Lwjgl2.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
 
     override fun createGradleFile(project: Project): GradleFile = ServerGradleFile(project)

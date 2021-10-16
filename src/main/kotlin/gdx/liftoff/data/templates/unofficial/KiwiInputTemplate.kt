@@ -11,7 +11,7 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KiwiInputTemplate : ClassicTemplate() {
-    override val id = "kiwiInputTemplate"
+    override val id = "lmlKiwiInputTemplate"
     private lateinit var mainClass: String
     override val width: String
         get() = "$mainClass.WIDTH"
@@ -19,8 +19,8 @@ class KiwiInputTemplate : ClassicTemplate() {
         get() = "$mainClass.HEIGHT"
     override val description: String
         get() = "Project template included simple launchers and an `InputAwareApplicationListener` extension " +
-            "(from [Kiwi](https://github.com/czyzby/gdx-lml/tree/master/kiwi) library) that draws libGDX logo " +
-            "and changes its color after the application is clicked/touched."
+            "(from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws libGDX logo " +
+            "and changes its color after the application is clicked or touched."
 
     override fun apply(project: Project) {
         mainClass = project.basic.mainClass

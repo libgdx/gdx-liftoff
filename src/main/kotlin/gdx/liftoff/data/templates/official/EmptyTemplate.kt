@@ -15,7 +15,7 @@ import gdx.liftoff.views.ProjectTemplate
 class EmptyTemplate : Template {
     override val id = "emptyTemplate"
     override val description: String
-        get() = "No sources were generated."
+        get() = "This project was generated without an `ApplicationListener` implementation."
 
     override fun apply(project: Project) {
         super.apply(project)

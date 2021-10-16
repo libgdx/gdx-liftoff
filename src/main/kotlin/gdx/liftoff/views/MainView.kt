@@ -218,7 +218,8 @@ class MainView : ActionContainer {
         basicData.revalidateSdkUtilityButtons()
     }
 
-    @LmlAction("platforms") fun getPlatforms(): Iterable<*> = platformsData.platforms.keys.sorted()
+    @LmlAction("platforms") fun getPlatforms(): Iterable<*> =
+        platformsData.platforms.entries.sortedBy { it.value.order }.map { it.key }
     @LmlAction("show") fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
     @LmlAction("hide") fun getTabHidingAction(): Action = Actions.fadeOut(0.1f)
     @LmlAction("gdxVersion") fun getGdxVersion(): String = Version.VERSION

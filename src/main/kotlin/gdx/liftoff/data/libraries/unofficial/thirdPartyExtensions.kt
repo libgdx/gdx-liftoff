@@ -9,10 +9,10 @@ import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.official.Controllers
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
-import gdx.liftoff.data.platforms.Desktop
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
-import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.Lwjgl2
+import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
@@ -537,8 +537,8 @@ class ControllerUtils : ThirdPartyExtension() {
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced")
-        addDependency(project, Desktop.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
-        addDependency(project, LWJGL3.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
+        addDependency(project, Lwjgl2.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
+        addDependency(project, Lwjgl3.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
         addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
         addDependency(project, iOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
 
@@ -782,8 +782,8 @@ class Guacamole : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn.guacamole:core")
         addDependency(project, Core.ID, "com.github.crykn.guacamole:gdx")
-        addDependency(project, Desktop.ID, "com.github.crykn.guacamole:gdx-desktop")
-        addDependency(project, LWJGL3.ID, "com.github.crykn.guacamole:gdx-desktop")
+        addDependency(project, Lwjgl2.ID, "com.github.crykn.guacamole:gdx-desktop")
+        addDependency(project, Lwjgl3.ID, "com.github.crykn.guacamole:gdx-desktop")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:core:sources")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
@@ -811,8 +811,8 @@ class GdxBasisUniversal : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.crashinvaders.basisu:basisu-wrapper")
         addDependency(project, Core.ID, "com.crashinvaders.basisu:basisu-gdx")
-        addDependency(project, Desktop.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
-        addDependency(project, LWJGL3.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
+        addDependency(project, Lwjgl2.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
+        addDependency(project, Lwjgl3.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
         addDependency(project, Headless.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
         addDependency(project, iOS.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-ios")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-armeabi-v7a")

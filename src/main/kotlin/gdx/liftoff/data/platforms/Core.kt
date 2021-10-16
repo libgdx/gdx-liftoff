@@ -11,9 +11,11 @@ import gdx.liftoff.views.GdxPlatform
 class Core : Platform {
     companion object {
         const val ID = "core"
+        const val ORDER = 0
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false
     override fun createGradleFile(project: Project): GradleFile {
         return CoreGradleFile()

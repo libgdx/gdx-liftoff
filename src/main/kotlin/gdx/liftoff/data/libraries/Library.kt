@@ -2,9 +2,9 @@ package gdx.liftoff.data.libraries
 
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.AndroidGradleFile
-import gdx.liftoff.data.platforms.Desktop
 import gdx.liftoff.data.platforms.GWT
-import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.Lwjgl2
+import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.project.Project
 
 /**
@@ -47,8 +47,8 @@ interface Library {
     }
 
     fun addDesktopDependency(project: Project, dependency: String) {
-        addDependency(project, Desktop.ID, dependency)
-        addDependency(project, LWJGL3.ID, dependency)
+        addDependency(project, Lwjgl2.ID, dependency)
+        addDependency(project, Lwjgl3.ID, dependency)
     }
 
     fun addNativeAndroidDependency(project: Project, dependency: String) {

@@ -8,13 +8,14 @@ import gdx.liftoff.data.templates.Template
 import gdx.liftoff.views.ProjectTemplate
 
 /**
- * Draws Badlogic Games logo at the center of the screen.
+ * Draws libGDX logo at the center of the screen.
  */
 @ProjectTemplate(official = true)
 open class ClassicTemplate : Template {
     override val id = "classic"
     override val description: String
-        get() = "Project template includes simple launchers and an `ApplicationAdapter` extension that draws libGDX logo."
+        get() = "This project was generated with a template including simple application launchers and an " +
+            "`ApplicationAdapter` extension that draws libGDX logo."
 
     override fun apply(project: Project) {
         super.apply(project)

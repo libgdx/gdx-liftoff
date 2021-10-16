@@ -12,9 +12,11 @@ import gdx.liftoff.views.GdxPlatform
 class Android : Platform {
     companion object {
         const val ID = "android"
+        const val ORDER = Lwjgl3.ORDER + 1
     }
 
     override val id = ID
+    override val order = ORDER
     override val isStandard = false // user should only jump through android hoops on request
     override fun initiate(project: Project) {
         project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
@@ -186,7 +188,7 @@ task copyAndroidNatives() {
 		file("libs/arm64-v8a/").mkdirs()
 		file("libs/x86_64/").mkdirs()
 		file("libs/x86/").mkdirs()
-		
+
 		configurations.getByName("natives").copy().files.each { jar ->
     	    def outputDir = null
     	    if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")

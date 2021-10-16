@@ -5,10 +5,10 @@ import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
-import gdx.liftoff.data.platforms.Desktop
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
-import gdx.liftoff.data.platforms.LWJGL3
+import gdx.liftoff.data.platforms.Lwjgl2
+import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
@@ -71,7 +71,7 @@ interface Template {
     fun addDesktopLauncher(project: Project) {
         addSourceFile(
             project = project,
-            platform = Desktop.ID,
+            platform = Lwjgl2.ID,
             packageName = "${project.basic.rootPackage}.desktop",
             fileName = "DesktopLauncher.$launcherExtension",
             content = getDesktopLauncherContent(project)
@@ -295,7 +295,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
     fun addLwjgl3Launcher(project: Project) {
         addSourceFile(
             project = project,
-            platform = LWJGL3.ID,
+            platform = Lwjgl3.ID,
             packageName = "${project.basic.rootPackage}.lwjgl3",
             fileName = "Lwjgl3Launcher.$launcherExtension",
             content = getLwjgl3LauncherContent(project)
