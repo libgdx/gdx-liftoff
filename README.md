@@ -4,11 +4,14 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
 ![Screenshot of gdx-liftoff](.github/screenshot.png)
 
-<p align="center" style="font-size: 30px;">
-    <a href="https://github.com/tommyettinger/gdx-liftoff/releases">DOWNLOAD</a>
+<p align="center">
+    :inbox_tray:
+    <strong><a href="https://github.com/tommyettinger/gdx-liftoff/releases">DOWNLOAD</a></strong>
+    :inbox_tray:
 </p>
 
-To generate a project, download the latest application `jar` and execute it, or run the following command:
+To generate a project, [download](https://github.com/tommyettinger/gdx-liftoff/releases) the latest application
+`jar` and execute it, or run the following command manually:
 
 ```shell
 java -jar gdx-liftoff-VERSION.jar
