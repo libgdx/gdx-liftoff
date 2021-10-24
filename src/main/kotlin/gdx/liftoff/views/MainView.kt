@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Button
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
 import com.github.czyzby.autumn.annotation.Destroy
 import com.github.czyzby.autumn.annotation.Inject
@@ -36,6 +37,7 @@ import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
+import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.preferences.SdkVersionPreference
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
@@ -227,7 +229,7 @@ class MainView : ActionContainer {
     @LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesData.languages
     @LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesData.versions
     @LmlAction("templates") fun getOfficialTemplates(): Array<String> =
-        templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> left.compareTo(right) }
+        templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> if(left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
             .toTypedArray()
 
     @LmlAction("thirdPartyTemplates") fun getThirdPartyTemplates(): Array<String> =
@@ -293,6 +295,23 @@ class MainView : ActionContainer {
 
             private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
             private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
+        })
+    }
+
+    /**
+     * I have no idea how to register this on an LML Actor. LML docs are no help. Agh.
+     */
+    fun assignScrollFocus(actor: Actor) {
+        actor.addListener(object : ClickListener() {
+            override fun enter(event: InputEvent?, x: Float, y: Float, pointer: Int, fromActor: Actor?) {
+                actor.stage?.scrollFocus = actor
+            }
+
+            override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Actor?) {
+                super.exit(event, x, y, pointer, toActor)
+                if(actor.stage?.scrollFocus == actor)
+                    actor.stage?.scrollFocus = null
+            }
         })
     }
 
