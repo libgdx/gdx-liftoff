@@ -31,7 +31,7 @@ abstract class KtxExtension : Library {
     override val name
         get() = id.camelCaseToKebabCase()
     override val url: String
-        get() = "https://github.com/libktx/ktx/tree/master/" + id.removeSuffix("ktx").camelCaseToKebabCase()
+        get() = "https://github.com/libktx/ktx/tree/master/" + id.removePrefix("ktx").camelCaseToKebabCase()
 
     override fun initiate(project: Project) {
         project.properties["ktxVersion"] = KtxRepository.version
