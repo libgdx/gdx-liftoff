@@ -197,12 +197,12 @@ public class GwtLauncher extends GwtApplication {""" + (
             project = project,
             platform = Android.ID,
             packageName = project.basic.rootPackage,
-            fileName = "AndroidLauncher.$launcherExtension",
+            fileName = "android/AndroidLauncher.$launcherExtension",
             content = getAndroidLauncherContent(project)
         )
     }
 
-    fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}
+    fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
 
 import android.os.Bundle;
 

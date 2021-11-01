@@ -67,7 +67,7 @@ class Android : Platform {
         	tools:ignore="UnusedAttribute"
 			android:theme="@style/GdxTheme">
 		<activity
-				android:name="${project.basic.rootPackage}.AndroidLauncher"
+				android:name="${project.basic.rootPackage}.android.AndroidLauncher"
 				android:label="@string/app_name"
 				android:screenOrientation="landscape"
 				android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
@@ -231,7 +231,7 @@ task run(type: Exec) {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.AndroidLauncher'
+	commandLine "${'$'}adb", 'shell', 'am', 'start', '-n', '${project.basic.rootPackage}/${project.basic.rootPackage}.android.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
