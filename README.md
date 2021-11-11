@@ -35,6 +35,8 @@ you generate a project.
 - **Optional Gradle runner.** You can optionally execute Gradle tasks after project generation.
 - **Supports all libGDX backends.** Do you need the LWJGL2, LWJGL3, and/or Headless backends? Liftoff
 provides simple checkboxes to add any and all official platforms, plus some special other modules.
+- **Up-to-date.** This project prides itself on updating quickly when major external components update, such
+as Gradle or libGDX itself.
 
 What's more, there are no major *structural differences* between any generated projects, regardless of the platforms
 you initially used. The official `gdx-setup` previously put assets in the `android` module, or the `core` module if Android is
