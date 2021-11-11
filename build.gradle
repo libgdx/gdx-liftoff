@@ -5,8 +5,8 @@ apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         gradlePluginPortal()
     }
     dependencies {
@@ -36,6 +36,7 @@ jar {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     gradlePluginPortal()
     maven { url 'https://jitpack.io' }

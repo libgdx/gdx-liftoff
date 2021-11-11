@@ -11,8 +11,8 @@ class RootGradleFile(val project: Project) : GradleFile("") {
     private val buildRepositories = mutableSetOf<String>()
 
     init {
-        buildRepositories.add("mavenLocal()")
         buildRepositories.add("mavenCentral()")
+        buildRepositories.add("mavenLocal()")
         buildRepositories.add("google()")
         buildRepositories.add("gradlePluginPortal()")
         buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
@@ -47,8 +47,8 @@ subprojects {
 	version = '${project.advanced.version}'
 	ext.appName = '${project.basic.name}'
 	repositories {
-		mavenLocal()
 		mavenCentral()
+		mavenLocal()
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://jitpack.io' }
