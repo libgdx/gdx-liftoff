@@ -86,6 +86,7 @@ fun main() {
     config.setResizable(true)
     config.setForegroundFPS(16)
     config.setIdleFPS(8)
+    config.setAutoIconify(true)
     config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
     val windowListener: Lwjgl3WindowListener = object : Lwjgl3WindowListener {
         override fun focusLost() { Gdx.graphics.isContinuousRendering = false }
