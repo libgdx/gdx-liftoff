@@ -36,7 +36,6 @@ jar {
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     gradlePluginPortal()
     maven { url 'https://jitpack.io' }
