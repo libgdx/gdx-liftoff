@@ -81,6 +81,10 @@ jar {
 	}
 }
 
+// Equivalent to the jar task; here for compatibility with gdx-setup.
+task dist(dependsOn: [jar]) {
+}
+
 run {
 	ignoreExitValue = true
 }

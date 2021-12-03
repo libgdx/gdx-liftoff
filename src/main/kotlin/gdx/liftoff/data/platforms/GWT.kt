@@ -53,7 +53,7 @@ class GWT : Platform {
                 content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module>
-	<source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "    <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
+    <source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "    <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
 </module>"""
             )
         )
@@ -68,7 +68,7 @@ class GWT : Platform {
                     content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module>
-	<source path="" />
+    <source path="" />
 </module>"""
                 )
             )
@@ -83,15 +83,15 @@ class GWT : Platform {
                 content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module rename-to="html">
-	<source path="" />
+    <source path="" />
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "\t<inherits name=\"$it\" />" }}
-	<entry-point class="${project.basic.rootPackage}.gwt.GwtLauncher" />
-	<set-configuration-property name="gdx.assetpath" value="../assets" />
-	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
-	<!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
-	<set-property name="user.agent" value="gecko1_8, safari"/>
-	<collapse-property name="user.agent" values="*" />
-	<!-- Remove the "user.agent" lines above if you encounter issues with Safari or other Gecko browsers. -->
+    <entry-point class="${project.basic.rootPackage}.gwt.GwtLauncher" />
+    <set-configuration-property name="gdx.assetpath" value="../assets" />
+    <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
+    <!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
+    <set-property name="user.agent" value="gecko1_8, safari"/>
+    <collapse-property name="user.agent" values="*" />
+    <!-- Remove the "user.agent" lines above if you encounter issues with Safari or other Gecko browsers. -->
 </module>"""
             )
         )
@@ -104,11 +104,11 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
                 content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
 <module rename-to="html">
-	<inherits name="${project.basic.rootPackage}.GdxDefinition" />
-	<collapse-all-properties />
-	<add-linker name="xsiframe"/>
-	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
-	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
+    <inherits name="${project.basic.rootPackage}.GdxDefinition" />
+    <collapse-all-properties />
+    <add-linker name="xsiframe"/>
+    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+    <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
 </module>"""
             )
         )
@@ -167,30 +167,30 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 
     override fun getContent(): String = """
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath "org.gretty:gretty:3.0.7"
-	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.gretty:gretty:3.0.7"
+    }
 }
 apply plugin: "gwt"
 apply plugin: "war"
 apply plugin: "org.gretty"
 
 gwt {
-	gwtVersion = "${'$'}gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
-	maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
-	minHeapSize = '1G'
+    gwtVersion = "${'$'}gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
+    maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
+    minHeapSize = '1G'
 
-	src = files(file('src/main/java')) // Needs to be in front of "modules" below.
-	modules '${project.basic.rootPackage}.GdxDefinition'
-	devModules '${project.basic.rootPackage}.GdxDefinitionSuperdev'
-	project.webAppDirName = 'webapp'
+    src = files(file('src/main/java')) // Needs to be in front of "modules" below.
+    modules '${project.basic.rootPackage}.GdxDefinition'
+    devModules '${project.basic.rootPackage}.GdxDefinitionSuperdev'
+    project.webAppDirName = 'webapp'
 
-	compiler.strict = true
-	compiler.disableCastChecking = true
-	//// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
+    compiler.strict = true
+    compiler.disableCastChecking = true
+    //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
 //	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
 
@@ -212,33 +212,33 @@ gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 
 task startHttpServer (dependsOn: [draftCompileGwt]) {
-	doFirst {
-		copy {
-			from "webapp"
-			into gretty.resourceBase
-		}
-		copy {
-			from "war"
-			into gretty.resourceBase
-		}
-	}
+    doFirst {
+        copy {
+            from "webapp"
+            into gretty.resourceBase
+        }
+        copy {
+            from "war"
+            into gretty.resourceBase
+        }
+    }
 }
 task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
     // The next line allows ports to be reused instead of
     // needing a process to be manually terminated.
-	file("build/TEMP_PORTS.properties").delete()
-	// Somewhat of a hack; uses Gretty's support for wrapping a task in
-	// a start and then stop of a Jetty server that serves files while
-	// also running the SuperDev code server.
-	integrationTestTask 'superDev'
+    file("build/TEMP_PORTS.properties").delete()
+    // Somewhat of a hack; uses Gretty's support for wrapping a task in
+    // a start and then stop of a Jetty server that serves files while
+    // also running the SuperDev code server.
+    integrationTestTask 'superDev'
 
-	interactive false
+    interactive false
 }
 
 task superDev(type: GwtSuperDev) {
-	doFirst {
-		gwt.modules = gwt.devModules
-	}
+    doFirst {
+        gwt.modules = gwt.devModules
+    }
 }
 // This next line can be changed if you want to, for instance, always build into the
 // docs/ folder of a Git repo, which can be set to automatically publish on GitHub Pages.
@@ -247,49 +247,56 @@ var outputPath = "build/dist/"
 
 task dist(dependsOn: [clean, compileGwt]) {
     doLast {
-		file(outputPath).mkdirs()
-		copy {
-			from("build/gwt/out"){
-				exclude '**/*.symbolMap' // Not used by a dist, and these can be large.
-			}
-			into outputPath
-		}
-		copy {
-			from("webapp") {
-				exclude 'index.html' // We edit this HTML file later.
-				exclude 'refresh.png' // We don't need this button; this saves some bytes.
-			}
-			into outputPath
-			}
-		copy {
-			from("webapp") {
-				// These next two lines take the index.html page and remove the superdev refresh button.
-				include 'index.html'
-				filter { String line -> line.replaceAll('<a class="superdev" .+', '') }
-				// This does not modify the original index.html, only the copy in the dist.
-			}
-			into outputPath
-			}
-		copy {
-			from "war"
-			into outputPath
-		}
-	}
+        // Uncomment the next line if you have changed outputPath and know that its contents
+        // should be replaced by a new dist build. Some large JS files are not cleaned up by
+        // default unless the outputPath is inside build/ (then the clean task removes them).
+        // Do not uncomment the next line if you changed outputPath to a folder that has
+        // non-generated files that you want to keep!
+        //delete(file(outputPath))
+
+        file(outputPath).mkdirs()
+        copy {
+            from("build/gwt/out"){
+                exclude '**/*.symbolMap' // Not used by a dist, and these can be large.
+            }
+            into outputPath
+        }
+        copy {
+            from("webapp") {
+                exclude 'index.html' // We edit this HTML file later.
+                exclude 'refresh.png' // We don't need this button; this saves some bytes.
+            }
+            into outputPath
+            }
+        copy {
+            from("webapp") {
+                // These next two lines take the index.html page and remove the superdev refresh button.
+                include 'index.html'
+                filter { String line -> line.replaceAll('<a class="superdev" .+', '') }
+                // This does not modify the original index.html, only the copy in the dist.
+            }
+            into outputPath
+            }
+        copy {
+            from "war"
+            into outputPath
+        }
+    }
 }
 
 task addSource {
-	doLast {
-		sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
-		${if (project.hasPlatform(Shared.ID)) "sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
-	}
+    doLast {
+        sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
+        ${if (project.hasPlatform(Shared.ID)) "sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
+    }
 }
 
 task distZip(type: Zip, dependsOn: dist){
-	//// This uses the output of the dist task, which removes the superdev buttons from index.html .
-	from(outputPath)
-	archiveBaseName.set("${'$'}{appName}-dist")
-	//// The result will be in html/build/ with a name containing "-dist".
-	destinationDir(file("build"))
+    //// This uses the output of the dist task, which removes the superdev buttons from index.html .
+    from(outputPath)
+    archiveBaseName.set("${'$'}{appName}-dist")
+    //// The result will be in html/build/ with a name containing "-dist".
+    destinationDir(file("build"))
 }
 
 tasks.compileGwt.dependsOn(addSource)
@@ -307,27 +314,27 @@ eclipse.project.name = appName + "-html"
 
 configurations { lom }
 dependencies {
-	lom "org.projectlombok:lombok:${'$'}{lombokVersion}"
-	implementation configurations.lom.dependencies
-	annotationProcessor configurations.lom.dependencies
+    lom "org.projectlombok:lombok:${'$'}{lombokVersion}"
+    implementation configurations.lom.dependencies
+    annotationProcessor configurations.lom.dependencies
 }
 
 draftCompileGwt {
-	doFirst {
-		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
-	}
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
 }
 
 compileGwt {
-	doFirst {
-		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
-	}
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
 }
 
 superDev {
-	doFirst {
-		jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
-	}
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
 }
 """ else ""
         )
