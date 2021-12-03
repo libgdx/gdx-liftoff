@@ -92,5 +92,9 @@ jar {
 		file(archiveFile).setExecutable(true, false)
 	}
 }
+
+// Equivalent to the jar task; here for compatibility with gdx-setup.
+task dist(dependsOn: [jar]) {
+}
 """
 }
