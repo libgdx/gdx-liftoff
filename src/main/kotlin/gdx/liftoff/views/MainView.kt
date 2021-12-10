@@ -1,5 +1,3 @@
-
-
 package gdx.liftoff.views
 
 import com.badlogic.gdx.Gdx
@@ -37,7 +35,6 @@ import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
-import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.preferences.SdkVersionPreference
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
@@ -229,7 +226,7 @@ class MainView : ActionContainer {
     @LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesData.languages
     @LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesData.versions
     @LmlAction("templates") fun getOfficialTemplates(): Array<String> =
-        templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> if(left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
+        templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> if (left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
             .toTypedArray()
 
     @LmlAction("thirdPartyTemplates") fun getThirdPartyTemplates(): Array<String> =
@@ -309,7 +306,7 @@ class MainView : ActionContainer {
 
             override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Actor?) {
                 super.exit(event, x, y, pointer, toActor)
-                if(actor.stage?.scrollFocus == actor)
+                if (actor.stage?.scrollFocus == actor)
                     actor.stage?.scrollFocus = null
             }
         })
