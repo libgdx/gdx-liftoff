@@ -13,9 +13,12 @@ changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gret
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
 Currently, gdx-liftoff projects depend on libGDX 1.10.0 by default, and allow using earlier versions or snapshots as well.
 The current version of libGDX is 1.10.0, which had a longer release cycle because there was an emphasis on fixing bugs
-in earlier releases. You can choose any released version of libGDX (or a nightly version) in the Advanced tab of the
-program window; it will be downloaded if needed when you import the Gradle project into your IDE or run one of most
-Gradle tasks. If you're updating from an older libGDX version, see [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
+in earlier releases. You may want to use the nightly version 1.10.1-SNAPSHOT if you target M1 Mac hardware, since just
+changing the libGDX version should be enough to make JARs run on M1 Macs. This project currently uses 1.10.1-SNAPSHOT
+for that reason, and gdx-liftoff should run on M1 Macs without needing Rosetta. You can choose any released version of
+libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
+the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
+[the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
 
 Projects default to using LWJGL3 instead of LWJGL2 (the old 'desktop' platform), since code tends to be very similar between the two, but LWJGL3 generally offers
 more features. Somewhat confusingly, gdx-setup used LWJGL2 for its desktop platform until recently, but now uses LWJGL3 and
