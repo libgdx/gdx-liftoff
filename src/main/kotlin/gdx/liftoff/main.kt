@@ -6,9 +6,11 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
+import com.badlogic.gdx.utils.GdxRuntimeException
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
 import com.github.czyzby.autumn.mvc.application.AutumnApplication
+import com.github.czyzby.autumn.nongwt.scanner.FallbackDesktopClassScanner
 import com.kotcrab.vis.ui.util.OsUtils
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.views.Extension
@@ -126,6 +128,23 @@ fun main() {
             }
         }
         throw error
+    } catch (error: GdxRuntimeException) {
+        Lwjgl3Application(
+            object : AutumnApplication(FallbackDesktopClassScanner(), Root::class.java) {
+                override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
+                    super.registerDefaultComponentAnnotations(initializer)
+                    // Classes with these annotations will be automatically scanned for and initiated as singletons:
+                    initializer.scanFor(
+                        Extension::class.java,
+                        ProjectTemplate::class.java,
+                        JvmLanguage::class.java,
+                        GdxPlatform::class.java
+                    )
+                }
+            },
+            config
+        )
+
     }
 }
 
