@@ -170,10 +170,10 @@ class Dialogs : ThirdPartyExtension() {
 
         addDependency(project, iOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
 
-        addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-dialogs-core:sources")
-        addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-dialogs-html")
-        addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-dialogs-html:sources")
-        addGwtInherit(project, "de.tomgrill.gdxfacebook.html.gdx_dialogs_html")
+        addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core:sources")
+        addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html")
+        addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html:sources")
+        addGwtInherit(project, "de.tomgrill.gdxdialogs.html.gdx_dialogs_html")
     }
 }
 
