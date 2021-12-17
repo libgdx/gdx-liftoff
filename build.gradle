@@ -66,6 +66,7 @@ dependencies {
     implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
     implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
 
+    implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
     implementation "khttp:khttp:1.0.0"
     implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1"
     implementation "org.slf4j:slf4j-nop:1.7.32"
