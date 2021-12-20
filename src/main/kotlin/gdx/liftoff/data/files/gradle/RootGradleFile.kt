@@ -12,10 +12,12 @@ class RootGradleFile(val project: Project) : GradleFile("") {
 
     init {
         buildRepositories.add("mavenCentral()")
+        buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
         buildRepositories.add("mavenLocal()")
         buildRepositories.add("google()")
         buildRepositories.add("gradlePluginPortal()")
         buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
+        buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
     }
 
     override fun getContent(): String = """buildscript {
@@ -48,11 +50,12 @@ subprojects {
 	ext.appName = '${project.basic.name}'
 	repositories {
 		mavenCentral()
+		maven { url 'https://s01.oss.sonatype.org' }
 		mavenLocal()
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://jitpack.io' }
-		maven { url 'https://s01.oss.sonatype.org' }
 	}
 }
 
