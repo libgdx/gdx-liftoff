@@ -793,6 +793,23 @@ class Guacamole : ThirdPartyExtension() {
 }
 
 /**
+ * Access the Oboe libraries for audio in Android 16+.
+ * @author barsoosayque
+ */
+@Extension
+class LibgdxOboe : ThirdPartyExtension() {
+    override val id = "libgdxOboe"
+    override val defaultVersion = "0.3.0.2"
+    override val url = "https://github.com/tommyettinger/libgdxoboe"
+    override val group = "com.github.tommyettinger"
+    override val name = "libgdxoboe"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Android.ID, "com.github.tommyettinger:libgdxoboe")
+    }
+}
+
+/**
  * Support for the Basis Universal supercompressed texture format.
  * This form of texture compression works best for extremely large 3D textures, and works
  * quite badly on pixel art. You might see big improvements in memory usage, you might not.
