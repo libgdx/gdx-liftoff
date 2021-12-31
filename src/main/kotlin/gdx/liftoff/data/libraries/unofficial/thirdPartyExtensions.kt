@@ -810,6 +810,29 @@ class LibgdxOboe : ThirdPartyExtension() {
 }
 
 /**
+ * A screen manager for libGDX supporting transitions.
+ * @author damios/crykn
+ */
+@Extension
+class LibgdxScreenManager : ThirdPartyExtension() {
+    override val id = "libgdxScreenManager"
+    override val defaultVersion = "0.6.7"
+    override val url = "https://github.com/crykn/libgdx-screenmanager"
+    override val repository = Repository.JitPack
+    override val group = "com.github.crykn"
+    override val name = "libgdx-screenmanager"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
+        addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
+        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:0.6.6")
+        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:0.6.6:sources")
+        addGwtInherit(project, "libgdx_screenmanager")
+        addGwtInherit(project, "libgdx_screenmanager_gwt")
+    }
+}
+
+/**
  * Support for the Basis Universal supercompressed texture format.
  * This form of texture compression works best for extremely large 3D textures, and works
  * quite badly on pixel art. You might see big improvements in memory usage, you might not.
