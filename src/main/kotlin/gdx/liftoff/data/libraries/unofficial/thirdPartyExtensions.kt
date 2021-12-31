@@ -833,6 +833,24 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 }
 
 /**
+ * Advanced audio features for LWJGL3.
+ * @author Hangman
+ */
+@Extension
+class TuningFork : ThirdPartyExtension() {
+    override val id = "tuningFork"
+    override val defaultVersion = "0.2.2"
+    override val url = "https://github.com/Hangman/TuningFork"
+    override val repository = Repository.JitPack
+    override val group = "com.github.Hangman"
+    override val name = "TuningFork"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Lwjgl3.ID, "com.github.Hangman:TuningFork")
+    }
+}
+
+/**
  * Support for the Basis Universal supercompressed texture format.
  * This form of texture compression works best for extremely large 3D textures, and works
  * quite badly on pixel art. You might see big improvements in memory usage, you might not.
