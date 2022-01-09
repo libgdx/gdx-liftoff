@@ -61,13 +61,14 @@ class GlobalActionContainer : ActionContainer {
     fun isValidPackageName(input: String): Boolean {
         if (Strings.isBlank(input) || !Character.isJavaIdentifierStart(input[0]) || input.contains("..") || input.endsWith('.')) {
             return false
-        } else if (input.length == 1) {
-            return true
         }
         for (id in 1 until input.length) {
             if (!Character.isJavaIdentifierPart(input[id]) && input[id] != '.') {
                 return false
             }
+        }
+        if(!input.contains('.') || input.matches(Regex("(^\\.)|(\\.$)"))) {
+            return false;
         }
         return true
     }
