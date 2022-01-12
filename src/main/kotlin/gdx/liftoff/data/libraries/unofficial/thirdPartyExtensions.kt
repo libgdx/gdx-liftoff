@@ -851,6 +851,27 @@ class TuningFork : ThirdPartyExtension() {
 }
 
 /**
+ * Load/render TinyVG vector graphics.
+ * @author Lyze
+ */
+@Extension
+class TinyVG : ThirdPartyExtension() {
+    override val id = "tinyVG"
+    override val defaultVersion = "734cf98aad"
+    override val url = "https://github.com/lyze237/gdx-TinyVG"
+    override val repository = Repository.JitPack
+    override val group = "com.github.lyze237"
+    override val name = "gdx-TinyVG"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.lyze237:gdx-TinyVG")
+        addDependency(project, GWT.ID, "com.github.lyze237:gdx-TinyVG:sources")
+        addGwtInherit(project, "dev.lyze.tinyvg")
+        ShapeDrawer().initiate(project)
+    }
+}
+
+/**
  * Support for the Basis Universal supercompressed texture format.
  * This form of texture compression works best for extremely large 3D textures, and works
  * quite badly on pixel art. You might see big improvements in memory usage, you might not.
