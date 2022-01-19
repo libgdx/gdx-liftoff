@@ -67,8 +67,8 @@ class GlobalActionContainer : ActionContainer {
                 return false
             }
         }
-        if(!input.contains('.') || input.matches(Regex("(^\\.)|(\\.$)"))) {
-            return false;
+        if (!input.contains('.') || input.matches(Regex("(^\\.)|(\\.$)"))) {
+            return false
         }
         return true
     }

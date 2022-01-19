@@ -18,7 +18,7 @@ class VisUIBasicTemplate : Template {
     override val id = "visUiBasicTemplate"
     override val description: String
         get() = "Project template included simple launchers and an `ApplicationAdapter` extension with GUI created " +
-            "using the [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) library."
+            "using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
     override fun apply(project: Project) {
         super.apply(project)

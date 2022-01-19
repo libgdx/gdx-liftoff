@@ -1,10 +1,6 @@
-Guide to HTML Deployment with GWT
-#####
+# Guide to HTML Deployment with GWT
 
-NOTE
-###
-
-This guide has been mostly superseded by [this libGDX wiki page](https://github.com/libgdx/libgdx/wiki/HTML5-Backend-and-GWT-Specifics).
+**NOTE:** This guide has been mostly superseded by [this libGDX wiki page](https://libgdx.com/wiki/html5-backend-and-gwt-specifics).
 It is here as just another source that might help.
 
 Google Web Toolkit is nice to have because it gives libGDX applications the option to deploy to a web target.
