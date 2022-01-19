@@ -72,7 +72,7 @@ class Ashley : OfficialExtension() {
 @Extension(official = true)
 class Box2D : OfficialExtension() {
     override val id = "gdx-box2d"
-    override val url = "https://github.com/libgdx/libgdx/wiki/Box2d"
+    override val url = "https://libgdx.com/wiki/extensions/physics/box2d"
 
     override fun initiate(project: Project) {
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion")
@@ -123,7 +123,7 @@ class Box2DLights : OfficialExtension() {
 @Extension(official = true)
 class Bullet : OfficialExtension() {
     override val id = "gdx-bullet"
-    override val url = "https://github.com/libgdx/libgdx/wiki/Bullet-physics"
+    override val url = "https://libgdx.com/wiki/extensions/physics/bullet/bullet-physics"
 
     override fun initiate(project: Project) {
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-bullet:\$gdxVersion")
@@ -180,7 +180,7 @@ class Controllers : OfficialExtension() {
 @Extension(official = true)
 class Freetype : OfficialExtension() {
     override val id = "gdx-freetype"
-    override val url = "https://github.com/libgdx/libgdx/wiki/Gdx-freetype"
+    override val url = "https://libgdx.com/wiki/extensions/gdx-freetype"
 
     override fun initiate(project: Project) {
         addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-freetype:\$gdxVersion")
@@ -204,7 +204,7 @@ class Freetype : OfficialExtension() {
 @Extension(official = true)
 class Tools : OfficialExtension() {
     override val id = "gdx-tools"
-    override val url = "https://github.com/libgdx/libgdx/wiki/Texture-packer"
+    override val url = "https://libgdx.com/wiki/tools/texture-packer"
 
     override fun initiate(project: Project) {
         addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
