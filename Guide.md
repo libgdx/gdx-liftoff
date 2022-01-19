@@ -223,7 +223,7 @@ other projects or older versions.
 - MacOS does not like the legacy desktop apps, showing all sorts of visual glitches.
   It seems to work fine with LWJGL3, in part because that platform had special attention
   paid to it so the `gradlew lwjgl3:run` command can work at all on MacOS.
-    - Consider adding the third-party extension Guacamole to handle a special macOS/LWJGL3 requirement (it
+    - Consider adding the third-party extension Guacamole to handle a special MacOS/LWJGL3 requirement (it
       needs `-XstartOnFirstThread` to be passed to the `java` command, but Guacamole can handle this for you
       and your users).
     - Apps for end-users have to include a bundled JRE to be distributed via the Mac App Store, and it's generally a
