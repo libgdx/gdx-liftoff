@@ -13,7 +13,7 @@
     <linkLabel url="https://github.com/oakes/play-clj" expand="true" align="bottom">
         @clojurePrompt
     </linkLabel>
-    <linkLabel url="https://github.com/libgdx/libgdx/wiki/Using-libgdx-with-other-jvm-languages" padBottom="10">
+    <linkLabel url="https://libgdx.com/wiki/jvm-langs/using-libgdx-with-other-jvm-languages" padBottom="10">
         @otherLanguagesPrompt
     </linkLabel>
 </tab>
