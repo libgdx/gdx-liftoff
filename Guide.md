@@ -45,7 +45,7 @@ dependencies on vulnerable log4j versions.
 - Get the latest `gdx-liftoff.jar` from the [Releases tab](https://github.com/tommyettinger/gdx-liftoff/releases) of this project.
     - If you have an older gdx-liftoff.jar, or you aren't sure when it was released, getting the current latest is a good idea.
 - Regardless of what platforms you intend to target, make sure the steps
-  [described by the libGDX wiki here](https://github.com/libgdx/libgdx/wiki/Setting-up-your-Development-Environment-%28Eclipse%2C-Intellij-IDEA%2C-NetBeans%29)
+  [described by the libGDX wiki here](https://libgdx.com/wiki/start/setup)
   are taken care of.
 - Run the JAR. Plug in whatever options you see fit:
     - For the Platforms tab, LWJGL3 starts enabled by default (it works on all desktop/laptop platforms), and you can
@@ -64,7 +64,7 @@ dependencies on vulnerable log4j versions.
             - LWJGL2 should mostly be preferred if you need to also depend on gdx-tools, such as if you need to run the
               texture packer at runtime. Some machines have issues with an inconsistent or very high framerate with LWJGL3,
               and using the "Legacy" desktop can fix that. This platform can also be less compatible with some JDKs, and
-              distributing a JDK from [AdoptOpenJDK](https://adoptopenjdk.net/) usually fixes that.
+              distributing a JDK from [Adoptium](https://adoptium.net/) usually fixes that.
                 - The framerate limit problem is currently solved with both LWJGL2 and LWJGL3, as long as you use libGDX
                   1.9.12 or higher.
                 - The "less compatible" JDK issue manifests as a crash immediately at startup, with several warnings printed
@@ -111,7 +111,7 @@ dependencies on vulnerable log4j versions.
           different on HTML due to the tool used, Google Web Toolkit (GWT). It's almost always possible to work around
           these differences and make things like random seeds act the same on all platforms, but it takes work. Mostly,
           you need to be careful with the `long` and `int` number types, and relates to `int` not overflowing as it
-          would on desktop, and `long` not being visible to reflection. See [this small guide to GWT](https://github.com/libgdx/libgdx/wiki/HTML5-Backend-and-GWT-Specifics)
+          would on desktop, and `long` not being visible to reflection. See [this small guide to GWT](https://libgdx.com/wiki/html5-backend-and-gwt-specifics)
           for more. It's very likely that you won't notice any difference unless you try to make behavior identical on GWT
           and other platforms, and even then there may be nothing apparent.
             - GWT 2.9.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
@@ -162,7 +162,7 @@ dependencies on vulnerable log4j versions.
 
 Now you'll have a project all set up with a sample. In IntelliJ IDEA or Android Studio, you can choose to open the
 `build.gradle` file and select "Open as Project" to get started. In Eclipse or Netbeans, the process should be similar;
-see [libGDX's documentation](https://libgdx.badlogicgames.com/documentation/gettingstarted/Importing%20into%20IDE.html).
+see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 
 - The way to run a game project that's probably the most reliable is to use Gradle tasks
   to do any part of the build/run process. The simplest way to do this is in the IDE itself,
