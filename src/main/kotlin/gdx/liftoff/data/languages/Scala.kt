@@ -14,7 +14,7 @@ import gdx.liftoff.views.JvmLanguage
 @Suppress("unused") // Class accessed via reflection.
 class Scala : Language {
     override val id = "scala"
-    override val version = "2.13.+"
+    override val version = "2.13.8"
 
     override fun initiate(project: Project) {
         project.rootGradle.plugins.add(id)
