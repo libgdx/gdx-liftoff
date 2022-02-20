@@ -37,7 +37,7 @@ This project rapidly updated to Gradle 7.3.2 and then 7.3.3 when they were relea
 mitigations for the so-called "log4shell" vulnerability in log4j. Since that vulnerability is extremely serious, any
 kind of mitigation is a good thing to have, especially for new projects. It is doubtful that gdx-liftoff itself would be
 affected by a log4j-related issue, but the projects it creates should be as up-to-date and secure as we can get. New
-projects as of 1.10.0.10 include a section of dependency constraints recommended by the Gradle team to block transitive
+projects since 1.10.0.10 include a section of dependency constraints recommended by the Gradle team to block transitive
 dependencies on vulnerable log4j versions. Since this panicky series of updates in mid-late December 2021, gdx-liftoff
 has updated to the latest Gradle (7.4).
 
