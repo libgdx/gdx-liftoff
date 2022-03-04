@@ -1,12 +1,12 @@
  #com.badlogic.gdx.graphics.g2d.BitmapFont: {
-    default: { file: com/badlogic/gdx/utils/arial-15.fnt }
+    default: { file: com/badlogic/gdx/utils/lsans-15.fnt }
  }
 
 #com.badlogic.gdx.graphics.Color: {
     white: { r: 1, g: 1, b: 1, a: 1 }
     gray: { r: 0.5, g: 0.5, b: 0.5, a: 1 }
     black: { r: 0, g: 0, b: 0, a: 1 }
-    
+
     up: { r: 0.1, g: 0.1, b: 0.1, a: 1 }
     over: { r: 0.3, g: 0.3, b: 0.3, a: 1 }
     down: { r: 0.3, g: 0, b: 0, a: 1 }
@@ -16,7 +16,7 @@
     background: { r: 0.2, g: 0.2, b: 0.2, a: 1 }
     selection: { r: 0.3, g: 0, b: 0, a: 1 }
     semiTransparent: { r: 0, g: 0, b: 0, a: 0.6 }
-    
+
     font: white
     fontOver: white
     fontDown: gray
