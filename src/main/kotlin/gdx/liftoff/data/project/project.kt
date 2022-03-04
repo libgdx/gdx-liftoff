@@ -192,7 +192,7 @@ class Project(
             // Explicitly copying Arial font if Android platform is included:
             if (hasPlatform(Android.ID)) {
                 arrayOf("png", "fnt").forEach {
-                    val path = path("com", "badlogic", "gdx", "utils", "arial-15.$it")
+                    val path = path("com", "badlogic", "gdx", "utils", "lsans-15.$it")
                     files.add(
                         CopiedFile(
                             projectName = Assets.ID, path = path, original = path,
