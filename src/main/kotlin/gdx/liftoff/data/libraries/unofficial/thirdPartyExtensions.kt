@@ -354,8 +354,31 @@ class TypingLabel : ThirdPartyExtension() {
 }
 
 /**
+ * Augmented text display, including styles and all of TypingLabel's features.
+ * @author Tommy Ettinger
+ * @author Rafa Skoberg
+ */
+@Extension
+class TextraTypist : ThirdPartyExtension() {
+    override val id = "textratypist"
+    override val defaultVersion = "0.2.0"
+    override val url = "https://github.com/tommyettinger/textratypist"
+    override val group = "com.github.tommyettinger"
+    override val name = "textratypist"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.tommyettinger:textratypist")
+
+        addDependency(project, GWT.ID, "com.github.tommyettinger:textratypist:sources")
+        addGwtInherit(project, "textratypist")
+        RegExodus().initiate(project)
+    }
+}
+
+/**
  * A high-performance alternative to libGDX's built-in ShapeRenderer, with smoothing and more shapes.
- * Better in just about every way when compared with ShapeRenderer.
+ * Usually more practical when compared with ShapeRenderer, but ShapeRenderer may perform better when
+ * rendering hair-thin lines or points.
  * @author earlygrey
  */
 @Extension
@@ -815,7 +838,7 @@ class LibgdxOboe : ThirdPartyExtension() {
  */
 @Extension
 class LibgdxScreenManager : ThirdPartyExtension() {
-    override val id = "libgdxScreenManager"
+    override val id = "screenManager"
     override val defaultVersion = "0.6.7"
     override val url = "https://github.com/crykn/libgdx-screenmanager"
     override val repository = Repository.JitPack
