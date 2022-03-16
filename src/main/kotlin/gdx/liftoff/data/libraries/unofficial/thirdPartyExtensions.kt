@@ -449,7 +449,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.6.1"
+    override val defaultVersion = "0.7.0"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
     override val group = "com.github.tommyettinger"
     override val name = "colorful"
@@ -470,7 +470,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.2.11"
+    override val defaultVersion = "0.3.5"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
     override val group = "com.github.tommyettinger"
     override val name = "anim8-gdx"
@@ -520,6 +520,26 @@ class GdxGltf : ThirdPartyExtension() {
         addDependency(project, Core.ID, "com.github.mgsx-dev.gdx-gltf:gltf")
         addDependency(project, GWT.ID, "com.github.mgsx-dev.gdx-gltf:gltf:sources")
         addGwtInherit(project, "GLTF")
+    }
+}
+
+/**
+ * A simple framebuffer based lighting engine for libGDX.
+ * @author Ali Asif Khan
+ */
+@Extension
+class HackLights : ThirdPartyExtension() {
+    override val id = "hackLights"
+    override val defaultVersion = "dd08b55956"
+    override val repository = Repository.JitPack
+    override val url = "https://github.com/aliasifk/HackLights"
+    override val group = "com.github.aliasifk"
+    override val name = "HackLights"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.aliasifk:HackLights")
+        addDependency(project, GWT.ID, "com.github.aliasifk:HackLights:sources")
+        addGwtInherit(project, "com.aliasifkhan.hackLights")
     }
 }
 
