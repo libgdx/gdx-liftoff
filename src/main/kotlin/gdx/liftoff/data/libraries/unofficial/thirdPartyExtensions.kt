@@ -7,13 +7,7 @@ import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.official.Controllers
-import gdx.liftoff.data.platforms.Android
-import gdx.liftoff.data.platforms.Core
-import gdx.liftoff.data.platforms.GWT
-import gdx.liftoff.data.platforms.Headless
-import gdx.liftoff.data.platforms.Lwjgl2
-import gdx.liftoff.data.platforms.Lwjgl3
-import gdx.liftoff.data.platforms.iOS
+import gdx.liftoff.data.platforms.*
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -524,7 +518,7 @@ class GdxGltf : ThirdPartyExtension() {
 }
 
 /**
- * A simple framebuffer based lighting engine for libGDX.
+ * A simple framebuffer based lighting engine for libGDX. Adds sample light assets, so it can be used immediately.
  * @author Ali Asif Khan
  */
 @Extension
@@ -540,6 +534,20 @@ class HackLights : ThirdPartyExtension() {
         addDependency(project, Core.ID, "com.github.aliasifk:HackLights")
         addDependency(project, GWT.ID, "com.github.aliasifk:HackLights:sources")
         addGwtInherit(project, "com.aliasifkhan.hackLights")
+        project.files.add(
+            CopiedFile(
+                projectName = Assets.ID,
+                original = path("generator", "assets", "lights.png"),
+                path = path("lights.png")
+            )
+        )
+        project.files.add(
+            CopiedFile(
+                projectName = Assets.ID,
+                original = path("generator", "assets", "lights.atlas"),
+                path = path("lights.atlas")
+            )
+        )
     }
 }
 
