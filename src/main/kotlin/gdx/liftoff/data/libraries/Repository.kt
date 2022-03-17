@@ -66,7 +66,8 @@ interface Repository {
         override fun fetchLatestVersion(group: String, name: String): String? {
             return try {
                 val response = get("https://jitpack.io/api/builds/$group/$name/latest", timeout = REQUEST_TIMEOUT)
-                response.jsonObject.getString("version")
+                // removeSurrounding gets rid of some broken version sections resulting from JitPack -SNAPSHOT usage.
+                response.jsonObject.getString("version").removeSurrounding("-", "-1")
             } catch (exception: Exception) {
                 Gdx.app.error("gdx-liftoff", "Unable to perform a HTTP request to JitPack.", exception)
                 null
