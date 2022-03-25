@@ -189,7 +189,7 @@ class Project(
             )
 
             // Android does not support classpath fonts loading through skins.
-            // Explicitly copying Arial font if Android platform is included:
+            // Explicitly copying Liberation Sans font if Android platform is included:
             if (hasPlatform(Android.ID)) {
                 arrayOf("png", "fnt").forEach {
                     val path = path("com", "badlogic", "gdx", "utils", "lsans-15.$it")
