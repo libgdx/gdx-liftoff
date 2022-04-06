@@ -76,7 +76,7 @@ class Kiwi : LmlExtension() {
     override val id = "kiwi"
 
     override fun initiateDependencies(project: Project) {
-        addGwtInherit(project, "$group.kiwi.GdxKiwi")
+        addGwtInherit(project, "com.github.czyzby.kiwi.GdxKiwi")
     }
 }
 
@@ -88,7 +88,7 @@ class LML : LmlExtension() {
     override val id = "lml"
 
     override fun initiateDependencies(project: Project) {
-        addGwtInherit(project, "$group.lml.GdxLml")
+        addGwtInherit(project, "com.github.czyzby.lml.GdxLml")
 
         Kiwi().initiate(project)
     }
@@ -102,7 +102,7 @@ class LMLVis : LmlExtension() {
     override val id = "lmlVis"
 
     override fun initiateDependencies(project: Project) {
-        addGwtInherit(project, "$group.lml.vis.GdxLmlVis")
+        addGwtInherit(project, "com.github.czyzby.lml.vis.GdxLmlVis")
 
         LML().initiate(project)
         VisUI().initiate(project)
@@ -125,7 +125,7 @@ class Autumn : LmlExtension() {
 
         addDependency(project, GWT.ID, "$group:gdx-autumn-gwt")
         addDependency(project, GWT.ID, "$group:gdx-autumn-gwt:sources")
-        addGwtInherit(project, "$group.autumn.gwt.GdxAutumnGwt")
+        addGwtInherit(project, "com.github.czyzby.autumn.gwt.GdxAutumnGwt")
 
         Kiwi().initiate(project)
     }
@@ -140,7 +140,7 @@ class AutumnMVC : LmlExtension() {
     override val url = "https://github.com/crashinvaders/gdx-lml/tree/master/mvc"
 
     override fun initiateDependencies(project: Project) {
-        addGwtInherit(project, "$group.autumn.mvc.GdxAutumnMvc")
+        addGwtInherit(project, "com.github.czyzby.autumn.mvc.GdxAutumnMvc")
 
         LML().initiate(project)
         Autumn().initiate(project)
@@ -180,8 +180,8 @@ class WebSocket : WebSocketExtension() {
         addDependency(project, GWT.ID, "$group.gdx-websockets:core:sources")
         addDependency(project, GWT.ID, "$group.gdx-websockets:html")
         addDependency(project, GWT.ID, "$group.gdx-websockets:html:sources")
-        addGwtInherit(project, "$group.gdx-websockets.websocket.GdxWebSocket")
-        addGwtInherit(project, "$group.gdx-websockets.websocket.GdxWebSocketGwt")
+        addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocket")
+        addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketGwt")
     }
 }
 
@@ -200,7 +200,7 @@ class WebSocketSerialization : WebSocketExtension() {
         addDependency(project, Server.ID, "$group.gdx-websockets:serialization")
 
         addDependency(project, GWT.ID, "$group.gdx-websockets:serialization:sources")
-        addGwtInherit(project, "$group.gdx-websockets.websocket.GdxWebSocketSerialization")
+        addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketSerialization")
 
         WebSocket().initiate(project)
     }
