@@ -40,14 +40,18 @@ abstract class LmlExtension : Library {
     override fun initiate(project: Project) {
         project.properties["lmlVersion"] = LmlRepository.version
         addDependency(project, Core.ID, "$group:$name")
-        addDependency(project, GWT.ID, "$group:$name:sources")
+        addDependency(project, GWT.ID, "$group:${name}:sources")
         initiateDependencies(project)
     }
 
     open fun initiateDependencies(project: Project) {}
 
     override fun addDependency(project: Project, platform: String, dependency: String) {
-        super.addDependency(project, platform, "$dependency:\$lmlVersion")
+        if (dependency.count { it == ':' } > 1) {
+            super.addDependency(project, platform, dependency.substringBeforeLast(':') + ":\$lmlVersion:" + dependency.substringAfterLast(':'))
+        } else {
+            super.addDependency(project, platform, "$dependency:\$lmlVersion")
+        }
     }
 
     fun addExternalDependency(project: Project, platform: String, dependency: String) {
