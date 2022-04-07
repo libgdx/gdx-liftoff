@@ -7,7 +7,7 @@ The official setup may transition to a web-based tool soon, but any user of the 
 formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
 code, which is built on czyzby's code, gives us working projects that use Gradle 7.4.2, ahead of 7.3.3 for the official setup and 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 7.4.2 at the time of writing, and since gdx-liftoff 1.10.0.13, new projects use that 7.4.2 version.
+The current Gradle version is 7.4.2 at the time of writing, and since gdx-liftoff 1.10.0.14, new projects use that 7.4.2 version.
 This allows new projects to "just work" on machines where Java 8 through 17 could be the default, and the moderate amount of configuration
 changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
