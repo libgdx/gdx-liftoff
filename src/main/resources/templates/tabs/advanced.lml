@@ -24,7 +24,7 @@
         @robovmVersion
         <textField id="robovmVersion" tooltip="@robovmVersionTip" row="true">2.3.16</textField>
         @gwtPlugin
-        <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.1.16</textField>
+        <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">1.1.18</textField>
     </table>
     </scrollPane>
     <table growX="true" defaultPad="2" defaultSpaceRight="10" defaultSpaceLeft="10">

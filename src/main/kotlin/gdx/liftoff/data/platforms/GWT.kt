@@ -199,6 +199,7 @@ ${joinDependencies(dependencies)}
 //// You can use the lines below instead of the "com.badlogicgames.gdx:gdx-backend-gwt" dependencies.
 //// If you do, follow the steps at https://github.com/tommyettinger/gdx-backends#gwt-290-support
 //// and you can use GWT 2.9.0, which gives you access to Java 11 language features.
+//// These releases use libGDX 1.10.0, and are not compatible with other versions.
 //	implementation "com.github.tommyettinger:gdx-backend-gwt:1.100.1"
 //	implementation "com.github.tommyettinger:gdx-backend-gwt:1.100.1:sources"
 }
@@ -274,6 +275,8 @@ task dist(dependsOn: [clean, compileGwt]) {
                 include 'index.html'
                 filter { String line -> line.replaceAll('<a class="superdev" .+', '') }
                 // This does not modify the original index.html, only the copy in the dist.
+                // If you decide to manually remove or comment out the superdev button from index.html, you should also
+                // either remove or comment out only the "filter" line above this.
             }
             into outputPath
             }
@@ -292,7 +295,7 @@ task addSource {
 }
 
 task distZip(type: Zip, dependsOn: dist){
-    //// This uses the output of the dist task, which removes the superdev buttons from index.html .
+    //// This uses the output of the dist task, which removes the superdev button from index.html .
     from(outputPath)
     archiveBaseName.set("${'$'}{appName}-dist")
     //// The result will be in html/build/ with a name containing "-dist".
@@ -302,7 +305,6 @@ task distZip(type: Zip, dependsOn: dist){
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 tasks.checkGwt.dependsOn(addSource)
-checkGwt.war = file("war")
 
 // You can change the version below to JavaVersion.VERSION_11 if you use the 2.9.0 backend.
 sourceCompatibility = JavaVersion.VERSION_1_8
