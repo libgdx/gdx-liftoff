@@ -923,6 +923,25 @@ class TinyVG : ThirdPartyExtension() {
 }
 
 /**
+ * LibGDX PSX-style render features.
+ * @author FXGaming
+ */
+@Extension
+class GdxPsx : ThirdPartyExtension() {
+    override val id = "gdxPsx"
+    override val defaultVersion = "f4d2c5caf5"
+    override val url = "https://github.com/fxgaming/gdx-psx"
+    override val repository = Repository.JitPack
+    override val group = "com.github.fxgaming"
+    override val name = "gdx-psx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "com.github.fxgaming:gdx-psx")
+        addDependency(project, GWT.ID, "com.github.fxgaming:gdx-psx:sources")
+    }
+}
+
+/**
  * Support for the Basis Universal supercompressed texture format.
  * This form of texture compression works best for extremely large 3D textures, and works
  * quite badly on pixel art. You might see big improvements in memory usage, you might not.
