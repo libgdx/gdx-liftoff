@@ -55,7 +55,7 @@
 		58C6F5381DA66CB600309CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8084D1F0A307440EC73CBFCA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AE849253332D33EDDC76AB2C /* moe-main-interfaces.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "moe-main-interfaces.m"; path = "../build/moe/main/ui-headers/moe-main-interfaces.m"; sourceTree = "<group>"; };
-		C995F7161EAA5D0A003E34E1 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../%ASSET_PATH%; sourceTree = "<group>"; };
+		C995F7161EAA5D0A003E34E1 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../%ASSET_PATH%"; sourceTree = "<group>"; };
 		E21F0FA31F8922D8003761DD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

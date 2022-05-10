@@ -2,6 +2,8 @@
 
 package gdx.liftoff.data.platforms
 
+import com.badlogic.gdx.Files
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.ProjectFile
@@ -87,13 +89,25 @@ class iOSMOE : Platform {
                 )
             }
 
-        project.files.add(iOSMOEPlistFile(path(iOSMOE.ID, "xcode", "ios-moe", "Info.plist"), project))
+        project.files.add(
+            ReplacedContentFile(
+                projectName = iOSMOE.ID,
+                path =  path("xcode", "ios-moe", "Info.plist"),
+                original = path("generator", "ios-moe", "xcode", "ios-moe", "Info.plist"),
+                replaceMap = mapOf(Pair("%PACKAGE%", project.basic.rootPackage))
+            )
+        )
 
         project.files.add(
-            CopiedFile(
+            ReplacedContentFile(
                 projectName = iOSMOE.ID,
                 path = path("xcode", "ios-moe.xcodeproj", "project.pbxproj"),
-                original = path("generator", "ios-moe", "xcode", "ios-moe.xcodeproj", "project.pbxproj")
+                original = path("generator", "ios-moe", "xcode", "ios-moe.xcodeproj", "project.pbxproj"),
+                replaceMap = mapOf(
+                    Pair("%PACKAGE%", project.basic.rootPackage),
+                    Pair("%ASSET_PATH%", "assets/"),
+                    Pair("%APP_NAME%", project.basic.name)
+                )
             )
         )
 
@@ -109,59 +123,11 @@ class iOSMOE : Platform {
     }
 }
 
-class iOSMOEPlistFile(override val path: String, val project: Project) : ProjectFile {
-
+class ReplacedContentFile(projectName: String = "", path: String, original: String, fileType: Files.FileType = Files.FileType.Internal, private val replaceMap: Map<String, String>) : CopiedFile(projectName, path, original, fileType) {
     override fun save(destination: FileHandle) {
-        destination.child(path).writeString("""
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-            	<key>CFBundleDevelopmentRegion</key>
-            	<string>en</string>
-            	<key>CFBundleExecutable</key>
-            	<string>${'$'}(EXECUTABLE_NAME)</string>
-            	<key>CFBundleIdentifier</key>
-            	<string>${'$'}(PRODUCT_BUNDLE_IDENTIFIER)</string>
-            	<key>CFBundleInfoDictionaryVersion</key>
-            	<string>6.0</string>
-            	<key>CFBundleName</key>
-            	<string>${'$'}(PRODUCT_NAME)</string>
-            	<key>CFBundlePackageType</key>
-            	<string>APPL</string>
-            	<key>CFBundleShortVersionString</key>
-            	<string>1.0</string>
-            	<key>CFBundleVersion</key>
-            	<string>1</string>
-            	<key>LSRequiresIPhoneOS</key>
-            	<true/>
-            	<key>MOE.Main.Class</key>
-            	<string>${project.basic.rootPackage}.ios.IOSLauncher</string>
-            	<key>UIApplicationExitsOnSuspend</key>
-            	<false/>
-            	<key>UIRequiredDeviceCapabilities</key>
-            	<array>
-            		<string>armv7</string>
-            	</array>
-            	<key>UIRequiresFullScreen</key>
-            	<true/>
-            	<key>UISupportedInterfaceOrientations</key>
-            	<array>
-            		<string>UIInterfaceOrientationPortrait</string>
-            		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-            		<string>UIInterfaceOrientationLandscapeLeft</string>
-            		<string>UIInterfaceOrientationLandscapeRight</string>
-            	</array>
-            	<key>UISupportedInterfaceOrientations~ipad</key>
-            	<array>
-            		<string>UIInterfaceOrientationPortrait</string>
-            		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-            		<string>UIInterfaceOrientationLandscapeLeft</string>
-            		<string>UIInterfaceOrientationLandscapeRight</string>
-            	</array>
-            </dict>
-            </plist>
-        """.trimIndent(), false, "UTF-8")
+        var input = Gdx.files.getFileHandle(original, fileType).readString("UTF-8")
+        replaceMap.forEach { (t, u) -> input = input.replace(t, u) }
+        destination.child(path).writeString(input, false, "UTF-8")
     }
 }
 
@@ -213,8 +179,6 @@ configurations { natives }
 dependencies {
 ${joinDependencies(dependencies)}
 }
-
-sourceSets.main.java.srcDirs = [ "src/" ]
 
 // Setup Multi-OS Engine
 moe {
