@@ -75,9 +75,9 @@ class AdvancedProjectData {
     val generateReadme: Boolean
         get() = generateReadmeButton.isChecked
 
-    val gradleTasks: List<String>
-        get() = if (gradleTasksField.isEmpty) listOf()
-        else gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter { it.isNotBlank() }
+    val gradleTasks: MutableList<String>
+        get() = if (gradleTasksField.isEmpty) mutableListOf()
+        else gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter { it.isNotBlank() }.toMutableList()
 
     fun forceSkinGeneration() {
         generateSkinButton.isChecked = true
