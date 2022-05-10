@@ -191,11 +191,6 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
   and you have followed all the steps for iOS development with libGDX, maybe you can run
   an iOS task? I can't try myself without a Mac or iOS device, so if you can get this to
   work, posting an issue with any info for other iOS targeters would be greatly appreciated.
-    - Agreeing with libGDX, MOE is no longer supported. Although there are "MOE Community" builds, they come with
-      a breaking change disclaimer that appears likely to break libGDX with MOE Community 1.6.0. You can use
-      gdx-liftoff 1.9.10.9 if you desperately need MOE for some reason.
-        - MOE may be added back to libGDX in a future version, and if it does, Liftoff will have to somehow add it back
-          to the project generator. This is somewhere that help would be appreciated, if MOE does wind up back in libGDX.
 - Consider changing the icons when you're looking to distribute your app. [appicon.co](https://appicon.co/) or
   some similar service can generate all the different requisite sizes.
     - `ios/data/Media.xcassets/AppIcon.appiconset` has the iOS icons, `android/res` has icons in
