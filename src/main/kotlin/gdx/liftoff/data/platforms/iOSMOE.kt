@@ -120,6 +120,8 @@ class iOSMOE : Platform {
                 )
             )
         }
+        project.advanced.gradleTasks.add("ios-moe:moeUpdateXcodeSettings")
+        project.advanced.gradleTasks.add("ios-moe:copyNatives")
     }
 }
 
