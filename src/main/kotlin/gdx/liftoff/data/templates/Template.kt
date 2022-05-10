@@ -307,6 +307,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
 
     fun getIOSMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
 
+import apple.uikit.c.UIKit;
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;
 import com.badlogic.gdx.backends.iosmoe.IOSApplicationConfiguration;
 import org.moe.natj.general.Pointer;
@@ -315,7 +316,7 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 /** Launches the iOS (Multi-Os Engine) application. */
 public class IOSLauncher extends IOSApplication.Delegate {
 
-    protected IOSMoeLauncher(Pointer peer) {
+    protected IOSLauncher(Pointer peer) {
         super(peer);
     }
 
@@ -326,7 +327,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
 	}
 
 	public static void main(String[] argv) {
-        UIKit.UIApplicationMain(0, null, null, IOSMoeLauncher.class.getName());
+        UIKit.UIApplicationMain(0, null, null, IOSLauncher.class.getName());
 	}
 }"""
 
