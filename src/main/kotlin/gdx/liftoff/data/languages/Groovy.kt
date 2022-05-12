@@ -14,7 +14,7 @@ import gdx.liftoff.views.JvmLanguage
 @Suppress("unused") // Class accessed via reflection.
 class Groovy : Language {
     override val id = "groovy"
-    override val version = "4.0.1"
+    override val version = "4.0.2"
 
     override fun initiate(project: Project) {
         project.rootGradle.plugins.add(id)
