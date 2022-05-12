@@ -11,11 +11,8 @@ The current Gradle version is 7.4.2 at the time of writing, and since gdx-liftof
 This allows new projects to "just work" on machines where Java 8 through 17 could be the default, and the moderate amount of configuration
 changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.10.0 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.10.0, which had a longer release cycle because there was an emphasis on fixing bugs
-in earlier releases. You may want to use the nightly version 1.10.1-SNAPSHOT if you target M1 Mac hardware, since just
-changing the libGDX version should be enough to make JARs run on M1 Macs. This project currently uses 1.10.1-SNAPSHOT
-for that reason, and gdx-liftoff should run on M1 Macs without needing Rosetta. You can choose any released version of
+Currently, gdx-liftoff projects depend on libGDX 1.11.0 by default, and allow using earlier versions or snapshots as well.
+The current version of libGDX is 1.11.0. You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
@@ -58,10 +55,9 @@ has updated to the latest Gradle (7.4.2).
             - LWJGL3 is almost the same as LWJGL2, but because it has better support for new hardware
               (such as high-DPI displays), it should probably be preferred. It also allows multiple windows and drag+drop.
                 - LWJGL3 itself supports Linux on arm32 and arm64 hardware, and libGDX since version 1.9.13 (current is
-                  1.10.0) also supports ARM Linux on desktop platforms.
-                - The new ARM Macs are so-far unsupported by LWJGL, but work is underway to make LWJGL3 run natively on this
-                  newest type of hardware, as well as on ARM Windows machines. This will only be usable by LWJGL3, not the
-                  older "legacy desktop" LWJGL2. LWJGL2 does appear to work via MacOS "Rosetta" emulation, though.
+                  1.11.0) also supports ARM Linux on desktop platforms.
+                - The new ARM Macs are now supported as of libGDX 1.11.0 when using the LWJGL3 backend.
+                  LWJGL2 does appear to work via macOS "Rosetta" emulation, though.
             - LWJGL2 should mostly be preferred if you need to also depend on gdx-tools, such as if you need to run the
               texture packer at runtime. Some machines have issues with an inconsistent or very high framerate with LWJGL3,
               and using the "Legacy" desktop can fix that. This platform can also be less compatible with some JDKs, and
@@ -90,7 +86,7 @@ has updated to the latest Gradle (7.4.2).
               template applications, first add a Viewport like you would for any other platform, and see if there is still
               an issue. If you still have clipping or a smaller view area, post an issue. Several changes happened in
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
-              for iOS projects to work more cleanly with libGDX 1.10.0 .
+              for iOS projects to work more cleanly with libGDX 1.10.0.
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
           Gradle 7.4.2, having an Android project present shouldn't interfere with other platforms or IDE integration, as
           long as your IDE supports Gradle 7.4.2 (current Android Studio and IDEA both support it).
@@ -144,7 +140,7 @@ has updated to the latest Gradle (7.4.2).
       project. Classic will show a white screen with a pixel-style face when you run, so it can be good to verify that
       a project works, while ApplicationAdapter is probably the easiest to bring an existing game into. The super-koalio
       demo is from libGDX's tests, and may act as a good way to test input and basic graphics in a new project.
-    - In Advanced, you can set the libGDX version (it defaults to 1.10.0, but can be set lower or higher) and
+    - In Advanced, you can set the libGDX version (it defaults to 1.11.0, but can be set lower or higher) and
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and
