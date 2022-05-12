@@ -240,10 +240,10 @@ For example, `core:clean` removes `build` folder only from the `core` project.""
         basic.destination.child("gradlew").file().setExecutable(true)
         basic.destination.child("gradlew.bat").file().setExecutable(true)
         logger.logNls("copyGradle")
-        val gradleTasks = advanced.gradleTasks
+        val gradleTasks = advanced.composeGradleTasks()
         if (gradleTasks.isNotEmpty()) {
             logger.logNls("runningGradleTasks")
-            val commands = determineGradleCommand() + advanced.gradleTasks
+            val commands = determineGradleCommand() + advanced.composeGradleTasks()
             logger.log(commands.joinToString(separator = " "))
             val process = ProcessBuilder(*commands).directory(basic.destination.file())
                 .redirectErrorStream(true).start()
