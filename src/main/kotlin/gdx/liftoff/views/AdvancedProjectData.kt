@@ -32,7 +32,7 @@ class AdvancedProjectData {
     val gdxVersion: String
         get() = gdxVersionField.text
 
-    fun wrangleVersion(text: String): String = (
+    private fun wrangleVersion(text: String): String = (
         if (text.length == 1 || text == "10")
             "1.$text" else if (text.startsWith("1."))
             text.substring(2) else text
@@ -67,7 +67,13 @@ class AdvancedProjectData {
         get() = wrangleVersion(serverJavaVersionField.model.text.removeSuffix(".0"))
 
     val desktopJavaVersion: String
-        get() = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
+        get() {
+            var djv = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
+            return if(djv.toDouble() < javaVersion.toDouble())
+                javaVersion
+            else
+                djv
+        }
 
     val generateSkin: Boolean
         get() = generateSkinButton.isChecked
