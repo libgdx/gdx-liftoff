@@ -6,7 +6,9 @@ import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
+import gdx.liftoff.data.libraries.official.Box2D
 import gdx.liftoff.data.libraries.official.Controllers
+import gdx.liftoff.data.libraries.official.Freetype
 import gdx.liftoff.data.platforms.*
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
@@ -993,6 +995,90 @@ class Lombok : ThirdPartyExtension() {
         addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
         // Lombok has special additional code that it needs for GWT.
         // That code is conditionally supplied in the gwt.kt file, in the platforms.
+    }
+}
+
+/**
+ * Add support for HyperLap2D libGDX runtime.
+ * @author fgnm
+ */
+@Extension
+class HyperLap2DRuntime : ThirdPartyExtension() {
+    override val id = "h2d"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/rednblackgames/hyperlap2d-runtime-libgdx"
+    override val group = "games.rednblack.hyperlap2d"
+    override val name = "runtime-libgdx"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "games.rednblack.hyperlap2d:runtime-libgdx")
+        addDependency(project, GWT.ID, "games.rednblack.hyperlap2d:runtime-libgdx:sources")
+        addGwtInherit(project, "HyperLap2D")
+
+        Box2D().initiate(project)
+        Freetype().initiate(project)
+        ArtemisOdb().initiate(project)
+    }
+}
+
+/**
+ * Add support for HyperLap2D Spine extension for libGDX runtime.
+ * @author fgnm
+ */
+@Extension
+class HyperLap2DSpineExtension : ThirdPartyExtension() {
+    override val id = "h2dSpineExtension"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/rednblackgames/h2d-libgdx-spine-extension"
+    override val group = "games.rednblack.hyperlap2d"
+    override val name = "libgdx-spine-extension"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "games.rednblack.hyperlap2d:libgdx-spine-extension")
+        addDependency(project, GWT.ID, "games.rednblack.hyperlap2d:libgdx-spine-extension:sources")
+        addGwtInherit(project, "HyperLap2D.spine")
+
+        SpineRuntime().initiate(project)
+    }
+}
+
+/**
+ * Add support for HyperLap2D TinyVG extension for libGDX runtime.
+ * @author fgnm
+ */
+@Extension
+class HyperLap2DTinyVGExtension : ThirdPartyExtension() {
+    override val id = "h2dTinyVGExtension"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/rednblackgames/h2d-libgdx-tinyvg-extension"
+    override val group = "games.rednblack.hyperlap2d"
+    override val name = "libgdx-tinyvg-extension"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "games.rednblack.hyperlap2d:libgdx-tinyvg-extension")
+        addDependency(project, GWT.ID, "games.rednblack.hyperlap2d:libgdx-tinyvg-extension:sources")
+
+        TinyVG().initiate(project)
+    }
+}
+
+/**
+ * Add support for HyperLap2D Typing Label extension for libGDX runtime.
+ * @author fgnm
+ */
+@Extension
+class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
+    override val id = "h2dTypingLabelExtension"
+    override val defaultVersion = "0.1.0"
+    override val url = "https://github.com/rednblackgames/h2d-libgdx-typinglabel-extension"
+    override val group = "games.rednblack.hyperlap2d"
+    override val name = "libgdx-typinglabel-extension"
+
+    override fun initiateDependencies(project: Project) {
+        addDependency(project, Core.ID, "games.rednblack.hyperlap2d:libgdx-typinglabel-extension")
+        addDependency(project, GWT.ID, "games.rednblack.hyperlap2d:libgdx-typinglabel-extension:sources")
+
+        TypingLabel().initiate(project)
     }
 }
 
