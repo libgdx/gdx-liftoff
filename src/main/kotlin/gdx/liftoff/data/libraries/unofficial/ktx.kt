@@ -16,7 +16,7 @@ import gdx.liftoff.views.Extension
 import khttp.get
 
 private const val defaultGroup = "io.github.libktx"
-private const val fallbackVersion = "1.10.0-b4"
+private const val fallbackVersion = "1.11.0-rc1"
 
 /**
  * Modular Kotlin utilities.

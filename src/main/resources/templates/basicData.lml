@@ -1,5 +1,6 @@
 <:root>
-    <validatable id="name" message="@namePrompt" textAlign="center" textFilter="fileNameFilter" tooltip="@nameTip" pad="4">
+    <validatable id="name" message="@namePrompt" textAlign="center" textFilter="fileNameFilter" tooltip="@nameTip"
+            text="$getName" onChange="setName" pad="4">
         <isNotEmpty error="@notEmpty|@name"/>
         <validator check="isValidFile" error="@nameNotValid"/>
     </validatable>

@@ -335,7 +335,7 @@ class MakeSomeNoise : ThirdPartyExtension() {
 @Extension
 class TypingLabel : ThirdPartyExtension() {
     override val id = "typingLabel"
-    override val defaultVersion = "1.2.0"
+    override val defaultVersion = "1.3.0"
     override val url = "https://github.com/rafaskb/typing-label"
     override val group = "com.rafaskoberg.gdx"
     override val name = "typing-label"
@@ -357,7 +357,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
     override val id = "textratypist"
-    override val defaultVersion = "0.2.0"
+    override val defaultVersion = "0.5.0"
     override val url = "https://github.com/tommyettinger/textratypist"
     override val group = "com.github.tommyettinger"
     override val name = "textratypist"
