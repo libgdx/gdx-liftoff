@@ -17,16 +17,16 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
 private const val defaultGroup = "com.crashinvaders.lml"
-private const val fallbackVersion = "1.9.1.10.0"
+private const val fallbackVersion = "1.10.1.11.0"
 
 /**
  * Various utilities for libGDX APIs including GUI building and dependency injection.
  * @author czyzby
- * @author metaphore (CrashInvaders)
+ * @author metaphore (Crashinvaders)
  */
 abstract class LmlExtension : Library {
     /**
-     * Latest version of gdx-lml libraries from the CrashInvaders fork.
+     * Latest version of gdx-lml libraries from the Crashinvaders fork.
      */
     override val defaultVersion = fallbackVersion
     override val repository = LmlRepository
