@@ -1666,11 +1666,7 @@ public enum ControlType {
                 content = """package ${project.basic.rootPackage}.service.controls.impl;
 
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.controllers.*;
 import com.badlogic.gdx.math.MathUtils;
 import ${project.basic.rootPackage}.configuration.preferences.ControlsData;
 import ${project.basic.rootPackage}.service.controls.AbstractButtonControl;
@@ -1731,21 +1727,23 @@ public class GamePadControl extends AbstractButtonControl {
 			return false;
 		}
 
-		@Override
-		public boolean povMoved(final Controller controller, final int povIndex, final PovDirection direction) {
-			if (isAssignedTo(controller)) {
-				if (direction != null) {
-					if (direction == PovDirection.center) {
-						stop();
-					} else {
-						movement.x = getX(direction);
-						movement.y = getY(direction);
-					}
-				}
-				return true;
-			}
-			return false;
-		}
+// This might be needed if using an older gdx-controllers version. The povMoved() method is not present in
+// the current version of gdx-controllers, and there isn't an immediately-clear replacement.
+//		@Override
+//		public boolean povMoved(final Controller controller, final int povIndex, final PovDirection direction) {
+//			if (isAssignedTo(controller)) {
+//				if (direction != null) {
+//					if (direction == PovDirection.center) {
+//						stop();
+//					} else {
+//						movement.x = getX(direction);
+//						movement.y = getY(direction);
+//					}
+//				}
+//				return true;
+//			}
+//			return false;
+//		}
 	};
 
 	public GamePadControl() {
