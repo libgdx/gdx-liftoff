@@ -18,7 +18,7 @@ const val REQUEST_TIMEOUT = 30.0
  * Interface for the supported Maven repositories. Fetches the latest versions of the registered libraries.
  */
 interface Repository {
-    /** Returns the latest version of "[group]:[name]" artefact in this Maven repository or null if unable to fetch. */
+    /** Returns the latest version of "[group]:[name]" artifact in this Maven repository or null if unable to fetch. */
     fun getLatestVersion(group: String, name: String): String?
 
     /**
@@ -65,7 +65,7 @@ interface Repository {
     object JitPack : CachedRepository() {
         override fun fetchLatestVersion(group: String, name: String): String? {
             return try {
-                val response = get("https://jitpack.io/api/builds/$group/$name/latestOk", timeout = REQUEST_TIMEOUT)
+                val response = get("https://jitpack.io/api/builds/$group/$name/latest", timeout = REQUEST_TIMEOUT)
                 // removeSurrounding gets rid of some broken version sections resulting from JitPack -SNAPSHOT usage.
                 response.jsonObject.getString("version").removeSurrounding("-", "-1")
             } catch (exception: Exception) {
