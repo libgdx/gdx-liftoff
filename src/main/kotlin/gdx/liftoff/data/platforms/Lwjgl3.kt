@@ -153,7 +153,7 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
             mainJar = jar.archiveFileName.get()
             if (os.contains('win')) {
                 imageOptions = ["--icon", "icons/logo.ico"]
-            } else if (os.contains('nix' || os.contains('nux') || os.contains('bsd'))) {
+            } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
                 imageOptions = ["--icon", "icons/logo.png"]
             } else if (os.contains('mac')) {
                 imageOptions = ["--icon", "icons/logo.icns", " --java-options", "\"XstartOnFirstThread\""]
