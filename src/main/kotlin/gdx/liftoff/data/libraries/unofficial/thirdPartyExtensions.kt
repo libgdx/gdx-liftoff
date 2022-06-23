@@ -1125,6 +1125,28 @@ class Juniper : ThirdPartyExtension() {
 	}
 }
 
+/**
+ * JDK interface support for GDX-style Data Structures. JDK 8+.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Jdkgdxds : ThirdPartyExtension() {
+	override val id = "jdkgdxds"
+	override val defaultVersion = "1.0.3"
+	override val url = "https://github.com/tommyettinger/jdkgdxds"
+	override val group = "com.github.tommyettinger"
+	override val name = "jdkgdxds"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds:sources")
+		addGwtInherit(project, "jdkgdxds")
+
+		Digital().initiate(project)
+	}
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
