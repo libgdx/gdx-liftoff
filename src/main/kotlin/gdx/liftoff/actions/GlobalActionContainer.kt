@@ -62,12 +62,20 @@ class GlobalActionContainer : ActionContainer {
         if (Strings.isBlank(input) || !Character.isJavaIdentifierStart(input[0]) || input.contains("..") || input.endsWith('.')) {
             return false
         }
-        for (id in 1 until input.length) {
-            if (!Character.isJavaIdentifierPart(input[id]) && input[id] != '.') {
-                return false
-            }
+		var previousDot = false
+		for (id in 1 until input.length) {
+			if(input[id] == '.')
+				previousDot = true
+			else {
+				if ((previousDot && !Character.isJavaIdentifierStart(input[id])) || !Character.isJavaIdentifierPart(input[id])) {
+					return false
+				}
+				previousDot = false
+			}
         }
-        if (!input.contains('.') || input.matches(Regex("(^\\.)|(\\.$)"))) {
+        if (!input.contains('.') || input.matches(Regex(
+				// case-insensitive check for any Java reserved word, then keep checking for Win32 reserved file/folder names.
+				"(?i).*(^|\\.)(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|double|do|else|enum|extends|false|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|null|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|true|try|void|volatile|while|_|con|prn|aux|nul|(com[1-9])|(lpt[1-9]))(\\.|$).*"))) {
             return false
         }
         return true
