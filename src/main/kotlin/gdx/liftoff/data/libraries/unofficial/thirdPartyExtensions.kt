@@ -1147,6 +1147,29 @@ class Jdkgdxds : ThirdPartyExtension() {
 	}
 }
 
+/**
+ * JSON support/translation for jdkgdxds to GDX. JDK 8+.
+ * @author Tommy Ettinger
+ */
+@Extension
+class JdkgdxdsInterop : ThirdPartyExtension() {
+	override val id = "jdkgdxdsInterop"
+	override val defaultVersion = "1.0.3.1"
+	override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
+	override val group = "com.github.tommyettinger"
+	override val name = "jdkgdxds_interop"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds_interop")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds_interop:sources")
+		addGwtInherit(project, "jdkgdxds_interop")
+
+		Jdkgdxds().initiate(project)
+		Juniper().initiate(project)
+	}
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
