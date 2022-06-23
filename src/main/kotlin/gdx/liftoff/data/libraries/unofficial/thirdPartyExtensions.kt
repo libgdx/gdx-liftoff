@@ -1082,6 +1082,27 @@ class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
     }
 }
 
+/**
+ * Common code for math and showing numbers.
+ * Optimal in projects that don't depend on libGDX, like server modules, because it duplicates some libGDX math code.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Digital : ThirdPartyExtension() {
+	override val id = "digital"
+	override val defaultVersion = "0.0.3"
+	override val url = "https://github.com/tommyettinger/digital"
+	override val group = "com.github.tommyettinger"
+	override val name = "digital"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:digital")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:digital:sources")
+		addGwtInherit(project, "digital")
+	}
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
