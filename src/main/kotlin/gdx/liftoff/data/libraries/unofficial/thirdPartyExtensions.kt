@@ -1103,6 +1103,28 @@ class Digital : ThirdPartyExtension() {
 	}
 }
 
+/**
+ * Random number generators with easy serialization.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Juniper : ThirdPartyExtension() {
+	override val id = "juniper"
+	override val defaultVersion = "0.0.2"
+	override val url = "https://github.com/tommyettinger/juniper"
+	override val group = "com.github.tommyettinger"
+	override val name = "juniper"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:juniper")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:juniper:sources")
+		addGwtInherit(project, "juniper")
+
+		Digital().initiate(project)
+	}
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
