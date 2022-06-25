@@ -1089,7 +1089,7 @@ class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
 @Extension
 class GdxMiniAudio : ThirdPartyExtension() {
 	override val id = "miniaudio"
-	override val defaultVersion = "0.1"
+	override val defaultVersion = "0.2"
 	override val url = "https://github.com/rednblackgames/gdx-miniaudio"
 	override val group = "games.rednblack.miniaudio"
 	override val name = "miniaudio"
