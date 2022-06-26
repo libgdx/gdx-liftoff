@@ -1083,6 +1083,37 @@ class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
 }
 
 /**
+ * Advanced Cross Platform Audio Engine for libGDX based on MiniAudio.
+ * @author fgnm
+ */
+@Extension
+class GdxMiniAudio : ThirdPartyExtension() {
+	override val id = "miniaudio"
+	override val defaultVersion = "0.2"
+	override val url = "https://github.com/rednblackgames/gdx-miniaudio"
+	override val group = "games.rednblack.miniaudio"
+	override val name = "miniaudio"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "games.rednblack.miniaudio:miniaudio")
+		addDependency(project, Lwjgl3.ID, "games.rednblack.miniaudio:miniaudio:natives-desktop")
+		addDependency(project, iOS.ID, "games.rednblack.miniaudio:miniaudio:natives-ios")
+		addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-armeabi-v7a")
+		addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-arm64-v8a")
+		addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-x86")
+		addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-x86_64")
+	}
+
+	override fun addNativeAndroidDependency(project: Project, dependency: String) {
+		if (dependency.count { it == ':' } > 1) {
+			super.addNativeAndroidDependency(project, dependency.substringBeforeLast(':') + ":\$${id}Version:" + dependency.substringAfterLast(':'))
+		} else {
+			super.addNativeAndroidDependency(project, dependency + ":\$${id}Version")
+		}
+	}
+}
+
+/**
  * Common code for math and showing numbers.
  * Optimal in projects that don't depend on libGDX, like server modules, because it duplicates some libGDX math code.
  * @author Tommy Ettinger
