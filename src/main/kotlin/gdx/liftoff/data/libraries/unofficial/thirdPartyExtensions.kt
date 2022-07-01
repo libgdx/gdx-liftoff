@@ -357,7 +357,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
     override val id = "textratypist"
-    override val defaultVersion = "0.5.0"
+    override val defaultVersion = "0.5.5"
     override val url = "https://github.com/tommyettinger/textratypist"
     override val group = "com.github.tommyettinger"
     override val name = "textratypist"
@@ -826,7 +826,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
     override val id = "guacamole"
-    override val defaultVersion = "0.3.1"
+    override val defaultVersion = "0.3.2"
     override val url = "https://github.com/crykn/guacamole"
     override val repository = Repository.JitPack
     override val group = "com.github.crykn"
@@ -841,7 +841,12 @@ class Guacamole : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
-        addGwtInherit(project, "guacamole_gdx_gwt")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:formic")
+		addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
+		addGwtInherit(project, "formic")
+
+		addGwtInherit(project, "guacamole_gdx_gwt")
     }
 }
 
@@ -869,7 +874,7 @@ class LibgdxOboe : ThirdPartyExtension() {
 @Extension
 class LibgdxScreenManager : ThirdPartyExtension() {
     override val id = "screenManager"
-    override val defaultVersion = "0.6.7"
+    override val defaultVersion = "0.6.8"
     override val url = "https://github.com/crykn/libgdx-screenmanager"
     override val repository = Repository.JitPack
     override val group = "com.github.crykn"
@@ -878,10 +883,11 @@ class LibgdxScreenManager : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
         addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
-        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:0.6.6")
-        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:0.6.6:sources")
+        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt")
+        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
         addGwtInherit(project, "libgdx_screenmanager")
         addGwtInherit(project, "libgdx_screenmanager_gwt")
+		Guacamole().initiate(project)
     }
 }
 
