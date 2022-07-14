@@ -1147,7 +1147,7 @@ class Digital : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
 	override val id = "juniper"
-	override val defaultVersion = "0.0.2"
+	override val defaultVersion = "0.0.3"
 	override val url = "https://github.com/tommyettinger/juniper"
 	override val group = "com.github.tommyettinger"
 	override val name = "juniper"

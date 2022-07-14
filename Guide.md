@@ -6,9 +6,9 @@ initially configured your project, and it is very far behind the times on its de
 The official setup may transition to a web-based tool soon, but any user of the Internet can recall times when
 formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 7.4.2, ahead of 7.3.3 for the official setup and 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 7.4.2 at the time of writing, and since gdx-liftoff 1.10.0.14, new projects use that 7.4.2 version.
-This allows new projects to "just work" on machines where Java 8 through 17 could be the default, and the moderate amount of configuration
+code, which is built on czyzby's code, gives us working projects that use Gradle 7.5, about the same as the official setup and ahead of 4.0.2 for czyzby's gdx-setup.
+The current Gradle version is 7.5 at the time of writing, and since gdx-liftoff 1.11.0.1, new projects use that 7.5 version.
+This allows new projects to "just work" on machines where Java 8 through 18 could be the default, and the moderate amount of configuration
 changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
 Currently, gdx-liftoff projects depend on libGDX 1.11.0 by default, and allow using earlier versions or snapshots as well.
@@ -36,7 +36,7 @@ kind of mitigation is a good thing to have, especially for new projects. It is d
 affected by a log4j-related issue, but the projects it creates should be as up-to-date and secure as we can get. New
 projects since 1.10.0.10 include a section of dependency constraints recommended by the Gradle team to block transitive
 dependencies on vulnerable log4j versions. Since this panicky series of updates in mid-late December 2021, gdx-liftoff
-has updated to the latest Gradle (7.4.2).
+has updated to the latest Gradle (7.5).
 
 ## Usage
 
@@ -69,11 +69,12 @@ has updated to the latest Gradle (7.4.2).
                   encounter this, switch to AdoptOpenJDK (bundling it with releases) or LWJGL3.
                 - The warnings on startup when using (legacy) desktop are somewhat important to note; even though they say
                   the application won't be allowed to start on future JDK versions, LWJGL 2 and 3 both will adapt to any
-                  inability to use certain internal APIs, and both should run perfectly fine on Java 16 and 17, even though those
-                  default to blocking what the warnings mention. Actually, Java 16 and 17 shouldn't emit these warnings at all.
+                  inability to use certain internal APIs, and both should run perfectly fine on Java 16 and up, even though those
+                  default to blocking what the warnings mention. Actually, Java 16 and up shouldn't emit these warnings at all.
                     - Even if you didn't build a JAR with Java 17, you can still run the generated JAR
                       with Java 17, and this may be a good idea for distribution because of some speed and stability
                       improvements in that JVM release. 17 is also an LTS release, and those tend to get more adoption.
+                    - Java 18 is out now, and supported by the current Gradle, but it isn't an LTS release.
         - iOS should probably *not* be checked if you aren't running MacOS and don't intend to later build an iOS
           app on a Mac. It needs some large dependencies to be downloaded when you first import the project.
             - If you have a Mac that is set up for iOS development, please try to generate any project and see if it gets
@@ -88,13 +89,12 @@ has updated to the latest Gradle (7.4.2).
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
               for iOS projects to work more cleanly with libGDX 1.10.0.
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
-          Gradle 7.4.2, having an Android project present shouldn't interfere with other platforms or IDE integration, as
-          long as your IDE supports Gradle 7.4.2 (current Android Studio and IDEA both support it).
+          Gradle 7.5, having an Android project present shouldn't interfere with other platforms or IDE integration, as
+          long as your IDE supports Gradle 7.5 (current Android Studio and IDEA both support it).
             - **You must set your project's JDK to a version 11 or higher** to use Android, due to a new requirement of the
               Android Gradle Plugin used by Android Studio and IDEA. JDK 11 is the most versatile option right now, because
-              it can be used with gdx-setup projects and Android projects. JDK 17 works, but since it requires Gradle 7.3 or
-              higher, you can't use it out-of-the-box with gdx-setup projects (they use Gradle 6.7.1). You could have to
-              open existing gdx-setup projects, so having JDK 11 installed is a good idea.
+              it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to
+              open older projects, so having JDK 11 installed is a good idea.
             - Having an Android module in a larger project changes some of IDEA's features, including disabling hot-swap.
               Some libGDX developers take the approach of having a separate Android-only project, keeping desktop platforms
               completely disconnected from Android. This also lets the assets be different, so it has other advantages.
@@ -144,10 +144,10 @@ has updated to the latest Gradle (7.4.2).
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and
-      Server modules, respectively. You can set `Java version` to as high as 17 if you have Java 17 installed, or
-      similarly for Java 11, 12, 13, 14, 15, or 16, but it will require users to also have Java of that version, or for you
+      Server modules, respectively. You can set `Java version` to as high as 18 if you have Java 18 installed, or
+      similarly for Java 11, 12, 13, 14, 15, 16, or 17, but it will require users to also have Java of that version, or for you
       to distribute a JRE of the appropriate version with your game.
-        - Distributing Java 14, 15, 16, or 17 is much easier now thanks to Beryx'
+        - Distributing Java 14, 15, 16, 17, or 18 is much easier now thanks to Beryx'
           "[Badass Runtime Plugin](https://github.com/raeleus/skin-composer/wiki/Deploying-libGDX-with-jpackage-and-Badass-Runtime),"
           which may be included in future versions to help ease the process of releasing a game.
         - HTML projects this generates always use language level 8, even if the JDK is newer. A comment in
@@ -181,7 +181,7 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 - If you had the GWT option checked in the setup and have a non-empty template,
   you can go through the slightly slow, but simple, build for GWT, probably using the `superDev`
   task for the `gwt` module, or also possibly the `dist` task in that module.
-    - GWT builds have gotten much faster with Gradle 7.4.2 (since Gradle 6, really) and some adjustments to
+    - GWT builds have gotten much faster with Gradle 7.5 (since Gradle 6, really) and some adjustments to
       configuration, so if you were avoiding GWT builds because of slow compile times, you might want to try again.
 - If you had the iOS option checked in the setup, you're running Mac OS X,
   and you have followed all the steps for iOS development with libGDX, maybe you can run
@@ -196,7 +196,7 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 Gradle has some quirks. Here's some notes on things you might encounter during upgrades from
 other projects or older versions.
 
- - All builds currently use Gradle 7.4.2 with the "api/implementation/compile fiasco" resolved. Adding dependencies
+ - All builds currently use Gradle 7.5 with the "api/implementation/compile fiasco" resolved. Adding dependencies
   will use the `api` keyword instead of the `compile` keyword it used in earlier versions. All modules use the
   `java-library` plugin, which enables the `api` keyword for dependencies.
    - You can use the `implementation` keyword for dependencies in any module except `core`; this is supposed to
