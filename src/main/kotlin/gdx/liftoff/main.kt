@@ -62,7 +62,17 @@ fun startNewJvmIfRequired(): Boolean {
     jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().inputArguments)
     jvmArgs.add("-cp")
     jvmArgs.add(System.getProperty("java.class.path"))
-    jvmArgs.add(System.getenv("JAVA_MAIN_CLASS_$pid"))
+    var mainClass = System.getenv("JAVA_MAIN_CLASS_$pid")
+    if (mainClass == null) {
+        val trace = Thread.currentThread().stackTrace
+        mainClass = if (trace.isNotEmpty()) {
+            trace[trace.size - 1].className
+        } else {
+            System.err.println("The main class could not be determined.")
+            return false
+        }
+    }
+    jvmArgs.add(mainClass!!)
     try {
         val process = ProcessBuilder(jvmArgs).redirectErrorStream(true).start()
         val processOutput = BufferedReader(InputStreamReader(process.inputStream))
