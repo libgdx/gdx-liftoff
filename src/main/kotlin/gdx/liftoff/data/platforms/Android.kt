@@ -215,11 +215,8 @@ task copyAndroidNatives() {
     	}
 	}
 }
-
-tasks.whenTaskAdded { packageTask ->
-  if (packageTask.name.contains("package")) {
+tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") }.configureEach { packageTask ->
     packageTask.dependsOn 'copyAndroidNatives'
-  }
 }
 
 task run(type: Exec) {
