@@ -357,7 +357,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
     override val id = "textratypist"
-    override val defaultVersion = "0.6.1"
+    override val defaultVersion = "0.6.2"
     override val url = "https://github.com/tommyettinger/textratypist"
     override val group = "com.github.tommyettinger"
     override val name = "textratypist"
@@ -1127,7 +1127,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
 	override val id = "digital"
-	override val defaultVersion = "0.0.3"
+	override val defaultVersion = "0.0.4"
 	override val url = "https://github.com/tommyettinger/digital"
 	override val group = "com.github.tommyettinger"
 	override val name = "digital"
