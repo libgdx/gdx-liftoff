@@ -241,6 +241,11 @@ task superDev(type: GwtSuperDev) {
         gwt.modules = gwt.devModules
     }
 }
+
+//// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.
+//// The war/ folder shouldn't be committed to version control.
+clean.delete += [file("war")]
+
 // This next line can be changed if you want to, for instance, always build into the
 // docs/ folder of a Git repo, which can be set to automatically publish on GitHub Pages.
 // This is relative to the html/ folder.
