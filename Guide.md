@@ -6,8 +6,8 @@ initially configured your project, and it is very far behind the times on its de
 The official setup may transition to a web-based tool soon, but any user of the Internet can recall times when
 formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 7.5, about the same as the official setup and ahead of 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 7.5 at the time of writing, and since gdx-liftoff 1.11.0.1, new projects use that 7.5 version.
+code, which is built on czyzby's code, gives us working projects that use Gradle 7.5.1, about the same as the official setup and ahead of 4.0.2 for czyzby's gdx-setup.
+The current Gradle version is 7.5.1 at the time of writing, and since gdx-liftoff 1.11.0.3, new projects use that 7.5.1 version.
 This allows new projects to "just work" on machines where Java 8 through 18 could be the default, and the moderate amount of configuration
 changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
@@ -36,7 +36,7 @@ kind of mitigation is a good thing to have, especially for new projects. It is d
 affected by a log4j-related issue, but the projects it creates should be as up-to-date and secure as we can get. New
 projects since 1.10.0.10 include a section of dependency constraints recommended by the Gradle team to block transitive
 dependencies on vulnerable log4j versions. Since this panicky series of updates in mid-late December 2021, gdx-liftoff
-has updated to the latest Gradle (7.5).
+has updated to the latest Gradle (7.5.1).
 
 ## Usage
 
@@ -89,8 +89,8 @@ has updated to the latest Gradle (7.5).
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
               for iOS projects to work more cleanly with libGDX 1.10.0.
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
-          Gradle 7.5, having an Android project present shouldn't interfere with other platforms or IDE integration, as
-          long as your IDE supports Gradle 7.5 (current Android Studio and IDEA both support it).
+          Gradle 7.5.1, having an Android project present shouldn't interfere with other platforms or IDE integration, as
+          long as your IDE supports Gradle 7.5.1 (current Android Studio and IDEA both support it).
             - **You must set your project's JDK to a version 11 or higher** to use Android, due to a new requirement of the
               Android Gradle Plugin used by Android Studio and IDEA. JDK 11 is the most versatile option right now, because
               it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to
@@ -181,7 +181,7 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 - If you had the GWT option checked in the setup and have a non-empty template,
   you can go through the slightly slow, but simple, build for GWT, probably using the `superDev`
   task for the `gwt` module, or also possibly the `dist` task in that module.
-    - GWT builds have gotten much faster with Gradle 7.5 (since Gradle 6, really) and some adjustments to
+    - GWT builds have gotten much faster with Gradle 7.5.1 (since Gradle 6, really) and some adjustments to
       configuration, so if you were avoiding GWT builds because of slow compile times, you might want to try again.
 - If you had the iOS option checked in the setup, you're running Mac OS X,
   and you have followed all the steps for iOS development with libGDX, maybe you can run
@@ -196,7 +196,7 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 Gradle has some quirks. Here's some notes on things you might encounter during upgrades from
 other projects or older versions.
 
- - All builds currently use Gradle 7.5 with the "api/implementation/compile fiasco" resolved. Adding dependencies
+ - All builds currently use Gradle 7.5.1 with the "api/implementation/compile fiasco" resolved. Adding dependencies
   will use the `api` keyword instead of the `compile` keyword it used in earlier versions. All modules use the
   `java-library` plugin, which enables the `api` keyword for dependencies.
    - You can use the `implementation` keyword for dependencies in any module except `core`; this is supposed to
