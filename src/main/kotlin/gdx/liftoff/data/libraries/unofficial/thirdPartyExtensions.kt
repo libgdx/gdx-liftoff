@@ -991,7 +991,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
 @Extension
 class Lombok : ThirdPartyExtension() {
     override val id = "lombok"
-    override val defaultVersion = "1.18.20"
+    override val defaultVersion = "1.18.24"
     override val url = "https://projectlombok.org/"
     override val group = "org.projectlombok"
     override val name = "lombok"
@@ -999,8 +999,8 @@ class Lombok : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "org.projectlombok:lombok")
         addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
-        // Lombok has special additional code that it needs for GWT.
-        // That code is conditionally supplied in the gwt.kt file, in the platforms.
+		project.rootGradle.buildDependencies.add("\"io.freefair.gradle:lombok-plugin:6.5.0.3\"")
+		project.rootGradle.plugins.add("io.freefair.lombok")
     }
 }
 
