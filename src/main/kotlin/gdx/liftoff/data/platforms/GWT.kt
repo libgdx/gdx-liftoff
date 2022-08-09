@@ -316,5 +316,33 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
-"""
+""" + (
+        if (project.extensions.hasExtensionSelected("lombok")) """
+
+configurations { lom }
+dependencies {
+    lom "org.projectlombok:lombok:${'$'}{lombokVersion}"
+    implementation configurations.lom.dependencies
+    annotationProcessor configurations.lom.dependencies
+}
+
+draftCompileGwt {
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
+}
+
+compileGwt {
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
+}
+
+superDev {
+    doFirst {
+        jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
+    }
+}
+""" else ""
+        )
 }
