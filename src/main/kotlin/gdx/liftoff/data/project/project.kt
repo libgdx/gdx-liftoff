@@ -105,8 +105,9 @@ class Project(
     private fun addBasicFiles() {
         // Adding global assets folder:
         files.add(SourceDirectory(Assets.ID, ""))
-        // Adding .gitignore:
+        // Adding .gitignore and .gitattributes:
         files.add(CopiedFile(path = ".gitignore", original = path("generator", "gitignore")))
+        files.add(CopiedFile(path = ".gitattributes", original = path("generator", "gitattributes")))
     }
 
     private fun addJvmLanguagesSupport() {
