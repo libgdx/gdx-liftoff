@@ -34,12 +34,12 @@ com_crashlytics_export_strings.xml
 /ios/robovm-build/
 
 ## iOS:
-/ios/xcode/*.xcodeproj/*
-!/ios/xcode/*.xcodeproj/xcshareddata
-!/ios/xcode/*.xcodeproj/project.pbxproj
-/ios/xcode/native/
-/ios/IOSLauncher.app
-/ios/IOSLauncher.app.dSYM
+/ios-moe/xcode/*.xcodeproj/*
+!/ios-moe/xcode/*.xcodeproj/xcshareddata
+!/ios-moe/xcode/*.xcodeproj/project.pbxproj
+/ios-moe/xcode/native/
+/ios-moe/IOSLauncher.app
+/ios-moe/IOSLauncher.app.dSYM
 
 ## GWT:
 /html/war/
