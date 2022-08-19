@@ -32,6 +32,8 @@ com_crashlytics_export_strings.xml
 
 ## Robovm:
 /ios/robovm-build/
+/ios/IOSLauncher.app
+/ios/IOSLauncher.app.dSYM
 
 ## iOS:
 /ios-moe/xcode/*.xcodeproj/*
