@@ -357,7 +357,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
     override val id = "textratypist"
-    override val defaultVersion = "0.7.1"
+    override val defaultVersion = "0.7.3"
     override val url = "https://github.com/tommyettinger/textratypist"
     override val group = "com.github.tommyettinger"
     override val name = "textratypist"
@@ -898,7 +898,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 @Extension
 class TuningFork : ThirdPartyExtension() {
     override val id = "tuningFork"
-    override val defaultVersion = "0.2.2"
+    override val defaultVersion = "2.0.1"
     override val url = "https://github.com/Hangman/TuningFork"
     override val repository = Repository.JitPack
     override val group = "com.github.Hangman"
@@ -1127,7 +1127,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
 	override val id = "digital"
-	override val defaultVersion = "0.1.1"
+	override val defaultVersion = "0.1.3"
 	override val url = "https://github.com/tommyettinger/digital"
 	override val group = "com.github.tommyettinger"
 	override val name = "digital"
@@ -1141,13 +1141,33 @@ class Digital : ThirdPartyExtension() {
 }
 
 /**
+ * Many Java 8 FunctionalInterface-s for primitives.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Funderby : ThirdPartyExtension() {
+	override val id = "funderby"
+	override val defaultVersion = "0.0.1"
+	override val url = "https://github.com/tommyettinger/funderby"
+	override val group = "com.github.tommyettinger"
+	override val name = "funderby"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:funderby")
+
+		addDependency(project, GWT.ID, "com.github.tommyettinger:funderby:sources")
+		addGwtInherit(project, "funderby")
+	}
+}
+
+/**
  * Random number generators with easy serialization.
  * @author Tommy Ettinger
  */
 @Extension
 class Juniper : ThirdPartyExtension() {
 	override val id = "juniper"
-	override val defaultVersion = "0.1.3"
+	override val defaultVersion = "0.1.4"
 	override val url = "https://github.com/tommyettinger/juniper"
 	override val group = "com.github.tommyettinger"
 	override val name = "juniper"
@@ -1180,6 +1200,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds:sources")
 		addGwtInherit(project, "jdkgdxds")
 
+		Funderby().initiate(project)
 		Digital().initiate(project)
 	}
 }
@@ -1191,7 +1212,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
 	override val id = "jdkgdxdsInterop"
-	override val defaultVersion = "1.0.3.1"
+	override val defaultVersion = "1.0.4.0"
 	override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
 	override val group = "com.github.tommyettinger"
 	override val name = "jdkgdxds_interop"
