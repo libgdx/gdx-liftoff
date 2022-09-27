@@ -28,7 +28,9 @@ class GlobalActionContainer : ActionContainer {
         try {
             val file = Gdx.files.absolute(path)
             if (file.isDirectory) {
-                return (file.child("tools").isDirectory || file.child("cmdline-tools").isDirectory) && file.child("platforms").isDirectory
+                return (file.child("tools").isDirectory ||
+					file.child("cmdline-tools").isDirectory ||
+					file.child("build-tools").isDirectory) && file.child("platforms").isDirectory
             }
         } catch (exception: Exception) {
             Exceptions.ignore(exception) // Probably not the Android SDK.
