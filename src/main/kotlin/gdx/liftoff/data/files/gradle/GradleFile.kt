@@ -31,8 +31,7 @@ abstract class GradleFile private constructor(override val path: String) : Proje
      * @param dependency will be added as an "implementation" or "api" dependency, quoted.
      */
     fun addDependency(dependency: String) {
-		if(!dependency.endsWith(":sources"))
-			dependencies.add("\"$dependency\"")
+		dependencies.add("\"$dependency\"")
 	}
 
     /**

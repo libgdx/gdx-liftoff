@@ -160,7 +160,7 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 		buildDependencies.add("project(':${Core.ID}')")
         addSpecialDependency("gwt project(':${Core.ID}')")
 
-        addSpecialDependency("gwt com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
+        addSpecialDependency("gwt \"com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion\"")
     }
 
     override fun getContent(): String = """

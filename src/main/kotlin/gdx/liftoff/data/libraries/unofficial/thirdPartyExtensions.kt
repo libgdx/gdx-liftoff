@@ -841,10 +841,11 @@ class Guacamole : ThirdPartyExtension() {
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
 
 		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:formic:\$formicVersion\"")
-		addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
 		addGwtInherit(project, "formic")
 
 		addGwtInherit(project, "guacamole_gdx_gwt")
+		if(project.platforms.containsKey(GWT.ID))
+			Formic().initiate(project)
     }
 }
 
@@ -882,7 +883,6 @@ class LibgdxScreenManager : ThirdPartyExtension() {
         addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
         addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
         addSpecialDependency(project, GWT.ID, "gwt \"com.github.crykn:libgdx-screenmanager-gwt:\$screenManagerVersion\"")
-        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
         addGwtInherit(project, "libgdx_screenmanager")
         addGwtInherit(project, "libgdx_screenmanager_gwt")
 		Guacamole().initiate(project)
@@ -1133,7 +1133,7 @@ class Digital : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:digital")
 
-		addDependency(project, GWT.ID, "com.github.tommyettinger:digital:sources")
+		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:digital:\$digitalVersion\"")
 		addGwtInherit(project, "digital")
 	}
 }
@@ -1195,7 +1195,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds")
 
-		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds:sources")
+		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:jdkgdxds:\$jdkgdxdsVersion\"")
 		addGwtInherit(project, "jdkgdxds")
 
 		Funderby().initiate(project)
@@ -1218,7 +1218,7 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds_interop")
 
-		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds_interop:sources")
+		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:jdkgdxds_interop:\$jdkgdxdsInteropVersion\"")
 		addGwtInherit(project, "jdkgdxds_interop")
 
 		Jdkgdxds().initiate(project)
