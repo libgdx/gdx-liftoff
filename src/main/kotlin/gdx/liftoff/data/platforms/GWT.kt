@@ -157,12 +157,10 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 
 class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
     init {
-        buildDependencies.add("project(':${Core.ID}')")
-        dependencies.add("project(':${Core.ID}')")
+		buildDependencies.add("project(':${Core.ID}')")
+        addSpecialDependency("gwt project(':${Core.ID}')")
 
-        addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion:sources")
-        addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
-        addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
+        addSpecialDependency("gwt com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
     }
 
     override fun getContent(): String = """
@@ -294,11 +292,12 @@ task dist(dependsOn: [clean, compileGwt]) {
 
 task addSource {
     doLast {
-        sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
-        ${if (project.hasPlatform(Shared.ID)) "sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
+        DomainObjectSet<ProjectDependency> gwtDeps = project.configurations.gwt.dependencies.withType ProjectDependency
+        gwtDeps.forEach {ProjectDependency gwtDep ->
+            sourceSets.main.compileClasspath += files(project(gwtDep.dependencyProject.path).sourceSets.main.allJava.srcDirs)
+        }
     }
 }
-
 task distZip(type: Zip, dependsOn: dist){
     //// This uses the output of the dist task, which removes the superdev button from index.html .
     from(outputPath)

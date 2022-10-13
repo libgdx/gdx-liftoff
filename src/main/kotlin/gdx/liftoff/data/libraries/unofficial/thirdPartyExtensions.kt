@@ -56,9 +56,7 @@ class ArtemisOdb : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb")
 
-        addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt")
-        addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt:sources")
-        addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:sources")
+        addSpecialDependency(project, GWT.ID, "gwt \"net.onedaybeard.artemis:artemis-odb-gwt:\$artemisOdbVersion\"")
         addGwtInherit(project, "com.artemis.backends.artemis_backends_gwt")
         if (project.hasPlatform(GWT.ID)) {
             project.files.add(
@@ -139,7 +137,7 @@ class Facebook : ThirdPartyExtension() {
 //        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
-        addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html")
+        addSpecialDependency(project, GWT.ID, "gwt \"de.tomgrill.gdxfacebook:gdx-facebook-html:\$facebookVersion\"")
         addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html:sources")
         addGwtInherit(project, "de.tomgrill.gdxfacebook.html.gdx_facebook_gwt")
     }
@@ -167,7 +165,7 @@ class Dialogs : ThirdPartyExtension() {
         addDependency(project, iOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
 
         addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core:sources")
-        addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html")
+        addSpecialDependency(project, GWT.ID, "gwt \"de.tomgrill.gdxdialogs:gdx-dialogs-html:\$dialogsVersion\"")
         addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html:sources")
         addGwtInherit(project, "de.tomgrill.gdxdialogs.html.gdx_dialogs_html")
     }
@@ -222,7 +220,7 @@ class JaciGwt : ThirdPartyExtension() {
     override val name = "jaci-libgdx-cli-gwt"
 
     override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "com.github.ykrasik:jaci-libgdx-cli-gwt")
+        addSpecialDependency(project, Core.ID, "gwt \"com.github.ykrasik:jaci-libgdx-cli-gwt:\$jaciGwtVersion\"")
 
         addDependency(project, GWT.ID, "com.github.ykrasik:jaci-libgdx-cli-gwt:sources")
         addGwtInherit(project, "com.github.ykrasik.jaci")
@@ -595,7 +593,7 @@ class ControllerUtils : ThirdPartyExtension() {
         addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
         addDependency(project, iOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
 
-        addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt")
+        addSpecialDependency(project, GWT.ID, "gwt \"de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:\$controllerUtilsVersion\"")
         addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:sources")
         addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:sources")
         addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
@@ -662,7 +660,7 @@ class GdxVfxCore : ThirdPartyExtension() {
         addDependency(project, Core.ID, "com.crashinvaders.vfx:gdx-vfx-core")
 
         addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-core:sources")
-        addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt")
+        addSpecialDependency(project, GWT.ID, "gwt \"com.crashinvaders.vfx:gdx-vfx-gwt:\$gdxVfxCoreVersion\"")
         addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt:sources")
         addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxCore")
         addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxGwt")
@@ -839,10 +837,10 @@ class Guacamole : ThirdPartyExtension() {
         addDependency(project, Lwjgl3.ID, "com.github.crykn.guacamole:gdx-desktop")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:core:sources")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
-        addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
+        addSpecialDependency(project, GWT.ID, "gwt \"com.github.crykn.guacamole:gdx-gwt:\$guacamoleVersion\"")
         addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
 
-		addDependency(project, GWT.ID, "com.github.tommyettinger:formic")
+		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:formic:\$formicVersion\"")
 		addDependency(project, GWT.ID, "com.github.tommyettinger:formic:sources")
 		addGwtInherit(project, "formic")
 
@@ -883,7 +881,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
         addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
-        addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt")
+        addSpecialDependency(project, GWT.ID, "gwt \"com.github.crykn:libgdx-screenmanager-gwt:\$screenManagerVersion\"")
         addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
         addGwtInherit(project, "libgdx_screenmanager")
         addGwtInherit(project, "libgdx_screenmanager_gwt")
@@ -976,11 +974,11 @@ class GdxBasisUniversal : ThirdPartyExtension() {
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
         addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86_64")
-        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt")
+        addSpecialDependency(project, GWT.ID, "gwt \"com.crashinvaders.basisu:basisu-gdx-gwt\$${id}Version\"")
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt:sources")
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx:sources")
         addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:sources")
-        addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
+        addSpecialDependency(project, GWT.ID, "gwt \"com.crashinvaders.basisu:basisu-wrapper:natives-web:\$${id}Version\"")
         addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
     }
 }
@@ -1127,7 +1125,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
 	override val id = "digital"
-	override val defaultVersion = "0.1.3"
+	override val defaultVersion = "0.1.4"
 	override val url = "https://github.com/tommyettinger/digital"
 	override val group = "com.github.tommyettinger"
 	override val name = "digital"
@@ -1167,7 +1165,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
 	override val id = "juniper"
-	override val defaultVersion = "0.1.4"
+	override val defaultVersion = "0.1.6"
 	override val url = "https://github.com/tommyettinger/juniper"
 	override val group = "com.github.tommyettinger"
 	override val name = "juniper"
@@ -1212,7 +1210,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
 	override val id = "jdkgdxdsInterop"
-	override val defaultVersion = "1.0.4.0"
+	override val defaultVersion = "1.0.4.1"
 	override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
 	override val group = "com.github.tommyettinger"
 	override val name = "jdkgdxds_interop"

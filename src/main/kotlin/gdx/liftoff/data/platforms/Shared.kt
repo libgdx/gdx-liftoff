@@ -27,7 +27,7 @@ class Shared : Platform {
         }
         if (project.hasPlatform(GWT.ID)) {
             // Including shared project sources in GWT platform:
-            project.getGradleFile(GWT.ID).buildDependencies.add("project(':$id')")
+            project.getGradleFile(GWT.ID).addSpecialDependency("gwt project(':$id')")
         }
     }
 }
