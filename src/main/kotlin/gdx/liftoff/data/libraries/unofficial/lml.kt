@@ -123,7 +123,8 @@ class Autumn : LmlExtension() {
 
         addDependency(project, Android.ID, "$group:gdx-autumn-android")
 
-        addSpecialDependency(project, GWT.ID, "gwt \"$group:gdx-autumn-gwt:\$autumnVersion\"")
+        addDependency(project, GWT.ID, "$group:gdx-autumn-gwt")
+        addDependency(project, GWT.ID, "$group:gdx-autumn-gwt:sources")
         addGwtInherit(project, "com.github.czyzby.autumn.gwt.GdxAutumnGwt")
 
         Kiwi().initiate(project)
@@ -177,7 +178,7 @@ class WebSocket : WebSocketExtension() {
         addAndroidPermission(project, "android.permission.INTERNET")
 
         addDependency(project, GWT.ID, "$group.gdx-websockets:core:sources")
-        addSpecialDependency(project, GWT.ID, "gwt \"$group.gdx-websockets:html:\$websocketVersion\"")
+        addDependency(project, GWT.ID, "$group.gdx-websockets:html")
         addDependency(project, GWT.ID, "$group.gdx-websockets:html:sources")
         addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocket")
         addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketGwt")
