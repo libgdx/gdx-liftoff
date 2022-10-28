@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.badlogic.gdx.utils.GdxRuntimeException
+import com.badlogic.gdx.utils.SharedLibraryLoader
 import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
 import com.github.czyzby.autumn.mvc.application.AutumnApplication
@@ -89,7 +90,13 @@ fun startNewJvmIfRequired(): Boolean {
 }
 
 fun main() {
-    if (startNewJvmIfRequired()) return
+	// Allows the application to be run on macOS without needing the pesky -XstartOnFirstThread argument.
+	if(SharedLibraryLoader.isMac) {
+		org.lwjgl.system.Configuration.GLFW_LIBRARY_NAME.set("glfw_async")
+	}
+	// I don't think we need this anymore.
+//    if (startNewJvmIfRequired()) return
+
     val config = Lwjgl3ApplicationConfiguration()
     config.setTitle("gdx-liftoff")
     config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
@@ -128,16 +135,16 @@ fun main() {
             },
             config
         )
-    } catch (error: ExceptionInInitializerError) {
-        if (OsUtils.isMac() && error.cause is IllegalStateException) {
-            if (error.stackTraceToString().contains("XstartOnFirstThread")) {
-                println(
-                    "Application was not launched on first thread. " +
-                        "Add VM argument -XstartOnFirstThread to avoid this."
-                )
-            }
-        }
-        throw error
+//    } catch (error: ExceptionInInitializerError) {
+//        if (OsUtils.isMac() && error.cause is IllegalStateException) {
+//            if (error.stackTraceToString().contains("XstartOnFirstThread")) {
+//                println(
+//                    "Application was not launched on first thread. " +
+//                        "Add VM argument -XstartOnFirstThread to avoid this."
+//                )
+//            }
+//        }
+//        throw error
     } catch (error: GdxRuntimeException) {
         Lwjgl3Application(
             object : AutumnApplication(FallbackDesktopClassScanner(), Root::class.java) {
