@@ -85,14 +85,14 @@ package ${project.basic.rootPackage}.lwjgl3
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import com.badlogic.gdx.utils.SharedLibraryLoader
-import org.lwjgl.system.Configuration
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {
     // Allows the application to be run on macOS without needing the pesky -XstartOnFirstThread argument.
-    if(SharedLibraryLoader.isMac) {
-        Configuration.GLFW_LIBRARY_NAME.set("glfw_async")
+    // We check that Gdx.app is null to ensure that the app hasn't started already (this can't be set twice).
+    if(SharedLibraryLoader.isMac && Gdx.app == null) {
+        org.lwjgl.system.Configuration.GLFW_LIBRARY_NAME.set("glfw_async")
     }
     Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("${project.basic.name}")
