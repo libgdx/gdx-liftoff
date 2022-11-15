@@ -12,6 +12,7 @@ import com.github.czyzby.autumn.context.ContextInitializer
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
 import com.github.czyzby.autumn.mvc.application.AutumnApplication
 import com.github.czyzby.autumn.nongwt.scanner.FallbackDesktopClassScanner
+import com.kotcrab.vis.ui.util.OsUtils
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.views.Extension
 import gdx.liftoff.views.GdxPlatform
@@ -90,8 +91,7 @@ fun startNewJvmIfRequired(): Boolean {
 
 fun main() {
 	// Allows the application to be run on macOS without needing the pesky -XstartOnFirstThread argument.
-	// We check that Gdx.app is null to ensure that the app hasn't started already (this can't be set twice).
-	if(SharedLibraryLoader.isMac && Gdx.app == null) {
+	if(SharedLibraryLoader.isMac) {
 		org.lwjgl.system.Configuration.GLFW_LIBRARY_NAME.set("glfw_async")
 	}
 	// I don't think we need this anymore.
