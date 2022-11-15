@@ -97,6 +97,11 @@ def os = System.properties['os.name'].toLowerCase()
 run {
 	workingDir = rootProject.file('assets').path
 	setIgnoreExitValue(true)
+
+	if (os.contains('mac')) {
+		// Required to run LWJGL3 Java apps on MacOS
+		jvmArgs += "-XstartOnFirstThread"
+	}
 }
 
 jar {
@@ -151,7 +156,7 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
             } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
                 imageOptions = ["--icon", "icons/logo.png"]
             } else if (os.contains('mac')) {
-                imageOptions = ["--icon", "icons/logo.icns"]
+                imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
             }
         }
     }

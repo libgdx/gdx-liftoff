@@ -345,8 +345,6 @@ public class IOSLauncher extends IOSApplication.Delegate {
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.utils.SharedLibraryLoader;
-import org.lwjgl.system.Configuration;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL3) application. */
@@ -356,10 +354,6 @@ public class Lwjgl3Launcher {
 	}
 
 	private static Lwjgl3Application createApplication() {
-		// Allows the application to be run on macOS without needing the pesky -XstartOnFirstThread argument.
-		if (SharedLibraryLoader.isMac) {
-			Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
-		}
 		return new Lwjgl3Application(new ${project.basic.mainClass}(), getDefaultConfiguration());
 	}
 
