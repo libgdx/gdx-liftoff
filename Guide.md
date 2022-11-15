@@ -205,7 +205,7 @@ other projects or older versions.
   JitPack dependencies in particular may take up to 15 minutes to become available if you're using any of those,
   like gdx-gltf. In IntelliJ IDEA, the `Reimport all Gradle projects` button is a pair of circling arrows in the
   Gradle tool window, which can be opened with `View -> Tool Windows -> Gradle`.
- - Like the official gdx-setup, the now-shut-down `jcenter()` repo will not be used in new projects.
+ - Like the official gdx-setup, the soon-to-be-shut-down `jcenter()` repo will not be used in new projects.
    - In earlier versions, jcenter() was last in the list because of a different flaw it had that allowed impersonation. 
    You may have guessed that I am not sad to see it shut down in favor of better alternatives.
    It's still annoying to have to deal with it closing on short notice, though.
@@ -215,13 +215,12 @@ other projects or older versions.
 - MacOS does not like the legacy desktop apps, showing all sorts of visual glitches.
   It seems to work fine with LWJGL3, in part because that platform had special attention
   paid to it so the `gradlew lwjgl3:run` command can work at all on MacOS.
-    - New projects that use LWJGL3 now set GLFW's `glfw_async` configuration, which means
-      they don't need `-XstartOnFirstThread` any more. This applies to gdx-liftoff as well.
-      - Both Java and Kotlin templates for LWJGL3 include this change.
-      - This only works if targeting libGDX 1.11.0 or newer, and the whole `if(SharedLibraryLoader.isMac)`
-        block in Lwjgl3Launcher must be removed if you have to target older libGDX versions.
+    - Consider adding the third-party extension Guacamole to handle a special MacOS/LWJGL3 requirement (it
+      needs `-XstartOnFirstThread` to be passed to the `java` command, but Guacamole can handle this for you
+      and your users).
     - Apps for end-users have to include a bundled JRE to be distributed via the Mac App Store, and it's generally a
-      good idea to distribute your JRE of choice, so you know what bugs to expect.
+      good idea to distribute your JRE of choice, so you know what bugs to expect. If you bundle a JRE, you can set the
+      launcher to use `-XstartOnFirstThread`, and so don't need Guacamole for that.
 - Android hasn't been tested enough, and the generated manifest is probably not very good.
     - You can modify the manifest, and probably need to do so if you want to submit an app to the Play store.
     - Android Studio should have better support for recent Gradle versions if you use a beta release.
