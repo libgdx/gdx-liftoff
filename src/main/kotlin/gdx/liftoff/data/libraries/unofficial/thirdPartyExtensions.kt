@@ -445,7 +445,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
     override val id = "colorful"
-    override val defaultVersion = "0.8.2"
+    override val defaultVersion = "0.8.4"
     override val url = "https://github.com/tommyettinger/colorful-gdx"
     override val group = "com.github.tommyettinger"
     override val name = "colorful"
@@ -466,7 +466,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
     override val id = "anim8"
-    override val defaultVersion = "0.3.7"
+    override val defaultVersion = "0.3.11"
     override val url = "https://github.com/tommyettinger/anim8-gdx"
     override val group = "com.github.tommyettinger"
     override val name = "anim8-gdx"
@@ -1124,7 +1124,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
 	override val id = "digital"
-	override val defaultVersion = "0.1.3"
+	override val defaultVersion = "0.1.4"
 	override val url = "https://github.com/tommyettinger/digital"
 	override val group = "com.github.tommyettinger"
 	override val name = "digital"
@@ -1164,7 +1164,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
 	override val id = "juniper"
-	override val defaultVersion = "0.1.4"
+	override val defaultVersion = "0.1.6"
 	override val url = "https://github.com/tommyettinger/juniper"
 	override val group = "com.github.tommyettinger"
 	override val name = "juniper"
@@ -1186,7 +1186,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
 	override val id = "jdkgdxds"
-	override val defaultVersion = "1.0.4"
+	override val defaultVersion = "1.0.5"
 	override val url = "https://github.com/tommyettinger/jdkgdxds"
 	override val group = "com.github.tommyettinger"
 	override val name = "jdkgdxds"
@@ -1209,7 +1209,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
 	override val id = "jdkgdxdsInterop"
-	override val defaultVersion = "1.0.4.0"
+	override val defaultVersion = "1.0.4.1"
 	override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
 	override val group = "com.github.tommyettinger"
 	override val name = "jdkgdxds_interop"

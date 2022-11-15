@@ -205,7 +205,7 @@ other projects or older versions.
   JitPack dependencies in particular may take up to 15 minutes to become available if you're using any of those,
   like gdx-gltf. In IntelliJ IDEA, the `Reimport all Gradle projects` button is a pair of circling arrows in the
   Gradle tool window, which can be opened with `View -> Tool Windows -> Gradle`.
- - Like the official gdx-setup, the soon-to-be-shut-down `jcenter()` repo will not be used in new projects.
+ - Like the official gdx-setup, the now-shut-down `jcenter()` repo will not be used in new projects.
    - In earlier versions, jcenter() was last in the list because of a different flaw it had that allowed impersonation. 
    You may have guessed that I am not sad to see it shut down in favor of better alternatives.
    It's still annoying to have to deal with it closing on short notice, though.
