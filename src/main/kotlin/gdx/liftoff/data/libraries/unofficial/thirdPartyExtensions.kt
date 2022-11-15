@@ -1132,7 +1132,7 @@ class Digital : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:digital")
 
-		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:digital:\$digitalVersion\"")
+		addDependency(project, GWT.ID, "com.github.tommyettinger:digital:sources")
 		addGwtInherit(project, "digital")
 	}
 }
@@ -1194,7 +1194,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds")
 
-		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:jdkgdxds:\$jdkgdxdsVersion\"")
+		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds:sources")
 		addGwtInherit(project, "jdkgdxds")
 
 		Funderby().initiate(project)
@@ -1217,11 +1217,51 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 	override fun initiateDependencies(project: Project) {
 		addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds_interop")
 
-		addSpecialDependency(project, GWT.ID, "gwt \"com.github.tommyettinger:jdkgdxds_interop:\$jdkgdxdsInteropVersion\"")
+		addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds_interop:sources")
 		addGwtInherit(project, "jdkgdxds_interop")
 
 		Jdkgdxds().initiate(project)
 		Juniper().initiate(project)
+	}
+}
+
+/**
+ * Kryo support for digital's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class KryoRegExodus : ThirdPartyExtension() {
+	override val id = "kryoRegExodus"
+	override val defaultVersion = "0.1.13.0"
+	override val url = "https://github.com/tommyettinger/kryo-more"
+	override val group = "com.github.tommyettinger"
+	override val name = "kryo-regexodus"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:kryo-regexodus")
+
+		Kryo().initiate(project)
+		RegExodus().initiate(project)
+	}
+}
+
+/**
+ * Kryo support for digital's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class KryoDigital : ThirdPartyExtension() {
+	override val id = "kryoDigital"
+	override val defaultVersion = "0.1.2.0"
+	override val url = "https://github.com/tommyettinger/kryo-more"
+	override val group = "com.github.tommyettinger"
+	override val name = "kryo-digital"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:kryo-digital")
+
+		Kryo().initiate(project)
+		Digital().initiate(project)
 	}
 }
 
