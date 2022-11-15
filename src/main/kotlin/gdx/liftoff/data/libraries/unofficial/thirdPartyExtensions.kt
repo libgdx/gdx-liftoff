@@ -1265,6 +1265,46 @@ class KryoDigital : ThirdPartyExtension() {
 	}
 }
 
+/**
+ * Kryo support for juniper's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class KryoJuniper : ThirdPartyExtension() {
+	override val id = "kryoJuniper"
+	override val defaultVersion = "0.1.6.0"
+	override val url = "https://github.com/tommyettinger/kryo-more"
+	override val group = "com.github.tommyettinger"
+	override val name = "kryo-juniper"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:kryo-juniper")
+
+		Kryo().initiate(project)
+		Juniper().initiate(project)
+	}
+}
+
+/**
+ * Kryo support for jdkgdxds's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class KryoJdkgdxds : ThirdPartyExtension() {
+	override val id = "kryoJdkgdxds"
+	override val defaultVersion = "1.0.4.0"
+	override val url = "https://github.com/tommyettinger/kryo-more"
+	override val group = "com.github.tommyettinger"
+	override val name = "kryo-jdkgdxds"
+
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "com.github.tommyettinger:kryo-jdkgdxds")
+
+		Kryo().initiate(project)
+		Jdkgdxds().initiate(project)
+	}
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
