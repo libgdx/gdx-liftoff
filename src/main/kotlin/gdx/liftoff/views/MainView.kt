@@ -126,7 +126,7 @@ class MainView : ActionContainer {
 
             // unexpected error -> show visui dialog
             if (status != NativeFileDialog.NFD_OKAY) {
-                throw Throwable("Native file dialog errored")
+                throw Throwable("Native file dialog error")
             }
 
             val folder = pathPointer.getStringUTF8(0)
@@ -137,6 +137,10 @@ class MainView : ActionContainer {
 
             callback.selected(array)
         } catch (e: Throwable) {
+			Gdx.app.error("NFD", "The Native File Dialog library could not be loaded.\n" +
+				"Check if you have multiple LWJGL3 applications open simultaneously,\n" +
+				"since that can cause this error.")
+			Gdx.app.error("NFD", e.stackTraceToString())
             val fileChooser = FileChooser(FileChooser.Mode.OPEN)
             fileChooser.selectionMode = FileChooser.SelectionMode.DIRECTORIES
             fileChooser.setDirectory(initialPath)
