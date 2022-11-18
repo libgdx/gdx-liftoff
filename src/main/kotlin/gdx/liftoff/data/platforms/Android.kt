@@ -177,16 +177,6 @@ dependencies {
 	${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
-	// This follows advice from https://blog.gradle.org/log4j-vulnerability
-	constraints {
-		implementation("org.apache.logging.log4j:log4j-core") {
-			version {
-				strictly("[2.18, 3[")
-				prefer("2.18.0")
-			}
-			because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
-		}
-	}
 }
 
 // Called every time gradle gets executed, takes the native dependencies of
