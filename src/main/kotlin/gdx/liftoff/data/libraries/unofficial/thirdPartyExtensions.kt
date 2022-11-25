@@ -889,13 +889,13 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 }
 
 /**
- * Advanced audio features for LWJGL3.
+ * Advanced audio features for LWJGL3. JDK 8+.
  * @author Hangman
  */
 @Extension
 class TuningFork : ThirdPartyExtension() {
     override val id = "tuningFork"
-    override val defaultVersion = "2.0.1"
+    override val defaultVersion = "3.1.0"
     override val url = "https://github.com/Hangman/TuningFork"
     override val repository = Repository.JitPack
     override val group = "com.github.Hangman"
@@ -928,13 +928,13 @@ class TinyVG : ThirdPartyExtension() {
 }
 
 /**
- * LibGDX PSX-style render features.
+ * LibGDX PSX-style render features. Not GWT-compatible.
  * @author FXGaming
  */
 @Extension
 class GdxPsx : ThirdPartyExtension() {
     override val id = "gdxPsx"
-    override val defaultVersion = "f4d2c5caf5"
+    override val defaultVersion = "6256159d1f" // corresponds to 0.1.4
     override val url = "https://github.com/fxgaming/gdx-psx"
     override val repository = Repository.JitPack
     override val group = "com.github.fxgaming"
@@ -942,7 +942,7 @@ class GdxPsx : ThirdPartyExtension() {
 
     override fun initiateDependencies(project: Project) {
         addDependency(project, Core.ID, "com.github.fxgaming:gdx-psx")
-        addDependency(project, GWT.ID, "com.github.fxgaming:gdx-psx:sources")
+//        addDependency(project, GWT.ID, "com.github.fxgaming:gdx-psx:sources")
     }
 }
 
