@@ -2,22 +2,29 @@ package gdx.liftoff.data.libraries
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.GdxRuntimeException
+import com.badlogic.gdx.utils.Json
+import com.badlogic.gdx.utils.JsonReader
+import com.badlogic.gdx.utils.JsonWriter
+import com.github.kittinunf.fuel.Fuel
 import devcsrj.mvnrepository.MvnRepositoryApi
 import gdx.liftoff.config.executeAnyOf
 import gdx.liftoff.config.threadPool
-import khttp.get
+import com.github.kittinunf.fuel.Fuel.get
+import com.github.kittinunf.fuel.core.Parameters
+import com.github.kittinunf.fuel.httpGet
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * HTTP request timeout when fetching extension versions.
  */
-const val REQUEST_TIMEOUT = 30.0
-
+const val REQUEST_TIMEOUT = 30
+val json = JsonReader()
 /**
  * Interface for the supported Maven repositories. Fetches the latest versions of the registered libraries.
  */
 interface Repository {
+
     /** Returns the latest version of "[group]:[name]" artifact in this Maven repository or null if unable to fetch. */
     fun getLatestVersion(group: String, name: String): String?
 
@@ -44,16 +51,16 @@ interface Repository {
 
         private fun fetchVersionFromMavenCentral(group: String, name: String): String {
             val response = get(
-                "https://search.maven.org/solrsearch/select", timeout = REQUEST_TIMEOUT,
-                params = mapOf(
+                "https://search.maven.org/solrsearch/select",
+                listOf(
                     "q" to """g:"group"+AND+a:"$name"""",
                     "rows" to "1",
                     "wt" to "json",
                 )
-            )
-            val results = response.jsonObject.getJSONObject("response").getJSONArray("docs")
-            if (results.length() > 0) {
-                return results.getJSONObject(0).getString("latestVersion")
+            ).timeout(REQUEST_TIMEOUT)
+            val results = json.parse(response.responseString().third.get())["response"]["docs"]
+            if (results.notEmpty()) {
+                return results[0].getString("latestVersion")
             }
             throw GdxRuntimeException("Unable to fetch $group:$name version from Maven Central.")
         }
@@ -65,9 +72,10 @@ interface Repository {
     object JitPack : CachedRepository() {
         override fun fetchLatestVersion(group: String, name: String): String? {
             return try {
-                val response = get("https://jitpack.io/api/builds/$group/$name/latest", timeout = REQUEST_TIMEOUT)
+                val response = get("https://jitpack.io/api/builds/$group/$name/latest")
+					.timeout(REQUEST_TIMEOUT)
                 // removeSurrounding gets rid of some broken version sections resulting from JitPack -SNAPSHOT usage.
-                response.jsonObject.getString("version").removeSurrounding("-", "-1")
+                json.parse(response.responseString().third.get()).getString("version").removeSurrounding("-", "-1")
             } catch (exception: Exception) {
                 Gdx.app.error("gdx-liftoff", "Unable to perform a HTTP request to JitPack.", exception)
                 null

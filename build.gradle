@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version = "1.11.0.5"
+version = "1.11.0.6-SNAPSHOT"
 mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -68,8 +68,11 @@ dependencies {
     implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
 
     implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
-    implementation "khttp:khttp:1.0.0"
+//    implementation "khttp:khttp:1.0.0"
+//	implementation 'org.danilopianini:khttp:1.2.3'
+//	implementation 'com.github.OndraZizka:khttp-ascclemens:1668b3e31d'
 //	implementation 'com.github.jkcclemens:khttp:39f76b4186'
+	implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
 	implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1"
-    implementation 'org.slf4j:slf4j-nop:1.7.36'
+    implementation 'org.slf4j:slf4j-nop:2.0.4'
 }
