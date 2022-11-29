@@ -422,16 +422,29 @@ public class TeaVMLauncher {
         teaBuildConfiguration.logClasses = false;
         teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}.class);
 
-		// Register any extra classpath assets here:
+        // Register any extra classpath assets here:
         // teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");
 
         // Register any classes or packages that require reflection here:
-        // TeaReflectionSupplier.addReflectionClass("${project.basic.rootPackage}.reflected");
+${generateTeaVMReflectionIncludes(project)}
 
         TeaBuilder.build(teaBuildConfiguration);
 	}
 }
 """
+
+	fun generateTeaVMReflectionIncludes(
+		project: Project, indent: String = "        ", trailingSemicolon: Boolean = true
+	): String {
+		val semicolon = if (trailingSemicolon) ";" else ""
+		return if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
+			"${indent}// TeaReflectionSupplier.addReflectionClass(\"${project.basic.rootPackage}.reflect\")${semicolon}"
+		} else {
+			(project.reflectedPackages + project.reflectedClasses).joinToString(separator = "\n") {
+				"${indent}TeaReflectionSupplier.addReflectionClass(\"$it\")${semicolon}"
+			}
+		}
+	}
 
     fun addSourceFile(
         project: Project,
