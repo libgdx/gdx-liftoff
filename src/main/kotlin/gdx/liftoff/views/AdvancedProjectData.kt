@@ -63,6 +63,9 @@ class AdvancedProjectData {
     val gwtPluginVersion: String
         get() = gwtPluginVersionField.text
 
+	val gdxWebToolsVersion: String
+		get() = "1.0.0-SNAPSHOT"
+
     val serverJavaVersion: String
         get() = wrangleVersion(serverJavaVersionField.model.text.removeSuffix(".0"))
 
