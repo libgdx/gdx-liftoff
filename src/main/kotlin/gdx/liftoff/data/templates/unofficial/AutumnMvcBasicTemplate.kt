@@ -19,12 +19,12 @@ open class AutumnMvcBasicTemplate : Template {
             "class scanners and a single [Autumn MVC](https://github.com/crashinvaders/gdx-lml/tree/master/mvc) view."
 
     override fun apply(project: Project) {
-        super.apply(project)
-        if (generateSkin) project.advanced.forceSkinGeneration()
+		// Registering main class in GWT/RoboVM reflection pool:
+		getReflectedClasses(project).forEach { project.reflectedClasses.add(it) }
+		getReflectedPackages(project).forEach { project.reflectedPackages.add(it) }
 
-        // Registering main class in GWT/RoboVM reflection pool:
-        getReflectedClasses(project).forEach { project.reflectedClasses.add(it) }
-        getReflectedPackages(project).forEach { project.reflectedPackages.add(it) }
+		super.apply(project)
+        if (generateSkin) project.advanced.forceSkinGeneration()
 
         // Adding Autumn MVC dependency:
         AutumnMVC().initiate(project)
