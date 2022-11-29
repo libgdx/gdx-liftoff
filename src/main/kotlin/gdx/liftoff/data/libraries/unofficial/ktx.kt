@@ -16,7 +16,7 @@ import gdx.liftoff.views.Extension
 import com.github.kittinunf.fuel.Fuel.get
 
 private const val defaultGroup = "io.github.libktx"
-private const val fallbackVersion = "1.11.0-rc1"
+private const val fallbackVersion = "1.11.0-rc2"
 
 /**
  * Modular Kotlin utilities.
@@ -57,7 +57,7 @@ object KtxRepository : SingleVersionRepository(fallbackVersion) {
     override fun fetchLatestVersion(): String? {
         return try {
             // Fetching and caching KTX version from the repo:
-            get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").body.asString(null).trim()
+            get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").timeout(30000).responseString().third.get().trim()
         } catch (exception: Exception) {
             Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
             Repository.MavenCentral.getLatestVersion(defaultGroup, "ktx-app")

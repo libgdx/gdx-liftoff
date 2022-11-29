@@ -2,23 +2,18 @@ package gdx.liftoff.data.libraries
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.GdxRuntimeException
-import com.badlogic.gdx.utils.Json
 import com.badlogic.gdx.utils.JsonReader
-import com.badlogic.gdx.utils.JsonWriter
-import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.Fuel.get
 import devcsrj.mvnrepository.MvnRepositoryApi
 import gdx.liftoff.config.executeAnyOf
 import gdx.liftoff.config.threadPool
-import com.github.kittinunf.fuel.Fuel.get
-import com.github.kittinunf.fuel.core.Parameters
-import com.github.kittinunf.fuel.httpGet
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * HTTP request timeout when fetching extension versions.
  */
-const val REQUEST_TIMEOUT = 30
+const val REQUEST_TIMEOUT = 30000
 val json = JsonReader()
 /**
  * Interface for the supported Maven repositories. Fetches the latest versions of the registered libraries.
