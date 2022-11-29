@@ -10,109 +10,109 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class Android : Platform {
-    companion object {
-        const val ID = "android"
-        const val ORDER = Lwjgl3.ORDER + 1
-    }
+	companion object {
+		const val ID = "android"
+		const val ORDER = Lwjgl3.ORDER + 1
+	}
 
-    override val id = ID
-    override val order = ORDER
-    override val isStandard = false // user should only jump through android hoops on request
-    override fun initiate(project: Project) {
-        project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
-        project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
+	override val id = ID
+	override val order = ORDER
+	override val isStandard = false // user should only jump through android hoops on request
+	override fun initiate(project: Project) {
+		project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
+		project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
 
-        addGradleTaskDescription(project, "lint", "performs Android project validation.")
+		addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
-        addCopiedFile(project, "ic_launcher-web.png")
-        addCopiedFile(project, "proguard-rules.pro")
-        addCopiedFile(project, "project.properties")
-        addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
-        addCopiedFile(project, "res", "values", "styles.xml")
+		addCopiedFile(project, "ic_launcher-web.png")
+		addCopiedFile(project, "proguard-rules.pro")
+		addCopiedFile(project, "project.properties")
+		addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
+		addCopiedFile(project, "res", "values", "styles.xml")
 
-        project.files.add(
-            SourceFile(
-                projectName = "", sourceFolderPath = "", packageName = "", fileName = "local.properties",
-                content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"
-            )
-        )
-        project.files.add(
-            SourceFile(
-                projectName = ID, sourceFolderPath = "res", packageName = "values", fileName = "strings.xml",
-                content = """<?xml version="1.0" encoding="utf-8"?>
+		project.files.add(
+			SourceFile(
+				projectName = "", sourceFolderPath = "", packageName = "", fileName = "local.properties",
+				content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"
+			)
+		)
+		project.files.add(
+			SourceFile(
+				projectName = ID, sourceFolderPath = "res", packageName = "values", fileName = "strings.xml",
+				content = """<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">${project.basic.name}</string>
+	<string name="app_name">${project.basic.name}</string>
 </resources>
 """
-            )
-        )
-        project.files.add(
-            SourceFile(
-                projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
-                content = """<?xml version="1.0" encoding="utf-8"?>
+			)
+		)
+		project.files.add(
+			SourceFile(
+				projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
+				content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    	xmlns:tools="http://schemas.android.com/tools"
+		xmlns:tools="http://schemas.android.com/tools"
 		package="${project.basic.rootPackage}">
 	<uses-feature android:glEsVersion="0x00020000" android:required="true"/>
 	<application
 			android:allowBackup="true"
-        	android:fullBackupContent="true"
+			android:fullBackupContent="true"
 			android:icon="@drawable/ic_launcher"
 			android:isGame="true"
 			android:appCategory="game"
-        	android:label="@string/app_name"
-        	tools:ignore="UnusedAttribute"
+			android:label="@string/app_name"
+			tools:ignore="UnusedAttribute"
 			android:theme="@style/GdxTheme">
 		<activity
 				android:name="${project.basic.rootPackage}.android.AndroidLauncher"
 				android:label="@string/app_name"
 				android:screenOrientation="landscape"
 				android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-          		android:exported="true">
+				android:exported="true">
 				<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
 	</application>
-${project.androidPermissions.joinToString(separator = "\n") { "    <uses-permission android:name=\"${it}\" />" }}
+${project.androidPermissions.joinToString(separator = "\n") { "	<uses-permission android:name=\"${it}\" />" }}
 </manifest>
 """
-            )
-        )
-    }
+			)
+		)
+	}
 
-    override fun createGradleFile(project: Project): GradleFile = AndroidGradleFile(project)
+	override fun createGradleFile(project: Project): GradleFile = AndroidGradleFile(project)
 }
 
 /**
  * Gradle file of the Android project.
  */
 class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
-    val plugins = mutableListOf<String>()
-    val srcFolders = mutableListOf("'src/main/java'")
-    val nativeDependencies = mutableSetOf<String>()
-    var latePlugin = false
-    init {
-        dependencies.add("project(':${Core.ID}')")
-        addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
-        addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
-        plugins.add("com.android.application")
-    }
+	val plugins = mutableListOf<String>()
+	val srcFolders = mutableListOf("'src/main/java'")
+	val nativeDependencies = mutableSetOf<String>()
+	var latePlugin = false
+	init {
+		dependencies.add("project(':${Core.ID}')")
+		addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
+		addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
+		plugins.add("com.android.application")
+	}
 
-    fun insertLatePlugin() { latePlugin = true }
-    /**
-     * @param dependency will be added as "natives" dependency, quoted.
-     */
-    fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
+	fun insertLatePlugin() { latePlugin = true }
+	/**
+	 * @param dependency will be added as "natives" dependency, quoted.
+	 */
+	fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
-    override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+	override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
@@ -190,23 +190,23 @@ task copyAndroidNatives() {
 		file("libs/x86/").mkdirs()
 
 		configurations.getByName("natives").copy().files.each { jar ->
-    	    def outputDir = null
-    	    if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-    	    if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-    	    if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-    	    if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-    	    if(outputDir != null) {
-    	        copy {
-    	            from zipTree(jar)
-    	            into outputDir
-    	            include "*.so"
-    	        }
-    	    }
-    	}
+			def outputDir = null
+			if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
+			if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
+			if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+			if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+			if(outputDir != null) {
+				copy {
+					from zipTree(jar)
+					into outputDir
+					include "*.so"
+				}
+			}
+		}
 	}
 }
 tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") }.configureEach { packageTask ->
-    packageTask.dependsOn 'copyAndroidNatives'
+	packageTask.dependsOn 'copyAndroidNatives'
 }
 
 task run(type: Exec) {

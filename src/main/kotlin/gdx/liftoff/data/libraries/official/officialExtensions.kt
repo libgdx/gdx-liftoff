@@ -20,12 +20,12 @@ import gdx.liftoff.views.Extension
  * Abstract base for official extensions.
  */
 abstract class OfficialExtension : Library {
-    override val defaultVersion = Version.VERSION
-    override val official = true
-    override val repository = Repository.MavenCentral
-    override val group = "com.badlogicgames.gdx"
-    override val name: String
-        get() = id
+	override val defaultVersion = Version.VERSION
+	override val official = true
+	override val repository = Repository.MavenCentral
+	override val group = "com.badlogicgames.gdx"
+	override val name: String
+		get() = id
 }
 
 /**
@@ -33,18 +33,18 @@ abstract class OfficialExtension : Library {
  */
 @Extension(official = true)
 class AI : OfficialExtension() {
-    override val id = "gdx-ai"
-    override val url = "https://github.com/libgdx/gdx-ai"
-    override val defaultVersion = "1.8.2"
+	override val id = "gdx-ai"
+	override val url = "https://github.com/libgdx/gdx-ai"
+	override val defaultVersion = "1.8.2"
 
-    override fun initiate(project: Project) {
-        project.properties["aiVersion"] = version
+	override fun initiate(project: Project) {
+		project.properties["aiVersion"] = version
 
-        addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion")
+		addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion:sources")
-        addGwtInherit(project, "com.badlogic.gdx.ai")
-    }
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-ai:\$aiVersion:sources")
+		addGwtInherit(project, "com.badlogic.gdx.ai")
+	}
 }
 
 /**
@@ -52,19 +52,19 @@ class AI : OfficialExtension() {
  */
 @Extension(official = true)
 class Ashley : OfficialExtension() {
-    override val id = "ashley"
-    override val url = "https://github.com/libgdx/ashley"
-    override val group = "com.badlogicgames.ashley"
-    override val defaultVersion = "1.7.4"
+	override val id = "ashley"
+	override val url = "https://github.com/libgdx/ashley"
+	override val group = "com.badlogicgames.ashley"
+	override val defaultVersion = "1.7.4"
 
-    override fun initiate(project: Project) {
-        project.properties[id + "Version"] = version
+	override fun initiate(project: Project) {
+		project.properties[id + "Version"] = version
 
-        addDependency(project, Core.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion")
+		addDependency(project, Core.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion:sources")
-        addGwtInherit(project, "com.badlogic.ashley_gwt")
-    }
+		addDependency(project, GWT.ID, "com.badlogicgames.ashley:ashley:\$ashleyVersion:sources")
+		addGwtInherit(project, "com.badlogic.ashley_gwt")
+	}
 }
 
 /**
@@ -72,29 +72,29 @@ class Ashley : OfficialExtension() {
  */
 @Extension(official = true)
 class Box2D : OfficialExtension() {
-    override val id = "gdx-box2d"
-    override val url = "https://libgdx.com/wiki/extensions/physics/box2d"
+	override val id = "gdx-box2d"
+	override val url = "https://libgdx.com/wiki/extensions/physics/box2d"
 
-    override fun initiate(project: Project) {
-        addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion")
+	override fun initiate(project: Project) {
+		addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion")
 
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-armeabi-v7a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-arm64-v8a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86_64")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-armeabi-v7a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-arm64-v8a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86_64")
 
-        addDesktopDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
-        addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
+		addDesktopDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
+		addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion:sources")
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources")
-        addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion:sources")
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources")
+		addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
 
-        addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
+		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
 
 		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-box2d-teavm:\$gdxWebToolsVersion")
-    }
+	}
 }
 
 /**
@@ -102,22 +102,22 @@ class Box2D : OfficialExtension() {
  */
 @Extension(official = true)
 class Box2DLights : OfficialExtension() {
-    override val id = "box2dlights"
-    override val url = "https://github.com/libgdx/box2dlights"
-    override val group = "com.badlogicgames.box2dlights"
-    override val defaultVersion = "1.5"
+	override val id = "box2dlights"
+	override val url = "https://github.com/libgdx/box2dlights"
+	override val group = "com.badlogicgames.box2dlights"
+	override val defaultVersion = "1.5"
 
-    override fun initiate(project: Project) {
-        project.properties[id + "Version"] = version
+	override fun initiate(project: Project) {
+		project.properties[id + "Version"] = version
 
-        addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
+		addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion:sources")
-        addGwtInherit(project, "Box2DLights")
+		addDependency(project, GWT.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion:sources")
+		addGwtInherit(project, "Box2DLights")
 
-        // Making sure Box2D is included as well:
-        Box2D().initiate(project)
-    }
+		// Making sure Box2D is included as well:
+		Box2D().initiate(project)
+	}
 }
 
 /**
@@ -125,25 +125,25 @@ class Box2DLights : OfficialExtension() {
  */
 @Extension(official = true)
 class Bullet : OfficialExtension() {
-    override val id = "gdx-bullet"
-    override val url = "https://libgdx.com/wiki/extensions/physics/bullet/bullet-physics"
+	override val id = "gdx-bullet"
+	override val url = "https://libgdx.com/wiki/extensions/physics/bullet/bullet-physics"
 
-    override fun initiate(project: Project) {
-        addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-bullet:\$gdxVersion")
+	override fun initiate(project: Project) {
+		addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-bullet:\$gdxVersion")
 
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-armeabi-v7a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-arm64-v8a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-x86")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-x86_64")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-armeabi-v7a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-arm64-v8a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-x86")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-x86_64")
 
-        addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
+		addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
 
-        addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
+		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
 
 		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-bullet-teavm:\$gdxWebToolsVersion")
 
-        // Other platforms are not officially supported (GWT).
-    }
+		// Other platforms are not officially supported (GWT).
+	}
 }
 
 /**
@@ -153,30 +153,30 @@ class Bullet : OfficialExtension() {
  */
 @Extension(official = true)
 class Controllers : OfficialExtension() {
-    override val id = "gdx-controllers"
-    override val url = "https://github.com/libgdx/gdx-controllers"
-    override val group = "com.badlogicgames.gdx-controllers"
-    override val name = "gdx-controllers-core"
-    override val defaultVersion = "2.2.1"
+	override val id = "gdx-controllers"
+	override val url = "https://github.com/libgdx/gdx-controllers"
+	override val group = "com.badlogicgames.gdx-controllers"
+	override val name = "gdx-controllers-core"
+	override val defaultVersion = "2.2.1"
 
-    override fun initiate(project: Project) {
-        project.properties["gdxControllersVersion"] = version
+	override fun initiate(project: Project) {
+		project.properties["gdxControllersVersion"] = version
 
-        addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
+		addDependency(project, Core.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion")
 
-        addDependency(project, Android.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-android:\$gdxControllersVersion")
+		addDependency(project, Android.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-android:\$gdxControllersVersion")
 
-        addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
+		addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
-        addDependency(project, Lwjgl3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
+		addDependency(project, Lwjgl3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
-        addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
-        addGwtInherit(project, "com.badlogic.gdx.controllers")
-        addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
+		addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
+		addGwtInherit(project, "com.badlogic.gdx.controllers")
+		addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
 
-        addDependency(project, iOS.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-ios:\$gdxControllersVersion")
-    }
+		addDependency(project, iOS.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-ios:\$gdxControllersVersion")
+	}
 }
 
 /**
@@ -184,25 +184,25 @@ class Controllers : OfficialExtension() {
  */
 @Extension(official = true)
 class Freetype : OfficialExtension() {
-    override val id = "gdx-freetype"
-    override val url = "https://libgdx.com/wiki/extensions/gdx-freetype"
+	override val id = "gdx-freetype"
+	override val url = "https://libgdx.com/wiki/extensions/gdx-freetype"
 
-    override fun initiate(project: Project) {
-        addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-freetype:\$gdxVersion")
+	override fun initiate(project: Project) {
+		addDependency(project, Core.ID, "com.badlogicgames.gdx:gdx-freetype:\$gdxVersion")
 
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-armeabi-v7a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-arm64-v8a")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-x86")
-        addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-x86_64")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-armeabi-v7a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-arm64-v8a")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-x86")
+		addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-x86_64")
 
-        addDesktopDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-desktop")
+		addDesktopDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-desktop")
 
-        addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
+		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
 
 		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-freetype-teavm:\$gdxWebToolsVersion")
 
-        // Other platforms are not officially supported (GWT).
-    }
+		// Other platforms are not officially supported (GWT).
+	}
 }
 
 /**
@@ -210,13 +210,13 @@ class Freetype : OfficialExtension() {
  */
 @Extension(official = true)
 class Tools : OfficialExtension() {
-    override val id = "gdx-tools"
-    override val url = "https://libgdx.com/wiki/tools/texture-packer"
+	override val id = "gdx-tools"
+	override val url = "https://libgdx.com/wiki/tools/texture-packer"
 
-    override fun initiate(project: Project) {
-        addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
+	override fun initiate(project: Project) {
+		addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
 
-        // Headless is unlikely to work because gdx-tools relies on graphics classes.
-        // addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
-    }
+		// Headless is unlikely to work because gdx-tools relies on graphics classes.
+		// addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
+	}
 }

@@ -129,37 +129,37 @@ jar {
 }
 
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-    jpackageImage.dependsOn jar
+	jpackageImage.dependsOn jar
 
-    runtime {
-        options.set(['--strip-debug',
-                     '--compress', '2',
-                     '--no-header-files',
-                     '--no-man-pages',
-                     '--strip-native-commands',
-                     '--vm', 'server'])
+	runtime {
+		options.set(['--strip-debug',
+					 '--compress', '2',
+					 '--no-header-files',
+					 '--no-man-pages',
+					 '--strip-native-commands',
+					 '--vm', 'server'])
 // you could very easily need more modules than this one.
 // use the lwjgl3:suggestModules task to see which modules may be needed.
-        modules.set([
-                'jdk.unsupported'
-        ])
-        distDir.set(file(buildDir))
-        jpackage {
-            imageName = appName
+		modules.set([
+				'jdk.unsupported'
+		])
+		distDir.set(file(buildDir))
+		jpackage {
+			imageName = appName
 // you can set this to false if you want to build an installer, or keep it as true to build just an app.
-            skipInstaller = true
+			skipInstaller = true
 // this may need to be set to a different path if your JAVA_HOME points to a low JDK version.
-            jpackageHome = javaHome.getOrElse("")
-            mainJar = jar.archiveFileName.get()
-            if (os.contains('win')) {
-                imageOptions = ["--icon", "icons/logo.ico"]
-            } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
-                imageOptions = ["--icon", "icons/logo.png"]
-            } else if (os.contains('mac')) {
-                imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
-            }
-        }
-    }
+			jpackageHome = javaHome.getOrElse("")
+			mainJar = jar.archiveFileName.get()
+			if (os.contains('win')) {
+				imageOptions = ["--icon", "icons/logo.ico"]
+			} else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
+				imageOptions = ["--icon", "icons/logo.png"]
+			} else if (os.contains('mac')) {
+				imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
+			}
+		}
+	}
 }
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.

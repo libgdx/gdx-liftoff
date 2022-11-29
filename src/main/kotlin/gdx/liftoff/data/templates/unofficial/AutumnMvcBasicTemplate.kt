@@ -12,48 +12,48 @@ import gdx.liftoff.views.ProjectTemplate
  */
 @ProjectTemplate
 open class AutumnMvcBasicTemplate : Template {
-    override val id: String = "lmlMvcBasicTemplate"
-    protected open val generateSkin = true
-    override val description: String
-        get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
-            "class scanners and a single [Autumn MVC](https://github.com/crashinvaders/gdx-lml/tree/master/mvc) view."
+	override val id: String = "lmlMvcBasicTemplate"
+	protected open val generateSkin = true
+	override val description: String
+		get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+			"class scanners and a single [Autumn MVC](https://github.com/crashinvaders/gdx-lml/tree/master/mvc) view."
 
-    override fun apply(project: Project) {
+	override fun apply(project: Project) {
 		// Registering main class in GWT/RoboVM reflection pool:
 		getReflectedClasses(project).forEach { project.reflectedClasses.add(it) }
 		getReflectedPackages(project).forEach { project.reflectedPackages.add(it) }
 
 		super.apply(project)
-        if (generateSkin) project.advanced.forceSkinGeneration()
+		if (generateSkin) project.advanced.forceSkinGeneration()
 
-        // Adding Autumn MVC dependency:
-        AutumnMVC().initiate(project)
+		// Adding Autumn MVC dependency:
+		AutumnMVC().initiate(project)
 
-        // Adding example LML template file:
-        addViews(project)
-    }
+		// Adding example LML template file:
+		addViews(project)
+	}
 
-    protected open fun getReflectedClasses(project: Project): Array<String> =
-        arrayOf("${project.basic.rootPackage}.${project.basic.mainClass}")
+	protected open fun getReflectedClasses(project: Project): Array<String> =
+		arrayOf("${project.basic.rootPackage}.${project.basic.mainClass}")
 
-    protected open fun getReflectedPackages(project: Project): Array<String> =
-        arrayOf()
+	protected open fun getReflectedPackages(project: Project): Array<String> =
+		arrayOf()
 
-    protected open fun addViews(project: Project) {
-        project.files.add(
-            SourceFile(
-                projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
-                fileName = "first.lml",
-                content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
+	protected open fun addViews(project: Project) {
+		project.files.add(
+			SourceFile(
+				projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+				fileName = "first.lml",
+				content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
 <window title="Example" style="border" defaultPad="4" oneColumn="true">
-    This is a simple Autumn MVC view constructed with LML.
-    <textButton onClick="setClicked" tablePad="8">Click me!</textButton>
+	This is a simple Autumn MVC view constructed with LML.
+	<textButton onClick="setClicked" tablePad="8">Click me!</textButton>
 </window>"""
-            )
-        )
-    }
+			)
+		)
+	}
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.github.czyzby.autumn.mvc.stereotype.View;
@@ -78,7 +78,7 @@ public class ${project.basic.mainClass} implements ActionContainer {
 	}
 }"""
 
-    override fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
+	override fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -113,7 +113,7 @@ public class DesktopLauncher {
 	}
 }"""
 
-    override fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
+	override fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -141,7 +141,7 @@ public class Lwjgl3Launcher {
 	}
 }"""
 
-    override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
+	override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -164,7 +164,7 @@ public class GwtLauncher extends GwtApplication {
 	}
 }"""
 
-    override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
+	override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
 
 import android.os.Bundle;
 
@@ -184,7 +184,7 @@ public class AndroidLauncher extends AndroidApplication {
 	}
 }"""
 
-    override fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
+	override fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
@@ -215,7 +215,7 @@ public class HeadlessLauncher {
 	}
 }"""
 
-    override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
+	override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;

@@ -14,24 +14,24 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate(official = true)
 @Suppress("unused") // Referenced via reflection.
 class SuperKoalioTemplate : Template {
-    override val id = "superKoalio"
-    override val description: String
-        get() = "A sample project implementing a 2D platformer. Includes launchers for each platform and a small " +
-            "but playable game."
+	override val id = "superKoalio"
+	override val description: String
+		get() = "A sample project implementing a 2D platformer. Includes launchers for each platform and a small " +
+			"but playable game."
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        arrayOf("koalio.png", "koalio-single.png", "tileSet.png", "level1.tmx").forEach {
-            project.files.add(
-                CopiedFile(
-                    projectName = Assets.ID, path = path(it),
-                    original = path("generator", "templates", "super-koalio", it)
-                )
-            )
-        }
-    }
+	override fun apply(project: Project) {
+		super.apply(project)
+		arrayOf("koalio.png", "koalio-single.png", "tileSet.png", "level1.tmx").forEach {
+			project.files.add(
+				CopiedFile(
+					projectName = Assets.ID, path = path(it),
+					original = path("generator", "templates", "super-koalio", it)
+				)
+			)
+		}
+	}
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

@@ -24,45 +24,45 @@ private const val fallbackVersion = "1.11.0-rc2"
  * @author libKTX group
  */
 abstract class KtxExtension : Library {
-    override val defaultVersion = fallbackVersion
-    override val official = false
-    override val repository = KtxRepository
-    override val group = defaultGroup
-    override val name
-        get() = id.camelCaseToKebabCase()
-    override val url: String
-        get() = "https://github.com/libktx/ktx/tree/master/" + id.removePrefix("ktx").camelCaseToKebabCase()
+	override val defaultVersion = fallbackVersion
+	override val official = false
+	override val repository = KtxRepository
+	override val group = defaultGroup
+	override val name
+		get() = id.camelCaseToKebabCase()
+	override val url: String
+		get() = "https://github.com/libktx/ktx/tree/master/" + id.removePrefix("ktx").camelCaseToKebabCase()
 
-    override fun initiate(project: Project) {
-        project.properties["ktxVersion"] = KtxRepository.version
-        addDependency(project, Core.ID, "$group:$name")
-        initiateDependencies(project)
-    }
+	override fun initiate(project: Project) {
+		project.properties["ktxVersion"] = KtxRepository.version
+		addDependency(project, Core.ID, "$group:$name")
+		initiateDependencies(project)
+	}
 
-    open fun initiateDependencies(project: Project) {}
+	open fun initiateDependencies(project: Project) {}
 
-    override fun addDependency(project: Project, platform: String, dependency: String) {
-        super.addDependency(project, platform, "$dependency:\$ktxVersion")
-    }
+	override fun addDependency(project: Project, platform: String, dependency: String) {
+		super.addDependency(project, platform, "$dependency:\$ktxVersion")
+	}
 
-    fun addExternalDependency(project: Project, platform: String, dependency: String) {
-        super.addDependency(project, platform, dependency)
-    }
+	fun addExternalDependency(project: Project, platform: String, dependency: String) {
+		super.addDependency(project, platform, dependency)
+	}
 }
 
 /**
  * Fetches and caches the latest KTX version.
  */
 object KtxRepository : SingleVersionRepository(fallbackVersion) {
-    override fun fetchLatestVersion(): String? {
-        return try {
-            // Fetching and caching KTX version from the repo:
-            get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").timeout(30000).responseString().third.get().trim()
-        } catch (exception: Exception) {
-            Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
-            Repository.MavenCentral.getLatestVersion(defaultGroup, "ktx-app")
-        }
-    }
+	override fun fetchLatestVersion(): String? {
+		return try {
+			// Fetching and caching KTX version from the repo:
+			get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").timeout(30000).responseString().third.get().trim()
+		} catch (exception: Exception) {
+			Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
+			Repository.MavenCentral.getLatestVersion(defaultGroup, "ktx-app")
+		}
+	}
 }
 
 /**
@@ -70,7 +70,7 @@ object KtxRepository : SingleVersionRepository(fallbackVersion) {
  */
 @Extension
 class KtxActors : KtxExtension() {
-    override val id = "ktxActors"
+	override val id = "ktxActors"
 }
 
 /**
@@ -78,7 +78,7 @@ class KtxActors : KtxExtension() {
  */
 @Extension
 class KtxApp : KtxExtension() {
-    override val id = "ktxApp"
+	override val id = "ktxApp"
 }
 
 /**
@@ -86,11 +86,11 @@ class KtxApp : KtxExtension() {
  */
 @Extension
 class KtxAshley : KtxExtension() {
-    override val id = "ktxAshley"
+	override val id = "ktxAshley"
 
-    override fun initiateDependencies(project: Project) {
-        Ashley().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		Ashley().initiate(project)
+	}
 }
 
 /**
@@ -98,7 +98,7 @@ class KtxAshley : KtxExtension() {
  */
 @Extension
 class KtxAssets : KtxExtension() {
-    override val id = "ktxAssets"
+	override val id = "ktxAssets"
 }
 
 /**
@@ -106,12 +106,12 @@ class KtxAssets : KtxExtension() {
  */
 @Extension
 class KtxAssetsAsync : KtxExtension() {
-    override val id = "ktxAssetsAsync"
+	override val id = "ktxAssetsAsync"
 
-    override fun initiateDependencies(project: Project) {
-        KtxAssets().initiate(project)
-        KtxAsync().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		KtxAssets().initiate(project)
+		KtxAsync().initiate(project)
+	}
 }
 
 /**
@@ -119,11 +119,11 @@ class KtxAssetsAsync : KtxExtension() {
  */
 @Extension
 class KtxAsync : KtxExtension() {
-    override val id = "ktxAsync"
+	override val id = "ktxAsync"
 
-    override fun initiateDependencies(project: Project) {
-        KotlinxCoroutines().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		KotlinxCoroutines().initiate(project)
+	}
 }
 
 /**
@@ -131,11 +131,11 @@ class KtxAsync : KtxExtension() {
  */
 @Extension
 class KtxBox2D : KtxExtension() {
-    override val id = "ktxBox2d"
+	override val id = "ktxBox2d"
 
-    override fun initiateDependencies(project: Project) {
-        Box2D().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		Box2D().initiate(project)
+	}
 }
 
 /**
@@ -143,7 +143,7 @@ class KtxBox2D : KtxExtension() {
  */
 @Extension
 class KtxCollections : KtxExtension() {
-    override val id = "ktxCollections"
+	override val id = "ktxCollections"
 }
 
 /**
@@ -151,11 +151,11 @@ class KtxCollections : KtxExtension() {
  */
 @Extension
 class KtxFreetype : KtxExtension() {
-    override val id = "ktxFreetype"
+	override val id = "ktxFreetype"
 
-    override fun initiateDependencies(project: Project) {
-        Freetype().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		Freetype().initiate(project)
+	}
 }
 
 /**
@@ -163,12 +163,12 @@ class KtxFreetype : KtxExtension() {
  */
 @Extension
 class KtxFreetypeAsync : KtxExtension() {
-    override val id = "ktxFreetypeAsync"
+	override val id = "ktxFreetypeAsync"
 
-    override fun initiateDependencies(project: Project) {
-        KtxFreetype().initiate(project)
-        KtxAsync().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		KtxFreetype().initiate(project)
+		KtxAsync().initiate(project)
+	}
 }
 
 /**
@@ -176,7 +176,7 @@ class KtxFreetypeAsync : KtxExtension() {
  */
 @Extension
 class KtxGraphics : KtxExtension() {
-    override val id = "ktxGraphics"
+	override val id = "ktxGraphics"
 }
 
 /**
@@ -184,7 +184,7 @@ class KtxGraphics : KtxExtension() {
  */
 @Extension
 class KtxI18n : KtxExtension() {
-    override val id = "ktxI18n"
+	override val id = "ktxI18n"
 }
 
 /**
@@ -192,7 +192,7 @@ class KtxI18n : KtxExtension() {
  */
 @Extension
 class KtxInject : KtxExtension() {
-    override val id = "ktxInject"
+	override val id = "ktxInject"
 }
 
 /**
@@ -200,7 +200,7 @@ class KtxInject : KtxExtension() {
  */
 @Extension
 class KtxJson : KtxExtension() {
-    override val id = "ktxJson"
+	override val id = "ktxJson"
 }
 
 /**
@@ -208,7 +208,7 @@ class KtxJson : KtxExtension() {
  */
 @Extension
 class KtxLog : KtxExtension() {
-    override val id = "ktxLog"
+	override val id = "ktxLog"
 }
 
 /**
@@ -216,7 +216,7 @@ class KtxLog : KtxExtension() {
  */
 @Extension
 class KtxMath : KtxExtension() {
-    override val id = "ktxMath"
+	override val id = "ktxMath"
 }
 
 /**
@@ -224,7 +224,7 @@ class KtxMath : KtxExtension() {
  */
 @Extension
 class KtxPreferences : KtxExtension() {
-    override val id = "ktxPreferences"
+	override val id = "ktxPreferences"
 }
 
 /**
@@ -232,7 +232,7 @@ class KtxPreferences : KtxExtension() {
  */
 @Extension
 class KtxReflect : KtxExtension() {
-    override val id = "ktxReflect"
+	override val id = "ktxReflect"
 }
 
 /**
@@ -240,7 +240,7 @@ class KtxReflect : KtxExtension() {
  */
 @Extension
 class KtxScene2D : KtxExtension() {
-    override val id = "ktxScene2d"
+	override val id = "ktxScene2d"
 }
 
 /**
@@ -248,7 +248,7 @@ class KtxScene2D : KtxExtension() {
  */
 @Extension
 class KtxStyle : KtxExtension() {
-    override val id = "ktxStyle"
+	override val id = "ktxStyle"
 }
 
 /**
@@ -256,7 +256,7 @@ class KtxStyle : KtxExtension() {
  */
 @Extension
 class KtxTiled : KtxExtension() {
-    override val id = "ktxTiled"
+	override val id = "ktxTiled"
 }
 
 /**
@@ -264,11 +264,11 @@ class KtxTiled : KtxExtension() {
  */
 @Extension
 class KtxVis : KtxExtension() {
-    override val id = "ktxVis"
+	override val id = "ktxVis"
 
-    override fun initiateDependencies(project: Project) {
-        VisUI().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		VisUI().initiate(project)
+	}
 }
 
 /**
@@ -276,10 +276,10 @@ class KtxVis : KtxExtension() {
  */
 @Extension
 class KtxVisStyle : KtxExtension() {
-    override val id = "ktxVisStyle"
+	override val id = "ktxVisStyle"
 
-    override fun initiateDependencies(project: Project) {
-        KtxStyle().initiate(project)
-        VisUI().initiate(project)
-    }
+	override fun initiateDependencies(project: Project) {
+		KtxStyle().initiate(project)
+		VisUI().initiate(project)
+	}
 }

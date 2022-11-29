@@ -11,46 +11,46 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class Lwjgl2 : Platform {
-    companion object {
-        const val ID = "lwjgl2"
-        const val ORDER = TeaVM.ORDER + 1
-    }
+	companion object {
+		const val ID = "lwjgl2"
+		const val ORDER = TeaVM.ORDER + 1
+	}
 
-    override val id = ID
-    override val order = ORDER
-    override val isStandard = false // use lwjgl3 instead
-    override fun createGradleFile(project: Project): GradleFile = Lwjgl2GradleFile(project)
+	override val id = ID
+	override val order = ORDER
+	override val isStandard = false // use lwjgl3 instead
+	override fun createGradleFile(project: Project): GradleFile = Lwjgl2GradleFile(project)
 
-    override fun initiate(project: Project) {
-        // Adding game icons:
-        arrayOf(16, 32, 64, 128)
-            .map { "libgdx$it.png" }
-            .forEach { icon ->
-                project.files.add(
-                    CopiedFile(
-                        projectName = ID,
-                        path = path("src", "main", "resources", icon),
-                        original = path("icons", icon)
-                    )
-                )
-            }
+	override fun initiate(project: Project) {
+		// Adding game icons:
+		arrayOf(16, 32, 64, 128)
+			.map { "libgdx$it.png" }
+			.forEach { icon ->
+				project.files.add(
+					CopiedFile(
+						projectName = ID,
+						path = path("src", "main", "resources", icon),
+						original = path("icons", icon)
+					)
+				)
+			}
 
-        addGradleTaskDescription(project, "run", "starts the application.")
-        addGradleTaskDescription(project, "jar", "builds application's runnable jar, which can be found at `$id/build/libs`.")
-    }
+		addGradleTaskDescription(project, "run", "starts the application.")
+		addGradleTaskDescription(project, "jar", "builds application's runnable jar, which can be found at `$id/build/libs`.")
+	}
 }
 
 /**
  * Gradle file of the legacy desktop project.
  */
 class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
-    init {
-        dependencies.add("project(':${Core.ID}')")
-        addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl:\$gdxVersion")
-        addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
-    }
+	init {
+		dependencies.add("project(':${Core.ID}')")
+		addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl:\$gdxVersion")
+		addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
+	}
 
-    override fun getContent(): String = """apply plugin: 'application'
+	override fun getContent(): String = """apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.desktop.DesktopLauncher'

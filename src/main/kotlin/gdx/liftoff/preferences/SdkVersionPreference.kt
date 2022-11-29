@@ -7,5 +7,5 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.Property
  */
 @Property("SdkVersion")
 class SdkVersionPreference : AbstractStringPreference() {
-    override fun getDefault(): String = "30"
+	override fun getDefault(): String = "30"
 }

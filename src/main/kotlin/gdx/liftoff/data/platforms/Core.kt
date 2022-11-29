@@ -9,37 +9,37 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class Core : Platform {
-    companion object {
-        const val ID = "core"
-        const val ORDER = 0
-    }
+	companion object {
+		const val ID = "core"
+		const val ORDER = 0
+	}
 
-    override val id = ID
-    override val order = ORDER
-    override val isStandard = false
-    override fun createGradleFile(project: Project): GradleFile {
-        return CoreGradleFile()
-    }
+	override val id = ID
+	override val order = ORDER
+	override val isStandard = false
+	override fun createGradleFile(project: Project): GradleFile {
+		return CoreGradleFile()
+	}
 
-    override fun initiate(project: Project) {
-        // Core has no external dependencies by default.
-    }
+	override fun initiate(project: Project) {
+		// Core has no external dependencies by default.
+	}
 }
 
 /**
  * Gradle file of the core project. Should contain all multi-platform dependencies, like "gdx" itself.
  */
 class CoreGradleFile : GradleFile(Core.ID) {
-    init {
-        addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion")
-    }
+	init {
+		addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion")
+	}
 
-    override fun getContent(): String {
-        return """[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+	override fun getContent(): String {
+		return """[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 
 dependencies {
 ${joinDependencies(dependencies, "api")}}
 """
-    }
+	}
 }

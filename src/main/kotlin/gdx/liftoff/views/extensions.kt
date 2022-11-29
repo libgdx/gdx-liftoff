@@ -16,32 +16,32 @@ import gdx.liftoff.data.libraries.Library
  */
 @Processor
 class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
-    val extensionsById = mutableMapOf<String, Library>()
-    val official = mutableListOf<Library>()
-    val thirdParty = mutableListOf<Library>()
+	val extensionsById = mutableMapOf<String, Library>()
+	val official = mutableListOf<Library>()
+	val thirdParty = mutableListOf<Library>()
 
-    @LmlActor("\$officialExtensions") private val officialButtons: ObjectMap<String, Button> = inject()
-    @LmlActor("\$thirdPartyExtensions") private val thirdPartyButtons: ObjectMap<String, Button> = inject()
+	@LmlActor("\$officialExtensions") private val officialButtons: ObjectMap<String, Button> = inject()
+	@LmlActor("\$thirdPartyExtensions") private val thirdPartyButtons: ObjectMap<String, Button> = inject()
 
-    fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
-    fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
-    fun hasExtensionSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
+	fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
+	fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
+	fun hasExtensionSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
 
-    // Automatic scanning of extensions:
-    override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
-    override fun isSupportingTypes(): Boolean = true
-    override fun processType(
-        type: Class<*>,
-        annotation: Extension,
-        component: Any,
-        context: Context,
-        initializer: ContextInitializer,
-        contextDestroyer: ContextDestroyer
-    ) {
-        val library = component as Library
-        if (annotation.official) { official } else { thirdParty }.add(library)
-        extensionsById[library.id] = library
-    }
+	// Automatic scanning of extensions:
+	override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
+	override fun isSupportingTypes(): Boolean = true
+	override fun processType(
+		type: Class<*>,
+		annotation: Extension,
+		component: Any,
+		context: Context,
+		initializer: ContextInitializer,
+		contextDestroyer: ContextDestroyer
+	) {
+		val library = component as Library
+		if (annotation.official) { official } else { thirdParty }.add(library)
+		extensionsById[library.id] = library
+	}
 }
 
 /**

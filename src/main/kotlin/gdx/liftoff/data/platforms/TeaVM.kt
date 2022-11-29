@@ -65,7 +65,7 @@ task run(dependsOn: [buildJavaScript, ":${TeaVM.ID}:jettyRun"]) {
 }
 
 clean.doLast {
-    file('webapp').deleteDir()
+	file('webapp').deleteDir()
 }
 """
 }

@@ -11,24 +11,24 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KiwiTemplate : ClassicTemplate() {
-    override val id = "lmlKiwiTemplate"
-    private lateinit var mainClass: String
-    override val width: String
-        get() = "$mainClass.WIDTH"
-    override val height: String
-        get() = "$mainClass.HEIGHT"
-    override val description: String
-        get() = "Project template included simple launchers and an `AbstractApplicationListener` extension " +
-            "(from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws libGDX logo."
+	override val id = "lmlKiwiTemplate"
+	private lateinit var mainClass: String
+	override val width: String
+		get() = "$mainClass.WIDTH"
+	override val height: String
+		get() = "$mainClass.HEIGHT"
+	override val description: String
+		get() = "Project template included simple launchers and an `AbstractApplicationListener` extension " +
+			"(from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws libGDX logo."
 
-    override fun apply(project: Project) {
-        mainClass = project.basic.mainClass
-        super.apply(project)
-        // Adding gdx-kiwi dependency:
-        Kiwi().initiate(project)
-    }
+	override fun apply(project: Project) {
+		mainClass = project.basic.mainClass
+		super.apply(project)
+		// Adding gdx-kiwi dependency:
+		Kiwi().initiate(project)
+	}
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;

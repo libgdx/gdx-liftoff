@@ -17,18 +17,18 @@ val threadPool: ExecutorService = Executors.newCachedThreadPool(PrefixedThreadFa
  * Generates sane thread names for [Executors].
  */
 private class PrefixedThreadFactory(threadPrefix: String) : ThreadFactory {
-    private val count = AtomicLong(0)
-    private val threadPrefix: String
+	private val count = AtomicLong(0)
+	private val threadPrefix: String
 
-    init {
-        this.threadPrefix = "$threadPrefix-"
-    }
+	init {
+		this.threadPrefix = "$threadPrefix-"
+	}
 
-    override fun newThread(runnable: Runnable): Thread {
-        val thread = Executors.defaultThreadFactory().newThread(runnable)
-        thread.name = threadPrefix + count.andIncrement
-        return thread
-    }
+	override fun newThread(runnable: Runnable): Thread {
+		val thread = Executors.defaultThreadFactory().newThread(runnable)
+		thread.name = threadPrefix + count.andIncrement
+		return thread
+	}
 }
 
 /**
@@ -39,17 +39,17 @@ private class PrefixedThreadFactory(threadPrefix: String) : ThreadFactory {
  * completes successfully. This is useful for executing operations that rely on third-party services.
  */
 fun <T> executeAnyOf(vararg tasks: CompletableFuture<out T>): CompletableFuture<T?> {
-    val result = CompletableFuture<T?>()
-    tasks.forEach { task -> task.thenAccept { result.complete(it) } }
-    val taskAggregator = CompletableFuture.allOf(*tasks).exceptionally {
-        // None of the tasks managed to execute successfully - completing the future with null:
-        result.complete(null)
-        null
-    }
-    // Cancelling other tasks:
-    result.thenAccept {
-        tasks.forEach { it.cancel(true) }
-        taskAggregator.cancel(true)
-    }
-    return result
+	val result = CompletableFuture<T?>()
+	tasks.forEach { task -> task.thenAccept { result.complete(it) } }
+	val taskAggregator = CompletableFuture.allOf(*tasks).exceptionally {
+		// None of the tasks managed to execute successfully - completing the future with null:
+		result.complete(null)
+		null
+	}
+	// Cancelling other tasks:
+	result.thenAccept {
+		tasks.forEach { it.cancel(true) }
+		taskAggregator.cancel(true)
+	}
+	return result
 }

@@ -20,59 +20,59 @@ import gdx.liftoff.data.project.Project
  */
 @Processor
 class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
-    val jvmLanguages = mutableMapOf<String, Language>()
+	val jvmLanguages = mutableMapOf<String, Language>()
 
-    @LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
-    val languageVersions = ObjectMap<String, VisTextField>()
+	@LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
+	val languageVersions = ObjectMap<String, VisTextField>()
 
-    val languages: Array<String>
-        get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
+	val languages: Array<String>
+		get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
 
-    val versions: Array<String>
-        get() = jvmLanguages.values.sortedBy { it.id }.map { it.version }.toTypedArray()
+	val versions: Array<String>
+		get() = jvmLanguages.values.sortedBy { it.id }.map { it.version }.toTypedArray()
 
-    fun assignVersions(parser: LmlParser) {
-        jvmLanguages.values.forEach {
-            languageVersions.put(
-                it.id,
-                parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
-            )
-        }
-    }
+	fun assignVersions(parser: LmlParser) {
+		jvmLanguages.values.forEach {
+			languageVersions.put(
+				it.id,
+				parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
+			)
+		}
+	}
 
-    fun getVersion(id: String): String = languageVersions[id].text
+	fun getVersion(id: String): String = languageVersions[id].text
 
-    fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
-        jvmLanguages[it.name]!!
-    }.toList()
+	fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
+		jvmLanguages[it.name]!!
+	}.toList()
 
-    fun appendSelectedLanguagesVersions(project: Project) {
-        languageButtons.filter { it.isChecked }.forEach {
-            project.properties[it.name + "Version"] = languageVersions.get(it.name).text
-        }
-    }
+	fun appendSelectedLanguagesVersions(project: Project) {
+		languageButtons.filter { it.isChecked }.forEach {
+			project.properties[it.name + "Version"] = languageVersions.get(it.name).text
+		}
+	}
 
-    override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
-    override fun isSupportingTypes(): Boolean = true
-    override fun processType(
-        type: Class<*>,
-        annotation: JvmLanguage,
-        component: Any,
-        context: Context,
-        initializer: ContextInitializer,
-        contextDestroyer: ContextDestroyer
-    ) {
-        val language = component as Language
-        jvmLanguages[language.id] = language
-    }
+	override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
+	override fun isSupportingTypes(): Boolean = true
+	override fun processType(
+		type: Class<*>,
+		annotation: JvmLanguage,
+		component: Any,
+		context: Context,
+		initializer: ContextInitializer,
+		contextDestroyer: ContextDestroyer
+	) {
+		val language = component as Language
+		jvmLanguages[language.id] = language
+	}
 
-    inline fun <reified Lang : Language> selectLanguage() {
-        jvmLanguages
-            .filter { it.value is Lang }
-            .forEach { language ->
-                languageButtons.first { it.name == language.key }.isChecked = true
-            }
-    }
+	inline fun <reified Lang : Language> selectLanguage() {
+		jvmLanguages
+			.filter { it.value is Lang }
+			.forEach { language ->
+				languageButtons.first { it.name == language.key }.isChecked = true
+			}
+	}
 }
 
 /**

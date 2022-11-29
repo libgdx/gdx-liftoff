@@ -15,24 +15,24 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class VisUIBasicTemplate : Template {
-    override val id = "visUiBasicTemplate"
-    override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension with GUI created " +
-            "using the [VisUI](https://github.com/kotcrab/vis-ui) library."
+	override val id = "visUiBasicTemplate"
+	override val description: String
+		get() = "Project template included simple launchers and an `ApplicationAdapter` extension with GUI created " +
+			"using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        project.files.add(
-            CopiedFile(
-                projectName = Assets.ID,
-                original = path("generator", "assets", ".gitkeep"),
-                path = ".gitkeep"
-            )
-        )
-        VisUI().initiate(project)
-    }
+	override fun apply(project: Project) {
+		super.apply(project)
+		project.files.add(
+			CopiedFile(
+				projectName = Assets.ID,
+				original = path("generator", "assets", ".gitkeep"),
+				path = ".gitkeep"
+			)
+		)
+		VisUI().initiate(project)
+	}
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

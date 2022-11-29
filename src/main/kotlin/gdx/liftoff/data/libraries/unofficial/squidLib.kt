@@ -14,11 +14,11 @@ import gdx.liftoff.views.Extension
  * @author Tommy Ettinger
  */
 abstract class SquidLibExtension : ThirdPartyExtension() {
-    override val defaultVersion = "3.0.4"
-    override val group = "com.squidpony"
-    override val name: String
-        get() = id.camelCaseToKebabCase()
-    override val url = "https://github.com/SquidPony/SquidLib"
+	override val defaultVersion = "3.0.4"
+	override val group = "com.squidpony"
+	override val name: String
+		get() = id.camelCaseToKebabCase()
+	override val url = "https://github.com/SquidPony/SquidLib"
 }
 
 /**
@@ -28,16 +28,16 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  */
 @Extension
 class SquidLibUtil : SquidLibExtension() {
-    override val id = "squidlibUtil"
+	override val id = "squidlibUtil"
 
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$group:$name:sources")
-        addGwtInherit(project, "squidlib-util")
+		addDependency(project, GWT.ID, "$group:$name:sources")
+		addGwtInherit(project, "squidlib-util")
 
-        RegExodus().initiate(project)
-    }
+		RegExodus().initiate(project)
+	}
 }
 
 /**
@@ -47,17 +47,17 @@ class SquidLibUtil : SquidLibExtension() {
  */
 @Extension
 class SquidLib : SquidLibExtension() {
-    override val id = "squidlib"
+	override val id = "squidlib"
 
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$group:$name:sources")
-        addGwtInherit(project, "squidlib")
+		addDependency(project, GWT.ID, "$group:$name:sources")
+		addGwtInherit(project, "squidlib")
 
-        SquidLibUtil().initiate(project)
-        Anim8().initiate(project)
-    }
+		SquidLibUtil().initiate(project)
+		Anim8().initiate(project)
+	}
 }
 
 /**
@@ -67,14 +67,14 @@ class SquidLib : SquidLibExtension() {
  */
 @Extension
 class SquidLibExtra : SquidLibExtension() {
-    override val id = "squidlibExtra"
+	override val id = "squidlibExtra"
 
-    override fun initiateDependencies(project: Project) {
-        addDependency(project, Core.ID, "$group:$name")
+	override fun initiateDependencies(project: Project) {
+		addDependency(project, Core.ID, "$group:$name")
 
-        addDependency(project, GWT.ID, "$group:$name:sources")
-        addGwtInherit(project, "squidlib-extra")
+		addDependency(project, GWT.ID, "$group:$name:sources")
+		addGwtInherit(project, "squidlib-extra")
 
-        SquidLibUtil().initiate(project)
-    }
+		SquidLibUtil().initiate(project)
+	}
 }

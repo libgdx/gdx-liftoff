@@ -12,20 +12,20 @@ import com.kotcrab.vis.ui.widget.spinner.Spinner
  * Abstract base for all application's preferences.
  */
 open class AbstractStringPreference : AbstractPreference<String>() {
-    override fun extractFromActor(actor: Actor): String {
-        return when (actor) {
-            is VisTextField -> actor.text
-            is Spinner -> actor.model.text
-            is SelectBox<*> -> if (actor.selectedIndex > 0) actor.selected.toString() else get()
-            else -> throw GdxRuntimeException("Actor type unsupported: " + actor.javaClass)
-        }
-    }
+	override fun extractFromActor(actor: Actor): String {
+		return when (actor) {
+			is VisTextField -> actor.text
+			is Spinner -> actor.model.text
+			is SelectBox<*> -> if (actor.selectedIndex > 0) actor.selected.toString() else get()
+			else -> throw GdxRuntimeException("Actor type unsupported: " + actor.javaClass)
+		}
+	}
 
-    override fun getDefault(): String = Strings.EMPTY_STRING
+	override fun getDefault(): String = Strings.EMPTY_STRING
 
-    override fun serialize(preference: String): String = preference
+	override fun serialize(preference: String): String = preference
 
-    override fun convert(rawPreference: String): String = rawPreference
+	override fun convert(rawPreference: String): String = rawPreference
 }
 
 // Side note: there is no preference for project name, as it is likely to be unique. There is also no preference

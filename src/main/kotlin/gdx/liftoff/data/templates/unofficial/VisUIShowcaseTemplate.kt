@@ -16,16 +16,16 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class VisUIShowcaseTemplate : Template {
-    override val id = "visUiShowcaseTemplate"
-    override val width: String
-        get() = "800"
-    override val height: String
-        get() = "600"
-    override val description: String
-        get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
-            "of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
+	override val id = "visUiShowcaseTemplate"
+	override val width: String
+		get() = "800"
+	override val height: String
+		get() = "600"
+	override val description: String
+		get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
+			"of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
-    override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -128,23 +128,23 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 	}
 }"""
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        project.files.add(
-            CopiedFile(
-                projectName = Assets.ID,
-                original = path("generator", "assets", ".gitkeep"),
-                path = ".gitkeep"
-            )
-        )
-        VisUI().initiate(project)
+	override fun apply(project: Project) {
+		super.apply(project)
+		project.files.add(
+			CopiedFile(
+				projectName = Assets.ID,
+				original = path("generator", "assets", ".gitkeep"),
+				path = ".gitkeep"
+			)
+		)
+		VisUI().initiate(project)
 
-        addSourceFile(
-            project = project,
-            platform = Core.ID,
-            packageName = project.basic.rootPackage,
-            fileName = "TestWindow.java",
-            content = """package ${project.basic.rootPackage};
+		addSourceFile(
+			project = project,
+			platform = Core.ID,
+			packageName = project.basic.rootPackage,
+			fileName = "TestWindow.java",
+			content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
@@ -363,14 +363,14 @@ public class TestWindow extends VisWindow {
 	}
 }
 """
-        )
+		)
 
-        addSourceFile(
-            project = project,
-            platform = Core.ID,
-            packageName = project.basic.rootPackage,
-            fileName = "TestListView.java",
-            content = """package ${project.basic.rootPackage};
+		addSourceFile(
+			project = project,
+			platform = Core.ID,
+			packageName = project.basic.rootPackage,
+			fileName = "TestListView.java",
+			content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -498,14 +498,14 @@ public class TestListView extends VisWindow {
 		}
 	}
 }"""
-        )
+		)
 
-        addSourceFile(
-            project = project,
-            platform = Core.ID,
-            packageName = project.basic.rootPackage,
-            fileName = "TestTabbedPane.java",
-            content = """package ${project.basic.rootPackage};
+		addSourceFile(
+			project = project,
+			platform = Core.ID,
+			packageName = project.basic.rootPackage,
+			fileName = "TestTabbedPane.java",
+			content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.util.TableUtils;
@@ -579,14 +579,14 @@ public class TestTabbedPane extends VisWindow {
 		}
 	}
 }"""
-        )
+		)
 
-        addSourceFile(
-            project = project,
-            platform = Core.ID,
-            packageName = project.basic.rootPackage,
-            fileName = "TestCollapsible.java",
-            content = """package ${project.basic.rootPackage};
+		addSourceFile(
+			project = project,
+			platform = Core.ID,
+			packageName = project.basic.rootPackage,
+			fileName = "TestCollapsible.java",
+			content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -633,6 +633,6 @@ public class TestCollapsible extends VisWindow {
 		pack();
 	}
 }"""
-        )
-    }
+		)
+	}
 }

@@ -9,19 +9,19 @@ import gdx.liftoff.data.project.Project
  * JvmLanguage.
  */
 interface Language {
-    val id: String
-    val version: String
+	val id: String
+	val version: String
 
-    /**
-     * Adds language-specific dependencies and plugins.
-     * @param project is being generated.
-     */
-    fun initiate(project: Project)
+	/**
+	 * Adds language-specific dependencies and plugins.
+	 * @param project is being generated.
+	 */
+	fun initiate(project: Project)
 
-    fun addDependency(project: Project, dependency: String) {
-        project.getGradleFile(Core.ID).addDependency(dependency)
-        if (project.hasPlatform(Shared.ID)) {
-            project.getGradleFile(Shared.ID).addDependency(dependency)
-        }
-    }
+	fun addDependency(project: Project, dependency: String) {
+		project.getGradleFile(Core.ID).addDependency(dependency)
+		if (project.hasPlatform(Shared.ID)) {
+			project.getGradleFile(Shared.ID).addDependency(dependency)
+		}
+	}
 }

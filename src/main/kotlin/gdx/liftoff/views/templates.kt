@@ -15,33 +15,33 @@ import gdx.liftoff.data.templates.Template
  */
 @Processor
 class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
-    private val templates = mutableListOf<Template>()
-    val officialTemplates = mutableListOf<Template>()
-    val thirdPartyTemplates = mutableListOf<Template>()
-    @LmlActor("templatesTable") private val templatesTable: ButtonTable = inject()
+	private val templates = mutableListOf<Template>()
+	val officialTemplates = mutableListOf<Template>()
+	val thirdPartyTemplates = mutableListOf<Template>()
+	@LmlActor("templatesTable") private val templatesTable: ButtonTable = inject()
 
-    fun getSelectedTemplate(): Template = templates.first { it.id == templatesTable.buttonGroup.checked.name }
+	fun getSelectedTemplate(): Template = templates.first { it.id == templatesTable.buttonGroup.checked.name }
 
-    // Automatic scanning of project templates:
+	// Automatic scanning of project templates:
 
-    override fun getSupportedAnnotationType(): Class<ProjectTemplate> = ProjectTemplate::class.java
-    override fun isSupportingTypes(): Boolean = true
-    override fun processType(
-        type: Class<*>,
-        annotation: ProjectTemplate,
-        component: Any,
-        context: Context,
-        initializer: ContextInitializer,
-        contextDestroyer: ContextDestroyer
-    ) {
-        val template = component as Template
-        templates.add(template)
-        if (annotation.official) {
-            officialTemplates
-        } else {
-            thirdPartyTemplates
-        }.add(template)
-    }
+	override fun getSupportedAnnotationType(): Class<ProjectTemplate> = ProjectTemplate::class.java
+	override fun isSupportingTypes(): Boolean = true
+	override fun processType(
+		type: Class<*>,
+		annotation: ProjectTemplate,
+		component: Any,
+		context: Context,
+		initializer: ContextInitializer,
+		contextDestroyer: ContextDestroyer
+	) {
+		val template = component as Template
+		templates.add(template)
+		if (annotation.official) {
+			officialTemplates
+		} else {
+			thirdPartyTemplates
+		}.add(template)
+	}
 }
 
 /**

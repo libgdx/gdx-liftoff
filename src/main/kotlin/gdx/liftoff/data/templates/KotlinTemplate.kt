@@ -8,19 +8,19 @@ import gdx.liftoff.data.project.Project
  * Basic interface for Kotlin project templates. Adds a Kotlin launcher for each platform.
  */
 interface KotlinTemplate : Template {
-    override val applicationListenerExtension: String
-        get() = "kt"
-    override val launcherExtension: String
-        get() = "kt"
-    override val defaultSourceFolder: String
-        get() = path("src", "main", "kotlin")
+	override val applicationListenerExtension: String
+		get() = "kt"
+	override val launcherExtension: String
+		get() = "kt"
+	override val defaultSourceFolder: String
+		get() = path("src", "main", "kotlin")
 
-    override fun apply(project: Project) {
-        super.apply(project)
-        project.languages.selectLanguage<Kotlin>()
-    }
+	override fun apply(project: Project) {
+		super.apply(project)
+		project.languages.selectLanguage<Kotlin>()
+	}
 
-    override fun getDesktopLauncherContent(project: Project): String = """@file:JvmName("DesktopLauncher")
+	override fun getDesktopLauncherContent(project: Project): String = """@file:JvmName("DesktopLauncher")
 
 package ${project.basic.rootPackage}.desktop
 
@@ -31,18 +31,18 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL) application. */
 fun main() {
-    LwjglApplication(${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
-        title = "${project.basic.name}"
-        width = $width
-        height = $height
-        intArrayOf(128, 64, 32, 16).forEach{
-            addIcon("libgdx${"$"}it.png", Files.FileType.Internal)
-        }
-    })
+	LwjglApplication(${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
+		title = "${project.basic.name}"
+		width = $width
+		height = $height
+		intArrayOf(128, 64, 32, 16).forEach{
+			addIcon("libgdx${"$"}it.png", Files.FileType.Internal)
+		}
+	})
 }
 """
 
-    override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android
+	override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android
 
 import android.os.Bundle
 
@@ -52,16 +52,16 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the Android application. */
 class AndroidLauncher : AndroidApplication() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
-            // Configure your application here.
-        })
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
+			// Configure your application here.
+		})
+	}
 }
 """
 
-    override fun getHeadlessLauncherContent(project: Project): String = """@file:JvmName("HeadlessLauncher")
+	override fun getHeadlessLauncherContent(project: Project): String = """@file:JvmName("HeadlessLauncher")
 
 package ${project.basic.rootPackage}.headless
 
@@ -71,14 +71,14 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the headless application. Can be converted into a server application or a scripting utility. */
 fun main() {
-    HeadlessApplication(${project.basic.mainClass}(), HeadlessApplicationConfiguration().apply {
-        // When this value is negative, ${project.basic.mainClass}#render() is never called:
-        updatesPerSecond = -1
-    })
+	HeadlessApplication(${project.basic.mainClass}(), HeadlessApplicationConfiguration().apply {
+		// When this value is negative, ${project.basic.mainClass}#render() is never called:
+		updatesPerSecond = -1
+	})
 }
 """
 
-    override fun getLwjgl3LauncherContent(project: Project): String = """@file:JvmName("Lwjgl3Launcher")
+	override fun getLwjgl3LauncherContent(project: Project): String = """@file:JvmName("Lwjgl3Launcher")
 
 package ${project.basic.rootPackage}.lwjgl3
 
@@ -88,15 +88,15 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {
-    Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
-        setTitle("${project.basic.name}")
-        setWindowedMode($width, $height)
-        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
-    })
+	Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
+		setTitle("${project.basic.name}")
+		setWindowedMode($width, $height)
+		setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
+	})
 }
 """
 
-    override fun getIOSLauncherContent(project: Project): String = """@file:JvmName("IOSLauncher")
+	override fun getIOSLauncherContent(project: Project): String = """@file:JvmName("IOSLauncher")
 
 package ${project.basic.rootPackage}.ios
 
@@ -111,22 +111,22 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 class IOSLauncher : IOSApplication.Delegate() {
 	override fun createApplication(): IOSApplication {
 		return IOSApplication(${project.basic.mainClass}(), IOSApplicationConfiguration().apply {
-            // Configure your application here.
-        })
+			// Configure your application here.
+		})
 	}
 
-    companion object {
-        @JvmStatic fun main(args: Array<String>) {
-            val pool = NSAutoreleasePool()
-            val principalClass: Class<UIApplication>? = null
-            val delegateClass = IOSLauncher::class.java
-            UIApplication.main(args, principalClass, delegateClass)
-            pool.close()
-        }
-    }
+	companion object {
+		@JvmStatic fun main(args: Array<String>) {
+			val pool = NSAutoreleasePool()
+			val principalClass: Class<UIApplication>? = null
+			val delegateClass = IOSLauncher::class.java
+			UIApplication.main(args, principalClass, delegateClass)
+			pool.close()
+		}
+	}
 }"""
 
-    override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
+	override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -136,20 +136,20 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {
-    @Override
-    public GwtApplicationConfiguration getConfig () {
+	@Override
+	public GwtApplicationConfiguration getConfig () {
 		return new GwtApplicationConfiguration($width, $height);
-    }
+	}
 
-    @Override
-    public ApplicationListener createApplicationListener () {
-        throw new GdxRuntimeException("Kotlin is currently not supported by GWT.");
-        // return new ${project.basic.mainClass}();
-    }
+	@Override
+	public ApplicationListener createApplicationListener () {
+		throw new GdxRuntimeException("Kotlin is currently not supported by GWT.");
+		// return new ${project.basic.mainClass}();
+	}
 }
 """
 
-    override fun getServerLauncherContent(project: Project) = """@file:JvmName("ServerLauncher")
+	override fun getServerLauncherContent(project: Project) = """@file:JvmName("ServerLauncher")
 
 package ${project.basic.rootPackage}.server
 
@@ -170,20 +170,20 @@ import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 fun main() {
-    val teaBuildConfiguration = TeaBuildConfiguration()
-    teaBuildConfiguration.assetsPath.add(File("../assets"))
-    teaBuildConfiguration.webappPath = File(".").canonicalPath
-    teaBuildConfiguration.obfuscate = true
-    teaBuildConfiguration.logClasses = false
-    teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}::class.java)
+	val teaBuildConfiguration = TeaBuildConfiguration()
+	teaBuildConfiguration.assetsPath.add(File("../assets"))
+	teaBuildConfiguration.webappPath = File(".").canonicalPath
+	teaBuildConfiguration.obfuscate = true
+	teaBuildConfiguration.logClasses = false
+	teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}::class.java)
 
-    // Register any extra classpath assets here:
-    // teaBuildConfiguration.additionalAssetsClasspathFiles += "ktx/script/asset.extension";
+	// Register any extra classpath assets here:
+	// teaBuildConfiguration.additionalAssetsClasspathFiles += "ktx/script/asset.extension";
 
-    // Register any classes or packages that require reflection here:
+	// Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project, indent = "    ", trailingSemicolon = false)}
 
-    TeaBuilder.build(teaBuildConfiguration)
+	TeaBuilder.build(teaBuildConfiguration)
 }
 """
 }

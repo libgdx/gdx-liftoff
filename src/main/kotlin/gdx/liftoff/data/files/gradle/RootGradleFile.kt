@@ -7,20 +7,20 @@ import gdx.liftoff.data.project.Project
  * Gradle file of the root project. Manages build script and global settings.
  */
 class RootGradleFile(val project: Project) : GradleFile("") {
-    val plugins = mutableSetOf<String>()
-    private val buildRepositories = mutableSetOf<String>()
+	val plugins = mutableSetOf<String>()
+	private val buildRepositories = mutableSetOf<String>()
 
-    init {
-        buildRepositories.add("mavenCentral()")
-        buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
-        buildRepositories.add("mavenLocal()")
-        buildRepositories.add("google()")
-        buildRepositories.add("gradlePluginPortal()")
-        buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
-        buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
-    }
+	init {
+		buildRepositories.add("mavenCentral()")
+		buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
+		buildRepositories.add("mavenLocal()")
+		buildRepositories.add("google()")
+		buildRepositories.add("gradlePluginPortal()")
+		buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
+		buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
+	}
 
-    override fun getContent(): String = """buildscript {
+	override fun getContent(): String = """buildscript {
 	repositories {
 ${buildRepositories.joinToString(separator = "\n") { "		$it" }}
 	}
@@ -35,10 +35,10 @@ allprojects {
 }
 
 configure(subprojects${if (project.hasPlatform(Android.ID)) {
-        " - project(':android')"
-    } else {
-        ""
-    }}) {
+		" - project(':android')"
+	} else {
+		""
+	}}) {
 ${plugins.joinToString(separator = "\n") { "	apply plugin: '$it'" }}
 	sourceCompatibility = ${project.advanced.javaVersion}
 	compileJava {

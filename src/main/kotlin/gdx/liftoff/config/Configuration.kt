@@ -38,72 +38,72 @@ import gdx.liftoff.views.widgets.ScrollableTextArea
 @Component
 @Suppress("unused") // Fields accessed via reflection.
 class Configuration {
-    companion object {
-        const val VERSION = "1.11.0.6-SNAPSHOT"
-        const val WIDTH = 600
-        const val HEIGHT = 700
-        const val PREFERENCES_PATH = "gdx-liftoff-prefs"
-    }
+	companion object {
+		const val VERSION = "1.11.0.6-SNAPSHOT"
+		const val WIDTH = 600
+		const val HEIGHT = 700
+		const val PREFERENCES_PATH = "gdx-liftoff-prefs"
+	}
 
-    @LmlParserSyntax
-    val syntax = VisLmlSyntax()
-    @LmlMacro
-    val macro = "templates/macros.lml"
+	@LmlParserSyntax
+	val syntax = VisLmlSyntax()
+	@LmlMacro
+	val macro = "templates/macros.lml"
 
-    @I18nBundle
-    val bundle = "i18n/nls"
-    @I18nLocale(propertiesPath = PREFERENCES_PATH, defaultLocale = "en")
-    val localePreference = "locale"
-    @AvailableLocales
-    val availableLocales = arrayOf("en")
-    @Preference
-    val preferencesPath = PREFERENCES_PATH
-    @StageViewport
-    val viewportProvider = ObjectProvider<Viewport> { FitViewport(WIDTH.toFloat(), HEIGHT.toFloat()) }
+	@I18nBundle
+	val bundle = "i18n/nls"
+	@I18nLocale(propertiesPath = PREFERENCES_PATH, defaultLocale = "en")
+	val localePreference = "locale"
+	@AvailableLocales
+	val availableLocales = arrayOf("en")
+	@Preference
+	val preferencesPath = PREFERENCES_PATH
+	@StageViewport
+	val viewportProvider = ObjectProvider<Viewport> { FitViewport(WIDTH.toFloat(), HEIGHT.toFloat()) }
 
-    @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
-    fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
-        VisUI.setSkipGdxVersionCheck(true)
-        VisUI.load(Gdx.files.internal("skin/tinted.json"))
-        skinService.addSkin("default", VisUI.getSkin())
-        FileChooser.setDefaultPrefsName(PREFERENCES_PATH)
+	@Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
+	fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
+		VisUI.setSkipGdxVersionCheck(true)
+		VisUI.load(Gdx.files.internal("skin/tinted.json"))
+		skinService.addSkin("default", VisUI.getSkin())
+		FileChooser.setDefaultPrefsName(PREFERENCES_PATH)
 
-        // Adding tags and attributes related to the file chooser:
-        ExtendedVisLml.registerFileChooser(syntax)
-        ExtendedVisLml.registerFileValidators(syntax)
-        // Adding custom ScrollableTextArea widget:
-        syntax.addTagProvider(ScrollableTextArea.ScrollableTextAreaLmlTagProvider(), "console")
+		// Adding tags and attributes related to the file chooser:
+		ExtendedVisLml.registerFileChooser(syntax)
+		ExtendedVisLml.registerFileValidators(syntax)
+		// Adding custom ScrollableTextArea widget:
+		syntax.addTagProvider(ScrollableTextArea.ScrollableTextAreaLmlTagProvider(), "console")
 
-        // Changing FileChooser locale bundle:
-        interfaceService.setActionOnBundlesReload {
-            Locales.setFileChooserBundle(localeService.i18nBundle)
-        }
+		// Changing FileChooser locale bundle:
+		interfaceService.setActionOnBundlesReload {
+			Locales.setFileChooserBundle(localeService.i18nBundle)
+		}
 
-        // Adding custom tooltip tag attribute:
-        interfaceService.parser.syntax.addAttributeProcessor(
-            object : LmlAttribute<Actor> {
-                override fun getHandledType(): Class<Actor> = Actor::class.java
-                override fun process(parser: LmlParser, tag: LmlTag, actor: Actor, rawAttributeData: String) {
-                    val tooltip = Tooltip()
-                    val label = VisLabel(parser.parseString(rawAttributeData, actor), "small")
-                    label.wrap = true
-                    tooltip.clear()
-                    tooltip.add(label).width(200f)
-                    tooltip.pad(3f)
-                    tooltip.target = actor
-                    tooltip.pack()
-                }
-            },
-            "tooltip"
-        )
-    }
+		// Adding custom tooltip tag attribute:
+		interfaceService.parser.syntax.addAttributeProcessor(
+			object : LmlAttribute<Actor> {
+				override fun getHandledType(): Class<Actor> = Actor::class.java
+				override fun process(parser: LmlParser, tag: LmlTag, actor: Actor, rawAttributeData: String) {
+					val tooltip = Tooltip()
+					val label = VisLabel(parser.parseString(rawAttributeData, actor), "small")
+					label.wrap = true
+					tooltip.clear()
+					tooltip.add(label).width(200f)
+					tooltip.pad(3f)
+					tooltip.target = actor
+					tooltip.pack()
+				}
+			},
+			"tooltip"
+		)
+	}
 
-    @Destroy
-    fun destroyThreadPool() {
-        try {
-            threadPool.shutdownNow()
-        } catch (exception: Exception) {
-            Exceptions.ignore(exception)
-        }
-    }
+	@Destroy
+	fun destroyThreadPool() {
+		try {
+			threadPool.shutdownNow()
+		} catch (exception: Exception) {
+			Exceptions.ignore(exception)
+		}
+	}
 }

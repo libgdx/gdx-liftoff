@@ -9,22 +9,22 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class Server : Platform {
-    companion object {
-        const val ID = "server"
-        const val ORDER = Lwjgl2.ORDER + 1
-    }
+	companion object {
+		const val ID = "server"
+		const val ORDER = Lwjgl2.ORDER + 1
+	}
 
-    override val id = ID
-    override val order = ORDER
-    override val isStandard = false
+	override val id = ID
+	override val order = ORDER
+	override val isStandard = false
 
-    override fun createGradleFile(project: Project): GradleFile = ServerGradleFile(project)
+	override fun createGradleFile(project: Project): GradleFile = ServerGradleFile(project)
 
-    override fun initiate(project: Project) {
-        // Server project has no additional dependencies.
+	override fun initiate(project: Project) {
+		// Server project has no additional dependencies.
 
-        addGradleTaskDescription(project, "run", "runs the $id application.")
-    }
+		addGradleTaskDescription(project, "run", "runs the $id application.")
+	}
 }
 
 /**
@@ -32,7 +32,7 @@ class Server : Platform {
  * with "run" task.
  */
 class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
-    override fun getContent(): String = """apply plugin: 'application'
+	override fun getContent(): String = """apply plugin: 'application'
 
 sourceCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
