@@ -158,4 +158,32 @@ fun main() {
 	TODO("Implement server application.")
 }
 """
+
+	override fun getTeaVMLauncherContent(project: Project) = """@file:JvmName("TeaVMLauncher")
+
+package ${project.basic.rootPackage}.teavm
+
+import java.io.File
+import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration
+import com.github.xpenatan.gdx.backends.teavm.TeaBuilder
+import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
+import ${project.basic.rootPackage}.${project.basic.mainClass}
+
+fun main() {
+	val teaBuildConfiguration = TeaBuildConfiguration()
+	teaBuildConfiguration.assetsPath.add(File("../assets"))
+	teaBuildConfiguration.webappPath = File(".").canonicalPath
+	teaBuildConfiguration.obfuscate = true
+	teaBuildConfiguration.logClasses = false
+	teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}::class.java)
+
+	// Register any extra classpath assets here:
+	// teaBuildConfiguration.additionalAssetsClasspathFiles += "ktx/script/asset.extension";
+
+	// Register any classes or packages that require reflection here:
+	// TeaReflectionSupplier.addReflectionClass("ktx.script.reflected");
+
+	TeaBuilder.build(teaBuildConfiguration)
+}
+"""
 }

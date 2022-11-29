@@ -11,6 +11,7 @@ import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
@@ -91,6 +92,8 @@ class Box2D : OfficialExtension() {
         addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
+
+		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-box2d-teavm:\$gdxWebToolsVersion")
     }
 }
 
@@ -136,6 +139,8 @@ class Bullet : OfficialExtension() {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
+
+		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-bullet-teavm:\$gdxWebToolsVersion")
 
         // Other platforms are not officially supported (GWT).
     }
@@ -193,6 +198,8 @@ class Freetype : OfficialExtension() {
         addDesktopDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-desktop")
 
         addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
+
+		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-freetype-teavm:\$gdxWebToolsVersion")
 
         // Other platforms are not officially supported (GWT).
     }

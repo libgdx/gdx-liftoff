@@ -12,6 +12,7 @@ gradle-app.setting
 /headless/build/
 /server/build/
 /shared/build/
+/teavm/build/
 
 ## Java:
 *.class
@@ -53,6 +54,9 @@ com_crashlytics_export_strings.xml
 gwt-unitCache/
 www-test/
 .gwt-tmp/
+
+## TeaVM:
+/teavm/webapp/
 
 ## IntelliJ, Android Studio:
 .idea/

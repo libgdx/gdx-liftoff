@@ -4,12 +4,14 @@ import gdx.liftoff.config.GdxVersion
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Server
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.platforms.iOSMOE
 import gdx.liftoff.data.project.Project
@@ -51,6 +53,7 @@ interface Template {
         addIOSMOELauncher(project)
         addLwjgl3Launcher(project)
         addServerLauncher(project)
+		addTeaVMLauncher(project)
         project.readmeDescription = description
     }
 
@@ -390,6 +393,45 @@ public class ServerLauncher {
 		// TODO Implement server application.
 	}
 }"""
+
+    fun addTeaVMLauncher(project: Project) {
+        addSourceFile(
+            project = project,
+            platform = TeaVM.ID,
+            packageName = "${project.basic.rootPackage}.teavm",
+            fileName = "TeaVMLauncher.$launcherExtension",
+            content = getTeaVMLauncherContent(project)
+        )
+    }
+    fun getTeaVMLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
+
+import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration;
+import com.github.xpenatan.gdx.backends.teavm.TeaBuilder;
+import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier;
+import java.io.File;
+import java.io.IOException;
+import ${project.basic.rootPackage}.${project.basic.mainClass};
+
+/** Launches the server application. */
+public class TeaVMLauncher {
+	public static void main(String[] args) throws IOException {
+        TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
+        teaBuildConfiguration.assetsPath.add(new File("../${Assets.ID}"));
+        teaBuildConfiguration.webappPath = new File(".").getCanonicalPath();
+        teaBuildConfiguration.obfuscate = true;
+        teaBuildConfiguration.logClasses = false;
+        teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}.class);
+
+		// Register any extra classpath assets here:
+        // teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");
+
+        // Register any classes or packages that require reflection here:
+        // TeaReflectionSupplier.addReflectionClass("${project.basic.rootPackage}.reflected");
+
+        TeaBuilder.build(teaBuildConfiguration);
+	}
+}
+"""
 
     fun addSourceFile(
         project: Project,

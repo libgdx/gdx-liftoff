@@ -13,7 +13,7 @@ import gdx.liftoff.views.GdxPlatform
 class Lwjgl2 : Platform {
     companion object {
         const val ID = "lwjgl2"
-        const val ORDER = Headless.ORDER + 1
+        const val ORDER = TeaVM.ORDER + 1
     }
 
     override val id = ID
