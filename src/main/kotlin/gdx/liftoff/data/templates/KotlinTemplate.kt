@@ -171,17 +171,17 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 fun main() {
 	val teaBuildConfiguration = TeaBuildConfiguration()
-	teaBuildConfiguration.assetsPath.add(File("../assets"))
-	teaBuildConfiguration.webappPath = File(".").canonicalPath
+	teaBuildConfiguration.assetsPath.add(File("..${"$"}{File.separatorChar}assets"))
+	teaBuildConfiguration.webappPath = File("build${"$"}{File.separatorChar}dist").canonicalPath
 	teaBuildConfiguration.obfuscate = true
 	teaBuildConfiguration.logClasses = false
 	teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}::class.java)
 
 	// Register any extra classpath assets here:
-	// teaBuildConfiguration.additionalAssetsClasspathFiles += "ktx/script/asset.extension";
+	// teaBuildConfiguration.additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
 
 	// Register any classes or packages that require reflection here:
-${generateTeaVMReflectionIncludes(project, indent = "    ", trailingSemicolon = false)}
+${generateTeaVMReflectionIncludes(project, indent = "\t", trailingSemicolon = false)}
 
 	TeaBuilder.build(teaBuildConfiguration)
 }

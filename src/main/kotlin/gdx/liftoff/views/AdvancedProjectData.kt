@@ -63,15 +63,24 @@ class AdvancedProjectData {
 	val gwtPluginVersion: String
 		get() = gwtPluginVersionField.text
 
+	/**
+	 * Version of the xpenatan's web tools that include the TeaVM backend.
+	 */
 	val gdxWebToolsVersion: String
 		get() = "1.0.0-SNAPSHOT"
+
+	/**
+	 * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
+	 */
+	val grettyVersion: String
+		get() = "3.1.0"
 
 	val serverJavaVersion: String
 		get() = wrangleVersion(serverJavaVersionField.model.text.removeSuffix(".0"))
 
 	val desktopJavaVersion: String
 		get() {
-			var djv = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
+			val djv = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
 			return if(djv.toDouble() < javaVersion.toDouble())
 				javaVersion
 			else
