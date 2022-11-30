@@ -22,8 +22,16 @@ class TeaVM : Platform {
 
 	override fun initiate(project: Project) {
 		project.properties["gdxWebToolsVersion"] = project.advanced.gdxWebToolsVersion
-		addGradleTaskDescription(project, "run", "starts the application via a local Jetty server.")
-		addGradleTaskDescription(project, "build", "transpiles the application into JavaScript.")
+		addGradleTaskDescription(
+			project,
+			"run",
+			"serves the JavaScript application at http://localhost:8080 via a local Jetty server."
+		)
+		addGradleTaskDescription(
+			project,
+			"build",
+			"builds the JavaScript application into the build/dist/webapp folder."
+		)
 	}
 }
 
@@ -38,11 +46,12 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
 
 	override fun getContent() = """plugins {
   id 'java'
-  id 'org.gretty' version '3.1.0'
+  id 'org.gretty' version '${project.advanced.grettyVersion}'
 }
 
 gretty {
-  extraResourceBase 'webapp'
+  contextPath = '/'
+  extraResourceBase 'build/dist/webapp'
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
@@ -61,11 +70,7 @@ task buildJavaScript(dependsOn: classes, type: JavaExec) {
 build.dependsOn buildJavaScript
 
 task run(dependsOn: [buildJavaScript, ":${TeaVM.ID}:jettyRun"]) {
-  setDescription("Run the JavaScript application hosted via a local Jetty server on http://localhost:8080/teavm/")
-}
-
-clean.doLast {
-	file('webapp').deleteDir()
+  setDescription("Run the JavaScript application hosted via a local Jetty server at http://localhost:8080/")
 }
 """
 }

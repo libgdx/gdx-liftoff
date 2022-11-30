@@ -416,8 +416,8 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 public class TeaVMLauncher {
 	public static void main(String[] args) throws IOException {
 		TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
-		teaBuildConfiguration.assetsPath.add(new File("../${Assets.ID}"));
-		teaBuildConfiguration.webappPath = new File(".").getCanonicalPath();
+		teaBuildConfiguration.assetsPath.add(new File(".." + File.separatorChar + "${Assets.ID}"));
+		teaBuildConfiguration.webappPath = new File("build" + File.separatorChar + "dist").getCanonicalPath();
 		teaBuildConfiguration.obfuscate = true;
 		teaBuildConfiguration.logClasses = false;
 		teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}.class);
@@ -434,7 +434,7 @@ ${generateTeaVMReflectionIncludes(project)}
 """
 
 	fun generateTeaVMReflectionIncludes(
-		project: Project, indent: String = "        ", trailingSemicolon: Boolean = true
+		project: Project, indent: String = "\t\t", trailingSemicolon: Boolean = true
 	): String {
 		val semicolon = if (trailingSemicolon) ";" else ""
 		return if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
