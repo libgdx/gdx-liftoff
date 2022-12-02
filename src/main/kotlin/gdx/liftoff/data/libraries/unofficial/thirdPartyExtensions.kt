@@ -1124,7 +1124,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
 	override val id = "digital"
-	override val defaultVersion = "0.1.4"
+	override val defaultVersion = "0.1.5"
 	override val url = "https://github.com/tommyettinger/digital"
 	override val group = "com.github.tommyettinger"
 	override val name = "digital"
@@ -1164,7 +1164,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
 	override val id = "juniper"
-	override val defaultVersion = "0.1.6"
+	override val defaultVersion = "0.1.7"
 	override val url = "https://github.com/tommyettinger/juniper"
 	override val group = "com.github.tommyettinger"
 	override val name = "juniper"

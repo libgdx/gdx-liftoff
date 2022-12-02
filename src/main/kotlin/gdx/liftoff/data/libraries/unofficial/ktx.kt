@@ -16,7 +16,7 @@ import gdx.liftoff.views.Extension
 import com.github.kittinunf.fuel.Fuel.get
 
 private const val defaultGroup = "io.github.libktx"
-private const val fallbackVersion = "1.11.0-rc2"
+private const val fallbackVersion = "1.11.0-rc3"
 
 /**
  * Modular Kotlin utilities.
