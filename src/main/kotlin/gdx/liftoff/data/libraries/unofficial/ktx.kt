@@ -82,7 +82,21 @@ class KtxApp : KtxExtension() {
 }
 
 /**
+ * Utilities for Artemis-odb entity component system.
+ * @author deviodesign
+ */
+@Extension
+class KtxArtemis : KtxExtension() {
+	override val id = "ktxArtemis"
+
+	override fun initiateDependencies(project: Project) {
+		ArtemisOdb().initiate(project)
+	}
+}
+
+/**
  * Utilities for Ashley entity component system.
+ * @author Jkly
  */
 @Extension
 class KtxAshley : KtxExtension() {
@@ -197,6 +211,7 @@ class KtxInject : KtxExtension() {
 
 /**
  * libGDX JSON serialization utilities for Kotlin applications.
+ * @author maltaisn
  */
 @Extension
 class KtxJson : KtxExtension() {
@@ -221,6 +236,7 @@ class KtxMath : KtxExtension() {
 
 /**
  * libGDX preferences utilities for applications developed with Kotlin.
+ * @author Quillraven
  */
 @Extension
 class KtxPreferences : KtxExtension() {
@@ -253,6 +269,7 @@ class KtxStyle : KtxExtension() {
 
 /**
  * Tiled utilities for libGDX applications written with Kotlin.
+ * @author Quillraven
  */
 @Extension
 class KtxTiled : KtxExtension() {
