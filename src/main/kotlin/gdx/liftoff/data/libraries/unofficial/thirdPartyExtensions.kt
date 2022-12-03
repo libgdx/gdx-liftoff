@@ -235,7 +235,7 @@ class JaciGwt : ThirdPartyExtension() {
 @Extension
 class KotlinxCoroutines : ThirdPartyExtension() {
 	override val id = "kotlinxCoroutines"
-	override val defaultVersion = "1.6.0"
+	override val defaultVersion = "1.6.4"
 	override val url = "https://kotlinlang.org/docs/coroutines-overview.html"
 	override val group = "org.jetbrains.kotlinx"
 	override val name = "kotlinx-coroutines-core"

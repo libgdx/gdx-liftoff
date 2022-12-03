@@ -93,7 +93,9 @@ class Box2D : OfficialExtension() {
 
 		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
 
-		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-box2d-teavm:\$gdxWebToolsVersion")
+		// Web tools version of the Box2D is not feature complete; however, TeaVM can compile the GWT Box2D library.
+		// addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-web-tools:gdx-box2d-teavm:\$gdxWebToolsVersion")
+		addDependency(project, TeaVM.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
 	}
 }
 

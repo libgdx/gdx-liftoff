@@ -171,7 +171,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath "org.gretty:gretty:3.1.0"
+		classpath 'org.gretty:gretty:${project.advanced.grettyVersion}'
 	}
 }
 apply plugin: "gwt"
