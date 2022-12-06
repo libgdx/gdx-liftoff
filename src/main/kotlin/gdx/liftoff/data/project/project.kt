@@ -15,7 +15,10 @@ import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Java
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Assets
+import gdx.liftoff.data.platforms.Core
+import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Platform
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.templates.Template
 import gdx.liftoff.views.AdvancedProjectData
 import gdx.liftoff.views.BasicProjectData
@@ -225,10 +228,25 @@ Useful Gradle tasks and flags:
 ${gradleTaskDescriptions.map { "- `${it.key}`: ${it.value}" }.sorted().joinToString(separator = "\n")}
 
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project."""
+For example, `core:clean` removes `build` folder only from the `core` project.
+"""
 				)
 			)
 		}
+	}
+
+	fun getAlertCodes(): List<String> {
+		val alerts = mutableListOf<String>()
+		if (GWT.ID in platforms && languages.getSelectedLanguages().any { it.id != Java().id }) {
+			alerts += "warningNonJavaGwt"
+		}
+		if (TeaVM.ID in platforms) {
+			val coreDependencies = gradleFiles[Core.ID]!!.dependencies
+			if (coreDependencies.any { "kotlinx-coroutines-core" in it }) {
+				alerts += "warningTeaVMCoroutines"
+			}
+		}
+		return alerts
 	}
 
 	fun includeGradleWrapper(logger: ProjectLogger) {

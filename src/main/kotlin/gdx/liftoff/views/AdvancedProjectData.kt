@@ -64,9 +64,9 @@ class AdvancedProjectData {
 		get() = gwtPluginVersionField.text
 
 	/**
-	 * Version of the xpenatan's web tools that include the TeaVM backend.
+	 * Version of xpenatan's TeaVM backend.
 	 */
-	val gdxWebToolsVersion: String
+	val gdxTeaVMVersion: String
 		get() = "1.0.0-SNAPSHOT"
 
 	/**

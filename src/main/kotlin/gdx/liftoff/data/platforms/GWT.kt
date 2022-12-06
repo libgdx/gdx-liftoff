@@ -317,7 +317,7 @@ sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
 """ + (
-		if (project.extensions.hasExtensionSelected("lombok")) """
+		if (project.extensions.isSelected("lombok")) """
 
 configurations { lom }
 dependencies {
