@@ -56,6 +56,7 @@ class AndroidLauncher : AndroidApplication() {
 		super.onCreate(savedInstanceState)
 		initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
 			// Configure your application here.
+			useImmersiveMode = true // Recommended, but not required.
 		})
 	}
 }

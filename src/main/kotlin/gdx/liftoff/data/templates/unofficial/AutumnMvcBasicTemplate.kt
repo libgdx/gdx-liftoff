@@ -180,6 +180,7 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
+		configuration.useImmersiveMode = true; // Recommended, but not required.
 		initialize(new AutumnApplication(new AndroidClassScanner(), ${project.basic.mainClass}.class), configuration);
 	}
 }"""
