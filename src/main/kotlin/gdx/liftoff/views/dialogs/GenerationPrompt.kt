@@ -12,6 +12,7 @@ import com.github.czyzby.autumn.mvc.stereotype.ViewDialog
 import com.github.czyzby.lml.annotation.LmlActor
 import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
+import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.project.ProjectLogger
 import gdx.liftoff.views.MainView
 import gdx.liftoff.views.widgets.ScrollableTextArea
@@ -44,6 +45,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
 				mainView.revalidateForm()
 				project.includeGradleWrapper(this)
 				logNls("generationEnd")
+				logAlerts(project)
 			} catch (exception: Exception) {
 				log(exception.javaClass.name + ": " + exception.message)
 				exception.stackTrace.forEach { log("  at $it") }
@@ -69,5 +71,13 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
 				scrollPane.scrollPercentY = 1f
 			}
 		}
+	}
+
+	private fun logAlerts(project: Project) {
+		val alerts = project.getAlertCodes()
+		if (alerts.isEmpty()) return
+
+		logNls("warnings")
+		alerts.forEach(this::logNls)
 	}
 }

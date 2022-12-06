@@ -4,7 +4,9 @@ import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.unofficial.KtxApp
 import gdx.liftoff.data.libraries.unofficial.KtxAssets
+import gdx.liftoff.data.libraries.unofficial.KtxAssetsAsync
 import gdx.liftoff.data.libraries.unofficial.KtxAsync
+import gdx.liftoff.data.libraries.unofficial.KtxFreetypeAsync
 import gdx.liftoff.data.libraries.unofficial.KtxGraphics
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
@@ -38,7 +40,7 @@ class KtxTemplate : KotlinTemplate {
 	}
 
 	private val Project.isUsingAsync: Boolean
-		get() = this.extensions.hasExtensionSelected(KtxAsync().id)
+		get() = listOf(KtxAsync(), KtxAssetsAsync(), KtxFreetypeAsync()).map { it.id }.any(extensions::isSelected)
 
 	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage}
 

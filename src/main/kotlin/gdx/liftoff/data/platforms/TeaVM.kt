@@ -21,7 +21,7 @@ class TeaVM : Platform {
 	override fun createGradleFile(project: Project) = TeaVMGradleFile(project)
 
 	override fun initiate(project: Project) {
-		project.properties["gdxWebToolsVersion"] = project.advanced.gdxWebToolsVersion
+		project.properties["gdxTeaVMVersion"] = project.advanced.gdxTeaVMVersion
 		addGradleTaskDescription(
 			project,
 			"run",
@@ -39,9 +39,9 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
 	init {
 		dependencies.add("project(':${Core.ID}')")
 
-		addDependency("com.github.xpenatan.gdx-web-tools:backend-web:\$gdxWebToolsVersion")
-		addDependency("com.github.xpenatan.gdx-web-tools:backend-teavm:\$gdxWebToolsVersion")
-		addDependency("com.github.xpenatan.gdx-web-tools:backend-teavm-native:\$gdxWebToolsVersion")
+		addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
+		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm-core:\$gdxTeaVMVersion")
+		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm-native:\$gdxTeaVMVersion")
 	}
 
 	override fun getContent() = """plugins {
@@ -55,7 +55,7 @@ gretty {
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-project.ext.mainClassName = '${project.basic.rootPackage}.teavm.TeaVMLauncher'
+project.ext.mainClassName = '${project.basic.rootPackage}.teavm.TeaVMBuilder'
 eclipse.project.name = appName + '-teavm'
 
 dependencies {

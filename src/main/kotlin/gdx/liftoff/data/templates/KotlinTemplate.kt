@@ -160,7 +160,23 @@ fun main() {
 }
 """
 
-	override fun getTeaVMLauncherContent(project: Project) = """@file:JvmName("TeaVMLauncher")
+	override fun getTeaVMLauncherContent(project: Project): String = """@file:JvmName("TeaVMLauncher")
+
+package ${project.basic.rootPackage}.teavm
+
+import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration
+import com.github.xpenatan.gdx.backends.web.WebApplication
+import ${project.basic.rootPackage}.${project.basic.mainClass}
+
+fun main() {
+	val config = TeaApplicationConfiguration("canvas")
+	config.width = $width
+	config.height = $height
+	WebApplication(${project.basic.mainClass}(), config)
+}
+"""
+
+	override fun getTeaVMBuilderContent(project: Project) = """@file:JvmName("TeaVMBuilder")
 
 package ${project.basic.rootPackage}.teavm
 
@@ -168,15 +184,13 @@ import java.io.File
 import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration
 import com.github.xpenatan.gdx.backends.teavm.TeaBuilder
 import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
-import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 fun main() {
 	val teaBuildConfiguration = TeaBuildConfiguration()
-	teaBuildConfiguration.assetsPath.add(File("..${"$"}{File.separatorChar}assets"))
-	teaBuildConfiguration.webappPath = File("build${"$"}{File.separatorChar}dist").canonicalPath
+	teaBuildConfiguration.assetsPath.add(File("../assets"))
+	teaBuildConfiguration.webappPath = File("build/dist").canonicalPath
+	// You can switch this setting during development:
 	teaBuildConfiguration.obfuscate = true
-	teaBuildConfiguration.logClasses = false
-	teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}::class.java)
 
 	// Register any extra classpath assets here:
 	// teaBuildConfiguration.additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
@@ -184,7 +198,9 @@ fun main() {
 	// Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project, indent = "\t", trailingSemicolon = false)}
 
-	TeaBuilder.build(teaBuildConfiguration)
+	val tool = TeaBuilder.config(teaBuildConfiguration)
+	tool.setMainClass("${project.basic.rootPackage}.teavm.TeaVMLauncher")
+	TeaBuilder.build(tool)
 }
 """
 }

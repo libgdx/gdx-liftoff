@@ -21,7 +21,7 @@ import gdx.liftoff.data.project.Project
  */
 interface Template {
 	val id: String
-	// Sizes are kept as strings so you can set the sizes to static values, for example: MainClass.WIDTH.
+	// Sizes are kept as strings, so you can set the sizes to static values, for example: MainClass.WIDTH.
 	val width: String
 		get() = "640"
 	val height: String
@@ -319,7 +319,6 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the iOS (Multi-Os Engine) application. */
 public class IOSLauncher extends IOSApplication.Delegate {
-
 	protected IOSLauncher(Pointer peer) {
 		super(peer);
 	}
@@ -403,25 +402,47 @@ public class ServerLauncher {
 			fileName = "TeaVMLauncher.$launcherExtension",
 			content = getTeaVMLauncherContent(project)
 		)
+		addSourceFile(
+			project = project,
+			platform = TeaVM.ID,
+			packageName = "${project.basic.rootPackage}.teavm",
+			fileName = "TeaVMBuilder.$launcherExtension",
+			content = getTeaVMBuilderContent(project)
+		)
 	}
 	fun getTeaVMLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
+
+import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration;
+import com.github.xpenatan.gdx.backends.web.WebApplication;
+import com.github.xpenatan.gdx.backends.web.WebApplicationConfiguration;
+import ${project.basic.rootPackage}.${project.basic.mainClass};
+
+public class TeaVMLauncher {
+    public static void main(String[] args) {
+        WebApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
+        config.width = $width;
+        config.height = $height;
+        new WebApplication(new ${project.basic.mainClass}(), config);
+    }
+}
+"""
+	fun getTeaVMBuilderContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
 
 import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration;
 import com.github.xpenatan.gdx.backends.teavm.TeaBuilder;
 import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier;
 import java.io.File;
 import java.io.IOException;
-import ${project.basic.rootPackage}.${project.basic.mainClass};
+import org.teavm.tooling.TeaVMTool;
 
 /** Launches the server application. */
-public class TeaVMLauncher {
+public class TeaVMBuilder {
 	public static void main(String[] args) throws IOException {
 		TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
-		teaBuildConfiguration.assetsPath.add(new File(".." + File.separatorChar + "${Assets.ID}"));
-		teaBuildConfiguration.webappPath = new File("build" + File.separatorChar + "dist").getCanonicalPath();
+		teaBuildConfiguration.assetsPath.add(new File("../${Assets.ID}"));
+		teaBuildConfiguration.webappPath = new File("build/dist").getCanonicalPath();
+		// You can switch this setting during development:
 		teaBuildConfiguration.obfuscate = true;
-		teaBuildConfiguration.logClasses = false;
-		teaBuildConfiguration.setApplicationListener(${project.basic.mainClass}.class);
 
 		// Register any extra classpath assets here:
 		// teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");
@@ -429,7 +450,9 @@ public class TeaVMLauncher {
 		// Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project)}
 
-		TeaBuilder.build(teaBuildConfiguration);
+        TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
+        tool.setMainClass(TeaVMLauncher.class.getName());
+        TeaBuilder.build(tool);
 	}
 }
 """
