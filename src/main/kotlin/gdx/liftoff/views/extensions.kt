@@ -25,7 +25,7 @@ class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
 
 	fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
 	fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
-	fun hasExtensionSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
+	fun isSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
 
 	// Automatic scanning of extensions:
 	override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
