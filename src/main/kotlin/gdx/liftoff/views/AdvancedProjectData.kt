@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel
 import com.kotcrab.vis.ui.widget.spinner.Spinner
 import gdx.liftoff.config.inject
+import gdx.liftoff.data.libraries.Repository.MavenCentral
 
 /**
  * Stores data from "advanced" tab.
@@ -67,7 +68,8 @@ class AdvancedProjectData {
 	 * Version of xpenatan's TeaVM backend.
 	 */
 	val gdxTeaVMVersion: String
-		get() = "1.0.0-SNAPSHOT"
+		get() = MavenCentral.getLatestVersion(group = "com.github.xpenatan.gdx-teavm", name = "backend-teavm")
+			?: "1.0.0-b1"
 
 	/**
 	 * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.

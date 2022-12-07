@@ -40,8 +40,7 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
 		dependencies.add("project(':${Core.ID}')")
 
 		addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
-		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm-core:\$gdxTeaVMVersion")
-		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm-native:\$gdxTeaVMVersion")
+		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
 	}
 
 	override fun getContent() = """plugins {
