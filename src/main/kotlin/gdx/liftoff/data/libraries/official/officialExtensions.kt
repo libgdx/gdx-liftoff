@@ -94,7 +94,7 @@ class Box2D : OfficialExtension() {
 		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
 
 		// TeaVM version of the Box2D is not feature complete; however, TeaVM can compile the GWT Box2D library.
-		// addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-box2d-teavm:\$gdxWebToolsVersion")
+		// addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-box2d-teavm:\$gdxTeaVMVersion")
 		addDependency(project, TeaVM.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
 	}
 }
@@ -142,7 +142,7 @@ class Bullet : OfficialExtension() {
 
 		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
 
-		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-bullet-teavm:\$gdxWebToolsVersion")
+		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-bullet-teavm:\$gdxTeaVMVersion")
 
 		// Other platforms are not officially supported (GWT).
 	}
@@ -201,7 +201,7 @@ class Freetype : OfficialExtension() {
 
 		addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
 
-		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:\$gdxWebToolsVersion")
+		addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:\$gdxTeaVMVersion")
 
 		// Other platforms are not officially supported (GWT).
 	}

@@ -251,7 +251,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 		return alerts
 	}
 
-	fun includeGradleWrapper(logger: ProjectLogger) {
+	fun includeGradleWrapper(logger: ProjectLogger, executeGradleTasks: Boolean = true) {
 		arrayOf(
 			"gradlew", "gradlew.bat", path("gradle", "wrapper", "gradle-wrapper.jar"),
 			path("gradle", "wrapper", "gradle-wrapper.properties")
@@ -262,7 +262,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 		basic.destination.child("gradlew.bat").file().setExecutable(true)
 		logger.logNls("copyGradle")
 		val gradleTasks = advanced.gradleTasks
-		if (gradleTasks.isNotEmpty()) {
+		if (executeGradleTasks && gradleTasks.isNotEmpty()) {
 			logger.logNls("runningGradleTasks")
 			val commands = determineGradleCommand() + gradleTasks
 			logger.log(commands.joinToString(separator = " "))
