@@ -418,12 +418,12 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the TeaVM/HTML application. */
 public class TeaVMLauncher {
-    public static void main(String[] args) {
-        WebApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
-        config.width = $width;
-        config.height = $height;
-        new WebApplication(new ${project.basic.mainClass}(), config);
-    }
+	public static void main(String[] args) {
+		WebApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
+		config.width = $width;
+		config.height = $height;
+		new WebApplication(new ${project.basic.mainClass}(), config);
+	}
 }
 """
 	fun getTeaVMBuilderContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
@@ -452,9 +452,9 @@ public class TeaVMBuilder {
 		// Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project)}
 
-        TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
-        tool.setMainClass(TeaVMLauncher.class.getName());
-        TeaBuilder.build(tool);
+		TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
+		tool.setMainClass(TeaVMLauncher.class.getName());
+		TeaBuilder.build(tool);
 	}
 }
 """

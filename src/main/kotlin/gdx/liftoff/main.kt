@@ -94,7 +94,6 @@ fun main() {
 	config.setTitle("gdx-liftoff")
 	config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
 	config.disableAudio(true)
-//    config.setDecorated(false)
 	config.setResizable(true)
 	config.setForegroundFPS(16)
 	config.setIdleFPS(8)
