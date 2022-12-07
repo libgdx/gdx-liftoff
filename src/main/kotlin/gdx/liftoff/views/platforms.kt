@@ -16,7 +16,8 @@ import gdx.liftoff.data.platforms.Platform
  * Handles platform-related input.
  */
 @Processor
-class PlatformsData : AbstractAnnotationProcessor<GdxPlatform>() {
+class PlatformsView : AbstractAnnotationProcessor<GdxPlatform>() {
+	// Filled by the annotation processor.
 	val platforms = mutableMapOf<String, Platform>()
 
 	@LmlActor("androidSdk") private val androidSdk: Disableable = inject()

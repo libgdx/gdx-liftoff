@@ -85,7 +85,7 @@ app.name=${project.basic.name}"""
 		<pattern>com.android.org.bouncycastle.crypto.digests.AndroidDigestFactoryOpenSSL</pattern>
 		<pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
 		<pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
-${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-controllers" } != null) "\t\t<pattern>com.badlogic.gdx.controllers.IosControllerManager</pattern>" else ""}
+${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) "\t\t<pattern>com.badlogic.gdx.controllers.IosControllerManager</pattern>" else ""}
 	</forceLinkClasses>
 	<libs>
 			<lib>z</lib>
@@ -99,7 +99,7 @@ ${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-co
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>GameController</framework>
-${if (project.extensions.getSelectedOfficialExtensions().find { it.id == "gdx-controllers" } != null) "\t\t<framework>GameKit</framework>" else ""}
+${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) "\t\t<framework>GameKit</framework>" else ""}
 	</frameworks>
 </config>"""
 			)

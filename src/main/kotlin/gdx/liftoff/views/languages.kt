@@ -13,17 +13,18 @@ import com.github.czyzby.lml.parser.LmlParser
 import com.kotcrab.vis.ui.widget.VisTextField
 import gdx.liftoff.config.inject
 import gdx.liftoff.data.languages.Language
-import gdx.liftoff.data.project.Project
+import gdx.liftoff.data.project.LanguagesData
 
 /**
  * Holds additional JVM languages data.
  */
 @Processor
-class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
-	val jvmLanguages = mutableMapOf<String, Language>()
+class LanguagesView : AbstractAnnotationProcessor<JvmLanguage>() {
+	// Filled by the annotation processor.
+	private val jvmLanguages = mutableMapOf<String, Language>()
 
 	@LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
-	val languageVersions = ObjectMap<String, VisTextField>()
+	private val languageVersions = ObjectMap<String, VisTextField>()
 
 	val languages: Array<String>
 		get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
@@ -40,16 +41,16 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
 		}
 	}
 
-	fun getVersion(id: String): String = languageVersions[id].text
-
-	fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
+	private fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
 		jvmLanguages[it.name]!!
 	}.toList()
 
-	fun appendSelectedLanguagesVersions(project: Project) {
-		languageButtons.filter { it.isChecked }.forEach {
-			project.properties[it.name + "Version"] = languageVersions.get(it.name).text
-		}
+	fun exportData(): LanguagesData {
+		val languages = getSelectedLanguages()
+		return LanguagesData(
+			list = languages.toMutableList(),
+			versions = languageVersions.associate { it.key to it.value.text }
+		)
 	}
 
 	override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
@@ -64,14 +65,6 @@ class LanguagesData : AbstractAnnotationProcessor<JvmLanguage>() {
 	) {
 		val language = component as Language
 		jvmLanguages[language.id] = language
-	}
-
-	inline fun <reified Lang : Language> selectLanguage() {
-		jvmLanguages
-			.filter { it.value is Lang }
-			.forEach { language ->
-				languageButtons.first { it.name == language.key }.isChecked = true
-			}
 	}
 }
 

@@ -20,10 +20,6 @@ import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Platform
 import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.templates.Template
-import gdx.liftoff.views.AdvancedProjectData
-import gdx.liftoff.views.BasicProjectData
-import gdx.liftoff.views.ExtensionsData
-import gdx.liftoff.views.LanguagesData
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -54,7 +50,7 @@ class Project(
 
 	// README.md:
 	var readmeDescription = ""
-	val gradleTaskDescriptions = mutableMapOf<String, String>()
+	private val gradleTaskDescriptions = mutableMapOf<String, String>()
 
 	init {
 		gradleFiles = mutableMapOf()
@@ -115,16 +111,22 @@ class Project(
 
 	private fun addJvmLanguagesSupport() {
 		Java().initiate(this) // Java is supported by default.
-		languages.getSelectedLanguages().forEach {
+		languages.list.forEach {
 			it.initiate(this)
 			properties[it.id + "Version"] = languages.getVersion(it.id)
 		}
-		languages.appendSelectedLanguagesVersions(this)
+		appendSelectedLanguagesVersions()
+	}
+
+	private fun appendSelectedLanguagesVersions() {
+		languages.list.forEach {
+			properties[it.id + "Version"] = languages.getVersion(it.id)
+		}
 	}
 
 	private fun addExtensions() {
-		extensions.getSelectedOfficialExtensions().forEach { it.initiate(this) }
-		extensions.getSelectedThirdPartyExtensions().forEach { it.initiate(this) }
+		extensions.officialExtensions.forEach { it.initiate(this) }
+		extensions.thirdPartyExtensions.forEach { it.initiate(this) }
 	}
 
 	private fun addPlatforms() {
@@ -237,7 +239,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 
 	fun getAlertCodes(): List<String> {
 		val alerts = mutableListOf<String>()
-		if (GWT.ID in platforms && languages.getSelectedLanguages().any { it.id != Java().id }) {
+		if (GWT.ID in platforms && languages.list.any { it.id != Java().id }) {
 			alerts += "warningNonJavaGwt"
 		}
 		if (TeaVM.ID in platforms) {
@@ -259,10 +261,10 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 		basic.destination.child("gradlew").file().setExecutable(true)
 		basic.destination.child("gradlew.bat").file().setExecutable(true)
 		logger.logNls("copyGradle")
-		val gradleTasks = advanced.composeGradleTasks()
+		val gradleTasks = advanced.gradleTasks
 		if (gradleTasks.isNotEmpty()) {
 			logger.logNls("runningGradleTasks")
-			val commands = determineGradleCommand() + advanced.composeGradleTasks()
+			val commands = determineGradleCommand() + gradleTasks
 			logger.log(commands.joinToString(separator = " "))
 			val process = ProcessBuilder(*commands).directory(basic.destination.file())
 				.redirectErrorStream(true).start()

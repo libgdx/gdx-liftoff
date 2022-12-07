@@ -24,7 +24,7 @@ open class AutumnMvcBasicTemplate : Template {
 		getReflectedPackages(project).forEach { project.reflectedPackages.add(it) }
 
 		super.apply(project)
-		if (generateSkin) project.advanced.forceSkinGeneration()
+		if (generateSkin) project.advanced.generateSkin = true
 
 		// Adding Autumn MVC dependency:
 		AutumnMVC().initiate(project)

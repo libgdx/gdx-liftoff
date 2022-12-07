@@ -10,22 +10,29 @@ import com.github.czyzby.autumn.processor.AbstractAnnotationProcessor
 import com.github.czyzby.lml.annotation.LmlActor
 import gdx.liftoff.config.inject
 import gdx.liftoff.data.libraries.Library
+import gdx.liftoff.data.project.ExtensionsData
 
 /**
  * Holds data about official and third-party extensions.
  */
 @Processor
-class ExtensionsData : AbstractAnnotationProcessor<Extension>() {
+class ExtensionsView : AbstractAnnotationProcessor<Extension>() {
+	// Filled by the annotation processor.
 	val extensionsById = mutableMapOf<String, Library>()
+
 	val official = mutableListOf<Library>()
 	val thirdParty = mutableListOf<Library>()
 
 	@LmlActor("\$officialExtensions") private val officialButtons: ObjectMap<String, Button> = inject()
 	@LmlActor("\$thirdPartyExtensions") private val thirdPartyButtons: ObjectMap<String, Button> = inject()
 
-	fun getSelectedOfficialExtensions(): Array<Library> = official.filter { officialButtons.get(it.id).isChecked }.toTypedArray()
-	fun getSelectedThirdPartyExtensions(): Array<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }.toTypedArray()
-	fun isSelected(id: String): Boolean = (officialButtons.containsKey(id) && officialButtons.get(id).isChecked) || (thirdPartyButtons.containsKey(id) && thirdPartyButtons.get(id).isChecked)
+	private fun getSelectedOfficialExtensions(): List<Library> = official.filter { officialButtons.get(it.id).isChecked }
+	private fun getSelectedThirdPartyExtensions(): List<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }
+
+	fun exportData(): ExtensionsData = ExtensionsData(
+		officialExtensions = getSelectedOfficialExtensions(),
+		thirdPartyExtensions = getSelectedThirdPartyExtensions(),
+	)
 
 	// Automatic scanning of extensions:
 	override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java

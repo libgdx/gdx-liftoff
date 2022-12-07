@@ -14,8 +14,10 @@ import gdx.liftoff.data.templates.Template
  * Handles templates tab.
  */
 @Processor
-class TemplatesData : AbstractAnnotationProcessor<ProjectTemplate>() {
+class TemplatesView : AbstractAnnotationProcessor<ProjectTemplate>() {
+	// Filled by the annotation processor.
 	private val templates = mutableListOf<Template>()
+
 	val officialTemplates = mutableListOf<Template>()
 	val thirdPartyTemplates = mutableListOf<Template>()
 	@LmlActor("templatesTable") private val templatesTable: ButtonTable = inject()
