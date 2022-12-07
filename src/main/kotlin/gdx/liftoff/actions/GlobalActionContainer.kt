@@ -83,6 +83,15 @@ class GlobalActionContainer : ActionContainer {
 		return true
 	}
 
+	@LmlAction("androidPluginVersion")
+	fun getDefaultAndroidPluginVersion(): String = "7.2.2"
+
+	@LmlAction("roboVMVersion")
+	fun getDefaultRoboVMVersion(): String = "2.3.16"
+
+	@LmlAction("gwtPluginVersion")
+	fun getDefaultGwtPluginVersion(): String = "1.1.18"
+
 	@LmlAction("close")
 	fun noOp() {
 		// Empty dialog closing utility.

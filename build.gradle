@@ -4,15 +4,15 @@ apply plugin: 'application'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 buildscript {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:10.2.0"
-    }
+	repositories {
+		mavenCentral()
+		mavenLocal()
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+		classpath "org.jlleitschuh.gradle:ktlint-gradle:10.2.0"
+	}
 }
 
 version = "1.11.0.6-SNAPSHOT"
@@ -20,59 +20,61 @@ mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 
 jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
-    dependencies {
-        exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
-    }
-    doLast {
-        file(archiveFile).setExecutable(true, false)
-    }
+	manifest {
+		attributes 'Main-Class': mainClassName
+	}
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+	exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+	dependencies {
+		exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
+	}
+	doLast {
+		file(archiveFile).setExecutable(true, false)
+	}
 }
 
 repositories {
-    mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://s01.oss.sonatype.org" }
-    gradlePluginPortal()
-    maven { url 'https://jitpack.io' }
+	mavenCentral()
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+	maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+	maven { url "https://s01.oss.sonatype.org" }
+	gradlePluginPortal()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    implementation "org.apache.commons:commons-exec:$commonsExecVersion"
-    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
-    implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
-    implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
-    implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
-    implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
-    implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
-    implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+	implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+	implementation "org.apache.commons:commons-exec:$commonsExecVersion"
+	implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+	implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
+	implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
+	implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
+	implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
+	implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
+	implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
+	implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
 
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
-    implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
+	implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
 
-    implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
-//    implementation "khttp:khttp:1.0.0"
-//	implementation 'org.danilopianini:khttp:1.2.3'
-//	implementation 'com.github.OndraZizka:khttp-ascclemens:1668b3e31d'
-//	implementation 'com.github.jkcclemens:khttp:39f76b4186'
-	implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
+	implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
+	implementation "com.github.kittinunf.fuel:fuel:2.3.1"
 	implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1"
-    implementation 'org.slf4j:slf4j-nop:2.0.4'
+	implementation "org.slf4j:slf4j-nop:2.0.5"
+}
+
+task sample(dependsOn: classes, type: JavaExec) {
+	setDescription("Generates a sample libGDX project into build/dist/sample")
+	mainClass.set("gdx.liftoff.Sample")
+	setClasspath(sourceSets.main.runtimeClasspath)
 }

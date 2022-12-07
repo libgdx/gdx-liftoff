@@ -61,5 +61,6 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 		batch.dispose();
 		image.dispose();
 	}
-}"""
+}
+"""
 }

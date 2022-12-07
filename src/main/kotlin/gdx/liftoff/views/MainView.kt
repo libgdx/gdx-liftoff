@@ -57,12 +57,12 @@ class MainView : ActionContainer {
 		manager
 	}
 	@Inject private val interfaceService: InterfaceService = inject()
-	@LmlInject private val basicData: BasicProjectData = inject()
-	@LmlInject private val advancedData: AdvancedProjectData = inject()
-	@LmlInject @Inject private val platformsData: PlatformsData = inject()
-	@LmlInject @Inject private val languagesData: LanguagesData = inject()
-	@LmlInject @Inject private val extensionsData: ExtensionsData = inject()
-	@LmlInject @Inject private val templatesData: TemplatesData = inject()
+	@LmlInject private val basicData: BasicProjectDataView = inject()
+	@LmlInject private val advancedData: AdvancedProjectDataView = inject()
+	@LmlInject @Inject private val platformsView: PlatformsView = inject()
+	@LmlInject @Inject private val languagesView: LanguagesView = inject()
+	@LmlInject @Inject private val extensionsData: ExtensionsView = inject()
+	@LmlInject @Inject private val templatesView: TemplatesView = inject()
 	@LmlActor("form") private val form: VisFormTable = inject()
 	@LmlActor("notLatestVersion") private val notUpToDateToast: ToastTable = inject()
 
@@ -124,7 +124,7 @@ class MainView : ActionContainer {
 				return
 			}
 
-			// unexpected error -> show visui dialog
+			// Unexpected error - show VisUI dialog.
 			if (status != NativeFileDialog.NFD_OKAY) {
 				throw Throwable("Native file dialog error")
 			}
@@ -155,7 +155,7 @@ class MainView : ActionContainer {
 	@LmlAction("togglePlatform")
 	fun togglePlatform(button: Button) {
 		if (button.name == Android.ID) {
-			platformsData.toggleAndroidPlatform(button.isChecked)
+			platformsView.toggleAndroidPlatform(button.isChecked)
 			revalidateForm()
 		}
 	}
@@ -187,11 +187,11 @@ class MainView : ActionContainer {
 	}
 
 	@LmlAfter fun initiateVersions(parser: LmlParser) {
-		languagesData.assignVersions(parser)
+		languagesView.assignVersions(parser)
 	}
 
 	@LmlAfter fun checkSetupVersion() {
-		// When using snapshots, we don't care if the version matches latest stable.
+		// When using snapshots, we don't care if the version matches the latest stable.
 		if (Configuration.VERSION.endsWith("SNAPSHOT")) return
 
 		val request = Net.HttpRequest(Net.HttpMethods.GET)
@@ -222,19 +222,19 @@ class MainView : ActionContainer {
 	}
 
 	@LmlAction("platforms") fun getPlatforms(): Iterable<*> =
-		platformsData.platforms.entries.sortedBy { it.value.order }.map { it.key }
+		platformsView.platforms.entries.sortedBy { it.value.order }.map { it.key }
 	@LmlAction("show") fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
 	@LmlAction("hide") fun getTabHidingAction(): Action = Actions.fadeOut(0.1f)
 	@LmlAction("gdxVersion") fun getGdxVersion(): String = Version.VERSION
 	@LmlAction("gwtVersions") fun getGwtVersions(): Array<String> = arrayOf("2.8.2")
-	@LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesData.languages
-	@LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesData.versions
+	@LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesView.languages
+	@LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesView.versions
 	@LmlAction("templates") fun getOfficialTemplates(): Array<String> =
-		templatesData.officialTemplates.map { it.id }.sortedWith { left, right -> if (left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
+		templatesView.officialTemplates.map { it.id }.sortedWith { left, right -> if (left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
 			.toTypedArray()
 
 	@LmlAction("thirdPartyTemplates") fun getThirdPartyTemplates(): Array<String> =
-		templatesData.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()
+		templatesView.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()
 
 	@LmlAction("officialExtensions") fun getOfficialExtensions(): Array<String> =
 		extensionsData.official.map { it.id }.sorted().toTypedArray()
@@ -253,15 +253,15 @@ class MainView : ActionContainer {
 	}
 
 	fun getDestination(): FileHandle = basicData.destination
-	fun getAndroidSdkVersion(): FileHandle = basicData.androidSdk
+	private fun getAndroidSdkVersion(): FileHandle = basicData.androidSdk
 
 	fun createProject(): Project = Project(
-		basic = basicData,
-		platforms = platformsData.getSelectedPlatforms(),
-		advanced = advancedData,
-		languages = languagesData,
-		extensions = extensionsData,
-		template = templatesData.getSelectedTemplate()
+		basic = basicData.exportData(),
+		platforms = platformsView.getSelectedPlatforms(),
+		advanced = advancedData.exportData(),
+		languages = languagesView.exportData(),
+		extensions = extensionsData.exportData(),
+		template = templatesView.getSelectedTemplate()
 	)
 
 	@LmlAction("minimize") fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())

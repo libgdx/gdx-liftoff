@@ -9,11 +9,12 @@ import com.github.czyzby.lml.annotation.LmlActor
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.kotcrab.vis.ui.widget.VisValidatableTextField
 import gdx.liftoff.config.inject
+import gdx.liftoff.data.project.BasicProjectData
 
 /**
  * Filled by the LML parser, this class contains references to basic project data widgets.
  */
-class BasicProjectData {
+class BasicProjectDataView {
 	@LmlActor("name") private val nameField: VisTextField = inject()
 	@LmlActor("package") private val rootPackageField: VisTextField = inject()
 	@LmlActor("class") private val mainClassField: VisTextField = inject()
@@ -25,12 +26,6 @@ class BasicProjectData {
 
 	@LmlActor("useOldestSdk", "useLatestSdk") private val sdkButtons: ObjectSet<Button> = inject()
 
-	val name: String
-		get() = nameField.text
-	val rootPackage: String
-		get() = rootPackageField.text
-	val mainClass: String
-		get() = mainClassField.text
 	val destination: FileHandle
 		get() = Gdx.files.absolute(destinationField.text)
 	val androidSdk: FileHandle
@@ -101,4 +96,12 @@ class BasicProjectData {
 		}
 		return null
 	}
+
+	fun exportData(): BasicProjectData = BasicProjectData(
+		name = nameField.text,
+		rootPackage = rootPackageField.text,
+		mainClass = mainClassField.text,
+		destination = destination,
+		androidSdk = androidSdk,
+	)
 }

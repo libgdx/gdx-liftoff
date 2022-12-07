@@ -17,7 +17,7 @@ class Scene2DTemplate : Template {
 
 	override fun apply(project: Project) {
 		super.apply(project)
-		project.advanced.forceSkinGeneration()
+		project.advanced.generateSkin = true
 	}
 
 	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
