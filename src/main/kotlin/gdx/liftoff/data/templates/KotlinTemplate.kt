@@ -167,39 +167,44 @@ import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration
 import com.github.xpenatan.gdx.backends.web.WebApplication
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
+/** Launches the TeaVM/HTML application. */
 fun main() {
-	val config = TeaApplicationConfiguration("canvas")
-	config.width = $width
-	config.height = $height
+	val config = TeaApplicationConfiguration("canvas").apply {
+		width = $width
+		height = $height
+	}
 	WebApplication(${project.basic.mainClass}(), config)
 }
 """
 
-	override fun getTeaVMBuilderContent(project: Project) = """@file:JvmName("TeaVMBuilder")
-
-package ${project.basic.rootPackage}.teavm
+	override fun getTeaVMBuilderContent(project: Project) = """package ${project.basic.rootPackage}.teavm
 
 import java.io.File
 import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration
 import com.github.xpenatan.gdx.backends.teavm.TeaBuilder
 import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
+import com.github.xpenatan.gdx.backends.web.gen.SkipClass
 
-fun main() {
-	val teaBuildConfiguration = TeaBuildConfiguration()
-	teaBuildConfiguration.assetsPath.add(File("../assets"))
-	teaBuildConfiguration.webappPath = File("build/dist").canonicalPath
-	// You can switch this setting during development:
-	teaBuildConfiguration.obfuscate = true
+/** Builds the TeaVM/HTML application. */
+@SkipClass
+object TeaVMBuilder {
+	@JvmStatic fun main(arguments: Array<String>) {
+		val teaBuildConfiguration = TeaBuildConfiguration().apply {
+			assetsPath.add(File("../assets"))
+			webappPath = File("build/dist").canonicalPath
+			// You can switch this setting during development:
+			obfuscate = true
+			// Register any extra classpath assets here:
+			// additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
+		}
 
-	// Register any extra classpath assets here:
-	// teaBuildConfiguration.additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
+		// Register any classes or packages that require reflection here:
+${generateTeaVMReflectionIncludes(project, indent = "\t\t", trailingSemicolon = false)}
 
-	// Register any classes or packages that require reflection here:
-${generateTeaVMReflectionIncludes(project, indent = "\t", trailingSemicolon = false)}
-
-	val tool = TeaBuilder.config(teaBuildConfiguration)
-	tool.setMainClass("${project.basic.rootPackage}.teavm.TeaVMLauncher")
-	TeaBuilder.build(tool)
+		val tool = TeaBuilder.config(teaBuildConfiguration)
+		tool.mainClass = "${project.basic.rootPackage}.teavm.TeaVMLauncher"
+		TeaBuilder.build(tool)
+	}
 }
 """
 }
