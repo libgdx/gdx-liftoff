@@ -1,6 +1,7 @@
 package gdx.liftoff.data.files.gradle
 
 import gdx.liftoff.data.platforms.Android
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
 
 /**
@@ -56,7 +57,11 @@ subprojects {
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url 'https://jitpack.io' }
+		maven { url 'https://jitpack.io' }${
+			if (project.hasPlatform(TeaVM.ID)) {
+				"\n\t\tmaven { url 'https://teavm.org/maven/repository/' }"
+			} else ""
+		}
 	}
 }
 
