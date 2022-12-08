@@ -1,0 +1,41 @@
+name: publish-demos
+on:
+  push:
+    tags:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v3
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+      - name: Execution permission for Gradle wrapper
+        run: chmod +x gradlew
+      - name: Generate sample
+        run: ./gradlew sample --args="default"
+      - name: Publish default sample
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.DEMO_PUSH }}
+          branch: main
+          folder: build/dist/sample
+          repository-name: tommyettinger/gdx-liftoff-demo
+      - name: Clean basic sample
+        run: rm -rf build/dist/sample
+      - name: Generate Kotlin sample
+        run: ./gradlew sample --args="kotlin"
+      - name: Publish Kotlin sample
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.DEMO_PUSH }}
+          branch: main
+          folder: build/dist/sample
+          repository-name: tommyettinger/gdx-liftoff-demo-kotlin
