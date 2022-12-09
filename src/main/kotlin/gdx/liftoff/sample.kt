@@ -88,6 +88,7 @@ enum class Preset {
 			}
 		override val template: Template
 			get() = KtxTemplate()
+		override val addSkin: Boolean = false
 	},
 	/** Includes the official platforms supporting Kotlin, as well as TeaVM. Omits unsupported KTX modules. */
 	KTX_WEB {
@@ -113,6 +114,7 @@ enum class Preset {
 			}
 		override val template: Template
 			get() = KtxTemplate()
+		override val addSkin: Boolean = false
 	};
 
 	abstract val projectName: String
@@ -121,6 +123,7 @@ enum class Preset {
 	abstract val languages: List<Language>
 	abstract val thirdPartyExtensions: List<Library>
 	abstract val template: Template
+	open val addSkin: Boolean = true
 
 	val languagesData: LanguagesData
 		get() = LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
@@ -163,7 +166,7 @@ fun main(arguments: Array<String>) {
 		gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),
 		serverJavaVersion = defaultJavaVersion,
 		desktopJavaVersion = defaultJavaVersion,
-		generateSkin = true,
+		generateSkin = preset.addSkin,
 		generateReadme = true,
 		gradleTasks = mutableListOf(),
 	)

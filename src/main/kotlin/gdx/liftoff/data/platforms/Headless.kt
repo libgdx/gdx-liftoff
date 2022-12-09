@@ -16,6 +16,7 @@ class Headless : Platform {
 
 	override val id = ID
 	override val order = ORDER
+	override val description = "Desktop platform without a graphical interface."
 	override val isStandard = false
 
 	override fun createGradleFile(project: Project): GradleFile = HeadlessGradleFile(project)

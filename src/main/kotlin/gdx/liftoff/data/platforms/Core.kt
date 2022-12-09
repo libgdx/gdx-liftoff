@@ -15,6 +15,7 @@ class Core : Platform {
 	}
 
 	override val id = ID
+	override val description = "Main module with the application logic shared by all platforms."
 	override val order = ORDER
 	override val isStandard = false
 	override fun createGradleFile(project: Project): GradleFile {

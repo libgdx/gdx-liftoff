@@ -30,6 +30,7 @@ class GWT : Platform {
 	}
 
 	override val id = ID
+	override val description = "Web platform using GWT and WebGL. Supports only Java projects."
 	override val order = ORDER
 	override val isStandard = false
 

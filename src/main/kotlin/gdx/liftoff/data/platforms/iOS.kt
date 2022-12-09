@@ -20,6 +20,7 @@ class iOS : Platform {
 	}
 
 	override val id = ID
+	override val description = "iOS mobile platform using RoboVM."
 	override val order = ORDER
 	override val isStandard = false
 

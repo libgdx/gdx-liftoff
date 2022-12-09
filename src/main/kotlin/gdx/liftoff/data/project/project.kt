@@ -221,6 +221,12 @@ A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://git
 
 $readmeDescription
 
+## Platforms
+
+${platforms.values.filter { it.description.isNotBlank() }
+						.sortedBy { it.order }
+						.joinToString(separator = "\n") { "- `${it.id}`: ${it.description}" }}
+
 ## Gradle
 
 This project uses [Gradle](http://gradle.org/) to manage dependencies.

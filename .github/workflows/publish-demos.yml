@@ -21,6 +21,8 @@ jobs:
         run: chmod +x gradlew
       - name: Generate sample
         run: ./gradlew sample --args="default"
+      - name: Save gdx-liftoff version
+        run: echo "LIFTOFF_VERSION=$(cat version.txt)" >> $GITHUB_ENV
       - name: Publish default sample
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -28,6 +30,7 @@ jobs:
           branch: main
           folder: build/dist/sample
           repository-name: tommyettinger/gdx-liftoff-demo
+          commit-message: 'Automatic deployment: gdx-liftoff ${{ env.LIFTOFF_VERSION }}.'
       - name: Clean basic sample
         run: rm -rf build/dist/sample
       - name: Generate Kotlin sample
@@ -39,3 +42,4 @@ jobs:
           branch: main
           folder: build/dist/sample
           repository-name: tommyettinger/gdx-liftoff-demo-kotlin
+          commit-message: 'Automatic deployment: gdx-liftoff ${{ env.LIFTOFF_VERSION }}.'

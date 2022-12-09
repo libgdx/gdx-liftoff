@@ -15,6 +15,11 @@ interface Platform {
 	val id: String
 
 	/**
+	 * Description of the platform as it appears in the generated project README files.
+	 */
+	val description: String
+
+	/**
 	 * Display order of the platform within the application.
 	 */
 	val order: Int

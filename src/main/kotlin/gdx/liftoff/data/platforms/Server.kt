@@ -15,6 +15,7 @@ class Server : Platform {
 	}
 
 	override val id = ID
+	override val description = "A separate application without access to the `core` module."
 	override val order = ORDER
 	override val isStandard = false
 
