@@ -16,6 +16,7 @@ class Shared : Platform {
 
 	override val id = ID
 	override val order = ORDER
+	override val description = "A common module shared by `core` and `server` platforms."
 	override val isStandard = false
 
 	override fun createGradleFile(project: Project): GradleFile = SharedGradleFile(project)

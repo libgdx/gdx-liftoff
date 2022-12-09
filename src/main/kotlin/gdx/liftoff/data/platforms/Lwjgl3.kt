@@ -17,6 +17,7 @@ class Lwjgl3 : Platform {
 	}
 
 	override val id = ID
+	override val description = "Primary desktop platform using LWJGL3."
 	override val order = ORDER
 
 	// override val isStandard = true // true is the default, and we want to prefer this to desktop

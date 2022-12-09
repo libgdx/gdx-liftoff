@@ -16,6 +16,7 @@ class Android : Platform {
 	}
 
 	override val id = ID
+	override val description = "Android mobile platform. Needs Android SDK."
 	override val order = ORDER
 	override val isStandard = false // user should only jump through android hoops on request
 	override fun initiate(project: Project) {

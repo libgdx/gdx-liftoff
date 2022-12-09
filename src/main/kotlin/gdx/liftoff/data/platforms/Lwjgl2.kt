@@ -17,6 +17,7 @@ class Lwjgl2 : Platform {
 	}
 
 	override val id = ID
+	override val description = "Legacy desktop platform using LWJGL2."
 	override val order = ORDER
 	override val isStandard = false // use lwjgl3 instead
 	override fun createGradleFile(project: Project): GradleFile = Lwjgl2GradleFile(project)

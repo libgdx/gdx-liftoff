@@ -6,7 +6,6 @@ import com.badlogic.gdx.Files
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.data.files.CopiedFile
-import gdx.liftoff.data.files.ProjectFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
@@ -23,6 +22,7 @@ class iOSMOE : Platform {
 	}
 
 	override val id = ID
+	override val description = "iOS mobile backend using Multi-OS Engine."
 	override val order = ORDER
 	override val isStandard = false
 
@@ -53,7 +53,7 @@ class iOSMOE : Platform {
 		).forEach {
 			project.files.add(
 				CopiedFile(
-					projectName = iOSMOE.ID,
+					projectName = ID,
 					path = path("xcode", "ios-moe", "Media.xcassets", "AppIcon.appiconset", it),
 					original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "AppIcon.appiconset", it)
 				)
@@ -62,7 +62,7 @@ class iOSMOE : Platform {
 
 		project.files.add(
 			CopiedFile(
-				projectName = iOSMOE.ID,
+				projectName = ID,
 				path = path("xcode", "ios-moe", "Media.xcassets", "Contents.json"),
 				original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "Contents.json")
 			)
@@ -82,7 +82,7 @@ class iOSMOE : Platform {
 		).forEach {
 				project.files.add(
 					CopiedFile(
-						projectName = iOSMOE.ID,
+						projectName = ID,
 						path = path("xcode", "ios-moe", it),
 						original = path("generator", "ios-moe", "xcode", "ios-moe", it)
 					)
@@ -91,7 +91,7 @@ class iOSMOE : Platform {
 
 		project.files.add(
 			ReplacedContentFile(
-				projectName = iOSMOE.ID,
+				projectName = ID,
 				path =  path("xcode", "ios-moe", "Info.plist"),
 				original = path("generator", "ios-moe", "xcode", "ios-moe", "Info.plist"),
 				replaceMap = mapOf(Pair("%PACKAGE%", project.basic.rootPackage))
@@ -100,7 +100,7 @@ class iOSMOE : Platform {
 
 		project.files.add(
 			ReplacedContentFile(
-				projectName = iOSMOE.ID,
+				projectName = ID,
 				path = path("xcode", "ios-moe.xcodeproj", "project.pbxproj"),
 				original = path("generator", "ios-moe", "xcode", "ios-moe.xcodeproj", "project.pbxproj"),
 				replaceMap = mapOf(
@@ -114,7 +114,7 @@ class iOSMOE : Platform {
 		arrayOf("Info.plist", "main.cpp").forEach {
 			project.files.add(
 				CopiedFile(
-					projectName = iOSMOE.ID,
+					projectName = ID,
 					path = path("xcode", "ios-moe-Test", it),
 					original = path("generator", "ios-moe", "xcode", "ios-moe-Test", it)
 				)

@@ -15,6 +15,7 @@ class TeaVM : Platform {
 	}
 
 	override val id = ID
+	override val description = "Experimental web platform using TeaVM and WebGL."
 	override val order = ORDER
 	override val isStandard = false
 
