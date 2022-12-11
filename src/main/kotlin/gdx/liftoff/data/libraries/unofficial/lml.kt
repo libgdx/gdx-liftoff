@@ -200,7 +200,8 @@ class WebSocketSerialization : WebSocketExtension() {
 		addDependency(project, Server.ID, "$group.gdx-websockets:serialization")
 
 		addDependency(project, GWT.ID, "$group.gdx-websockets:serialization:sources")
-		addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketSerialization")
+		addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
+		addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
 
 		WebSocket().initiate(project)
 	}
