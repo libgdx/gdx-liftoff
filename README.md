@@ -1,3 +1,5 @@
+![Build status](https://github.com/tommyettinger/gdx-liftoff/workflows/build/badge.svg)
+
 # 🚀 gdx-liftoff 🚀
 
 A setup tool for [libGDX](https://libgdx.com/) Gradle projects.

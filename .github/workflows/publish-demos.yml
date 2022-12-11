@@ -17,8 +17,8 @@ jobs:
         with:
           java-version: 11
           distribution: temurin
-      - name: Execution permission for Gradle wrapper
-        run: chmod +x gradlew
+      - name: Gradle setup
+        uses: gradle/gradle-build-action@v2
       - name: Generate sample
         run: ./gradlew sample --args="default"
       - name: Save gdx-liftoff version
