@@ -29,6 +29,8 @@ data class AdvancedProjectData(
   var generateSkin: Boolean,
   val generateReadme: Boolean,
   val gradleTasks: MutableList<String>,
+  val generateEditorConfig: Boolean = true,
+  val indentSize: Int = 4,
 ) {
   val gwtVersion: String
     get() = if (gdxVersion.length == 5 && gdxVersion[4] != '9') {

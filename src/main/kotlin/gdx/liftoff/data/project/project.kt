@@ -97,6 +97,7 @@ class Project(
     addPlatforms()
     addSkinAssets()
     addReadmeFile()
+    addEditorConfig()
     saveProperties()
     saveFiles()
   }
@@ -241,6 +242,34 @@ For example, `core:clean` removes `build` folder only from the `core` project.
         )
       )
     }
+  }
+
+  private fun addEditorConfig() {
+    if (!advanced.generateEditorConfig) return
+    files.add(
+      SourceFile(
+        projectName = "", fileName = ".editorconfig",
+        content = """# https://editorconfig.org
+root = true
+
+[*]
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{java,scala,groovy,kt,kts}]
+indent_size = ${advanced.indentSize}
+
+[*.gradle]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+"""
+      )
+    )
   }
 
   fun getAlertCodes(): List<String> {
