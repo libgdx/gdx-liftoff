@@ -26,6 +26,6 @@ jobs:
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
       - name: Build
-        run: ./gradlew build -x ktlintMainSourceSetCheck
+        run: ./gradlew build check
       - name: Generate sample project
         run: ./gradlew sample
