@@ -53,6 +53,8 @@ For more details on how to use the application and how it works, see the [usage 
 If you would like to contribute to the project, you might find the [architecture document](Architecture.md)
 helpful.
 
+When submitting a pull request, please format the application with the `ktlintFormat` Gradle task.
+
 ## Credits
 
 The project was forked from the [`czyzby/gdx-setup`](https://github.com/czyzby/gdx-setup) repository.
