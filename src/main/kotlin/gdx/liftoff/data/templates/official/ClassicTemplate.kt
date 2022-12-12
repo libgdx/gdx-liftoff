@@ -12,23 +12,23 @@ import gdx.liftoff.views.ProjectTemplate
  */
 @ProjectTemplate(official = true)
 open class ClassicTemplate : Template {
-	override val id = "classic"
-	override val description: String
-		get() = "This project was generated with a template including simple application launchers and an " +
-			"`ApplicationAdapter` extension that draws libGDX logo."
+  override val id = "classic"
+  override val description: String
+    get() = "This project was generated with a template including simple application launchers and an " +
+      "`ApplicationAdapter` extension that draws libGDX logo."
 
-	override fun apply(project: Project) {
-		super.apply(project)
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID,
-				original = path("generator", "templates", "libgdx.png"),
-				path = "libgdx.png"
-			)
-		)
-	}
+  override fun apply(project: Project) {
+    super.apply(project)
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID,
+        original = path("generator", "templates", "libgdx.png"),
+        path = "libgdx.png"
+      )
+    )
+  }
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -38,29 +38,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class ${project.basic.mainClass} extends ApplicationAdapter {
-	private SpriteBatch batch;
-	private Texture image;
+    private SpriteBatch batch;
+    private Texture image;
 
-	@Override
-	public void create() {
-		batch = new SpriteBatch();
-		image = new Texture("libgdx.png");
-	}
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        image = new Texture("libgdx.png");
+    }
 
-	@Override
-	public void render() {
-		Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(image, 140, 210);
-		batch.end();
-	}
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(image, 140, 210);
+        batch.end();
+    }
 
-	@Override
-	public void dispose() {
-		batch.dispose();
-		image.dispose();
-	}
+    @Override
+    public void dispose() {
+        batch.dispose();
+        image.dispose();
+    }
 }
 """
 }

@@ -143,7 +143,7 @@ package com.badlogic.gdx.scenes.scene2d.ui {
   #SelectBox$SelectBoxStyle: {
     default: { font: default, fontColor: font, disabledFontColor: fontDisabled, background: selectBox, backgroundOver: selectOver,
       backgroundOpen: selectDown, backgroundDisabled: selectDisabled, scrollStyle: default, listStyle:
-      	{ background: selectList, fontColorUnselected: font, selection: selection, fontColorSelected: fontDown, font: default }
+        { background: selectList, fontColorUnselected: font, selection: selection, fontColorSelected: fontDown, font: default }
       }
   }
 
@@ -151,7 +151,7 @@ package com.badlogic.gdx.scenes.scene2d.ui {
     default-horizontal: { background: sliderHorizontal, knob: sliderKnob, knobOver: sliderKnobOver, knobDown: sliderKnobDown,
       disabledKnob: sliderKnobDisabled },
     default-vertical: { background: sliderVertical, knob: sliderVerticalKnob, knobOver: sliderVerticalKnobOver,
-      knobDown: sliderVerticalKnobDown,	disabledKnob: sliderVerticalKnobDisabled }
+      knobDown: sliderVerticalKnobDown,  disabledKnob: sliderVerticalKnobDisabled }
   }
 
   #SplitPane$SplitPaneStyle: {

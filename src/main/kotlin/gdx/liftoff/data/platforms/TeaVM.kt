@@ -9,42 +9,42 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class TeaVM : Platform {
-	companion object {
-		const val ID = "teavm"
-		const val ORDER = Headless.ORDER + 1
-	}
+  companion object {
+    const val ID = "teavm"
+    const val ORDER = Headless.ORDER + 1
+  }
 
-	override val id = ID
-	override val description = "Experimental web platform using TeaVM and WebGL."
-	override val order = ORDER
-	override val isStandard = false
+  override val id = ID
+  override val description = "Experimental web platform using TeaVM and WebGL."
+  override val order = ORDER
+  override val isStandard = false
 
-	override fun createGradleFile(project: Project) = TeaVMGradleFile(project)
+  override fun createGradleFile(project: Project) = TeaVMGradleFile(project)
 
-	override fun initiate(project: Project) {
-		project.properties["gdxTeaVMVersion"] = project.advanced.gdxTeaVMVersion
-		addGradleTaskDescription(
-			project,
-			"run",
-			"serves the JavaScript application at http://localhost:8080 via a local Jetty server."
-		)
-		addGradleTaskDescription(
-			project,
-			"build",
-			"builds the JavaScript application into the build/dist/webapp folder."
-		)
-	}
+  override fun initiate(project: Project) {
+    project.properties["gdxTeaVMVersion"] = project.advanced.gdxTeaVMVersion
+    addGradleTaskDescription(
+      project,
+      "run",
+      "serves the JavaScript application at http://localhost:8080 via a local Jetty server."
+    )
+    addGradleTaskDescription(
+      project,
+      "build",
+      "builds the JavaScript application into the build/dist/webapp folder."
+    )
+  }
 }
 
 class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
-	init {
-		dependencies.add("project(':${Core.ID}')")
+  init {
+    dependencies.add("project(':${Core.ID}')")
 
-		addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
-		addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
-	}
+    addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
+    addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
+  }
 
-	override fun getContent() = """plugins {
+  override fun getContent() = """plugins {
   id 'java'
   id 'org.gretty' version '${project.advanced.grettyVersion}'
 }

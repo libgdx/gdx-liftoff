@@ -1,11 +1,11 @@
 <dialog id="dialog" title="@controls" style="dialog">
-	<table defaultPad="4">
-		<:loop times="$playersAmount">
-			<label color="vis-blue" style="small" align="left">@player{loop:index}</label>
-			<textButton id="edit{loop:index}" onChange="edit">@edit</textButton>
-			<textButton id="switch{loop:index}" onChange="switch" row="true">@switch</textButton>
-		</:loop>
-	</table>
-	<!-- "close" action is defined in Global class. -->
-	<textButton onResult="close">@back</textButton>
+  <table defaultPad="4">
+    <:loop times="$playersAmount">
+      <label color="vis-blue" style="small" align="left">@player{loop:index}</label>
+      <textButton id="edit{loop:index}" onChange="edit">@edit</textButton>
+      <textButton id="switch{loop:index}" onChange="switch" row="true">@switch</textButton>
+    </:loop>
+  </table>
+  <!-- "close" action is defined in Global class. -->
+  <textButton onResult="close">@back</textButton>
 </dialog>

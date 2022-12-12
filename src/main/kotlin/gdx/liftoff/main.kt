@@ -34,133 +34,133 @@ private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
  * Thanks crykn/damios!
  */
 fun startNewJvmIfRequired(): Boolean {
-	if (!UIUtils.isMac) {
-		return false
-	}
-	val pid = LibC.getpid()
+  if (!UIUtils.isMac) {
+    return false
+  }
+  val pid = LibC.getpid()
 
-	// check whether -XstartOnFirstThread is enabled
-	if ("1" == System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$pid")) {
-		return false
-	}
+  // check whether -XstartOnFirstThread is enabled
+  if ("1" == System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$pid")) {
+    return false
+  }
 
-	// check whether the JVM was previously restarted
-	// avoids looping, but most certainly leads to a crash
-	if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
-		System.err.println(
-			"There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument"
-		)
-		return false
-	}
+  // check whether the JVM was previously restarted
+  // avoids looping, but most certainly leads to a crash
+  if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
+    System.err.println(
+      "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument"
+    )
+    return false
+  }
 
-	// Restart the JVM with -XstartOnFirstThread
-	val jvmArgs = ArrayList<String>()
-	val separator = System.getProperty("file.separator")
-	jvmArgs.add(System.getProperty("java.home") + separator + "bin" + separator + "java")
-	jvmArgs.add("-XstartOnFirstThread")
-	jvmArgs.add("-D$JVM_RESTARTED_ARG=true")
-	jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().inputArguments)
-	jvmArgs.add("-cp")
-	jvmArgs.add(System.getProperty("java.class.path"))
-	var mainClass = System.getenv("JAVA_MAIN_CLASS_$pid")
-	if (mainClass == null) {
-		val trace = Thread.currentThread().stackTrace
-		mainClass = if (trace.isNotEmpty()) {
-			trace[trace.size - 1].className
-		} else {
-			System.err.println("The main class could not be determined.")
-			return false
-		}
-	}
-	jvmArgs.add(mainClass!!)
-	try {
-		val process = ProcessBuilder(jvmArgs).redirectErrorStream(true).start()
-		val processOutput = BufferedReader(InputStreamReader(process.inputStream))
-		var line: String?
-		while (processOutput.readLine().also { line = it } != null) {
-			println(line)
-		}
-		process.waitFor()
-	} catch (e: Exception) {
-		System.err.println("There was a problem restarting the JVM")
-		e.printStackTrace()
-	}
-	return true
+  // Restart the JVM with -XstartOnFirstThread
+  val jvmArgs = ArrayList<String>()
+  val separator = System.getProperty("file.separator")
+  jvmArgs.add(System.getProperty("java.home") + separator + "bin" + separator + "java")
+  jvmArgs.add("-XstartOnFirstThread")
+  jvmArgs.add("-D$JVM_RESTARTED_ARG=true")
+  jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().inputArguments)
+  jvmArgs.add("-cp")
+  jvmArgs.add(System.getProperty("java.class.path"))
+  var mainClass = System.getenv("JAVA_MAIN_CLASS_$pid")
+  if (mainClass == null) {
+    val trace = Thread.currentThread().stackTrace
+    mainClass = if (trace.isNotEmpty()) {
+      trace[trace.size - 1].className
+    } else {
+      System.err.println("The main class could not be determined.")
+      return false
+    }
+  }
+  jvmArgs.add(mainClass!!)
+  try {
+    val process = ProcessBuilder(jvmArgs).redirectErrorStream(true).start()
+    val processOutput = BufferedReader(InputStreamReader(process.inputStream))
+    var line: String?
+    while (processOutput.readLine().also { line = it } != null) {
+      println(line)
+    }
+    process.waitFor()
+  } catch (e: Exception) {
+    System.err.println("There was a problem restarting the JVM")
+    e.printStackTrace()
+  }
+  return true
 }
 
 fun main() {
-	if (startNewJvmIfRequired()) return
-	val config = Lwjgl3ApplicationConfiguration()
-	config.setTitle("gdx-liftoff")
-	config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
-	config.disableAudio(true)
-	config.setResizable(true)
-	config.setForegroundFPS(16)
-	config.setIdleFPS(8)
-	config.setAutoIconify(true)
-	config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
-	val windowListener: Lwjgl3WindowListener = object : Lwjgl3WindowListener {
-		override fun focusLost() { Gdx.graphics.isContinuousRendering = false }
-		override fun focusGained() { Gdx.graphics.isContinuousRendering = true }
-		override fun created(window: Lwjgl3Window) {}
-		override fun iconified(isIconified: Boolean) {}
-		override fun maximized(isMaximized: Boolean) {}
-		override fun closeRequested(): Boolean { return true }
-		override fun filesDropped(files: Array<String>) {}
-		override fun refreshRequested() {}
-	}
-	config.setWindowListener(windowListener)
+  if (startNewJvmIfRequired()) return
+  val config = Lwjgl3ApplicationConfiguration()
+  config.setTitle("gdx-liftoff")
+  config.setWindowedMode(Configuration.WIDTH, Configuration.HEIGHT)
+  config.disableAudio(true)
+  config.setResizable(true)
+  config.setForegroundFPS(16)
+  config.setIdleFPS(8)
+  config.setAutoIconify(true)
+  config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
+  val windowListener: Lwjgl3WindowListener = object : Lwjgl3WindowListener {
+    override fun focusLost() { Gdx.graphics.isContinuousRendering = false }
+    override fun focusGained() { Gdx.graphics.isContinuousRendering = true }
+    override fun created(window: Lwjgl3Window) {}
+    override fun iconified(isIconified: Boolean) {}
+    override fun maximized(isMaximized: Boolean) {}
+    override fun closeRequested(): Boolean { return true }
+    override fun filesDropped(files: Array<String>) {}
+    override fun refreshRequested() {}
+  }
+  config.setWindowListener(windowListener)
 
-	try {
-		Lwjgl3Application(
-			object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
-				override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
-					super.registerDefaultComponentAnnotations(initializer)
-					// Classes with these annotations will be automatically scanned for and initiated as singletons:
-					initializer.scanFor(
-						Extension::class.java,
-						ProjectTemplate::class.java,
-						JvmLanguage::class.java,
-						GdxPlatform::class.java
-					)
-				}
-			},
-			config
-		)
-	} catch (error: ExceptionInInitializerError) {
-		if (OsUtils.isMac() && error.cause is IllegalStateException) {
-			if (error.stackTraceToString().contains("XstartOnFirstThread")) {
-				println(
-					"Application was not launched on first thread. " +
-						"Add VM argument -XstartOnFirstThread to avoid this."
-				)
-			}
-		}
-		throw error
-	} catch (error: GdxRuntimeException) {
-		Lwjgl3Application(
-			object : AutumnApplication(FallbackDesktopClassScanner(), Root::class.java) {
-				override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
-					super.registerDefaultComponentAnnotations(initializer)
-					// Classes with these annotations will be automatically scanned for and initiated as singletons:
-					initializer.scanFor(
-						Extension::class.java,
-						ProjectTemplate::class.java,
-						JvmLanguage::class.java,
-						GdxPlatform::class.java
-					)
-				}
-			},
-			config
-		)
-	}
+  try {
+    Lwjgl3Application(
+      object : AutumnApplication(DesktopClassScanner(), Root::class.java) {
+        override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
+          super.registerDefaultComponentAnnotations(initializer)
+          // Classes with these annotations will be automatically scanned for and initiated as singletons:
+          initializer.scanFor(
+            Extension::class.java,
+            ProjectTemplate::class.java,
+            JvmLanguage::class.java,
+            GdxPlatform::class.java
+          )
+        }
+      },
+      config
+    )
+  } catch (error: ExceptionInInitializerError) {
+    if (OsUtils.isMac() && error.cause is IllegalStateException) {
+      if (error.stackTraceToString().contains("XstartOnFirstThread")) {
+        println(
+          "Application was not launched on first thread. " +
+            "Add VM argument -XstartOnFirstThread to avoid this."
+        )
+      }
+    }
+    throw error
+  } catch (error: GdxRuntimeException) {
+    Lwjgl3Application(
+      object : AutumnApplication(FallbackDesktopClassScanner(), Root::class.java) {
+        override fun registerDefaultComponentAnnotations(initializer: ContextInitializer) {
+          super.registerDefaultComponentAnnotations(initializer)
+          // Classes with these annotations will be automatically scanned for and initiated as singletons:
+          initializer.scanFor(
+            Extension::class.java,
+            ProjectTemplate::class.java,
+            JvmLanguage::class.java,
+            GdxPlatform::class.java
+          )
+        }
+      },
+      config
+    )
+  }
 }
 
 fun Throwable.stackTraceToString(): String {
-	val stringWriter = StringWriter()
-	val printWriter = PrintWriter(stringWriter, true)
-	printStackTrace(printWriter)
-	return stringWriter.buffer.toString()
+  val stringWriter = StringWriter()
+  val printWriter = PrintWriter(stringWriter, true)
+  printStackTrace(printWriter)
+  return stringWriter.buffer.toString()
 }
 
 /**

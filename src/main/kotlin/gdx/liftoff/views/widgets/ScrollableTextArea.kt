@@ -16,48 +16,48 @@ import com.kotcrab.vis.ui.widget.VisTextField
  * @author Kotcrab
  */
 class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, styleName) {
-	init {
-		style.font.data.markupEnabled = true
-	}
-	override fun getPrefWidth(): Float {
-		return width
-	}
+  init {
+    style.font.data.markupEnabled = true
+  }
+  override fun getPrefWidth(): Float {
+    return width
+  }
 
-	override fun getPrefHeight(): Float {
-		return lines * style.font.lineHeight
-	}
+  override fun getPrefHeight(): Float {
+    return lines * style.font.lineHeight
+  }
 
-	override fun setText(str: String) {
-		// TextArea seems to have problem when '\r\n' (Windows style) is used as line ending, as it treats it as two
-		// lines. Although example templates files are using '\n', Git (when cloning the repository) may replace them
-		// with '\r\n' on Windows.
-		super.setText(Strings.stripCharacter(str, '\r'))
-	}
+  override fun setText(str: String) {
+    // TextArea seems to have problem when '\r\n' (Windows style) is used as line ending, as it treats it as two
+    // lines. Although example templates files are using '\n', Git (when cloning the repository) may replace them
+    // with '\r\n' on Windows.
+    super.setText(Strings.stripCharacter(str, '\r'))
+  }
 
-	override fun draw(batch: Batch?, parentAlpha: Float) {
-		try {
-			super.draw(batch, parentAlpha)
-		} catch (getYourActTogetherScene2D: IndexOutOfBoundsException) {
-			copy()
-		}
-	}
+  override fun draw(batch: Batch?, parentAlpha: Float) {
+    try {
+      super.draw(batch, parentAlpha)
+    } catch (getYourActTogetherScene2D: IndexOutOfBoundsException) {
+      copy()
+    }
+  }
 
-	/**
-	 * Provides CodeTextArea tags.
-	 * @author Kotcrab
-	 */
-	class ScrollableTextAreaLmlTagProvider : LmlTagProvider {
-		override fun create(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder): LmlTag =
-			ScrollableTextAreaLmlTag(parser, parentTag, rawTagData)
-	}
+  /**
+   * Provides CodeTextArea tags.
+   * @author Kotcrab
+   */
+  class ScrollableTextAreaLmlTagProvider : LmlTagProvider {
+    override fun create(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder): LmlTag =
+      ScrollableTextAreaLmlTag(parser, parentTag, rawTagData)
+  }
 
-	/**
-	 * Handles CodeTextArea actor.
-	 * @author Kotcrab
-	 */
-	class ScrollableTextAreaLmlTag(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder) :
-		VisTextAreaLmlTag(parser, parentTag, rawTagData) {
-		override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
-			ScrollableTextArea(textBuilder.text, textBuilder.styleName)
-	}
+  /**
+   * Handles CodeTextArea actor.
+   * @author Kotcrab
+   */
+  class ScrollableTextAreaLmlTag(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder) :
+    VisTextAreaLmlTag(parser, parentTag, rawTagData) {
+    override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
+      ScrollableTextArea(textBuilder.text, textBuilder.styleName)
+  }
 }

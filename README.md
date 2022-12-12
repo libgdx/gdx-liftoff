@@ -1,10 +1,10 @@
-![Build status](https://github.com/tommyettinger/gdx-liftoff/workflows/build/badge.svg)
+[![Build status](https://github.com/tommyettinger/gdx-liftoff/workflows/build/badge.svg)](https://github.com/tommyettinger/gdx-liftoff/actions/workflows/build.yml)
 
 # 🚀 gdx-liftoff 🚀
 
 A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
-![Screenshot of gdx-liftoff](.github/screenshot.png)
+[![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/tommyettinger/gdx-liftoff/releases)
 
 <h1 align="center">
     📥
@@ -21,7 +21,7 @@ java -jar gdx-liftoff-VERSION.jar
 
 ## Features
 
-In addition to most official `gdx-setup` features, `gdx-liffoff` offers:
+In addition to most features of the official `gdx-setup`, the `gdx-liffoff` tool offers:
  
 - **Project templates.** You can choose one of many project skeletons highlighting various libGDX features.
 - **Input validation.** Your project data is validated as you type it in.
@@ -30,8 +30,8 @@ Their standard libraries, Gradle plugins, and appropriate source folders will be
 - **Customization.** You have more control over the versions of software used by your application.
 - **More third-party extensions.** Their versions are fetched from Maven Central or JitPack, so your project is always 
 up-to-date.
-  - **Automatic configuration for tricky extensions.** If you're having trouble setting up
-  Artemis-ODB, Lombok, or several other libraries, Liftoff does some extra work, so you don't have to. 
+- **Automatic configuration for tricky extensions.** If you're having trouble setting up
+Artemis-ODB, Lombok, or several other libraries, Liftoff does some extra work, so you don't have to. 
 - **Preferences support.** Basic data of your application is saved, so you don't have to fill it each time
 you generate a project.
 - **Optional Gradle runner.** You can optionally execute Gradle tasks after project generation.
@@ -52,6 +52,8 @@ brought recently into gdx-setup in part because it worked in gdx-liftoff first.
 For more details on how to use the application and how it works, see the [usage guide](Guide.md).
 If you would like to contribute to the project, you might find the [architecture document](Architecture.md)
 helpful.
+
+When submitting a pull request, please format the application with the `ktlintFormat` Gradle task.
 
 ## Credits
 

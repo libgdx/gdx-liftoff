@@ -1,0 +1,9 @@
+# .git-blame-ignore-revs
+# Indents in generated sources.
+ca745e24aec00712d818835b401cc0ab4b91216e
+# Changed tabs to spaces, ran ktlint.
+d106b0e1682c527580b947e255f8d76f2a407505
+# Unified whitespaces.
+bff7d70cfe453d23d888212524dbb0a208d2260a
+# Added ktlint.
+01d4cec8e6cff07b4a124b05940a9ec2b16ac5f6

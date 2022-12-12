@@ -9,23 +9,23 @@ import gdx.liftoff.views.GdxPlatform
  */
 @GdxPlatform
 class Server : Platform {
-	companion object {
-		const val ID = "server"
-		const val ORDER = Lwjgl2.ORDER + 1
-	}
+  companion object {
+    const val ID = "server"
+    const val ORDER = Lwjgl2.ORDER + 1
+  }
 
-	override val id = ID
-	override val description = "A separate application without access to the `core` module."
-	override val order = ORDER
-	override val isStandard = false
+  override val id = ID
+  override val description = "A separate application without access to the `core` module."
+  override val order = ORDER
+  override val isStandard = false
 
-	override fun createGradleFile(project: Project): GradleFile = ServerGradleFile(project)
+  override fun createGradleFile(project: Project): GradleFile = ServerGradleFile(project)
 
-	override fun initiate(project: Project) {
-		// Server project has no additional dependencies.
+  override fun initiate(project: Project) {
+    // Server project has no additional dependencies.
 
-		addGradleTaskDescription(project, "run", "runs the $id application.")
-	}
+    addGradleTaskDescription(project, "run", "runs the $id application.")
+  }
 }
 
 /**
@@ -33,7 +33,7 @@ class Server : Platform {
  * with "run" task.
  */
 class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
-	override fun getContent(): String = """apply plugin: 'application'
+  override fun getContent(): String = """apply plugin: 'application'
 
 sourceCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
@@ -43,24 +43,24 @@ dependencies {
 ${joinDependencies(dependencies)}}
 
 jar {
-	archiveBaseName.set(appName)
+  archiveBaseName.set(appName)
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
-	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-	dependsOn configurations.runtimeClasspath
-	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  dependsOn configurations.runtimeClasspath
+  from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 // these "exclude" lines remove some unnecessary duplicate files in the output JAR.
-	exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
-	dependencies {
-		exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
-	}
+  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+  dependencies {
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
+  }
 // setting the manifest makes the JAR runnable.
-	manifest {
-		attributes 'Main-Class': project.mainClassName
-	}
+  manifest {
+    attributes 'Main-Class': project.mainClassName
+  }
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
-	doLast {
-		file(archiveFile).setExecutable(true, false)
-	}
+  doLast {
+    file(archiveFile).setExecutable(true, false)
+  }
 }
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.

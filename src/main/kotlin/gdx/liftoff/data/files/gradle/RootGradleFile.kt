@@ -8,61 +8,61 @@ import gdx.liftoff.data.project.Project
  * Gradle file of the root project. Manages build script and global settings.
  */
 class RootGradleFile(val project: Project) : GradleFile("") {
-	val plugins = mutableSetOf<String>()
-	private val buildRepositories = mutableSetOf<String>()
+  val plugins = mutableSetOf<String>()
+  private val buildRepositories = mutableSetOf<String>()
 
-	init {
-		buildRepositories.add("mavenCentral()")
-		buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
-		buildRepositories.add("mavenLocal()")
-		buildRepositories.add("google()")
-		buildRepositories.add("gradlePluginPortal()")
-		buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
-		buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
-	}
+  init {
+    buildRepositories.add("mavenCentral()")
+    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
+    buildRepositories.add("mavenLocal()")
+    buildRepositories.add("google()")
+    buildRepositories.add("gradlePluginPortal()")
+    buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
+    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
+  }
 
-	override fun getContent(): String = """buildscript {
-	repositories {
-${buildRepositories.joinToString(separator = "\n") { "		$it" }}
-	}
-	dependencies {
-${joinDependencies(buildDependencies, type = "classpath", tab = "		")}
-	}
+  override fun getContent(): String = """buildscript {
+  repositories {
+${buildRepositories.joinToString(separator = "\n") { "    $it" }}
+  }
+  dependencies {
+${joinDependencies(buildDependencies, type = "classpath", indent = "    ")}
+  }
 }
 
 allprojects {
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
 }
 
 configure(subprojects${if (project.hasPlatform(Android.ID)) {
-		" - project(':android')"
-	} else {
-		""
-	}}) {
-${plugins.joinToString(separator = "\n") { "	apply plugin: '$it'" }}
-	sourceCompatibility = ${project.advanced.javaVersion}
-	compileJava {
-		options.incremental = true
-	}
+    " - project(':android')"
+  } else {
+    ""
+  }}) {
+${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
+  sourceCompatibility = ${project.advanced.javaVersion}
+  compileJava {
+    options.incremental = true
+  }
 }
 
 subprojects {
-	version = '${project.advanced.version}'
-	ext.appName = '${project.basic.name}'
-	repositories {
-		mavenCentral()
-		maven { url 'https://s01.oss.sonatype.org' }
-		mavenLocal()
-		gradlePluginPortal()
-		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url 'https://jitpack.io' }${
-			if (project.hasPlatform(TeaVM.ID)) {
-				"\n\t\tmaven { url 'https://teavm.org/maven/repository/' }"
-			} else ""
-		}
-	}
+  version = '${project.advanced.version}'
+  ext.appName = '${project.basic.name}'
+  repositories {
+    mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org' }
+    mavenLocal()
+    gradlePluginPortal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }${
+  if (project.hasPlatform(TeaVM.ID)) {
+    "\n    maven { url 'https://teavm.org/maven/repository/' }"
+  } else ""
+  }
+  }
 }
 
 eclipse.project.name = '${project.basic.name}' + '-parent'
