@@ -99,7 +99,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
               core library desugaring and other Java-8-related features, allowing a large subset of Java 8 language
               features, and the standard library in JDK 8, to be used across most platforms (not iOS, though).
               - Several 3rd-party dependencies require Java 8, such as TuningFork (which is LWJGL3-only), and jdkgdxds
-				(which works on Android if the above Java 8 steps are taken).
+        (which works on Android if the above Java 8 steps are taken).
             - If you are using an Android Studio version before 4.2 or an IDEA version before 2021.2, you can set the
               Android Gradle Plugin on the Advanced tab to a lower version, like 4.0.2, that is compatible with that older
               IDE version. Right now we use Android Gradle Plugin 7.2.2, even though a newer version is available, because

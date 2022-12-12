@@ -13,20 +13,20 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate(official = true)
 @Suppress("unused") // Referenced via reflection.
 class EmptyTemplate : Template {
-	override val id = "emptyTemplate"
-	override val description: String
-		get() = "This project was generated without an `ApplicationListener` implementation."
+  override val id = "emptyTemplate"
+  override val description: String
+    get() = "This project was generated without an `ApplicationListener` implementation."
 
-	override fun apply(project: Project) {
-		super.apply(project)
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID,
-				original = path("generator", "assets", ".gitkeep"),
-				path = ".gitkeep"
-			)
-		)
-	}
+  override fun apply(project: Project) {
+    super.apply(project)
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID,
+        original = path("generator", "assets", ".gitkeep"),
+        path = ".gitkeep"
+      )
+    )
+  }
 
-	override fun getApplicationListenerContent(project: Project): String = ""
+  override fun getApplicationListenerContent(project: Project): String = ""
 }

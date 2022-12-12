@@ -19,30 +19,30 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class KtxTemplate : KotlinTemplate {
-	override val id = "ktxTemplate"
-	override val description = "This project was generated with a Kotlin project template that includes Kotlin " +
-		"application launchers and [KTX](https://libktx.github.io/) utilities."
+  override val id = "ktxTemplate"
+  override val description = "This project was generated with a Kotlin project template that includes Kotlin " +
+    "application launchers and [KTX](https://libktx.github.io/) utilities."
 
-	override fun apply(project: Project) {
-		super.apply(project)
+  override fun apply(project: Project) {
+    super.apply(project)
 
-		KtxApp().initiate(project)
-		KtxGraphics().initiate(project)
-		KtxAssets().initiate(project)
+    KtxApp().initiate(project)
+    KtxGraphics().initiate(project)
+    KtxAssets().initiate(project)
 
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID,
-				original = path("generator", "templates", "ktx", "ktx.png"),
-				path = "logo.png"
-			)
-		)
-	}
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID,
+        original = path("generator", "templates", "ktx", "ktx.png"),
+        path = "logo.png"
+      )
+    )
+  }
 
-	private val Project.isUsingAsync: Boolean
-		get() = listOf(KtxAsync(), KtxAssetsAsync(), KtxFreetypeAsync()).map { it.id }.any(extensions::isSelected)
+  private val Project.isUsingAsync: Boolean
+    get() = listOf(KtxAsync(), KtxAssetsAsync(), KtxFreetypeAsync()).map { it.id }.any(extensions::isSelected)
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage}
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage}
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter.Linear
@@ -52,14 +52,14 @@ import ktx.app.KtxScreen
 import ktx.app.clearScreen
 import ktx.assets.disposeSafely
 import ktx.assets.toInternalFile${
-	if (project.isUsingAsync) "\nimport ktx.async.KtxAsync" else ""
-	}
+  if (project.isUsingAsync) "\nimport ktx.async.KtxAsync" else ""
+  }
 import ktx.graphics.use
 
 class ${project.basic.mainClass} : KtxGame<KtxScreen>() {
 	override fun create() {${
-	if (project.isUsingAsync) "\n		KtxAsync.initiate()\n" else ""
-	}
+  if (project.isUsingAsync) "\n		KtxAsync.initiate()\n" else ""
+  }
 		addScreen(FirstScreen())
 		setScreen<FirstScreen>()
 	}

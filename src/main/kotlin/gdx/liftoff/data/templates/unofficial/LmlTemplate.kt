@@ -13,39 +13,39 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class LmlTemplate : Template {
-	override val id: String = "lmlTemplate"
-	private lateinit var mainClass: String
-	override val width: String
-		get() = "$mainClass.WIDTH"
-	override val height: String
-		get() = "$mainClass.HEIGHT"
-	override val description = "Project template included simple launchers and an `AbstractApplicationListener` " +
-		"extension (from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws " +
-		"a simple GUI created using [LML](https://github.com/crashinvaders/gdx-lml/tree/master/lml)."
+  override val id: String = "lmlTemplate"
+  private lateinit var mainClass: String
+  override val width: String
+    get() = "$mainClass.WIDTH"
+  override val height: String
+    get() = "$mainClass.HEIGHT"
+  override val description = "Project template included simple launchers and an `AbstractApplicationListener` " +
+    "extension (from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws " +
+    "a simple GUI created using [LML](https://github.com/crashinvaders/gdx-lml/tree/master/lml)."
 
-	override fun apply(project: Project) {
-		mainClass = project.basic.mainClass
-		super.apply(project)
-		project.advanced.generateSkin = true
+  override fun apply(project: Project) {
+    mainClass = project.basic.mainClass
+    super.apply(project)
+    project.advanced.generateSkin = true
 
-		// Adding LML dependency:
-		LML().initiate(project)
+    // Adding LML dependency:
+    LML().initiate(project)
 
-		// Adding example LML template file:
-		project.files.add(
-			SourceFile(
-				projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
-				fileName = "main.lml",
-				content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
+    // Adding example LML template file:
+    project.files.add(
+      SourceFile(
+        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        fileName = "main.lml",
+        content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
 <window title="Example" style="border" defaultPad="4" oneColumn="true" alpha="0" onShow="fadeIn">
   This is a simple LML view.
   <textButton onClick="setClicked" tablePad="8">Click me!</textButton>
 </window>"""
-			)
-		)
-	}
+      )
+    )
+  }
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;

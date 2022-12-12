@@ -24,60 +24,60 @@ import java.util.concurrent.ConcurrentLinkedQueue
 @ViewDialog(id = "generation", value = "templates/dialogs/generation.lml", cacheInstance = false)
 @Suppress("unused") // Referenced via reflection.
 class GenerationPrompt : ViewDialogShower, ProjectLogger {
-	@Inject private val locale: LocaleService = inject()
-	@Inject private val mainView: MainView = inject()
+  @Inject private val locale: LocaleService = inject()
+  @Inject private val mainView: MainView = inject()
 
-	@LmlActor("close", "exit") private val buttons: ObjectSet<Button> = inject()
-	@LmlActor("console") private val console: ScrollableTextArea = inject()
-	@LmlActor("scroll") private val scrollPane: ScrollPane = inject()
+  @LmlActor("close", "exit") private val buttons: ObjectSet<Button> = inject()
+  @LmlActor("console") private val console: ScrollableTextArea = inject()
+  @LmlActor("scroll") private val scrollPane: ScrollPane = inject()
 
-	private val loggingBuffer = ConcurrentLinkedQueue<String>()
+  private val loggingBuffer = ConcurrentLinkedQueue<String>()
 
-	override fun doBeforeShow(dialog: Window) {
-		dialog.invalidate()
-		threadPool.execute {
-			try {
-				logNls("copyStart")
-				val project = mainView.createProject()
-				logNls("generationStart")
-				project.generate()
-				logNls("copyEnd")
-				mainView.revalidateForm()
-				project.includeGradleWrapper(this)
-				logNls("generationEnd")
-				logAlerts(project)
-			} catch (exception: Exception) {
-				log(exception.javaClass.name + ": " + exception.message)
-				exception.stackTrace.forEach { log("  at $it") }
-				exception.printStackTrace()
-				logNls("generationFail")
-			} finally {
-				buttons.forEach { it.isDisabled = false }
-			}
-		}
-	}
+  override fun doBeforeShow(dialog: Window) {
+    dialog.invalidate()
+    threadPool.execute {
+      try {
+        logNls("copyStart")
+        val project = mainView.createProject()
+        logNls("generationStart")
+        project.generate()
+        logNls("copyEnd")
+        mainView.revalidateForm()
+        project.includeGradleWrapper(this)
+        logNls("generationEnd")
+        logAlerts(project)
+      } catch (exception: Exception) {
+        log(exception.javaClass.name + ": " + exception.message)
+        exception.stackTrace.forEach { log("  at $it") }
+        exception.printStackTrace()
+        logNls("generationFail")
+      } finally {
+        buttons.forEach { it.isDisabled = false }
+      }
+    }
+  }
 
-	override fun logNls(bundleLine: String) = log(locale.i18nBundle.get(bundleLine))
-	override fun log(message: String) {
-		loggingBuffer.offer(message)
-		Gdx.app.postRunnable {
-			while (loggingBuffer.isNotEmpty()) {
-				if (console.text.isNotBlank()) console.text += '\n'
-				console.text += loggingBuffer.poll()
-			}
-			Gdx.app.postRunnable {
-				console.invalidateHierarchy()
-				scrollPane.layout()
-				scrollPane.scrollPercentY = 1f
-			}
-		}
-	}
+  override fun logNls(bundleLine: String) = log(locale.i18nBundle.get(bundleLine))
+  override fun log(message: String) {
+    loggingBuffer.offer(message)
+    Gdx.app.postRunnable {
+      while (loggingBuffer.isNotEmpty()) {
+        if (console.text.isNotBlank()) console.text += '\n'
+        console.text += loggingBuffer.poll()
+      }
+      Gdx.app.postRunnable {
+        console.invalidateHierarchy()
+        scrollPane.layout()
+        scrollPane.scrollPercentY = 1f
+      }
+    }
+  }
 
-	private fun logAlerts(project: Project) {
-		val alerts = project.getAlertCodes()
-		if (alerts.isEmpty()) return
+  private fun logAlerts(project: Project) {
+    val alerts = project.getAlertCodes()
+    if (alerts.isEmpty()) return
 
-		logNls("warnings")
-		alerts.forEach(this::logNls)
-	}
+    logNls("warnings")
+    alerts.forEach(this::logNls)
+  }
 }

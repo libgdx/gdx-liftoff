@@ -16,16 +16,16 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class VisUIShowcaseTemplate : Template {
-	override val id = "visUiShowcaseTemplate"
-	override val width: String
-		get() = "800"
-	override val height: String
-		get() = "600"
-	override val description: String
-		get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
-			"of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
+  override val id = "visUiShowcaseTemplate"
+  override val width: String
+    get() = "800"
+  override val height: String
+    get() = "600"
+  override val description: String
+    get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
+      "of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -43,108 +43,108 @@ import com.kotcrab.vis.ui.widget.MenuItem;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class ${project.basic.mainClass} extends ApplicationAdapter {
-	private MenuBar menuBar;
-	private Stage stage;
+  private MenuBar menuBar;
+  private Stage stage;
 
-	@Override
-	public void create () {
-		VisUI.setSkipGdxVersionCheck(true);
-		VisUI.load(SkinScale.X1);
+  @Override
+  public void create () {
+    VisUI.setSkipGdxVersionCheck(true);
+    VisUI.load(SkinScale.X1);
 
-		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
+    stage = new Stage(new ScreenViewport());
+    Gdx.input.setInputProcessor(stage);
 
-		Table root = new Table();
-		root.setFillParent(true);
-		stage.addActor(root);
+    Table root = new Table();
+    root.setFillParent(true);
+    stage.addActor(root);
 
-		menuBar = new MenuBar();
-		root.add(menuBar.getTable()).growX().row();
-		root.add().grow();
+    menuBar = new MenuBar();
+    root.add(menuBar.getTable()).growX().row();
+    root.add().grow();
 
-		createMenus();
+    createMenus();
 
-		stage.addActor(new TestWindow());
-	}
+    stage.addActor(new TestWindow());
+  }
 
-	private void createMenus () {
-		Menu startTestMenu = new Menu("start test");
-		Menu fileMenu = new Menu("file");
-		Menu editMenu = new Menu("edit");
+  private void createMenus () {
+    Menu startTestMenu = new Menu("start test");
+    Menu fileMenu = new Menu("file");
+    Menu editMenu = new Menu("edit");
 
-		startTestMenu.addItem(new MenuItem("listview", new ChangeListener() {
-			@Override
-			public void changed (ChangeEvent event, Actor actor) {
-				stage.addActor(new TestListView());
-			}
-		}));
+    startTestMenu.addItem(new MenuItem("listview", new ChangeListener() {
+      @Override
+      public void changed (ChangeEvent event, Actor actor) {
+        stage.addActor(new TestListView());
+      }
+    }));
 
-		startTestMenu.addItem(new MenuItem("tabbed pane", new ChangeListener() {
-			@Override
-			public void changed (ChangeEvent event, Actor actor) {
-				stage.addActor(new TestTabbedPane());
-			}
-		}));
+    startTestMenu.addItem(new MenuItem("tabbed pane", new ChangeListener() {
+      @Override
+      public void changed (ChangeEvent event, Actor actor) {
+        stage.addActor(new TestTabbedPane());
+      }
+    }));
 
-		startTestMenu.addItem(new MenuItem("collapsible", new ChangeListener() {
-			@Override
-			public void changed (ChangeEvent event, Actor actor) {
-				stage.addActor(new TestCollapsible());
-			}
-		}));
+    startTestMenu.addItem(new MenuItem("collapsible", new ChangeListener() {
+      @Override
+      public void changed (ChangeEvent event, Actor actor) {
+        stage.addActor(new TestCollapsible());
+      }
+    }));
 
-		//creating dummy menu items for showcase
-		fileMenu.addItem(new MenuItem("menuitem #1"));
-		fileMenu.addItem(new MenuItem("menuitem #2").setShortcut("f1"));
-		fileMenu.addItem(new MenuItem("menuitem #3").setShortcut("f2"));
+    //creating dummy menu items for showcase
+    fileMenu.addItem(new MenuItem("menuitem #1"));
+    fileMenu.addItem(new MenuItem("menuitem #2").setShortcut("f1"));
+    fileMenu.addItem(new MenuItem("menuitem #3").setShortcut("f2"));
 
-		editMenu.addItem(new MenuItem("menuitem #4"));
-		editMenu.addItem(new MenuItem("menuitem #5"));
-		editMenu.addSeparator();
-		editMenu.addItem(new MenuItem("menuitem #6"));
-		editMenu.addItem(new MenuItem("menuitem #7"));
+    editMenu.addItem(new MenuItem("menuitem #4"));
+    editMenu.addItem(new MenuItem("menuitem #5"));
+    editMenu.addSeparator();
+    editMenu.addItem(new MenuItem("menuitem #6"));
+    editMenu.addItem(new MenuItem("menuitem #7"));
 
-		menuBar.addMenu(startTestMenu);
-		menuBar.addMenu(fileMenu);
-		menuBar.addMenu(editMenu);
-	}
+    menuBar.addMenu(startTestMenu);
+    menuBar.addMenu(fileMenu);
+    menuBar.addMenu(editMenu);
+  }
 
-	@Override
-	public void resize (int width, int height) {
-		stage.getViewport().update(width, height, true);
-	}
+  @Override
+  public void resize (int width, int height) {
+    stage.getViewport().update(width, height, true);
+  }
 
-	@Override
-	public void render () {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
-	}
+  @Override
+  public void render () {
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+    stage.draw();
+  }
 
-	@Override
-	public void dispose () {
-		VisUI.dispose();
-		stage.dispose();
-	}
+  @Override
+  public void dispose () {
+    VisUI.dispose();
+    stage.dispose();
+  }
 }"""
 
-	override fun apply(project: Project) {
-		super.apply(project)
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID,
-				original = path("generator", "assets", ".gitkeep"),
-				path = ".gitkeep"
-			)
-		)
-		VisUI().initiate(project)
+  override fun apply(project: Project) {
+    super.apply(project)
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID,
+        original = path("generator", "assets", ".gitkeep"),
+        path = ".gitkeep"
+      )
+    )
+    VisUI().initiate(project)
 
-		addSourceFile(
-			project = project,
-			platform = Core.ID,
-			packageName = project.basic.rootPackage,
-			fileName = "TestWindow.java",
-			content = """package ${project.basic.rootPackage};
+    addSourceFile(
+      project = project,
+      platform = Core.ID,
+      packageName = project.basic.rootPackage,
+      fileName = "TestWindow.java",
+      content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
@@ -165,18 +165,18 @@ import com.kotcrab.vis.ui.widget.spinner.SimpleFloatSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 
 public class TestWindow extends VisWindow {
-	private static final Drawable white = VisUI.getSkin().getDrawable("white");
+  private static final Drawable white = VisUI.getSkin().getDrawable("white");
 
-	public TestWindow () {
-		super("example window");
+  public TestWindow () {
+    super("example window");
 
-		TableUtils.setSpacingDefaults(this);
-		columnDefaults(0).left();
+    TableUtils.setSpacingDefaults(this);
+    columnDefaults(0).left();
 
-		add(createLabels()).row();
-		add(createButtons()).row();
-		add(createCheckboxes()).row();
-		add(createTextFields()).row();
+    add(createLabels()).row();
+    add(createButtons()).row();
+    add(createCheckboxes()).row();
+  	add(createTextFields()).row();
 		add(createProgressBars()).row();
 		add(createSpinners()).row();
 		add(createSelectBox()).row();
@@ -363,14 +363,14 @@ public class TestWindow extends VisWindow {
 	}
 }
 """
-		)
+    )
 
-		addSourceFile(
-			project = project,
-			platform = Core.ID,
-			packageName = project.basic.rootPackage,
-			fileName = "TestListView.java",
-			content = """package ${project.basic.rootPackage};
+    addSourceFile(
+      project = project,
+      platform = Core.ID,
+      packageName = project.basic.rootPackage,
+      fileName = "TestListView.java",
+      content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -498,14 +498,14 @@ public class TestListView extends VisWindow {
 		}
 	}
 }"""
-		)
+    )
 
-		addSourceFile(
-			project = project,
-			platform = Core.ID,
-			packageName = project.basic.rootPackage,
-			fileName = "TestTabbedPane.java",
-			content = """package ${project.basic.rootPackage};
+    addSourceFile(
+      project = project,
+      platform = Core.ID,
+      packageName = project.basic.rootPackage,
+      fileName = "TestTabbedPane.java",
+      content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.util.TableUtils;
@@ -579,14 +579,14 @@ public class TestTabbedPane extends VisWindow {
 		}
 	}
 }"""
-		)
+    )
 
-		addSourceFile(
-			project = project,
-			platform = Core.ID,
-			packageName = project.basic.rootPackage,
-			fileName = "TestCollapsible.java",
-			content = """package ${project.basic.rootPackage};
+    addSourceFile(
+      project = project,
+      platform = Core.ID,
+      packageName = project.basic.rootPackage,
+      fileName = "TestCollapsible.java",
+      content = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -633,6 +633,6 @@ public class TestCollapsible extends VisWindow {
 		pack();
 	}
 }"""
-		)
-	}
+    )
+  }
 }

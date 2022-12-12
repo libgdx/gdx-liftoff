@@ -20,52 +20,52 @@ import gdx.liftoff.data.project.LanguagesData
  */
 @Processor
 class LanguagesView : AbstractAnnotationProcessor<JvmLanguage>() {
-	// Filled by the annotation processor.
-	private val jvmLanguages = mutableMapOf<String, Language>()
+  // Filled by the annotation processor.
+  private val jvmLanguages = mutableMapOf<String, Language>()
 
-	@LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
-	private val languageVersions = ObjectMap<String, VisTextField>()
+  @LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
+  private val languageVersions = ObjectMap<String, VisTextField>()
 
-	val languages: Array<String>
-		get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
+  val languages: Array<String>
+    get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
 
-	val versions: Array<String>
-		get() = jvmLanguages.values.sortedBy { it.id }.map { it.version }.toTypedArray()
+  val versions: Array<String>
+    get() = jvmLanguages.values.sortedBy { it.id }.map { it.version }.toTypedArray()
 
-	fun assignVersions(parser: LmlParser) {
-		jvmLanguages.values.forEach {
-			languageVersions.put(
-				it.id,
-				parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
-			)
-		}
-	}
+  fun assignVersions(parser: LmlParser) {
+    jvmLanguages.values.forEach {
+      languageVersions.put(
+        it.id,
+        parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
+      )
+    }
+  }
 
-	private fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
-		jvmLanguages[it.name]!!
-	}.toList()
+  private fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
+    jvmLanguages[it.name]!!
+  }.toList()
 
-	fun exportData(): LanguagesData {
-		val languages = getSelectedLanguages()
-		return LanguagesData(
-			list = languages.toMutableList(),
-			versions = languageVersions.associate { it.key to it.value.text }
-		)
-	}
+  fun exportData(): LanguagesData {
+    val languages = getSelectedLanguages()
+    return LanguagesData(
+      list = languages.toMutableList(),
+      versions = languageVersions.associate { it.key to it.value.text }
+    )
+  }
 
-	override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
-	override fun isSupportingTypes(): Boolean = true
-	override fun processType(
-		type: Class<*>,
-		annotation: JvmLanguage,
-		component: Any,
-		context: Context,
-		initializer: ContextInitializer,
-		contextDestroyer: ContextDestroyer
-	) {
-		val language = component as Language
-		jvmLanguages[language.id] = language
-	}
+  override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
+  override fun isSupportingTypes(): Boolean = true
+  override fun processType(
+    type: Class<*>,
+    annotation: JvmLanguage,
+    component: Any,
+    context: Context,
+    initializer: ContextInitializer,
+    contextDestroyer: ContextDestroyer
+  ) {
+    val language = component as Language
+    jvmLanguages[language.id] = language
+  }
 }
 
 /**

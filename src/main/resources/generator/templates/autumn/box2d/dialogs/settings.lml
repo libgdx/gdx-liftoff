@@ -1,51 +1,51 @@
 <dialog id="dialog" title="@settings" style="dialog">
-	<!-- Note that all values (like width and height) are in viewport units, 
-		not pixels. Its somewhat safe to use "magic" values. Values in {= } are equations; 
-		values proceeded with $ reference Java methods. -->
-	<tabbedPane selected="0" width="400" minHeight="360">
-		<!-- :setting macro is defined at global.lml. -->
-		<:setting name="@music">
-			@musicVolume
-			<!-- Music-related methods are added by MusicService. -->
-			<slider value="$getMusicVolume" onChange="setMusicVolume"
-				growX="true" />
-			<checkBox onChange="toggleMusic" checked="$musicOn">@toggleMusic
-			</checkBox>
-		</:setting>
-		<:setting name="@sound">
-			@soundVolume
-			<!-- Sound-related methods are added by MusicService. -->
-			<slider value="$getSoundVolume" onChange="setSoundVolume"
-				growX="true" />
-			<checkBox onChange="toggleSound" checked="$soundOn">@toggleSound
-			</checkBox>
-		</:setting>
-		<:setting name="@locale">
-			<!-- {locales} and {currentLocale} are LML arguments automatically added 
-				by LocaleService. "locale:name" action changes current locale and reloads 
-				UI. For example, "locale:en" action would change current locale to English. -->
-			<:each locale="{locales}">
-				<:if test="{locale} != {currentLocale}">
-					<textButton onChange="locale:{locale}">@{locale}</textButton>
-				</:if>
-			</:each>
-		</:setting>
-		<!-- Showing fullscreen settings only on desktop/GWT: -->
-		<:if test="!$isMobile">
-		<:setting name="@gui">
-			@fullscreen
-			<table defaultPad="3" defaultGrowX="true">
-			<!-- $displayModes is a method from SettingsController that returns all 
-				supported fullscreen modes. -->
-				<:each mode="$displayModes">
-					<textButton id="{mode}" onChange="setFullscreen">{mode}</textButton>
-					<:if test="{each:index}%2=1"><:row/></:if>
-				</:each>
-				<textButton onChange="resetFullscreen">@reset</textButton>
-			</table>
-		</:setting>
-		</:if>
-	</tabbedPane>
-	<!-- "close" action is defined in Global class. -->
-	<textButton onResult="close">@back</textButton>
+  <!-- Note that all values (like width and height) are in viewport units,
+    not pixels. Its somewhat safe to use "magic" values. Values in {= } are equations;
+    values proceeded with $ reference Java methods. -->
+  <tabbedPane selected="0" width="400" minHeight="360">
+    <!-- :setting macro is defined at global.lml. -->
+    <:setting name="@music">
+      @musicVolume
+      <!-- Music-related methods are added by MusicService. -->
+      <slider value="$getMusicVolume" onChange="setMusicVolume"
+        growX="true" />
+      <checkBox onChange="toggleMusic" checked="$musicOn">@toggleMusic
+      </checkBox>
+    </:setting>
+    <:setting name="@sound">
+      @soundVolume
+      <!-- Sound-related methods are added by MusicService. -->
+      <slider value="$getSoundVolume" onChange="setSoundVolume"
+        growX="true" />
+      <checkBox onChange="toggleSound" checked="$soundOn">@toggleSound
+      </checkBox>
+    </:setting>
+    <:setting name="@locale">
+      <!-- {locales} and {currentLocale} are LML arguments automatically added
+        by LocaleService. "locale:name" action changes current locale and reloads
+        UI. For example, "locale:en" action would change current locale to English. -->
+      <:each locale="{locales}">
+        <:if test="{locale} != {currentLocale}">
+          <textButton onChange="locale:{locale}">@{locale}</textButton>
+        </:if>
+      </:each>
+    </:setting>
+    <!-- Showing fullscreen settings only on desktop/GWT: -->
+    <:if test="!$isMobile">
+    <:setting name="@gui">
+      @fullscreen
+      <table defaultPad="3" defaultGrowX="true">
+      <!-- $displayModes is a method from SettingsController that returns all
+        supported fullscreen modes. -->
+        <:each mode="$displayModes">
+          <textButton id="{mode}" onChange="setFullscreen">{mode}</textButton>
+          <:if test="{each:index}%2=1"><:row/></:if>
+        </:each>
+        <textButton onChange="resetFullscreen">@reset</textButton>
+      </table>
+    </:setting>
+    </:if>
+  </tabbedPane>
+  <!-- "close" action is defined in Global class. -->
+  <textButton onResult="close">@back</textButton>
 </dialog>

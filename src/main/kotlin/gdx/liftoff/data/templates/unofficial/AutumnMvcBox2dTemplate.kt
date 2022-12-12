@@ -16,69 +16,69 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
-	override val id = "lmlMvcBox2dTemplate"
-	override val description: String
-		get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
-			"class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application " +
-			"showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens " +
-			"and dialogs was provided, including a settings view that allows the players to choose their controls."
+  override val id = "lmlMvcBox2dTemplate"
+  override val description: String
+    get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+      "class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application " +
+      "showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens " +
+      "and dialogs was provided, including a settings view that allows the players to choose their controls."
 
-	override fun apply(project: Project) {
-		super.apply(project)
-		// Adding extra dependencies:
-		Box2D().initiate(project)
-		Controllers().initiate(project)
-	}
+  override fun apply(project: Project) {
+    super.apply(project)
+    // Adding extra dependencies:
+    Box2D().initiate(project)
+    Controllers().initiate(project)
+  }
 
-	override fun addResources(project: Project) {
-		// Adding music theme:
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID, path = path("music", "theme.ogg"),
-				original = path("generator", "templates", "autumn", "theme.ogg")
-			)
-		)
-		// Adding I18N bundle:
-		arrayOf("", "_en", "_pl").forEach {
-			val fileName = "bundle$it.properties"
-			project.files.add(
-				CopiedFile(
-					projectName = Assets.ID, path = path("i18n", fileName),
-					original = path("generator", "templates", "autumn", "box2d", fileName)
-				)
-			)
-		}
-		// Adding LML views:
-		arrayOf("game.lml", "loading.lml", "menu.lml").forEach {
-			project.files.add(
-				CopiedFile(
-					projectName = Assets.ID, path = path("ui", "templates", it),
-					original = path("generator", "templates", "autumn", "box2d", it)
-				)
-			)
-		}
-		arrayOf("controls.lml", "edit.lml", "inactive.lml", "settings.lml", "switch.lml").forEach {
-			project.files.add(
-				CopiedFile(
-					projectName = Assets.ID, path = path("ui", "templates", "dialogs", it),
-					original = path("generator", "templates", "autumn", "box2d", "dialogs", it)
-				)
-			)
-		}
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID, path = path("ui", "templates", "macros", "global.lml"),
-				original = path("generator", "templates", "autumn", "box2d", "macros", "global.lml")
-			)
-		)
-	}
+  override fun addResources(project: Project) {
+    // Adding music theme:
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID, path = path("music", "theme.ogg"),
+        original = path("generator", "templates", "autumn", "theme.ogg")
+      )
+    )
+    // Adding I18N bundle:
+    arrayOf("", "_en", "_pl").forEach {
+      val fileName = "bundle$it.properties"
+      project.files.add(
+        CopiedFile(
+          projectName = Assets.ID, path = path("i18n", fileName),
+          original = path("generator", "templates", "autumn", "box2d", fileName)
+        )
+      )
+    }
+    // Adding LML views:
+    arrayOf("game.lml", "loading.lml", "menu.lml").forEach {
+      project.files.add(
+        CopiedFile(
+          projectName = Assets.ID, path = path("ui", "templates", it),
+          original = path("generator", "templates", "autumn", "box2d", it)
+        )
+      )
+    }
+    arrayOf("controls.lml", "edit.lml", "inactive.lml", "settings.lml", "switch.lml").forEach {
+      project.files.add(
+        CopiedFile(
+          projectName = Assets.ID, path = path("ui", "templates", "dialogs", it),
+          original = path("generator", "templates", "autumn", "box2d", "dialogs", it)
+        )
+      )
+    }
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID, path = path("ui", "templates", "macros", "global.lml"),
+        original = path("generator", "templates", "autumn", "box2d", "macros", "global.lml")
+      )
+    )
+  }
 
-	override fun addSources(project: Project) {
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration",
-				fileName = "Configuration.java",
-				content = """package ${project.basic.rootPackage}.configuration;
+  override fun addSources(project: Project) {
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration",
+        fileName = "Configuration.java",
+        content = """package ${project.basic.rootPackage}.configuration;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -107,100 +107,100 @@ import com.kotcrab.vis.ui.VisUI;
  * This is a utility class that configures application settings. */
 @Component
 public class Configuration {
-	/** Name of the application's preferences file. */
-	public static final String PREFERENCES = "${project.basic.name}";
-	/** Max players amount. */
-	public static final int PLAYERS_AMOUNT = 3;
-	/** Path to global macro file. */
-	@LmlMacro private final String globalMacro = "ui/templates/macros/global.lml";
-	/** Path to the internationalization bundle. */
-	@I18nBundle private final String bundlePath = "i18n/bundle";
-	/** Enabling VisUI usage. */
-	@LmlParserSyntax private final LmlSyntax syntax = new VisLmlSyntax();
+  /** Name of the application's preferences file. */
+  public static final String PREFERENCES = "${project.basic.name}";
+  /** Max players amount. */
+  public static final int PLAYERS_AMOUNT = 3;
+  /** Path to global macro file. */
+  @LmlMacro private final String globalMacro = "ui/templates/macros/global.lml";
+  /** Path to the internationalization bundle. */
+  @I18nBundle private final String bundlePath = "i18n/bundle";
+  /** Enabling VisUI usage. */
+  @LmlParserSyntax private final LmlSyntax syntax = new VisLmlSyntax();
 
-	/** These sound-related fields allow MusicService to store settings in preferences file. Sound preferences will be
-	 * automatically saved when the application closes and restored the next time it's turned on. Sound-related methods
-	 * methods will be automatically added to LML templates - see settings.lml template. */
-	@SoundVolume(preferences = PREFERENCES) private final String soundVolume = "soundVolume";
-	@SoundEnabled(preferences = PREFERENCES) private final String soundEnabled = "soundOn";
-	@MusicVolume(preferences = PREFERENCES) private final String musicVolume = "musicVolume";
-	@MusicEnabled(preferences = PREFERENCES) private final String musicEnabledPreference = "musicOn";
+  /** These sound-related fields allow MusicService to store settings in preferences file. Sound preferences will be
+   * automatically saved when the application closes and restored the next time it's turned on. Sound-related methods
+   * methods will be automatically added to LML templates - see settings.lml template. */
+  @SoundVolume(preferences = PREFERENCES) private final String soundVolume = "soundVolume";
+  @SoundEnabled(preferences = PREFERENCES) private final String soundEnabled = "soundOn";
+  @MusicVolume(preferences = PREFERENCES) private final String musicVolume = "musicVolume";
+  @MusicEnabled(preferences = PREFERENCES) private final String musicEnabledPreference = "musicOn";
 
-	/** These i18n-related fields will allow LocaleService to save game's locale in preferences file. Locale changing
-	 * actions will be automatically added to LML templates - see settings.lml template. */
-	@I18nLocale(propertiesPath = PREFERENCES, defaultLocale = "en") private final String localePreference = "locale";
-	@AvailableLocales private final String[] availableLocales = new String[] { "en" };
+  /** These i18n-related fields will allow LocaleService to save game's locale in preferences file. Locale changing
+   * actions will be automatically added to LML templates - see settings.lml template. */
+  @I18nLocale(propertiesPath = PREFERENCES, defaultLocale = "en") private final String localePreference = "locale";
+  @AvailableLocales private final String[] availableLocales = new String[] { "en" };
 
-	/** Setting the default Preferences object path. */
-	@Preference private final String preferencesPath = PREFERENCES;
+  /** Setting the default Preferences object path. */
+  @Preference private final String preferencesPath = PREFERENCES;
 
-	/** Thanks to the Initiate annotation, this method will be automatically invoked during context building. All
-	 * method's parameters will be injected with values from the context.
-	 *
-	 * @param skinService contains GUI skin. */
-	@Initiate
-	public void initiateConfiguration(final SkinService skinService) {
-		// Loading default VisUI skin with the selected scale:
-		VisUI.load(VisUI.SkinScale.X2);
-		// Registering VisUI skin with "default" name - this skin will be the default one for all LML widgets:
-		skinService.addSkin("default", VisUI.getSkin());
-		// Changing the default resizer - centering actors on resize.
-		InterfaceService.DEFAULT_VIEW_RESIZER = new ViewResizer() {
-			@Override
-			public void resize(final Stage stage, final int width, final int height) {
-				stage.getViewport().update(width, height, true);
-				for (final Actor actor : stage.getActors()) {
-					Actors.centerActor(actor);
-				}
-			}
-		};
-	}
+  /** Thanks to the Initiate annotation, this method will be automatically invoked during context building. All
+   * method's parameters will be injected with values from the context.
+   *
+   * @param skinService contains GUI skin. */
+  @Initiate
+  public void initiateConfiguration(final SkinService skinService) {
+    // Loading default VisUI skin with the selected scale:
+    VisUI.load(VisUI.SkinScale.X2);
+    // Registering VisUI skin with "default" name - this skin will be the default one for all LML widgets:
+    skinService.addSkin("default", VisUI.getSkin());
+    // Changing the default resizer - centering actors on resize.
+    InterfaceService.DEFAULT_VIEW_RESIZER = new ViewResizer() {
+      @Override
+      public void resize(final Stage stage, final int width, final int height) {
+        stage.getViewport().update(width, height, true);
+        for (final Actor actor : stage.getActors()) {
+          Actors.centerActor(actor);
+        }
+      }
+    };
+  }
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
-				fileName = "ControlsData.java",
-				content = """package ${project.basic.rootPackage}.configuration.preferences;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
+        fileName = "ControlsData.java",
+        content = """package ${project.basic.rootPackage}.configuration.preferences;
 
 import ${project.basic.rootPackage}.service.controls.ControlType;
 
 /** JSON-encoded class. Uses public fields to support libGDX JSON utilities. */
 public class ControlsData {
-	/** Up movement shortcut. */
-	public int up;
-	/** Down movement shortcut. */
-	public int down;
-	/** Left movement shortcut. */
-	public int left;
-	/** Right movement shortcut. */
-	public int right;
-	/** Jump shortcut. */
-	public int jump;
-	/** Type of controls */
-	public ControlType type;
-	/** Additional data. Might be used for device ID. */
-	public int index;
-	/** Optional settings. Might not be supported by every controller. */
-	public boolean invertX, invertY, invertXY;
+  /** Up movement shortcut. */
+  public int up;
+  /** Down movement shortcut. */
+  public int down;
+  /** Left movement shortcut. */
+  public int left;
+  /** Right movement shortcut. */
+  public int right;
+  /** Jump shortcut. */
+  public int jump;
+  /** Type of controls */
+  public ControlType type;
+  /** Additional data. Might be used for device ID. */
+  public int index;
+  /** Optional settings. Might not be supported by every controller. */
+  public boolean invertX, invertY, invertXY;
 
-	public ControlsData() {
-	}
+  public ControlsData() {
+  }
 
-	public ControlsData(final ControlType type) {
-		this.type = type;
-	}
+  public ControlsData(final ControlType type) {
+    this.type = type;
+  }
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
-				fileName = "ControlsPreference.java",
-				content = """package ${project.basic.rootPackage}.configuration.preferences;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
+        fileName = "ControlsPreference.java",
+        content = """package ${project.basic.rootPackage}.configuration.preferences;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
@@ -218,7 +218,7 @@ import ${project.basic.rootPackage}.service.controls.impl.TouchControl;
 /** Allows to save controls in preferences. */
 @Property("Controls")
 public class ControlsPreference extends AbstractPreference<Array<ControlsData>> {
-	private final Json json = new Json();
+  private final Json json = new Json();
 
 	@Override
 	public Array<ControlsData> getDefault() {
@@ -248,14 +248,14 @@ public class ControlsPreference extends AbstractPreference<Array<ControlsData>> 
 		return Base64Coder.encodeString(json.toJson(preference, Array.class, ControlsData.class));
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
-				fileName = "GameController.java",
-				content = """package ${project.basic.rootPackage}.controller;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        fileName = "GameController.java",
+        content = """package ${project.basic.rootPackage}.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -303,14 +303,14 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 		stage.draw();
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
-				fileName = "LoadingController.java",
-				content = """package ${project.basic.rootPackage}.controller;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        fileName = "LoadingController.java",
+        content = """package ${project.basic.rootPackage}.controller;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.czyzby.autumn.annotation.Inject;
@@ -341,14 +341,14 @@ public class LoadingController implements ViewRenderer {
 		stage.draw();
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
-				fileName = "MenuController.java",
-				content = """package ${project.basic.rootPackage}.controller;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        fileName = "MenuController.java",
+        content = """package ${project.basic.rootPackage}.controller;
 
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.autumn.annotation.Inject;
@@ -387,14 +387,14 @@ public class MenuController implements ActionContainer {
 		return false;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.action",
-				fileName = "Global.java",
-				content = """package ${project.basic.rootPackage}.controller.action;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.action",
+        fileName = "Global.java",
+        content = """package ${project.basic.rootPackage}.controller.action;
 
 import com.github.czyzby.autumn.mvc.stereotype.ViewActionContainer;
 import com.github.czyzby.kiwi.util.gdx.GdxUtilities;
@@ -425,14 +425,14 @@ public class Global implements ActionContainer {
 		return Configuration.PLAYERS_AMOUNT;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
-				fileName = "ControlsController.java",
-				content = """package ${project.basic.rootPackage}.controller.dialog;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        fileName = "ControlsController.java",
+        content = """package ${project.basic.rootPackage}.controller.dialog;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -494,14 +494,14 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
 		interfaceService.showDialog(ControlsSwitchController.class);
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
-				fileName = "ControlsEditController.java",
-				content = """package ${project.basic.rootPackage}.controller.dialog;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        fileName = "ControlsEditController.java",
+        content = """package ${project.basic.rootPackage}.controller.dialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -813,14 +813,14 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 		}
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
-				fileName = "ControlsSwitchController.java",
-				content = """package ${project.basic.rootPackage}.controller.dialog;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        fileName = "ControlsSwitchController.java",
+        content = """package ${project.basic.rootPackage}.controller.dialog;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -912,14 +912,14 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
 		}
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
-				fileName = "NotEnoughPlayersErrorController.java",
-				content = """package ${project.basic.rootPackage}.controller.dialog;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        fileName = "NotEnoughPlayersErrorController.java",
+        content = """package ${project.basic.rootPackage}.controller.dialog;
 
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 
@@ -927,14 +927,14 @@ import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 @ViewDialog(id = "inactive", value = "ui/templates/dialogs/inactive.lml", cacheInstance = true)
 public class NotEnoughPlayersErrorController {
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
-				fileName = "SettingsController.java",
-				content = """package ${project.basic.rootPackage}.controller.dialog;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        fileName = "SettingsController.java",
+        content = """package ${project.basic.rootPackage}.controller.dialog;
 
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -986,14 +986,14 @@ public class SettingsController implements ActionContainer {
 		fullscreenService.resetFullscreen();
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.entity",
-				fileName = "Player.java",
-				content = """package ${project.basic.rootPackage}.entity;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.entity",
+        fileName = "Player.java",
+        content = """package ${project.basic.rootPackage}.entity;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -1053,14 +1053,14 @@ public class Player implements ControlListener {
 		jumped = true;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
-				fileName = "Box2DService.java",
-				content = """package ${project.basic.rootPackage}.service;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        fileName = "Box2DService.java",
+        content = """package ${project.basic.rootPackage}.service;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector2;
@@ -1206,14 +1206,14 @@ public class Box2DService {
 		}
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
-				fileName = "ControlsService.java",
-				content = """package ${project.basic.rootPackage}.service;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        fileName = "ControlsService.java",
+        content = """package ${project.basic.rootPackage}.service;
 
 import com.badlogic.gdx.utils.Array;
 import com.github.czyzby.autumn.annotation.Component;
@@ -1274,14 +1274,14 @@ public class ControlsService {
 		return controls;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
-				fileName = "FullscreenService.java",
-				content = """package ${project.basic.rootPackage}.service;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        fileName = "FullscreenService.java",
+        content = """package ${project.basic.rootPackage}.service;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -1333,14 +1333,14 @@ public class FullscreenService {
 		}
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
-				fileName = "AbstractButtonControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        fileName = "AbstractButtonControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls;
 
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -1480,14 +1480,14 @@ public abstract class AbstractButtonControl extends AbstractControl {
 		this.jump = jump;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
-				fileName = "AbstractControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        fileName = "AbstractControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -1538,14 +1538,14 @@ public abstract class AbstractControl implements Control {
 		movement.set(0f, 0f);
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
-				fileName = "Control.java",
-				content = """package ${project.basic.rootPackage}.service.controls;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        fileName = "Control.java",
+        content = """package ${project.basic.rootPackage}.service.controls;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector2;
@@ -1583,28 +1583,28 @@ public interface Control {
 	/** Clears state variables. */
 	void reset();
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
-				fileName = "ControlListener.java",
-				content = """package ${project.basic.rootPackage}.service.controls;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        fileName = "ControlListener.java",
+        content = """package ${project.basic.rootPackage}.service.controls;
 
 /** Listens to game events. */
 public interface ControlListener {
 	/** Invoked when controller detects jump input event. */
 	void jump();
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
-				fileName = "ControlType.java",
-				content = """package ${project.basic.rootPackage}.service.controls;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        fileName = "ControlType.java",
+        content = """package ${project.basic.rootPackage}.service.controls;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -1656,14 +1656,14 @@ public enum ControlType {
 	 * @return deserialized controller. */
 	public abstract Control create(ControlsData data);
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
-				fileName = "GamePadControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls.impl;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        fileName = "GamePadControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls.impl;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.controllers.*;
@@ -1931,14 +1931,14 @@ public class GamePadControl extends AbstractButtonControl {
 		return ControlType.PAD;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
-				fileName = "InactiveControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls.impl;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        fileName = "InactiveControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls.impl;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector2;
@@ -1991,14 +1991,14 @@ public class InactiveControl implements Control {
 	public void reset() {
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
-				fileName = "KeyboardControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls.impl;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        fileName = "KeyboardControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls.impl;
 
 import com.badlogic.gdx.Input.Keys;
 import ${project.basic.rootPackage}.service.controls.AbstractButtonControl;
@@ -2050,14 +2050,14 @@ public class KeyboardControl extends AbstractButtonControl {
 		return ControlType.KEYBOARD;
 	}
 }"""
-			)
-		)
+      )
+    )
 
-		project.files.add(
-			SourceFile(
-				projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
-				fileName = "TouchControl.java",
-				content = """package ${project.basic.rootPackage}.service.controls.impl;
+    project.files.add(
+      SourceFile(
+        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        fileName = "TouchControl.java",
+        content = """package ${project.basic.rootPackage}.service.controls.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -2130,11 +2130,11 @@ public class TouchControl extends AbstractControl {
 		return ControlType.TOUCH;
 	}
 }"""
-			)
-		)
-	}
+      )
+    )
+  }
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 /** This class serves only as the application scanning root. Any classes in its package (or any of the sub-packages)
  * with proper Autumn MVC annotations will be found, scanned and initiated. */

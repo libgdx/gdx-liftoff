@@ -11,31 +11,31 @@ import gdx.liftoff.views.ProjectTemplate
 @ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class Noise4JTemplate : Template {
-	override val id = "noise4jTemplate"
-	private lateinit var mainClass: String
-	override val width: String
-		get() = "$mainClass.SIZE * 2"
-	override val height: String
-		get() = "$mainClass.SIZE * 2"
-	override val description: String
-		get() = "Project template included simple launchers and an `ApplicationAdapter` extension that draws random " +
-			"maps created using [Noise4J](https://github.com/czyzby/noise4j)."
+  override val id = "noise4jTemplate"
+  private lateinit var mainClass: String
+  override val width: String
+    get() = "$mainClass.SIZE * 2"
+  override val height: String
+    get() = "$mainClass.SIZE * 2"
+  override val description: String
+    get() = "Project template included simple launchers and an `ApplicationAdapter` extension that draws random " +
+      "maps created using [Noise4J](https://github.com/czyzby/noise4j)."
 
-	override fun apply(project: Project) {
-		mainClass = project.basic.mainClass
-		super.apply(project)
-		project.files.add(
-			CopiedFile(
-				projectName = Assets.ID,
-				original = path("generator", "assets", ".gitkeep"),
-				path = ".gitkeep"
-			)
-		)
-		// Including noise4j dependency:
-		Noise4J().initiate(project)
-	}
+  override fun apply(project: Project) {
+    mainClass = project.basic.mainClass
+    super.apply(project)
+    project.files.add(
+      CopiedFile(
+        projectName = Assets.ID,
+        original = path("generator", "assets", ".gitkeep"),
+        path = ".gitkeep"
+      )
+    )
+    // Including noise4j dependency:
+    Noise4J().initiate(project)
+  }
 
-	override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
