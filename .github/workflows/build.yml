@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [8, 11, 17]
+
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v3
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: temurin
+      - name: Gradle setup
+        uses: gradle/gradle-build-action@v2
+      - name: Gradle wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+      - name: Build
+        run: ./gradlew build -x ktlintMainSourceSetCheck
+      - name: Generate sample project
+        run: ./gradlew sample
