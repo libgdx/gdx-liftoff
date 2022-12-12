@@ -31,14 +31,14 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL) application. */
 fun main() {
-  LwjglApplication(${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
-    title = "${project.basic.name}"
-    width = $width
-    height = $height
-    intArrayOf(128, 64, 32, 16).forEach{
-      addIcon("libgdx${"$"}it.png", Files.FileType.Internal)
-    }
-  })
+    LwjglApplication(${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
+        title = "${project.basic.name}"
+        width = $width
+        height = $height
+        intArrayOf(128, 64, 32, 16).forEach{
+            addIcon("libgdx${"$"}it.png", Files.FileType.Internal)
+        }
+    })
 }
 """
 
@@ -52,13 +52,13 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the Android application. */
 class AndroidLauncher : AndroidApplication() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
-      // Configure your application here.
-      useImmersiveMode = true // Recommended, but not required.
-    })
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
+            // Configure your application here.
+            useImmersiveMode = true // Recommended, but not required.
+        })
+    }
 }
 """
 
@@ -72,10 +72,10 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the headless application. Can be converted into a server application or a scripting utility. */
 fun main() {
-  HeadlessApplication(${project.basic.mainClass}(), HeadlessApplicationConfiguration().apply {
-    // When this value is negative, ${project.basic.mainClass}#render() is never called:
-    updatesPerSecond = -1
-  })
+    HeadlessApplication(${project.basic.mainClass}(), HeadlessApplicationConfiguration().apply {
+        // When this value is negative, ${project.basic.mainClass}#render() is never called:
+        updatesPerSecond = -1
+    })
 }
 """
 
@@ -89,11 +89,11 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {
-  Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
-    setTitle("${project.basic.name}")
-    setWindowedMode($width, $height)
-    setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
-  })
+    Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
+        setTitle("${project.basic.name}")
+        setWindowedMode($width, $height)
+        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
+    })
 }
 """
 
@@ -110,21 +110,21 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the iOS (RoboVM) application. */
 class IOSLauncher : IOSApplication.Delegate() {
-  override fun createApplication(): IOSApplication {
-    return IOSApplication(${project.basic.mainClass}(), IOSApplicationConfiguration().apply {
-      // Configure your application here.
-    })
-  }
-
-  companion object {
-    @JvmStatic fun main(args: Array<String>) {
-      val pool = NSAutoreleasePool()
-      val principalClass: Class<UIApplication>? = null
-      val delegateClass = IOSLauncher::class.java
-      UIApplication.main(args, principalClass, delegateClass)
-      pool.close()
+    override fun createApplication(): IOSApplication {
+        return IOSApplication(${project.basic.mainClass}(), IOSApplicationConfiguration().apply {
+            // Configure your application here.
+        })
     }
-  }
+
+    companion object {
+        @JvmStatic fun main(args: Array<String>) {
+            val pool = NSAutoreleasePool()
+            val principalClass: Class<UIApplication>? = null
+            val delegateClass = IOSLauncher::class.java
+            UIApplication.main(args, principalClass, delegateClass)
+            pool.close()
+        }
+    }
 }"""
 
   override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
@@ -137,16 +137,16 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {
-  @Override
-  public GwtApplicationConfiguration getConfig () {
-    return new GwtApplicationConfiguration($width, $height);
-  }
+    @Override
+    public GwtApplicationConfiguration getConfig () {
+        return new GwtApplicationConfiguration($width, $height);
+    }
 
-  @Override
-  public ApplicationListener createApplicationListener () {
-    throw new GdxRuntimeException("Kotlin is currently not supported by GWT.");
-    // return new ${project.basic.mainClass}();
-  }
+    @Override
+    public ApplicationListener createApplicationListener () {
+        throw new GdxRuntimeException("Kotlin is currently not supported by GWT.");
+        // return new ${project.basic.mainClass}();
+    }
 }
 """
 
@@ -156,7 +156,7 @@ package ${project.basic.rootPackage}.server
 
 /** Launches the server application. */
 fun main() {
-  TODO("Implement server application.")
+    TODO("Implement server application.")
 }
 """
 
@@ -170,11 +170,11 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the TeaVM/HTML application. */
 fun main() {
-  val config = TeaApplicationConfiguration("canvas").apply {
-    width = $width
-    height = $height
-  }
-  WebApplication(${project.basic.mainClass}(), config)
+    val config = TeaApplicationConfiguration("canvas").apply {
+        width = $width
+        height = $height
+    }
+    WebApplication(${project.basic.mainClass}(), config)
 }
 """
 
@@ -189,23 +189,23 @@ import com.github.xpenatan.gdx.backends.web.gen.SkipClass
 /** Builds the TeaVM/HTML application. */
 @SkipClass
 object TeaVMBuilder {
-  @JvmStatic fun main(arguments: Array<String>) {
-    val teaBuildConfiguration = TeaBuildConfiguration().apply {
-      assetsPath.add(File("../assets"))
-      webappPath = File("build/dist").canonicalPath
-      // You can switch this setting during development:
-      obfuscate = true
-      // Register any extra classpath assets here:
-      // additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
+    @JvmStatic fun main(arguments: Array<String>) {
+        val teaBuildConfiguration = TeaBuildConfiguration().apply {
+            assetsPath.add(File("../assets"))
+            webappPath = File("build/dist").canonicalPath
+            // You can switch this setting during development:
+            obfuscate = true
+            // Register any extra classpath assets here:
+            // additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
+        }
+
+        // Register any classes or packages that require reflection here:
+${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemicolon = false)}
+
+        val tool = TeaBuilder.config(teaBuildConfiguration)
+        tool.mainClass = "${project.basic.rootPackage}.teavm.TeaVMLauncher"
+        TeaBuilder.build(tool)
     }
-
-    // Register any classes or packages that require reflection here:
-${generateTeaVMReflectionIncludes(project, indent = " ".repeat(4), trailingSemicolon = false)}
-
-    val tool = TeaBuilder.config(teaBuildConfiguration)
-    tool.mainClass = "${project.basic.rootPackage}.teavm.TeaVMLauncher"
-    TeaBuilder.build(tool)
-  }
 }
 """
 }
