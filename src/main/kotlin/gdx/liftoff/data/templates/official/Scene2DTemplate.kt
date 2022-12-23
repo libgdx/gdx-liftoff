@@ -57,8 +57,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         });
         window.add(button);
         window.pack();
-        window.setPosition(stage.getWidth() / 2f - window.getWidth() / 2f,
-                stage.getHeight() / 2f - window.getHeight() / 2f);
+        // We round the window position to avoid awkward half-pixel artifacts.
+        // Casting using (int) would also work.
+        window.setPosition(MathUtils.roundPositive(stage.getWidth() / 2f - window.getWidth() / 2f),
+            MathUtils.roundPositive(stage.getHeight() / 2f - window.getHeight() / 2f));
         window.addAction(Actions.sequence(Actions.alpha(0f), Actions.fadeIn(1f)));
         stage.addActor(window);
 
