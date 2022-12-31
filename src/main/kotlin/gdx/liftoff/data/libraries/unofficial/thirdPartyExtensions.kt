@@ -941,7 +941,7 @@ class TinyVG : ThirdPartyExtension() {
 @Extension
 class GdxPsx : ThirdPartyExtension() {
   override val id = "gdxPsx"
-  override val defaultVersion = "6256159d1f" // corresponds to 0.1.4
+  override val defaultVersion = "0.1.5"
   override val url = "https://github.com/fxgaming/gdx-psx"
   override val repository = Repository.JitPack
   override val group = "com.github.fxgaming"
@@ -1131,7 +1131,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.1.5"
+  override val defaultVersion = "0.1.6"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
