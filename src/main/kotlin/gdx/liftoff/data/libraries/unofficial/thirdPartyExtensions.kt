@@ -723,7 +723,7 @@ class RegExodus : ThirdPartyExtension() {
 /**
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
- * with which libGDX versions; vis-ui 1.5.0 is the default and is
+ * with which libGDX versions; vis-ui 1.5.1 is the default and is
  * compatible with libGDX 1.11.0.
  * @author Kotcrab
  */
@@ -731,7 +731,7 @@ class RegExodus : ThirdPartyExtension() {
 class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1.5.0"
+  override val defaultVersion = "1.5.1"
   override val url = "https://github.com/kotcrab/vis-ui"
   override val group = "com.kotcrab.vis"
   override val name = "vis-ui"
@@ -950,6 +950,26 @@ class GdxPsx : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.fxgaming:gdx-psx")
 //        addDependency(project, GWT.ID, "com.github.fxgaming:gdx-psx:sources")
+  }
+}
+
+/**
+ * A layout engine which implements Flexbox.
+ * @author Lyze
+ */
+@Extension
+class GdxFlexBox : ThirdPartyExtension() {
+  override val id = "gdxFlexBox"
+  override val defaultVersion = "425149b588"
+  override val url = "https://github.com/lyze237/gdx-FlexBox"
+  override val repository = Repository.JitPack
+  override val group = "com.github.lyze327"
+  override val name = "gdx-FlexBox"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.lyze237:gdx-FlexBox")
+    addDependency(project, GWT.ID, "com.github.lyze237:gdx-FlexBox:sources")
+    addGwtInherit(project, "dev.lyze.flexbox")
   }
 }
 
@@ -1193,7 +1213,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.0.5"
+  override val defaultVersion = "1.1.1"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1216,7 +1236,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.0.4.1"
+  override val defaultVersion = "1.1.1.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1259,7 +1279,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.1.2.0"
+  override val defaultVersion = "0.1.5.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1279,7 +1299,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.1.6.0"
+  override val defaultVersion = "0.1.7.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1299,7 +1319,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.0.4.0"
+  override val defaultVersion = "1.1.1.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
