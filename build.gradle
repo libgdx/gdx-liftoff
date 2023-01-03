@@ -31,6 +31,15 @@ jar {
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
+    copy {
+      from("etc") {
+        include '*.bat'
+        filter { String line -> line.replaceAll('VERSION', "$project.version") }
+      }
+      rename("VERSION", "$project.version")
+      into "build/libs"
+    }
+
   }
 }
 
