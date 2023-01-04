@@ -887,8 +887,8 @@ class LibgdxScreenManager : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
     addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
-    addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt")
-    addExternalDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
+    addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt")
+    addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
     addGwtInherit(project, "libgdx_screenmanager")
     addGwtInherit(project, "libgdx_screenmanager_gwt")
     Guacamole().initiate(project)
