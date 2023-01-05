@@ -1144,6 +1144,27 @@ class GdxMiniAudio : ThirdPartyExtension() {
 }
 
 /**
+ * Aurelien Ribon's Universal Tween Engine.
+ * @author Aurelien Ribon
+ * @author Tom Cashman
+ */
+@Extension
+class UniversalTween : ThirdPartyExtension() {
+  override val id = "universalTween"
+  override val defaultVersion = "6.3.3"
+  override val url = "https://github.com/mini2Dx/universal-tween-engine"
+  override val group = "org.mini2Dx"
+  override val name = "univeral-tween-engine"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "org.mini2Dx:universal-tween-engine")
+
+    addDependency(project, GWT.ID, "org.mini2Dx:universal-tween-engine:sources")
+    addGwtInherit(project, "aurelienribon.tweenengine")
+  }
+}
+
+/**
  * Common code for math and showing numbers.
  * Optimal in projects that don't depend on libGDX, like server modules, because it duplicates some libGDX math code.
  * @author Tommy Ettinger
