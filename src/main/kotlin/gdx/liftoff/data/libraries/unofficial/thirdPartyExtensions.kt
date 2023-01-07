@@ -364,7 +364,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "0.7.3"
+  override val defaultVersion = "0.7.4"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -503,6 +503,26 @@ class TenPatch : ThirdPartyExtension() {
 
     addDependency(project, GWT.ID, "com.github.raeleus.TenPatch:tenpatch:sources")
     addGwtInherit(project, "com.ray3k.tenpatch.tenpatch")
+  }
+}
+
+/**
+ * Collected Scene2D widgets and utilities.
+ * @author Raymond Buckley
+ */
+@Extension
+class Stripe : ThirdPartyExtension() {
+  override val id = "stripe"
+  override val defaultVersion = "1.4.1"
+  override val url = "https://github.com/raeleus/stripe"
+  override val group = "com.github.raeleus.stripe"
+  override val name = "Stripe"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.raeleus.stripe:stripe")
+
+    addDependency(project, GWT.ID, "com.github.raeleus.stripe:stripe:sources")
+    addGwtInherit(project, "com.ray3k.stripe")
   }
 }
 
@@ -1257,7 +1277,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.1.1.0"
+  override val defaultVersion = "1.1.1.1"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
