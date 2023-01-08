@@ -7,7 +7,7 @@
     <!--
     <imageButton style="close-blue" image="icon-minus" toTitleTable="true" fill="false"
                  align="topRight" padTop="-6"/>
-    <imageButton style="close-window" onChange="app:exit" toTitleTable="true" fill="false" expandX="false"
+    <imageButton style="close-window" onChange="exit" toTitleTable="true" fill="false" expandX="false"
                  align="topRight" padTop="-6" padLeft="3"/>
     -->
 </table>

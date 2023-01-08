@@ -6,6 +6,7 @@ import com.github.czyzby.kiwi.util.common.Exceptions
 import com.github.czyzby.kiwi.util.common.Strings
 import com.github.czyzby.lml.annotation.LmlAction
 import com.github.czyzby.lml.parser.action.ActionContainer
+import kotlin.system.exitProcess
 
 /**
  * Contains actions available for all dialogs and views.
@@ -101,5 +102,11 @@ class GlobalActionContainer : ActionContainer {
   @LmlAction("close")
   fun noOp() {
     // Empty dialog closing utility.
+  }
+
+  @LmlAction("exit")
+  fun exit() {
+    Gdx.app.exit()
+    exitProcess(0)
   }
 }

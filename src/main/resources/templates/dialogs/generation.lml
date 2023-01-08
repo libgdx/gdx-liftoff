@@ -6,5 +6,5 @@
     </scrollPane>
     <:column column="0" toButtonTable="true" padRight="10" padLeft="10" padBottom="10"/>
     <textButton id="close" onResult="close" disabled="true" growX="true" row="true" padTop="10">@closeDialog</textButton>
-    <textButton id="exit" onResult="app:exit" disabled="true" growX="true">@exit</textButton>
+    <textButton id="exit" onResult="exit" disabled="true" growX="true">@exit</textButton>
 </dialog>
