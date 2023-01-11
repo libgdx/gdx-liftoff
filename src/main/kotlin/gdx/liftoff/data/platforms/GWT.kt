@@ -198,11 +198,11 @@ gwt {
 dependencies {
 ${joinDependencies(dependencies)}
 //// You can use the lines below instead of the "com.badlogicgames.gdx:gdx-backend-gwt" dependencies.
-//// If you do, follow the steps at https://github.com/tommyettinger/gdx-backends#gwt-290-support
-//// and you can use GWT 2.9.0, which gives you access to Java 11 language features.
-//// These releases use libGDX 1.10.0, and are not compatible with other versions.
-//  implementation "com.github.tommyettinger:gdx-backend-gwt:1.100.1"
-//  implementation "com.github.tommyettinger:gdx-backend-gwt:1.100.1:sources"
+//// If you do, follow the steps at https://github.com/tommyettinger/gdx-backends#gwt-2902100-support
+//// and you can use GWT 2.10.0, which gives you access to Java 11 language features.
+//// These releases use libGDX 1.11.0, and are not compatible with other versions.
+//	implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0"
+//	implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources"
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
@@ -305,14 +305,14 @@ task distZip(type: Zip, dependsOn: dist){
   from(outputPath)
   archiveBaseName.set("${'$'}{appName}-dist")
   //// The result will be in html/build/ with a name containing "-dist".
-  destinationDir(file("build"))
+  destinationDirectory.set(file("build"))
 }
 
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 tasks.checkGwt.dependsOn(addSource)
 
-// You can change the version below to JavaVersion.VERSION_11 if you use the 2.9.0 backend.
+// You can change the version below to JavaVersion.VERSION_11 if you use the 2.9.0 or 2.10.0 backends.
 sourceCompatibility = JavaVersion.VERSION_1_8
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 

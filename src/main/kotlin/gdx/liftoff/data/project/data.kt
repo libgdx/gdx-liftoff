@@ -32,6 +32,9 @@ data class AdvancedProjectData(
   val generateEditorConfig: Boolean = true,
   val indentSize: Int = 4,
 ) {
+  /**
+   * Can be set manually to 2.9.0 or 2.10.0 if using an alternative backend; see generated html/build.gradle .
+   */
   val gwtVersion: String
     get() = if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
       if (gdxVersion[4] < '5') "2.6.1" else "2.8.0"
