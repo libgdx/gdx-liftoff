@@ -1192,7 +1192,7 @@ class UniversalTween : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.1.6"
+  override val defaultVersion = "0.1.7"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1201,7 +1201,7 @@ class Digital : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:digital")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:digital:sources")
-    addGwtInherit(project, "digital")
+    addGwtInherit(project, "com.github.tommyettinger.digital")
   }
 }
 
@@ -1212,7 +1212,7 @@ class Digital : ThirdPartyExtension() {
 @Extension
 class Funderby : ThirdPartyExtension() {
   override val id = "funderby"
-  override val defaultVersion = "0.0.1"
+  override val defaultVersion = "0.0.2"
   override val url = "https://github.com/tommyettinger/funderby"
   override val group = "com.github.tommyettinger"
   override val name = "funderby"
@@ -1221,7 +1221,7 @@ class Funderby : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:funderby")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:funderby:sources")
-    addGwtInherit(project, "funderby")
+    addGwtInherit(project, "com.github.tommyettinger.funderby")
   }
 }
 
@@ -1232,7 +1232,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
-  override val defaultVersion = "0.1.7"
+  override val defaultVersion = "0.1.8"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1241,7 +1241,7 @@ class Juniper : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:juniper")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:juniper:sources")
-    addGwtInherit(project, "juniper")
+    addGwtInherit(project, "com.github.tommyettinger.juniper")
 
     Digital().initiate(project)
   }
@@ -1254,7 +1254,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.1.1"
+  override val defaultVersion = "1.1.2"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1263,7 +1263,7 @@ class Jdkgdxds : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds:sources")
-    addGwtInherit(project, "jdkgdxds")
+    addGwtInherit(project, "com.github.tommyettinger.jdkgdxds")
 
     Funderby().initiate(project)
     Digital().initiate(project)
@@ -1277,7 +1277,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.1.1.1"
+  override val defaultVersion = "1.1.2.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1286,7 +1286,7 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:jdkgdxds_interop")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:jdkgdxds_interop:sources")
-    addGwtInherit(project, "jdkgdxds_interop")
+    addGwtInherit(project, "com.github.tommyettinger.jdkgdxds_interop")
 
     Jdkgdxds().initiate(project)
     Juniper().initiate(project)
