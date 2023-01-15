@@ -14,7 +14,7 @@ import gdx.liftoff.views.Extension
  * @author Tommy Ettinger
  */
 abstract class SquidLibExtension : ThirdPartyExtension() {
-  override val defaultVersion = "3.0.4"
+  override val defaultVersion = "3.0.6"
   override val group = "com.squidpony"
   override val name: String
     get() = id.camelCaseToKebabCase()
@@ -34,7 +34,7 @@ class SquidLibUtil : SquidLibExtension() {
     addDependency(project, Core.ID, "$group:$name")
 
     addDependency(project, GWT.ID, "$group:$name:sources")
-    addGwtInherit(project, "squidlib-util")
+    addGwtInherit(project, "squidpony.squidlib-util")
 
     RegExodus().initiate(project)
   }
@@ -53,7 +53,7 @@ class SquidLib : SquidLibExtension() {
     addDependency(project, Core.ID, "$group:$name")
 
     addDependency(project, GWT.ID, "$group:$name:sources")
-    addGwtInherit(project, "squidlib")
+    addGwtInherit(project, "squidpony.squidlib")
 
     SquidLibUtil().initiate(project)
     Anim8().initiate(project)
@@ -73,7 +73,7 @@ class SquidLibExtra : SquidLibExtension() {
     addDependency(project, Core.ID, "$group:$name")
 
     addDependency(project, GWT.ID, "$group:$name:sources")
-    addGwtInherit(project, "squidlib-extra")
+    addGwtInherit(project, "squidpony.squidlib-extra")
 
     SquidLibUtil().initiate(project)
   }

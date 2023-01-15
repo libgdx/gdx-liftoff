@@ -410,7 +410,7 @@ class ShapeDrawer : ThirdPartyExtension() {
 @Extension
 class SimpleGraphs : ThirdPartyExtension() {
   override val id = "simpleGraphs"
-  override val defaultVersion = "3.0.0"
+  override val defaultVersion = "5.1.1"
   override val url = "https://github.com/earlygrey/simple-graphs"
   override val repository = Repository.JitPack
   override val group = "space.earlygrey"
@@ -473,7 +473,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
   override val id = "anim8"
-  override val defaultVersion = "0.3.11"
+  override val defaultVersion = "0.3.12"
   override val url = "https://github.com/tommyettinger/anim8-gdx"
   override val group = "com.github.tommyettinger"
   override val name = "anim8-gdx"
@@ -482,7 +482,7 @@ class Anim8 : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:anim8-gdx")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:anim8-gdx:sources")
-    addGwtInherit(project, "anim8")
+    addGwtInherit(project, "com.github.tommyettinger.anim8")
   }
 }
 
@@ -727,7 +727,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension
 class RegExodus : ThirdPartyExtension() {
   override val id = "regExodus"
-  override val defaultVersion = "0.1.13"
+  override val defaultVersion = "0.1.14"
   override val url = "https://github.com/tommyettinger/RegExodus"
   override val group = "com.github.tommyettinger"
   override val name = "regexodus"
@@ -736,7 +736,7 @@ class RegExodus : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:regexodus")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:sources")
-    addGwtInherit(project, "regexodus")
+    addGwtInherit(project, "regexodus.regexodus")
   }
 }
 
