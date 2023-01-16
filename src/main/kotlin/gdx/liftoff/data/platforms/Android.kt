@@ -55,8 +55,7 @@ class Android : Platform {
         projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
         content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="${project.basic.rootPackage}">
+    xmlns:tools="http://schemas.android.com/tools">
   <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
   <application
       android:allowBackup="true"
@@ -113,11 +112,14 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
    */
   fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
-  override fun getContent(): String = """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+  override fun getContent(): String {
+    // The core library desugaring feature depends heavily on the current Android Gradle Plugin version.
+    val agpVersion = project.advanced.androidPluginVersion.split('.').map {it.toInt()}
+    return """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
-  compileSdkVersion ${project.advanced.androidSdkVersion}
+  compileSdk ${project.advanced.androidSdkVersion}
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -143,6 +145,8 @@ android {
     exclude 'META-INF/DEPENDENCIES.txt'
     exclude 'META-INF/DEPENDENCIES'
     exclude 'META-INF/dependencies.txt'
+    // These are only used by GWT, and not Android.
+    exclude '**/*.gwt.xml'
   }
   defaultConfig {
     applicationId '${project.basic.rootPackage}'
@@ -152,6 +156,7 @@ android {
     versionName "1.0"
     multiDexEnabled true
   }
+  namespace "${project.basic.rootPackage}"
   compileOptions {
     sourceCompatibility "${project.advanced.javaVersion}"
     targetCompatibility "${project.advanced.javaVersion}"
@@ -175,7 +180,11 @@ repositories {
 configurations { natives }
 
 dependencies {
-  ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'" else ""}
+  ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")
+    "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:" +
+      (if(agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) "1.1.5"
+      else if(agpVersion[0] == 7 && agpVersion[1] == 3) "1.2.2"
+      else "2.0.0") + "'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
 }
@@ -234,4 +243,5 @@ task run(type: Exec) {
 
 eclipse.project.name = appName + "-android"
 """
+  }
 }
