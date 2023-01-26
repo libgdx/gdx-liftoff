@@ -364,7 +364,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "0.7.4"
+  override val defaultVersion = "0.7.5"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -373,7 +373,7 @@ class TextraTypist : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.tommyettinger:textratypist")
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:textratypist:sources")
-    addGwtInherit(project, "textratypist")
+    addGwtInherit(project, "com.github.tommyettinger.textratypist")
     RegExodus().initiate(project)
   }
 }
@@ -387,7 +387,7 @@ class TextraTypist : ThirdPartyExtension() {
 @Extension
 class ShapeDrawer : ThirdPartyExtension() {
   override val id = "shapeDrawer"
-  override val defaultVersion = "2.4.0"
+  override val defaultVersion = "2.6.0"
   override val url = "https://github.com/earlygrey/shapedrawer"
   override val repository = Repository.JitPack
   override val group = "space.earlygrey"
@@ -533,7 +533,7 @@ class Stripe : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
   override val id = "gdxGltf"
-  override val defaultVersion = "aa6951ab84"
+  override val defaultVersion = "3312170492"
   override val repository = Repository.JitPack
   override val url = "https://github.com/mgsx-dev/gdx-gltf"
   override val group = "com.github.mgsx-dev"
@@ -588,8 +588,8 @@ class HackLights : ThirdPartyExtension() {
 @Extension
 class SpineRuntime : ThirdPartyExtension() {
   override val id = "spineRuntime"
-  override val defaultVersion = "4.0.18.1"
-  override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/4.0/spine-libgdx"
+  override val defaultVersion = "4.1.0"
+  override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/4.1/spine-libgdx"
   override val group = "com.esotericsoftware.spine"
   override val name = "spine-libgdx"
 
@@ -680,7 +680,7 @@ class ControllerMapping : ThirdPartyExtension() {
 @Extension
 class GdxVfxCore : ThirdPartyExtension() {
   override val id = "gdxVfxCore"
-  override val defaultVersion = "0.5.0"
+  override val defaultVersion = "0.5.1"
   override val url = "https://github.com/crashinvaders/gdx-vfx"
   override val group = "com.crashinvaders.vfx"
   override val name = "gdx-vfx-core"
@@ -704,7 +704,7 @@ class GdxVfxCore : ThirdPartyExtension() {
 @Extension
 class GdxVfxStandardEffects : ThirdPartyExtension() {
   override val id = "gdxVfxEffects"
-  override val defaultVersion = "0.5.0"
+  override val defaultVersion = "0.5.1"
   override val url = "https://github.com/crashinvaders/gdx-vfx"
   override val group = "com.crashinvaders.vfx"
   override val name = "gdx-vfx-effects"
@@ -816,7 +816,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
   override val id = "kryo"
-  override val defaultVersion = "5.3.0"
+  override val defaultVersion = "5.4.0"
   override val url = "https://github.com/EsotericSoftware/kryo"
   override val group = "com.esotericsoftware"
   override val name = "kryo"
@@ -881,7 +881,7 @@ class Guacamole : ThirdPartyExtension() {
 @Extension
 class LibgdxOboe : ThirdPartyExtension() {
   override val id = "libgdxOboe"
-  override val defaultVersion = "0.3.0.2"
+  override val defaultVersion = "0.3.0.3"
   override val url = "https://github.com/tommyettinger/libgdx-oboe"
   override val group = "com.github.tommyettinger"
   override val name = "libgdxoboe"
@@ -922,7 +922,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 @Extension
 class TuningFork : ThirdPartyExtension() {
   override val id = "tuningFork"
-  override val defaultVersion = "3.1.0"
+  override val defaultVersion = "3.2.0"
   override val url = "https://github.com/Hangman/TuningFork"
   override val repository = Repository.JitPack
   override val group = "com.github.Hangman"
@@ -1294,13 +1294,13 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 }
 
 /**
- * Kryo support for digital's types.
+ * Kryo support for RegExodus types.
  * @author Tommy Ettinger
  */
 @Extension
 class KryoRegExodus : ThirdPartyExtension() {
   override val id = "kryoRegExodus"
-  override val defaultVersion = "0.1.13.0"
+  override val defaultVersion = "0.1.14.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-regexodus"
@@ -1320,7 +1320,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.1.5.0"
+  override val defaultVersion = "0.1.7.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1340,7 +1340,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.1.7.0"
+  override val defaultVersion = "0.1.8.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1360,7 +1360,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.1.1.0"
+  override val defaultVersion = "1.1.2.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
