@@ -114,7 +114,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
 
   override fun getContent(): String {
     // The core library desugaring feature depends heavily on the current Android Gradle Plugin version.
-    val agpVersion = project.advanced.androidPluginVersion.split('.').map {it.toInt()}
+    val agpVersion = project.advanced.androidPluginVersion.split('.').map { it.toInt() }
     return """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
@@ -181,10 +181,12 @@ configurations { natives }
 
 dependencies {
   ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")
-    "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:" +
-      (if(agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) "1.1.5"
-      else if(agpVersion[0] == 7 && agpVersion[1] == 3) "1.2.2"
-      else "2.0.0") + "'" else ""}
+      "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:" +
+        (
+          if (agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) "1.1.5"
+          else if (agpVersion[0] == 7 && agpVersion[1] == 3) "1.2.2"
+          else "2.0.0"
+          ) + "'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
 }
