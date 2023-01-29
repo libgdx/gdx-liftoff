@@ -165,7 +165,7 @@ android {
   ${if (latePlugin && project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"kotlinOptions.jvmTarget = \"1.8\"" else ""}
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
