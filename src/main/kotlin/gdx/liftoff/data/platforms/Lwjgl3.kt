@@ -129,8 +129,6 @@ jar {
 }
 
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-  jpackageImage.dependsOn jar
-
   runtime {
     options.set(['--strip-debug',
            '--compress', '2',
