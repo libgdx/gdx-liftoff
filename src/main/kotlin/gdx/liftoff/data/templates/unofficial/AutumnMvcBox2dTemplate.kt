@@ -1807,58 +1807,61 @@ public class GamePadControl extends AbstractButtonControl {
 
     }
 
-    protected float getX(final PovDirection direction) {
-        final float x;
-        if (invertXY) { // Checking Y axis (north=east, south=west):
-            x = getAbsoluteY(direction);
-        } else { // Checking X axis:
-            x = getAbsoluteX(direction);
-        }
-        if (invertX) {
-            return -x;
-        }
-        return x;
-    }
-
-    protected float getY(final PovDirection direction) {
-        final float y;
-        if (invertXY) { // Checking X axis (north=east, south=west):
-            y = getAbsoluteX(direction);
-        } else { // Checking Y axis:
-            y = getAbsoluteY(direction);
-        }
-        if (invertY) {
-            return -y;
-        }
-        return y;
-    }
-
-    protected float getAbsoluteX(final PovDirection direction) {
-        if (direction == PovDirection.east) {
-            return 1f;
-        } else if (direction == PovDirection.northEast || direction == PovDirection.southEast) {
-            return COS;
-        } else if (direction == PovDirection.west) {
-            return -1f;
-        } else if (direction == PovDirection.northWest || direction == PovDirection.southWest) {
-            return -COS;
-        }
-        return 0f;
-    }
-
-    protected float getAbsoluteY(final PovDirection direction) {
-        if (direction == PovDirection.north) {
-            return 1f;
-        } else if (direction == PovDirection.northEast || direction == PovDirection.northWest) {
-            return SIN;
-        } else if (direction == PovDirection.south) {
-            return -1f;
-        } else if (direction == PovDirection.southWest || direction == PovDirection.southEast) {
-            return -SIN;
-        } else {
-            return 0f;
-        }
-    }
+// This might be needed if using an older gdx-controllers version. PovDirection is not present in
+// the current version of gdx-controllers, and this code is only used by povMoved(), which is also
+// commented out.
+//    protected float getX(final PovDirection direction) {
+//        final float x;
+//        if (invertXY) { // Checking Y axis (north=east, south=west):
+//            x = getAbsoluteY(direction);
+//        } else { // Checking X axis:
+//            x = getAbsoluteX(direction);
+//        }
+//        if (invertX) {
+//            return -x;
+//        }
+//        return x;
+//    }
+//
+//    protected float getY(final PovDirection direction) {
+//        final float y;
+//        if (invertXY) { // Checking X axis (north=east, south=west):
+//            y = getAbsoluteX(direction);
+//        } else { // Checking Y axis:
+//            y = getAbsoluteY(direction);
+//        }
+//        if (invertY) {
+//            return -y;
+//        }
+//        return y;
+//    }
+//
+//    protected float getAbsoluteX(final PovDirection direction) {
+//        if (direction == PovDirection.east) {
+//            return 1f;
+//        } else if (direction == PovDirection.northEast || direction == PovDirection.southEast) {
+//            return COS;
+//        } else if (direction == PovDirection.west) {
+//            return -1f;
+//        } else if (direction == PovDirection.northWest || direction == PovDirection.southWest) {
+//            return -COS;
+//        }
+//        return 0f;
+//    }
+//
+//    protected float getAbsoluteY(final PovDirection direction) {
+//        if (direction == PovDirection.north) {
+//            return 1f;
+//        } else if (direction == PovDirection.northEast || direction == PovDirection.northWest) {
+//            return SIN;
+//        } else if (direction == PovDirection.south) {
+//            return -1f;
+//        } else if (direction == PovDirection.southWest || direction == PovDirection.southEast) {
+//            return -SIN;
+//        } else {
+//            return 0f;
+//        }
+//    }
 
     private static boolean isX(final int axisIndex) {
         return axisIndex == X_LEFT || axisIndex == X_RIGHT;
