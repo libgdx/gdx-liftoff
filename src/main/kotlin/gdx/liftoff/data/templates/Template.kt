@@ -412,8 +412,7 @@ public class ServerLauncher {
   fun getTeaVMLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
 
 import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration;
-import com.github.xpenatan.gdx.backends.web.WebApplication;
-import com.github.xpenatan.gdx.backends.web.WebApplicationConfiguration;
+import com.github.xpenatan.gdx.backends.teavm.TeaApplication;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /**
@@ -426,11 +425,11 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
  */
 public class TeaVMLauncher {
     public static void main(String[] args) {
-        WebApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
+        TeaApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
         // change these to both 0 to use all available space, or both -1 for the canvas size.
         config.width = $width;
         config.height = $height;
-        new WebApplication(new ${project.basic.mainClass}(), config);
+        new TeaApplication(new ${project.basic.mainClass}(), config);
     }
 }
 """
@@ -439,7 +438,7 @@ public class TeaVMLauncher {
 import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration;
 import com.github.xpenatan.gdx.backends.teavm.TeaBuilder;
 import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier;
-import com.github.xpenatan.gdx.backends.web.gen.SkipClass;
+import com.github.xpenatan.gdx.backends.teavm.gen.SkipClass;
 import java.io.File;
 import java.io.IOException;
 import org.teavm.tooling.TeaVMTool;
@@ -451,8 +450,6 @@ public class TeaVMBuilder {
         TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
         teaBuildConfiguration.assetsPath.add(new File("../${Assets.ID}"));
         teaBuildConfiguration.webappPath = new File("build/dist").getCanonicalPath();
-        // You can switch this setting during development:
-        teaBuildConfiguration.obfuscate = true;
 
         // Register any extra classpath assets here:
         // teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");

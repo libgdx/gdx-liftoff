@@ -40,7 +40,6 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
 
-    addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
     addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
   }
 
@@ -57,6 +56,12 @@ gretty {
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 project.ext.mainClassName = '${project.basic.rootPackage}.teavm.TeaVMBuilder'
 eclipse.project.name = appName + '-teavm'
+
+// This must be at least 11, and no higher than the JDK version this project is built with.
+targetCompatibility = 11
+// This should probably be equal to targetCompatibility, above. This only affects the TeaVM module.
+sourceCompatibility = 11
+
 
 dependencies {
 ${joinDependencies(dependencies)}

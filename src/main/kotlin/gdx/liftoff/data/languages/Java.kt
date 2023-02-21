@@ -9,7 +9,7 @@ import gdx.liftoff.data.project.Project
  */
 class Java : Language {
   override val id = "java-library"
-  override val version = "1.8"
+  override val version = "11"
 
   override fun initiate(project: Project) {
     project.rootGradle.plugins.add(id)
