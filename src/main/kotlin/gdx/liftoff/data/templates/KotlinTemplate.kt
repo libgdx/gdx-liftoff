@@ -165,7 +165,7 @@ fun main() {
 package ${project.basic.rootPackage}.teavm
 
 import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration
-import com.github.xpenatan.gdx.backends.web.WebApplication
+import com.github.xpenatan.gdx.backends.teavm.TeaApplication
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the TeaVM/HTML application. */
@@ -174,7 +174,7 @@ fun main() {
         width = $width
         height = $height
     }
-    WebApplication(${project.basic.mainClass}(), config)
+    TeaApplication(${project.basic.mainClass}(), config)
 }
 """
 
@@ -184,7 +184,7 @@ import java.io.File
 import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration
 import com.github.xpenatan.gdx.backends.teavm.TeaBuilder
 import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
-import com.github.xpenatan.gdx.backends.web.gen.SkipClass
+import com.github.xpenatan.gdx.backends.teavm.gen.SkipClass
 
 /** Builds the TeaVM/HTML application. */
 @SkipClass
@@ -193,8 +193,6 @@ object TeaVMBuilder {
         val teaBuildConfiguration = TeaBuildConfiguration().apply {
             assetsPath.add(File("../assets"))
             webappPath = File("build/dist").canonicalPath
-            // You can switch this setting during development:
-            obfuscate = true
             // Register any extra classpath assets here:
             // additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
         }
