@@ -7,6 +7,7 @@ import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.GdxPlatform
+import gdx.liftoff.views.AdvancedProjectDataView
 
 /**
  * Represents GWT backend.
@@ -162,8 +163,14 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
     dependencies.add("project(':${Core.ID}')")
 
     addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion:sources")
-    addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
-    addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
+    if (project.advanced.gwtVersion != "2.10.0") {
+      addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
+      addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
+    } else {
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.0")
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources")
+      addDependency("com.google.jsinterop:jsinterop-annotations:2.0.0:sources")
+    }
   }
 
   override fun getContent(): String = """
@@ -193,16 +200,10 @@ gwt {
   compiler.disableCastChecking = true
   //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
 //  compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
-}
+${if(project.advanced.gwtVersion == "2.10.0") "\n  sourceLevel = 1.11\n" else ""}}
 
 dependencies {
 ${joinDependencies(dependencies)}
-//// You can use the lines below instead of the "com.badlogicgames.gdx:gdx-backend-gwt" dependencies.
-//// If you do, follow the steps at https://github.com/tommyettinger/gdx-backends#gwt-2902100-support
-//// and you can use GWT 2.10.0, which gives you access to Java 11 language features.
-//// These releases use libGDX 1.11.0, and are not compatible with other versions.
-//	implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0"
-//	implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources"
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
@@ -312,8 +313,7 @@ tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 tasks.checkGwt.dependsOn(addSource)
 
-// You can change the version below to JavaVersion.VERSION_11 if you use the 2.9.0 or 2.10.0 backends.
-sourceCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = ${if (project.advanced.gwtVersion == "2.10.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"

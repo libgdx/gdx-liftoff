@@ -44,7 +44,7 @@ class AdvancedProjectDataView {
   private val desktopJavaVersion: String
     get() {
       val javaVersion = javaVersionField.model.text.toJavaVersion()
-      val version = wrangleVersion(desktopJavaVersionField.model.text.removeSuffix(".0"))
+      val version = desktopJavaVersionField.model.text.toJavaVersion()
       return if (version.toDouble() < javaVersion.toDouble()) javaVersion else version
     }
 
