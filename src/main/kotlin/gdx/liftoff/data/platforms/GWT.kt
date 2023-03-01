@@ -7,7 +7,6 @@ import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.GdxPlatform
-import gdx.liftoff.views.AdvancedProjectDataView
 
 /**
  * Represents GWT backend.
@@ -200,7 +199,7 @@ gwt {
   compiler.disableCastChecking = true
   //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
 //  compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
-${if(project.advanced.gwtVersion == "2.10.0") "\n  sourceLevel = 1.11\n" else ""}}
+${if (project.advanced.gwtVersion == "2.10.0") "\n  sourceLevel = 1.11\n" else ""}}
 
 dependencies {
 ${joinDependencies(dependencies)}

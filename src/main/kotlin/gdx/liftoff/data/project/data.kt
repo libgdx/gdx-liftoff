@@ -37,7 +37,7 @@ data class AdvancedProjectData(
    */
   val gwtVersion: String
     get() = if (javaVersion.removeSurrounding("1.", ".0").toDouble().compareTo(8.0) > 0) "2.10.0"
-      else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
+    else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
       if (gdxVersion[4] < '5') "2.6.1" else "2.8.0"
     } else "2.8.2"
 
