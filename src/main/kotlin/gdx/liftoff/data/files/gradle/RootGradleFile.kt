@@ -44,7 +44,7 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   sourceCompatibility = ${project.advanced.javaVersion}
   compileJava {
     options.incremental = true
-  }${if(project.hasPlatform(TeaVM.ID) && plugins.contains("kotlin")) """
+  }${if (project.hasPlatform(TeaVM.ID) && plugins.contains("kotlin")) """
   compileKotlin {
     compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
   }""" else ""}
