@@ -162,13 +162,13 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
     dependencies.add("project(':${Core.ID}')")
 
     addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion:sources")
-    if (project.advanced.gwtVersion != "2.10.0") {
+    if (project.advanced.gwtVersion == "2.10.0") {
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.1")
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.1:sources")
+      addDependency("com.google.jsinterop:jsinterop-annotations:2.0.0:sources")
+    } else {
       addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
       addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
-    } else {
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.0")
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources")
-      addDependency("com.google.jsinterop:jsinterop-annotations:2.0.0:sources")
     }
   }
 
