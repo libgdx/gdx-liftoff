@@ -18,7 +18,20 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
   override val group = "com.squidpony"
   override val name: String
     get() = id.camelCaseToKebabCase()
-  override val url = "https://github.com/SquidPony/SquidLib"
+  override val url = "https://github.com/yellowstonegames/SquidLib"
+}
+
+/**
+ * Base class of SquidSquad libraries.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+abstract class SquidSquadExtension : ThirdPartyExtension() {
+  override val defaultVersion = "4.0.0-alpha1"
+  override val group = "com.squidpony"
+  override val name: String
+    get() = id.replaceFirstChar { it.titlecaseChar() }
+  override val url = "https://github.com/yellowstonegames/SquidSquad"
 }
 
 /**
@@ -76,5 +89,178 @@ class SquidLibExtra : SquidLibExtension() {
     addGwtInherit(project, "squidpony.squidlib-extra")
 
     SquidLibUtil().initiate(project)
+  }
+}
+
+/**
+ * Core utilities used by all SquidSquad extensions.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadCore : SquidSquadExtension() {
+  override val id = "squidCore"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidcore")
+
+    Jdkgdxds().initiate(project)
+    Juniper().initiate(project)
+    RegExodus().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for various 2D spatial "stuff."
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadGrid : SquidSquadExtension() {
+  override val id = "squidGrid"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidgrid")
+
+    SquidSquadCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for pathfinding, often copied from simple-graphs.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadPath : SquidSquadExtension() {
+  override val id = "squidPath"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidpath")
+
+    SquidSquadGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for walking-scale map generation; mostly dungeons.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadPlace : SquidSquadExtension() {
+  override val id = "squidPlace"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidplace")
+
+    SquidSquadGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for smoothly changing between positions/colors/etc.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadSmooth : SquidSquadExtension() {
+  override val id = "squidSmooth"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidsmooth")
+
+    SquidSquadGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for world- and continent-scale map generation.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWorld : SquidSquadExtension() {
+  override val id = "squidWorld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidworld")
+
+    SquidSquadPlace().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for text-based display on a grid.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadGlyph : SquidSquadExtension() {
+  override val id = "squidGlyph"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidglyph")
+
+    SquidSquadGrid().initiate(project)
+    TextraTypist().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's compatibility code to maintain similar output to SquidLib.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadOld : SquidSquadExtension() {
+  override val id = "squidOld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidold")
+
+    SquidSquadCore().initiate(project)
+  }
+}
+/**
+ * SquidSquad's code for natural language text imitation, adaptation, and/or generation.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadText : SquidSquadExtension() {
+  override val id = "squidText"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidtext")
+
+    SquidSquadCore().initiate(project)
   }
 }
