@@ -79,12 +79,14 @@ class GlobalActionContainer : ActionContainer {
       }
     }
     // case-insensitive check for any Java reserved word, then keep checking for Win32 reserved file/folder names.
-    return !(!input.contains('.') || input.matches(
-      Regex(
-        // case-insensitive check for any Java reserved word, then keep checking for Win32 reserved file/folder names.
-        "(?i).*(^|\\.)(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|double|do|else|enum|extends|false|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|null|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|true|try|void|volatile|while|_|con|prn|aux|nul|(com[1-9])|(lpt[1-9]))(\\.|$).*"
+    return !(
+      !input.contains('.') || input.matches(
+        Regex(
+          // case-insensitive check for any Java reserved word, then keep checking for Win32 reserved file/folder names.
+          "(?i).*(^|\\.)(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|double|do|else|enum|extends|false|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|null|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|true|try|void|volatile|while|_|con|prn|aux|nul|(com[1-9])|(lpt[1-9]))(\\.|$).*"
+        )
       )
-    ))
+      )
   }
 
   @LmlAction("androidPluginVersion")
