@@ -264,3 +264,155 @@ class SquidSquadText : SquidSquadExtension() {
     SquidSquadCore().initiate(project)
   }
 }
+
+/**
+ * SquidSquad's JSON compatibility code for SquidCore.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStoreCore : SquidSquadExtension() {
+  override val id = "squidStoreCore"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstorecore")
+
+    SquidSquadCore().initiate(project)
+    JdkgdxdsInterop().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's JSON compatibility code for SquidGrid.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStoreGrid : SquidSquadExtension() {
+  override val id = "squidStoreGrid"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstoregrid")
+
+    SquidSquadStoreCore().initiate(project)
+    SquidSquadGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's JSON compatibility code for SquidOld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStoreOld : SquidSquadExtension() {
+  override val id = "squidStoreOld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstoreold")
+
+    SquidSquadStoreCore().initiate(project)
+    SquidSquadOld().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's JSON compatibility code for SquidText.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStoreText : SquidSquadExtension() {
+  override val id = "squidStoreText"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstoretext")
+
+    SquidSquadStoreCore().initiate(project)
+    SquidSquadText().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Kryo compatibility code for SquidCore.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezeCore : SquidSquadExtension() {
+  override val id = "squidFreezeCore"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadCore().initiate(project)
+    Kryo().initiate(project)
+    KryoRegExodus().initiate(project)
+    KryoDigital().initiate(project)
+    KryoJuniper().initiate(project)
+    KryoJdkgdxds().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Kryo compatibility code for SquidGrid.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezeGrid : SquidSquadExtension() {
+  override val id = "squidFreezeGrid"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadGrid().initiate(project)
+    SquidSquadFreezeCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Kryo compatibility code for SquidOld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezeOld : SquidSquadExtension() {
+  override val id = "squidFreezeOld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadOld().initiate(project)
+    SquidSquadFreezeCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Kryo compatibility code for SquidText.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezeText : SquidSquadExtension() {
+  override val id = "squidFreezeText"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadText().initiate(project)
+    SquidSquadFreezeCore().initiate(project)
+  }
+}
