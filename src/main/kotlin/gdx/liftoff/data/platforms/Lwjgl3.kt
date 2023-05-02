@@ -129,6 +129,7 @@ jar {
 }
 
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
+  tasks.jpackageImage.doNotTrackState("This task both reads from and writes to the build folder.")
   runtime {
     options.set(['--strip-debug',
            '--compress', '2',
