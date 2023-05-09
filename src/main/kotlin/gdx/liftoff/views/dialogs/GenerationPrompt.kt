@@ -4,12 +4,16 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Window
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.badlogic.gdx.utils.ObjectSet
 import com.github.czyzby.autumn.annotation.Inject
 import com.github.czyzby.autumn.mvc.component.i18n.LocaleService
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower
 import com.github.czyzby.autumn.mvc.stereotype.ViewDialog
+import com.github.czyzby.lml.annotation.LmlAction
 import com.github.czyzby.lml.annotation.LmlActor
+import com.github.czyzby.lml.parser.action.ActionContainer
+import com.kotcrab.vis.ui.widget.Tooltip
 import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.project.Project
@@ -23,13 +27,16 @@ import java.util.concurrent.ConcurrentLinkedQueue
  */
 @ViewDialog(id = "generation", value = "templates/dialogs/generation.lml", cacheInstance = false)
 @Suppress("unused") // Referenced via reflection.
-class GenerationPrompt : ViewDialogShower, ProjectLogger {
+class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
+  private lateinit var intellijPath: String
+
   @Inject private val locale: LocaleService = inject()
   @Inject private val mainView: MainView = inject()
 
   @LmlActor("close", "exit") private val buttons: ObjectSet<Button> = inject()
   @LmlActor("console") private val console: ScrollableTextArea = inject()
   @LmlActor("scroll") private val scrollPane: ScrollPane = inject()
+  @LmlActor("idea") private val ideaButton: Button = inject()
 
   private val loggingBuffer = ConcurrentLinkedQueue<String>()
 
@@ -53,6 +60,23 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
         logNls("generationFail")
       } finally {
         buttons.forEach { it.isDisabled = false }
+      }
+    }
+
+    threadPool.execute {
+      try {
+        val findIntellij = if (UIUtils.isWindows) arrayListOf("where.exe", "idea") else arrayListOf("which", "idea")
+
+        val process = ProcessBuilder(findIntellij).start()
+        if (process.waitFor() != 0) {
+          throw Exception("IntelliJ not found")
+        }
+
+        intellijPath = process.inputStream.bufferedReader().readLine()
+        ideaButton.isDisabled = false
+      } catch (e: Exception) {
+        Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have \"Generate shell scripts\" checked in the Toolboxes settings.").target(ideaButton).build()
+        ideaButton.isDisabled = true
       }
     }
   }
@@ -79,5 +103,10 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger {
 
     logNls("warnings")
     alerts.forEach(this::logNls)
+  }
+
+  @LmlAction("openIdea")
+  public fun openIdea() {
+    ProcessBuilder(intellijPath, ".").directory(mainView.getDestination().file()).start()
   }
 }
