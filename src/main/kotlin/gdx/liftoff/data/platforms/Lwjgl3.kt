@@ -73,7 +73,7 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
 // using jpackage only works if the JDK version is 14 or higher.
 // your JAVA_HOME environment variable may also need to be a JDK with version 14 or higher.
     if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-      classpath "org.beryx:badass-runtime-plugin:1.12.7"
+      classpath "org.beryx:badass-runtime-plugin:1.13.0"
     }
   }
 }
