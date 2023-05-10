@@ -34,9 +34,12 @@ up-to-date.
 Artemis-ODB, Lombok, or several other libraries, Liftoff does some extra work, so you don't have to. 
 - **Preferences support.** Basic data of your application is saved, so you don't have to fill it each time
 you generate a project.
-- **Optional Gradle runner.** You can optionally execute Gradle tasks after project generation.
+- **Optional Gradle runner.** You can optionally execute Gradle tasks after project generation. Gradle doesn't have to
+run for a project to be created.
 - **Supports all libGDX backends.** Do you need the LWJGL2, LWJGL3, and/or Headless backends? Liftoff
 provides simple checkboxes to add any and all official platforms, plus some special other modules.
+- **Convenience features.** If you have JetBrains Toolbox, you can open a just-generated project in IDEA with one click
+(it needs "Generate Shell Scripts" set in Toolbox). If you use Eclipse, you can still import Gradle projects normally.
 - **Up-to-date.** This project prides itself on updating quickly when major external components update, such
 as Gradle or libGDX itself.
 

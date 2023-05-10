@@ -75,7 +75,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
         intellijPath = process.inputStream.bufferedReader().readLine()
         ideaButton.isDisabled = false
       } catch (e: Exception) {
-        Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have \"Generate shell scripts\" checked in the Toolboxes settings.").target(ideaButton).build()
+        Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
         ideaButton.isDisabled = true
       }
     }
