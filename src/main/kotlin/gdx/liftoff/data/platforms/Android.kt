@@ -194,7 +194,7 @@ ${joinDependencies(nativeDependencies, "natives")}
 // Called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
-task copyAndroidNatives() {
+tasks.register('copyAndroidNatives') {
   doFirst {
     file("libs/armeabi-v7a/").mkdirs()
     file("libs/arm64-v8a/").mkdirs()
@@ -221,7 +221,7 @@ tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") 
   packageTask.dependsOn 'copyAndroidNatives'
 }
 
-task run(type: Exec) {
+tasks.register('run', Exec) {
   def path
   def localProperties = project.file("../local.properties")
   if (localProperties.exists()) {

@@ -83,7 +83,8 @@ dependencies {
   implementation "org.slf4j:slf4j-nop:2.0.5"
 }
 
-task sample(dependsOn: classes, type: JavaExec) {
+tasks.register('sample', JavaExec) {
+  dependsOn classes
   setDescription("Generates a sample libGDX project into build/dist/sample")
   mainClass.set("gdx.liftoff.Sample")
   setClasspath(sourceSets.main.runtimeClasspath)
