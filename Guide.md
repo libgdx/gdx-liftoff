@@ -45,7 +45,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
 - Run the JAR. Plug in whatever options you see fit:
     - For the Platforms tab, LWJGL3 starts enabled by default (it works on all desktop/laptop platforms), and you can
       manually check other platforms to match your needs.
-      If you target iOS, it will only build on a MacOS machine. Downloading iOS (and/or HTML) dependencies can take some
+      If you target iOS, it will only build on a macOS machine. Downloading iOS (and/or HTML) dependencies can take some
       time, so just check the platforms you want to target. You can re-run the setup, make a new project with the same
       settings (in a different folder), and copy in the existing code if you want to quickly change platforms.
         - LWJGL2 and/or LWJGL3 should usually be checked, so you can test on the same computer you develop on.
@@ -72,7 +72,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
                       with Java 17, and this may be a good idea for distribution because of some speed and stability
                       improvements in that JVM release. 17 is also an LTS release, and those tend to get more adoption.
                     - Java 18 is out now, and supported by the current Gradle, but it isn't an LTS release.
-        - iOS should probably *not* be checked if you aren't running MacOS and don't intend to later build an iOS
+        - iOS should probably *not* be checked if you aren't running macOS and don't intend to later build an iOS
           app on a Mac. It needs some large dependencies to be downloaded when you first import the project.
             - If you have a Mac that is set up for iOS development, please try to generate any project and see if it gets
               made correctly! We've had some [good feedback](https://github.com/tommyettinger/gdx-liftoff/issues/28) on iOS
@@ -213,8 +213,8 @@ other projects or older versions.
 
 - MacOS does not like the legacy desktop apps, showing all sorts of visual glitches.
   It seems to work fine with LWJGL3, in part because that platform had special attention
-  paid to it so the `gradlew lwjgl3:run` command can work at all on MacOS.
-    - Consider adding the third-party extension Guacamole to handle a special MacOS/LWJGL3 requirement (it
+  paid to it so the `gradlew lwjgl3:run` command can work at all on macOS.
+    - Consider adding the third-party extension Guacamole to handle a special macOS/LWJGL3 requirement (it
       needs `-XstartOnFirstThread` to be passed to the `java` command, but Guacamole can handle this for you
       and your users).
     - Apps for end-users have to include a bundled JRE to be distributed via the Mac App Store, and it's generally a

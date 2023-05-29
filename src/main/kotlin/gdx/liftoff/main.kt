@@ -28,7 +28,7 @@ private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
 
 /**
  * Calling this should be done in an if check; if this returns true, the old program should end because a new JVM will
- * take over, but if it returns false, the program should continue normally. It is meant to allow MacOS to start with
+ * take over, but if it returns false, the program should continue normally. It is meant to allow macOS to start with
  * its required '-XstartOnFirstThread' argument, even if the jar wasn't originally started with it.
  * Taken from https://github.com/crykn/guacamole/blob/master/gdx-desktop/src/main/java/de/damios/guacamole/gdx/StartOnFirstThreadHelper.java .
  * Thanks crykn/damios!

@@ -99,7 +99,7 @@ run {
   setIgnoreExitValue(true)
 
   if (os.contains('mac')) {
-    // Required to run LWJGL3 Java apps on MacOS
+    // Required to run LWJGL3 Java apps on macOS
     jvmArgs += "-XstartOnFirstThread"
   }
 }

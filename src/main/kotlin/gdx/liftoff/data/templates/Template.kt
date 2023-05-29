@@ -360,7 +360,7 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
-        if (StartupHelper.startNewJvmIfRequired()) return; // This handles MacOS support and helps on Windows.
+        if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
         createApplication();
     }
 
@@ -438,7 +438,7 @@ public class StartupHelper {
      *
      * <pre><code>
      * public static void main(String... args) {
-     * 	if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles MacOS support and helps on Windows.
+     * 	if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
      * 	// after this is the actual main method code
      * }
      * </code></pre>
@@ -545,7 +545,7 @@ public class StartupHelper {
      *
      * <pre>
      * public static void main(String... args) {
-     * 	if (StartupHelper.startNewJvmIfRequired()) return; // This handles MacOS support and helps on Windows.
+     * 	if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
      * 	// the actual main method code
      * }
      * </pre>
