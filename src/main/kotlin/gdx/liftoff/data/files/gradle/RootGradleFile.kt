@@ -56,6 +56,7 @@ subprojects {
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
+    // You may want to remove the following line if you have errors downloading dependencies.
     mavenLocal()
     gradlePluginPortal()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }

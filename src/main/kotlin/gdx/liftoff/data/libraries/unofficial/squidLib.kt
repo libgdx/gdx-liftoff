@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.0-alpha1"
+  override val defaultVersion = "4.0.0-alpha3"
   override val group = "com.squidpony"
   override val name: String
     get() = id.replaceFirstChar { it.titlecaseChar() }
@@ -260,6 +260,24 @@ class SquidSquadText : SquidSquadExtension() {
 
     addDependency(project, GWT.ID, "$group:$name:sources")
     addGwtInherit(project, "com.github.yellowstonegames.squidtext")
+
+    SquidSquadCore().initiate(project)
+  }
+}
+/**
+ * SquidSquad's code for input handling and key rebinding.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadPress : SquidSquadExtension() {
+  override val id = "squidPress"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidpress")
 
     SquidSquadCore().initiate(project)
   }
