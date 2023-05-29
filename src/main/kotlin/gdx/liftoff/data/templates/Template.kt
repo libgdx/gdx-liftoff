@@ -348,7 +348,6 @@ public class IOSLauncher extends IOSApplication.Delegate {
       fileName = "StartupHelper.$launcherExtension",
       content = getLwjgl3StartupContent(project)
     )
-
   }
 
   fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
