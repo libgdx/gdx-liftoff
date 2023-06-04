@@ -8,6 +8,7 @@ import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.SingleVersionRepository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
+import gdx.liftoff.data.libraries.official.AI
 import gdx.liftoff.data.libraries.official.Ashley
 import gdx.liftoff.data.libraries.official.Box2D
 import gdx.liftoff.data.libraries.official.Freetype
@@ -16,7 +17,7 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
 private const val defaultGroup = "io.github.libktx"
-private const val fallbackVersion = "1.11.0-rc5"
+private const val fallbackVersion = "1.11.0-rc6"
 
 /**
  * Modular Kotlin utilities.
@@ -79,6 +80,18 @@ class KtxActors : KtxExtension() {
 @Extension
 class KtxApp : KtxExtension() {
   override val id = "ktxApp"
+}
+
+/**
+ * Kotlin utilities for gdx-ai usage.
+ */
+@Extension
+class KtxAi : KtxExtension() {
+  override val id = "ktxAi"
+
+  override fun initiateDependencies(project: Project) {
+    AI().initiate(project)
+  }
 }
 
 /**
