@@ -2,6 +2,7 @@
 
 package gdx.liftoff.data.platforms
 
+import gdx.liftoff.config.GdxVersion
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.gradle.GradleFile
@@ -93,7 +94,7 @@ ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) 
   </libs>
   <frameworks>
     <framework>UIKit</framework>
-    <framework>OpenGLES</framework>
+${if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 12, 0)) "    <framework>OpenGLES</framework>" else ""}
     <framework>QuartzCore</framework>
     <framework>CoreGraphics</framework>
     <framework>OpenAL</framework>

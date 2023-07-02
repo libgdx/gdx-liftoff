@@ -6,14 +6,14 @@ initially configured your project, and it is very far behind the times on its de
 The official setup may transition to a web-based tool soon, but any user of the Internet can recall times when
 formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 7.6, a bit ahead of the official setup and far ahead of 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 8.1.1 at the time of writing, but the 8.x Gradle version isn't supported by ProGuard yet, has limited
-support for Android, and in general just isn't ready for cross-platform usage yet. We use Gradle version 7.6.1 .
+code, which is built on czyzby's code, gives us working projects that use Gradle 7.6.2, a bit ahead of the official setup and far ahead of 4.0.2 for czyzby's gdx-setup.
+The current Gradle version is 8.2 at the time of writing, but the 8.x Gradle version isn't supported by ProGuard yet, has limited
+support for Android, and in general just isn't ready for cross-platform usage yet. We use Gradle version 7.6.2 .
 This allows new projects to "just work" on machines where Java 8 through 19 could be the default, and the moderate amount of configuration
 changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.11.0 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.11.0. You can choose any released version of
+Currently, gdx-liftoff projects depend on libGDX 1.12.0 by default, and allow using earlier versions or snapshots as well.
+The current version of libGDX is 1.12.0. You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
@@ -53,8 +53,8 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
             - LWJGL3 is almost the same as LWJGL2, but because it has better support for new hardware
               (such as high-DPI displays), it should probably be preferred. It also allows multiple windows and drag+drop.
                 - LWJGL3 itself supports Linux on arm32 and arm64 hardware, and libGDX since version 1.9.13 (current is
-                  1.11.0) also supports ARM Linux on desktop platforms.
-                - The new ARM Macs are now supported as of libGDX 1.11.0 when using the LWJGL3 backend.
+                  1.12.0) also supports ARM Linux on desktop platforms.
+                - The new ARM Macs are now supported as of libGDX 1.11.0 or later when using the LWJGL3 backend.
                   LWJGL2 does appear to work via macOS "Rosetta" emulation, though.
             - LWJGL2 should mostly be preferred if you need to also depend on gdx-tools, such as if you need to run the
               texture packer at runtime. Some machines have issues with an inconsistent or very high framerate with LWJGL3,
@@ -140,7 +140,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
       project. Classic will show a white screen with a pixel-style face when you run, so it can be good to verify that
       a project works, while ApplicationAdapter is probably the easiest to bring an existing game into. The super-koalio
       demo is from libGDX's tests, and may act as a good way to test input and basic graphics in a new project.
-    - In Advanced, you can set the libGDX version (it defaults to 1.11.0, but can be set lower or higher) and
+    - In Advanced, you can set the libGDX version (it defaults to 1.12.0, but can be set lower or higher) and
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and
