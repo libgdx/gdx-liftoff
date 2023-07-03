@@ -22,7 +22,7 @@ class Android : Platform {
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
     project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
-
+    project.properties["android.useAndroidX"] = "true"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
     addCopiedFile(project, "ic_launcher-web.png")
@@ -185,7 +185,7 @@ dependencies {
         (
           if (agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) "1.1.5"
           else if (agpVersion[0] == 7 && agpVersion[1] == 3) "1.2.2"
-          else "2.0.0"
+          else "2.0.3"
           ) + "'" else ""}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
