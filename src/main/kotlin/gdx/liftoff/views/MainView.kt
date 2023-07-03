@@ -117,7 +117,7 @@ class MainView : ActionContainer {
     val pathPointer = memAllocPointer(1)
 
     try {
-      val status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
+      val status = NativeFileDialog.NFD_PickFolder(pathPointer, initialPath)
 
       if (status == NativeFileDialog.NFD_CANCEL) {
         callback.canceled()
@@ -130,7 +130,7 @@ class MainView : ActionContainer {
       }
 
       val folder = pathPointer.getStringUTF8(0)
-      NativeFileDialog.nNFD_Free(pathPointer.get(0))
+      NativeFileDialog.nNFD_FreePath(pathPointer.get(0))
 
       val array = GdxArray<FileHandle>()
       array.add(Gdx.files.absolute(folder))
