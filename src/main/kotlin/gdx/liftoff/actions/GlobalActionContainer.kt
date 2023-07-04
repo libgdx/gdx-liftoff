@@ -93,7 +93,7 @@ class GlobalActionContainer : ActionContainer {
   fun getDefaultAndroidPluginVersion(): String = "7.4.2"
 
   @LmlAction("roboVMVersion")
-  fun getDefaultRoboVMVersion(): String = "2.3.16"
+  fun getDefaultRoboVMVersion(): String = "2.3.19"
 
   @LmlAction("gwtPluginVersion")
   fun getDefaultGwtPluginVersion(): String = "1.1.19"
