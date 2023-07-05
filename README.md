@@ -6,7 +6,7 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
 [![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/tommyettinger/gdx-liftoff/releases)
 
-<h1 align="center">
+<h1 style="text-align: center;">
     📥
     <strong><a href="https://github.com/tommyettinger/gdx-liftoff/releases">DOWNLOAD</a></strong>
     📥
@@ -18,6 +18,8 @@ To generate a project, [download](https://github.com/tommyettinger/gdx-liftoff/r
 ```shell
 java -jar gdx-liftoff-VERSION.jar
 ```
+
+If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
 ## Features
 
