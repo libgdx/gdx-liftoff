@@ -27,7 +27,6 @@ class iOS : Platform {
 
   override fun createGradleFile(project: Project): GradleFile = iOSGradleFile(project)
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"com.mobidevelop.robovm:robovm-gradle-plugin:\$robovmVersion\"")
     project.properties["robovmVersion"] = project.advanced.robovmVersion
 
     // Including RoboVM config files:
@@ -194,7 +193,15 @@ class iOSGradleFile(val project: Project) : GradleFile(iOS.ID) {
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios")
   }
 
-  override fun getContent() = """apply plugin: 'robovm'
+  override fun getContent() = """buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "com.mobidevelop.robovm:robovm-gradle-plugin:${'$'}robovmVersion"
+  }
+}
+apply plugin: 'robovm'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
