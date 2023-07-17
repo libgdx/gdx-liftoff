@@ -473,7 +473,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
   override val id = "anim8"
-  override val defaultVersion = "0.3.15"
+  override val defaultVersion = "0.4.0"
   override val url = "https://github.com/tommyettinger/anim8-gdx"
   override val group = "com.github.tommyettinger"
   override val name = "anim8-gdx"
@@ -751,7 +751,7 @@ class RegExodus : ThirdPartyExtension() {
 class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1.5.1"
+  override val defaultVersion = "1.5.2"
   override val url = "https://github.com/kotcrab/vis-ui"
   override val group = "com.kotcrab.vis"
   override val name = "vis-ui"
@@ -1254,7 +1254,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.3.2"
+  override val defaultVersion = "1.4.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1277,7 +1277,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.3.2.0"
+  override val defaultVersion = "1.4.0.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1360,7 +1360,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.3.2.0"
+  override val defaultVersion = "1.4.0.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"

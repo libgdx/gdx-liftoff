@@ -59,18 +59,18 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-kiwi:$lmlVersion"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-lml:$lmlVersion"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-lml-vis:$lmlVersion"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn:$lmlVersion"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-fcs:$lmlVersion"
-  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-mvc:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-kiwi:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-lml:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-lml-vis:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-fcs:$lmlVersion"
+//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-mvc:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
 //  implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
 
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
@@ -82,7 +82,10 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
 
-  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
+  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
+
+
+//  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
 //  implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1" // old, has vulnerable dependencies
   implementation 'com.github.tommyettinger:mvnrepository-client:ad8deb8f2f'
