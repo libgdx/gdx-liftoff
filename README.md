@@ -26,8 +26,8 @@ If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Tro
 In addition to most features of the official `gdx-setup`, the `gdx-liffoff` tool offers:
  
 - **Project templates.** You can choose one of many project skeletons highlighting various libGDX features.
-- **Input validation.** Your project data is validated as you type it in.
-- **Other JVM languages support.** You can choose additional languages for your project, like Kotlin or Scala,
+- **Instant input validation.** Your project data is validated as you type it in.
+- **Other JVM languages support.** You can choose additional languages for your project, like Kotlin or Scala.
 Their standard libraries, Gradle plugins, and appropriate source folders will be included.
 - **Customization.** You have more control over the versions of software used by your application.
 - **More third-party extensions.** Their versions are fetched from Maven Central or JitPack, so your project is always 
@@ -42,7 +42,7 @@ run for a project to be created.
 provides simple checkboxes to add any and all official platforms, plus some special other modules.
 - **Convenience features.** If you have JetBrains Toolbox, you can open a just-generated project in IDEA with one click
 (it needs "Generate Shell Scripts" set in Toolbox). If you use Eclipse, you can still import Gradle projects normally.
-- **Up-to-date.** This project prides itself on updating quickly when major external components update, such
+- **Up-to-date.** This project prides itself on updating quickly after releases of major external components such
 as Gradle or libGDX itself.
 
 What's more, there are no major *structural differences* between any generated projects, regardless of the platforms
