@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-version = "1.12.0.0"
+version = "1.12.0.1-SNAPSHOT"
 mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -71,6 +71,7 @@ dependencies {
   implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
 //  implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
+  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
 
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
@@ -81,9 +82,6 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
-
-  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
-
 
 //  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
