@@ -88,10 +88,11 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
           Gradle 7.6, having an Android project present shouldn't interfere with other platforms or IDE integration, as
           long as your IDE supports Gradle 7.6 (current Android Studio and IDEA both support it).
-            - **You must set your project's JDK to a version 11 or higher** to use Android, due to a new requirement of the
-              Android Gradle Plugin used by Android Studio and IDEA. JDK 11 is the most versatile option right now, because
+            - **You must set your project's JDK to a version 17 or higher** to use Android, due to a new requirement of the
+              Android Gradle Plugin used by Android Studio and IDEA. JDK 17 is the most versatile option right now, because
               it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to
-              open older projects, so having JDK 11 installed is a good idea.
+              open older projects, so having JDK 17 installed is a good idea. Java 20 should work here, but will be completely
+              broken if you try to use it with gdx-setup projects at this point in time.
             - Having an Android module in a larger project changes some of IDEA's features, including disabling hot-swap.
               Some libGDX developers take the approach of having a separate Android-only project, keeping desktop platforms
               completely disconnected from Android. This also lets the assets be different, so it has other advantages.
