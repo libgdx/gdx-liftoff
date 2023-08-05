@@ -47,6 +47,11 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   }${if (project.hasPlatform(TeaVM.ID) && plugins.contains("kotlin")) """
   compileKotlin {
     compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+  }""" else ""}${
+    if(plugins.contains("kotlin")) """
+
+  kotlin {
+    jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
   }""" else ""}
 }
 
@@ -64,8 +69,7 @@ subprojects {
     maven { url 'https://jitpack.io' }${
   if (project.hasPlatform(TeaVM.ID)) {
     "\n    maven { url 'https://teavm.org/maven/repository/' }"
-  } else ""
-  }
+  } else ""}
   }
 }
 

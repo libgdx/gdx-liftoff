@@ -162,14 +162,17 @@ android {
     targetCompatibility "${project.advanced.javaVersion}"
     ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaringEnabled true" else ""}
   }
-  ${if (latePlugin && project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"kotlinOptions.jvmTarget = \"1.8\"" else ""}
   buildTypes {
     release {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-  }
+  }${
+      if(latePlugin) """
 
+  kotlin {
+    jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
+  }""" else ""}
 }
 
 repositories {
