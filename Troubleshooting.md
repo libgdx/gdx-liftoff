@@ -36,3 +36,24 @@ apply plugin: 'robovm'
 (Starting with the line that sets encoding, everything else is the same.) You will also need to remove any mention of
 `robovm` plugin from the top of the root `build.gradle` file; this means a line that starts with `classpath` and a line
 `apply plugin: 'robovm'`.
+
+### A project that contains an Android module fails to run, saying `Android Gradle plugin requires Java 17 to run.`
+
+Well, install Java 17 or higher and try again. You may need to set your JDK in your IDE. In IntelliJ IDEA, it's under
+`File -> Project Structure`; in that window, you can even download a JDK automatically in the SDKs tab by clicking `+`
+and then `Download JDK`. Android Studio doesn't provide as many ways to configure the JDK because it should include one
+that works with the latest Android tools already.
+
+### A Kotlin project that contains an Android module gives the message `jvm target compatibility should be set to the same Java version.`
+
+The simplest solution here is to set your JDK to a Java 17 one and to change `sourceCompatibility` and 
+`targetCompatibility` to 17 each. A better solution is to use toolchains. In your root build.gradle, you can try adding
+
+```gradle
+kotlin {
+  jvmToolchain(17)
+}
+```
+
+(Probably adding it at the bottom of the file makes the most sense.) You still need to change `sourceCompatibility` and
+`targetCompatibility` to the same version as your toolchain; these affect Java, while the toolchain should help Kotlin.

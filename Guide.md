@@ -1,16 +1,15 @@
 # `gdx-liftoff` Guide
 
 If you've used libGDX for even a short time, you've probably used the official `gdx-setup.jar` made by the libGDX team. It's seen
-major improvements lately, but it still lags behind in some areas -- it places assets in different locations depending on how you
-initially configured your project, and it is very far behind the times on its default LWJGL version and on third-party extensions.
-The official setup may transition to a web-based tool soon, but any user of the Internet can recall times when
-formerly-reliable services went offline or had outages. This project provides another alternative setup tool based on
+major improvements lately, but it still lags behind in some areas -- it uses an outdated Gradle version most of the time,
+it has relatively few third-party extensions available, and some of the Gradle configuration could be better, especially for HTML
+projects and projects that want to use jpackage to distribute executables.
+This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 7.6.2, a bit ahead of the official setup and far ahead of 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 8.2 at the time of writing, but the 8.x Gradle version isn't supported by ProGuard yet, has limited
-support for Android, and in general just isn't ready for cross-platform usage yet. We use Gradle version 7.6.2 .
-This allows new projects to "just work" on machines where Java 8 through 19 could be the default, and the moderate amount of configuration
-changes needed for Gradle 7.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 7.x
+code, which is built on czyzby's code, gives us working projects that use Gradle 8.2.1, far ahead of the official setup and farther ahead of 4.0.2 for czyzby's gdx-setup.
+The current Gradle version is 8.2.1 at the time of writing.
+This allows new projects to "just work" on machines where Java 8 through 20 could be the default, and the moderate amount of configuration
+changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
 Currently, gdx-liftoff projects depend on libGDX 1.12.0 by default, and allow using earlier versions or snapshots as well.
 The current version of libGDX is 1.12.0. You can choose any released version of

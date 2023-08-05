@@ -19,6 +19,9 @@ To generate a project, [download](https://github.com/tommyettinger/gdx-liftoff/r
 java -jar gdx-liftoff-VERSION.jar
 ```
 
+**You should use Java 17+ !** Android tools now require your installed JDK to be version 17 or higher.
+You can still target other releases, as low as 8 typically, while building with any of the JDK versions 17 and up.
+
 If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
 ## Features
