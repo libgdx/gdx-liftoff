@@ -154,43 +154,50 @@ class Project(
 
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "uiskin.atlas"),
+          projectName = Assets.ID,
+          path = path("ui", "uiskin.atlas"),
           original = path("generator", "assets", "ui", "uiskin.atlas")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "uiskin.json"),
+          projectName = Assets.ID,
+          path = path("ui", "uiskin.json"),
           original = path("generator", "assets", "ui", "uiskin.json")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "uiskin.png"),
+          projectName = Assets.ID,
+          path = path("ui", "uiskin.png"),
           original = path("generator", "assets", "ui", "uiskin.png")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "font.fnt"),
+          projectName = Assets.ID,
+          path = path("ui", "font.fnt"),
           original = path("generator", "assets", "ui", "font.fnt")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "font-list.fnt"),
+          projectName = Assets.ID,
+          path = path("ui", "font-list.fnt"),
           original = path("generator", "assets", "ui", "font-list.fnt")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "font-subtitle.fnt"),
+          projectName = Assets.ID,
+          path = path("ui", "font-subtitle.fnt"),
           original = path("generator", "assets", "ui", "font-subtitle.fnt")
         )
       )
       files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "font-window.fnt"),
+          projectName = Assets.ID,
+          path = path("ui", "font-window.fnt"),
           original = path("generator", "assets", "ui", "font-window.fnt")
         )
       )
@@ -202,7 +209,9 @@ class Project(
           val path = path("com", "badlogic", "gdx", "utils", "lsans-15.$it")
           files.add(
             CopiedFile(
-              projectName = Assets.ID, path = path, original = path,
+              projectName = Assets.ID,
+              path = path,
+              original = path,
               fileType = Files.FileType.Classpath
             )
           )
@@ -215,7 +224,8 @@ class Project(
     if (advanced.generateReadme) {
       files.add(
         SourceFile(
-          projectName = "", fileName = "README.md",
+          projectName = "",
+          fileName = "README.md",
           content = """# ${basic.name}
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
@@ -248,7 +258,8 @@ For example, `core:clean` removes `build` folder only from the `core` project.
     if (!advanced.generateEditorConfig) return
     files.add(
       SourceFile(
-        projectName = "", fileName = ".editorconfig",
+        projectName = "",
+        fileName = ".editorconfig",
         content = """# https://editorconfig.org
 root = true
 
@@ -288,7 +299,9 @@ trim_trailing_whitespace = false
 
   fun includeGradleWrapper(logger: ProjectLogger, executeGradleTasks: Boolean = true) {
     arrayOf(
-      "gradlew", "gradlew.bat", path("gradle", "wrapper", "gradle-wrapper.jar"),
+      "gradlew",
+      "gradlew.bat",
+      path("gradle", "wrapper", "gradle-wrapper.jar"),
       path("gradle", "wrapper", "gradle-wrapper.properties")
     ).forEach {
       CopiedFile(path = it, original = path("generator", it)).save(basic.destination)

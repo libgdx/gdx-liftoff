@@ -23,15 +23,18 @@ class ExtensionsView : AbstractAnnotationProcessor<Extension>() {
   val official = mutableListOf<Library>()
   val thirdParty = mutableListOf<Library>()
 
-  @LmlActor("\$officialExtensions") private val officialButtons: ObjectMap<String, Button> = inject()
-  @LmlActor("\$thirdPartyExtensions") private val thirdPartyButtons: ObjectMap<String, Button> = inject()
+  @LmlActor("\$officialExtensions")
+  private val officialButtons: ObjectMap<String, Button> = inject()
+
+  @LmlActor("\$thirdPartyExtensions")
+  private val thirdPartyButtons: ObjectMap<String, Button> = inject()
 
   private fun getSelectedOfficialExtensions(): List<Library> = official.filter { officialButtons.get(it.id).isChecked }
   private fun getSelectedThirdPartyExtensions(): List<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }
 
   fun exportData(): ExtensionsData = ExtensionsData(
     officialExtensions = getSelectedOfficialExtensions(),
-    thirdPartyExtensions = getSelectedThirdPartyExtensions(),
+    thirdPartyExtensions = getSelectedThirdPartyExtensions()
   )
 
   // Automatic scanning of extensions:

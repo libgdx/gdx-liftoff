@@ -34,7 +34,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
     // Adding music theme:
     project.files.add(
       CopiedFile(
-        projectName = Assets.ID, path = path("music", "theme.ogg"),
+        projectName = Assets.ID,
+        path = path("music", "theme.ogg"),
         original = path("generator", "templates", "autumn", "theme.ogg")
       )
     )
@@ -43,7 +44,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
       val fileName = "bundle$it.properties"
       project.files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("i18n", fileName),
+          projectName = Assets.ID,
+          path = path("i18n", fileName),
           original = path("generator", "templates", "autumn", "box2d", fileName)
         )
       )
@@ -52,7 +54,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
     arrayOf("game.lml", "loading.lml", "menu.lml").forEach {
       project.files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "templates", it),
+          projectName = Assets.ID,
+          path = path("ui", "templates", it),
           original = path("generator", "templates", "autumn", "box2d", it)
         )
       )
@@ -60,14 +63,16 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
     arrayOf("controls.lml", "edit.lml", "inactive.lml", "settings.lml", "switch.lml").forEach {
       project.files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("ui", "templates", "dialogs", it),
+          projectName = Assets.ID,
+          path = path("ui", "templates", "dialogs", it),
           original = path("generator", "templates", "autumn", "box2d", "dialogs", it)
         )
       )
     }
     project.files.add(
       CopiedFile(
-        projectName = Assets.ID, path = path("ui", "templates", "macros", "global.lml"),
+        projectName = Assets.ID,
+        path = path("ui", "templates", "macros", "global.lml"),
         original = path("generator", "templates", "autumn", "box2d", "macros", "global.lml")
       )
     )
@@ -76,7 +81,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
   override fun addSources(project: Project) {
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.configuration",
         fileName = "Configuration.java",
         content = """package ${project.basic.rootPackage}.configuration;
 
@@ -161,7 +167,8 @@ public class Configuration {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.configuration.preferences",
         fileName = "ControlsData.java",
         content = """package ${project.basic.rootPackage}.configuration.preferences;
 
@@ -198,7 +205,8 @@ public class ControlsData {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.configuration.preferences",
         fileName = "ControlsPreference.java",
         content = """package ${project.basic.rootPackage}.configuration.preferences;
 
@@ -253,7 +261,8 @@ public class ControlsPreference extends AbstractPreference<Array<ControlsData>> 
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller",
         fileName = "GameController.java",
         content = """package ${project.basic.rootPackage}.controller;
 
@@ -308,7 +317,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller",
         fileName = "LoadingController.java",
         content = """package ${project.basic.rootPackage}.controller;
 
@@ -346,7 +356,8 @@ public class LoadingController implements ViewRenderer {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller",
         fileName = "MenuController.java",
         content = """package ${project.basic.rootPackage}.controller;
 
@@ -392,7 +403,8 @@ public class MenuController implements ActionContainer {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.action",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.action",
         fileName = "Global.java",
         content = """package ${project.basic.rootPackage}.controller.action;
 
@@ -430,7 +442,8 @@ public class Global implements ActionContainer {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "ControlsController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -499,7 +512,8 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "ControlsEditController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -818,7 +832,8 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "ControlsSwitchController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -917,7 +932,8 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "NotEnoughPlayersErrorController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -932,7 +948,8 @@ public class NotEnoughPlayersErrorController {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "SettingsController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -991,7 +1008,8 @@ public class SettingsController implements ActionContainer {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.entity",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.entity",
         fileName = "Player.java",
         content = """package ${project.basic.rootPackage}.entity;
 
@@ -1058,7 +1076,8 @@ public class Player implements ControlListener {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service",
         fileName = "Box2DService.java",
         content = """package ${project.basic.rootPackage}.service;
 
@@ -1211,7 +1230,8 @@ public class Box2DService {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service",
         fileName = "ControlsService.java",
         content = """package ${project.basic.rootPackage}.service;
 
@@ -1279,7 +1299,8 @@ public class ControlsService {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service",
         fileName = "FullscreenService.java",
         content = """package ${project.basic.rootPackage}.service;
 
@@ -1338,7 +1359,8 @@ public class FullscreenService {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls",
         fileName = "AbstractButtonControl.java",
         content = """package ${project.basic.rootPackage}.service.controls;
 
@@ -1485,7 +1507,8 @@ public abstract class AbstractButtonControl extends AbstractControl {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls",
         fileName = "AbstractControl.java",
         content = """package ${project.basic.rootPackage}.service.controls;
 
@@ -1543,7 +1566,8 @@ public abstract class AbstractControl implements Control {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls",
         fileName = "Control.java",
         content = """package ${project.basic.rootPackage}.service.controls;
 
@@ -1588,7 +1612,8 @@ public interface Control {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls",
         fileName = "ControlListener.java",
         content = """package ${project.basic.rootPackage}.service.controls;
 
@@ -1602,7 +1627,8 @@ public interface ControlListener {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls",
         fileName = "ControlType.java",
         content = """package ${project.basic.rootPackage}.service.controls;
 
@@ -1661,7 +1687,8 @@ public enum ControlType {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls.impl",
         fileName = "GamePadControl.java",
         content = """package ${project.basic.rootPackage}.service.controls.impl;
 
@@ -1939,7 +1966,8 @@ public class GamePadControl extends AbstractButtonControl {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls.impl",
         fileName = "InactiveControl.java",
         content = """package ${project.basic.rootPackage}.service.controls.impl;
 
@@ -1999,7 +2027,8 @@ public class InactiveControl implements Control {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls.impl",
         fileName = "KeyboardControl.java",
         content = """package ${project.basic.rootPackage}.service.controls.impl;
 
@@ -2058,7 +2087,8 @@ public class KeyboardControl extends AbstractButtonControl {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service.controls.impl",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service.controls.impl",
         fileName = "TouchControl.java",
         content = """package ${project.basic.rootPackage}.service.controls.impl;
 

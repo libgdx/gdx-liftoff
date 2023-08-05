@@ -107,7 +107,8 @@ open class CopiedFile private constructor(override val path: String, val origina
       } else {
         ""
       } + path,
-      original, fileType
+      original,
+      fileType
     )
 
   override fun save(destination: FileHandle) {

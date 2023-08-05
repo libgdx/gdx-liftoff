@@ -41,7 +41,9 @@ public class ${project.basic.mainClass} extends Game {
       )
     )
     addSourceFile(
-      project = project, platform = Core.ID, packageName = project.basic.rootPackage,
+      project = project,
+      platform = Core.ID,
+      packageName = project.basic.rootPackage,
       fileName = "FirstScreen.java",
       content = """package ${project.basic.rootPackage};
 

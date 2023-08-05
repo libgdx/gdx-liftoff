@@ -23,7 +23,8 @@ class LanguagesView : AbstractAnnotationProcessor<JvmLanguage>() {
   // Filled by the annotation processor.
   private val jvmLanguages = mutableMapOf<String, Language>()
 
-  @LmlActor("\$jvmLanguages") val languageButtons: ObjectSet<Button> = inject()
+  @LmlActor("\$jvmLanguages")
+  val languageButtons: ObjectSet<Button> = inject()
   private val languageVersions = ObjectMap<String, VisTextField>()
 
   val languages: Array<String>

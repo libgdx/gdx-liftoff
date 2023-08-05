@@ -56,15 +56,30 @@ class MainView : ActionContainer {
     manager.alignment = Align.bottomRight
     manager
   }
+
   @Inject private val interfaceService: InterfaceService = inject()
+
   @LmlInject private val basicData: BasicProjectDataView = inject()
+
   @LmlInject private val advancedData: AdvancedProjectDataView = inject()
-  @LmlInject @Inject private val platformsView: PlatformsView = inject()
-  @LmlInject @Inject private val languagesView: LanguagesView = inject()
-  @LmlInject @Inject private val extensionsData: ExtensionsView = inject()
-  @LmlInject @Inject private val templatesView: TemplatesView = inject()
-  @LmlActor("form") private val form: VisFormTable = inject()
-  @LmlActor("notLatestVersion") private val notUpToDateToast: ToastTable = inject()
+
+  @LmlInject @Inject
+  private val platformsView: PlatformsView = inject()
+
+  @LmlInject @Inject
+  private val languagesView: LanguagesView = inject()
+
+  @LmlInject @Inject
+  private val extensionsData: ExtensionsView = inject()
+
+  @LmlInject @Inject
+  private val templatesView: TemplatesView = inject()
+
+  @LmlActor("form")
+  private val form: VisFormTable = inject()
+
+  @LmlActor("notLatestVersion")
+  private val notUpToDateToast: ToastTable = inject()
 
   @LmlAction("chooseDirectory")
   fun chooseDirectory() {
@@ -224,34 +239,55 @@ class MainView : ActionContainer {
     basicData.revalidateSdkUtilityButtons()
   }
 
-  @LmlAction("platforms") fun getPlatforms(): Iterable<*> =
+  @LmlAction("platforms")
+  fun getPlatforms(): Iterable<*> =
     platformsView.platforms.entries.sortedBy { it.value.order }.map { it.key }
-  @LmlAction("show") fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
-  @LmlAction("hide") fun getTabHidingAction(): Action = Actions.fadeOut(0.1f)
-  @LmlAction("gdxVersion") fun getGdxVersion(): String = Version.VERSION
-  @LmlAction("gwtVersions") fun getGwtVersions(): Array<String> = arrayOf("2.8.2")
-  @LmlAction("jvmLanguages") fun getLanguages(): Array<String> = languagesView.languages
-  @LmlAction("jvmLanguagesVersions") fun getLanguagesVersions(): Array<String> = languagesView.versions
-  @LmlAction("templates") fun getOfficialTemplates(): Array<String> =
+
+  @LmlAction("show")
+  fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
+
+  @LmlAction("hide")
+  fun getTabHidingAction(): Action = Actions.fadeOut(0.1f)
+
+  @LmlAction("gdxVersion")
+  fun getGdxVersion(): String = Version.VERSION
+
+  @LmlAction("gwtVersions")
+  fun getGwtVersions(): Array<String> = arrayOf("2.8.2")
+
+  @LmlAction("jvmLanguages")
+  fun getLanguages(): Array<String> = languagesView.languages
+
+  @LmlAction("jvmLanguagesVersions")
+  fun getLanguagesVersions(): Array<String> = languagesView.versions
+
+  @LmlAction("templates")
+  fun getOfficialTemplates(): Array<String> =
     templatesView.officialTemplates.map { it.id }.sortedWith { left, right -> if (left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
       .toTypedArray()
 
-  @LmlAction("thirdPartyTemplates") fun getThirdPartyTemplates(): Array<String> =
+  @LmlAction("thirdPartyTemplates")
+  fun getThirdPartyTemplates(): Array<String> =
     templatesView.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()
 
-  @LmlAction("officialExtensions") fun getOfficialExtensions(): Array<String> =
+  @LmlAction("officialExtensions")
+  fun getOfficialExtensions(): Array<String> =
     extensionsData.official.map { it.id }.sorted().toTypedArray()
 
-  @LmlAction("officialExtensionsUrls") fun getOfficialExtensionsUrls(): Array<String> =
+  @LmlAction("officialExtensionsUrls")
+  fun getOfficialExtensionsUrls(): Array<String> =
     extensionsData.official.sortedBy { it.id }.map { it.url }.toTypedArray()
 
-  @LmlAction("thirdPartyExtensions") fun getThirdPartyExtensions(): Array<String> =
+  @LmlAction("thirdPartyExtensions")
+  fun getThirdPartyExtensions(): Array<String> =
     extensionsData.thirdParty.map { it.id }.sorted().toTypedArray()
 
-  @LmlAction("thirdPartyExtensionsUrls") fun getThirdPartyExtensionsUrls(): Array<String> =
+  @LmlAction("thirdPartyExtensionsUrls")
+  fun getThirdPartyExtensionsUrls(): Array<String> =
     extensionsData.thirdParty.sortedBy { it.id }.map { it.url }.toTypedArray()
 
-  @LmlAction("initTabs") fun initiateTabbedPane(tabbedPane: TabbedPane.TabbedPaneTable) {
+  @LmlAction("initTabs")
+  fun initiateTabbedPane(tabbedPane: TabbedPane.TabbedPaneTable) {
     tabbedPane.tabbedPane.tabsPane.horizontalFlowGroup.spacing = 2f
   }
 
@@ -267,7 +303,8 @@ class MainView : ActionContainer {
     template = templatesView.getSelectedTemplate()
   )
 
-  @LmlAction("minimize") fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
+  @LmlAction("minimize")
+  fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
 
   @LmlAction("initTitleTable")
   fun addWindowDragListener(actor: Actor) {
@@ -313,8 +350,9 @@ class MainView : ActionContainer {
 
       override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Actor?) {
         super.exit(event, x, y, pointer, toActor)
-        if (actor.stage?.scrollFocus == actor)
+        if (actor.stage?.scrollFocus == actor) {
           actor.stage?.scrollFocus = null
+        }
       }
     })
   }

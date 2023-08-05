@@ -14,9 +14,9 @@ import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
-import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -171,7 +171,7 @@ class Dialogs : ThirdPartyExtension() {
 
     addDesktopDependency(project, "de.tomgrill.gdxdialogs:gdx-dialogs-desktop")
 
-    addDependency(project, iOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
+    addDependency(project, IOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
 
     addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core:sources")
     addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html")
@@ -620,7 +620,7 @@ class ControllerUtils : ThirdPartyExtension() {
     addDependency(project, Lwjgl2.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
     addDependency(project, Lwjgl3.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-jamepad")
     addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
-    addDependency(project, iOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
+    addDependency(project, IOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
 
     addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt")
     addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:sources")
@@ -750,6 +750,7 @@ class RegExodus : ThirdPartyExtension() {
 @Extension
 class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
+
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
   override val defaultVersion = "1.5.2"
   override val url = "https://github.com/kotcrab/vis-ui"
@@ -869,8 +870,9 @@ class Guacamole : ThirdPartyExtension() {
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
     addGwtInherit(project, "guacamole_gdx_gwt")
-    if (project.platforms.containsKey(GWT.ID))
+    if (project.platforms.containsKey(GWT.ID)) {
       Formic().initiate(project)
+    }
   }
 }
 
@@ -1015,7 +1017,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
     addDependency(project, Lwjgl2.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
     addDependency(project, Lwjgl3.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
     addDependency(project, Headless.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-desktop")
-    addDependency(project, iOS.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-ios")
+    addDependency(project, IOS.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-ios")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-armeabi-v7a")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
@@ -1028,6 +1030,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
     addGwtInherit(project, "com.crashinvaders.basisu.BasisuGdxGwt")
   }
 }
+
 /**
  * Adds support for Lombok annotations in the core module; meant to reduce boilerplate code.
  * @author The Project Lombok Authors
@@ -1147,7 +1150,7 @@ class GdxMiniAudio : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "games.rednblack.miniaudio:miniaudio")
     addDependency(project, Lwjgl3.ID, "games.rednblack.miniaudio:miniaudio:natives-desktop")
-    addDependency(project, iOS.ID, "games.rednblack.miniaudio:miniaudio:natives-ios")
+    addDependency(project, IOS.ID, "games.rednblack.miniaudio:miniaudio:natives-ios")
     addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-armeabi-v7a")
     addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-arm64-v8a")
     addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-x86")

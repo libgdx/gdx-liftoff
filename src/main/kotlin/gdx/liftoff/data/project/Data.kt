@@ -11,7 +11,7 @@ data class BasicProjectData(
   val rootPackage: String,
   val mainClass: String,
   val destination: FileHandle,
-  val androidSdk: FileHandle,
+  val androidSdk: FileHandle
 )
 
 /** Stores data represented by the advanced settings view. */
@@ -30,16 +30,19 @@ data class AdvancedProjectData(
   val generateReadme: Boolean,
   val gradleTasks: MutableList<String>,
   val generateEditorConfig: Boolean = true,
-  val indentSize: Int = 4,
+  val indentSize: Int = 4
 ) {
   /**
    * Can be set manually to 2.9.0 or 2.10.0 if using an alternative backend; see generated html/build.gradle .
    */
   val gwtVersion: String
-    get() = if (javaVersion.removeSurrounding("1.", ".0").toDouble().compareTo(8.0) > 0) "2.10.0"
-    else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
+    get() = if (javaVersion.removeSurrounding("1.", ".0").toDouble().compareTo(8.0) > 0) {
+      "2.10.0"
+    } else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
       if (gdxVersion[4] < '5') "2.6.1" else "2.8.0"
-    } else "2.8.2"
+    } else {
+      "2.8.2"
+    }
 
   /**
    * Version of xpenatan's TeaVM backend.
@@ -57,7 +60,7 @@ data class AdvancedProjectData(
 /** Stores alternative JVM languages data. */
 data class LanguagesData(
   val list: MutableList<Language>,
-  val versions: Map<String, String>,
+  val versions: Map<String, String>
 ) {
   fun getVersion(id: String): String = versions[id] ?: ""
 
@@ -70,7 +73,7 @@ data class LanguagesData(
 /** Stores selected project dependencies. */
 data class ExtensionsData(
   val officialExtensions: List<Library>,
-  val thirdPartyExtensions: List<Library>,
+  val thirdPartyExtensions: List<Library>
 ) {
   private val ids = (officialExtensions + thirdPartyExtensions).map(Library::id).toSet()
   fun isSelected(id: String): Boolean = id in ids

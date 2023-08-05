@@ -34,7 +34,9 @@ class LmlTemplate : Template {
     // Adding example LML template file:
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = "main.lml",
         content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
 <window title="Example" style="border" defaultPad="4" oneColumn="true" alpha="0" onShow="fadeIn">

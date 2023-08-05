@@ -15,16 +15,29 @@ import gdx.liftoff.data.project.BasicProjectData
  * Filled by the LML parser, this class contains references to basic project data widgets.
  */
 class BasicProjectDataView {
-  @LmlActor("name") private val nameField: VisTextField = inject()
-  @LmlActor("package") private val rootPackageField: VisTextField = inject()
-  @LmlActor("class") private val mainClassField: VisTextField = inject()
-  @LmlActor("destination") private val destinationField: VisTextField = inject()
-  @LmlActor("androidSdk") private val androidSdkPathField: VisValidatableTextField = inject()
+  @LmlActor("name")
+  private val nameField: VisTextField = inject()
 
-  @LmlActor("mkdirs") private val mkdirsButton: Button = inject()
-  @LmlActor("clearFolder") private val clearButton: Button = inject()
+  @LmlActor("package")
+  private val rootPackageField: VisTextField = inject()
 
-  @LmlActor("useOldestSdk", "useLatestSdk") private val sdkButtons: ObjectSet<Button> = inject()
+  @LmlActor("class")
+  private val mainClassField: VisTextField = inject()
+
+  @LmlActor("destination")
+  private val destinationField: VisTextField = inject()
+
+  @LmlActor("androidSdk")
+  private val androidSdkPathField: VisValidatableTextField = inject()
+
+  @LmlActor("mkdirs")
+  private val mkdirsButton: Button = inject()
+
+  @LmlActor("clearFolder")
+  private val clearButton: Button = inject()
+
+  @LmlActor("useOldestSdk", "useLatestSdk")
+  private val sdkButtons: ObjectSet<Button> = inject()
 
   val destination: FileHandle
     get() = Gdx.files.absolute(destinationField.text)
@@ -102,6 +115,6 @@ class BasicProjectDataView {
     rootPackage = rootPackageField.text,
     mainClass = mainClassField.text,
     destination = destination,
-    androidSdk = androidSdk,
+    androidSdk = androidSdk
   )
 }

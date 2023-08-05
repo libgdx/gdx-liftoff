@@ -14,7 +14,7 @@ import gdx.liftoff.views.GdxPlatform
  * Represents iOS backend.
  */
 @GdxPlatform
-class iOS : Platform {
+class IOS : Platform {
   companion object {
     const val ID = "ios"
     const val ORDER = Android.ORDER + 1
@@ -25,7 +25,7 @@ class iOS : Platform {
   override val order = ORDER
   override val isStandard = false
 
-  override fun createGradleFile(project: Project): GradleFile = iOSGradleFile(project)
+  override fun createGradleFile(project: Project): GradleFile = IOSGradleFile(project)
   override fun initiate(project: Project) {
     project.properties["robovmVersion"] = project.advanced.robovmVersion
 
@@ -184,7 +184,7 @@ ${project.reflectedClasses.joinToString(separator = "\n") { "    <pattern>$it</p
   }
 }
 
-class iOSGradleFile(val project: Project) : GradleFile(iOS.ID) {
+class IOSGradleFile(val project: Project) : GradleFile(IOS.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.mobidevelop.robovm:robovm-rt:\$robovmVersion")

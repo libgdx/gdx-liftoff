@@ -69,9 +69,9 @@ class GlobalActionContainer : ActionContainer {
     }
     var previousDot = false
     for (id in 1 until input.length) {
-      if (input[id] == '.')
+      if (input[id] == '.') {
         previousDot = true
-      else {
+      } else {
         if ((previousDot && !Character.isJavaIdentifierStart(input[id])) || !Character.isJavaIdentifierPart(input[id])) {
           return false
         }

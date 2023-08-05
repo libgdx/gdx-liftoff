@@ -8,12 +8,12 @@ import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.IOS
+import gdx.liftoff.data.platforms.IOSMOE
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.TeaVM
-import gdx.liftoff.data.platforms.iOS
-import gdx.liftoff.data.platforms.iOSMOE
 import gdx.liftoff.data.project.Project
 
 /**
@@ -21,11 +21,13 @@ import gdx.liftoff.data.project.Project
  */
 interface Template {
   val id: String
+
   // Sizes are kept as strings, so you can set the sizes to static values, for example: MainClass.WIDTH.
   val width: String
     get() = "640"
   val height: String
     get() = "480"
+
   /** Used as project description in README file. Optional. */
   val description: String
     get() = ""
@@ -33,6 +35,7 @@ interface Template {
   /** File extension of the ApplicationListener implementation. */
   val applicationListenerExtension: String
     get() = "java"
+
   /** File extension of the application launchers on each platform. */
   val launcherExtension: String
     get() = "java"
@@ -136,8 +139,8 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {""" + (
-    if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 9, 12))
-"""
+    if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 9, 12)) {
+      """
         ////USE THIS CODE FOR A FIXED SIZE APPLICATION
         @Override
         public GwtApplicationConfiguration getConfig () {
@@ -175,7 +178,8 @@ public class GwtLauncher extends GwtApplication {""" + (
         //    }
         ////END OF CODE FOR RESIZABLE APPLICATION
 """
-    else """
+    } else {
+      """
         @Override
         public GwtApplicationConfiguration getConfig () {
             // Resizable application, uses available space in browser with no padding:
@@ -188,6 +192,7 @@ public class GwtLauncher extends GwtApplication {""" + (
             //return new GwtApplicationConfiguration($width, $height);
         }
 """
+    }
     ) +
 """
         @Override
@@ -267,7 +272,7 @@ public class HeadlessLauncher {
   fun addIOSLauncher(project: Project) {
     addSourceFile(
       project = project,
-      platform = iOS.ID,
+      platform = IOS.ID,
       packageName = "${project.basic.rootPackage}.ios",
       fileName = "IOSLauncher.$launcherExtension",
       content = getIOSLauncherContent(project)
@@ -301,7 +306,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
   fun addIOSMOELauncher(project: Project) {
     addSourceFile(
       project = project,
-      platform = iOSMOE.ID,
+      platform = IOSMOE.ID,
       packageName = "${project.basic.rootPackage}.ios",
       fileName = "IOSLauncher.$launcherExtension",
       content = getIOSMOELauncherContent(project)

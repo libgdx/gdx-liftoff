@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 const val REQUEST_TIMEOUT = 30000
 val json = JsonReader()
+
 /**
  * Interface for the supported Maven repositories. Fetches the latest versions of the registered libraries.
  */
@@ -50,7 +51,7 @@ interface Repository {
         listOf(
           "q" to """g:"group"+AND+a:"$name"""",
           "rows" to "1",
-          "wt" to "json",
+          "wt" to "json"
         )
       ).timeout(REQUEST_TIMEOUT)
       val results = json.parse(response.responseString().third.get())["response"]["docs"]

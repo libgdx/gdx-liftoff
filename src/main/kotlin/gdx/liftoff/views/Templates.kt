@@ -20,7 +20,9 @@ class TemplatesView : AbstractAnnotationProcessor<ProjectTemplate>() {
 
   val officialTemplates = mutableListOf<Template>()
   val thirdPartyTemplates = mutableListOf<Template>()
-  @LmlActor("templatesTable") private val templatesTable: ButtonTable = inject()
+
+  @LmlActor("templatesTable")
+  private val templatesTable: ButtonTable = inject()
 
   fun getSelectedTemplate(): Template = templates.first { it.id == templatesTable.buttonGroup.checked.name }
 

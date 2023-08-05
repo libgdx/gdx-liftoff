@@ -246,6 +246,7 @@ class SquidSquadOld : SquidSquadExtension() {
     SquidSquadCore().initiate(project)
   }
 }
+
 /**
  * SquidSquad's code for natural language text imitation, adaptation, and/or generation.
  * @author Eben Howard
@@ -264,6 +265,7 @@ class SquidSquadText : SquidSquadExtension() {
     SquidSquadCore().initiate(project)
   }
 }
+
 /**
  * SquidSquad's code for input handling and key rebinding.
  * @author Eben Howard

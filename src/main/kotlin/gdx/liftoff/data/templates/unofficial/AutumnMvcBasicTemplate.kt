@@ -42,7 +42,9 @@ open class AutumnMvcBasicTemplate : Template {
   protected open fun addViews(project: Project) {
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = "first.lml",
         content = """<!-- Note: you can get content assist thanks to DTD schema files. See the official LML page. -->
 <window title="Example" style="border" defaultPad="4" oneColumn="true">

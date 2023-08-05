@@ -17,6 +17,7 @@ import gdx.liftoff.views.MainView
 @Suppress("unused") // Referenced via reflection.
 class DeletionPrompt : ActionContainer {
   @Inject private val interfaceService: InterfaceService = inject()
+
   @Inject private val mainView: MainView = inject()
 
   @LmlAction("delete")

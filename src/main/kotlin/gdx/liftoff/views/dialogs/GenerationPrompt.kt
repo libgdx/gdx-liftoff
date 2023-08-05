@@ -31,12 +31,20 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
   private lateinit var intellijPath: String
 
   @Inject private val locale: LocaleService = inject()
+
   @Inject private val mainView: MainView = inject()
 
-  @LmlActor("close", "exit") private val buttons: ObjectSet<Button> = inject()
-  @LmlActor("console") private val console: ScrollableTextArea = inject()
-  @LmlActor("scroll") private val scrollPane: ScrollPane = inject()
-  @LmlActor("idea") private val ideaButton: Button = inject()
+  @LmlActor("close", "exit")
+  private val buttons: ObjectSet<Button> = inject()
+
+  @LmlActor("console")
+  private val console: ScrollableTextArea = inject()
+
+  @LmlActor("scroll")
+  private val scrollPane: ScrollPane = inject()
+
+  @LmlActor("idea")
+  private val ideaButton: Button = inject()
 
   private val loggingBuffer = ConcurrentLinkedQueue<String>()
 

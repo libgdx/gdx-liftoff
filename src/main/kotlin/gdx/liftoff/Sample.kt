@@ -18,10 +18,10 @@ import gdx.liftoff.data.libraries.unofficial.KtxRepository
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
+import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Platform
 import gdx.liftoff.data.platforms.TeaVM
-import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.AdvancedProjectData
 import gdx.liftoff.data.project.BasicProjectData
 import gdx.liftoff.data.project.ExtensionsData
@@ -48,12 +48,13 @@ enum class Preset {
     override val rootPackage: String
       get() = "gdx.liftoff"
     override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), iOS(), GWT())
+      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), GWT())
     override val languages: List<Language> = emptyList()
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template
       get() = ClassicTemplate()
   },
+
   /** Includes the official platforms supporting Kotlin, as well as TeaVM. Uses a basic Kotlin template. */
   KOTLIN {
     override val projectName: String
@@ -61,13 +62,14 @@ enum class Preset {
     override val rootPackage: String
       get() = "gdx.liftoff"
     override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), iOS(), TeaVM())
+      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language>
       get() = listOf(Kotlin())
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template
       get() = KotlinClassicTemplate()
   },
+
   /** Includes the official platforms supporting Kotlin. Uses a KTX template. */
   KTX {
     override val projectName: String
@@ -75,7 +77,7 @@ enum class Preset {
     override val rootPackage: String
       get() = "ktx.demo"
     override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), iOS())
+      get() = listOf(Core(), Lwjgl3(), Android(), IOS())
     override val languages: List<Language>
       get() = listOf(Kotlin())
     override val thirdPartyExtensions: List<Library>
@@ -90,6 +92,7 @@ enum class Preset {
       get() = KtxTemplate()
     override val addSkin: Boolean = false
   },
+
   /** Includes the official platforms supporting Kotlin, as well as TeaVM. Omits unsupported KTX modules. */
   KTX_WEB {
     override val projectName: String
@@ -97,7 +100,7 @@ enum class Preset {
     override val rootPackage: String
       get() = "ktx.demo"
     override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), iOS(), TeaVM())
+      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language>
       get() = listOf(Kotlin())
     override val thirdPartyExtensions: List<Library>
@@ -152,7 +155,7 @@ fun main(arguments: Array<String>) {
     rootPackage = preset.rootPackage,
     mainClass = "Main",
     destination = FileHandle(File("build/dist/sample")),
-    androidSdk = FileHandle(File(".")),
+    androidSdk = FileHandle(File("."))
   )
   val defaultJavaVersion = Java().version
   val defaults = GlobalActionContainer()
@@ -168,11 +171,11 @@ fun main(arguments: Array<String>) {
     desktopJavaVersion = defaultJavaVersion,
     generateSkin = preset.addSkin,
     generateReadme = true,
-    gradleTasks = mutableListOf(),
+    gradleTasks = mutableListOf()
   )
   val extensions = ExtensionsData(
     officialExtensions = officialExtensions,
-    thirdPartyExtensions = preset.thirdPartyExtensions,
+    thirdPartyExtensions = preset.thirdPartyExtensions
   )
 
   val project = Project(

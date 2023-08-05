@@ -51,13 +51,15 @@ public class ${project.basic.mainClass} {
     // Adding resources:
     project.files.add(
       CopiedFile(
-        projectName = Assets.ID, path = path("images", "libgdx.png"),
+        projectName = Assets.ID,
+        path = path("images", "libgdx.png"),
         original = path("generator", "templates", "libgdx.png")
       )
     )
     project.files.add(
       CopiedFile(
-        projectName = Assets.ID, path = path("music", "theme.ogg"),
+        projectName = Assets.ID,
+        path = path("music", "theme.ogg"),
         original = path("generator", "templates", "autumn", "theme.ogg")
       )
     )
@@ -66,7 +68,8 @@ public class ${project.basic.mainClass} {
       val fileName = "bundle$it.properties"
       project.files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path("i18n", fileName),
+          projectName = Assets.ID,
+          path = path("i18n", fileName),
           original = path("generator", "templates", "autumn", fileName)
         )
       )
@@ -76,7 +79,8 @@ public class ${project.basic.mainClass} {
   protected open fun addSources(project: Project) {
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.configuration",
         fileName = "Configuration.java",
         content = """package ${project.basic.rootPackage}.configuration;
 
@@ -163,7 +167,8 @@ public class ${project.basic.mainClass} {
     )
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.configuration.preferences",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.configuration.preferences",
         fileName = "ScalePreference.java",
         content = """package ${project.basic.rootPackage}.configuration.preferences;
 
@@ -203,7 +208,8 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller",
         fileName = "LoadingController.java",
         content = """package ${project.basic.rootPackage}.controller;
 
@@ -241,7 +247,8 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller",
         fileName = "MenuController.java",
         content = """package ${project.basic.rootPackage}.controller;
 
@@ -281,7 +288,8 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.action",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.action",
         fileName = "Global.java",
         content = """package ${project.basic.rootPackage}.controller.action;
 
@@ -305,7 +313,8 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.controller.dialog",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.controller.dialog",
         fileName = "SettingsController.java",
         content = """package ${project.basic.rootPackage}.controller.dialog;
 
@@ -343,7 +352,8 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = "${project.basic.rootPackage}.service",
+        projectName = Core.ID,
+        packageName = "${project.basic.rootPackage}.service",
         fileName = "ScaleService.java",
         content = """package ${project.basic.rootPackage}.service;
 
@@ -408,7 +418,9 @@ public class ${project.basic.mainClass} {
   override fun addViews(project: Project) {
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = "loading.lml",
         content = """<!-- Going through LML tutorials is suggested before starting with Autumn MVC. If anything is unclear
     in the .lml files, you should go through LML resources first. -->
@@ -421,7 +433,9 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = "menu.lml",
         content = """<table oneColumn="true" defaultPad="2" tableAlign="bottomRight" fillParent="true" defaultFillX="true">
     <!-- "show:settings" will automatically show the settings.lml dialog when button is clicked. -->
@@ -434,7 +448,9 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = path("dialogs", "settings.lml"),
         content = """<dialog id="dialog" title="@settings" style="dialog">
     <!-- Note that all values (like width and height) are in viewport units, not pixels.
@@ -483,7 +499,9 @@ public class ${project.basic.mainClass} {
 
     project.files.add(
       SourceFile(
-        projectName = Assets.ID, sourceFolderPath = "ui", packageName = "templates",
+        projectName = Assets.ID,
+        sourceFolderPath = "ui",
+        packageName = "templates",
         fileName = path("macros", "global.lml"),
         content = """<!-- This is a custom macro that displays a TabbedPane's tab.
     - name: becomes the title of the tab. Defaults to empty string. -->

@@ -9,10 +9,10 @@ import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.TeaVM
-import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -91,7 +91,7 @@ class Box2D : OfficialExtension() {
     addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources")
     addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
 
-    addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
+    addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
 
     // TeaVM version of the Box2D is not feature complete; however, TeaVM can compile the GWT Box2D library.
     // addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-box2d-teavm:\$gdxTeaVMVersion")
@@ -140,7 +140,7 @@ class Bullet : OfficialExtension() {
 
     addDesktopDependency(project, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-desktop")
 
-    addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
+    addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
 
     addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-bullet-teavm:\$gdxTeaVMVersion")
 
@@ -177,7 +177,7 @@ class Controllers : OfficialExtension() {
     addGwtInherit(project, "com.badlogic.gdx.controllers")
     addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
 
-    addDependency(project, iOS.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-ios:\$gdxControllersVersion")
+    addDependency(project, IOS.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-ios:\$gdxControllersVersion")
   }
 }
 
@@ -199,7 +199,7 @@ class Freetype : OfficialExtension() {
 
     addDesktopDependency(project, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-desktop")
 
-    addDependency(project, iOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
+    addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
 
     addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:\$gdxTeaVMVersion")
 

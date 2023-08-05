@@ -11,7 +11,7 @@ buildscript {
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
+    classpath "org.jlleitschuh.gradle:ktlint-gradle:11.5.0"
   }
 }
 
@@ -102,3 +102,5 @@ tasks.register('sample', JavaExec) {
   mainClass.set("gdx.liftoff.Sample")
   setClasspath(sourceSets.main.runtimeClasspath)
 }
+
+jar.dependsOn('ktlintFormat')

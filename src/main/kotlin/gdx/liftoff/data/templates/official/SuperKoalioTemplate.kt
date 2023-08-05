@@ -24,7 +24,8 @@ class SuperKoalioTemplate : Template {
     arrayOf("koalio.png", "koalio-single.png", "tileSet.png", "level1.tmx").forEach {
       project.files.add(
         CopiedFile(
-          projectName = Assets.ID, path = path(it),
+          projectName = Assets.ID,
+          path = path(it),
           original = path("generator", "templates", "super-koalio", it)
         )
       )

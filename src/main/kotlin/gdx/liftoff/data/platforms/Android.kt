@@ -36,13 +36,19 @@ class Android : Platform {
 
     project.files.add(
       SourceFile(
-        projectName = "", sourceFolderPath = "", packageName = "", fileName = "local.properties",
+        projectName = "",
+        sourceFolderPath = "",
+        packageName = "",
+        fileName = "local.properties",
         content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"
       )
     )
     project.files.add(
       SourceFile(
-        projectName = ID, sourceFolderPath = "res", packageName = "values", fileName = "strings.xml",
+        projectName = ID,
+        sourceFolderPath = "res",
+        packageName = "values",
+        fileName = "strings.xml",
         content = """<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">${project.basic.name}</string>
@@ -52,7 +58,10 @@ class Android : Platform {
     )
     project.files.add(
       SourceFile(
-        projectName = ID, sourceFolderPath = "", packageName = "", fileName = "AndroidManifest.xml",
+        projectName = ID,
+        sourceFolderPath = "",
+        packageName = "",
+        fileName = "AndroidManifest.xml",
         content = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -107,6 +116,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
   }
 
   fun insertLatePlugin() { latePlugin = true }
+
   /**
    * @param dependency will be added as "natives" dependency, quoted.
    */
@@ -168,11 +178,15 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }${
-      if(latePlugin) """
+    if (latePlugin) {
+      """
 
   kotlin {
     jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
-  }""" else ""}
+  }"""
+    } else {
+      ""
+    }}
 }
 
 repositories {
@@ -183,13 +197,20 @@ repositories {
 configurations { natives }
 
 dependencies {
-  ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")
+  ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7") {
       "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:" +
         (
-          if (agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) "1.1.5"
-          else if (agpVersion[0] == 7 && agpVersion[1] == 3) "1.2.2"
-          else "2.0.3"
-          ) + "'" else ""}
+          if (agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) {
+            "1.1.5"
+          } else if (agpVersion[0] == 7 && agpVersion[1] == 3) {
+            "1.2.2"
+          } else {
+            "2.0.3"
+          }
+          ) + "'"
+    } else {
+      ""
+    }}
 ${joinDependencies(dependencies)}
 ${joinDependencies(nativeDependencies, "natives")}
 }

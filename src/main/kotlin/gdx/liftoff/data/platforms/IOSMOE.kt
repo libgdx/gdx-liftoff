@@ -15,7 +15,7 @@ import gdx.liftoff.views.GdxPlatform
  * Represents iOS backend.
  */
 @GdxPlatform
-class iOSMOE : Platform {
+class IOSMOE : Platform {
   companion object {
     const val ID = "ios-moe"
     const val ORDER = Shared.ORDER + 1
@@ -26,7 +26,7 @@ class iOSMOE : Platform {
   override val order = ORDER
   override val isStandard = false
 
-  override fun createGradleFile(project: Project): GradleFile = iOSMOEGradleFile(project)
+  override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add("\"org.multi-os-engine:moe-gradle:1.9.0\"")
     // Best would be to just copy the "xcode" directory
@@ -133,7 +133,7 @@ class ReplacedContentFile(projectName: String = "", path: String, original: Stri
   }
 }
 
-class iOSMOEGradleFile(val project: Project) : GradleFile(iOSMOE.ID) {
+class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("io.github.berstanio:gdx-backend-moe:\$gdxVersion")

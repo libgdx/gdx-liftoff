@@ -15,7 +15,7 @@ import gdx.liftoff.views.GdxPlatform
 class GWT : Platform {
   companion object {
     const val ID = "html"
-    const val ORDER = iOS.ORDER + 1
+    const val ORDER = IOS.ORDER + 1
     const val BASIC_INHERIT = "com.badlogic.gdx.backends.gdx_backends_gwt"
     val INHERIT_COMPARATOR = Comparator<String> { a, b ->
       // Basic GWT inherit has to be first:
@@ -49,7 +49,8 @@ class GWT : Platform {
     // Adding GWT definition to core project:
     project.files.add(
       SourceFile(
-        projectName = Core.ID, packageName = project.basic.rootPackage,
+        projectName = Core.ID,
+        packageName = project.basic.rootPackage,
         fileName = "${project.basic.mainClass}.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
@@ -64,7 +65,8 @@ class GWT : Platform {
     if (project.hasPlatform(Shared.ID)) {
       project.files.add(
         SourceFile(
-          projectName = Shared.ID, packageName = project.basic.rootPackage,
+          projectName = Shared.ID,
+          packageName = project.basic.rootPackage,
           fileName = "Shared.gwt.xml",
           content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
@@ -79,7 +81,8 @@ class GWT : Platform {
     // Adding GWT definition:
     project.files.add(
       SourceFile(
-        projectName = ID, packageName = project.basic.rootPackage,
+        projectName = ID,
+        packageName = project.basic.rootPackage,
         fileName = "GdxDefinition.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
@@ -100,7 +103,8 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
     // Adding SuperDev definition:
     project.files.add(
       SourceFile(
-        projectName = ID, packageName = project.basic.rootPackage,
+        projectName = ID,
+        packageName = project.basic.rootPackage,
         fileName = "GdxDefinitionSuperdev.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
@@ -126,8 +130,9 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
           path = path("webapp", "index.html")
         )
       )
-    } else
+    } else {
       addCopiedFile(project, "webapp", "index.html")
+    }
     addSoundManagerSource(project)
     addCopiedFile(project, "webapp", "styles.css")
     addCopiedFile(project, "webapp", "WEB-INF", "web.xml")
@@ -145,7 +150,7 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
       // after 1.9.11, soundmanager is no longer used
       else -> ""
     }
-    if (soundManagerSource.isNotEmpty())
+    if (soundManagerSource.isNotEmpty()) {
       project.files.add(
         CopiedFile(
           projectName = id,
@@ -153,6 +158,7 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
           path = path("webapp", "soundmanager2-jsmin.js")
         )
       )
+    }
   }
 }
 
@@ -317,7 +323,8 @@ sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
 """ + (
-    if (project.extensions.isSelected("lombok")) """
+    if (project.extensions.isSelected("lombok")) {
+      """
 
 configurations { lom }
 dependencies {
@@ -343,6 +350,9 @@ superDev {
     jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
   }
 }
-""" else ""
+"""
+    } else {
+      ""
+    }
     )
 }

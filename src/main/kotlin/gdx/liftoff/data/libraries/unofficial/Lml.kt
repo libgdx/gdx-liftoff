@@ -10,9 +10,9 @@ import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
+import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.Shared
-import gdx.liftoff.data.platforms.iOS
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -172,7 +172,7 @@ class WebSocket : WebSocketExtension() {
 
     addDesktopDependency(project, "$group.gdx-websockets:common")
     addDependency(project, Headless.ID, "$group.gdx-websockets:common")
-    addDependency(project, iOS.ID, "$group.gdx-websockets:common")
+    addDependency(project, IOS.ID, "$group.gdx-websockets:common")
 
     addDependency(project, Android.ID, "$group.gdx-websockets:common")
     addAndroidPermission(project, "android.permission.INTERNET")

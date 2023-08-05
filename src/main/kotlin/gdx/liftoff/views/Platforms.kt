@@ -20,9 +20,14 @@ class PlatformsView : AbstractAnnotationProcessor<GdxPlatform>() {
   // Filled by the annotation processor.
   val platforms = mutableMapOf<String, Platform>()
 
-  @LmlActor("androidSdk") private val androidSdk: Disableable = inject()
-  @LmlActor("androidSdkButton") private val androidSdkButton: Disableable = inject()
-  @LmlActor("\$platforms") private val platformButtons: ObjectSet<Button> = inject()
+  @LmlActor("androidSdk")
+  private val androidSdk: Disableable = inject()
+
+  @LmlActor("androidSdkButton")
+  private val androidSdkButton: Disableable = inject()
+
+  @LmlActor("\$platforms")
+  private val platformButtons: ObjectSet<Button> = inject()
 
   fun toggleAndroidPlatform(active: Boolean) {
     androidSdk.isDisabled = !active
