@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-version = "1.12.0.1"
+version = "1.12.0.2"
 mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
