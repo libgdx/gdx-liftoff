@@ -88,7 +88,8 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
 
-//  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
+  // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
+  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
 //  implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1" // old, has vulnerable dependencies
   implementation 'com.github.tommyettinger:mvnrepository-client:ad8deb8f2f'
