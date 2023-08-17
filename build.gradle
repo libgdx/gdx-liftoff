@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-version = "1.12.0.2"
+version = "1.12.0.3-SNAPSHOT"
 mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -79,14 +79,14 @@ dependencies {
   implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
 
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
 
   // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
   implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
