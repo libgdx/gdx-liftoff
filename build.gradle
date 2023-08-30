@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-version = "1.12.0.3-SNAPSHOT"
+version = "1.12.0.3"
 mainClassName = 'gdx.liftoff.MainKt'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -36,15 +36,14 @@ jar {
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
-    copy {
-      from("etc") {
-        include '*.bat'
-        filter { String line -> line.replaceAll('VERSION', "$project.version") }
-      }
-      rename("VERSION", "$project.version")
-      into "build/libs"
-    }
-
+//    copy {
+//      from("etc") {
+//        include '*.bat'
+//        filter { String line -> line.replaceAll('VERSION', "$project.version") }
+//      }
+//      rename("VERSION", "$project.version")
+//      into "build/libs"
+//    }
   }
 }
 

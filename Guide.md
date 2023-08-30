@@ -12,7 +12,7 @@ This allows new projects to "just work" on machines where Java 8 through 20 coul
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
 Currently, gdx-liftoff projects depend on libGDX 1.12.0 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.12.0. You can choose any released version of
+The current version of libGDX is 1.12.0 . You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
