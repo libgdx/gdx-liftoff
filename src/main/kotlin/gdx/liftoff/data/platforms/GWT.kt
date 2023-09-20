@@ -53,7 +53,7 @@ class GWT : Platform {
         packageName = project.basic.rootPackage,
         fileName = "${project.basic.mainClass}.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
   <source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
 </module>"""
@@ -69,7 +69,7 @@ class GWT : Platform {
           packageName = project.basic.rootPackage,
           fileName = "Shared.gwt.xml",
           content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
   <source path="" />
 </module>"""
@@ -85,7 +85,7 @@ class GWT : Platform {
         packageName = project.basic.rootPackage,
         fileName = "GdxDefinition.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module rename-to="html">
   <source path="" />
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
@@ -107,7 +107,7 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
         packageName = project.basic.rootPackage,
         fileName = "GdxDefinitionSuperdev.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "http://www.gwtproject.org/doctype/${project.advanced.gwtVersion}/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module rename-to="html">
   <inherits name="${project.basic.rootPackage}.GdxDefinition" />
   <collapse-all-properties />
@@ -215,7 +215,8 @@ import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
 
 gretty.httpPort = 8080
-gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
+// The line below will need to be changed only if you change the build directory to something other than "build".
+gretty.resourceBase = project.projectDir.path + "/build/gwt/draftOut"
 gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 

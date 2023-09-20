@@ -1177,7 +1177,7 @@ class UniversalTween : ThirdPartyExtension() {
   override val defaultVersion = "6.3.3"
   override val url = "https://github.com/mini2Dx/universal-tween-engine"
   override val group = "org.mini2Dx"
-  override val name = "univeral-tween-engine"
+  override val name = "universal-tween-engine"
 
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "org.mini2Dx:universal-tween-engine")
@@ -1235,7 +1235,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
-  override val defaultVersion = "0.3.8"
+  override val defaultVersion = "0.3.9"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1343,7 +1343,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.3.8.1"
+  override val defaultVersion = "0.3.9.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
