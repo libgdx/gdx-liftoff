@@ -108,7 +108,7 @@ jar {
 // sets the name of the .jar file this produces to the name of the game or app.
   archiveBaseName.set(appName)
 // using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
-  destinationDirectory = file("${'$'}project.buildDir/lib")
+  destinationDirectory = file("${'$'}project.layout.buildDirectory/lib")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   dependsOn configurations.runtimeClasspath
@@ -142,7 +142,7 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
     modules.set([
         'jdk.unsupported'
     ])
-    distDir.set(file(buildDir))
+    distDir.set(file(project.layout.buildDirectory))
     jpackage {
       imageName = appName
 // you can set this to false if you want to build an installer, or keep it as true to build just an app.

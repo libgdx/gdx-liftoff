@@ -216,7 +216,7 @@ import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
 
 gretty.httpPort = 8080
 // The line below will need to be changed only if you change the build directory to something other than "build".
-gretty.resourceBase = project.projectDir.path + "/build/gwt/draftOut"
+gretty.resourceBase = "${'$'}project.layout.buildDirectory/gwt/draftOut"
 gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 
