@@ -23,6 +23,7 @@ class Android : Platform {
     project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
     project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
     project.properties["android.useAndroidX"] = "true"
+    project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
     addCopiedFile(project, "ic_launcher-web.png")
