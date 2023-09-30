@@ -179,6 +179,12 @@ class StartupHelper private constructor() {
                 }
                 return false
             }
+
+            // There is no need for -XstartOnFirstThread on Graal native image
+            if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isEmpty()) {
+                return false
+            }
+
             val pid = LibC.getpid()
 
             // check whether -XstartOnFirstThread is enabled
