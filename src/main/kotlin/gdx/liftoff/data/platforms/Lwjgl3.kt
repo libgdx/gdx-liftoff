@@ -50,7 +50,7 @@ class Lwjgl3 : Platform {
     addGradleTaskDescription(
       project,
       "jar",
-      "builds application's runnable jar, which can be found at `$id/build/libs`."
+      "builds application's runnable jar, which can be found at `$id/build/lib`."
     )
   }
 }
@@ -108,7 +108,7 @@ jar {
 // sets the name of the .jar file this produces to the name of the game or app.
   archiveBaseName.set(appName)
 // using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
-  destinationDirectory = file("${'$'}project.layout.buildDirectory/lib")
+  destinationDirectory = file("${'$'}{project.layout.buildDirectory.asFile.get().absolutePath}/lib")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   dependsOn configurations.runtimeClasspath
