@@ -21,8 +21,7 @@ class Android : Platform {
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
     // the AGP Upgrade Assistant doesn't recognize versions in properties files
-    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.1")
-    project.properties["androidPluginVersion"] = "8.1.1"
+    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.1\"")
     project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
@@ -135,12 +134,12 @@ android {
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
-      aidl.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
-      renderscript.srcDirs = [${srcFolders.joinToString(separator = ", ")}]
-      res.srcDirs = ['res']
-      assets.srcDirs = ['../assets']
-      jniLibs.srcDirs = ['libs']
+      java.srcDirs(${srcFolders.joinToString(separator = ", ")})
+      aidl.srcDirs(${srcFolders.joinToString(separator = ", ")})
+      renderscript.srcDirs(${srcFolders.joinToString(separator = ", ")})
+      res.srcDirs('res')
+      assets.srcDirs('../assets')
+      jniLibs.srcDirs('libs')
     }
   }
   packagingOptions {

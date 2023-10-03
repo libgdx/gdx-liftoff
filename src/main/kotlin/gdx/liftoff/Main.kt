@@ -44,6 +44,12 @@ fun startNewJvmIfRequired(): Boolean {
     }
     return false
   }
+
+  // There is no need for -XstartOnFirstThread on Graal native image
+  if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isEmpty()) {
+    return false
+  }
+
   val pid = LibC.getpid()
 
   // check whether -XstartOnFirstThread is enabled
@@ -81,6 +87,7 @@ fun startNewJvmIfRequired(): Boolean {
   }
   jvmArgs.add(mainClass!!)
   try {
+    // // Used if we need to print to the console, but might not always close correctly.
     val process = ProcessBuilder(jvmArgs).redirectErrorStream(true).start()
     val processOutput = BufferedReader(InputStreamReader(process.inputStream))
     var line: String?
@@ -88,6 +95,10 @@ fun startNewJvmIfRequired(): Boolean {
       println(line)
     }
     process.waitFor()
+    // // Used if we don't want to make a new JVM, but doesn't seem to always close correctly, either...
+//    val processBuilder = ProcessBuilder(jvmArgs)
+//    processBuilder.start()
+
   } catch (e: Exception) {
     System.err.println("There was a problem restarting the JVM")
     e.printStackTrace()

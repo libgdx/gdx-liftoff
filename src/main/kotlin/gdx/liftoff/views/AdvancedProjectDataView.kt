@@ -80,7 +80,7 @@ class AdvancedProjectDataView {
     gdxVersion = gdxVersionField.text,
     javaVersion = javaVersionField.model.text.toJavaVersion(),
     androidSdkVersion = androidSdkVersion,
-    androidPluginVersion = androidPluginVersionField.text,
+    androidPluginVersion = "8.1.1",
     robovmVersion = robovmVersionField.text,
     gwtPluginVersion = gwtPluginVersionField.text,
     serverJavaVersion = serverJavaVersionField.model.text.toJavaVersion(),
