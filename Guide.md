@@ -86,8 +86,8 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
               for iOS projects to work more cleanly with libGDX 1.10.0.
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
-          Gradle 7.6, having an Android project present shouldn't interfere with other platforms or IDE integration, as
-          long as your IDE supports Gradle 7.6 (current Android Studio and IDEA both support it).
+          Gradle 8.3, having an Android project present shouldn't interfere with other platforms or IDE integration, as
+          long as your IDE supports Gradle 8.3 (current Android Studio and IDEA both support it).
             - **You must set your project's JDK to a version 17 or higher** to use Android, due to a new requirement of the
               Android Gradle Plugin used by Android Studio and IDEA. JDK 17 is the most versatile option right now, because
               it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to
@@ -104,6 +104,11 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
             - If you are using an Android Studio version before 4.2 or an IDEA version before 2021.2, you can set the
               Android Gradle Plugin on the Advanced tab to a lower version, like 4.0.2, that is compatible with that older
               IDE version.
+            - The Android Gradle Plugin (AGP) version is currently set at 8.1.1 and is not configurable from within Liftoff.
+              This was required because IDEA's and Android Studio's AGP Upgrade Assistant requires the AGP version to be part
+              of the dependency String, and not in a properties file (which is what Liftoff usually uses). On the plus side,
+              this lets you use the AGP Upgrade Assistant now. It isn't always a great idea, particularly if you need to use
+              both Android Studio and IDEA (IDEA usually supports only a lower version of AGP than what Android Studio can use).
         - HTML is a more-involved target, with some perfectly-normal code on all other platforms acting completely
           different on HTML due to the tool used, Google Web Toolkit (GWT). It's almost always possible to work around
           these differences and make things like random seeds act the same on all platforms, but it takes work. Mostly,
@@ -111,10 +116,10 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
           would on desktop, and `long` not being visible to reflection. See [this small guide to GWT](https://libgdx.com/wiki/html5-backend-and-gwt-specifics)
           for more. It's very likely that you won't notice any difference unless you try to make behavior identical on GWT
           and other platforms, and even then there may be nothing apparent.
-            - GWT 2.9.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
-              official GWT backend](https://github.com/tommyettinger/gdx-backends#11000) that supports it with libGDX
-              1.10.0. Using GWT 2.9.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
-              change much of what's available from the standard library.
+            - GWT 2.10.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
+              official GWT backend](https://github.com/tommyettinger/gdx-backends#112001) that supports it with libGDX
+              1.12.0. Using GWT 2.10.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
+              change much of what's available from the standard library. The third-party 2.10.0 backend is currently used by default.
     - For dependencies, you don't need libGDX checked (the tool is ready to download libGDX and set it as a
       dependency in all cases).
         - There are lots of potential dependencies you can add, some official but most third-party (unofficial).
@@ -172,10 +177,10 @@ see [libGDX's documentation](https://libgdx.com/wiki/start/import-and-running).
 - If you had the LWJGL3 (or LWJGL2) option checked in the setup, and you chose a non-empty
   template in the Templates tab, you can run the LWJGL3 or LWJGL2 module right away.
     - You can build a runnable jar that includes all it needs to run using
-      `lwjgl3 -> Tasks -> build -> jar`; this jar will be in `lwjgl3/build/libs/` when it finishes.
-      Note: this is the command-line option `gradlew lwjgl3:jar`, not the `dist` command
-      used by the official setup jar. Substitute `lwjgl2` where `lwjgl3` is if you use the legacy
-      LWJGL2 version.
+      `lwjgl3 -> Tasks -> build -> jar`; this jar will be in `lwjgl3/build/lib/` when it finishes.
+      Note: this is the command-line option `gradlew lwjgl3:jar`, but the `dist` command
+      used by the official setup jar will still work as an alias. Substitute `lwjgl2` where `lwjgl3` is if you use
+      the legacy LWJGL2 version.
 - If you had the Android option checked in the setup and have a non-empty template,
   you can try to run the Android module on an emulator or a connected Android device.
 - If you had the GWT option checked in the setup and have a non-empty template,

@@ -98,7 +98,6 @@ fun startNewJvmIfRequired(): Boolean {
     // // Used if we don't want to make a new JVM, but doesn't seem to always close correctly, either...
 //    val processBuilder = ProcessBuilder(jvmArgs)
 //    processBuilder.start()
-
   } catch (e: Exception) {
     System.err.println("There was a problem restarting the JVM")
     e.printStackTrace()
