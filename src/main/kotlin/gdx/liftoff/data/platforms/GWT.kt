@@ -319,7 +319,8 @@ tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 tasks.checkGwt.dependsOn(addSource)
 
-sourceCompatibility = ${if (project.advanced.gwtVersion == "2.10.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
+java.sourceCompatibility = ${if (project.advanced.gwtVersion == "2.10.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
+java.targetCompatibility = ${if (project.advanced.gwtVersion == "2.10.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
 sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"

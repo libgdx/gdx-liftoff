@@ -87,7 +87,8 @@ else {
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
 eclipse.project.name = appName + '-lwjgl3'
-sourceCompatibility = ${project.advanced.desktopJavaVersion}
+java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
+java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
 ${joinDependencies(dependencies)}}

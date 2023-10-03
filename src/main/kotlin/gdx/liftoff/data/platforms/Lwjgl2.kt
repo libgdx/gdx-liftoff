@@ -56,7 +56,8 @@ class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.desktop.DesktopLauncher'
 eclipse.project.name = appName + '-desktop'
-sourceCompatibility = ${project.advanced.desktopJavaVersion}
+java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
+java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
 ${joinDependencies(dependencies)}}

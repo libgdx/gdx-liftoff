@@ -44,7 +44,8 @@ class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
 
   override fun getContent(): String = """apply plugin: 'application'
 
-sourceCompatibility = ${project.advanced.serverJavaVersion}
+java.sourceCompatibility = ${project.advanced.serverJavaVersion}
+java.targetCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.headless.HeadlessLauncher'
 eclipse.project.name = appName + '-headless'
 

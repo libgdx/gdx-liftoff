@@ -35,7 +35,8 @@ class Server : Platform {
 class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
   override fun getContent(): String = """apply plugin: 'application'
 
-sourceCompatibility = ${project.advanced.serverJavaVersion}
+java.sourceCompatibility = ${project.advanced.serverJavaVersion}
+java.targetCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
 eclipse.project.name = appName + '-server'
 
