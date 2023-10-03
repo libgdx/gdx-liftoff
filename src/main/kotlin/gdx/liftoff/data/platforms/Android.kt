@@ -20,8 +20,9 @@ class Android : Platform {
   override val order = ORDER
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:\$androidPluginVersion\"")
-    project.properties["androidPluginVersion"] = project.advanced.androidPluginVersion
+    // the AGP Upgrade Assistant doesn't recognize versions in properties files
+    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.1")
+    project.properties["androidPluginVersion"] = "8.1.1"
     project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
@@ -143,21 +144,12 @@ android {
     }
   }
   packagingOptions {
-    // Preventing from license violations (more or less):
-    pickFirst 'META-INF/LICENSE.txt'
-    pickFirst 'META-INF/LICENSE'
-    pickFirst 'META-INF/license.txt'
-    pickFirst 'META-INF/LGPL2.1'
-    pickFirst 'META-INF/NOTICE.txt'
-    pickFirst 'META-INF/NOTICE'
-    pickFirst 'META-INF/notice.txt'
-    // Excluding unnecessary meta-data:
-    exclude 'META-INF/robovm/ios/robovm.xml'
-    exclude 'META-INF/DEPENDENCIES.txt'
-    exclude 'META-INF/DEPENDENCIES'
-    exclude 'META-INF/dependencies.txt'
-    // These are only used by GWT, and not Android.
-    exclude '**/*.gwt.xml'
+    resources.with {
+      excludes += ['META-INF/robovm/ios/robovm.xml',
+        'META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/dependencies.txt', '**/*.gwt.xml']
+      pickFirsts += ['META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/license.txt', 'META-INF/LGPL2.1',
+        'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/notice.txt']
+    }
   }
   defaultConfig {
     applicationId '${project.basic.rootPackage}'
