@@ -37,7 +37,7 @@ class GWT : Platform {
   override fun createGradleFile(project: Project): GradleFile = GWTGradleFile(project)
 
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"org.wisepersist:gwt-gradle-plugin:\$gwtPluginVersion\"")
+    project.rootGradle.buildDependencies.add("\"org.docstr:gwt-gradle-plugin:\$gwtPluginVersion\"")
 
     addGradleTaskDescription(project, "superDev", "compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/$id](http://localhost:8080/$id). Use only during development.")
     addGradleTaskDescription(project, "dist", "compiles GWT sources. The compiled application can be found at `$id/build/dist`: you can use any HTTP server to deploy it.")
@@ -204,7 +204,7 @@ gwt {
   compiler.strict = true
   compiler.disableCastChecking = true
   //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
-//  compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
+//  compiler.style = org.docstr.gradle.plugins.gwt.Style.DETAILED
 ${if (project.advanced.gwtVersion == "2.10.0") "\n  sourceLevel = 1.11\n" else ""}}
 
 dependencies {
@@ -212,7 +212,7 @@ ${joinDependencies(dependencies)}
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
-import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
+import org.docstr.gradle.plugins.gwt.GwtSuperDev
 
 gretty.httpPort = 8080
 // The line below will need to be changed only if you change the build directory to something other than "build".
