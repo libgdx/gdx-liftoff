@@ -99,10 +99,10 @@ run {
   workingDir = rootProject.file('assets').path
   setIgnoreExitValue(true)
 
-  if (os.contains('mac')) {
-    // Required to run LWJGL3 Java apps on macOS
-    jvmArgs += "-XstartOnFirstThread"
-  }
+  // This next line could be needed to run LWJGL3 Java apps on macOS, but StartupHelper should make it unnecessary.
+  //if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
+  // If you encounter issues with the 'lwjgl3:run' task on macOS specifically, try uncommenting the above line, and
+  // regardless, please report it via the gdx-liftoff issue tracker or just mention it on the libGDX Discord.
 }
 
 jar {
@@ -156,7 +156,10 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
       } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
         imageOptions = ["--icon", "icons/logo.png"]
       } else if (os.contains('mac')) {
-        imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
+// If you are making a jpackage image on macOS, the below line should work thanks to StartupHelper.
+        imageOptions = ["--icon", "icons/logo.icns"]
+// If the above line doesn't produce a runnable executable, you can try using the below line instead of the above one.
+//        imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
       }
     }
   }

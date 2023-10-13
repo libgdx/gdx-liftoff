@@ -364,7 +364,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "0.9.0"
+  override val defaultVersion = "0.10.0"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -452,7 +452,7 @@ class Formic : ThirdPartyExtension() {
 @Extension
 class Colorful : ThirdPartyExtension() {
   override val id = "colorful"
-  override val defaultVersion = "0.8.4"
+  override val defaultVersion = "0.8.5"
   override val url = "https://github.com/tommyettinger/colorful-gdx"
   override val group = "com.github.tommyettinger"
   override val name = "colorful"
@@ -473,7 +473,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
   override val id = "anim8"
-  override val defaultVersion = "0.4.0"
+  override val defaultVersion = "0.4.2"
   override val url = "https://github.com/tommyettinger/anim8-gdx"
   override val group = "com.github.tommyettinger"
   override val name = "anim8-gdx"

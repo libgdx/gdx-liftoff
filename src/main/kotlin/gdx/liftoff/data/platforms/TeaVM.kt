@@ -74,8 +74,9 @@ task buildJavaScript(dependsOn: classes, type: JavaExec) {
 }
 build.dependsOn buildJavaScript
 
-task run(dependsOn: [buildJavaScript, ":${TeaVM.ID}:jettyRun"]) {
-  setDescription("Run the JavaScript application hosted via a local Jetty server at http://localhost:8080/")
+val run = tasks.register("run") {
+  description = "Run the JavaScript application hosted via a local Jetty server at http://localhost:8080/"
+  dependsOn(buildJavaScript, tasks.named("jettyRun"))
 }
 """
 }
