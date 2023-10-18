@@ -743,8 +743,8 @@ class RegExodus : ThirdPartyExtension() {
 /**
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
- * with which libGDX versions; vis-ui 1.5.1 is the default and is
- * compatible with libGDX 1.11.0.
+ * with which libGDX versions; vis-ui 1.5.2 is the default and is
+ * compatible with libGDX 1.12.0.
  * @author Kotcrab
  */
 @Extension
