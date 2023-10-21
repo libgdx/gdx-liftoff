@@ -181,6 +181,23 @@ class Dialogs : ThirdPartyExtension() {
 }
 
 /**
+ * Fast, lightweight Kotlin ECS framework; needs Java 11 or higher.
+ * @author StrongJoshua
+ */
+@Extension
+class Fleks : ThirdPartyExtension() {
+  override val id = "fleks"
+  override val defaultVersion = "2.5"
+  override val url = "https://github.com/Quillraven/Fleks"
+  override val group = "io.github.quillraven.fleks"
+  override val name = "Fleks"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "io.github.quillraven.fleks:Fleks")
+  }
+}
+
+/**
  * In-game console implementation; GWT-incompatible. If you target GWT, you can use JACI GWT.
  * @author StrongJoshua
  */
