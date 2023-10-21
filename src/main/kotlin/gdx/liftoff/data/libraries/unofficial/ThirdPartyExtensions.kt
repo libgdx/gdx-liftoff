@@ -1023,7 +1023,7 @@ class GdxFlexBox : ThirdPartyExtension() {
 @Extension
 class GdxBasisUniversal : ThirdPartyExtension() {
   override val id = "gdxBasisUniversal"
-  override val defaultVersion = "0.1.0"
+  override val defaultVersion = "1.0.0"
   override val url = "https://github.com/crashinvaders/gdx-basis-universal"
   override val group = "com.crashinvaders.basisu"
   override val name = "basisu-wrapper"
