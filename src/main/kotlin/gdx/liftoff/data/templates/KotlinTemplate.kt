@@ -352,7 +352,7 @@ import com.github.xpenatan.gdx.backends.teavm.gen.SkipClass
 object TeaVMBuilder {
     @JvmStatic fun main(arguments: Array<String>) {
         val teaBuildConfiguration = TeaBuildConfiguration().apply {
-            assetsPath.add(File("../assets"))
+            assetsPath.add(File("assets"))
             webappPath = File("build/dist").canonicalPath
             // Register any extra classpath assets here:
             // additionalAssetsClasspathFiles += "${project.basic.rootPackage.replace('.', '/')}/asset.extension"
