@@ -761,7 +761,7 @@ class RegExodus : ThirdPartyExtension() {
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
  * with which libGDX versions; vis-ui 1.5.2 is the default and is
- * compatible with libGDX 1.12.0.
+ * compatible with libGDX 1.12.1.
  * @author Kotcrab
  */
 @Extension
@@ -1212,7 +1212,7 @@ class UniversalTween : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.4.0"
+  override val defaultVersion = "0.4.3"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1252,7 +1252,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
-  override val defaultVersion = "0.3.9"
+  override val defaultVersion = "0.4.1"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1274,7 +1274,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.4.1"
+  override val defaultVersion = "1.4.3"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1291,13 +1291,13 @@ class Jdkgdxds : ThirdPartyExtension() {
 }
 
 /**
- * JSON support/translation for jdkgdxds to GDX. JDK 8+.
+ * JSON support for jdkgdxds/juniper to/from GDX. JDK 8+.
  * @author Tommy Ettinger
  */
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.4.1.0"
+  override val defaultVersion = "1.4.3.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1340,7 +1340,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.4.0.0"
+  override val defaultVersion = "0.4.3.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1360,7 +1360,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.3.9.0"
+  override val defaultVersion = "0.4.1.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1370,6 +1370,7 @@ class KryoJuniper : ThirdPartyExtension() {
 
     Kryo().initiate(project)
     Juniper().initiate(project)
+    KryoDigital().initiate(project)
   }
 }
 
@@ -1380,7 +1381,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.4.1.0"
+  override val defaultVersion = "1.4.3.0"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
@@ -1390,6 +1391,7 @@ class KryoJdkgdxds : ThirdPartyExtension() {
 
     Kryo().initiate(project)
     Jdkgdxds().initiate(project)
+    KryoDigital().initiate(project)
   }
 }
 

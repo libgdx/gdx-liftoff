@@ -53,7 +53,7 @@ class GWT : Platform {
         packageName = project.basic.rootPackage,
         fileName = "${project.basic.mainClass}.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.10.0//EN" "https://www.gwtproject.org/doctype/2.10.0/gwt-module.dtd">
 <module>
   <source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
 </module>"""
@@ -69,7 +69,7 @@ class GWT : Platform {
           packageName = project.basic.rootPackage,
           fileName = "Shared.gwt.xml",
           content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.10.0//EN" "https://www.gwtproject.org/doctype/2.10.0/gwt-module.dtd">
 <module>
   <source path="" />
 </module>"""
@@ -85,7 +85,7 @@ class GWT : Platform {
         packageName = project.basic.rootPackage,
         fileName = "GdxDefinition.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.10.0//EN" "https://www.gwtproject.org/doctype/2.10.0/gwt-module.dtd">
 <module rename-to="html">
   <source path="" />
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
@@ -107,7 +107,7 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
         packageName = project.basic.rootPackage,
         fileName = "GdxDefinitionSuperdev.gwt.xml",
         content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit ${project.advanced.gwtVersion}//EN" "https://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.10.0//EN" "https://www.gwtproject.org/doctype/2.10.0/gwt-module.dtd">
 <module rename-to="html">
   <inherits name="${project.basic.rootPackage}.GdxDefinition" />
   <collapse-all-properties />
@@ -169,8 +169,8 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
 
     addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion:sources")
     if (project.advanced.gwtVersion == "2.10.0") {
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1200.1")
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1200.1:sources")
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.0")
+      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.0:sources")
       addDependency("com.google.jsinterop:jsinterop-annotations:2.0.0:sources")
     } else {
       addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")

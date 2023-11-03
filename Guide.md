@@ -12,7 +12,7 @@ This allows new projects to "just work" on machines where Java 8 through 20 coul
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
 Currently, gdx-liftoff projects depend on libGDX 1.12.0 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.12.0 . You can choose any released version of
+The current version of libGDX is 1.12.1 . You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
@@ -52,7 +52,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
             - LWJGL3 is almost the same as LWJGL2, but because it has better support for new hardware
               (such as high-DPI displays), it should probably be preferred. It also allows multiple windows and drag+drop.
                 - LWJGL3 itself supports Linux on arm32 and arm64 hardware, and libGDX since version 1.9.13 (current is
-                  1.12.0) also supports ARM Linux on desktop platforms.
+                  1.12.1) also supports ARM Linux on desktop platforms.
                 - The new ARM Macs are now supported as of libGDX 1.11.0 or later when using the LWJGL3 backend.
                   LWJGL2 does appear to work via macOS "Rosetta" emulation, though.
             - LWJGL2 should mostly be preferred if you need to also depend on gdx-tools, such as if you need to run the
@@ -117,7 +117,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
           for more. It's very likely that you won't notice any difference unless you try to make behavior identical on GWT
           and other platforms, and even then there may be nothing apparent.
             - GWT 2.10.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
-              official GWT backend](https://github.com/tommyettinger/gdx-backends#112001) that supports it with libGDX
+              official GWT backend](https://github.com/tommyettinger/gdx-backends#112100) that supports it with libGDX
               1.12.0. Using GWT 2.10.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
               change much of what's available from the standard library. The third-party 2.10.0 backend is currently used by default.
     - For dependencies, you don't need libGDX checked (the tool is ready to download libGDX and set it as a
@@ -145,7 +145,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
       project. Classic will show a white screen with a pixel-style face when you run, so it can be good to verify that
       a project works, while ApplicationAdapter is probably the easiest to bring an existing game into. The super-koalio
       demo is from libGDX's tests, and may act as a good way to test input and basic graphics in a new project.
-    - In Advanced, you can set the libGDX version (it defaults to 1.12.0, but can be set lower or higher) and
+    - In Advanced, you can set the libGDX version (it defaults to 1.12.1, but can be set lower or higher) and
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and

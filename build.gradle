@@ -15,7 +15,7 @@ buildscript {
   }
 }
 
-version = "1.12.0.6-SNAPSHOT"
+version = "1.12.1.0-SNAPSHOT"
 mainClassName = 'gdx.liftoff.MainKt'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
@@ -75,8 +75,6 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
 
   // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
   implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
