@@ -52,6 +52,13 @@ class Lwjgl3 : Platform {
       "jar",
       "builds application's runnable jar, which can be found at `$id/build/lib`."
     )
+    project.properties["graalHelperVersion"] = "1.12.1"
+    project.properties["enableGraalNative"] = "false"
+    project.getGradleFile(Core.ID).addSpecialDependency(
+      """if(enableGraalNative == 'true')
+    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper:${'$'}graalHelperVersion"
+  else
+    implementation "com.github.tommyettinger:gdx-graalhelper-shim:${'$'}graalHelperVersion"""")
   }
 }
 
@@ -75,6 +82,9 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
     if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
       classpath "org.beryx:badass-runtime-plugin:1.13.0"
     }
+    if(enableGraalNative == 'true') {
+      classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
+    }
   }
 }
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
@@ -84,6 +94,10 @@ else {
   apply plugin: 'application'
 }
 
+if(enableGraalNative == 'true') {
+  apply plugin: "org.graalvm.buildtools.native"
+}
+
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
 eclipse.project.name = appName + '-lwjgl3'
@@ -91,8 +105,12 @@ java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
-${joinDependencies(dependencies)}}
+${joinDependencies(dependencies)}
+  if(enableGraalNative == 'true')
+    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
+}
 
+def jarName = "${'$'}{appName}-${'$'}{version}.jar"
 def os = System.properties['os.name'].toLowerCase()
 
 run {
@@ -105,9 +123,23 @@ run {
   // regardless, please report it via the gdx-liftoff issue tracker or just mention it on the libGDX Discord.
 }
 
+if(enableGraalNative == 'true') {
+  graalvmNative {
+    binaries {
+      main {
+        imageName = appName
+        mainClass = project.mainClassName
+        requiredVersion = '23.0'
+        buildArgs.add("-march=compatibility")
+        jvmArgs.addAll("-Dfile.encoding=UTF8")
+        sharedLibrary = false
+      }
+    }
+  }
+}
 jar {
 // sets the name of the .jar file this produces to the name of the game or app.
-  archiveBaseName.set(appName)
+  archiveFileName.set(jarName)
 // using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
   destinationDirectory = file("${'$'}{project.layout.buildDirectory.asFile.get().absolutePath}/lib")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
@@ -150,7 +182,7 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
       skipInstaller = true
 // this may need to be set to a different path if your JAVA_HOME points to a low JDK version.
       jpackageHome = javaHome.getOrElse("")
-      mainJar = jar.archiveFileName.get()
+      mainJar = jarName
       if (os.contains('win')) {
         imageOptions = ["--icon", "icons/logo.ico"]
       } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
