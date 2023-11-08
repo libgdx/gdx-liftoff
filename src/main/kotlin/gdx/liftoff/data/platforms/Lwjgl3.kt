@@ -1,6 +1,7 @@
 package gdx.liftoff.data.platforms
 
 import gdx.liftoff.data.files.CopiedFile
+import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
@@ -59,6 +60,25 @@ class Lwjgl3 : Platform {
     implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper:${'$'}graalHelperVersion"
   else
     implementation "com.github.tommyettinger:gdx-graalhelper-shim:${'$'}graalHelperVersion"""")
+
+    project.files.add(
+      SourceFile(
+        projectName = Lwjgl3.ID,
+        sourceFolderPath = path("src", "main", "resources", "META-INF", "native-image"),
+        packageName = project.basic.rootPackage,
+        fileName = "${project.basic.name}/resource-config.json",
+        content = """{
+  "resources":{
+  "includes":[
+    {
+      "pattern": ".+\\.(png|jpg|jpeg|tmx|tsx|fnt|ttf|otf|json|xml|glsl)"
+    }
+  ]},
+  "bundles":[]
+}"""
+      )
+    )
+
   }
 }
 
