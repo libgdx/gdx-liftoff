@@ -58,9 +58,9 @@ project.ext.mainClassName = '${project.basic.rootPackage}.teavm.TeaVMBuilder'
 eclipse.project.name = appName + '-teavm'
 
 // This must be at least 11, and no higher than the JDK version this project is built with.
-java.targetCompatibility = 11
+java.targetCompatibility = "${project.advanced.javaVersion}"
 // This should probably be equal to targetCompatibility, above. This only affects the TeaVM module.
-java.sourceCompatibility = 11
+java.sourceCompatibility = "${project.advanced.javaVersion}"
 
 
 dependencies {
