@@ -55,11 +55,6 @@ class Lwjgl3 : Platform {
     )
     project.properties["graalHelperVersion"] = "1.12.1"
     project.properties["enableGraalNative"] = "false"
-    project.getGradleFile(Core.ID).addSpecialDependency(
-      """if(enableGraalNative == 'true')
-    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper:${'$'}graalHelperVersion"
-  else
-    implementation "com.github.tommyettinger:gdx-graalhelper-shim:${'$'}graalHelperVersion"""")
 
     project.files.add(
       SourceFile(
@@ -78,7 +73,39 @@ class Lwjgl3 : Platform {
 }"""
       )
     )
+    project.files.add(
+      SourceFile(
+        projectName = Lwjgl3.ID,
+        fileName = "nativeimage.gradle",
+        content = """
+          project(":lwjgl3") {
+            apply plugin: "org.graalvm.buildtools.native"
 
+            dependencies {
+              implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
+            }
+
+            graalvmNative {
+              binaries {
+                main {
+                  imageName = appName
+                  mainClass = project.mainClassName
+                  requiredVersion = '23.0'
+                  buildArgs.add("-march=compatibility")
+                  jvmArgs.addAll("-Dfile.encoding=UTF8")
+                  sharedLibrary = false
+                }
+              }
+            }
+          }
+
+          project(":core") {
+            dependencies {
+              implementation "io.github.berstanio:gdx-svmhelper:${'$'}graalHelperVersion"
+            }
+          }
+        """.trimIndent())
+    )
   }
 }
 
@@ -115,7 +142,7 @@ else {
 }
 
 if(enableGraalNative == 'true') {
-  apply plugin: "org.graalvm.buildtools.native"
+  apply from: file("nativeimage.gradle")
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
@@ -125,10 +152,7 @@ java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 
 dependencies {
-${joinDependencies(dependencies)}
-  if(enableGraalNative == 'true')
-    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
-}
+${joinDependencies(dependencies)}}
 
 def jarName = "${'$'}{appName}-${'$'}{version}.jar"
 def os = System.properties['os.name'].toLowerCase()
@@ -143,20 +167,6 @@ run {
   // regardless, please report it via the gdx-liftoff issue tracker or just mention it on the libGDX Discord.
 }
 
-if(enableGraalNative == 'true') {
-  graalvmNative {
-    binaries {
-      main {
-        imageName = appName
-        mainClass = project.mainClassName
-        requiredVersion = '23.0'
-        buildArgs.add("-march=compatibility")
-        jvmArgs.addAll("-Dfile.encoding=UTF8")
-        sharedLibrary = false
-      }
-    }
-  }
-}
 jar {
 // sets the name of the .jar file this produces to the name of the game or app.
   archiveFileName.set(jarName)
