@@ -104,7 +104,8 @@ class Lwjgl3 : Platform {
               implementation "io.github.berstanio:gdx-svmhelper:${'$'}graalHelperVersion"
             }
           }
-        """.trimIndent())
+        """.trimIndent()
+      )
     )
   }
 }
@@ -139,10 +140,6 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
 }
 else {
   apply plugin: 'application'
-}
-
-if(enableGraalNative == 'true') {
-  apply from: file("nativeimage.gradle")
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
@@ -230,6 +227,10 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
 // Equivalent to the jar task; here for compatibility with gdx-setup.
 tasks.register('dist') {
   dependsOn['jar']
+}
+
+if(enableGraalNative == 'true') {
+  apply from: file("nativeimage.gradle")
 }
 """
 }
