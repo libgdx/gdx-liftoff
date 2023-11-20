@@ -82,7 +82,7 @@ class Lwjgl3 : Platform {
             apply plugin: "org.graalvm.buildtools.native"
 
             dependencies {
-              implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
+              implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
             }
 
             graalvmNative {
@@ -101,7 +101,7 @@ class Lwjgl3 : Platform {
 
           project(":core") {
             dependencies {
-              implementation "io.github.berstanio:gdx-svmhelper-annotations:${'$'}graalHelperVersion"
+              implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-annotations:${'$'}graalHelperVersion"
             }
           }
         """.trimIndent()

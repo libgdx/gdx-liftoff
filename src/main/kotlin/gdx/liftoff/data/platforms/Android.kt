@@ -196,7 +196,7 @@ dependencies {
           } else if (agpVersion[0] == 7 && agpVersion[1] == 3) {
             "1.2.2"
           } else {
-            "2.0.3"
+            "2.0.4"
           }
           ) + "'"
     } else {
