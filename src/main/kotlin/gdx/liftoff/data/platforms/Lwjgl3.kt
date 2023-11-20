@@ -66,7 +66,7 @@ class Lwjgl3 : Platform {
   "resources":{
   "includes":[
     {
-      "pattern": ".+\\.(png|jpg|jpeg|tmx|tsx|fnt|ttf|otf|json|xml|glsl)"
+      "pattern": ".+\\.(png|jpg|jpeg|tmx|tsx|fnt|ttf|otf|atlas|json|xml|glsl|vert|frag|properties)"
     }
   ]},
   "bundles":[]
