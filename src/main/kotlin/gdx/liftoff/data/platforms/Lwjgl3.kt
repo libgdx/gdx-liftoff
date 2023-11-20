@@ -102,6 +102,9 @@ project(":lwjgl3") {
       }
     }
   }
+  run {
+    doNotTrackState("Running the app should not be affected by Graal.")
+  }
 }
 
 project(":core") {
