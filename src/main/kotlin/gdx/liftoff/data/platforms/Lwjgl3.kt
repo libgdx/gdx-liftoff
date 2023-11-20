@@ -77,34 +77,39 @@ class Lwjgl3 : Platform {
       SourceFile(
         projectName = Lwjgl3.ID,
         fileName = "nativeimage.gradle",
-        content = """
-          project(":lwjgl3") {
-            apply plugin: "org.graalvm.buildtools.native"
+        content =
+"""
+project(":lwjgl3") {
+  apply plugin: "org.graalvm.buildtools.native"
 
-            dependencies {
-              implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
-            }
+  dependencies {
+    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:""" + '$' + """graalHelperVersion"
+""" +
+          (if (project.extensions.isSelected("gdx-box2d")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-bullet")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-freetype")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
+          """  }
+  graalvmNative {
+    binaries {
+      main {
+        imageName = appName
+        mainClass = project.mainClassName
+        requiredVersion = '23.0'
+        buildArgs.add("-march=compatibility")
+        jvmArgs.addAll("-Dfile.encoding=UTF8")
+        sharedLibrary = false
+      }
+    }
+  }
+}
 
-            graalvmNative {
-              binaries {
-                main {
-                  imageName = appName
-                  mainClass = project.mainClassName
-                  requiredVersion = '23.0'
-                  buildArgs.add("-march=compatibility")
-                  jvmArgs.addAll("-Dfile.encoding=UTF8")
-                  sharedLibrary = false
-                }
-              }
-            }
-          }
-
-          project(":core") {
-            dependencies {
-              implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-annotations:${'$'}graalHelperVersion"
-            }
-          }
-        """.trimIndent()
+project(":core") {
+  dependencies {
+    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-annotations:""" + '$' + """graalHelperVersion"
+  }
+}
+"""
       )
     )
   }
