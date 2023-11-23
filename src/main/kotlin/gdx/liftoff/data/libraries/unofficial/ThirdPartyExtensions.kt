@@ -871,7 +871,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
   override val id = "guacamole"
-  override val defaultVersion = "0.3.2"
+  override val defaultVersion = "0.3.5"
   override val url = "https://github.com/crykn/guacamole"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
@@ -917,7 +917,7 @@ class LibgdxOboe : ThirdPartyExtension() {
 @Extension
 class LibgdxScreenManager : ThirdPartyExtension() {
   override val id = "screenManager"
-  override val defaultVersion = "0.6.8"
+  override val defaultVersion = "0.7.0"
   override val url = "https://github.com/crykn/libgdx-screenmanager"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
@@ -926,10 +926,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.crykn:libgdx-screenmanager")
     addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager:sources")
-    addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt")
-    addDependency(project, GWT.ID, "com.github.crykn:libgdx-screenmanager-gwt:sources")
     addGwtInherit(project, "libgdx_screenmanager")
-    addGwtInherit(project, "libgdx_screenmanager_gwt")
     Guacamole().initiate(project)
   }
 }
