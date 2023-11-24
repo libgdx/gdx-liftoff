@@ -53,7 +53,7 @@ class Lwjgl3 : Platform {
       "jar",
       "builds application's runnable jar, which can be found at `$id/build/lib`."
     )
-    project.properties["graalHelperVersion"] = "2.0.0"
+    project.properties["graalHelperVersion"] = "2.0.1"
     project.properties["enableGraalNative"] = "false"
 
     project.files.add(
@@ -83,12 +83,12 @@ project(":lwjgl3") {
   apply plugin: "org.graalvm.buildtools.native"
 
   dependencies {
-    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-backend-lwjgl3:""" + '$' + """graalHelperVersion"
+    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:""" + '$' + """graalHelperVersion"
 """ +
-          (if (project.extensions.isSelected("gdx-box2d")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-bullet")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-freetype")) "    implementation \"com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-box2d")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-bullet")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
+          (if (project.extensions.isSelected("gdx-freetype")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
           """  }
   graalvmNative {
     binaries {
@@ -109,7 +109,7 @@ project(":lwjgl3") {
 
 project(":core") {
   dependencies {
-    implementation "com.github.Berstanio.gdx-graalhelper:gdx-svmhelper-annotations:""" + '$' + """graalHelperVersion"
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:""" + '$' + """graalHelperVersion"
   }
 }
 """
