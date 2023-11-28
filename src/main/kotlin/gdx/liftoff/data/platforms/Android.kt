@@ -32,6 +32,10 @@ class Android : Platform {
     addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
     addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
     addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
+    addCopiedFile(project, "res", "drawable-xxxhdpi", "ic_launcher.png")
+    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
+    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
+    addCopiedFile(project, "res", "values", "color.xml")
     addCopiedFile(project, "res", "values", "styles.xml")
 
     project.files.add(
@@ -216,7 +220,7 @@ tasks.register('copyAndroidNatives') {
     file("libs/x86_64/").mkdirs()
     file("libs/x86/").mkdirs()
 
-    configurations.named("natives").orNull.copy().files.each { jar ->
+    configurations.natives.copy().files.each { jar ->
       def outputDir = null
       if(jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
       if(jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
