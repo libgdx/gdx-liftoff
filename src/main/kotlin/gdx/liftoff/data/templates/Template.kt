@@ -610,11 +610,6 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /**
  * Launches the TeaVM/HTML application.
- * <br>
- * It may be important to note that if the TeaVM page is loaded from a URL with parameters,
- * that is, with a '?' sign after ".html" or some other file extension, then loading any
- * assets might not work right now. This is especially true when loading via IntelliJ IDEA's
- * built-in web server, which will default to adding on URL parameters that can be removed.
  */
 public class TeaVMLauncher {
     public static void main(String[] args) {
@@ -628,13 +623,14 @@ public class TeaVMLauncher {
 """
   fun getTeaVMBuilderContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
 
-import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration;
-import com.github.xpenatan.gdx.backends.teavm.TeaBuilder;
-import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier;
+import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildConfiguration;
+import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder;
+import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier;
 import com.github.xpenatan.gdx.backends.teavm.gen.SkipClass;
 import java.io.File;
 import java.io.IOException;
 import org.teavm.tooling.TeaVMTool;
+import org.teavm.vm.TeaVMOptimizationLevel;
 
 /** Builds the TeaVM/HTML application. */
 @SkipClass
@@ -652,6 +648,9 @@ ${generateTeaVMReflectionIncludes(project)}
 
         TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
         tool.setMainClass(TeaVMLauncher.class.getName());
+        // For many (or most) applications, using the highest optimization won't add much to build time.
+        // If your builds take too long, and runtime performance doesn't matter, you can change FULL to SIMPLE .
+        tool.setOptimizationLevel(TeaVMOptimizationLevel.FULL);
         TeaBuilder.build(tool);
     }
 }
