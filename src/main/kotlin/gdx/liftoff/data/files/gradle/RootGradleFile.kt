@@ -43,6 +43,23 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   sourceCompatibility = ${project.advanced.javaVersion}
   compileJava {
     options.incremental = true
+  }
+  // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
+  // The article can be helpful when using assets.txt in your project.
+  compileJava.doLast {
+    // projectFolder/assets
+    def assetsFolder = new File("${'$'}{project.rootDir}/assets/")
+    // projectFolder/assets/assets.txt
+    def assetsFile = new File(assetsFolder, "assets.txt")
+    // delete that file in case we've already created it
+    assetsFile.delete()
+
+    // iterate through all files inside that folder
+    // convert it to a relative path
+    // and append it to the file assets.txt
+    fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.each {
+      assetsFile.append(it + "\n")
+    }
   }${if (project.hasPlatform(TeaVM.ID) && plugins.contains("kotlin")) {
     """
   compileKotlin {
