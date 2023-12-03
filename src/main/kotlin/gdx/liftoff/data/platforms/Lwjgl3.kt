@@ -59,23 +59,6 @@ class Lwjgl3 : Platform {
     project.files.add(
       SourceFile(
         projectName = Lwjgl3.ID,
-        sourceFolderPath = path("src", "main", "resources", "META-INF", "native-image"),
-        packageName = project.basic.rootPackage,
-        fileName = "${project.basic.name}/resource-config.json",
-        content = """{
-  "resources":{
-  "includes":[
-    {
-      "pattern": ".+\\.(png|jpg|jpeg|tmx|tsx|fnt|ttf|otf|json|xml|glsl)"
-    }
-  ]},
-  "bundles":[]
-}"""
-      )
-    )
-    project.files.add(
-      SourceFile(
-        projectName = Lwjgl3.ID,
         fileName = "nativeimage.gradle",
         content =
 """
@@ -102,8 +85,40 @@ project(":lwjgl3") {
       }
     }
   }
+
   run {
     doNotTrackState("Running the app should not be affected by Graal.")
+  }
+
+  // Modified from https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/ ; thanks again, Lyze!
+  // This creates a resource-config.json file based on the contents of the assets folder (and the libGDX icons).
+  // This file is used by Graal Native to embed those specific files.
+  // This has to run before nativeCompile, so it runs at the start of an unrelated resource-handling command.
+  generateResourcesConfigFile.doFirst {
+    def assetsFolder = new File("${'$'}{project.rootDir}/assets/")
+    def lwjgl3 = project(':lwjgl3')
+    def resFolder = new File("${'$'}{lwjgl3.projectDir}/src/main/resources/META-INF/native-image/${'$'}{lwjgl3.ext.appName}")
+    resFolder.mkdirs()
+    def resFile = new File(resFolder, "resource-config.json")
+    resFile.delete()
+    resFile.append(
+            ""${'"'}{
+  "resources":{
+  "includes":[
+    {
+      "pattern": "()""${'"'})
+    fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.each {
+      // The backslash-Q and backslash-E escape the start and end of a literal string, respectively.
+      resFile.append("\\\\Q${'$'}{it}\\\\E|")
+    }
+    // We also match all of the window icon images this way.
+    resFile.append(
+            ""${'"'}libgdx.+.\\\\.png"
+    }
+  ]},
+  "bundles":[]
+}""${'"'}
+    )
   }
 }
 
