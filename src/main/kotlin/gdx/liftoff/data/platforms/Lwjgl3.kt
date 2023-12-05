@@ -106,7 +106,7 @@ project(":lwjgl3") {
   "resources":{
   "includes":[
     {
-      "pattern": "()""${'"'})
+      "pattern": ".*(""${'"'})
     // This adds every filename in the assets/ folder to a pattern that adds those files as resources.
     fileTree(assetsFolder).each {
       // The backslash-Q and backslash-E escape the start and end of a literal string, respectively.
@@ -114,7 +114,7 @@ project(":lwjgl3") {
     }
     // We also match all of the window icon images this way and the font files that are part of libGDX.
     resFile.append(
-            ""${'"'}libgdx.+.\\\\.png|lsans.+"
+            ""${'"'}libgdx.+\\\\.png|lsans.+)"
     }
     // You can add additional includes here if needed; making the change here prevents your changes
     // from being overwritten when another build action recreates resources-config.json .
