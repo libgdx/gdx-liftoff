@@ -342,9 +342,9 @@ fun main() {
   override fun getTeaVMBuilderContent(project: Project) = """package ${project.basic.rootPackage}.teavm
 
 import java.io.File
-import com.github.xpenatan.gdx.backends.teavm.TeaBuildConfiguration
-import com.github.xpenatan.gdx.backends.teavm.TeaBuilder
-import com.github.xpenatan.gdx.backends.teavm.plugins.TeaReflectionSupplier
+import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildConfiguration
+import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder
+import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier
 import com.github.xpenatan.gdx.backends.teavm.gen.SkipClass
 
 /** Builds the TeaVM/HTML application. */

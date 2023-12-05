@@ -14,6 +14,7 @@ class RootGradleFile(val project: Project) : GradleFile("") {
   init {
     buildRepositories.add("mavenCentral()")
     buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
+    buildRepositories.add("gradlePluginPortal())")
     buildRepositories.add("mavenLocal()")
     buildRepositories.add("google()")
     buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
