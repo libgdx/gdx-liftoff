@@ -32,7 +32,6 @@ import gdx.liftoff.data.templates.Template
 import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.data.templates.official.KotlinClassicTemplate
 import gdx.liftoff.data.templates.unofficial.KtxTemplate
-import gdx.liftoff.preferences.SdkVersionPreference
 import gdx.liftoff.views.Extension
 import java.io.File
 import kotlin.system.exitProcess
@@ -163,7 +162,6 @@ fun main(arguments: Array<String>) {
     version = Configuration.VERSION,
     gdxVersion = Version.VERSION,
     javaVersion = defaultJavaVersion,
-    androidSdkVersion = SdkVersionPreference().default,
     androidPluginVersion = defaults.getDefaultAndroidPluginVersion(),
     robovmVersion = defaults.getDefaultRoboVMVersion(),
     gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),

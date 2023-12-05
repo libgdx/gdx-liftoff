@@ -104,7 +104,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
             - If you are using an Android Studio version before 4.2 or an IDEA version before 2021.2, you can set the
               Android Gradle Plugin on the Advanced tab to a lower version, like 4.0.2, that is compatible with that older
               IDE version.
-            - The Android Gradle Plugin (AGP) version is currently set at 8.1.2 and is not configurable from within Liftoff.
+            - The Android Gradle Plugin (AGP) version is currently set at 8.1.4 and is not configurable from within Liftoff.
               This was required because IDEA's and Android Studio's AGP Upgrade Assistant requires the AGP version to be part
               of the dependency String, and not in a properties file (which is what Liftoff usually uses). On the plus side,
               this lets you use the AGP Upgrade Assistant now. It isn't always a great idea, particularly if you need to use
@@ -235,6 +235,9 @@ other projects or older versions.
       gdx-liftoff will pre-fill the Android SDK path with `ANDROID_SDK_ROOT` if it hasn't been set yet, but will use the
       last used path if there's a historical path. You can change any and all settings history by either editing
       `~/.prefs/gdx-liftoff-prefs` or just deleting that file and having gdx-liftoff remake it.
+    - The Android SDK version is now set at exactly 34, but this should change in future versions of Liftoff as
+      new versions of the Android OS require updates. Currently, Google play requires a target SDK of 34 for newly
+      submitted projects.
 
 ## Contributions
 

@@ -21,7 +21,7 @@ class Android : Platform {
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
     // the AGP Upgrade Assistant doesn't recognize versions in properties files
-    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.2\"")
+    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.4\"")
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
@@ -133,25 +133,26 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
+  namespace "${project.basic.rootPackage}"
   compileSdk ${project.advanced.androidSdkVersion}
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs(${srcFolders.joinToString(separator = ", ")})
-      aidl.srcDirs(${srcFolders.joinToString(separator = ", ")})
-      renderscript.srcDirs(${srcFolders.joinToString(separator = ", ")})
-      res.srcDirs('res')
-      assets.srcDirs('../assets')
-      jniLibs.srcDirs('libs')
+      java.setSrcDirs([${srcFolders.joinToString(separator = ", ")}])
+      aidl.setSrcDirs([${srcFolders.joinToString(separator = ", ")}])
+      renderscript.setSrcDirs([${srcFolders.joinToString(separator = ", ")}])
+      res.setSrcDirs(['res'])
+      assets.setSrcDirs(['../assets'])
+      jniLibs.setSrcDirs(['libs'])
     }
   }
   packagingOptions {
-    resources.with {
-      excludes += ['META-INF/robovm/ios/robovm.xml',
-        'META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES', 'META-INF/dependencies.txt', '**/*.gwt.xml']
-      pickFirsts += ['META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/license.txt', 'META-INF/LGPL2.1',
-        'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/notice.txt']
-    }
+		resources {
+			excludes += ['META-INF/robovm/ios/robovm.xml', 'META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES',
+                   'META-INF/dependencies.txt', '**/*.gwt.xml']
+			pickFirsts += ['META-INF/LICENSE.txt', 'META-INF/LICENSE', 'META-INF/license.txt', 'META-INF/LGPL2.1',
+                     'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/notice.txt']
+		}
   }
   defaultConfig {
     applicationId '${project.basic.rootPackage}'
@@ -161,7 +162,6 @@ android {
     versionName "1.0"
     multiDexEnabled true
   }
-  namespace "${project.basic.rootPackage}"
   compileOptions {
     sourceCompatibility "${project.advanced.javaVersion}"
     targetCompatibility "${project.advanced.javaVersion}"
@@ -236,6 +236,7 @@ tasks.register('copyAndroidNatives') {
     }
   }
 }
+
 tasks.matching { it.name.contains("merge") && it.name.contains("JniLibFolders") }.configureEach { packageTask ->
   packageTask.dependsOn 'copyAndroidNatives'
 }

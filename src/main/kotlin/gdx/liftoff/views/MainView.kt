@@ -13,10 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
-import com.github.czyzby.autumn.annotation.Destroy
 import com.github.czyzby.autumn.annotation.Inject
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService
-import com.github.czyzby.autumn.mvc.config.AutumnActionPriority
 import com.github.czyzby.autumn.mvc.stereotype.View
 import com.github.czyzby.lml.annotation.LmlAction
 import com.github.czyzby.lml.annotation.LmlActor
@@ -35,7 +33,6 @@ import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
-import gdx.liftoff.preferences.SdkVersionPreference
 import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.system.MemoryUtil.memAllocPointer
@@ -355,14 +352,5 @@ class MainView : ActionContainer {
         }
       }
     })
-  }
-
-  /**
-   * Explicitly forces saving of Android SDK versions. They might not be properly updated as change events are not
-   * fired on programmatic SDK and tools versions changes.
-   */
-  @Destroy(priority = AutumnActionPriority.TOP_PRIORITY)
-  fun saveAndroidSdkVersions(api: SdkVersionPreference) {
-    api.set(advancedData.androidSdkVersion)
   }
 }
