@@ -1271,7 +1271,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.4.4"
+  override val defaultVersion = "1.4.5"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"

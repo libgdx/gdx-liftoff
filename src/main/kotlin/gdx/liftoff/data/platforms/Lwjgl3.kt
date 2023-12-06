@@ -184,10 +184,7 @@ run {
   workingDir = rootProject.file('assets').path
   setIgnoreExitValue(true)
 
-  // This next line could be needed to run LWJGL3 Java apps on macOS, but StartupHelper should make it unnecessary.
-  //if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
-  // If you encounter issues with the 'lwjgl3:run' task on macOS specifically, try uncommenting the above line, and
-  // regardless, please report it via the gdx-liftoff issue tracker or just mention it on the libGDX Discord.
+  if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
 }
 
 jar {
