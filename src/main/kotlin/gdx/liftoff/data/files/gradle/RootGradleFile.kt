@@ -33,6 +33,14 @@ ${joinDependencies(buildDependencies, type = "classpath", indent = "    ")}
 allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
+
+  // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
+  idea {
+    module {
+      outputDir file('build/classes/java/main')
+      testOutputDir file('build/classes/java/test')
+    }
+  }
 }
 
 configure(subprojects${if (project.hasPlatform(Android.ID)) {
