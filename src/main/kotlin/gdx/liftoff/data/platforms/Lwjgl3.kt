@@ -116,8 +116,6 @@ project(":lwjgl3") {
     resFile.append(
             ""${'"'}libgdx.+\\\\.png|lsans.+)"
     }
-    // You can add additional includes here if needed; making the change here prevents your changes
-    // from being overwritten when another build action recreates resources-config.json .
   ]},
   "bundles":[]
 }""${'"'}
