@@ -3,15 +3,15 @@
 If you've used libGDX for even a short time, you've probably used the official `gdx-setup.jar` made by the libGDX team. It's seen
 major improvements lately, but it still lags behind in some areas -- it uses an outdated Gradle version most of the time,
 it has relatively few third-party extensions available, and some of the Gradle configuration could be better, especially for HTML
-projects and projects that want to use jpackage to distribute executables.
+projects and projects that want to use jpackage or Graal Native Image to distribute executables.
 This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
-code, which is built on czyzby's code, gives us working projects that use Gradle 8.2.1, far ahead of the official setup and farther ahead of 4.0.2 for czyzby's gdx-setup.
-The current Gradle version is 8.2.1 at the time of writing.
-This allows new projects to "just work" on machines where Java 8 through 20 could be the default, and the moderate amount of configuration
+code, which is built on [czyzby's code](https://github.com/czyzby/gdx-setup), gives us working projects that use Gradle
+8.5, ahead of the official setup and farther ahead of 4.0.2 for czyzby's gdx-setup. The current Gradle version is 8.5 at the time of writing.
+This allows new projects to "just work" on machines where Java 8 through 21 could be the default, and the moderate amount of configuration
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.12.0 by default, and allow using earlier versions or snapshots as well.
+Currently, gdx-liftoff projects depend on libGDX 1.12.1 by default, and allow using earlier versions or snapshots as well.
 The current version of libGDX is 1.12.1 . You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
@@ -91,7 +91,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
             - **You must set your project's JDK to a version 17 or higher** to use Android, due to a new requirement of the
               Android Gradle Plugin used by Android Studio and IDEA. JDK 17 is the most versatile option right now, because
               it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to
-              open older projects, so having JDK 17 installed is a good idea. Java 20 should work here, but will be completely
+              open older projects, so having JDK 17 installed is a good idea. Java 21 should work here, but will be completely
               broken if you try to use it with gdx-setup projects at this point in time.
             - Having an Android module in a larger project changes some of IDEA's features, including disabling hot-swap.
               Some libGDX developers take the approach of having a separate Android-only project, keeping desktop platforms
@@ -118,7 +118,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
           and other platforms, and even then there may be nothing apparent.
             - GWT 2.10.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
               official GWT backend](https://github.com/tommyettinger/gdx-backends#112100) that supports it with libGDX
-              1.12.0. Using GWT 2.10.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
+              1.12.1. Using GWT 2.10.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
               change much of what's available from the standard library. The third-party 2.10.0 backend is currently used by default.
     - For dependencies, you don't need libGDX checked (the tool is ready to download libGDX and set it as a
       dependency in all cases).
