@@ -59,3 +59,25 @@ kotlin {
 
 (Probably adding it at the bottom of the file makes the most sense.) You still need to change `sourceCompatibility` and
 `targetCompatibility` to the same version as your toolchain; these affect Java, while the toolchain should help Kotlin.
+
+### Graal Native Image isn't working (in any of various ways)
+
+First, ensure that you changed `enableGraalNative=false` to `enableGraalNative=true` in gradle.properties. This enables
+the rest of the Graal code, including downloading dependencies once you re-sync the project.
+
+On Windows, you also have to make sure a (rather recent) Visual Studio is installed *and has C++ tools installed*. The
+C++ tools aren't checked by default when first installing Visual Studio. There may be issues with some non-US locales
+when the Native Image tools try to locate Visual Studio programs/scripts. If you encounter these and have a
+non-English-language and/or non-US locale, you may want to try [this StackOverflow answer's solution](https://stackoverflow.com/a/77527818).
+You can also launch the Visual Studio x64 Native Tools command prompt (it's in the start menu by default), navigate to
+your Liftoff project, and launch `gradlew lwjgl3:nativeCompile` from there, which may work better.
+
+The asset-location code was subtly broken in Liftoff 1.12.1.3 in some cases, namely when assets were in subfolders. This
+should be fixed in 1.12.1.4; if you are updating a 1.12.1.3 project that uses Graal Native Image, I recommend copying in
+the whole nativeimage.gradle file to replace the existing one (unless you have edited it) from either a new 1.12.1.4 or
+higher project or [the same file from the generated demo](https://github.com/tommyettinger/gdx-liftoff-demo/blob/main/lwjgl3/nativeimage.gradle).
+
+There are probably a lot of ways Graal projects can have issues that I don't know about yet. There aren't many users for
+Graal Native Image in the Java gamedev space right now, but it's a good option for releasing small executables that are
+relatively hard to decompile (though not impossible). If more people start using Graal Native Image, this section will
+likely grow.
