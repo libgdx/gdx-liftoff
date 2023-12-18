@@ -187,7 +187,7 @@ class Dialogs : ThirdPartyExtension() {
 @Extension
 class Fleks : ThirdPartyExtension() {
   override val id = "fleks"
-  override val defaultVersion = "2.5"
+  override val defaultVersion = "2.6"
   override val url = "https://github.com/Quillraven/Fleks"
   override val group = "io.github.quillraven.fleks"
   override val name = "Fleks"
