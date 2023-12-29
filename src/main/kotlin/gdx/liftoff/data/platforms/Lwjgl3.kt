@@ -247,7 +247,7 @@ if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.
 tasks.register('dist') {
-  dependsOn['jar']
+  dependsOn 'jar'
 }
 
 if(enableGraalNative == 'true') {
