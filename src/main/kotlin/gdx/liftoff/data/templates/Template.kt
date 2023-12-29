@@ -49,7 +49,7 @@ interface Template {
   fun apply(project: Project) {
     addApplicationListener(project)
     addAndroidLauncher(project)
-    addDesktopLauncher(project)
+    addLwjgl2Launcher(project)
     addGwtLauncher(project)
     addHeadlessLauncher(project)
     addIOSLauncher(project)
@@ -76,25 +76,25 @@ interface Template {
    */
   fun getApplicationListenerContent(project: Project): String
 
-  fun addDesktopLauncher(project: Project) {
+  fun addLwjgl2Launcher(project: Project) {
     addSourceFile(
       project = project,
       platform = Lwjgl2.ID,
-      packageName = "${project.basic.rootPackage}.desktop",
-      fileName = "DesktopLauncher.$launcherExtension",
-      content = getDesktopLauncherContent(project)
+      packageName = "${project.basic.rootPackage}.lwjgl2",
+      fileName = "Lwjgl2Launcher.$launcherExtension",
+      content = getLwjgl2LauncherContent(project)
     )
   }
 
-  fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
+  fun getLwjgl2LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl2;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
-/** Launches the desktop (LWJGL) application. */
-public class DesktopLauncher {
+/** Launches the desktop (LWJGL2) application. */
+public class Lwjgl2Launcher {
     public static void main(String[] args) {
         createApplication();
     }

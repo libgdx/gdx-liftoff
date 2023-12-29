@@ -80,7 +80,7 @@ public class ${project.basic.mainClass} implements ActionContainer {
     }
 }"""
 
-  override fun getDesktopLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.desktop;
+  override fun getLwjgl2LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl2;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -89,8 +89,8 @@ import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner;
 import com.github.czyzby.autumn.mvc.application.AutumnApplication;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
-/** Launches the desktop (LWJGL) application. */
-public class DesktopLauncher {
+/** Launches the desktop (LWJGL2) application. */
+public class Lwjgl2Launcher {
     public static void main(String[] args) {
         createApplication();
     }

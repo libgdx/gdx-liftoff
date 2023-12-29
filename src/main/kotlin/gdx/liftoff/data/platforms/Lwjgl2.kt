@@ -54,8 +54,8 @@ class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
   override fun getContent(): String = """apply plugin: 'application'
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-mainClassName = '${project.basic.rootPackage}.desktop.DesktopLauncher'
-eclipse.project.name = appName + '-desktop'
+mainClassName = '${project.basic.rootPackage}.lwjgl2.Lwjgl2Launcher'
+eclipse.project.name = appName + '-lwjgl2'
 java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 
@@ -85,7 +85,7 @@ jar {
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.
 tasks.register('dist') {
-  dependsOn['jar']
+  dependsOn 'jar'
 }
 
 run {

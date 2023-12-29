@@ -20,9 +20,9 @@ interface KotlinTemplate : Template {
     project.languages.selectLanguage<Kotlin>()
   }
 
-  override fun getDesktopLauncherContent(project: Project): String = """@file:JvmName("DesktopLauncher")
+  override fun getLwjgl2LauncherContent(project: Project): String = """@file:JvmName("Lwjgl2Launcher")
 
-package ${project.basic.rootPackage}.desktop
+package ${project.basic.rootPackage}.lwjgl2
 
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
