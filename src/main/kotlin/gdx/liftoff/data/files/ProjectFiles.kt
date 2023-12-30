@@ -134,7 +134,16 @@ class PropertiesFile(val properties: Map<String, String>) : ProjectFile {
 class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
   override val path = "settings.gradle"
   override fun save(destination: FileHandle) {
-    val content = platforms.joinToString(prefix = "include ", separator = ", ", postfix = "\n") { "'${it.id}'" }
+    val content =  platforms.joinToString(prefix =
+    """// Can be used to automatically download a JDK with the correct version.
+// This is currently only used by Kotlin projects (by default).
+plugins {
+    id('org.gradle.toolchains.foojay-resolver-convention') version '0.7.0'
+}
+// A list of which subprojects to load as part of the same larger project.
+// You can remove Strings from the list and reload the Gradle project
+// if you want to temporarily disable a subproject.
+include """, separator = ", ", postfix = "\n") { "'${it.id}'" }
     destination.child(path).writeString(content, false, "UTF-8")
   }
 }
