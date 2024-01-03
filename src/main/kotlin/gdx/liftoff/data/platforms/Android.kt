@@ -177,10 +177,16 @@ android {
       """
 
   kotlin {
-    jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
+    jvmToolchain(17) // Android currently requires Java 17.
   }"""
     } else {
-      ""
+      """
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Android currently requires Java 17.
+    }
+}"""
     }}
 }
 

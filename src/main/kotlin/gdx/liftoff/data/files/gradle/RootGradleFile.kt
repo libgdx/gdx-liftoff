@@ -84,7 +84,13 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
     jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
   }"""
   } else {
-    ""
+    """
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
+    }
+}"""
   }}
 }
 

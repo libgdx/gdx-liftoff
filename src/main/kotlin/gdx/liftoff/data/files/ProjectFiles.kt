@@ -137,7 +137,6 @@ class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
     val content = platforms.joinToString(
       prefix =
       """// Can be used to automatically download a JDK with the correct version.
-// This is currently only used by Kotlin projects (by default).
 plugins {
     id('org.gradle.toolchains.foojay-resolver-convention') version '0.7.0'
 }
