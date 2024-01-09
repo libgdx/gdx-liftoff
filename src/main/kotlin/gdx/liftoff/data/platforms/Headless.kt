@@ -47,6 +47,7 @@ class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
 java.sourceCompatibility = ${project.advanced.serverJavaVersion}
 java.targetCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.headless.HeadlessLauncher'
+application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-headless'
 
 dependencies {

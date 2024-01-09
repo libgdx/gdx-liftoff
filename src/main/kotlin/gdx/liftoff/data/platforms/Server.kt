@@ -38,6 +38,7 @@ class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
 java.sourceCompatibility = ${project.advanced.serverJavaVersion}
 java.targetCompatibility = ${project.advanced.serverJavaVersion}
 mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
+application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-server'
 
 dependencies {

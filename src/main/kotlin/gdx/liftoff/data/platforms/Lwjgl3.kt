@@ -168,6 +168,7 @@ else {
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
+application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-lwjgl3'
 java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
