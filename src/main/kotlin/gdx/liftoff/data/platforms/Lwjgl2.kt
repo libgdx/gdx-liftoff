@@ -52,6 +52,7 @@ class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
   }
 
   override fun getContent(): String = """apply plugin: 'application'
+${if(project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl2.Lwjgl2Launcher'

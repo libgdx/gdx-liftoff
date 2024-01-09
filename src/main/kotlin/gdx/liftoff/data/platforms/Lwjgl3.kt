@@ -159,6 +159,7 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
     }
   }
 }
+${if(project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
   apply plugin: 'org.beryx.runtime'
 }
