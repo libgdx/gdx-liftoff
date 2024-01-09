@@ -21,7 +21,9 @@ java -jar gdx-liftoff-VERSION.jar
 
 **You should use Java 17+ !** Android tools now require your installed JDK to be version 17 or higher.
 You can still target other releases, as low as 8 typically, while building with any of the JDK versions 17 and up.
-Java 21 is not recommended, though, because Gradle doesn't fully support it yet.
+Java 21 works now, but when Java 22 is released (or if you are using an early access build), it won't work right
+away. That's just how Gradle is. When Gradle releases a version that expands JVM compatibility, we try to update
+quickly to that version.
 
 If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
@@ -35,7 +37,7 @@ In addition to most features of the official `gdx-setup`, the `gdx-liffoff` tool
 Their standard libraries, Gradle plugins, and appropriate source folders will be included.
 - **Customization.** You have more control over the versions of software used by your application.
 - **More third-party extensions.** Their versions are fetched from Maven Central or JitPack, so your project is always 
-up-to-date.
+generated up-to-date.
 - **Automatic configuration for tricky extensions.** If you're having trouble setting up
 Artemis-ODB, Lombok, or several other libraries, Liftoff does some extra work, so you don't have to. 
 - **Preferences support.** Basic data of your application is saved, so you don't have to fill it each time
@@ -48,13 +50,16 @@ provides simple checkboxes to add any and all official platforms, plus some spec
 (it needs "Generate Shell Scripts" set in Toolbox). If you use Eclipse, you can still import Gradle projects normally.
 - **Up-to-date.** This project prides itself on updating quickly after releases of major external components such
 as Gradle or libGDX itself.
+- **More backends are supported.** MOE is pretty much gone from gdx-setup, but that iOS backend's Community Edition
+is still supported here. TeaVM, an increasingly-popular alternative to GWT for browser-based applications, is also here,
+and works with Kotlin and other JVM languages as well as it does with Java.
 
 What's more, there are no major *structural differences* between any generated projects, regardless of the platforms
 you initially used. The official `gdx-setup` previously put assets in the `android` module, or the `core` module if Android is
 not selected. If you don't start with the Android platform, adding it to an existing project would require modification
 of the Gradle scripts. To avoid this issue, `gdx-liftoff` puts `assets` in the root folder. Adding a new platform
 to an existing application never forces you to modify any of the other modules. It should be noted that this feature was
-brought recently into gdx-setup in part because it worked in gdx-liftoff first.
+brought into gdx-setup in part because it worked in gdx-liftoff first.
 
 ## Guide
 

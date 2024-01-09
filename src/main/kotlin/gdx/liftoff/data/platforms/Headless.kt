@@ -43,7 +43,7 @@ class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
   }
 
   override fun getContent(): String = """apply plugin: 'application'
-${if(project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
+${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 java.sourceCompatibility = ${project.advanced.serverJavaVersion}
 java.targetCompatibility = ${project.advanced.serverJavaVersion}
