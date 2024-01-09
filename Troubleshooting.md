@@ -60,6 +60,38 @@ kotlin {
 (Probably adding it at the bottom of the file makes the most sense.) You still need to change `sourceCompatibility` and
 `targetCompatibility` to the same version as your toolchain; these affect Java, while the toolchain should help Kotlin.
 
+### Running a Kotlin launcher via IDEA's or Android Studio's "green triangle" button in the margin fails.
+
+This can be identified by an error message appearing such as:
+```
+Error: Could not find or load main class some.liftoff.project.lwjgl3.Lwjgl3Launcher
+Caused by: java.lang.ClassNotFoundException: some.liftoff.project.lwjgl3.Lwjgl3Launcher
+```
+
+The simplest solution I've found for this is to try it again in exactly the same way. You actually can expect a
+different result! The first failure seems to set something necessary up in the IDE, and so later attempts work.
+If this still fails on later tries, you can try reimporting/refreshing/syncing the Gradle project (I don't know
+what each IDE calls it, but the button may look like two circling arrows in the Gradle sidebar, may be in a bar
+that pops up at the top, or may be a tiny button with just those circling arrows). Then try it again (twice, if
+needed) and see if it works.
+
+Why does this work at all? 🤷‍♂️
+
+Some steps were taken to try to address this in gdx-liftoff 1.12.1.5, but they can't seem to fully eliminate this
+problem on the very first run. They may be what fixes it for the second and later runs, though.
+
+### Toolchains aren't working or are slow
+
+This is to be expected in 1.12.1.4, because some configuration was missing for Kotlin projects. That absence has been
+fixed in 1.12.1.5. In that version onward, Java also uses toolchains, the same way Kotlin does. This means there can
+be a long download for the first time you launch a gdx-liftoff project, but the download will get a JDK and keep it
+for any future projects to use (as long as they need the same version). This can be useful if someone wants to build
+your project but doesn't necessarily start with the right JVM version -- toolchains ensure they get the right one.
+
+A good option for cross-platform building is to keep the language level on 11 (supported by everything except RoboVM).
+This works even on Android; even with its requirements for Java 17 in other places, using a toolchain JDK 11 seems to
+keep away from those requirements. A JDK 17 may still be needed for other parts of an Android build.
+
 ### Graal Native Image isn't working (in any of various ways)
 
 First, ensure that you changed `enableGraalNative=false` to `enableGraalNative=true` in gradle.properties. This enables
