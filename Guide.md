@@ -116,10 +116,10 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
           would on desktop, and `long` not being visible to reflection. See [this small guide to GWT](https://libgdx.com/wiki/html5-backend-and-gwt-specifics)
           for more. It's very likely that you won't notice any difference unless you try to make behavior identical on GWT
           and other platforms, and even then there may be nothing apparent.
-            - GWT 2.10.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
-              official GWT backend](https://github.com/tommyettinger/gdx-backends#112100) that supports it with libGDX
-              1.12.1. Using GWT 2.10.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, but doesn't
-              change much of what's available from the standard library. The third-party 2.10.0 backend is currently used by default.
+            - GWT 2.11.0 is available but doesn't integrate with libGDX by default; there's a third-party [replacement to the
+              official GWT backend](https://github.com/tommyettinger/gdx-backends#112101) that supports it with libGDX
+              1.12.1. Using GWT 2.11.0 allows Java 11's `var` keyword to be used, plus other Java 11 features, and
+              allows using a little of the standard library. The third-party 2.11.0 backend is currently used by default.
     - For dependencies, you don't need libGDX checked (the tool is ready to download libGDX and set it as a
       dependency in all cases).
         - There are lots of potential dependencies you can add, some official but most third-party (unofficial).
