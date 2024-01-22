@@ -55,7 +55,7 @@ data class AdvancedProjectData(
    */
   val gdxTeaVMVersion: String
     get() = Repository.MavenCentral.getLatestVersion(group = "com.github.xpenatan.gdx-teavm", name = "backend-teavm")
-      ?: "1.0.0-b8"
+      ?: "1.0.0-b9"
 
   /**
    * Version of the main TeaVM project.

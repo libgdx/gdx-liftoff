@@ -87,8 +87,7 @@ class Box2D : OfficialExtension() {
     addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
 
     addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d:\$gdxVersion:sources")
-    addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
-    addDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
     addGwtInherit(project, "com.badlogic.gdx.physics.box2d.box2d-gwt")
 
     addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
@@ -173,7 +172,7 @@ class Controllers : OfficialExtension() {
     addDependency(project, Lwjgl3.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:\$gdxControllersVersion")
 
     addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-core:\$gdxControllersVersion:sources")
-    addDependency(project, GWT.ID, "com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"com.badlogicgames.gdx-controllers:gdx-controllers-gwt:\$gdxControllersVersion:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
     addGwtInherit(project, "com.badlogic.gdx.controllers")
     addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
 
