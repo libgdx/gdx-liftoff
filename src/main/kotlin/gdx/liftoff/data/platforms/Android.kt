@@ -182,11 +182,11 @@ android {
     } else {
       """
 
-java {
+  java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
+      languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
     }
-}"""
+  }"""
     }}
 }
 

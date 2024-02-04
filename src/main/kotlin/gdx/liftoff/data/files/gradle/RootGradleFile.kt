@@ -86,11 +86,11 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   } else {
     """
 
-java {
+  java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
+      languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
     }
-}"""
+  }"""
   }}
 }
 

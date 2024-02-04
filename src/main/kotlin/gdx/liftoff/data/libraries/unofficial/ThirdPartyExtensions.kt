@@ -697,7 +697,7 @@ class ControllerMapping : ThirdPartyExtension() {
 @Extension
 class GdxVfxCore : ThirdPartyExtension() {
   override val id = "gdxVfxCore"
-  override val defaultVersion = "0.5.1"
+  override val defaultVersion = "0.5.4"
   override val url = "https://github.com/crashinvaders/gdx-vfx"
   override val group = "com.crashinvaders.vfx"
   override val name = "gdx-vfx-core"
@@ -721,7 +721,7 @@ class GdxVfxCore : ThirdPartyExtension() {
 @Extension
 class GdxVfxStandardEffects : ThirdPartyExtension() {
   override val id = "gdxVfxEffects"
-  override val defaultVersion = "0.5.1"
+  override val defaultVersion = "0.5.4"
   override val url = "https://github.com/crashinvaders/gdx-vfx"
   override val group = "com.crashinvaders.vfx"
   override val name = "gdx-vfx-effects"
@@ -834,7 +834,7 @@ class JBump : ThirdPartyExtension() {
 @Extension
 class Kryo : ThirdPartyExtension() {
   override val id = "kryo"
-  override val defaultVersion = "5.4.0"
+  override val defaultVersion = "5.6.0"
   override val url = "https://github.com/EsotericSoftware/kryo"
   override val group = "com.esotericsoftware"
   override val name = "kryo"
@@ -1209,7 +1209,7 @@ class UniversalTween : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.4.5"
+  override val defaultVersion = "0.4.7"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1271,7 +1271,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "1.4.6"
+  override val defaultVersion = "1.4.8"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1294,7 +1294,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "1.4.6.0"
+  override val defaultVersion = "1.4.8.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1317,7 +1317,7 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 @Extension
 class KryoRegExodus : ThirdPartyExtension() {
   override val id = "kryoRegExodus"
-  override val defaultVersion = "0.1.15.0"
+  override val defaultVersion = "0.1.15.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-regexodus"
@@ -1337,7 +1337,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.4.5.0"
+  override val defaultVersion = "0.4.7.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1357,7 +1357,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.5.0.0"
+  override val defaultVersion = "0.5.0.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1378,7 +1378,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.4.6.0"
+  override val defaultVersion = "1.4.8.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
