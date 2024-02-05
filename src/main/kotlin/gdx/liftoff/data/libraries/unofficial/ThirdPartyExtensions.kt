@@ -63,8 +63,7 @@ class ArtemisOdb : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb")
 
-    addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt")
-    addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version:sources\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
     addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:sources")
     addGwtInherit(project, "com.artemis.backends.artemis_backends_gwt")
     if (project.hasPlatform(GWT.ID)) {
@@ -146,8 +145,7 @@ class Facebook : ThirdPartyExtension() {
 //        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
 
     addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
-    addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html")
-    addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-html:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"de.tomgrill.gdxfacebook:gdx-facebook-html:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
     addGwtInherit(project, "de.tomgrill.gdxfacebook.html.gdx_facebook_gwt")
   }
 }
@@ -174,7 +172,6 @@ class Dialogs : ThirdPartyExtension() {
     addDependency(project, IOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
 
     addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core:sources")
-    addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html")
     addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html:sources")
     addGwtInherit(project, "de.tomgrill.gdxdialogs.html.gdx_dialogs_html")
   }
@@ -449,7 +446,7 @@ class SimpleGraphs : ThirdPartyExtension() {
 @Extension
 class Formic : ThirdPartyExtension() {
   override val id = "formic"
-  override val defaultVersion = "0.1.4"
+  override val defaultVersion = "0.1.5"
   override val url = "https://github.com/tommyettinger/formic"
   override val group = "com.github.tommyettinger"
   override val name = "formic"
@@ -639,9 +636,8 @@ class ControllerUtils : ThirdPartyExtension() {
     addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
     addDependency(project, IOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
 
-    addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt")
-    addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:sources")
-    addDependency(project, GWT.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
+    addSpecialDependency(project, GWT.ID, "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
     addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
   }
 }
@@ -706,7 +702,6 @@ class GdxVfxCore : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.crashinvaders.vfx:gdx-vfx-core")
 
     addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-core:sources")
-    addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt")
     addDependency(project, GWT.ID, "com.crashinvaders.vfx:gdx-vfx-gwt:sources")
     addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxCore")
     addGwtInherit(project, "com.crashinvaders.vfx.GdxVfxGwt")
@@ -760,7 +755,7 @@ class RegExodus : ThirdPartyExtension() {
 /**
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
- * with which libGDX versions; vis-ui 1.5.2 is the default and is
+ * with which libGDX versions; vis-ui 1.5.3 is the default and is
  * compatible with libGDX 1.12.1.
  * @author Kotcrab
  */
@@ -769,7 +764,7 @@ class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
 
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1.5.2"
+  override val defaultVersion = "1.5.3"
   override val url = "https://github.com/kotcrab/vis-ui"
   override val group = "com.kotcrab.vis"
   override val name = "vis-ui"
@@ -884,8 +879,7 @@ class Guacamole : ThirdPartyExtension() {
     addDependency(project, Lwjgl3.ID, "com.github.crykn.guacamole:gdx-desktop")
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:core:sources")
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
-    addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt")
-    addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx-gwt:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"com.github.crykn.guacamole:gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
     addGwtInherit(project, "guacamole_gdx_gwt")
     if (project.platforms.containsKey(GWT.ID)) {
       Formic().initiate(project)
@@ -1036,8 +1030,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86_64")
-    addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt")
-    addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx-gwt:sources")
+    addSpecialDependency(project, GWT.ID, "implementation(\"com.crashinvaders.basisu:basisu-gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx:sources")
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:sources")
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")

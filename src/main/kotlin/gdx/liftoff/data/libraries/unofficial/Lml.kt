@@ -17,7 +17,7 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
 private const val defaultGroup = "com.crashinvaders.lml"
-private const val fallbackVersion = "1.10.1.11.0"
+private const val fallbackVersion = "1.10.1.12.0"
 
 /**
  * Various utilities for libGDX APIs including GUI building and dependency injection.
@@ -123,7 +123,6 @@ class Autumn : LmlExtension() {
 
     addDependency(project, Android.ID, "$group:gdx-autumn-android")
 
-    addDependency(project, GWT.ID, "$group:gdx-autumn-gwt")
     addDependency(project, GWT.ID, "$group:gdx-autumn-gwt:sources")
     addGwtInherit(project, "com.github.czyzby.autumn.gwt.GdxAutumnGwt")
 
@@ -178,7 +177,6 @@ class WebSocket : WebSocketExtension() {
     addAndroidPermission(project, "android.permission.INTERNET")
 
     addDependency(project, GWT.ID, "$group.gdx-websockets:core:sources")
-    addDependency(project, GWT.ID, "$group.gdx-websockets:html")
     addDependency(project, GWT.ID, "$group.gdx-websockets:html:sources")
     addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocket")
     addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketGwt")
