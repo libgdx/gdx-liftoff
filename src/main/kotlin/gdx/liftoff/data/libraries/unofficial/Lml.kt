@@ -123,6 +123,7 @@ class Autumn : LmlExtension() {
 
     addDependency(project, Android.ID, "$group:gdx-autumn-android")
 
+    addDependency(project, GWT.ID, "$group:gdx-autumn-gwt")
     addDependency(project, GWT.ID, "$group:gdx-autumn-gwt:sources")
     addGwtInherit(project, "com.github.czyzby.autumn.gwt.GdxAutumnGwt")
 

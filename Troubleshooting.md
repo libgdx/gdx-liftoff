@@ -113,3 +113,64 @@ There are probably a lot of ways Graal projects can have issues that I don't kno
 Graal Native Image in the Java gamedev space right now, but it's a good option for releasing small executables that are
 relatively hard to decompile (though not impossible). If more people start using Graal Native Image, this section will
 likely grow.
+
+### You receive compile-time errors in a GWT project made with Liftoff 1.12.1.6 or newer
+
+Liftoff 1.12.1.6 is the first to use GWT 2.11.0, which is almost entirely backwards-compatible... at an API level,
+at least. It has different dependencies for `gwt-user`, both because the version is newer, and that JAR is provided in
+a different "group" -- `org.gwtproject:gwt-user:2.11.0` instead of the older `com.google.gwt:gwt-user:2.8.2`.
+
+Before I start with the general solution, there's often a much easier one: for libraries that Liftoff has in its
+third-party extensions, any that need special treatment for GWT should already have that taken care of. The rest of this
+is only needed if a library you want to use isn't known to Liftoff and depends on an older GWT version.
+
+Any library dependencies, not installed via a checkbox in Liftoff, that have code specifically for GWT, and depend
+either directly on gwt-user (or gwt-dev) or indirectly via any version of `com.badlogicgames.gdx:gdx-backend-gwt`, can
+trigger version conflicts from two different releases of GWT. That means if you are trying to use 2.11.0, but 2.10.0, 
+2.8.2, or 2.8.0 gets into the dependencies, because the groups are different, the older version won't be replaced by the
+newer one. The solution is to exclude gwt-user (or the gdx-backend-gwt in the `com.badlogicsgames.gdx` group) from any
+dependencies that themselves depend on the older GWT. You can identify which dependencies these are by running the
+Gradle task `gradlew html:dependencies`, and searching through it for `com.google.gwt:gwt-user` . The output you're
+trying to find looks like this:
+
+```
++--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
+|    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
+|    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.12.1 (*)
+|         \--- com.google.gwt:gwt-user:2.8.2
+|              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
+|              +--- javax.validation:validation-api:1.0.0.GA
+|              +--- javax.servlet:javax.servlet-api:3.1.0
+|              \--- org.w3c.css:sac:1.3
+```
+
+Right in the middle there is gwt-user 2.8.2 . Once you've found all the places that depend on old gwt-user, you'll need
+to add an "exclude" to each dependency that was trying to obtain the old gwt-user. The new one should be kept; it's in
+`org.gwtproject:gwt-user`. The change to add an exclude block isn't too hard, but there's a lot of Gradle syntax
+involved. You find an existing dependency, such as:
+
+`implementation "com.crashinvaders.basisu:basisu-gdx-gwt:$gdxBasisUniversalVersion:sources"`
+
+Then make sure the quoted String is also in parentheses (I don't know why this is needed), and after that add a curly
+brace block to configure that line.
+```
+implementation("com.crashinvaders.basisu:basisu-gdx-gwt:$gdxBasisUniversalVersion:sources") {
+  exclude group: "com.badlogicgames.gdx", module: "gdx-backend-gwt"
+}
+```
+
+It is approximately equivalent to exclude the older gwt-user directly, and this may be better for some libraries that
+don't depend on libGDX, but do depend on GWT. You could do that with this block instead of the one above:
+
+```
+implementation("com.crashinvaders.basisu:basisu-gdx-gwt:$gdxBasisUniversalVersion:sources") {
+  exclude group: "com.google.gwt", module: "gwt-user"
+}
+```
+
+If a dependency has two parts that both depend on GWT, typically one with a `:sources` classifier at the end and one
+without `:sources`, then both need to be given the same exclude block in curly braces.
+
+Once every dependency on older GWT has been excluded, you should be able to run `html:superDev` or `html:dist` without
+any issues. From this, anyway.

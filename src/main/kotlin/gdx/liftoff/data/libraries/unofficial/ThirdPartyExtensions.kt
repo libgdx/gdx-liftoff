@@ -63,6 +63,7 @@ class ArtemisOdb : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb")
 
+    addSpecialDependency(project, GWT.ID, "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
     addSpecialDependency(project, GWT.ID, "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version:sources\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
     addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:sources")
     addGwtInherit(project, "com.artemis.backends.artemis_backends_gwt")
