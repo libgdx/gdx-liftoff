@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Net
 import com.badlogic.gdx.Version
 import com.badlogic.gdx.files.FileHandle
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -33,7 +31,6 @@ import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
-import org.lwjgl.BufferUtils
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.system.MemoryUtil.memAllocPointer
 import org.lwjgl.system.MemoryUtil.memFree
@@ -73,10 +70,10 @@ class MainView : ActionContainer {
   private val templatesView: TemplatesView = inject()
 
   @LmlActor("form")
-  private lateinit var form: VisFormTable
+  private val form: VisFormTable = inject()
 
   @LmlActor("notLatestVersion")
-  private lateinit var notUpToDateToast: ToastTable
+  private val notUpToDateToast: ToastTable = inject()
 
   @LmlAction("chooseDirectory")
   fun chooseDirectory() {
@@ -218,6 +215,9 @@ class MainView : ActionContainer {
         if (Configuration.VERSION != latestStable) {
           Gdx.app.postRunnable {
             toastManager.value.show(notUpToDateToast)
+            // all of these things *should* work...
+            toastManager.value.resize()
+            toastManager.value.toFront()
             // TODO: debug prints and debug outlines
             println(notUpToDateToast)
             form.stage.isDebugAll = true
