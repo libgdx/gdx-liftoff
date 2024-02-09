@@ -73,10 +73,10 @@ class MainView : ActionContainer {
   private val templatesView: TemplatesView = inject()
 
   @LmlActor("form")
-  private val form: VisFormTable = inject()
+  private lateinit var form: VisFormTable
 
   @LmlActor("notLatestVersion")
-  private val notUpToDateToast: ToastTable = inject()
+  private lateinit var notUpToDateToast: ToastTable
 
   @LmlAction("chooseDirectory")
   fun chooseDirectory() {
@@ -207,15 +207,21 @@ class MainView : ActionContainer {
 
   @LmlAfter fun checkSetupVersion() {
     // When using snapshots, we don't care if the version matches the latest stable.
-    if (Configuration.VERSION.endsWith("SNAPSHOT")) return
+//    if (Configuration.VERSION.endsWith("SNAPSHOT")) return
 
     val request = Net.HttpRequest(Net.HttpMethods.GET)
     request.url = "https://raw.githubusercontent.com/tommyettinger/gdx-liftoff/master/version.txt"
     val listener = object : Net.HttpResponseListener {
       override fun handleHttpResponse(httpResponse: Net.HttpResponse) {
-        val latestStable = httpResponse.resultAsString.trim()
+        // TODO: bring the commented line back when the Toast shows up
+        val latestStable = "999.999.999.999"//httpResponse.resultAsString.trim()
         if (Configuration.VERSION != latestStable) {
-          Gdx.app.postRunnable { toastManager.value.show(notUpToDateToast) }
+          Gdx.app.postRunnable {
+            toastManager.value.show(notUpToDateToast)
+            // TODO: debug prints and debug outlines
+            println(notUpToDateToast)
+            form.stage.isDebugAll = true
+          }
         }
       }
 
@@ -305,35 +311,35 @@ class MainView : ActionContainer {
 
   @LmlAction("initTitleTable")
   fun addWindowDragListener(actor: Actor) {
-    actor.addListener(object : InputListener() {
-      private val context = GLFW.glfwGetCurrentContext()
-      private var startX = 0
-      private var startY = 0
-      private var offsetX = 0
-      private var offsetY = 0
-      private val cursorX = BufferUtils.createDoubleBuffer(1)
-      private val cursorY = BufferUtils.createDoubleBuffer(1)
-      private val windowX = BufferUtils.createIntBuffer(1)
-      private val windowY = BufferUtils.createIntBuffer(1)
-
-      override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
-        GLFW.glfwGetCursorPos(context, cursorX, cursorY)
-        startX = getX()
-        startY = getY()
-        return true
-      }
-
-      override fun touchDragged(event: InputEvent?, x: Float, y: Float, pointer: Int) {
-        GLFW.glfwGetCursorPos(context, cursorX, cursorY)
-        offsetX = getX() - startX
-        offsetY = getY() - startY
-        GLFW.glfwGetWindowPos(context, windowX, windowY)
-        GLFW.glfwSetWindowPos(context, windowX.get(0) + offsetX, windowY.get(0) + offsetY)
-      }
-
-      private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
-      private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
-    })
+//    actor.addListener(object : InputListener() {
+//      private val context = GLFW.glfwGetCurrentContext()
+//      private var startX = 0
+//      private var startY = 0
+//      private var offsetX = 0
+//      private var offsetY = 0
+//      private val cursorX = BufferUtils.createDoubleBuffer(1)
+//      private val cursorY = BufferUtils.createDoubleBuffer(1)
+//      private val windowX = BufferUtils.createIntBuffer(1)
+//      private val windowY = BufferUtils.createIntBuffer(1)
+//
+//      override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+//        GLFW.glfwGetCursorPos(context, cursorX, cursorY)
+//        startX = getX()
+//        startY = getY()
+//        return true
+//      }
+//
+//      override fun touchDragged(event: InputEvent?, x: Float, y: Float, pointer: Int) {
+//        GLFW.glfwGetCursorPos(context, cursorX, cursorY)
+//        offsetX = getX() - startX
+//        offsetY = getY() - startY
+//        GLFW.glfwGetWindowPos(context, windowX, windowY)
+//        GLFW.glfwSetWindowPos(context, windowX.get(0) + offsetX, windowY.get(0) + offsetY)
+//      }
+//
+//      private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
+//      private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
+//    })
   }
 
   /**

@@ -1,9 +1,7 @@
 <table toTitleTable="true" growX="true">
-    <!--
     <table background="window-bg" onCreate="initTitleTable" growX="true" height="26" padBottom="-20" row="true"
-           colspan="3" touchable="enabled"/>
-    -->
-    <image style="gdx-liftoff" fill="false" onClick="showSite" expandX="true" padTop="26"/>
+           colspan="1" touchable="enabled"/>
+    <image style="gdx-liftoff" fill="false" expandX="true" padTop="26"/>
     <!--
     <imageButton style="close-blue" image="icon-minus" toTitleTable="true" fill="false"
                  align="topRight" padTop="-6"/>
