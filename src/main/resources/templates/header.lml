@@ -1,7 +1,13 @@
 <table toTitleTable="true" growX="true">
+    <!--
     <table background="window-bg" onCreate="initTitleTable" growX="true" height="26" padBottom="-20" row="true"
            colspan="1" touchable="enabled"/>
-    <image style="gdx-liftoff" fill="false" expandX="true" padTop="26"/>
+    -->
+    <stack fill="false" expandX="true" padTop="13" padBottom="13">
+            <label id="versionUpdate" align="center">@notUpToDate</label>
+            <linkLabel id="versionLink" align="center" url="https://github.com/tommyettinger/gdx-liftoff/releases">@downloadLatest</linkLabel>
+            <image id="logo" style="gdx-liftoff"/>
+    </stack>
     <!--
     <imageButton style="close-blue" image="icon-minus" toTitleTable="true" fill="false"
                  align="topRight" padTop="-6"/>

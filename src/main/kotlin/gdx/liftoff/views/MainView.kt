@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Button
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.badlogic.gdx.utils.Align
 import com.github.czyzby.autumn.annotation.Inject
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService
 import com.github.czyzby.autumn.mvc.stereotype.View
@@ -21,11 +21,11 @@ import com.github.czyzby.lml.annotation.LmlInject
 import com.github.czyzby.lml.parser.LmlParser
 import com.github.czyzby.lml.parser.action.ActionContainer
 import com.github.czyzby.lml.vis.ui.VisFormTable
-import com.kotcrab.vis.ui.util.ToastManager
+import com.kotcrab.vis.ui.widget.LinkLabel
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.file.FileChooser
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
-import com.kotcrab.vis.ui.widget.toast.ToastTable
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
@@ -44,13 +44,6 @@ import com.badlogic.gdx.utils.Array as GdxArray
 @View(id = "main", value = "templates/main.lml", first = true)
 @Suppress("unused") // Methods and fields accessed via reflection.
 class MainView : ActionContainer {
-  val toastManager: Lazy<ToastManager> = lazy {
-    val manager = ToastManager(form.stage)
-    manager.screenPadding = 40
-    manager.alignment = Align.bottomRight
-    manager
-  }
-
   @Inject private val interfaceService: InterfaceService = inject()
 
   @LmlInject private val basicData: BasicProjectDataView = inject()
@@ -69,11 +62,20 @@ class MainView : ActionContainer {
   @LmlInject @Inject
   private val templatesView: TemplatesView = inject()
 
+  @LmlActor("logo")
+  @Inject
+  private val logo: Image = inject()
+
+  @LmlActor("versionUpdate")
+  @LmlInject
+  private val versionUpdate: VisLabel = inject()
+
+  @LmlActor("versionLink")
+  @LmlInject
+  private val versionLink: LinkLabel = inject()
+
   @LmlActor("form")
   private val form: VisFormTable = inject()
-
-  @LmlActor("notLatestVersion")
-  private val notUpToDateToast: ToastTable = inject()
 
   @LmlAction("chooseDirectory")
   fun chooseDirectory() {
@@ -203,24 +205,28 @@ class MainView : ActionContainer {
   }
 
   @LmlAfter fun checkSetupVersion() {
+    versionUpdate.color.a = 0f
+    versionLink.color.a = 0f
     // When using snapshots, we don't care if the version matches the latest stable.
-//    if (Configuration.VERSION.endsWith("SNAPSHOT")) return
+    if (Configuration.VERSION.endsWith("SNAPSHOT")) return
 
     val request = Net.HttpRequest(Net.HttpMethods.GET)
     request.url = "https://raw.githubusercontent.com/tommyettinger/gdx-liftoff/master/version.txt"
     val listener = object : Net.HttpResponseListener {
       override fun handleHttpResponse(httpResponse: Net.HttpResponse) {
-        // TODO: bring the commented line back when the Toast shows up
-        val latestStable = "999.999.999.999"//httpResponse.resultAsString.trim()
+        val latestStable = httpResponse.resultAsString.trim()
         if (Configuration.VERSION != latestStable) {
           Gdx.app.postRunnable {
-            toastManager.value.show(notUpToDateToast)
-            // all of these things *should* work...
-            toastManager.value.resize()
-            toastManager.value.toFront()
-            // TODO: debug prints and debug outlines
-            println(notUpToDateToast)
-            form.stage.isDebugAll = true
+            logo.setZIndex(0)
+            logo.addAction(
+              Actions.sequence(
+                Actions.fadeOut(1.5f),
+                Actions.run {
+                  versionLink.addAction(Actions.fadeIn(1f))
+                  versionUpdate.addAction(Actions.fadeIn(1f))
+                }
+              )
+            )
           }
         }
       }
