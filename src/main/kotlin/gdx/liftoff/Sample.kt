@@ -13,8 +13,16 @@ import gdx.liftoff.data.languages.Java
 import gdx.liftoff.data.languages.Kotlin
 import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.libraries.Library
+import gdx.liftoff.data.libraries.official.Box2D
+import gdx.liftoff.data.libraries.official.Box2DLights
+import gdx.liftoff.data.libraries.official.Freetype
 import gdx.liftoff.data.libraries.official.OfficialExtension
+import gdx.liftoff.data.libraries.unofficial.Formic
 import gdx.liftoff.data.libraries.unofficial.KtxRepository
+import gdx.liftoff.data.libraries.unofficial.RegExodus
+import gdx.liftoff.data.libraries.unofficial.ShapeDrawer
+import gdx.liftoff.data.libraries.unofficial.Stripe
+import gdx.liftoff.data.libraries.unofficial.TenPatch
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
@@ -34,6 +42,7 @@ import gdx.liftoff.data.templates.official.KotlinClassicTemplate
 import gdx.liftoff.data.templates.unofficial.KtxTemplate
 import gdx.liftoff.views.Extension
 import java.io.File
+import java.util.Optional
 import kotlin.system.exitProcess
 import com.badlogic.gdx.utils.Array as GdxArray
 import gdx.liftoff.views.Extension as GdxExtension
@@ -49,6 +58,8 @@ enum class Preset {
     override val platforms: List<Platform>
       get() = listOf(Core(), Lwjgl3(), Android(), IOS(), GWT())
     override val languages: List<Language> = emptyList()
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template
       get() = ClassicTemplate()
@@ -64,6 +75,8 @@ enum class Preset {
       get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language>
       get() = listOf(Kotlin())
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template
       get() = KotlinClassicTemplate()
@@ -79,6 +92,8 @@ enum class Preset {
       get() = listOf(Core(), Lwjgl3(), Android(), IOS())
     override val languages: List<Language>
       get() = listOf(Kotlin())
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
         val scanner = DesktopClassScanner()
@@ -102,6 +117,8 @@ enum class Preset {
       get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language>
       get() = listOf(Kotlin())
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
         val scanner = DesktopClassScanner()
@@ -117,12 +134,65 @@ enum class Preset {
     override val template: Template
       get() = KtxTemplate()
     override val addSkin: Boolean = false
+  },
+
+  /** Includes Android and LWJGL3 projects, meant for users developing on Android devices.
+   * Also includes Box2D, Box2D-Lights, GDX-Freetype, ShapeDrawer, TenPatch, and Stripe. */
+  ANDROID_DEV {
+    override val projectName: String
+      get() = "gdx-android-dev-demo"
+    override val rootPackage: String
+      get() = "gdx.android"
+    override val platforms: List<Platform>
+      get() = listOf(Core(), Lwjgl3(), Android())
+    override val languages: List<Language> = emptyList()
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.of(listOf(Box2D(), Box2DLights(), Freetype()))
+    override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe())
+    override val template: Template
+      get() = ClassicTemplate()
+  },
+
+  /** Includes GWT and LWJGL3 projects, meant for users developing an HTML game that can also be played offline.
+   * Also includes Box2D, ShapeDrawer, TenPatch, Stripe, Formic, and RegExodus. */
+  GWT_DEV {
+    override val projectName: String
+      get() = "gdx-gwt-dev-demo"
+    override val rootPackage: String
+      get() = "gdx.gwt"
+    override val platforms: List<Platform>
+      get() = listOf(Core(), Lwjgl3(), GWT())
+    override val languages: List<Language> = emptyList()
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.of(listOf(Box2D()))
+    override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe(), Formic(), RegExodus())
+    override val template: Template
+      get() = ClassicTemplate()
+  },
+
+  /** Includes TeaVM and LWJGL3 projects with the Kotlin language, meant for users developing an HTML game that can also
+   * be played offline, in Kotlin. You may prefer KTX_WEB if you want to use KTX.
+   * Also includes Box2D, ShapeDrawer, TenPatch and Stripe. */
+  TEA_DEV {
+    override val projectName: String
+      get() = "gdx-gwt-dev-demo"
+    override val rootPackage: String
+      get() = "gdx.gwt"
+    override val platforms: List<Platform>
+      get() = listOf(Core(), Lwjgl3(), TeaVM())
+    override val languages: List<Language> = listOf(Kotlin())
+    override val officialExtensions: Optional<List<Library>>
+      get() = Optional.of(listOf(Box2D()))
+    override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe())
+    override val template: Template
+      get() = KotlinClassicTemplate()
   };
 
   abstract val projectName: String
   abstract val rootPackage: String
   abstract val platforms: List<Platform>
   abstract val languages: List<Language>
+  abstract val officialExtensions: Optional<List<Library>>
   abstract val thirdPartyExtensions: List<Library>
   abstract val template: Template
   open val addSkin: Boolean = true
@@ -172,7 +242,7 @@ fun main(arguments: Array<String>) {
     gradleTasks = mutableListOf()
   )
   val extensions = ExtensionsData(
-    officialExtensions = officialExtensions,
+    officialExtensions = preset.officialExtensions.orElse(officialExtensions),
     thirdPartyExtensions = preset.thirdPartyExtensions
   )
 
