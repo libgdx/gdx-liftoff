@@ -22,7 +22,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: temurin
       - name: Gradle setup
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@3b1b3b9a2104c2b47fbae53f3938079c00c9bb87
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
       - name: Build

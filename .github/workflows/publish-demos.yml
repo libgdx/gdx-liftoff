@@ -18,13 +18,13 @@ jobs:
           java-version: 11
           distribution: temurin
       - name: Gradle setup
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@3b1b3b9a2104c2b47fbae53f3938079c00c9bb87
       - name: Generate sample
         run: ./gradlew sample --args="default"
       - name: Save gdx-liftoff version
         run: echo "LIFTOFF_VERSION=$(cat version.txt)" >> $GITHUB_ENV
       - name: Publish default sample
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@daa009f998b3c55001be245134f4f91e640955fd
         with:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main
@@ -36,7 +36,7 @@ jobs:
       - name: Generate Kotlin sample
         run: ./gradlew sample --args="kotlin"
       - name: Publish Kotlin sample
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@daa009f998b3c55001be245134f4f91e640955fd
         with:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main
