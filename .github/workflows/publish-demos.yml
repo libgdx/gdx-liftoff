@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main
           folder: build/dist/sample
-          repository-name: tommyettinger/gdx-liftoff-demo
+          repository-name: libgdx/gdx-liftoff-demo
           commit-message: 'Automatic deployment: gdx-liftoff ${{ env.LIFTOFF_VERSION }}.'
       - name: Clean basic sample
         run: rm -rf build/dist/sample
@@ -41,5 +41,5 @@ jobs:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main
           folder: build/dist/sample
-          repository-name: tommyettinger/gdx-liftoff-demo-kotlin
+          repository-name: libgdx/gdx-liftoff-demo-kotlin
           commit-message: 'Automatic deployment: gdx-liftoff ${{ env.LIFTOFF_VERSION }}.'

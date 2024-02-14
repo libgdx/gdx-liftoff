@@ -54,17 +54,10 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-kiwi:$lmlVersion"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-lml:$lmlVersion"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-lml-vis:$lmlVersion"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn:$lmlVersion"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-fcs:$lmlVersion"
-//  implementation "com.github.tommyettinger.gdx-lml:gdx-autumn-mvc:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
-//  implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
@@ -78,9 +71,14 @@ dependencies {
 
   // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
   implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
+  // for some network requests, such as checking the versions of dependencies
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
-//  implementation "com.github.devcsrj:mvnrepository-api-client:1.1.1" // old, has vulnerable dependencies
+  // specifically for getting the latest stable versions from https://mvnrepository.com
+  // this was just updated, but this version has 4 vulnerable dependencies: okhttp, okio, retrofit, and jsoup
+//  implementation "com.github.devcsrj:mvnrepository-api-client:2.0.2"
+  // this is about the same code, but does not have any of the above vulnerable dependency versions
   implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
+
   implementation "org.slf4j:slf4j-nop:2.0.5"
 }
 

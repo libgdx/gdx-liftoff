@@ -211,7 +211,7 @@ class MainView : ActionContainer {
     if (Configuration.VERSION.endsWith("SNAPSHOT")) return
 
     val request = Net.HttpRequest(Net.HttpMethods.GET)
-    request.url = "https://raw.githubusercontent.com/tommyettinger/gdx-liftoff/master/version.txt"
+    request.url = "https://raw.githubusercontent.com/libgdx/gdx-liftoff/master/version.txt"
     val listener = object : Net.HttpResponseListener {
       override fun handleHttpResponse(httpResponse: Net.HttpResponse) {
         val latestStable = httpResponse.resultAsString.trim()

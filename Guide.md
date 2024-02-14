@@ -37,7 +37,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
 
 ## Usage
 
-- Get the latest `gdx-liftoff.jar` from the [Releases tab](https://github.com/tommyettinger/gdx-liftoff/releases) of this project.
+- Get the latest `gdx-liftoff.jar` from the [Releases tab](https://github.com/libgdx/gdx-liftoff/releases) of this project.
     - If you have an older gdx-liftoff.jar, or you aren't sure when it was released, getting the current latest is a good idea.
 - Regardless of what platforms you intend to target, make sure the steps
   [described by the libGDX wiki here](https://libgdx.com/wiki/start/setup)
@@ -75,9 +75,9 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
         - iOS should probably *not* be checked if you aren't running macOS and don't intend to later build an iOS
           app on a Mac. It needs some large dependencies to be downloaded when you first import the project.
             - If you have a Mac that is set up for iOS development, please try to generate any project and see if it gets
-              made correctly! We've had some [good feedback](https://github.com/tommyettinger/gdx-liftoff/issues/28) on iOS
+              made correctly! We've had some [good feedback](https://github.com/libgdx/gdx-liftoff/issues/28) on iOS
               projects, but any extra usage info would help ensure that liftoff is ready for any libGDX usage. It isn't a
-              typical usage for a [GitHub Issue](https://github.com/tommyettinger/gdx-liftoff/issues), but sending any
+              typical usage for a [GitHub Issue](https://github.com/libgdx/gdx-liftoff/issues), but sending any
               feedback as an issue, whether it's "iOS projects work for me" or "iOS support is broken" would really help.
             - Support for iOS should be better as of 1.10.0.3, but it could still use more testing. There are changes in
               libGDX 1.10.0 that should really help iOS projects out of the box; if you encounter screen trouble with any

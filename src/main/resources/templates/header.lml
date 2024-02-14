@@ -5,7 +5,7 @@
     -->
     <stack fill="false" expandX="true" padTop="13" padBottom="13">
             <label id="versionUpdate" align="center">@notUpToDate</label>
-            <linkLabel id="versionLink" align="center" url="https://github.com/tommyettinger/gdx-liftoff/releases">@downloadLatest</linkLabel>
+            <linkLabel id="versionLink" align="center" url="https://github.com/libgdx/gdx-liftoff/releases">@downloadLatest</linkLabel>
             <image id="logo" style="gdx-liftoff"/>
     </stack>
     <!--

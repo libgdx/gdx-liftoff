@@ -107,7 +107,7 @@ your Liftoff project, and launch `gradlew lwjgl3:nativeCompile` from there, whic
 The asset-location code was subtly broken in Liftoff 1.12.1.3 in some cases, namely when assets were in subfolders. This
 should be fixed in 1.12.1.4; if you are updating a 1.12.1.3 project that uses Graal Native Image, I recommend copying in
 the whole nativeimage.gradle file to replace the existing one (unless you have edited it) from either a new 1.12.1.4 or
-higher project or [the same file from the generated demo](https://github.com/tommyettinger/gdx-liftoff-demo/blob/main/lwjgl3/nativeimage.gradle).
+higher project or [the same file from the generated demo](https://github.com/libgdx/gdx-liftoff-demo/blob/main/lwjgl3/nativeimage.gradle).
 
 There are probably a lot of ways Graal projects can have issues that I don't know about yet. There aren't many users for
 Graal Native Image in the Java gamedev space right now, but it's a good option for releasing small executables that are

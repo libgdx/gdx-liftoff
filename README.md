@@ -1,18 +1,18 @@
-[![Build status](https://github.com/tommyettinger/gdx-liftoff/workflows/build/badge.svg)](https://github.com/tommyettinger/gdx-liftoff/actions/workflows/build.yml)
+[![Build status](https://github.com/libgdx/gdx-liftoff/workflows/build/badge.svg)](https://github.com/libgdx/gdx-liftoff/actions/workflows/build.yml)
 
 # 🚀 gdx-liftoff 🚀
 
 A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
-[![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/tommyettinger/gdx-liftoff/releases)
+[![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/libgdx/gdx-liftoff/releases)
 
 <h1 style="text-align: center;">
     📥
-    <strong><a href="https://github.com/tommyettinger/gdx-liftoff/releases">DOWNLOAD</a></strong>
+    <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD</a></strong>
     📥
 </h1>
 
-To generate a project, [download](https://github.com/tommyettinger/gdx-liftoff/releases) the latest application
+To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application
 `jar` and run it (usually double-clicking will do), or run the following command manually (replacing the `VERSION` appropriately):
 
 ```shell
