@@ -1,16 +1,16 @@
 <tab text="@platforms" closeable="false" oneColumn="true">
-    <label padBottom="10" align="left" padLeft="50">@primaryPlatforms</label>
+    <label style="small" padBottom="2" align="left" padLeft="50">@primaryPlatforms</label>
     <table>
         <:for platform="$platforms">
             <:calculate key="mandatory" value="{platform}=core"/>
             <:calculate key="precheck" value="{platform}=core || {platform}=lwjgl3"/>
-            <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="30" padBottom="5"
+            <checkBox id="{platform}" disabled="{mandatory}" checked="{precheck}" padLeft="30" padBottom="2"
                       align="left" onChange="togglePlatform">
-                @{platform}
+                <label style="small">@{platform}</label>
             </checkBox>
-            <label style="small" row="true" align="left" padLeft="20" padBottom="5">@{platform}Tip</label>
+            <label style="small" row="true" align="left" padLeft="20" padBottom="2">@{platform}Tip</label>
             <:if test="{platform}=html">
-                <label pad="10" row="true" colspan="2" align="left" padLeft="50">@secondaryPlatforms</label>
+                <label style="small" pad="2" row="true" colspan="2" align="left" padLeft="50">@secondaryPlatforms</label>
             </:if>
         </:for>
     </table>

@@ -15,7 +15,7 @@ maxHeight=2048
 maxWidth=1024
 minHeight=16
 minWidth=1024
-paddingX=1
+paddingX=2
 paddingY=2
 pot=true
 mof=false
@@ -30,14 +30,18 @@ square=false
 bleed=true
 limitMemory=true
 useIndexes=true
+prettyPrint=false
+legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
 inputFiles=[{path:../raw/icon-arrow-left.png,type:Input,regionName:null},{path:../raw/color-picker-bar-selector.png,type:Input,regionName:null},{path:../raw/color-picker-cross.png,type:Input,regionName:null},{path:../raw/color-picker-selector-horizontal.png,type:Input,regionName:null},{path:../raw/color-picker-selector-vertical.png,type:Input,regionName:null},{path:../raw/cursor.9.png,type:Input,regionName:null},{path:../raw/default.png,type:Input,regionName:null},{path:../raw/gdx-liftoff.png,type:Input,regionName:null},{path:../raw/icon-arrow-down.png,type:Input,regionName:null},{path:../raw/icon-arrow-right.png,type:Input,regionName:null},{path:../raw/icon-arrow-up.png,type:Input,regionName:null},{path:../raw/icon-close.png,type:Input,regionName:null},{path:../raw/icon-drive.png,type:Input,regionName:null},{path:../raw/icon-file-audio.png,type:Input,regionName:null},{path:../raw/icon-file-image.png,type:Input,regionName:null},{path:../raw/icon-file-pdf.png,type:Input,regionName:null},{path:../raw/icon-file-text.png,type:Input,regionName:null},{path:../raw/icon-folder-new.png,type:Input,regionName:null},{path:../raw/icon-folder-parent.png,type:Input,regionName:null},{path:../raw/icon-folder-star.png,type:Input,regionName:null},{path:../raw/icon-folder.png,type:Input,regionName:null},{path:../raw/icon-list-settings.png,type:Input,regionName:null},{path:../raw/icon-minus.png,type:Input,regionName:null},{path:../raw/icon-refresh.png,type:Input,regionName:null},{path:../raw/icon-star-outline.png,type:Input,regionName:null},{path:../raw/icon-star.png,type:Input,regionName:null},{path:../raw/icon-trash.png,type:Input,regionName:null},{path:../raw/libgdx.png,type:Input,regionName:null},{path:../raw/t-base.9.png,type:Input,regionName:null},{path:../raw/t-border-circle.png,type:Input,regionName:null},{path:../raw/t-border.9.png,type:Input,regionName:null},{path:../raw/t-check-tick.png,type:Input,regionName:null},{path:../raw/t-check.png,type:Input,regionName:null},{path:../raw/t-dot.png,type:Input,regionName:null},{path:../raw/t-hknob.png,type:Input,regionName:null},{path:../raw/t-hline.png,type:Input,regionName:null},{path:../raw/t-hslider.png,type:Input,regionName:null},{path:../raw/t-radio-tick.png,type:Input,regionName:null},{path:../raw/t-radio.png,type:Input,regionName:null},{path:../raw/t-select-down.png,type:Input,regionName:null},{path:../raw/t-select-up.png,type:Input,regionName:null},{path:../raw/t-select.9.png,type:Input,regionName:null},{path:../raw/t-tree-minus.png,type:Input,regionName:null},{path:../raw/t-tree-plus.png,type:Input,regionName:null},{path:../raw/t-vknob.png,type:Input,regionName:null},{path:../raw/t-vline.png,type:Input,regionName:null},{path:../raw/t-vslider.png,type:Input,regionName:null},{path:../raw/t-window-border.9.png,type:Input,regionName:null},{path:../raw/t-window-resize.9.png,type:Input,regionName:null},{path:../raw/t-window.9.png,type:Input,regionName:null}]
+keepInputFileExtensions=false
 
 
 -PROJ-
 
-version=4.10.0
+version=4.13.0
 fileTypeType=png
 fileTypeData={encoding:RGBA8888}
 previewBackgroundColor=ffffffff
+projectSettings={inputFiles:{}}
