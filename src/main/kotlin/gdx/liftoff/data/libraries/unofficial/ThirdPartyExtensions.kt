@@ -985,12 +985,12 @@ class GdxPsx : ThirdPartyExtension() {
 }
 
 /**
- * A layout engine which implements Flexbox.
+ * A layout engine which implements FlexBox.
  * @author Lyze
  */
 @Extension
 class GdxFlexBox : ThirdPartyExtension() {
-  override val id = "gdxFlexBox"
+  override val id = "flexBox"
   override val defaultVersion = "425149b588"
   override val url = "https://github.com/lyze237/gdx-FlexBox"
   override val repository = Repository.JitPack
@@ -1001,6 +1001,28 @@ class GdxFlexBox : ThirdPartyExtension() {
     addDependency(project, Core.ID, "com.github.lyze237:gdx-FlexBox")
     addDependency(project, GWT.ID, "com.github.lyze237:gdx-FlexBox:sources")
     addGwtInherit(project, "dev.lyze.flexbox")
+  }
+}
+
+/**
+ * Couples Unity's behaviour system and execution order with Box2D.
+ * @author Lyze
+ */
+@Extension
+class GdxUnBox2D : ThirdPartyExtension() {
+  override val id = "unbox2d"
+  override val defaultVersion = "e09473c1d0"
+  override val url = "https://github.com/lyze237/gdx-UnBox2D"
+  override val repository = Repository.JitPack
+  override val group = "com.github.lyze327"
+  override val name = "gdx-UnBox2D"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.lyze237:gdx-UnBox2D")
+    addDependency(project, GWT.ID, "com.github.lyze237:gdx-UnBox2D:sources")
+    addGwtInherit(project, "dev.lyze.gdxUnBox2d")
+    Box2D().initiate(project)
+    ShapeDrawer().initiate(project)
   }
 }
 
