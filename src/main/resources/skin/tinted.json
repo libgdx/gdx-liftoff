@@ -1,8 +1,4 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont:{
-default-font:{file:default.fnt,scaledSize:12,useIntegerPositions:false},
-small-font:{file:default.fnt,scaledSize:10}
-},
 com.badlogic.gdx.graphics.Color:{
 green:{a:1,b:0,g:1,r:0},
 red:{a:1,b:0,g:0,r:1},
@@ -110,6 +106,10 @@ window-border-bg:{name:t-dot,color:t-dark},
 window-noborder:{name:t-window-border,color:t-dark},
 window-resizable:{name:t-window-resize,color:t-dark}
 },
+com.badlogic.gdx.graphics.g2d.BitmapFont:{
+default-font:{file:default.fnt,scaledSize:12,useIntegerPositions:false},
+small-font:{file:default.fnt,scaledSize:10}
+},
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle:{
 default:{down:button-down,up:button},
 blue:{down:button-blue-down,up:button-blue},
@@ -125,7 +125,7 @@ list:{vScroll:scroll,vScrollKnob:scroll-knob-vertical,hScroll:scroll-horizontal,
 default:{background:border,vScroll:scroll,vScrollKnob:scroll-knob-vertical,hScroll:scroll-horizontal,hScrollKnob:scroll-knob-horizontal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle:{
-default:{background:default-select,backgroundOver:default-select-over,scrollStyle:default,listStyle:{font:default-font,selection:padded-list-selection,background:select-box-list-bg},font:default-font,fontColor:white,disabledFontColor:grey}
+default:{background:default-select,backgroundOver:default-select-over,scrollStyle:default,listStyle:selectBoxListStyle,font:default-font,fontColor:white,disabledFontColor:grey}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle:{
 default-vertical:{handle:splitpane-vertical},
@@ -156,7 +156,8 @@ default:{font:default-font,fontColor:white,disabledFontColor:grey,selection:sele
 small:{font:small-font,fontColor:white,disabledFontColor:grey,selection:selection,background:textfield,cursor:cursor,messageFont:default-font,messageFontColor:grey}
 },
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle:{
-default:{fontColorUnselected:white,selection:padded-list-selection,fontColorSelected:white,font:default-font}
+default:{fontColorUnselected:white,selection:padded-list-selection,fontColorSelected:white,font:default-font},
+selectBoxListStyle:{font:default-font,selection:padded-list-selection,background:select-box-list-bg}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle:{
 default:{background:default-pane,knob:touchpad-knob}
@@ -165,7 +166,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle:{
 default:{minus:tree-minus,plus:tree-plus,selection:tree-selection,over:tree-over}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle:{
-default:{background:window-noborder,label:{font:small-font,fontColor:white}}
+default:{background:window-noborder,label:small}
 },
 com.kotcrab.vis.ui.Sizes:{
 default:{scaleFactor:1,spacingBottom:8,spacingRight:6,buttonBarSpacing:10,menuItemIconSize:22,spinnerButtonHeight:12,spinnerFieldSize:40,fileChooserViewModeBigIconsSize:200,fileChooserViewModeMediumIconsSize:128,fileChooserViewModeSmallIconsSize:64,fileChooserViewModeListWidthSize:170},
