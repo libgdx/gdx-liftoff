@@ -7,4 +7,9 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.Property
  */
 @Property("Name")
 @Suppress("unused") // Referenced via reflection.
-class NamePreference : AbstractStringPreference()
+class NamePreference : AbstractStringPreference(){
+  override fun getDefault(): String {
+    return "ExampleGame"
+  }
+}
+
