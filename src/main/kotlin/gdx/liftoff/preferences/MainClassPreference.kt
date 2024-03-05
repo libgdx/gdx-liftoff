@@ -7,7 +7,7 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.Property
  */
 @Property("MainClass")
 @Suppress("unused") // Referenced via reflection.
-class MainClassPreference : AbstractStringPreference(){
+class MainClassPreference : AbstractStringPreference() {
   override fun getDefault(): String {
     return "Main"
   }

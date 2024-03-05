@@ -69,8 +69,9 @@ class Configuration {
   @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
   fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
     VisUI.setSkipGdxVersionCheck(true)
-    if(!VisUI.isLoaded())
+    if (!VisUI.isLoaded()) {
       VisUI.load(Gdx.files.internal("skin/tinted.json"))
+    }
     skinService.addSkin("default", VisUI.getSkin())
     FileChooser.setDefaultPrefsName(PREFERENCES_PATH)
 

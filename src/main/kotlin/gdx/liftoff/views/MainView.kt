@@ -315,8 +315,8 @@ class MainView : ActionContainer {
   @LmlAction("minimize")
   fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
 
-  @LmlAction("initTitleTable")
-  fun addWindowDragListener(actor: Actor) {
+//  @LmlAction("initTitleTable")
+//  fun addWindowDragListener(actor: Actor) {
 //    actor.addListener(object : InputListener() {
 //      private val context = GLFW.glfwGetCurrentContext()
 //      private var startX = 0
@@ -346,7 +346,7 @@ class MainView : ActionContainer {
 //      private fun getX(): Int = MathUtils.floor(cursorX.get(0).toFloat())
 //      private fun getY(): Int = MathUtils.floor(cursorY.get(0).toFloat())
 //    })
-  }
+//  }
 
   /**
    * I have no idea how to register this on an LML Actor. LML docs are no help. Agh.
