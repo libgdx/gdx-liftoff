@@ -1,5 +1,6 @@
 package gdx.liftoff.data.platforms
 
+import com.badlogic.gdx.Gdx
 import gdx.liftoff.config.GdxVersion
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.SourceFile
@@ -131,7 +132,16 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
         )
       )
     } else {
-      addCopiedFile(project, "webapp", "index.html")
+      project.files.add(
+        SourceFile(
+          projectName = id,
+          fileName = "index.html",
+          sourceFolderPath = "webapp",
+          packageName = "",
+          content = Gdx.files.internal(path("generator", id, "webapp", "index.html")).readString("UTF8")
+            .replaceFirst("@@libGDX application@@", project.basic.name)
+        )
+      )
     }
     addSoundManagerSource(project)
     addCopiedFile(project, "webapp", "styles.css")
