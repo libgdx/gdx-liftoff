@@ -27,7 +27,7 @@ class IOSMOE : Platform {
 
   override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"org.multi-os-engine:moe-gradle:1.9.0\"")
+    project.properties["multiOsEngineVersion"] = "1.10.0"
     // Best would be to just copy the "xcode" directory
     arrayOf(
       "app-store-icon-1024@1x.png",
@@ -139,7 +139,16 @@ class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
     addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios\"")
   }
 
-  override fun getContent() = """apply plugin: 'moe'
+  override fun getContent() = """buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.multi-os-engine:moe-gradle:${'$'}multiOsEngineVersion"
+  }
+}
+
+apply plugin: 'moe'
 
 // Exclude all files from Gradle's test runner
 test { exclude '**' }
@@ -162,7 +171,7 @@ task copyNatives  {
       }
     }
 
-    def LD_FLAGS = "LIBGDX_NATIVES = -Wl,-all_load"
+    def LD_FLAGS = "LIBGDX_NATIVES = "
     def outFlags = file("xcode/ios-moe/custom.xcconfig");
     outFlags.write LD_FLAGS
 
