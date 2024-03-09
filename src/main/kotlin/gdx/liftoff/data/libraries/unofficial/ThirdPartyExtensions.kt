@@ -824,6 +824,40 @@ class JBump : ThirdPartyExtension() {
 }
 
 /**
+ * Extends or augments the Java Collections Framework.
+ * @author Apache Software Foundation
+ */
+@Extension
+class CommonsCollections : ThirdPartyExtension() {
+  override val id = "commonsCollections"
+  override val defaultVersion = "4.4"
+  override val url = "https://commons.apache.org/proper/commons-collections/"
+  override val group = "org.apache.commons"
+  override val name = "commons-collections4"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "org.apache.commons:commons-collections4")
+  }
+}
+
+/**
+ * Very fast binary serialization for various languages.
+ * @author Apache Software Foundation
+ */
+@Extension
+class Fury : ThirdPartyExtension() {
+  override val id = "fury"
+  override val defaultVersion = "0.4.1"
+  override val url = "https://fury.apache.org/"
+  override val group = "org.furyio" // will change to org.apache.fury in 0.5.0
+  override val name = "fury-core"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "org.furyio:fury-core")
+  }
+}
+
+/**
  * A fast and efficient binary object graph serialization framework for Java.
  * @author Nathan Sweet
  */
