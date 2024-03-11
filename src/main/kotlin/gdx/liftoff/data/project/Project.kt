@@ -240,7 +240,7 @@ ${platforms.values.filter { it.description.isNotBlank() }
 
 ## Gradle
 
-This project uses [Gradle](http://gradle.org/) to manage dependencies.
+This project uses [Gradle](https://gradle.org/) to manage dependencies.
 The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
 Useful Gradle tasks and flags:
 
