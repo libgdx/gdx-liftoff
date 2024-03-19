@@ -1252,6 +1252,48 @@ class UniversalTween : ThirdPartyExtension() {
 }
 
 /**
+ * Shared interfaces for points, such as Vector2.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Crux : ThirdPartyExtension() {
+  override val id = "crux"
+  override val defaultVersion = "0.0.1"
+  override val url = "https://github.com/tommyettinger/crux"
+  override val group = "com.github.tommyettinger"
+  override val name = "crux"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:crux")
+
+    addDependency(project, GWT.ID, "com.github.tommyettinger:crux:sources")
+    addGwtInherit(project, "com.github.tommyettinger.crux")
+  }
+}
+
+/**
+ * Pathfinding combining simple-graphs and gdx-ai.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Gand : ThirdPartyExtension() {
+  override val id = "gand"
+  override val defaultVersion = "0.1.1"
+  override val url = "https://github.com/tommyettinger/gand"
+  override val group = "com.github.tommyettinger"
+  override val name = "gand"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:gand")
+
+    addDependency(project, GWT.ID, "com.github.tommyettinger:gand:sources")
+    addGwtInherit(project, "com.github.tommyettinger.gand")
+
+    Crux().initiate(project)
+  }
+}
+
+/**
  * Common code for math and showing numbers.
  * Optimal in projects that don't depend on libGDX, like server modules, because it duplicates some libGDX math code.
  * @author Tommy Ettinger

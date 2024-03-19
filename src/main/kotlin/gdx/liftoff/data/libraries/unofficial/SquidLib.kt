@@ -27,10 +27,10 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.0-alpha3"
+  override val defaultVersion = "4.0.0-beta1"
   override val group = "com.squidpony"
   override val name: String
-    get() = id.replaceFirstChar { it.titlecaseChar() }
+    get() = id.lowercase()
   override val url = "https://github.com/yellowstonegames/SquidSquad"
 }
 
@@ -129,6 +129,7 @@ class SquidSquadGrid : SquidSquadExtension() {
     addGwtInherit(project, "com.github.yellowstonegames.squidgrid")
 
     SquidSquadCore().initiate(project)
+    Crux().initiate(project)
   }
 }
 
