@@ -163,6 +163,13 @@ ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) 
         original = path("generator", "ios", "data", "Base.lproj", "LaunchScreen.storyboard")
       )
     )
+    project.files.add(
+      CopiedFile(
+        projectName = ID,
+        path = path("data", "PrivacyInfo.xcprivacy"),
+        original = path("generator", "ios", "data", "PrivacyInfo.xcprivacy")
+      )
+    )
 
     // Including reflected classes:
     if (project.reflectedClasses.isNotEmpty() || project.reflectedPackages.isNotEmpty()) {
