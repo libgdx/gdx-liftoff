@@ -5,6 +5,21 @@ followed by any ways that help resolve those problems.
 
 This guide is brand new, and will be added to as new solutions are found for problems.
 
+### Some older docs mention Gradle tasks using a "desktop" module.
+
+This would include docs telling you to run a Gradle task like `desktop:run` or `desktop:dist`.
+The solution is almost always to just change `desktop` to `lwjgl3`, since there is an `lwjgl3` module in most Liftoff
+projects where gdx-setup would call it `desktop`. The reason for this is that Liftoff can generate modules using either
+`lwjgl2`, which is what gdx-setup used to call `desktop`, and `lwjgl3`, which is what it now calls `desktop`. Liftoff
+can even generate them both in one parent project, which can be handy for using `gdx-tools` in the `lwjgl2` project.
+
+Of the two, you almost always should be using LWJGL3 in new code; LWJGL2 hasn't been updated in 9 years, and won't see
+future updates. LWJGL3 also supports more target hardware, from ARM Linux machines like a Raspberry Pi, to M1 and newer
+Macs using Apple Silicon processors. You might need LWJGL2 to port older projects in specific cases; doing that prevents
+customers who have the latest Mac hardware from running your game natively. Those customers might still be able to use
+virtualization software to run Windows games on their Mac, though. LWJGL3 should work out of the box on Mac, thanks in
+part to the `StartupHelper` class distributed in new LWJGL3 projects that Liftoff creates.
+
 ### When importing an Android project, an error mentions SeekableByteChannel.
 
 Specifically, the error involves `void org.apache.commons.compress.archivers.zip.ZipFile.<init>(java.nio.channels.SeekableByteChannel)'`.
@@ -80,7 +95,7 @@ Why does this work at all? 🤷‍♂️
 Some steps were taken to try to address this in gdx-liftoff 1.12.1.5, but they can't seem to fully eliminate this
 problem on the very first run. They may be what fixes it for the second and later runs, though.
 
-### Toolchains aren't working or are slow
+### Toolchains aren't working or are slow.
 
 This is to be expected in 1.12.1.4, because some configuration was missing for Kotlin projects. That absence has been
 fixed in 1.12.1.5. In that version onward, Java also uses toolchains, the same way Kotlin does. This means there can
@@ -92,7 +107,7 @@ A good option for cross-platform building is to keep the language level on 11 (s
 This works even on Android; even with its requirements for Java 17 in other places, using a toolchain JDK 11 seems to
 keep away from those requirements. A JDK 17 may still be needed for other parts of an Android build.
 
-### Graal Native Image isn't working (in any of various ways)
+### Graal Native Image isn't working (in any of various ways).
 
 First, ensure that you changed `enableGraalNative=false` to `enableGraalNative=true` in gradle.properties. This enables
 the rest of the Graal code, including downloading dependencies once you re-sync the project.
@@ -114,7 +129,7 @@ Graal Native Image in the Java gamedev space right now, but it's a good option f
 relatively hard to decompile (though not impossible). If more people start using Graal Native Image, this section will
 likely grow.
 
-### You receive compile-time errors in a GWT project made with Liftoff 1.12.1.6 or newer
+### You receive compile-time errors in a GWT project made with Liftoff 1.12.1.6 or newer.
 
 Liftoff 1.12.1.6 is the first to use GWT 2.11.0, which is almost entirely backwards-compatible... at an API level,
 at least. It has different dependencies for `gwt-user`, both because the version is newer, and that JAR is provided in
