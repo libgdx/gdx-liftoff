@@ -14,7 +14,7 @@ import gdx.liftoff.views.GdxPlatform
 /**
  * Represents iOS backend.
  */
-@GdxPlatform
+//@GdxPlatform
 class IOSMOE : Platform {
   companion object {
     const val ID = "ios-moe"

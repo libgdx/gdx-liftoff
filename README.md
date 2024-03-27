@@ -50,9 +50,9 @@ provides simple checkboxes to add any and all official platforms, plus some spec
 (it needs "Generate Shell Scripts" set in Toolbox). If you use Eclipse, you can still import Gradle projects normally.
 - **Up-to-date.** This project prides itself on updating quickly after releases of major external components such
 as Gradle or libGDX itself.
-- **More backends are supported.** MOE is pretty much gone from gdx-setup, but that iOS backend's Community Edition
-is still supported here. TeaVM, an increasingly-popular alternative to GWT for browser-based applications, is also here,
-and works with Kotlin and other JVM languages as well as it does with Java.
+- **More backends are supported.** The headless backend has been part of libGDX for a long time, but wasn't easily
+accessed in gdx-setup; it is a checkbox here. TeaVM, an increasingly-popular alternative to GWT for browser-based 
+applications, is also here, and works with Kotlin and other JVM languages as well as it does with Java.
 
 ## Guide
 

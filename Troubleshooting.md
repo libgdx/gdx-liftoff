@@ -189,3 +189,11 @@ without `:sources`, then both need to be given the same exclude block in curly b
 
 Once every dependency on older GWT has been excluded, you should be able to run `html:superDev` or `html:dist` without
 any issues. From this, anyway.
+
+### Selecting MOE causes the project to not generate correctly, and errors are logged.
+
+The iOS backend using Multi-OS Engine (MOE) seems to have some incompatibility with the current Gradle, 8.7, that also
+goes back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, other than it's supposed to be
+fixed in the next major Gradle release (8.8 or 9.0). Because that won't release for some time, MOE has been temporarily
+removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
+yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually. 
