@@ -196,25 +196,28 @@ class Fleks : ThirdPartyExtension() {
 }
 
 /**
- * In-game console implementation; GWT-incompatible. If you target GWT, you can use JACI GWT.
- * @author StrongJoshua
+ * In-game console implementation; GWT-compatible with config.
+ * @author StrongJoshua (original)
+ * @author Tommy Ettinger (maintainer)
  */
 @Extension
 class InGameConsole : ThirdPartyExtension() {
   override val id = "inGameConsole"
-  override val defaultVersion = "1.0.0"
-  override val url = "https://github.com/StrongJoshua/libgdx-inGameConsole"
-  override val group = "com.strongjoshua"
-  override val name = "libgdx-inGameConsole"
+  override val defaultVersion = "1.0.1"
+  override val url = "https://github.com/tommyettinger/sjInGameConsole"
+  override val group = "com.github.tommyettinger"
+  override val name = "sjInGameConsole"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.strongjoshua:libgdx-inGameConsole")
+    addDependency(project, Core.ID, "com.github.tommyettinger:sjInGameConsole")
+    addDependency(project, GWT.ID, "com.github.tommyettinger:sjInGameConsole:sources")
+    addGwtInherit(project, "com.strongjoshua.console")
   }
 }
 
 /**
  * Java Annotation Console Interface. In-game console implementation, for non-GWT usage.
- * If you target GWT, use JaciGwt instead.
+ * If you target GWT, use JaciGwt or InGameConsole instead.
  * @author Yevgeny Krasik
  */
 @Extension
