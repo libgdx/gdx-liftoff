@@ -295,7 +295,7 @@ class Noise4J : ThirdPartyExtension() {
 @Extension
 class BladeInk : ThirdPartyExtension() {
   override val id = "bladeInk"
-  override val defaultVersion = "0.7.4"
+  override val defaultVersion = "1.1.2"
   override val url = "https://github.com/bladecoder/blade-ink"
   override val group = "com.bladecoder.ink"
   override val name = "blade-ink"
@@ -841,7 +841,7 @@ class CommonsCollections : ThirdPartyExtension() {
 }
 
 /**
- * Very fast binary serialization for various languages.
+ * Very fast binary serialization. GWT-incompatible.
  * @author Apache Software Foundation
  */
 @Extension
@@ -858,7 +858,7 @@ class Fury : ThirdPartyExtension() {
 }
 
 /**
- * A fast and efficient binary object graph serialization framework for Java.
+ * Efficient binary serialization framework for the JVM. GWT-incompatible.
  * @author Nathan Sweet
  */
 @Extension
@@ -1294,6 +1294,26 @@ class Gand : ThirdPartyExtension() {
 }
 
 /**
+ * Random generation, noise, "encarption..."
+ * @author Tommy Ettinger
+ */
+@Extension
+class Cringe : ThirdPartyExtension() {
+  override val id = "cringe"
+  override val defaultVersion = "0.1.1"
+  override val url = "https://github.com/tommyettinger/cringe"
+  override val group = "com.github.tommyettinger"
+  override val name = "cringe"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:cringe")
+
+    addDependency(project, GWT.ID, "com.github.tommyettinger:cringe:sources")
+    addGwtInherit(project, "com.github.tommyettinger.cringe")
+  }
+}
+
+/**
  * Common code for math and showing numbers.
  * Optimal in projects that don't depend on libGDX, like server modules, because it duplicates some libGDX math code.
  * @author Tommy Ettinger
@@ -1481,6 +1501,128 @@ class KryoJdkgdxds : ThirdPartyExtension() {
     Kryo().initiate(project)
     Jdkgdxds().initiate(project)
     KryoDigital().initiate(project)
+  }
+}
+
+/**
+ * Kryo support for cringe's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class KryoCringe : ThirdPartyExtension() {
+  override val id = "kryoCringe"
+  override val defaultVersion = "0.1.1.1"
+  override val url = "https://github.com/tommyettinger/kryo-more"
+  override val group = "com.github.tommyettinger"
+  override val name = "kryo-cringe"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:kryo-cringe")
+
+    Kryo().initiate(project)
+    Cringe().initiate(project)
+  }
+}
+
+/**
+ * Tantrum support for libGDX types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TantrumLibgdx : ThirdPartyExtension() {
+  override val id = "tantrumLibgdx"
+  override val defaultVersion = "1.12.1.0"
+  override val url = "https://github.com/tommyettinger/tantrum"
+  override val group = "com.github.tommyettinger"
+  override val name = "tantrum-libgdx"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-libgdx")
+
+    Fury().initiate(project)
+  }
+}
+
+
+/**
+ * Tantrum support for RegExodus types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TantrumRegExodus : ThirdPartyExtension() {
+  override val id = "tantrumRegExodus"
+  override val defaultVersion = "0.1.15.0"
+  override val url = "https://github.com/tommyettinger/tantrum"
+  override val group = "com.github.tommyettinger"
+  override val name = "tantrum-regexodus"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-regexodus")
+
+    Fury().initiate(project)
+    RegExodus().initiate(project)
+  }
+}
+
+/**
+ * Tantrum support for digital's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TantrumDigital : ThirdPartyExtension() {
+  override val id = "tantrumDigital"
+  override val defaultVersion = "0.4.7.0"
+  override val url = "https://github.com/tommyettinger/tantrum"
+  override val group = "com.github.tommyettinger"
+  override val name = "tantrum-digital"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-digital")
+
+    Fury().initiate(project)
+    Digital().initiate(project)
+  }
+}
+
+/**
+ * Tantrum support for juniper's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TantrumJuniper : ThirdPartyExtension() {
+  override val id = "tantrumJuniper"
+  override val defaultVersion = "0.5.0.0"
+  override val url = "https://github.com/tommyettinger/tantrum"
+  override val group = "com.github.tommyettinger"
+  override val name = "tantrum-juniper"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-juniper")
+
+    Fury().initiate(project)
+    Juniper().initiate(project)
+    TantrumDigital().initiate(project)
+  }
+}
+
+/**
+ * Tantrum support for jdkgdxds's types.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TantrumJdkgdxds : ThirdPartyExtension() {
+  override val id = "tantrumJdkgdxds"
+  override val defaultVersion = "1.4.8.0"
+  override val url = "https://github.com/tommyettinger/tantrum"
+  override val group = "com.github.tommyettinger"
+  override val name = "tantrum-jdkgdxds"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-jdkgdxds")
+
+    Fury().initiate(project)
+    Jdkgdxds().initiate(project)
+    TantrumDigital().initiate(project)
   }
 }
 
