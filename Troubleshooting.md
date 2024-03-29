@@ -61,7 +61,8 @@ that works with the latest Android tools already.
 
 ### A Kotlin project that contains an Android module gives the message `jvm target compatibility should be set to the same Java version.`
 
-This should be fixed in 1.12.0.1 by using toolchains; if that doesn't work for you, here are other options.
+This should be fixed in 1.12.0.1 by using toolchains, or in 1.12.1.7 using Kotlin's `jvmTarget` option; if that doesn't
+work for you, here are other options.
 
 The simplest solution here is to set your JDK to a Java 17 one and to change `java.sourceCompatibility` and 
 `java.targetCompatibility` to 11 each. You may need to set this for both Java and Kotlin, and they must use the same
@@ -119,6 +120,8 @@ build your project but doesn't necessarily start with the right JVM version -- t
 A good option for cross-platform building is to keep the language level on 11 (supported by everything except RoboVM).
 This works even on Android; even with its requirements for Java 17 in other places, using a toolchain JDK 11 seems to
 keep away from those requirements. A JDK 17 may still be needed for other parts of an Android build.
+
+Version 1.12.1.7 does not use toolchains because some simpler ways to accomplish the same things became feasible.
 
 ### Graal Native Image isn't working (in any of various ways).
 
@@ -202,6 +205,15 @@ without `:sources`, then both need to be given the same exclude block in curly b
 
 Once every dependency on older GWT has been excluded, you should be able to run `html:superDev` or `html:dist` without
 any issues. From this, anyway.
+
+Libraries known to be affected by this include Artemis-ODB, the official Box2D, gdx-facebook, the official
+gdx-controllers, the unofficial gdx-controllerutils, Guacamole, and GdxBasisUniversal. There are probably more that are
+not in gdx-liftoff's known extension list. If you can get one of these using an extensions checkbox in Liftoff, that way
+is **strongly recommended**.
+
+(There's probably a more elegant way to solve this using Gradle's dependency constraints; I just haven't figured it out
+yet... If anyone wants to flex their Gradle muscles and provide a way for the old gwt-user and gdx-backend-gwt
+dependencies to be automatically excluded, that would be very welcome!)
 
 ### Selecting MOE causes the project to not generate correctly, and errors are logged.
 

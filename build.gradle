@@ -17,7 +17,7 @@ buildscript {
   }
 }
 
-version = "1.12.1.7-SNAPSHOT"
+version = "1.12.1.7"
 mainClassName = 'gdx.liftoff.MainKt'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
@@ -52,7 +52,10 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
   implementation "org.apache.commons:commons-exec:$commonsExecVersion"
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
+    exclude group: "org.jcraft", module: "jorbis"
+    exclude group: "org.lwjgl", module: "lwjgl-openal"
+  }
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
