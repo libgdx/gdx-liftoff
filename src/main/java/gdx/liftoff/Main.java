@@ -30,6 +30,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
+
         screenViewport = new ScreenViewport();
         fitViewport = new FitViewport(1024, 576);
         bgViewport = new FillViewport(1024, 576);
