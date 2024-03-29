@@ -9,12 +9,11 @@ import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
-import gdx.liftoff.views.GdxPlatform
 
 /**
  * Represents iOS backend.
  */
-//@GdxPlatform
+// @GdxPlatform
 class IOSMOE : Platform {
   companion object {
     const val ID = "ios-moe"

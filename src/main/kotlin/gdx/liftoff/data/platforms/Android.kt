@@ -176,17 +176,15 @@ android {
     if (latePlugin) {
       """
 
-  kotlin {
-    jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
-  }"""
+  kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
+      if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+        "1_8"
+      } else {
+        project.advanced.javaVersion.removePrefix("1.")
+      }})
+  """
     } else {
-      """
-
-  java {
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
-    }
-  }"""
+      ""
     }}
 }
 

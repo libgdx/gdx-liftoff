@@ -63,8 +63,21 @@ that works with the latest Android tools already.
 
 This should be fixed in 1.12.0.1 by using toolchains; if that doesn't work for you, here are other options.
 
-The simplest solution here is to set your JDK to a Java 17 one and to change `sourceCompatibility` and 
-`targetCompatibility` to 17 each. A better solution is to use toolchains. In your root build.gradle, you can try adding
+The simplest solution here is to set your JDK to a Java 17 one and to change `java.sourceCompatibility` and 
+`java.targetCompatibility` to 11 each. You may need to set this for both Java and Kotlin, and they must use the same
+versions across the board. You can also set the `release` option to the same version as `targetCompatibility` to help
+with some incompatibilities between versions; this is only available if you are using Java 9 or later.
+
+```gradle
+java.sourceCompatibility = 11
+java.targetCompatibility = 11
+if (JavaVersion.current().isJava9Compatible()) {
+        compileJava.options.release.set(11)
+}
+kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+```
+
+Another solution is to use toolchains. In your root build.gradle, you can try adding
 
 ```gradle
 kotlin {
@@ -98,10 +111,10 @@ problem on the very first run. They may be what fixes it for the second and late
 ### Toolchains aren't working or are slow.
 
 This is to be expected in 1.12.1.4, because some configuration was missing for Kotlin projects. That absence has been
-fixed in 1.12.1.5. In that version onward, Java also uses toolchains, the same way Kotlin does. This means there can
-be a long download for the first time you launch a gdx-liftoff project, but the download will get a JDK and keep it
-for any future projects to use (as long as they need the same version). This can be useful if someone wants to build
-your project but doesn't necessarily start with the right JVM version -- toolchains ensure they get the right one.
+fixed in 1.12.1.5. In that version and in 1.12.1.6, Java also uses toolchains, the same way Kotlin does. This means
+there can be a long download for the first time you launch a gdx-liftoff project, but the download will get a JDK and
+keep it for any future projects to use (as long as they need the same version). This can be useful if someone wants to
+build your project but doesn't necessarily start with the right JVM version -- toolchains ensure they get the right one.
 
 A good option for cross-platform building is to keep the language level on 11 (supported by everything except RoboVM).
 This works even on Android; even with its requirements for Java 17 in other places, using a toolchain JDK 11 seems to
