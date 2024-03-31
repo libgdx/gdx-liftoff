@@ -62,6 +62,7 @@ dependencies {
   implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
   implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
+  implementation "com.github.raeleus.stripe:stripe:1.4.6"
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"

@@ -5,14 +5,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ray3k.stripe.SystemCursorListener;
 import gdx.liftoff.ui.RootTable;
 
 public class Main extends ApplicationAdapter {
@@ -22,6 +29,9 @@ public class Main extends ApplicationAdapter {
     public static FitViewport fitViewport;
     public static FillViewport bgViewport;
     public static SpriteBatch batch;
+    public static Table root;
+    public static SystemCursorListener handListener;
+    public static SystemCursorListener ibeamListener;
     private TextureRegion bgTextureRegion;
 
     public static void main(String[] args) {
@@ -47,7 +57,10 @@ public class Main extends ApplicationAdapter {
 
         Gdx.input.setInputProcessor(stage);
 
-        RootTable root = new RootTable();
+        handListener = new SystemCursorListener(SystemCursor.Hand);
+        ibeamListener = new SystemCursorListener(SystemCursor.Ibeam);
+
+        root = new RootTable();
         root.setFillParent(true);
         stage.addActor(root);
     }
@@ -73,5 +86,31 @@ public class Main extends ApplicationAdapter {
     public void resize(int width, int height) {
         bgViewport.update(width, height, true);
         stage.getViewport().update(width, height, true);
+    }
+
+    public static void addHandListener(Actor actor) {
+        actor.addListener(handListener);
+    }
+
+    public static void addIbeamListener(Actor actor) {
+        actor.addListener(ibeamListener);
+    }
+
+    public static void onChange(Actor actor, Runnable runnable) {
+        actor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                runnable.run();
+            }
+        });
+    }
+
+    public static void onClick(Actor actor, Runnable runnable) {
+        actor.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                runnable.run();
+            }
+        });
     }
 }

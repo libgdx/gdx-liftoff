@@ -24,6 +24,12 @@
 		"markupEnabled": false,
 		"flip": false
 	},
+	"font-label-field": {
+		"file": "font-label-field.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	},
 	"font-label-header": {
 		"file": "font-label-header.fnt",
 		"scaledSize": -1,
@@ -65,6 +71,10 @@
 	"selection": {
 		"name": "white-pixel",
 		"color": "selection"
+	},
+	"black": {
+		"name": "white-pixel",
+		"color": "black"
 	}
 },
 "com.ray3k.tenpatch.TenPatchDrawable": {
@@ -554,6 +564,13 @@
 	},
 	"header": {
 		"font": "font-label-header"
+	},
+	"field": {
+		"font": "font-label-field"
+	},
+	"error": {
+		"font": "font-label",
+		"fontColor": "red"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
