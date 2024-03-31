@@ -4,11 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.Main;
 
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.*;
 
 public class ProjectPanel extends Table  {
+    private static final float TOOLTIP_WIDTH = 300;
     private Actor keyboardActor;
 
     public ProjectPanel() {
@@ -18,11 +21,13 @@ public class ProjectPanel extends Table  {
 
         Label label = new Label("PROJECT NAME", skin);
         add(label);
+        addTooltip(label, Align.top, TOOLTIP_WIDTH, projectNameTooltipDescription);
 
         TextField textField = new TextField("", skin);
         keyboardActor = textField;
         add(textField);
         addIbeamListener(textField);
+        addTooltip(textField, Align.top, TOOLTIP_WIDTH, projectNameTooltipDescription);
         onChange(textField, () -> {
 
         });
@@ -30,10 +35,12 @@ public class ProjectPanel extends Table  {
         row();
         label = new Label("PACKAGE", skin);
         add(label);
+        addTooltip(label, Align.top, TOOLTIP_WIDTH, packageTooltipDescription);
 
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
+        addTooltip(textField, Align.top, TOOLTIP_WIDTH, packageTooltipDescription);
         onChange(textField, () -> {
 
         });
@@ -41,10 +48,12 @@ public class ProjectPanel extends Table  {
         row();
         label = new Label("MAIN CLASS", skin);
         add(label);
+        addTooltip(label, Align.top, TOOLTIP_WIDTH, mainClassTooltipDescription);
 
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
+        addTooltip(textField, Align.top, TOOLTIP_WIDTH, mainClassTooltipDescription);
         onChange(textField, () -> {
 
         });

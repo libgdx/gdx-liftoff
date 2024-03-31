@@ -11,16 +11,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ray3k.stripe.PopTable;
+import com.ray3k.stripe.PopTable.PopTableStyle;
+import com.ray3k.stripe.PopTableHoverListener;
 import com.ray3k.stripe.SystemCursorListener;
 import gdx.liftoff.ui.RootTable;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class Main extends ApplicationAdapter {
     public static Skin skin;
@@ -63,6 +72,7 @@ public class Main extends ApplicationAdapter {
         root = new RootTable();
         root.setFillParent(true);
         stage.addActor(root);
+//        root.setZIndex(0);
     }
 
     @Override
@@ -71,6 +81,7 @@ public class Main extends ApplicationAdapter {
 
         //draw background
         bgViewport.apply();
+        batch.setColor(Color.WHITE);
         batch.setProjectionMatrix(bgViewport.getCamera().combined);
         batch.begin();
         batch.draw(bgTextureRegion, 0, 0);
@@ -112,5 +123,26 @@ public class Main extends ApplicationAdapter {
                 runnable.run();
             }
         });
+    }
+
+    public static PopTable addTooltip(Actor actor, int align, String description) {
+        return addTooltip(actor, align, 0, description);
+    }
+
+    public static PopTable addTooltip(Actor actor, int align, float wrapWidth, String description) {
+        String style = align == Align.bottom ? "tooltip-arrow-up" : align == Align.top ? "tooltip-arrow-down" : align == Align.left ? "tooltip-arrow-right" : "tooltip-arrow-left";
+        PopTableHoverListener listener = new PopTableHoverListener(align, align, skin, style);
+        actor.addListener(listener);
+
+        PopTable pop = listener.getPopTable();
+
+        Label label = new Label(description, skin, "tooltip");
+        Cell cell = pop.add(label);
+        if (wrapWidth != 0) {
+            label.setWrap(true);
+            cell.width(wrapWidth);
+        }
+
+        return pop;
     }
 }

@@ -2,15 +2,18 @@ package gdx.liftoff.ui.tables;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import gdx.liftoff.ui.panels.ProjectPanel;
 import gdx.liftoff.ui.panels.SocialPanel;
 
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.*;
 
 public class LandingTable extends Table {
     private ProjectPanel projectPanel;
+    private static final float TOOLTIP_WIDTH = 200;
 
     public LandingTable() {
         setBackground(skin.getDrawable("black"));
@@ -23,6 +26,7 @@ public class LandingTable extends Table {
         Image image = new Image(skin, "title-small");
         image.setScaling(Scaling.fit);
         table.add(image).minSize(270, 30).maxHeight(50);
+        addTooltip(image, Align.top, logoTooltipDescription);
 
         table.row();
         CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(false);
@@ -58,15 +62,18 @@ public class LandingTable extends Table {
         TextButton textButton = new TextButton("CREATE NEW PROJECT", skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
 
         textButton = new TextButton("NEW PROJECT", skin, "mid");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
 
         table.row();
         textButton = new TextButton("QUICK PROJECT", skin, "mid");
         table.add(textButton).fillX().space(20);
         addQuickProjectListeners(textButton);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, quickProjectTooltipDescription);
 
         //begin small vertical group
         table = new Table();
@@ -76,11 +83,13 @@ public class LandingTable extends Table {
         textButton = new TextButton("NEW PROJECT", skin);
         table.add(textButton);
         addNewProjectListeners(textButton);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
 
         table.row();
         textButton = new TextButton("QUICK PROJECT", skin);
         table.add(textButton).space(20);
         addQuickProjectListeners(textButton);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, quickProjectTooltipDescription);
         //end vertical groups
 
         row();
