@@ -17,6 +17,7 @@ public class PopTableHoverListener extends InputListener {
     private final int align;
     private final int edge;
     private Action showTableAction;
+    private boolean dismissed;
 
     public PopTableHoverListener(int edge, int align, Skin skin) {
         this(edge, align, findStyleInSkin(skin));
@@ -64,7 +65,7 @@ public class PopTableHoverListener extends InputListener {
         Actor actor = event.getListenerActor();
 
         if (Gdx.input.isButtonPressed(Buttons.LEFT) || Gdx.input.isButtonPressed(Buttons.RIGHT) || Gdx.input.isButtonPressed(Buttons.MIDDLE)) return;
-        if (pointer != -1 || !popTable.isHidden()) return;
+        if (pointer != -1 || !popTable.isHidden() || dismissed) return;
         if (fromActor != null && actor.isAscendantOf(fromActor)) return;
         if (actor instanceof Disableable && ((Disableable) actor).isDisabled()) return;
 
@@ -89,10 +90,23 @@ public class PopTableHoverListener extends InputListener {
         Actor actor = event.getListenerActor();
 
         if (!popTable.isHidden()) popTable.hide();
+        dismissed = false;
         if (showTableAction != null) {
             actor.removeAction(showTableAction);
             showTableAction = null;
         }
+    }
+
+    @Override
+    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        Actor actor = event.getListenerActor();
+        dismissed = true;
+        popTable.hide();
+        if (showTableAction != null) {
+            actor.removeAction(showTableAction);
+            showTableAction = null;
+        }
+        return false;
     }
 
     public PopTable getPopTable() {

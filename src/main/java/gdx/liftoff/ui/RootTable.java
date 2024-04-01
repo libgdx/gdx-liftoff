@@ -10,5 +10,6 @@ public class RootTable extends Table {
         LandingTable landingTable = new LandingTable();
         add(landingTable).prefSize(600, 700);
         landingTable.captureKeyboardFocus();
+        landingTable.animate();
     }
 }

@@ -1,6 +1,9 @@
 package gdx.liftoff.ui.tables;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
@@ -8,11 +11,18 @@ import com.ray3k.stripe.CollapsibleGroup;
 import gdx.liftoff.ui.panels.ProjectPanel;
 import gdx.liftoff.ui.panels.SocialPanel;
 
+import static com.badlogic.gdx.math.Interpolation.exp10Out;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
 public class LandingTable extends Table {
+    private Image logoImage;
+    private Label subtitleLabel;
+    private TextButton updateButton;
     private ProjectPanel projectPanel;
+    private CollapsibleGroup buttonsCollapsibleGroup;
+    private SocialPanel socialPanel;
     private static final float TOOLTIP_WIDTH = 200;
 
     public LandingTable() {
@@ -23,25 +33,31 @@ public class LandingTable extends Table {
         Table table = new Table();
         add(table);
 
-        Image image = new Image(skin, "title-small");
-        image.setScaling(Scaling.fit);
-        table.add(image).minSize(270, 30).maxHeight(50);
-        addTooltip(image, Align.top, logoTooltipDescription);
+        logoImage = new Image(skin, "title-small");
+        logoImage.setScaling(Scaling.fit);
+        table.add(logoImage).minSize(270, 30).maxHeight(50);
+        addTooltip(logoImage, Align.top, logoTooltipDescription);
 
         table.row();
         CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(false);
         table.add(verticalCollapsibleGroup).minWidth(0);
 
+        table = new Table();
+        table.padTop(20);
+        verticalCollapsibleGroup.addActor(table);
+
+        subtitleLabel = new Label(liftoffVersion, skin);
+        subtitleLabel.setEllipsis("...");
+        table.add(subtitleLabel).minWidth(0);
+
+        table.row();
+        updateButton = new TextButton("UPDATE AVAILABLE", skin, "link");
+        table.add(updateButton);
+        addHandListener(updateButton);
+        addTooltip(updateButton, Align.bottom, updateTooltipDescription);
+        onChange(updateButton, () -> Gdx.net.openURI(updateUrl));
+
         Container container = new Container();
-        container.padTop(20);
-        container.minWidth(0);
-        verticalCollapsibleGroup.addActor(container);
-
-        Label label = new Label("a modern setup tool for libGDX Gradle projects", skin);
-        label.setEllipsis("...");
-        container.setActor(label);
-
-        container = new Container();
         verticalCollapsibleGroup.addActor(container);
 
         row();
@@ -49,12 +65,12 @@ public class LandingTable extends Table {
         add(projectPanel).growX();
 
         row();
-        verticalCollapsibleGroup = new CollapsibleGroup(false);
-        add(verticalCollapsibleGroup);
+        buttonsCollapsibleGroup = new CollapsibleGroup(false);
+        add(buttonsCollapsibleGroup);
 
         //begin big vertical group
         table = new Table();
-        verticalCollapsibleGroup.addActor(table);
+        buttonsCollapsibleGroup.addActor(table);
 
         CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(true);
         table.add(horizontalCollapsibleGroup);
@@ -77,7 +93,7 @@ public class LandingTable extends Table {
 
         //begin small vertical group
         table = new Table();
-        verticalCollapsibleGroup.addActor(table);
+        buttonsCollapsibleGroup.addActor(table);
 
         table.defaults().uniformX().fillX();
         textButton = new TextButton("NEW PROJECT", skin);
@@ -93,7 +109,7 @@ public class LandingTable extends Table {
         //end vertical groups
 
         row();
-        SocialPanel socialPanel = new SocialPanel();
+        socialPanel = new SocialPanel();
         add(socialPanel).right();
     }
 
@@ -113,5 +129,73 @@ public class LandingTable extends Table {
         onChange(actor, () -> {
 
         });
+    }
+
+    public void animate() {
+        //initial setup
+        logoImage.setColor(CLEAR_WHITE);
+        subtitleLabel.setText(subtitle);
+        subtitleLabel.setColor(CLEAR_WHITE);
+        updateButton.setColor(CLEAR_WHITE);
+        projectPanel.setColor(CLEAR_WHITE);
+        buttonsCollapsibleGroup.setColor(CLEAR_WHITE);
+        socialPanel.setColor(CLEAR_WHITE);
+        bgImage.setColor(CLEAR_WHITE);
+        float offsetAmount = 150f;
+        Gdx.input.setInputProcessor(null);
+        stage.setKeyboardFocus(null);
+
+        Action action = sequence(
+            //setup on the first frame
+            run(() -> {
+                logoImage.moveBy(0, offsetAmount);
+                projectPanel.moveBy(offsetAmount, 0);
+                buttonsCollapsibleGroup.moveBy(-offsetAmount, 0);
+                socialPanel.moveBy(offsetAmount, 0);
+            }),
+            //fade in bg image
+            targeting(bgImage, fadeIn(.5f, exp10Out)),
+            //fade in/translate logo image
+            parallel(
+                fadeIn(1f),
+                Actions.moveBy(0, -offsetAmount, 1f, exp10Out)
+            ),
+            //fade in subtitle
+            targeting(subtitleLabel, fadeIn(.5f)),
+            delay(.25f),
+            parallel(
+                //fade in project panel
+                targeting(projectPanel, delay(0, parallel(
+                    targeting(projectPanel, fadeIn(.5f)),
+                    targeting(projectPanel, Actions.moveBy(-offsetAmount, 0, 1f, exp10Out))
+                ))),
+
+                //fade in buttons
+                targeting(buttonsCollapsibleGroup, delay(.3f, parallel(
+                    targeting(buttonsCollapsibleGroup, fadeIn(1f)),
+                    targeting(buttonsCollapsibleGroup, Actions.moveBy(offsetAmount, 0, 1f, exp10Out))
+                ))),
+
+                //fade in social panel
+                targeting(socialPanel, delay(.6f, parallel(
+                    targeting(socialPanel, fadeIn(1f)),
+                    targeting(socialPanel, Actions.moveBy(-offsetAmount, 0, 1f, exp10Out))
+                )))
+            ),
+            //reset input
+            run(() -> {
+                projectPanel.captureKeyboardFocus();
+                Gdx.input.setInputProcessor(stage);
+            }),
+            //fade transition subtitle to version
+            delay(1.5f),
+            targeting(subtitleLabel, fadeOut(.5f)),
+            run(() -> subtitleLabel.setText(liftoffVersion)),
+            parallel(
+                targeting(subtitleLabel, fadeIn(.5f)),
+                targeting(updateButton, fadeIn(.5f))
+            )
+        );
+        logoImage.addAction(action);
     }
 }

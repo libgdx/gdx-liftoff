@@ -1,6 +1,11 @@
 package gdx.liftoff.ui.data;
 
 public class Data {
+    //common
+    public static String liftoffVersion = "v1.12.1.7";
+    public static String subtitle = "a modern setup tool for libGDX Gradle projects";
+    public static String updateUrl = "https://github.com/libgdx/gdx-liftoff/releases";
+
     //landing table
     public static String logoTooltipDescription = "Developed and maintained by TEttinger\nUI design by Raeleus";
     public static String updateTooltipDescription = "A new update is available. Click to view GitHub for more details.";
@@ -12,7 +17,7 @@ public class Data {
     public static String packageTooltipDescription = "Package has to be a valid Java identifier. Should contain at least one dot for Android compatibility. For example: \"com.yourcompany.yourgame\".";
     public static String mainClassTooltipDescription = "Main class has to be a valid Java identifier. Cannot start with a number. For example: \"Center\", \"Main\", \"TopLevel\", \"YourGame\".";
 
-    //socials panel
+    //social panel
     public static String libgdxURL = "https://libgdx.com/";
     public static String discordURL = "https://libgdx.com/community/discord/";
     public static String wikiURL = "https://libgdx.com/wiki/";

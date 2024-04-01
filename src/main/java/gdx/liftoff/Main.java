@@ -11,37 +11,31 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.PopTable;
-import com.ray3k.stripe.PopTable.PopTableStyle;
 import com.ray3k.stripe.PopTableHoverListener;
 import com.ray3k.stripe.SystemCursorListener;
 import gdx.liftoff.ui.RootTable;
-
-import java.io.IOException;
-import java.util.Properties;
 
 public class Main extends ApplicationAdapter {
     public static Skin skin;
     public static Stage stage;
     public static ScreenViewport screenViewport;
     public static FitViewport fitViewport;
-    public static FillViewport bgViewport;
     public static SpriteBatch batch;
     public static Table root;
     public static SystemCursorListener handListener;
     public static SystemCursorListener ibeamListener;
-    private TextureRegion bgTextureRegion;
+    public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);
+    public static Image bgImage = new Image();
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -56,11 +50,9 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
-        bgTextureRegion = skin.getRegion("bg");
 
-        screenViewport = new ScreenViewport();
         fitViewport = new FitViewport(1920, 1080);
-        bgViewport = new FillViewport(1920, 1080);
+        screenViewport = new ScreenViewport();
         batch = new SpriteBatch();
         stage = new Stage(screenViewport, batch);
 
@@ -69,23 +61,19 @@ public class Main extends ApplicationAdapter {
         handListener = new SystemCursorListener(SystemCursor.Hand);
         ibeamListener = new SystemCursorListener(SystemCursor.Ibeam);
 
+        bgImage = new Image(skin, "bg");
+        bgImage.setFillParent(true);
+        bgImage.setScaling(Scaling.fill);
+        stage.addActor(bgImage);
+
         root = new RootTable();
         root.setFillParent(true);
         stage.addActor(root);
-//        root.setZIndex(0);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(Color.BLACK);
-
-        //draw background
-        bgViewport.apply();
-        batch.setColor(Color.WHITE);
-        batch.setProjectionMatrix(bgViewport.getCamera().combined);
-        batch.begin();
-        batch.draw(bgTextureRegion, 0, 0);
-        batch.end();
 
         //draw stage
         stage.getViewport().apply();
@@ -95,7 +83,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        bgViewport.update(width, height, true);
         stage.getViewport().update(width, height, true);
     }
 
