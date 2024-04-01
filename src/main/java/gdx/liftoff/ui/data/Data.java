@@ -8,7 +8,7 @@ public class Data {
 
     //landing table
     public static String logoTooltipDescription = "Developed and maintained by TEttinger\nUI design by Raeleus";
-    public static String updateTooltipDescription = "A new update is available. Click to view GitHub for more details.";
+    public static String updateTooltipDescription = "A new update is available\nClick to view GitHub for more details";
     public static String newProjectTooltipDescription = "Create a new libGDX project using a wizard style setup.";
     public static String quickProjectTooltipDescription = "Create a new libGDX project without any advanced options. The resulting project contains Desktop, Android, iOS, and HTML5 backends.";
 

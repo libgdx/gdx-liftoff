@@ -27,7 +27,7 @@ public class ProjectPanel extends Table  {
         keyboardActor = textField;
         add(textField);
         addIbeamListener(textField);
-        addTooltip(textField, Align.top, TOOLTIP_WIDTH, projectNameTooltipDescription);
+        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, projectNameTooltipDescription);
         onChange(textField, () -> {
 
         });
@@ -40,7 +40,7 @@ public class ProjectPanel extends Table  {
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
-        addTooltip(textField, Align.top, TOOLTIP_WIDTH, packageTooltipDescription);
+        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, packageTooltipDescription);
         onChange(textField, () -> {
 
         });
@@ -53,7 +53,7 @@ public class ProjectPanel extends Table  {
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
-        addTooltip(textField, Align.top, TOOLTIP_WIDTH, mainClassTooltipDescription);
+        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, mainClassTooltipDescription);
         onChange(textField, () -> {
 
         });

@@ -14,6 +14,7 @@ public class PopTableHoverListener extends InputListener {
     protected PopTable popTable;
     public boolean hideOnExit;
     public float delay;
+    public Actor attachedActor;
     private final int align;
     private final int edge;
     private Action showTableAction;
@@ -74,7 +75,7 @@ public class PopTableHoverListener extends InputListener {
                 popTable.show(stage);
                 popTable.toFront();
                 popTable.getParentGroup().setTouchable(Touchable.disabled);
-                popTable.attachToActor(actor, edge, align);
+                popTable.attachToActor(attachedActor != null ? attachedActor : actor, edge, align);
                 showTableAction = null;
             }));
             actor.addAction(showTableAction);

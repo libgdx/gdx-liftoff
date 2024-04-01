@@ -117,12 +117,17 @@ public class Main extends ApplicationAdapter {
     }
 
     public static PopTable addTooltip(Actor actor, int align, String description) {
-        return addTooltip(actor, align, 0, description);
+        return addTooltip(actor, null, align, 0, description);
     }
 
     public static PopTable addTooltip(Actor actor, int align, float wrapWidth, String description) {
+        return addTooltip(actor, null, align, wrapWidth,  description);
+    }
+
+    public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String description) {
         String style = align == Align.bottom ? "tooltip-arrow-up" : align == Align.top ? "tooltip-arrow-down" : align == Align.left ? "tooltip-arrow-right" : "tooltip-arrow-left";
         PopTableHoverListener listener = new PopTableHoverListener(align, align, skin, style);
+        listener.attachedActor = attachedActor;
         actor.addListener(listener);
 
         PopTable pop = listener.getPopTable();
