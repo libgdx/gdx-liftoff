@@ -25,8 +25,14 @@ public class LandingTable extends LiftoffTable {
     private CollapsibleGroup buttonsCollapsibleGroup;
     private SocialPanel socialPanel;
     private static final float TOOLTIP_WIDTH = 200;
+    private Action animationAction;
 
     public LandingTable() {
+        populate();
+    }
+
+    private void populate() {
+        clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(20).padLeft(30).padRight(30);
 
@@ -150,7 +156,7 @@ public class LandingTable extends LiftoffTable {
         setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
-        Action action = sequence(
+        animationAction = sequence(
             //setup on the first frame
             run(() -> {
                 logoImage.moveBy(0, offsetAmount);
@@ -201,6 +207,16 @@ public class LandingTable extends LiftoffTable {
                 targeting(updateButton, fadeIn(.5f))
             )
         );
-        addAction(action);
+        Gdx.app.postRunnable(() -> addAction(animationAction));
+    }
+
+    @Override
+    public void finishAnimation() {
+        if (animationAction != null && getActions().contains(animationAction, true)) {
+            System.out.println("finished");
+            removeAction(animationAction);
+            populate();
+            setTouchable(Touchable.childrenOnly);
+        }
     }
 }

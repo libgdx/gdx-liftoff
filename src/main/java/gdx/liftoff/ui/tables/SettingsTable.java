@@ -7,4 +7,9 @@ public class SettingsTable extends LiftoffTable {
     public void captureKeyboardFocus() {
 
     }
+
+    @Override
+    public void finishAnimation() {
+
+    }
 }

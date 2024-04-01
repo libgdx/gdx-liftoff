@@ -36,6 +36,7 @@ public class Main extends ApplicationAdapter {
     public static SystemCursorListener ibeamListener;
     public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);
     public static Image bgImage = new Image();
+    public static boolean resizingWindow;
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -79,11 +80,14 @@ public class Main extends ApplicationAdapter {
         stage.getViewport().apply();
         stage.act();
         stage.draw();
+
+        resizingWindow = false;
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        resizingWindow = true;
     }
 
     public static void addHandListener(Actor actor) {

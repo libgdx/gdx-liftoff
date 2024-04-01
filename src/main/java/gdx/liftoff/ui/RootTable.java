@@ -3,9 +3,11 @@ package gdx.liftoff.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.tables.*;
@@ -37,6 +39,20 @@ public class RootTable extends Table {
         settingsTable = new SettingsTable();
         completeTable = new CompleteTable();
         tables.addAll(landingTable, addOnsTable, thirdPartyTable, settingsTable, completeTable);
+
+        setTouchable(Touchable.enabled);
+        addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                tables.get(tableIndex).finishAnimation();
+            }
+        });
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (resizingWindow) tables.get(tableIndex).finishAnimation();
     }
 
     public void previousTable() {
@@ -49,6 +65,7 @@ public class RootTable extends Table {
 
     private void transitionTable(boolean goNext) {
         LiftoffTable table = tables.get(tableIndex);
+        table.finishAnimation();
         table.setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
@@ -56,6 +73,7 @@ public class RootTable extends Table {
         tableIndex = MathUtils.clamp(tableIndex, 0, tables.size);
         LiftoffTable newTable = tables.get(tableIndex);
 
+        //initial setup
         clearChildren();
         stage.addActor(table);
         add(newTable).prefSize(600, 700);
