@@ -31,7 +31,7 @@ public class Main extends ApplicationAdapter {
     public static ScreenViewport screenViewport;
     public static FitViewport fitViewport;
     public static SpriteBatch batch;
-    public static Table root;
+    public static RootTable root;
     public static SystemCursorListener handListener;
     public static SystemCursorListener ibeamListener;
     public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);

@@ -3,6 +3,7 @@ package gdx.liftoff.ui.tables;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
@@ -16,7 +17,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
-public class LandingTable extends Table {
+public class LandingTable extends LiftoffTable {
     private Image logoImage;
     private Label subtitleLabel;
     private TextButton updateButton;
@@ -79,11 +80,13 @@ public class LandingTable extends Table {
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        onChange(textButton, () -> root.nextTable());
 
         textButton = new TextButton("NEW PROJECT", skin, "mid");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        onChange(textButton, () -> root.nextTable());
 
         table.row();
         textButton = new TextButton("QUICK PROJECT", skin, "mid");
@@ -100,6 +103,7 @@ public class LandingTable extends Table {
         table.add(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        onChange(textButton, () -> root.nextTable());
 
         table.row();
         textButton = new TextButton("QUICK PROJECT", skin);
@@ -113,6 +117,7 @@ public class LandingTable extends Table {
         add(socialPanel).right();
     }
 
+    @Override
     public void captureKeyboardFocus() {
         projectPanel.captureKeyboardFocus();
     }
@@ -142,7 +147,7 @@ public class LandingTable extends Table {
         socialPanel.setColor(CLEAR_WHITE);
         bgImage.setColor(CLEAR_WHITE);
         float offsetAmount = 150f;
-        Gdx.input.setInputProcessor(null);
+        setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
         Action action = sequence(
@@ -184,8 +189,8 @@ public class LandingTable extends Table {
             ),
             //reset input
             run(() -> {
+                setTouchable(Touchable.childrenOnly);
                 projectPanel.captureKeyboardFocus();
-                Gdx.input.setInputProcessor(stage);
             }),
             //fade transition subtitle to version
             delay(1.5f),

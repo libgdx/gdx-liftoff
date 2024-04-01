@@ -1,7 +1,15 @@
 package gdx.liftoff.ui.tables;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import static gdx.liftoff.Main.skin;
 
-public class AddOnsTable extends Table {
+public class AddOnsTable extends LiftoffTable {
+    public AddOnsTable() {
+        setBackground(skin.getDrawable("black"));
+        pad(20).padLeft(30).padRight(30);
+    }
 
+    @Override
+    public void captureKeyboardFocus() {
+
+    }
 }
