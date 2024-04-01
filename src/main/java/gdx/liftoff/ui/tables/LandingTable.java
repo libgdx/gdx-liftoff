@@ -157,8 +157,8 @@ public class LandingTable extends Table {
             targeting(bgImage, fadeIn(.5f, exp10Out)),
             //fade in/translate logo image
             parallel(
-                fadeIn(1f),
-                Actions.moveBy(0, -offsetAmount, 1f, exp10Out)
+                targeting(logoImage, fadeIn(1f)),
+                targeting(logoImage, Actions.moveBy(0, -offsetAmount, 1f, exp10Out))
             ),
             //fade in subtitle
             targeting(subtitleLabel, fadeIn(.5f)),
@@ -196,6 +196,6 @@ public class LandingTable extends Table {
                 targeting(updateButton, fadeIn(.5f))
             )
         );
-        logoImage.addAction(action);
+        addAction(action);
     }
 }
