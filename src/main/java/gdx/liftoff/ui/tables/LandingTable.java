@@ -212,7 +212,7 @@ public class LandingTable extends LiftoffTable {
                     targeting(subtitleLabel, visible(false)),
                     parallel(
                         targeting(versionLabel, fadeIn(.5f)),
-                        targeting(updateButton, fadeIn(.5f))
+                        targeting(updateButton, delay(.35f, targeting(updateButton, fadeIn(.5f))))
                     )
                 )))
             ),
