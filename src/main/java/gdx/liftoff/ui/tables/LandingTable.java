@@ -20,6 +20,7 @@ import static gdx.liftoff.ui.data.Data.*;
 public class LandingTable extends LiftoffTable {
     private Image logoImage;
     private Label subtitleLabel;
+    private Label versionLabel;
     private TextButton updateButton;
     private ProjectPanel projectPanel;
     private CollapsibleGroup buttonsCollapsibleGroup;
@@ -53,9 +54,19 @@ public class LandingTable extends LiftoffTable {
         table.padTop(20);
         verticalCollapsibleGroup.addActor(table);
 
-        subtitleLabel = new Label(liftoffVersion, skin);
+        Stack stack = new Stack();
+        table.add(stack).minWidth(0);
+
+        subtitleLabel = new Label(subtitle, skin);
         subtitleLabel.setEllipsis("...");
-        table.add(subtitleLabel).minWidth(0);
+        subtitleLabel.setAlignment(Align.center);
+        subtitleLabel.setVisible(false);
+        stack.add(subtitleLabel);
+
+        versionLabel = new Label(liftoffVersion, skin);
+        versionLabel.setEllipsis("...");
+        versionLabel.setAlignment(Align.center);
+        stack.add(versionLabel);
 
         table.row();
         updateButton = new TextButton("UPDATE AVAILABLE", skin, "link");
@@ -147,6 +158,8 @@ public class LandingTable extends LiftoffTable {
         logoImage.setColor(CLEAR_WHITE);
         subtitleLabel.setText(subtitle);
         subtitleLabel.setColor(CLEAR_WHITE);
+        subtitleLabel.setVisible(true);
+        versionLabel.setColor(CLEAR_WHITE);
         updateButton.setColor(CLEAR_WHITE);
         projectPanel.setColor(CLEAR_WHITE);
         buttonsCollapsibleGroup.setColor(CLEAR_WHITE);
@@ -191,21 +204,23 @@ public class LandingTable extends LiftoffTable {
                 targeting(socialPanel, delay(.6f, parallel(
                     targeting(socialPanel, fadeIn(1f)),
                     targeting(socialPanel, Actions.moveBy(-offsetAmount, 0, 1f, exp10Out))
+                ))),
+
+                //fade transition subtitle to version
+                targeting(subtitleLabel, delay(.5f, sequence(
+                    targeting(subtitleLabel, fadeOut(.5f)),
+                    targeting(subtitleLabel, visible(false)),
+                    parallel(
+                        targeting(versionLabel, fadeIn(.5f)),
+                        targeting(updateButton, fadeIn(.5f))
+                    )
                 )))
             ),
             //reset input
             run(() -> {
                 setTouchable(Touchable.childrenOnly);
                 projectPanel.captureKeyboardFocus();
-            }),
-            //fade transition subtitle to version
-            delay(1.5f),
-            targeting(subtitleLabel, fadeOut(.5f)),
-            run(() -> subtitleLabel.setText(liftoffVersion)),
-            parallel(
-                targeting(subtitleLabel, fadeIn(.5f)),
-                targeting(updateButton, fadeIn(.5f))
-            )
+            })
         );
         Gdx.app.postRunnable(() -> addAction(animationAction));
     }
@@ -213,7 +228,6 @@ public class LandingTable extends LiftoffTable {
     @Override
     public void finishAnimation() {
         if (animationAction != null && getActions().contains(animationAction, true)) {
-            System.out.println("finished");
             removeAction(animationAction);
             populate();
             setTouchable(Touchable.childrenOnly);
