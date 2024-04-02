@@ -50,6 +50,12 @@
 		"b": 0,
 		"a": 1
 	},
+	"clear": {
+		"r": 1,
+		"g": 1,
+		"b": 1,
+		"a": 0
+	},
 	"red": {
 		"r": 0.8,
 		"g": 0,
@@ -81,6 +87,10 @@
 	"black": {
 		"name": "white-pixel",
 		"color": "black"
+	},
+	"clear": {
+		"name": "white-pixel",
+		"color": "clear"
 	}
 },
 "com.ray3k.tenpatch.TenPatchDrawable": {
@@ -206,13 +216,13 @@
 	},
 	"button-small-down-10": {
 		"region": "button-small-down",
-		"horizontalStretchAreas": [ 2, 20 ],
-		"verticalStretchAreas": [ 2, 20 ],
+		"horizontalStretchAreas": [ 2, 46 ],
+		"verticalStretchAreas": [ 3, 21 ],
 		"tiling": false,
-		"minWidth": 23,
+		"minWidth": 49,
 		"minHeight": 24,
-		"rightWidth": 10,
-		"leftWidth": 10,
+		"rightWidth": 14,
+		"leftWidth": 14,
 		"bottomHeight": 3,
 		"topHeight": 4,
 		"offsetX": 0,
@@ -226,13 +236,13 @@
 	},
 	"button-small-over-10": {
 		"region": "button-small-over",
-		"horizontalStretchAreas": [ 2, 20 ],
-		"verticalStretchAreas": [ 2, 20 ],
+		"horizontalStretchAreas": [ 2, 46 ],
+		"verticalStretchAreas": [ 3, 21 ],
 		"tiling": false,
-		"minWidth": 23,
+		"minWidth": 49,
 		"minHeight": 24,
-		"rightWidth": 10,
-		"leftWidth": 10,
+		"rightWidth": 14,
+		"leftWidth": 14,
 		"bottomHeight": 4,
 		"topHeight": 3,
 		"offsetX": 0,
@@ -246,13 +256,13 @@
 	},
 	"button-small-up-10": {
 		"region": "button-small-up",
-		"horizontalStretchAreas": [ 2, 20 ],
-		"verticalStretchAreas": [ 2, 20 ],
+		"horizontalStretchAreas": [ 2, 46 ],
+		"verticalStretchAreas": [ 3, 21 ],
 		"tiling": false,
-		"minWidth": 23,
+		"minWidth": 49,
 		"minHeight": 24,
-		"rightWidth": 10,
-		"leftWidth": 10,
+		"rightWidth": 14,
+		"leftWidth": 14,
 		"bottomHeight": 4,
 		"topHeight": 3,
 		"offsetX": 0,

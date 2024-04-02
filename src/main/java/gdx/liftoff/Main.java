@@ -44,6 +44,7 @@ public class Main extends ApplicationAdapter {
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
         config.setWindowedMode(800, 800);
+        config.setWindowSizeLimits(400,410, -1, -1);
         config.setWindowIcon("icons/libgdx128.png", "icons/libgdx64.png", "icons/libgdx32.png", "icons/libgdx16.png");
         new Lwjgl3Application(new Main(), config);
     }
