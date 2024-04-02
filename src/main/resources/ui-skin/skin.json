@@ -68,6 +68,12 @@
 		"b": 0.45882353,
 		"a": 1
 	},
+	"stage-bg": {
+		"r": 0,
+		"g": 0,
+		"b": 0,
+		"a": 0.7696629
+	},
 	"white": {
 		"r": 1,
 		"g": 1,
@@ -91,6 +97,10 @@
 	"clear": {
 		"name": "white-pixel",
 		"color": "clear"
+	},
+	"stage-bg": {
+		"name": "white-pixel",
+		"color": "stage-bg"
 	}
 },
 "com.ray3k.tenpatch.TenPatchDrawable": {
@@ -533,6 +543,46 @@
 		"regions": [],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"checkbox-bg-10": {
+		"region": "checkbox-bg",
+		"horizontalStretchAreas": [ 0, 35 ],
+		"verticalStretchAreas": [ 0, 16 ],
+		"tiling": false,
+		"minWidth": 36,
+		"minHeight": 17,
+		"rightWidth": 0,
+		"leftWidth": 0,
+		"bottomHeight": 1,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"checkbox-bg-down-10": {
+		"region": "checkbox-bg",
+		"horizontalStretchAreas": [ 0, 35 ],
+		"verticalStretchAreas": [ 0, 16 ],
+		"tiling": false,
+		"minWidth": 36,
+		"minHeight": 17,
+		"rightWidth": 0,
+		"leftWidth": 0,
+		"bottomHeight": 0,
+		"topHeight": 1,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -563,6 +613,24 @@
 		"up": "button-restore-up",
 		"down": "button-restore-down",
 		"over": "button-restore-over"
+	},
+	"delete": {
+		"up": "button-delete-up",
+		"down": "button-delete-down",
+		"over": "button-delete-over"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+	"default": {
+		"checkboxOn": "check-box-checked-up",
+		"checkboxOff": "check-box-unchecked-up",
+		"checkboxOnOver": "check-box-checked-over",
+		"checkboxOver": "check-box-unchecked-over",
+		"font": "font-label",
+		"fontColor": "white",
+		"overFontColor": "red",
+		"up": "checkbox-bg-10",
+		"down": "checkbox-bg-down-10"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
@@ -591,6 +659,9 @@
 	"tooltip": {
 		"font": "font-label-tooltip",
 		"fontColor": "black"
+	},
+	"description": {
+		"font": "font-label-tooltip"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
@@ -675,6 +746,11 @@
 	"tooltip-arrow-left": {
 		"background": "pop-arrow-left-10",
 		"titleFont": "font-label"
+	},
+	"dialog": {
+		"background": "pop-dialog-10",
+		"titleFont": "font-label",
+		"stageBackground": "stage-bg"
 	}
 }
 }

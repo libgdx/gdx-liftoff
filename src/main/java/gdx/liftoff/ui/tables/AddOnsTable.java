@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
-import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.panels.AddOnsPanel;
 
 import static gdx.liftoff.Main.*;
@@ -29,7 +28,7 @@ public class AddOnsTable extends LiftoffTable {
         table.add(verticalCollapsibleGroup).minHeight(0);
 
         Container container = new Container();
-        container.minSize(260, 25).maxSize(300, 35);
+        container.minSize(260, 25).maxSize(300, 35).prefWidth(300);
         verticalCollapsibleGroup.addActor(container);
 
         Image logoImage = new Image(skin, "title-small");

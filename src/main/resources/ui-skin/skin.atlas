@@ -39,23 +39,44 @@ button-big-up
   orig: 78, 80
   offset: 0, 0
   index: -1
-button-maximize-down
+button-delete-down
   rotate: false
-  xy: 1508, 681
-  size: 26, 27
-  orig: 26, 27
+  xy: 747, 395
+  size: 16, 17
+  orig: 16, 17
   offset: 0, 0
   index: -1
-button-maximize-over
+button-delete-over
+  rotate: false
+  xy: 1546, 691
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+button-delete-up
+  rotate: false
+  xy: 1624, 726
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+button-maximize-down
   rotate: false
   xy: 1568, 716
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
-button-maximize-up
+button-maximize-over
   rotate: false
   xy: 669, 359
+  size: 26, 27
+  orig: 26, 27
+  offset: 0, 0
+  index: -1
+button-maximize-up
+  rotate: false
+  xy: 1923, 1737
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
@@ -83,21 +104,21 @@ button-mid-up
   index: -1
 button-outline-down
   rotate: false
-  xy: 1536, 684
+  xy: 669, 333
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
   index: -1
 button-outline-over
   rotate: false
-  xy: 1596, 719
+  xy: 697, 362
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
   index: -1
 button-outline-up
   rotate: false
-  xy: 669, 333
+  xy: 1923, 1711
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
@@ -125,21 +146,21 @@ button-plus-up
   index: -1
 button-restore-down
   rotate: false
-  xy: 1923, 1737
+  xy: 1991, 1922
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-restore-over
   rotate: false
-  xy: 1991, 1922
+  xy: 509, 157
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-restore-up
   rotate: false
-  xy: 509, 157
+  xy: 1596, 716
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
@@ -167,37 +188,44 @@ button-small-up
   index: -1
 check-box-checked-down
   rotate: false
-  xy: 561, 231
-  size: 16, 17
-  orig: 16, 17
+  xy: 1052, 652
+  size: 22, 17
+  orig: 22, 17
   offset: 0, 0
   index: -1
 check-box-checked-over
   rotate: false
-  xy: 697, 369
-  size: 16, 17
-  orig: 16, 17
+  xy: 561, 231
+  size: 22, 17
+  orig: 22, 17
   offset: 0, 0
   index: -1
 check-box-checked-up
   rotate: false
-  xy: 1923, 1718
-  size: 16, 17
-  orig: 16, 17
+  xy: 1508, 672
+  size: 22, 17
+  orig: 22, 17
   offset: 0, 0
   index: -1
 check-box-unchecked-over
   rotate: false
-  xy: 1951, 1747
-  size: 16, 17
-  orig: 16, 17
+  xy: 1991, 1903
+  size: 22, 17
+  orig: 22, 17
   offset: 0, 0
   index: -1
 check-box-unchecked-up
   rotate: false
-  xy: 1991, 1903
-  size: 16, 17
-  orig: 16, 17
+  xy: 509, 138
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+checkbox-bg
+  rotate: false
+  xy: 1508, 691
+  size: 36, 17
+  orig: 36, 17
   offset: 0, 0
   index: -1
 font-button-big
@@ -251,7 +279,7 @@ font-label-tooltip
   index: -1
 icon-invalid
   rotate: false
-  xy: 1052, 650
+  xy: 1951, 1745
   size: 19, 19
   orig: 19, 19
   offset: 0, 0

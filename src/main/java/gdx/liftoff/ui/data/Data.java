@@ -1,5 +1,7 @@
 package gdx.liftoff.ui.data;
 
+import com.badlogic.gdx.utils.Array;
+
 public class Data {
     //common
     public static String liftoffVersion = "v1.12.1.7";
@@ -24,4 +26,23 @@ public class Data {
     public static String libgdxTooltipDescription = "The official libGDX website";
     public static String discordTooltipDescription = "The libGDX community Discord server";
     public static String wikiTooltipDescription = "The libGDX wiki\nLearn through tutorials, articles, and links";
+
+    //add-ons panel
+    //todo: These lists are temporary and should be filled by some other means. Consult TEttinger.
+    public static Array<String> platformsNames = new Array<>(new String[] {"CORE", "ANDROID", "DESKTOP"});
+    public static Array<String> languagesNames = new Array<>(new String[] {"GROOVY 3.0", "KOTLIN 1.4"});
+    public static Array<String> extensionsNames = new Array<>(new String[] {"ASHLEY", "TOOLS"});
+
+    //platforms dialog
+    public static String coreDescription = "Main module shared by all platforms.";
+    public static String desktopDescription = "Primary desktop backend using LWJGL3.";
+    public static String androidDescription = "Android mobile backend. Needs Android SDK.";
+    public static String iosDescription = "iOS mobile backend using RoboVM.";
+    public static String htmlDescription = "Web backend using GWT and WebGL.";
+    public static String headlessDescription = "Desktop backend without a graphical interface.";
+    public static String htmlTeavmDescription = "Experimental web backend using TeaVM and WebGL.";
+    public static String desktopLegacyDescription = "Legacy desktop backend using LWJGL2.";
+    public static String serverDescription = "Optional server project without libGDX libraries.";
+    public static String sharedDescription = "Optional module shared by Core and Server.";
+    public static String iosMultiosDescription = "iOS mobile backend using Multi-OS Engine.";
 }

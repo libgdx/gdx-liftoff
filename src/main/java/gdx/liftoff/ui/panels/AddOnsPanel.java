@@ -2,10 +2,13 @@ package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.CollapsibleGroup;
+import gdx.liftoff.ui.data.Data;
+import gdx.liftoff.ui.dialogs.PlatformsDialog;
 
-import static gdx.liftoff.Main.addHandListener;
-import static gdx.liftoff.Main.skin;
+import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.*;
 
 public class AddOnsPanel extends Table {
     public AddOnsPanel() {
@@ -16,6 +19,7 @@ public class AddOnsPanel extends Table {
         Table table = new Table();
         add(table).grow();
 
+        //Platforms
         table.defaults().space(10).grow().minHeight(150);
         Table subTable = new Table();
         subTable.pad(10);
@@ -29,13 +33,16 @@ public class AddOnsPanel extends Table {
         subTable.row();
         Table scrollTable = new Table();
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow();
+        subTable.add(scrollPane).grow().padTop(10);
+        populateAddOnTable(scrollTable, platformsNames);
 
         subTable.row();
         Button button = new Button(skin, "plus");
         subTable.add(button).right().padRight(5);
         addHandListener(button);
+        onChange(button, PlatformsDialog::show);
 
+        //Languages
         subTable = new Table();
         subTable.pad(10);
         subTable.setBackground(skin.getDrawable("button-outline-up-10"));
@@ -48,13 +55,15 @@ public class AddOnsPanel extends Table {
         subTable.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow();
+        subTable.add(scrollPane).grow().padTop(10);
+        populateAddOnTable(scrollTable, languagesNames);
 
         subTable.row();
         button = new Button(skin, "plus");
         subTable.add(button).right().padRight(5);
         addHandListener(button);
 
+        //Extensions
         subTable = new Table();
         subTable.pad(10);
         subTable.setBackground(skin.getDrawable("button-outline-up-10"));
@@ -67,7 +76,8 @@ public class AddOnsPanel extends Table {
         subTable.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow();
+        subTable.add(scrollPane).grow().padTop(10);
+        populateAddOnTable(scrollTable, extensionsNames);
 
         subTable.row();
         button = new Button(skin, "plus");
@@ -96,5 +106,17 @@ public class AddOnsPanel extends Table {
 
         Container container = new Container();
         collapsibleGroup.addActor(container);
+    }
+
+    private void populateAddOnTable(Table table, Array<String> names) {
+        table.clearChildren();
+        table.top();
+
+        table.defaults().growX().space(5);
+        for (String name : names) {
+            Label label = new Label(name, skin);
+            table.add(label);
+            table.row();
+        }
     }
 }
