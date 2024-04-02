@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -125,6 +126,7 @@ public class Main extends ApplicationAdapter {
         return addTooltip(actor, null, align, wrapWidth,  description);
     }
 
+    private static GlyphLayout layout = new GlyphLayout();
     public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String description) {
         String style = align == Align.bottom ? "tooltip-arrow-up" : align == Align.top ? "tooltip-arrow-down" : align == Align.left ? "tooltip-arrow-right" : "tooltip-arrow-left";
         PopTableHoverListener listener = new PopTableHoverListener(align, align, skin, style);
@@ -134,10 +136,13 @@ public class Main extends ApplicationAdapter {
         PopTable pop = listener.getPopTable();
 
         Label label = new Label(description, skin, "tooltip");
+        label.setWrap(true);
         Cell cell = pop.add(label);
         if (wrapWidth != 0) {
-            label.setWrap(true);
             cell.width(wrapWidth);
+        } else {
+            layout.setText(label.getStyle().font, description);
+            cell.minWidth(0).prefWidth(layout.width);
         }
 
         return pop;
