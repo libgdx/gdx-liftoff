@@ -123,7 +123,7 @@ public class PlatformsDialog extends PopTable  {
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(iosDescription, table);
+        addDescriptionLabel(iosMultiosDescription, table);
 
         row();
         TextButton textButton = new TextButton("OK", skin);
