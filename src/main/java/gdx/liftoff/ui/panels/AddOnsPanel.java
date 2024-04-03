@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.CollapsibleGroup;
 import gdx.liftoff.ui.data.Data;
+import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
 
 import static gdx.liftoff.Main.*;
@@ -62,6 +63,7 @@ public class AddOnsPanel extends Table {
         button = new Button(skin, "plus");
         subTable.add(button).right().padRight(5);
         addHandListener(button);
+        onChange(button, LanguagesDialog::show);
 
         //Extensions
         subTable = new Table();
@@ -83,6 +85,7 @@ public class AddOnsPanel extends Table {
         button = new Button(skin, "plus");
         subTable.add(button).right().padRight(5);
         addHandListener(button);
+        onChange(button, PlatformsDialog::show);
 
         row();
         table = new Table();

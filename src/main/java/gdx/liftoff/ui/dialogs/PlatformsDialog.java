@@ -21,6 +21,7 @@ public class PlatformsDialog extends PopTable  {
 
         row();
         Table scrollTable = new Table();
+        scrollTable.pad(5);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);

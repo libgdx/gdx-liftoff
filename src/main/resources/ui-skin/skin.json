@@ -583,6 +583,66 @@
 		"regions": [],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"underline-external-link-up-10": {
+		"region": "underline-external-link-up",
+		"horizontalStretchAreas": [ 2, 23 ],
+		"verticalStretchAreas": [ 21, 23 ],
+		"tiling": false,
+		"minWidth": 44,
+		"minHeight": 24,
+		"rightWidth": 29,
+		"leftWidth": 3,
+		"bottomHeight": 1,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"underline-external-link-over-10": {
+		"region": "underline-external-link-over",
+		"horizontalStretchAreas": [ 2, 23 ],
+		"verticalStretchAreas": [ 21, 23 ],
+		"tiling": false,
+		"minWidth": 44,
+		"minHeight": 24,
+		"rightWidth": 29,
+		"leftWidth": 3,
+		"bottomHeight": 1,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"underline-external-link-down-10": {
+		"region": "underline-external-link-down",
+		"horizontalStretchAreas": [ 2, 23 ],
+		"verticalStretchAreas": [ 21, 23 ],
+		"tiling": false,
+		"minWidth": 44,
+		"minHeight": 24,
+		"rightWidth": 29,
+		"leftWidth": 3,
+		"bottomHeight": 0,
+		"topHeight": 1,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -618,6 +678,11 @@
 		"up": "button-delete-up",
 		"down": "button-delete-down",
 		"over": "button-delete-over"
+	},
+	"external-link": {
+		"up": "button-external-link-up",
+		"down": "button-external-link-down",
+		"over": "button-external-link-over"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
@@ -710,6 +775,14 @@
 		"up": "button-outline-up-10",
 		"down": "button-outline-down-10",
 		"over": "button-outline-over-10"
+	},
+	"link-external": {
+		"font": "font-label",
+		"fontColor": "white",
+		"overFontColor": "red",
+		"up": "underline-external-link-up-10",
+		"down": "underline-external-link-down-10",
+		"over": "underline-external-link-over-10"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {

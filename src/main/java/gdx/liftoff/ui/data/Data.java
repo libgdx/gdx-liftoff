@@ -32,6 +32,7 @@ public class Data {
     public static Array<String> platformsNames = new Array<>(new String[] {"CORE", "ANDROID", "DESKTOP"});
     public static Array<String> languagesNames = new Array<>(new String[] {"GROOVY 3.0", "KOTLIN 1.4"});
     public static Array<String> extensionsNames = new Array<>(new String[] {"ASHLEY", "TOOLS"});
+    public static String gwtLanguageWarning = "Note: unlike TeaVM, the GWT web backend does not support other languages.";
 
     //platforms dialog
     public static String coreDescription = "Main module shared by all platforms.";
@@ -45,4 +46,13 @@ public class Data {
     public static String serverDescription = "Optional server project without libGDX libraries.";
     public static String sharedDescription = "Optional module shared by Core and Server.";
     public static String iosMultiosDescription = "iOS mobile backend using Multi-OS Engine.";
+
+    //languages dialog
+    public static String groovyDefaultVersion = "4.0.2";
+    public static String kotlinDefaultVersion = "1.9.22";
+    public static String scalaDefaultVersion = "2.13.8";
+    public static String clojureLinkText = "play-clj: a Clojure libGDX wrapper";
+    public static String clojureLinkURL = "https://github.com/oakes/play-clj";
+    public static String otherJVMLinkText = "Using other JVM languages in libGDX";
+    public static String otherJVMLinkURL = "https://libgdx.com/wiki/jvm-langs/using-libgdx-with-other-jvm-languages";
 }
