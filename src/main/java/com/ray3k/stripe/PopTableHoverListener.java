@@ -129,4 +129,54 @@ public class PopTableHoverListener extends InputListener {
     public void tableHidden(Event event) {
 
     }
+
+    /**
+     * Returns true (the default) if the PopTable will be hidden automatically when the pointer exits the Listener Actor.
+     * @return
+     */
+    public boolean isHideOnExit() {
+        return hideOnExit;
+    }
+
+    /**
+     * Set to true (the default) if the PopTable should be hidden automatically when the pointer exits the Listener Actor.
+     * @param hideOnExit
+     */
+    public void setHideOnExit(boolean hideOnExit) {
+        this.hideOnExit = hideOnExit;
+    }
+
+    /**
+     * Returns the delay in seconds before the PopTable is shown.
+     * @return
+     */
+    public float getDelay() {
+        return delay;
+    }
+
+    /**
+     * Sets the delay in seconds before the PopTable is shown.
+     * @param delay
+     */
+    public void setDelay(float delay) {
+        this.delay = delay;
+    }
+
+    /**
+     * Returns the Actor that the PopTable's position will be attached to. If set to null (the default), the PopTable
+     * will be attached to the Listener Actor.
+     * @return
+     */
+    public Actor getAttachedActor() {
+        return attachedActor;
+    }
+
+    /**
+     * sets the Actor that the PopTable's position will be attached to. IIf set to null (the default), the PopTable will
+     * be attached to the Listener Actor.
+     * @param attachedActor
+     */
+    public void setAttachedActor(Actor attachedActor) {
+        this.attachedActor = attachedActor;
+    }
 }

@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.PopTableHoverListener;
+import com.ray3k.stripe.PopTableTextHoverListener;
 import com.ray3k.stripe.SystemCursorListener;
 import gdx.liftoff.ui.RootTable;
 
@@ -126,25 +127,11 @@ public class Main extends ApplicationAdapter {
         return addTooltip(actor, null, align, wrapWidth,  description);
     }
 
-    private static GlyphLayout layout = new GlyphLayout();
     public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String description) {
         String style = align == Align.bottom ? "tooltip-arrow-up" : align == Align.top ? "tooltip-arrow-down" : align == Align.left ? "tooltip-arrow-right" : "tooltip-arrow-left";
-        PopTableHoverListener listener = new PopTableHoverListener(align, align, skin, style);
+        PopTableTextHoverListener listener = new PopTableTextHoverListener(description, wrapWidth, align, align, skin, style);
         listener.attachedActor = attachedActor;
         actor.addListener(listener);
-
-        PopTable pop = listener.getPopTable();
-
-        Label label = new Label(description, skin, "tooltip");
-        label.setWrap(true);
-        Cell cell = pop.add(label);
-        if (wrapWidth != 0) {
-            cell.width(wrapWidth);
-        } else {
-            layout.setText(label.getStyle().font, description);
-            cell.minWidth(0).prefWidth(layout.width);
-        }
-
-        return pop;
+        return listener.getPopTable();
     }
 }

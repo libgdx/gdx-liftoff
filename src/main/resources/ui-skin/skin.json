@@ -723,7 +723,24 @@
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
 	"default": {
-		"label": "default"
+		"label": "default",
+		"background": "pop-dialog-10"
+	},
+	"tooltip-arrow-up": {
+		"label": "tooltip",
+		"background": "pop-arrow-up-10"
+	},
+	"tooltip-arrow-down": {
+		"label": "tooltip",
+		"background": "pop-arrow-down-10"
+	},
+	"tooltip-arrow-right": {
+		"label": "tooltip",
+		"background": "pop-arrow-right-10"
+	},
+	"tooltip-arrow-left": {
+		"label": "tooltip",
+		"background": "pop-arrow-left-10"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
