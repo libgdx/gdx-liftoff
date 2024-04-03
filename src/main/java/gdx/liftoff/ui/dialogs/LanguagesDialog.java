@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
@@ -39,7 +40,7 @@ public class LanguagesDialog extends PopTable  {
         label = new Label("LANGUAGE", skin, "field");
         table.add(label);
 
-        label = new Label("Version", skin, "field");
+        label = new Label("VERSION", skin, "field");
         table.add(label);
 
         table.columnDefaults(0).left();
@@ -59,6 +60,7 @@ public class LanguagesDialog extends PopTable  {
         Button button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
+        onChange(button, () -> Gdx.net.openURI(groovyLinkUrl));
 
         //kotlin
         table.row();
@@ -74,6 +76,7 @@ public class LanguagesDialog extends PopTable  {
         button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
+        onChange(button, () -> Gdx.net.openURI(kotlinLinkUrl));
 
         //scala
         table.row();
@@ -93,23 +96,26 @@ public class LanguagesDialog extends PopTable  {
         scrollTable.row();
         table = new Table();
         scrollTable.add(table).spaceTop(30).growX();
+        onChange(button, () -> Gdx.net.openURI(scalaLinkUrl));
 
         //links
         table.defaults().space(5);
         label = new Label("LINKS", skin, "field");
         table.add(label).left();
 
-        table.defaults().left();
+        table.defaults().left().padLeft(10);
         table.row();
         TextButton textButton = new TextButton(clojureLinkText, skin, "link");
         textButton.getLabel().setAlignment(Align.left);
         table.add(textButton);
         addHandListener(textButton);
+        onChange(textButton, () -> Gdx.net.openURI(clojureLinkURL));
 
         table.row();
         textButton = new TextButton(otherJVMLinkText, skin, "link");
         table.add(textButton);
         addHandListener(textButton);
+        onChange(textButton, () -> Gdx.net.openURI(otherJVMLinkURL));
 
         row();
         textButton = new TextButton("OK", skin);

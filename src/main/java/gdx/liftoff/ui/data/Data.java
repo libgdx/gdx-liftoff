@@ -49,8 +49,11 @@ public class Data {
 
     //languages dialog
     public static String groovyDefaultVersion = "4.0.2";
+    public static String groovyLinkUrl = "http://www.groovy-lang.org/";
     public static String kotlinDefaultVersion = "1.9.22";
+    public static String kotlinLinkUrl = "https://kotlinlang.org/";
     public static String scalaDefaultVersion = "2.13.8";
+    public static String scalaLinkUrl = "https://www.scala-lang.org/";
     public static String clojureLinkText = "play-clj: a Clojure libGDX wrapper";
     public static String clojureLinkURL = "https://github.com/oakes/play-clj";
     public static String otherJVMLinkText = "Using other JVM languages in libGDX";
