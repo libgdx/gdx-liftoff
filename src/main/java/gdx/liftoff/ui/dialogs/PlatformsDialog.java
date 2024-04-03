@@ -1,6 +1,5 @@
 package gdx.liftoff.ui.dialogs;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
@@ -26,7 +25,9 @@ public class PlatformsDialog extends PopTable  {
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow();
+        add(scrollPane).grow().spaceTop(20);
+        addScrollFocusListener(scrollPane);
+        stage.setScrollFocus(scrollPane);
 
         scrollTable.defaults().left();
         label = new Label("PRIMARY PLATFORMS", skin, "field");

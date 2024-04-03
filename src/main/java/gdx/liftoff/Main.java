@@ -21,10 +21,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.ray3k.stripe.PopTable;
-import com.ray3k.stripe.PopTableHoverListener;
-import com.ray3k.stripe.PopTableTextHoverListener;
-import com.ray3k.stripe.SystemCursorListener;
+import com.ray3k.stripe.*;
 import gdx.liftoff.ui.RootTable;
 
 public class Main extends ApplicationAdapter {
@@ -36,6 +33,7 @@ public class Main extends ApplicationAdapter {
     public static RootTable root;
     public static SystemCursorListener handListener;
     public static SystemCursorListener ibeamListener;
+    public static ScrollFocusListener scrollFocusListener;
     public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);
     public static Image bgImage = new Image();
     public static boolean resizingWindow;
@@ -64,6 +62,7 @@ public class Main extends ApplicationAdapter {
 
         handListener = new SystemCursorListener(SystemCursor.Hand);
         ibeamListener = new SystemCursorListener(SystemCursor.Ibeam);
+        scrollFocusListener = new ScrollFocusListener(stage);
 
         bgImage = new Image(skin, "bg");
         bgImage.setFillParent(true);
@@ -99,6 +98,10 @@ public class Main extends ApplicationAdapter {
 
     public static void addIbeamListener(Actor actor) {
         actor.addListener(ibeamListener);
+    }
+
+    public static void addScrollFocusListener(Actor actor) {
+        actor.addListener(scrollFocusListener);
     }
 
     public static void onChange(Actor actor, Runnable runnable) {
