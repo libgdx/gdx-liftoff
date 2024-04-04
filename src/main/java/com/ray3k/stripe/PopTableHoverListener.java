@@ -2,6 +2,7 @@ package com.ray3k.stripe;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -31,7 +32,20 @@ public class PopTableHoverListener extends InputListener {
     public PopTableHoverListener(int edge, int align, PopTableStyle style) {
         hideOnExit = true;
         delay = .5f;
-        popTable = new PopTable(style);
+        popTable = new PopTable(style) {
+            @Override
+            public void act(float delta) {
+                super.act(delta);
+                if (Gdx.input.isKeyPressed(Keys.ANY_KEY)) {
+                    dismissed = true;
+                    popTable.hide();
+                    if (showTableAction != null) {
+                        if (showTableAction.getActor() != null) showTableAction.getActor().removeAction(showTableAction);
+                        showTableAction = null;
+                    }
+                }
+            }
+        };
         popTable.setModal(false);
         popTable.setHideOnUnfocus(true);
         popTable.setTouchable(Touchable.disabled);
@@ -100,11 +114,10 @@ public class PopTableHoverListener extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        Actor actor = event.getListenerActor();
         dismissed = true;
         popTable.hide();
         if (showTableAction != null) {
-            actor.removeAction(showTableAction);
+            if (showTableAction.getActor() != null) showTableAction.getActor().removeAction(showTableAction);
             showTableAction = null;
         }
         return false;
