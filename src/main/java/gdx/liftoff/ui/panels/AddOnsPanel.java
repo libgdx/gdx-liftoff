@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.CollapsibleGroup;
-import gdx.liftoff.ui.data.Data;
+import gdx.liftoff.ui.dialogs.ExtensionsDialog;
 import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
 
@@ -85,7 +85,7 @@ public class AddOnsPanel extends Table {
         button = new Button(skin, "plus");
         subTable.add(button).right().padRight(5);
         addHandListener(button);
-        onChange(button, PlatformsDialog::show);
+        onChange(button, ExtensionsDialog::show);
 
         row();
         table = new Table();

@@ -58,4 +58,24 @@ public class Data {
     public static String clojureLinkURL = "https://github.com/oakes/play-clj";
     public static String otherJVMLinkText = "Using other JVM languages in libGDX";
     public static String otherJVMLinkURL = "https://libgdx.com/wiki/jvm-langs/using-libgdx-with-other-jvm-languages";
+
+    //extensions dialog
+    public static String ashleyDescription = "Entity system.";
+    public static String ashleyURL = "https://github.com/libgdx/ashley";
+    public static String box2DLightsDescription = "Lights system for the 2D physics engine.";
+    public static String box2DLightsURL = "https://github.com/libgdx/box2dlights";
+    public static String aiDescription = "Artificial intelligence utilities.";
+    public static String aiURL = "https://github.com/libgdx/gdx-ai";
+    public static String box2DDescription = "2D physics engine.";
+    public static String box2DURL = "https://libgdx.com/wiki/extensions/physics/box2d";
+    public static String bulletDescription = "3D physics engine. GWT-incompatible.";
+    public static String bulletURL = "https://libgdx.com/wiki/extensions/physics/bullet/bullet-physics";
+    public static String controllersDescription = "Official controllers support.";
+    public static String controllersURL = "https://github.com/libgdx/gdx-controllers";
+    public static String freetypeDescription = "Official TTF fonts support. GWT-incompatible.";
+    public static String freetypeURL = "https://libgdx.com/wiki/extensions/gdx-freetype";
+    public static String toolsDescription = "Various libGDX tools. Requires a legacy desktop project!";
+    public static String toolsURL = "https://libgdx.com/wiki/tools/texture-packer";
+    public static String gdxPayLinkText = "gdx-pay: cross-platform in-app purchasing.";
+    public static String gdxPayLinkURL = "https://github.com/libgdx/gdx-pay";
 }

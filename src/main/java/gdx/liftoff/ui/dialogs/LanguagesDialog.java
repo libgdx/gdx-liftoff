@@ -92,17 +92,18 @@ public class LanguagesDialog extends PopTable  {
         button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
-
-        scrollTable.row();
-        table = new Table();
-        scrollTable.add(table).spaceTop(30).growX();
         onChange(button, () -> Gdx.net.openURI(scalaLinkUrl));
 
         //links
+        scrollTable.row();
+        table = new Table();
+        scrollTable.add(table).spaceTop(30).growX();
+
         table.defaults().space(5);
         label = new Label("LINKS", skin, "field");
         table.add(label).left();
 
+        //clojure
         table.defaults().left().padLeft(10);
         table.row();
         TextButton textButton = new TextButton(clojureLinkText, skin, "link");
@@ -111,6 +112,7 @@ public class LanguagesDialog extends PopTable  {
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(clojureLinkURL));
 
+        //other jvm's
         table.row();
         textButton = new TextButton(otherJVMLinkText, skin, "link");
         table.add(textButton);
