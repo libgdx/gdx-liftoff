@@ -1,5 +1,9 @@
 package gdx.liftoff.ui.panels;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -87,27 +91,51 @@ public class AddOnsPanel extends Table {
         addHandListener(button);
         onChange(button, ExtensionsDialog::show);
 
+        //template
         row();
         table = new Table();
         add(table).growX().spaceTop(20);
 
-        table.defaults().space(20);
         label = new Label("TEMPLATE", skin, "field");
-        table.add(label);
+        table.add(label).space(20);
 
-        TextButton textButton = new TextButton("CLASSIC", skin, "field");
-        textButton.getLabel().setAlignment(Align.left);
-        table.add(textButton).growX().minWidth(150);
-        addHandListener(textButton);
+        Stack stack = new Stack();
+        table.add(stack).growX();
+
+        Table chooseTable = new Table();
+        stack.add(chooseTable);
+
+        chooseTable.defaults().space(20);
+        TextButton chooseFieldButton = new TextButton("CLASSIC", skin, "field");
+        chooseFieldButton.getLabel().setAlignment(Align.left);
+        chooseTable.add(chooseFieldButton).growX().minWidth(150);
 
         CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
-        table.add(collapsibleGroup).minWidth(0);
+        chooseTable.add(collapsibleGroup);
 
-        textButton = new TextButton("CHOOSE", skin);
-        collapsibleGroup.addActor(textButton);
-        addHandListener(textButton);
+        TextButton chooseButton = new TextButton("CHOOSE", skin);
+        collapsibleGroup.addActor(chooseButton);
+
+        Container chooseContainer = new Container();
+        chooseContainer.setTouchable(Touchable.enabled);
+        stack.add(chooseContainer);
+        addHandListener(chooseContainer);
+        chooseContainer.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                chooseButton.fire(event);
+                chooseFieldButton.fire(event);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                chooseButton.fire(event);
+                chooseFieldButton.fire(event);
+            }
+        });
 
         Container container = new Container();
+        container.size(0);
         collapsibleGroup.addActor(container);
     }
 
