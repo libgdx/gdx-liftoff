@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.dialogs.ExtensionsDialog;
 import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
@@ -105,16 +106,20 @@ public class AddOnsPanel extends Table {
         Table chooseTable = new Table();
         stack.add(chooseTable);
 
-        chooseTable.defaults().space(20);
+        SmashGroup smashGroup = new SmashGroup(true);
+        smashGroup.space(20);
+        stack.add(smashGroup);
+
+        Container container = new Container();
+        container.minWidth(150).fill();
+        smashGroup.setFirstActor(container);
+
         TextButton chooseFieldButton = new TextButton("CLASSIC", skin, "field");
         chooseFieldButton.getLabel().setAlignment(Align.left);
-        chooseTable.add(chooseFieldButton).growX().minWidth(150);
-
-        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
-        chooseTable.add(collapsibleGroup);
+        container.setActor(chooseFieldButton);
 
         TextButton chooseButton = new TextButton("CHOOSE", skin);
-        collapsibleGroup.addActor(chooseButton);
+        smashGroup.setSecondActor(chooseButton);
 
         Container chooseContainer = new Container();
         chooseContainer.setTouchable(Touchable.enabled);
@@ -133,10 +138,6 @@ public class AddOnsPanel extends Table {
                 chooseFieldButton.fire(event);
             }
         });
-
-        Container container = new Container();
-        container.size(0);
-        collapsibleGroup.addActor(container);
     }
 
     private void populateAddOnTable(Table table, Array<String> names) {
