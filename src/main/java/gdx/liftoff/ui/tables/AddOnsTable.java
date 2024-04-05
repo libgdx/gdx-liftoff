@@ -8,7 +8,6 @@ import gdx.liftoff.ui.panels.AddOnsPanel;
 
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.liftoffVersion;
-import static gdx.liftoff.ui.data.Data.logoTooltipDescription;
 
 public class AddOnsTable extends LiftoffTable {
     public AddOnsTable() {
@@ -34,7 +33,7 @@ public class AddOnsTable extends LiftoffTable {
         Image logoImage = new Image(skin, "title-small");
         logoImage.setScaling(Scaling.fit);
         container.setActor(logoImage);
-        addTooltip(logoImage, Align.top, logoTooltipDescription);
+        addTooltip(logoImage, Align.top, prop.getProperty("logoTip"));
 
         container = new Container();
         verticalCollapsibleGroup.addActor(container);
@@ -62,14 +61,14 @@ public class AddOnsTable extends LiftoffTable {
         table = new Table();
         add(table).bottom().growX();
 
-        TextButton textButton = new TextButton("PREVIOUS", skin);
+        TextButton textButton = new TextButton(prop.getProperty("previous"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
         onChange(textButton, () -> root.previousTable());
 
         table.add().growX().space(5);
 
-        textButton = new TextButton("NEXT", skin);
+        textButton = new TextButton(prop.getProperty("next"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
         onChange(textButton, () -> root.nextTable());

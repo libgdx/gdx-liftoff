@@ -683,6 +683,13 @@
 		"up": "button-external-link-up",
 		"down": "button-external-link-down",
 		"over": "button-external-link-over"
+	},
+	"radio": {
+		"up": "radio-unchecked-up",
+		"down": "radio-checked-down",
+		"over": "radio-unchecked-over",
+		"checked": "radio-checked-up",
+		"checkedOver": "radio-checked-over"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
@@ -691,6 +698,17 @@
 		"checkboxOff": "check-box-unchecked-up",
 		"checkboxOnOver": "check-box-checked-over",
 		"checkboxOver": "check-box-unchecked-over",
+		"font": "font-label",
+		"fontColor": "white",
+		"overFontColor": "red",
+		"up": "checkbox-bg-10",
+		"down": "checkbox-bg-down-10"
+	},
+	"radio": {
+		"checkboxOn": "radio-checked-up",
+		"checkboxOff": "radio-unchecked-up",
+		"checkboxOnOver": "radio-checked-over",
+		"checkboxOver": "radio-unchecked-over",
 		"font": "font-label",
 		"fontColor": "white",
 		"overFontColor": "red",

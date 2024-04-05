@@ -12,22 +12,22 @@ public class SocialPanel extends Table {
     public SocialPanel() {
         defaults().space(15);
 
-        TextButton textButton = new TextButton("LIBGDX.COM", skin, "link");
+        TextButton textButton = new TextButton(prop.getProperty("libgdxButton"), skin, "link");
         add(textButton);
         addHandListener(textButton);
-        addTooltip(textButton, Align.top, libgdxTooltipDescription);
-        onChange(textButton, () -> Gdx.net.openURI(libgdxURL));
+        addTooltip(textButton, Align.top, prop.getProperty("libgdxTip"));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("libGdxUrl")));
 
-        textButton = new TextButton("DISCORD", skin, "link");
+        textButton = new TextButton(prop.getProperty("discordButton"), skin, "link");
         add(textButton);
         addHandListener(textButton);
-        addTooltip(textButton, Align.top, discordTooltipDescription);
-        onChange(textButton, () -> Gdx.net.openURI(discordURL));
+        addTooltip(textButton, Align.top, prop.getProperty("discordTip"));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("discordUrl")));
 
-        textButton = new TextButton("WIKI", skin, "link");
+        textButton = new TextButton(prop.getProperty("wikiButton"), skin, "link");
         add(textButton);
         addHandListener(textButton);
-        addTooltip(textButton, Align.top, wikiTooltipDescription);
-        onChange(textButton, () -> Gdx.net.openURI(wikiURL));
+        addTooltip(textButton, Align.top, prop.getProperty("wikiTip"));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("wikiUrl")));
     }
 }

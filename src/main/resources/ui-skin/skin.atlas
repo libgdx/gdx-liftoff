@@ -41,28 +41,28 @@ button-big-up
   index: -1
 button-delete-down
   rotate: false
-  xy: 509, 90
+  xy: 1991, 1852
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-delete-over
   rotate: false
-  xy: 1114, 652
+  xy: 1923, 1644
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-delete-up
   rotate: false
-  xy: 1991, 1871
+  xy: 1138, 652
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-external-link-down
   rotate: false
-  xy: 771, 395
+  xy: 509, 71
   size: 15, 17
   orig: 15, 17
   offset: 0, 0
@@ -153,14 +153,14 @@ button-plus-down
   index: -1
 button-plus-over
   rotate: false
-  xy: 1641, 726
+  xy: 771, 395
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-plus-up
   rotate: false
-  xy: 1923, 1663
+  xy: 1665, 726
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
@@ -338,6 +338,41 @@ pop-dialog
   xy: 1991, 1993
   size: 54, 54
   orig: 54, 54
+  offset: 0, 0
+  index: -1
+radio-checked-down
+  rotate: false
+  xy: 1114, 652
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+radio-checked-over
+  rotate: false
+  xy: 1641, 726
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+radio-checked-up
+  rotate: false
+  xy: 1991, 1871
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+radio-unchecked-over
+  rotate: false
+  xy: 1923, 1663
+  size: 22, 17
+  orig: 22, 17
+  offset: 0, 0
+  index: -1
+radio-unchecked-up
+  rotate: false
+  xy: 509, 90
+  size: 22, 17
+  orig: 22, 17
   offset: 0, 0
   index: -1
 scroll-horizontal

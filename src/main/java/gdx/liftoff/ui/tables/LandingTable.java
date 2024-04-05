@@ -44,7 +44,7 @@ public class LandingTable extends LiftoffTable {
         logoImage = new Image(skin, "title-small");
         logoImage.setScaling(Scaling.fit);
         table.add(logoImage).minSize(270, 30).maxHeight(50);
-        addTooltip(logoImage, Align.top, logoTooltipDescription);
+        addTooltip(logoImage, Align.top, prop.getProperty("logoTip"));
 
         table.row();
         CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(false);
@@ -57,7 +57,7 @@ public class LandingTable extends LiftoffTable {
         Stack stack = new Stack();
         table.add(stack).minWidth(0);
 
-        subtitleLabel = new Label(subtitle, skin);
+        subtitleLabel = new Label(prop.getProperty("subtitle"), skin);
         subtitleLabel.setEllipsis("...");
         subtitleLabel.setAlignment(Align.center);
         subtitleLabel.setVisible(false);
@@ -69,11 +69,11 @@ public class LandingTable extends LiftoffTable {
         stack.add(versionLabel);
 
         table.row();
-        updateButton = new TextButton("UPDATE AVAILABLE", skin, "link");
+        updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
         table.add(updateButton);
         addHandListener(updateButton);
-        addTooltip(updateButton, Align.bottom, updateTooltipDescription);
-        onChange(updateButton, () -> Gdx.net.openURI(updateUrl));
+        addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
+        onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
 
         Container container = new Container();
         verticalCollapsibleGroup.addActor(container);
@@ -93,40 +93,40 @@ public class LandingTable extends LiftoffTable {
         CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(true);
         table.add(horizontalCollapsibleGroup);
 
-        TextButton textButton = new TextButton("CREATE NEW PROJECT", skin, "big");
+        TextButton textButton = new TextButton(prop.getProperty("createNewProject"), skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
-        textButton = new TextButton("NEW PROJECT", skin, "mid");
+        textButton = new TextButton(prop.getProperty("newProject"), skin, "mid");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
         table.row();
-        textButton = new TextButton("QUICK PROJECT", skin, "mid");
+        textButton = new TextButton(prop.getProperty("quickProject"), skin, "mid");
         table.add(textButton).fillX().space(20);
         addQuickProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, quickProjectTooltipDescription);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
 
         //begin small vertical group
         table = new Table();
         buttonsCollapsibleGroup.addActor(table);
 
         table.defaults().uniformX().fillX();
-        textButton = new TextButton("NEW PROJECT", skin);
+        textButton = new TextButton(prop.getProperty("newProject"), skin);
         table.add(textButton);
         addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, newProjectTooltipDescription);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
         table.row();
-        textButton = new TextButton("QUICK PROJECT", skin);
+        textButton = new TextButton(prop.getProperty("quickProject"), skin);
         table.add(textButton).space(20);
         addQuickProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, quickProjectTooltipDescription);
+        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
         //end vertical groups
 
         row();
@@ -156,7 +156,7 @@ public class LandingTable extends LiftoffTable {
     public void animate() {
         //initial setup
         logoImage.setColor(CLEAR_WHITE);
-        subtitleLabel.setText(subtitle);
+        subtitleLabel.setText(prop.getProperty("subtitle"));
         subtitleLabel.setColor(CLEAR_WHITE);
         subtitleLabel.setVisible(true);
         versionLabel.setColor(CLEAR_WHITE);

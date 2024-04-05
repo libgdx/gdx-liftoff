@@ -16,7 +16,7 @@ public class PlatformsDialog extends PopTable  {
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
-        Label label = new Label("PLATFORMS", skin, "header");
+        Label label = new Label(prop.getProperty("platforms"), skin, "header");
         add(label);
 
         row();
@@ -31,7 +31,7 @@ public class PlatformsDialog extends PopTable  {
         stage.setScrollFocus(scrollPane);
 
         scrollTable.defaults().left();
-        label = new Label("PRIMARY PLATFORMS", skin, "field");
+        label = new Label(prop.getProperty("primaryPlatforms"), skin, "field");
         scrollTable.add(label).spaceTop(30);
 
         scrollTable.row();
@@ -41,43 +41,43 @@ public class PlatformsDialog extends PopTable  {
         table.defaults().left().spaceLeft(20);
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.setMinCheckCount(1);
-        CheckBox checkBox = new CheckBox("CORE", skin);
+        CheckBox checkBox = new CheckBox(prop.getProperty("core"), skin);
         table.add(checkBox);
         buttonGroup.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(coreDescription, table);
+        addDescriptionLabel(prop.getProperty("coreTip"), table);
 
         table.row();
-        checkBox = new CheckBox("DESKTOP", skin);
+        checkBox = new CheckBox(prop.getProperty("lwjgl3"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(desktopDescription, table);
+        addDescriptionLabel(prop.getProperty("lwjgl3Tip"), table);
 
         table.row();
-        checkBox = new CheckBox("ANDROID", skin);
+        checkBox = new CheckBox(prop.getProperty("android"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(androidDescription, table);
+        addDescriptionLabel(prop.getProperty("androidTip"), table);
 
         table.row();
-        checkBox = new CheckBox("iOS", skin);
+        checkBox = new CheckBox(prop.getProperty("ios"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(iosDescription, table);
+        addDescriptionLabel(prop.getProperty("iosTip"), table);
 
         table.row();
-        checkBox = new CheckBox("HTML", skin);
+        checkBox = new CheckBox(prop.getProperty("html"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(htmlDescription, table);
+        addDescriptionLabel(prop.getProperty("htmlTip"), table);
 
         scrollTable.row();
-        label = new Label("SECONDARY PLATFORMS", skin, "field");
+        label = new Label(prop.getProperty("secondaryPlatforms"), skin, "field");
         scrollTable.add(label).spaceTop(30);
 
         scrollTable.row();
@@ -85,50 +85,50 @@ public class PlatformsDialog extends PopTable  {
         scrollTable.add(table).spaceTop(10).growX();
 
         table.defaults().left().spaceLeft(20);
-        checkBox = new CheckBox("HEADLESS", skin);
+        checkBox = new CheckBox(prop.getProperty("headless"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(headlessDescription, table);
+        addDescriptionLabel(prop.getProperty("headlessTip"), table);
 
         table.row();
         table.defaults().left().spaceLeft(20);
-        checkBox = new CheckBox("HTML (TEAVM)", skin);
+        checkBox = new CheckBox(prop.getProperty("teavm"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(htmlTeavmDescription, table);
+        addDescriptionLabel(prop.getProperty("teavmTip"), table);
 
         table.row();
-        checkBox = new CheckBox("DESKTOP (LEGACY)", skin);
+        checkBox = new CheckBox(prop.getProperty("lwjgl2"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(desktopLegacyDescription, table);
+        addDescriptionLabel(prop.getProperty("lwjgl2"), table);
 
         table.row();
-        checkBox = new CheckBox("SERVER", skin);
+        checkBox = new CheckBox(prop.getProperty("server"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(serverDescription, table);
+        addDescriptionLabel(prop.getProperty("serverTip"), table);
 
         table.row();
-        checkBox = new CheckBox("SHARED", skin);
+        checkBox = new CheckBox(prop.getProperty("shared"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(sharedDescription, table);
+        addDescriptionLabel(prop.getProperty("sharedTip"), table);
 
         table.row();
-        checkBox = new CheckBox("iOS MULTI-OS ENGINE", skin);
+        checkBox = new CheckBox(prop.getProperty("ios-moe"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        addDescriptionLabel(iosMultiosDescription, table);
+        addDescriptionLabel(prop.getProperty("ios-moeTip"), table);
 
         row();
-        TextButton textButton = new TextButton("OK", skin);
+        TextButton textButton = new TextButton(prop.getProperty("ok"), skin);
         add(textButton).prefWidth(140).spaceTop(20);
         addHandListener(textButton);
         onChange(textButton, () -> {

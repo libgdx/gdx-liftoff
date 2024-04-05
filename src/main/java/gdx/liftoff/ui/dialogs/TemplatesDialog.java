@@ -9,14 +9,14 @@ import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
 
-public class ExtensionsDialog extends PopTable  {
-    public ExtensionsDialog() {
+public class TemplatesDialog extends PopTable  {
+    public TemplatesDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
-        Label label = new Label(prop.getProperty("extensions"), skin, "header");
+        Label label = new Label("EXTENSIONS", skin, "header");
         add(label);
 
         row();
@@ -39,7 +39,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //ashley
         table.row();
-        CheckBox checkBox = new CheckBox(prop.getProperty("ashley"), skin);
+        CheckBox checkBox = new CheckBox("Ashley", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -47,7 +47,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //box2DLights
         table.row();
-        checkBox = new CheckBox(prop.getProperty("box2dlights"), skin);
+        checkBox = new CheckBox("Box2DLights", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -55,7 +55,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //ai
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-ai"), skin);
+        checkBox = new CheckBox("Ai", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -63,7 +63,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //box2D
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-box2d"), skin);
+        checkBox = new CheckBox("Box2D", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -71,7 +71,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //bullet
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-bullet"), skin);
+        checkBox = new CheckBox("Bullet", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -79,7 +79,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //controllers
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-controllers"), skin);
+        checkBox = new CheckBox("Controllers", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -87,7 +87,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //freetype
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-freetype"), skin);
+        checkBox = new CheckBox("Freetype", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -95,7 +95,7 @@ public class ExtensionsDialog extends PopTable  {
 
         //tools
         table.row();
-        checkBox = new CheckBox(prop.getProperty("gdx-tools"), skin);
+        checkBox = new CheckBox("Tools", skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -107,7 +107,7 @@ public class ExtensionsDialog extends PopTable  {
         scrollTable.add(table).spaceTop(30).growX();
 
         table.defaults().space(5);
-        label = new Label(prop.getProperty("links"), skin, "field");
+        label = new Label("LINKS", skin, "field");
         table.add(label).left();
 
         //gdx-pay
@@ -120,7 +120,7 @@ public class ExtensionsDialog extends PopTable  {
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
         row();
-        textButton = new TextButton(prop.getProperty("ok"), skin);
+        textButton = new TextButton("OK", skin);
         add(textButton).prefWidth(140).spaceTop(20);
         addHandListener(textButton);
         onChange(textButton, () -> {
@@ -146,7 +146,7 @@ public class ExtensionsDialog extends PopTable  {
     }
 
     public static void show() {
-        ExtensionsDialog dialog = new ExtensionsDialog();
+        TemplatesDialog dialog = new TemplatesDialog();
         dialog.show(stage);
     }
 }

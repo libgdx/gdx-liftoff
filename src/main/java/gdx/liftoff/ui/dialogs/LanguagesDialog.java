@@ -1,7 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
@@ -17,7 +16,7 @@ public class LanguagesDialog extends PopTable  {
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
-        Label label = new Label("LANGUAGES", skin, "header");
+        Label label = new Label(prop.getProperty("languages"), skin, "header");
         add(label);
 
         row();
@@ -37,10 +36,10 @@ public class LanguagesDialog extends PopTable  {
         scrollTable.add(table).spaceTop(10).growX();
 
         table.defaults().space(10);
-        label = new Label("LANGUAGE", skin, "field");
+        label = new Label(prop.getProperty("language"), skin, "field");
         table.add(label);
 
-        label = new Label("VERSION", skin, "field");
+        label = new Label(prop.getProperty("languageVersion"), skin, "field");
         table.add(label);
 
         table.columnDefaults(0).left();
@@ -48,7 +47,7 @@ public class LanguagesDialog extends PopTable  {
 
         //groovy
         table.row();
-        CheckBox checkBox = new CheckBox("Groovy", skin);
+        CheckBox checkBox = new CheckBox(prop.getProperty("groovy"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -60,11 +59,11 @@ public class LanguagesDialog extends PopTable  {
         Button button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(groovyLinkUrl));
+        onChange(button, () -> Gdx.net.openURI(prop.getProperty("groovyUrl")));
 
         //kotlin
         table.row();
-        checkBox = new CheckBox("Kotlin", skin);
+        checkBox = new CheckBox(prop.getProperty("kotlin"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -76,11 +75,11 @@ public class LanguagesDialog extends PopTable  {
         button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(kotlinLinkUrl));
+        onChange(button, () -> Gdx.net.openURI(prop.getProperty("kotlinUrl")));
 
         //scala
         table.row();
-        checkBox = new CheckBox("Scala", skin);
+        checkBox = new CheckBox(prop.getProperty("scala"), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -92,32 +91,38 @@ public class LanguagesDialog extends PopTable  {
         button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(scalaLinkUrl));
+        onChange(button, () -> Gdx.net.openURI(prop.getProperty("scalaUrl")));
+
+        scrollTable.row();
+        label = new Label(prop.getProperty("languagesPrompt"), skin, "description");
+        label.setWrap(true);
+        label.setAlignment(Align.left);
+        scrollTable.add(label).spaceTop(30).growX();
 
         //links
         scrollTable.row();
         table = new Table();
-        scrollTable.add(table).spaceTop(30).growX();
+        scrollTable.add(table).spaceTop(20).growX();
 
         table.defaults().space(5);
-        label = new Label("LINKS", skin, "field");
+        label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //clojure
         table.defaults().left().padLeft(10);
         table.row();
-        TextButton textButton = new TextButton(clojureLinkText, skin, "link");
+        TextButton textButton = new TextButton(prop.getProperty("clojureLink"), skin, "link");
         textButton.getLabel().setAlignment(Align.left);
         table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> Gdx.net.openURI(clojureLinkURL));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("clojureUrl")));
 
         //other jvm's
         table.row();
-        textButton = new TextButton(otherJVMLinkText, skin, "link");
+        textButton = new TextButton(prop.getProperty("otherLanguagesPrompt"), skin, "link");
         table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> Gdx.net.openURI(otherJVMLinkURL));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("otherJvmUrl")));
 
         row();
         textButton = new TextButton("OK", skin);

@@ -12,13 +12,14 @@ import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.dialogs.ExtensionsDialog;
 import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
+import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
 public class AddOnsPanel extends Table {
     public AddOnsPanel() {
-        Label label = new Label("ADD-ONS", skin, "header");
+        Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(30);
 
         row();
@@ -32,7 +33,7 @@ public class AddOnsPanel extends Table {
         subTable.setBackground(skin.getDrawable("button-outline-up-10"));
         table.add(subTable).prefWidth(150);
 
-        label = new Label("PLATFORMS", skin, "field");
+        label = new Label(prop.getProperty("platforms"), skin, "field");
         label.setEllipsis("...");
         subTable.add(label).minWidth(0);
 
@@ -54,7 +55,7 @@ public class AddOnsPanel extends Table {
         subTable.setBackground(skin.getDrawable("button-outline-up-10"));
         table.add(subTable).prefWidth(150);
 
-        label = new Label("LANGUAGES", skin, "field");
+        label = new Label(prop.getProperty("languages"), skin, "field");
         label.setEllipsis("...");
         subTable.add(label).minWidth(0);
 
@@ -76,7 +77,7 @@ public class AddOnsPanel extends Table {
         subTable.setBackground(skin.getDrawable("button-outline-up-10"));
         table.add(subTable).prefWidth(150);
 
-        label = new Label("EXTENSIONS", skin, "field");
+        label = new Label(prop.getProperty("extensions"), skin, "field");
         label.setEllipsis("...");
         subTable.add(label).minWidth(0);
 
@@ -97,7 +98,7 @@ public class AddOnsPanel extends Table {
         table = new Table();
         add(table).growX().spaceTop(20);
 
-        label = new Label("TEMPLATE", skin, "field");
+        label = new Label(prop.getProperty("template"), skin, "field");
         table.add(label).space(20);
 
         Stack stack = new Stack();
@@ -110,21 +111,19 @@ public class AddOnsPanel extends Table {
         smashGroup.space(20);
         stack.add(smashGroup);
 
-        Container container = new Container();
-        container.minWidth(150).fill();
-        smashGroup.setFirstActor(container);
-
         TextButton chooseFieldButton = new TextButton("CLASSIC", skin, "field");
         chooseFieldButton.getLabel().setAlignment(Align.left);
-        container.setActor(chooseFieldButton);
+        smashGroup.setFirstActor(chooseFieldButton);
+        smashGroup.getFirstContainer().minWidth(150);
 
-        TextButton chooseButton = new TextButton("CHOOSE", skin);
+        TextButton chooseButton = new TextButton(prop.getProperty("choose"), skin);
         smashGroup.setSecondActor(chooseButton);
 
         Container chooseContainer = new Container();
         chooseContainer.setTouchable(Touchable.enabled);
         stack.add(chooseContainer);
         addHandListener(chooseContainer);
+        onClick(chooseContainer, TemplatesDialog::show);
         chooseContainer.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

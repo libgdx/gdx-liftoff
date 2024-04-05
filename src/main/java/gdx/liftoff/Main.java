@@ -24,6 +24,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.*;
 import gdx.liftoff.ui.RootTable;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class Main extends ApplicationAdapter {
     public static Skin skin;
     public static Stage stage;
@@ -37,6 +40,7 @@ public class Main extends ApplicationAdapter {
     public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);
     public static Image bgImage = new Image();
     public static boolean resizingWindow;
+    public static Properties prop;
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -51,6 +55,13 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        prop = new Properties();
+        try {
+            prop.load(Gdx.files.internal("i18n/nls.properties").read());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        
         skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
 
         fitViewport = new FitViewport(1920, 1080);
