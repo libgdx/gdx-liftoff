@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
  * rendered. The entire space will then be given to the primary widget.
  */
 public class SmashGroup extends WidgetGroup {
-    private boolean horizontal;
+    private boolean horizontal = true;
     private boolean smashFirst;
     private float spacing;
     private Container firstContainer;
@@ -109,6 +109,12 @@ public class SmashGroup extends WidgetGroup {
         return horizontal ? Math.max(firstContainer.getPrefHeight(), secondContainer.getPrefHeight()) : firstContainer.getPrefHeight() + spacing + secondContainer.getPrefHeight();
     }
 
+    /**
+     *
+     * @param actor
+     * @see SmashGroup#setFirstActor(Actor)
+     * @see SmashGroup#setSecondActor(Actor)
+     */
     @Deprecated
     @Override
     public void addActor(Actor actor) {
@@ -119,39 +125,93 @@ public class SmashGroup extends WidgetGroup {
         return horizontal;
     }
 
+    /**
+     * Set to true to lay out the widgets horizontally.
+     * @param horizontal
+     */
     public void setHorizontal(boolean horizontal) {
         this.horizontal = horizontal;
     }
 
+    /**
+     * Returns whether the first widget will not take priority when resizing.
+     * @return
+     */
     public boolean isSmashFirst() {
         return smashFirst;
     }
 
+    /**
+     * Set to true to make the first widget to not take priority when resizing.
+     * @param smashFirst
+     */
     public void setSmashFirst(boolean smashFirst) {
         this.smashFirst = smashFirst;
     }
 
+    /**
+     * Returns the spacing between the widgets.
+     * @return
+     */
     public float getSpace() {
         return spacing;
     }
 
-    public void space(float spacing) {
+    /**
+     * Set the spacing between the widgets.
+     * @param spacing
+     * @return
+     */
+    public SmashGroup space(float spacing) {
         this.spacing = spacing;
+        return this;
     }
 
+    /**
+     * Returns the first actor of the group. This would be the left or top widget depending on the horizontal setting.
+     * @return
+     */
     public Actor getFirstActor() {
         return firstContainer.getActor();
     }
 
+    /**
+     * Sets the first actor of the group. This would be the left or top widget depending on the horizontal setting.
+     * @param firstActor
+     */
     public void setFirstActor(Actor firstActor) {
         firstContainer.setActor(firstActor);
     }
 
+    /**
+     * Returns the second actor of the group. This would be the right or bottom widget depending on the horizontal setting.
+     * @return
+     */
     public Actor getSecondActor() {
         return secondContainer.getActor();
     }
 
+    /**
+     * Sets the second actor of the group. This would be the right or bottom widget depending on the horizontal setting.
+     * @param secondActor
+     */
     public void setSecondActor(Actor secondActor) {
         secondContainer.setActor(secondActor);
+    }
+
+    /**
+     * Returns the internal container for the first widget. The Container is fully customizable.
+     * @return
+     */
+    public Container getFirstContainer() {
+        return firstContainer;
+    }
+
+    /**
+     * Returns the internal container for the first widget. The Container is fully customizable.
+     * @return
+     */
+    public Container getSecondContainer() {
+        return secondContainer;
     }
 }
