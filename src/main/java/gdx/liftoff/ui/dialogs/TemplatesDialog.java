@@ -2,9 +2,11 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
+import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
@@ -16,7 +18,7 @@ public class TemplatesDialog extends PopTable  {
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
-        Label label = new Label("EXTENSIONS", skin, "header");
+        Label label = new Label(prop.getProperty("templates"), skin, "header");
         add(label);
 
         row();
@@ -35,71 +37,43 @@ public class TemplatesDialog extends PopTable  {
         table.left();
         scrollTable.add(table).spaceTop(10).growX();
 
-        table.defaults().left().spaceLeft(10);
+        table.defaults().left().space(5);
+        ButtonGroup buttonGroup = new ButtonGroup();
 
-        //ashley
         table.row();
-        CheckBox checkBox = new CheckBox("Ashley", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
+        label = new Label(prop.getProperty("officialTemplates"), skin, "field");
+        label.setTouchable(Touchable.enabled);
+        table.add(label).minWidth(0).spaceBottom(10).colspan(2).growX();
+        addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
-        addDescription(table, prop.getProperty("ashleyTip"), prop.getProperty("ashleyUrl"));
+        addTemplate(table, buttonGroup, prop.getProperty("classic"), prop.getProperty("classicTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("applicationAdapter"), prop.getProperty("applicationAdapterTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("applicationListener"), prop.getProperty("applicationListenerTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("emptyTemplate"), prop.getProperty("emptyTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("gameTemplate"), prop.getProperty("gameTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("inputProcessor"), prop.getProperty("inputProcessorTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("kotlinClassicTemplate"), prop.getProperty("kotlinClassicTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("kotlinTemplate"), prop.getProperty("kotlinTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("scene2dTemplate"), prop.getProperty("scene2dTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("superKoalio"), prop.getProperty("superKoalioTip"));
 
-        //box2DLights
         table.row();
-        checkBox = new CheckBox("Box2DLights", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
+        label = new Label(prop.getProperty("thirdPartyTemplates"), skin, "field");
+        label.setTouchable(Touchable.enabled);
+        label.setEllipsis("...");
+        table.add(label).minWidth(0).spaceTop(20).spaceBottom(10).colspan(2).growX();
+        addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
-        addDescription(table, prop.getProperty("box2dlightsTip"), prop.getProperty("gdx-box2dlightsUrl"));
-
-        //ai
-        table.row();
-        checkBox = new CheckBox("Ai", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-aiTip"), prop.getProperty("gdx-aiUrl"));
-
-        //box2D
-        table.row();
-        checkBox = new CheckBox("Box2D", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-box2dTip"), prop.getProperty("gdx-box2dUrl"));
-
-        //bullet
-        table.row();
-        checkBox = new CheckBox("Bullet", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-bulletTip"), prop.getProperty("gdx-bulletUrl"));
-
-        //controllers
-        table.row();
-        checkBox = new CheckBox("Controllers", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-controllersTip"), prop.getProperty("gdx-controllersUrl"));
-
-        //freetype
-        table.row();
-        checkBox = new CheckBox("Freetype", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-freetypeTip"), prop.getProperty("gdx-freetypeUrl"));
-
-        //tools
-        table.row();
-        checkBox = new CheckBox("Tools", skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescription(table, prop.getProperty("gdx-toolsTip"), prop.getProperty("gdx-toolsUrl"));
+        addTemplate(table, buttonGroup, prop.getProperty("ktxTemplate"), prop.getProperty("ktxTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiInputTemplate"), prop.getProperty("lmlKiwiInputTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiTemplate"), prop.getProperty("lmlKiwiTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlMvcBasicTemplate"), prop.getProperty("lmlMvcBasicTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlMvcBox2dTemplate"), prop.getProperty("lmlMvcBox2dTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlMvcVisTemplate"), prop.getProperty("lmlMvcVisTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlTemplate"), prop.getProperty("lmlTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("noise4jTemplate"), prop.getProperty("noise4jTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("visUiBasicTemplate"), prop.getProperty("visUiBasicTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("visUiShowcaseTemplate"), prop.getProperty("visUiShowcaseTemplateTip"));
 
         //links
         scrollTable.row();
@@ -113,9 +87,22 @@ public class TemplatesDialog extends PopTable  {
         //gdx-pay
         table.defaults().left().padLeft(10);
         table.row();
+        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
+        table.add(collapsibleGroup);
+
         TextButton textButton = new TextButton(prop.getProperty("gdxPayLink"), skin, "link");
         textButton.getLabel().setAlignment(Align.left);
-        table.add(textButton);
+        collapsibleGroup.addActor(textButton);
+        addHandListener(textButton);
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
+
+        Container container = new Container();
+        container.left();
+        collapsibleGroup.addActor(container);
+
+        textButton = new TextButton(prop.getProperty("gdxPayLinkSmall"), skin, "link");
+        textButton.getLabel().setAlignment(Align.left);
+        container.setActor(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
@@ -129,20 +116,17 @@ public class TemplatesDialog extends PopTable  {
     }
 
     private static GlyphLayout layout = new GlyphLayout();
-    private void addDescription(Table table, String description, String url) {
-        Table subTable = new Table();
-        table.add(subTable);
+    private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description) {
+        table.row();
+        CheckBox checkBox = new CheckBox(labelText, skin, "radio");
+        table.add(checkBox).spaceRight(10);
+        buttonGroup.add(checkBox);
+        addHandListener(checkBox);
 
-        subTable.defaults().space(10);
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
         layout.setText(label.getStyle().font, description);
-        subTable.add(label).prefWidth(layout.width).minWidth(0);
-
-        Button button = new Button(skin, "external-link");
-        subTable.add(button);
-        addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(url));
+        table.add(label).prefWidth(layout.width).minWidth(0).growX();
     }
 
     public static void show() {
