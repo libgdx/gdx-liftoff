@@ -643,6 +643,66 @@
 		"regions": [],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"button-card-up-10": {
+		"region": "button-card-up",
+		"horizontalStretchAreas": [ 1, 22 ],
+		"verticalStretchAreas": [ 27, 55 ],
+		"tiling": false,
+		"minWidth": 55,
+		"minHeight": 57,
+		"rightWidth": 10,
+		"leftWidth": 10,
+		"bottomHeight": 34,
+		"topHeight": 10,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"button-card-over-10": {
+		"region": "button-card-over",
+		"horizontalStretchAreas": [ 1, 22 ],
+		"verticalStretchAreas": [ 27, 55 ],
+		"tiling": false,
+		"minWidth": 55,
+		"minHeight": 57,
+		"rightWidth": 10,
+		"leftWidth": 10,
+		"bottomHeight": 34,
+		"topHeight": 10,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"button-card-down-10": {
+		"region": "button-card-down",
+		"horizontalStretchAreas": [ 1, 22 ],
+		"verticalStretchAreas": [ 25, 53 ],
+		"tiling": false,
+		"minWidth": 55,
+		"minHeight": 57,
+		"rightWidth": 10,
+		"leftWidth": 10,
+		"bottomHeight": 32,
+		"topHeight": 12,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -690,6 +750,11 @@
 		"over": "radio-unchecked-over",
 		"checked": "radio-checked-up",
 		"checkedOver": "radio-checked-over"
+	},
+	"card": {
+		"up": "button-card-up-10",
+		"down": "button-card-down-10",
+		"over": "button-card-over-10"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {

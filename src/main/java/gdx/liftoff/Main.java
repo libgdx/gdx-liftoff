@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ray3k.stripe.*;
+import com.ray3k.stripe.PopTable.PopTableStyle;
 import gdx.liftoff.ui.RootTable;
 
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class Main extends ApplicationAdapter {
     public static Image bgImage = new Image();
     public static boolean resizingWindow;
     public static Properties prop;
+    private static GlyphLayout layout = new GlyphLayout();
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -61,7 +63,7 @@ public class Main extends ApplicationAdapter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
+
         skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
 
         fitViewport = new FitViewport(1920, 1080);
@@ -133,19 +135,46 @@ public class Main extends ApplicationAdapter {
         });
     }
 
-    public static PopTable addTooltip(Actor actor, int align, String description) {
-        return addTooltip(actor, null, align, 0, description);
+    public static PopTable addTooltip(Actor actor, int align, String text) {
+        return addTooltip(actor, null, align, 0, text);
     }
 
-    public static PopTable addTooltip(Actor actor, int align, float wrapWidth, String description) {
-        return addTooltip(actor, null, align, wrapWidth,  description);
+    public static PopTable addTooltip(Actor actor, int align, float wrapWidth, String text) {
+        return addTooltip(actor, null, align, wrapWidth,  text);
     }
 
-    public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String description) {
-        String style = align == Align.bottom ? "tooltip-arrow-up" : align == Align.top ? "tooltip-arrow-down" : align == Align.left ? "tooltip-arrow-right" : "tooltip-arrow-left";
-        PopTableTextHoverListener listener = new PopTableTextHoverListener(description, wrapWidth, align, align, skin, style);
+    public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
+        String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0  ? "tooltip-arrow-down" : (align & Align.left) != 0  ? "tooltip-arrow-right" : "tooltip-arrow-left";
+        PopTableTextHoverListener listener = new PopTableTextHoverListener(text, wrapWidth, align, align, skin, style);
         listener.attachedActor = attachedActor;
         actor.addListener(listener);
         return listener.getPopTable();
+    }
+
+    public static PopTable addPopTableClickListener(Actor actor, int align, String description) {
+        return addPopTableClickListener(actor, null, align, 0, description);
+    }
+
+    public static PopTable addPopTableClickListener(Actor actor, int align, float wrapWidth, String description) {
+        return addPopTableClickListener(actor, null, align, wrapWidth,  description);
+    }
+
+    public static PopTable addPopTableClickListener(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
+        String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0  ? "tooltip-arrow-down" : (align & Align.left) != 0  ? "tooltip-arrow-right" : "tooltip-arrow-left";
+        PopTableClickListener listener = new PopTableClickListener(align, align, skin, style);
+        listener.attachedActor = attachedActor;
+        actor.addListener(listener);
+        PopTable pop = listener.getPopTable();
+
+        Label label = new Label(text, skin, "tooltip");
+        Cell cell = pop.add(label);
+        if (wrapWidth != 0) {
+            cell.width(wrapWidth);
+        } else {
+            layout.setText(label.getStyle().font, text);
+            cell.minWidth(0).prefWidth(layout.width);
+        }
+
+        return pop;
     }
 }

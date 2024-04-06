@@ -27,71 +27,53 @@ public class AddOnsPanel extends Table {
         add(table).grow();
 
         //Platforms
-        table.defaults().space(10).grow().minHeight(150);
-        Table subTable = new Table();
-        subTable.pad(10);
-        subTable.setBackground(skin.getDrawable("button-outline-up-10"));
-        table.add(subTable).prefWidth(150);
-
-        label = new Label(prop.getProperty("platforms"), skin, "field");
-        label.setEllipsis("...");
-        subTable.add(label).minWidth(0);
-
-        subTable.row();
-        Table scrollTable = new Table();
-        ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow().padTop(10);
-        populateAddOnTable(scrollTable, platformsNames);
-
-        subTable.row();
-        Button button = new Button(skin, "plus");
-        subTable.add(button).right().padRight(5);
+        table.defaults().space(10).grow().minHeight(150).minWidth(90);
+        Button button = new Button(skin, "card");
+        table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, PlatformsDialog::show);
 
-        //Languages
-        subTable = new Table();
-        subTable.pad(10);
-        subTable.setBackground(skin.getDrawable("button-outline-up-10"));
-        table.add(subTable).prefWidth(150);
-
-        label = new Label(prop.getProperty("languages"), skin, "field");
+        label = new Label(prop.getProperty("platforms"), skin, "field");
         label.setEllipsis("...");
-        subTable.add(label).minWidth(0);
+        button.add(label).minWidth(0);
 
-        subTable.row();
-        scrollTable = new Table();
-        scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow().padTop(10);
-        populateAddOnTable(scrollTable, languagesNames);
+        button.row();
+        Table scrollTable = new Table();
+        ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
+        button.add(scrollPane).grow().padTop(10);
+        populateAddOnTable(scrollTable, platformsNames);
 
-        subTable.row();
-        button = new Button(skin, "plus");
-        subTable.add(button).right().padRight(5);
+        //Languages
+        button = new Button(skin, "card");
+        table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, LanguagesDialog::show);
 
+        label = new Label(prop.getProperty("languages"), skin, "field");
+        label.setEllipsis("...");
+        button.add(label).minWidth(0);
+
+        button.row();
+        scrollTable = new Table();
+        scrollPane = new ScrollPane(scrollTable, skin);
+        button.add(scrollPane).grow().padTop(10);
+        populateAddOnTable(scrollTable, languagesNames);
+
         //Extensions
-        subTable = new Table();
-        subTable.pad(10);
-        subTable.setBackground(skin.getDrawable("button-outline-up-10"));
-        table.add(subTable).prefWidth(150);
+        button = new Button(skin, "card");
+        table.add(button).prefWidth(150);
+        addHandListener(button);
+        onChange(button, ExtensionsDialog::show);
 
         label = new Label(prop.getProperty("extensions"), skin, "field");
         label.setEllipsis("...");
-        subTable.add(label).minWidth(0);
+        button.add(label).minWidth(0);
 
-        subTable.row();
+        button.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
-        subTable.add(scrollPane).grow().padTop(10);
+        button.add(scrollPane).grow().padTop(10);
         populateAddOnTable(scrollTable, extensionsNames);
-
-        subTable.row();
-        button = new Button(skin, "plus");
-        subTable.add(button).right().padRight(5);
-        addHandListener(button);
-        onChange(button, ExtensionsDialog::show);
 
         //template
         row();
@@ -146,7 +128,8 @@ public class AddOnsPanel extends Table {
         table.defaults().growX().space(5);
         for (String name : names) {
             Label label = new Label(name, skin);
-            table.add(label);
+            label.setEllipsis("...");
+            table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();
         }
     }

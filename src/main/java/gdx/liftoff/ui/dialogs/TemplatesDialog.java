@@ -1,10 +1,17 @@
 package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.PopTable;
@@ -54,7 +61,7 @@ public class TemplatesDialog extends PopTable  {
         addTemplate(table, buttonGroup, prop.getProperty("inputProcessor"), prop.getProperty("inputProcessorTip"));
         addTemplate(table, buttonGroup, prop.getProperty("kotlinClassicTemplate"), prop.getProperty("kotlinClassicTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("kotlinTemplate"), prop.getProperty("kotlinTemplateTip"));
-        addTemplate(table, buttonGroup, prop.getProperty("scene2dTemplate"), prop.getProperty("scene2dTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("scene2dTemplate"), prop.getProperty("scene2dTemplateTip"), true);
         addTemplate(table, buttonGroup, prop.getProperty("superKoalio"), prop.getProperty("superKoalioTip"));
 
         table.row();
@@ -67,10 +74,10 @@ public class TemplatesDialog extends PopTable  {
         addTemplate(table, buttonGroup, prop.getProperty("ktxTemplate"), prop.getProperty("ktxTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiInputTemplate"), prop.getProperty("lmlKiwiInputTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiTemplate"), prop.getProperty("lmlKiwiTemplateTip"));
-        addTemplate(table, buttonGroup, prop.getProperty("lmlMvcBasicTemplate"), prop.getProperty("lmlMvcBasicTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlMvcBasicTemplate"), prop.getProperty("lmlMvcBasicTemplateTip"), true);
         addTemplate(table, buttonGroup, prop.getProperty("lmlMvcBox2dTemplate"), prop.getProperty("lmlMvcBox2dTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("lmlMvcVisTemplate"), prop.getProperty("lmlMvcVisTemplateTip"));
-        addTemplate(table, buttonGroup, prop.getProperty("lmlTemplate"), prop.getProperty("lmlTemplateTip"));
+        addTemplate(table, buttonGroup, prop.getProperty("lmlTemplate"), prop.getProperty("lmlTemplateTip"), true);
         addTemplate(table, buttonGroup, prop.getProperty("noise4jTemplate"), prop.getProperty("noise4jTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("visUiBasicTemplate"), prop.getProperty("visUiBasicTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("visUiShowcaseTemplate"), prop.getProperty("visUiShowcaseTemplateTip"));
@@ -80,31 +87,19 @@ public class TemplatesDialog extends PopTable  {
         table = new Table();
         scrollTable.add(table).spaceTop(30).growX();
 
-        table.defaults().space(5);
+        table.defaults().space(5).expandX();
         label = new Label("LINKS", skin, "field");
         table.add(label).left();
 
-        //gdx-pay
+        //propose a template
         table.defaults().left().padLeft(10);
         table.row();
-        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
-        table.add(collapsibleGroup);
 
-        TextButton textButton = new TextButton(prop.getProperty("gdxPayLink"), skin, "link");
+        TextButton textButton = new TextButton(prop.getProperty("templatesLink"), skin, "link");
         textButton.getLabel().setAlignment(Align.left);
-        collapsibleGroup.addActor(textButton);
+        table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
-
-        Container container = new Container();
-        container.left();
-        collapsibleGroup.addActor(container);
-
-        textButton = new TextButton(prop.getProperty("gdxPayLinkSmall"), skin, "link");
-        textButton.getLabel().setAlignment(Align.left);
-        container.setActor(textButton);
-        addHandListener(textButton);
-        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
 
         row();
         textButton = new TextButton("OK", skin);
@@ -116,17 +111,61 @@ public class TemplatesDialog extends PopTable  {
     }
 
     private static GlyphLayout layout = new GlyphLayout();
+
     private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description) {
+        addTemplate(table, buttonGroup, labelText, description, false);
+    }
+
+    private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description, boolean showGuiTip) {
         table.row();
         CheckBox checkBox = new CheckBox(labelText, skin, "radio");
-        table.add(checkBox).spaceRight(10);
+        checkBox.left();
+        table.add(checkBox).spaceRight(10).growX();
         buttonGroup.add(checkBox);
         addHandListener(checkBox);
+        if (showGuiTip) addTooltip(checkBox, Align.topLeft, prop.getProperty("templatesStar"));
 
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
+        label.setTouchable(Touchable.enabled);
         layout.setText(label.getStyle().font, description);
         table.add(label).prefWidth(layout.width).minWidth(0).growX();
+        label.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                if (pointer == -1) {
+                    label.setColor(skin.getColor("red"));
+                    checkBox.fire(event);
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                if (pointer == -1) {
+                    label.setColor(Color.WHITE);
+                    checkBox.fire(event);
+                }
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                checkBox.setChecked(!checkBox.isChecked());
+            }
+        });
+
+        checkBox.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                if (pointer == -1) label.setColor(skin.getColor("red"));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                if (pointer == -1) label.setColor(skin.getColor("white"));
+            }
+        });
     }
 
     public static void show() {

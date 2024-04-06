@@ -1,13 +1,17 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 public class PlatformsDialog extends PopTable  {
     public PlatformsDialog() {
@@ -41,40 +45,15 @@ public class PlatformsDialog extends PopTable  {
         table.defaults().left().spaceLeft(20);
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.setMinCheckCount(1);
-        CheckBox checkBox = new CheckBox(prop.getProperty("core"), skin);
-        table.add(checkBox);
+        CheckBox checkBox = addPlatform(table, prop.getProperty("core"), prop.getProperty("coreTip"));
         buttonGroup.add(checkBox);
-        addHandListener(checkBox);
+        PopTable pop = addTooltip(checkBox, Align.top, prop.getProperty("coreMandatoryTip"));
+        onClick(checkBox, () -> pop.show(stage));
 
-        addDescriptionLabel(prop.getProperty("coreTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("lwjgl3"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("lwjgl3Tip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("android"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("androidTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("ios"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("iosTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("html"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("htmlTip"), table);
+        addPlatform(table, prop.getProperty("lwjgl3"), prop.getProperty("lwjgl3Tip"));
+        addPlatform(table, prop.getProperty("android"), prop.getProperty("androidTip"));
+        addPlatform(table, prop.getProperty("ios"), prop.getProperty("iosTip"));
+        addPlatform(table, prop.getProperty("html"), prop.getProperty("htmlTip"));
 
         scrollTable.row();
         label = new Label(prop.getProperty("secondaryPlatforms"), skin, "field");
@@ -85,47 +64,12 @@ public class PlatformsDialog extends PopTable  {
         scrollTable.add(table).spaceTop(10).growX();
 
         table.defaults().left().spaceLeft(20);
-        checkBox = new CheckBox(prop.getProperty("headless"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("headlessTip"), table);
-
-        table.row();
-        table.defaults().left().spaceLeft(20);
-        checkBox = new CheckBox(prop.getProperty("teavm"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("teavmTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("lwjgl2"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("lwjgl2"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("server"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("serverTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("shared"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("sharedTip"), table);
-
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("ios-moe"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        addDescriptionLabel(prop.getProperty("ios-moeTip"), table);
+        addPlatform(table, prop.getProperty("headless"), prop.getProperty("headlessTip"));
+        addPlatform(table, prop.getProperty("teavm"), prop.getProperty("teavmTip"));
+        addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2"));
+        addPlatform(table, prop.getProperty("server"), prop.getProperty("serverTip"));
+        addPlatform(table, prop.getProperty("shared"), prop.getProperty("sharedTip"));
+        addPlatform(table, prop.getProperty("ios-moe"), prop.getProperty("ios-moeTip"));
 
         row();
         TextButton textButton = new TextButton(prop.getProperty("ok"), skin);
@@ -137,12 +81,54 @@ public class PlatformsDialog extends PopTable  {
     }
 
     private static GlyphLayout layout = new GlyphLayout();
-    private void addDescriptionLabel(String description, Table table) {
+    private CheckBox addPlatform(Table table, String labelString, String description) {
+        table.row();
+        CheckBox checkBox = new CheckBox(labelString, skin);
+        table.add(checkBox);
+        addHandListener(checkBox);
+
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
         label.setAlignment(Align.left);
         layout.setText(label.getStyle().font, description);
         table.add(label).growX().minWidth(0).prefWidth(layout.width + 5);
+        label.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                if (pointer == -1) {
+                    label.setColor(skin.getColor("red"));
+                    checkBox.fire(event);
+                }
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                if (pointer == -1) {
+                    label.setColor(Color.WHITE);
+                    checkBox.fire(event);
+                }
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                checkBox.setChecked(!checkBox.isChecked());
+            }
+        });
+
+        checkBox.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                if (pointer == -1) label.setColor(skin.getColor("red"));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                if (pointer == -1) label.setColor(skin.getColor("white"));
+            }
+        });
+        return checkBox;
     }
 
     public static void show() {
