@@ -231,6 +231,7 @@ public class LandingTable extends LiftoffTable {
             removeAction(animationAction);
             populate();
             setTouchable(Touchable.childrenOnly);
+            captureKeyboardFocus();
         }
     }
 }

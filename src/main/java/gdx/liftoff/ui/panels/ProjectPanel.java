@@ -10,7 +10,7 @@ import gdx.liftoff.Main;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
-public class ProjectPanel extends Table  {
+public class ProjectPanel extends Table implements Panel {
     private static final float TOOLTIP_WIDTH = 300;
     private Actor keyboardActor;
 

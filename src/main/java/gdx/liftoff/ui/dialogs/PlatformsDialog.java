@@ -66,7 +66,7 @@ public class PlatformsDialog extends PopTable  {
         table.defaults().left().spaceLeft(20);
         addPlatform(table, prop.getProperty("headless"), prop.getProperty("headlessTip"));
         addPlatform(table, prop.getProperty("teavm"), prop.getProperty("teavmTip"));
-        addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2"));
+        addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2Tip"));
         addPlatform(table, prop.getProperty("server"), prop.getProperty("serverTip"));
         addPlatform(table, prop.getProperty("shared"), prop.getProperty("sharedTip"));
         addPlatform(table, prop.getProperty("ios-moe"), prop.getProperty("ios-moeTip"));
@@ -93,42 +93,7 @@ public class PlatformsDialog extends PopTable  {
         label.setAlignment(Align.left);
         layout.setText(label.getStyle().font, description);
         table.add(label).growX().minWidth(0).prefWidth(layout.width + 5);
-        label.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                if (pointer == -1) {
-                    label.setColor(skin.getColor("red"));
-                    checkBox.fire(event);
-                }
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                if (pointer == -1) {
-                    label.setColor(Color.WHITE);
-                    checkBox.fire(event);
-                }
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                checkBox.setChecked(!checkBox.isChecked());
-            }
-        });
-
-        checkBox.addListener(new InputListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (pointer == -1) label.setColor(skin.getColor("red"));
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (pointer == -1) label.setColor(skin.getColor("white"));
-            }
-        });
+        addLabelHighlight(checkBox, label);
         return checkBox;
     }
 

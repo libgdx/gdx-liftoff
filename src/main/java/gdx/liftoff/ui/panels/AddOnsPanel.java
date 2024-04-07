@@ -17,7 +17,7 @@ import gdx.liftoff.ui.dialogs.TemplatesDialog;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
-public class AddOnsPanel extends Table {
+public class AddOnsPanel extends Table implements Panel {
     public AddOnsPanel() {
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(30);
@@ -28,7 +28,7 @@ public class AddOnsPanel extends Table {
 
         //Platforms
         table.defaults().space(10).grow().minHeight(150).minWidth(90);
-        Button button = new Button(skin, "card");
+        Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, PlatformsDialog::show);
@@ -47,7 +47,7 @@ public class AddOnsPanel extends Table {
         addScrollFocusListener(scrollPane);
 
         //Languages
-        button = new Button(skin, "card");
+        button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, LanguagesDialog::show);
@@ -66,7 +66,7 @@ public class AddOnsPanel extends Table {
         addScrollFocusListener(scrollPane);
 
         //Extensions
-        button = new Button(skin, "card");
+        button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, ExtensionsDialog::show);
@@ -141,5 +141,10 @@ public class AddOnsPanel extends Table {
             table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();
         }
+    }
+
+    @Override
+    public void captureKeyboardFocus() {
+
     }
 }

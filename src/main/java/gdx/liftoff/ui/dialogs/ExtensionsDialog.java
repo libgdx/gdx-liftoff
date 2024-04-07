@@ -106,42 +106,7 @@ public class ExtensionsDialog extends PopTable  {
         label.setEllipsis("...");
         layout.setText(label.getStyle().font, description);
         subTable.add(label).prefWidth(layout.width).minWidth(0);
-        label.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                if (pointer == -1) {
-                    label.setColor(skin.getColor("red"));
-                    checkBox.fire(event);
-                }
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                if (pointer == -1) {
-                    label.setColor(Color.WHITE);
-                    checkBox.fire(event);
-                }
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                checkBox.setChecked(!checkBox.isChecked());
-            }
-        });
-
-        checkBox.addListener(new InputListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (pointer == -1) label.setColor(skin.getColor("red"));
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (pointer == -1) label.setColor(skin.getColor("white"));
-            }
-        });
+        addLabelHighlight(checkBox, label);
 
         Button button = new Button(skin, "external-link");
         subTable.add(button);
