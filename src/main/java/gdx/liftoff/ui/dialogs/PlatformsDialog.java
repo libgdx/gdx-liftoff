@@ -84,7 +84,8 @@ public class PlatformsDialog extends PopTable  {
     private CheckBox addPlatform(Table table, String labelString, String description) {
         table.row();
         CheckBox checkBox = new CheckBox(labelString, skin);
-        table.add(checkBox);
+        checkBox.left();
+        table.add(checkBox).growX();
         addHandListener(checkBox);
 
         Label label = new Label(description, skin, "description");
