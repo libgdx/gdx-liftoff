@@ -40,8 +40,11 @@ public class AddOnsPanel extends Table {
         button.row();
         Table scrollTable = new Table();
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(10);
         populateAddOnTable(scrollTable, platformsNames);
+        addScrollFocusListener(scrollPane);
 
         //Languages
         button = new Button(skin, "card");
@@ -56,8 +59,11 @@ public class AddOnsPanel extends Table {
         button.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(10);
         populateAddOnTable(scrollTable, languagesNames);
+        addScrollFocusListener(scrollPane);
 
         //Extensions
         button = new Button(skin, "card");
@@ -72,8 +78,11 @@ public class AddOnsPanel extends Table {
         button.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(10);
         populateAddOnTable(scrollTable, extensionsNames);
+        addScrollFocusListener(scrollPane);
 
         //template
         row();
