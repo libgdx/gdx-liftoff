@@ -10,7 +10,7 @@ public class Data {
     //add-ons panel
     public static Array<String> platformsNames = new Array<>(new String[] {"CORE", "ANDROID", "DESKTOP"});
     public static Array<String> languagesNames = new Array<>(new String[] {"GROOVY 3.0", "KOTLIN 1.4"});
-    public static Array<String> extensionsNames = new Array<>(new String[] {"ASHLEY", "TOOLS"});
+    public static Array<String> extensionsNames = new Array<>(new String[] {"ASHLEY", "TOOLS", "ASHLEY", "TOOLS", "ASHLEY", "TOOLS", "ASHLEY", "TOOLS"});
 
     //languages dialog
     public static String groovyDefaultVersion = "4.0.2";

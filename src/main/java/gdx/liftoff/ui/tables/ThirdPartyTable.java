@@ -20,9 +20,6 @@ public class ThirdPartyTable extends LiftoffTable {
         pad(20).padLeft(30).padRight(30);
 
         defaults().space(30);
-        add(new LogoWidget()).top().spaceBottom(0);
-
-        row();
         thirdPartyPanel = new ThirdPartyPanel();
         add(thirdPartyPanel).grow().spaceTop(0).maxHeight(500);
 

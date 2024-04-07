@@ -18,11 +18,8 @@ public class AddOnsTable extends LiftoffTable {
         pad(20).padLeft(30).padRight(30);
 
         defaults().space(30);
-        add(new LogoWidget()).top().spaceBottom(0);
-
-        row();
         AddOnsPanel addOnsPanel = new AddOnsPanel();
-        add(addOnsPanel).grow().spaceTop(0);
+        add(addOnsPanel).grow().spaceTop(0).maxHeight(500);
 
         row();
         Table table = new Table();
