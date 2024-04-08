@@ -179,14 +179,14 @@ public class Main extends ApplicationAdapter {
         return pop;
     }
 
-    public static void addLabelHighlight(Button button, Label label) {
+    public static void addLabelHighlight(Actor actor, Label label) {
         label.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
                 if (pointer == -1) {
                     label.setColor(skin.getColor("red"));
-                    button.fire(event);
+                    actor.fire(event);
                 }
             }
 
@@ -195,17 +195,19 @@ public class Main extends ApplicationAdapter {
                 super.exit(event, x, y, pointer, toActor);
                 if (pointer == -1) {
                     label.setColor(Color.WHITE);
-                    button.fire(event);
+                    actor.fire(event);
                 }
             }
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (!(actor instanceof Button)) return;
+                Button button = (Button) actor;
                 button.setChecked(!button.isChecked());
             }
         });
 
-        button.addListener(new InputListener() {
+        actor.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 if (pointer == -1) label.setColor(skin.getColor("red"));
