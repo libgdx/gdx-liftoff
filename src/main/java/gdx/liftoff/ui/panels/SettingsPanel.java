@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.SmashGroup;
-import gdx.liftoff.ui.dialogs.ExtensionsDialog;
-import gdx.liftoff.ui.dialogs.LanguagesDialog;
-import gdx.liftoff.ui.dialogs.PlatformsDialog;
-import gdx.liftoff.ui.dialogs.TemplatesDialog;
+import gdx.liftoff.ui.dialogs.*;
 
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
@@ -27,6 +24,7 @@ public class SettingsPanel extends Table implements Panel {
         Table table = new Table();
         add(table);
 
+        //libgdx version
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).growX().maxWidth(100);
         table.defaults().spaceTop(5);
@@ -41,6 +39,7 @@ public class SettingsPanel extends Table implements Panel {
         addLabelHighlight(textField, label, false);
         keyboardFocus = textField;
 
+        //java version
         table.row();
         label = new Label(prop.getProperty("javaVersion"), skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -52,6 +51,7 @@ public class SettingsPanel extends Table implements Panel {
         addIbeamListener(textField);
         addLabelHighlight(textField, label, false);
 
+        //application version
         table.row();
         label = new Label(prop.getProperty("version"), skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -63,6 +63,7 @@ public class SettingsPanel extends Table implements Panel {
         addIbeamListener(textField);
         addLabelHighlight(textField, label, false);
 
+        //robovm version
         table.row();
         label = new Label(prop.getProperty("robovmVersion"), skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -74,6 +75,7 @@ public class SettingsPanel extends Table implements Panel {
         addIbeamListener(textField);
         addLabelHighlight(textField, label, false);
 
+        //add gui assets
         table.defaults().spaceTop(10);
         table.row();
         label = new Label(prop.getProperty("generateSkin"), skin, "field");
@@ -87,6 +89,7 @@ public class SettingsPanel extends Table implements Panel {
         addHandListener(imageButton);
         addLabelHighlight(imageButton, label);
 
+        //add readme
         table.row();
         label = new Label(prop.getProperty("generateReadme"), skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -98,6 +101,13 @@ public class SettingsPanel extends Table implements Panel {
         addTooltip(imageButton, label, Align.top, 200, prop.getProperty("generateReadmeTip"));
         addHandListener(imageButton);
         addLabelHighlight(imageButton, label);
+
+        //add gradle tasks
+        row();
+        TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);
+        add(textButton).spaceTop(30);
+        addHandListener(textButton);
+        onChange(textButton, () -> GradleDialog.show());
     }
 
     @Override
