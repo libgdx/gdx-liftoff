@@ -193,8 +193,8 @@ public class ThirdPartyPanel extends Table implements Panel {
             scrollTable.row();
             CheckBox checkBox = new CheckBox(searchEntry.name, skin);
             checkBox.getLabel().setWrap(true);
-            checkBox.getLabelCell().growX();
-            scrollTable.add(checkBox).left().growX().maxWidth(200);
+            checkBox.getLabelCell().growX().maxWidth(200);
+            scrollTable.add(checkBox).left().growX();
             addHandListener(checkBox);
 
             Label label = new Label(searchEntry.description, skin, "description");
