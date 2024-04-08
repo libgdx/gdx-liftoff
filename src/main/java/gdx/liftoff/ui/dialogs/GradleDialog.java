@@ -34,6 +34,7 @@ public class GradleDialog extends PopTable  {
         row();
         TextField textField = new TextField("", skin);
         add(textField).width(350);
+        addIbeamListener(textField);
         stage.setKeyboardFocus(textField);
 
         row();
