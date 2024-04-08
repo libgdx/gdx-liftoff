@@ -9,11 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
@@ -88,7 +85,7 @@ public class TemplatesDialog extends PopTable  {
         scrollTable.add(table).spaceTop(30).growX();
 
         table.defaults().space(5).expandX();
-        label = new Label("LINKS", skin, "field");
+        label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //propose a template

@@ -168,6 +168,24 @@ public class ThirdPartyPanel extends Table implements Panel {
         addThirdParty("websocketSerialization");
 
         populateScrollTable(null);
+
+        row();
+        table = new Table();
+        add(table).spaceTop(30).growX();
+
+        table.defaults().space(5).expandX();
+        label = new Label(prop.getProperty("links"), skin, "field");
+        table.add(label).left();
+
+        //submit an extension
+        table.defaults().left().padLeft(10);
+        table.row();
+
+        TextButton textButton = new TextButton(prop.getProperty("thirdPartyLink"), skin, "link");
+        textButton.getLabel().setAlignment(Align.left);
+        table.add(textButton);
+        addHandListener(textButton);
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
     }
 
     private SearchEntry addThirdParty(String name) {
@@ -182,7 +200,6 @@ public class ThirdPartyPanel extends Table implements Panel {
 
     private void populateScrollTable(String search) {
         if (search != null) search = search.toLowerCase(Locale.ROOT).replaceAll("\\W", "");
-        System.out.println(search);
         scrollTable.clearChildren();
 
         for (SearchEntry searchEntry : searchEntries) {
@@ -205,10 +222,7 @@ public class ThirdPartyPanel extends Table implements Panel {
             Button button = new Button(skin, "external-link");
             scrollTable.add(button).padRight(5);
             addHandListener(button);
-            onChange(button, () -> {
-                System.out.println("searchEntry.link = " + searchEntry.link);
-                Gdx.net.openURI(searchEntry.link);
-            });
+            onChange(button, () -> Gdx.net.openURI(searchEntry.link));
         }
     }
 

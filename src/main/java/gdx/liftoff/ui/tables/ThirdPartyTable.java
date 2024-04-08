@@ -2,7 +2,6 @@ package gdx.liftoff.ui.tables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.ThirdPartyPanel;
 
 import static gdx.liftoff.Main.*;
@@ -21,7 +20,7 @@ public class ThirdPartyTable extends LiftoffTable {
 
         defaults().space(30);
         thirdPartyPanel = new ThirdPartyPanel();
-        add(thirdPartyPanel).grow().spaceTop(0).maxHeight(500);
+        add(thirdPartyPanel).grow().spaceTop(0).maxHeight(550);
 
         row();
         Table table = new Table();
