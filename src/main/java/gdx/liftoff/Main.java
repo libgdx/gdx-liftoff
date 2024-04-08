@@ -180,12 +180,16 @@ public class Main extends ApplicationAdapter {
     }
 
     public static void addLabelHighlight(Actor actor, Label label) {
+        addLabelHighlight(actor, label, true);
+    }
+
+    public static void addLabelHighlight(Actor actor, Label label, boolean changeColor) {
         label.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
                 if (pointer == -1) {
-                    label.setColor(skin.getColor("red"));
+                    if (changeColor) label.setColor(skin.getColor("red"));
                     actor.fire(event);
                 }
             }
@@ -194,7 +198,7 @@ public class Main extends ApplicationAdapter {
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 super.exit(event, x, y, pointer, toActor);
                 if (pointer == -1) {
-                    label.setColor(Color.WHITE);
+                    if (changeColor) label.setColor(Color.WHITE);
                     actor.fire(event);
                 }
             }
@@ -210,12 +214,12 @@ public class Main extends ApplicationAdapter {
         actor.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (pointer == -1) label.setColor(skin.getColor("red"));
+                if (pointer == -1 && changeColor) label.setColor(skin.getColor("red"));
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (pointer == -1) label.setColor(skin.getColor("white"));
+                if (pointer == -1 && changeColor) label.setColor(skin.getColor("white"));
             }
         });
     }

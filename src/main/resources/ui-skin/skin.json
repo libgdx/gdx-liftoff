@@ -866,6 +866,19 @@
 		"down": "checkbox-bg-down-10"
 	}
 },
+"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+	"default": {
+		"imageUp": "button-outline-up-10"
+	},
+	"check": {
+		"imageUp": "check-box-unchecked-up",
+		"imageDown": "check-box-checked-down",
+		"imageOver": "check-box-unchecked-over",
+		"imageChecked": "check-box-checked-up",
+		"imageCheckedDown": "check-box-checked-down",
+		"imageCheckedOver": "check-box-checked-over"
+	}
+},
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 	"default": {
 		"font": "font-label"

@@ -25,7 +25,7 @@ public class SettingsTable extends LiftoffTable {
 
         if (1+1 == 2) {
             row();
-            
+
         }
 
         row();

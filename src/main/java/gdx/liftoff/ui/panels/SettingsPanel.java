@@ -36,8 +36,9 @@ public class SettingsPanel extends Table implements Panel {
 
         TextField textField = new TextField("", skin);
         table.add(textField);
-        addTooltip(textField, label, Align.top, 0, prop.getProperty("gdxVersionTip"));
+        addTooltip(textField, label, Align.top, 200, prop.getProperty("gdxVersionTip"));
         addIbeamListener(textField);
+        addLabelHighlight(textField, label, false);
         keyboardFocus = textField;
 
         table.row();
@@ -47,8 +48,9 @@ public class SettingsPanel extends Table implements Panel {
 
         textField = new TextField("", skin);
         table.add(textField);
-        addTooltip(textField, label, Align.top, 0, prop.getProperty("javaVersionTip"));
+        addTooltip(textField, label, Align.top, 200, prop.getProperty("javaVersionTip"));
         addIbeamListener(textField);
+        addLabelHighlight(textField, label, false);
 
         table.row();
         label = new Label(prop.getProperty("version"), skin, "field");
@@ -57,8 +59,9 @@ public class SettingsPanel extends Table implements Panel {
 
         textField = new TextField("", skin);
         table.add(textField);
-        addTooltip(textField, label, Align.top, 0, prop.getProperty("versionTip"));
+        addTooltip(textField, label, Align.top, 200, prop.getProperty("versionTip"));
         addIbeamListener(textField);
+        addLabelHighlight(textField, label, false);
 
         table.row();
         label = new Label(prop.getProperty("robovmVersion"), skin, "field");
@@ -67,8 +70,34 @@ public class SettingsPanel extends Table implements Panel {
 
         textField = new TextField("", skin);
         table.add(textField);
-        addTooltip(textField, label, Align.top, 0, prop.getProperty("robovmVersionTip"));
+        addTooltip(textField, label, Align.top, 200, prop.getProperty("robovmVersionTip"));
         addIbeamListener(textField);
+        addLabelHighlight(textField, label, false);
+
+        table.defaults().spaceTop(10);
+        table.row();
+        label = new Label(prop.getProperty("generateSkin"), skin, "field");
+        label.setTouchable(Touchable.enabled);
+        table.add(label);
+
+        ImageButton imageButton = new ImageButton(skin, "check");
+        imageButton.left();
+        table.add(imageButton);
+        addTooltip(imageButton, label, Align.top, 200, prop.getProperty("generateSkinTip"));
+        addHandListener(imageButton);
+        addLabelHighlight(imageButton, label);
+
+        table.row();
+        label = new Label(prop.getProperty("generateReadme"), skin, "field");
+        label.setTouchable(Touchable.enabled);
+        table.add(label);
+
+        imageButton = new ImageButton(skin, "check");
+        imageButton.left();
+        table.add(imageButton);
+        addTooltip(imageButton, label, Align.top, 200, prop.getProperty("generateReadmeTip"));
+        addHandListener(imageButton);
+        addLabelHighlight(imageButton, label);
     }
 
     @Override
