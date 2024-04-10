@@ -1,8 +1,10 @@
 package gdx.liftoff.ui.tables;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import gdx.liftoff.ui.panels.PathsPanel;
 import gdx.liftoff.ui.panels.SettingsPanel;
 
 import static gdx.liftoff.Main.*;
@@ -19,13 +21,21 @@ public class SettingsTable extends LiftoffTable {
         setBackground(skin.getDrawable("black"));
         pad(20).padLeft(30).padRight(30);
 
-        defaults().space(30);
+        Table scrollTable = new Table();
+        ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setScrollingDisabled(true, false);
+        add(scrollPane).grow();
+        addScrollFocusListener(scrollPane);
+
+        scrollTable.defaults().space(30);
         settingsPanel = new SettingsPanel();
-        add(settingsPanel).grow().spaceTop(0).maxHeight(500);
+        scrollTable.add(settingsPanel).grow().spaceTop(0).maxHeight(500);
 
         if (1+1 == 2) {
-            row();
-
+            scrollTable.row();
+            PathsPanel pathsPanel = new PathsPanel();
+            scrollTable.add(pathsPanel).grow().spaceTop(30);
         }
 
         row();

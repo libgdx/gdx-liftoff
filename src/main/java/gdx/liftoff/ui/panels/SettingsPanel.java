@@ -1,17 +1,13 @@
 package gdx.liftoff.ui.panels;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.ray3k.stripe.SmashGroup;
+import com.ray3k.stripe.PopTable;
+import com.ray3k.stripe.PopTable.TableShowHideListener;
 import gdx.liftoff.ui.dialogs.*;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 public class SettingsPanel extends Table implements Panel {
     private Actor keyboardFocus;
@@ -22,92 +18,83 @@ public class SettingsPanel extends Table implements Panel {
 
         row();
         Table table = new Table();
-        add(table);
+        add(table).grow();
 
         //libgdx version
         table.columnDefaults(0).right().expandX();
-        table.columnDefaults(1).growX().maxWidth(100);
-        table.defaults().spaceTop(5);
-        label = new Label(prop.getProperty("gdxVersion"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        TextField textField = new TextField("", skin);
-        table.add(textField);
-        addTooltip(textField, label, Align.top, 200, prop.getProperty("gdxVersionTip"));
-        addIbeamListener(textField);
-        addLabelHighlight(textField, label, false);
-        keyboardFocus = textField;
+        table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
+        table.defaults().spaceTop(5).spaceLeft(10);
+        addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), table, true);
 
         //java version
-        table.row();
-        label = new Label(prop.getProperty("javaVersion"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        textField = new TextField("", skin);
-        table.add(textField);
-        addTooltip(textField, label, Align.top, 200, prop.getProperty("javaVersionTip"));
-        addIbeamListener(textField);
-        addLabelHighlight(textField, label, false);
+        addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), table);
 
         //application version
-        table.row();
-        label = new Label(prop.getProperty("version"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        textField = new TextField("", skin);
-        table.add(textField);
-        addTooltip(textField, label, Align.top, 200, prop.getProperty("versionTip"));
-        addIbeamListener(textField);
-        addLabelHighlight(textField, label, false);
+        addField(prop.getProperty("version"), prop.getProperty("versionTip"), table);
 
         //robovm version
-        table.row();
-        label = new Label(prop.getProperty("robovmVersion"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        textField = new TextField("", skin);
-        table.add(textField);
-        addTooltip(textField, label, Align.top, 200, prop.getProperty("robovmVersionTip"));
-        addIbeamListener(textField);
-        addLabelHighlight(textField, label, false);
+        addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), table);
 
         //add gui assets
         table.defaults().spaceTop(10);
-        table.row();
-        label = new Label(prop.getProperty("generateSkin"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        ImageButton imageButton = new ImageButton(skin, "check");
-        imageButton.left();
-        table.add(imageButton);
-        addTooltip(imageButton, label, Align.top, 200, prop.getProperty("generateSkinTip"));
-        addHandListener(imageButton);
-        addLabelHighlight(imageButton, label);
+        addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), table);
 
         //add readme
-        table.row();
-        label = new Label(prop.getProperty("generateReadme"), skin, "field");
-        label.setTouchable(Touchable.enabled);
-        table.add(label);
-
-        imageButton = new ImageButton(skin, "check");
-        imageButton.left();
-        table.add(imageButton);
-        addTooltip(imageButton, label, Align.top, 200, prop.getProperty("generateReadmeTip"));
-        addHandListener(imageButton);
-        addLabelHighlight(imageButton, label);
+        addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), table);
 
         //add gradle tasks
         row();
         TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);
         add(textButton).spaceTop(30);
         addHandListener(textButton);
-        onChange(textButton, () -> GradleDialog.show());
+        onChange(textButton, () -> {
+            PopTable pop = GradleDialog.show();
+            pop.addListener(new TableShowHideListener() {
+                @Override
+                public void tableShown(Event event) {
+
+                }
+
+                @Override
+                public void tableHidden(Event event) {
+                    captureKeyboardFocus();
+                }
+            });
+        });
+    }
+
+    private void addField(String text, String tip, Table table) {
+        addField(text, tip, table, false);
+    }
+
+    private void addField(String text, String tip, Table table, boolean setKeyboardFocus) {
+        table.row();
+        Label label = new Label(text, skin, "field");
+        label.setTouchable(Touchable.enabled);
+        label.setEllipsis("...");
+        table.add(label).minWidth(0);
+
+        TextField textField = new TextField("", skin);
+        table.add(textField);
+        addTooltip(textField, label, Align.top, 200, tip);
+        addIbeamListener(textField);
+        addLabelHighlight(textField, label, false);
+        if (setKeyboardFocus) keyboardFocus = textField;
+    }
+
+    private void addCheck(String text, String tip, Table table) {
+        table.row();
+        Label label = new Label(text, skin, "field");
+        label.setTouchable(Touchable.enabled);
+        label.setEllipsis("...");
+        table.add(label).minWidth(0);
+
+        ImageButton imageButton = new ImageButton(skin, "check");
+        imageButton.left();
+        table.add(imageButton);
+        addTooltip(imageButton, label, Align.top, 200, tip);
+        addHandListener(imageButton);
+        addLabelHighlight(imageButton, label);
     }
 
     @Override

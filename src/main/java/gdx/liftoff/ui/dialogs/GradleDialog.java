@@ -46,8 +46,9 @@ public class GradleDialog extends PopTable  {
         });
     }
 
-    public static void show() {
+    public static PopTable show() {
         GradleDialog dialog = new GradleDialog();
         dialog.show(stage);
+        return dialog;
     }
 }
