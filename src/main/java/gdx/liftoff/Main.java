@@ -73,6 +73,7 @@ public class Main extends ApplicationAdapter {
         prop = new Properties();
         try {
             prop.load(Gdx.files.internal("i18n/nls.properties").read());
+            prop.load(Gdx.files.internal("ui-data/urls.properties").read());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
