@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -17,17 +18,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kotcrab.vis.ui.widget.file.FileChooser;
+import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
+import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
 import com.ray3k.stripe.PopTable.PopTableStyle;
 import gdx.liftoff.ui.RootTable;
+import gdx.liftoff.views.MainView;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
+
+import static org.lwjgl.system.MemoryUtil.memAllocPointer;
+import static org.lwjgl.system.MemoryUtil.memFree;
 
 public class Main extends ApplicationAdapter {
     public static Skin skin;
@@ -222,5 +234,53 @@ public class Main extends ApplicationAdapter {
                 if (pointer == -1 && changeColor) label.setColor(skin.getColor("white"));
             }
         });
+    }
+
+    public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
+        String initialPath = initialFolder.path();
+
+        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win")) {
+            initialPath = initialPath.replace("/", "\\");
+        }
+
+        PointerBuffer pathPointer = memAllocPointer(1);
+
+        try {
+            int status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer);
+
+            if (status == NativeFileDialog.NFD_CANCEL) {
+                callback.canceled();
+                return;
+            }
+
+            // Unexpected error - show VisUI dialog.
+            if (status != NativeFileDialog.NFD_OKAY) {
+                throw new Throwable("Native file dialog error");
+            }
+
+            String folder = pathPointer.getStringUTF8(0);
+            NativeFileDialog.nNFD_Free(pathPointer.get(0));
+
+            Array<FileHandle> array = new Array<>();
+            array.add(Gdx.files.absolute(folder));
+
+            callback.selected(array);
+        } catch (Throwable e) {
+            Gdx.app.error(
+                "NFD",
+                "The Native File Dialog library could not be loaded.\n" +
+                    "Check if you have multiple LWJGL3 applications open simultaneously,\n" +
+                    "since that can cause this error."
+            );
+            Gdx.app.error("NFD", e.toString());
+            FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
+            fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);
+            fileChooser.setDirectory(initialPath);
+            fileChooser.setListener(callback);
+
+            stage.addActor(fileChooser.fadeIn());
+        } finally {
+            memFree(pathPointer);
+        }
     }
 }

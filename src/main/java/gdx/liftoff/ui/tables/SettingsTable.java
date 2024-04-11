@@ -22,6 +22,7 @@ public class SettingsTable extends LiftoffTable {
         pad(20).padLeft(30).padRight(30);
 
         Table scrollTable = new Table();
+        scrollTable.pad(5);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
@@ -30,12 +31,12 @@ public class SettingsTable extends LiftoffTable {
 
         scrollTable.defaults().space(30);
         settingsPanel = new SettingsPanel();
-        scrollTable.add(settingsPanel).grow().spaceTop(0).maxHeight(500);
+        scrollTable.add(settingsPanel).growX().spaceTop(0).maxHeight(500);
 
         if (1+1 == 2) {
             scrollTable.row();
             PathsPanel pathsPanel = new PathsPanel();
-            scrollTable.add(pathsPanel).grow().spaceTop(30);
+            scrollTable.add(pathsPanel).growX().spaceTop(30);
         }
 
         row();

@@ -1,14 +1,19 @@
 package gdx.liftoff.ui.panels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.SmashGroup;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.dialogs.GradleDialog;
 import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
@@ -57,7 +62,17 @@ public class PathsPanel extends Table implements Panel {
         chooseContainer.setTouchable(Touchable.enabled);
         stack.add(chooseContainer);
         addHandListener(chooseContainer);
-        onClick(chooseContainer, TemplatesDialog::show);
+        onClick(chooseContainer, () -> Main.pickDirectory(Gdx.files.absolute("C://"), new FileChooserAdapter() {
+            @Override
+            public void canceled() {
+                super.canceled();
+            }
+
+            @Override
+            public void selected(Array<FileHandle> files) {
+                super.selected(files);
+            }
+        }));
         chooseContainer.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
