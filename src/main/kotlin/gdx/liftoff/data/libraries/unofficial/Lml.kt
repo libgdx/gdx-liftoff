@@ -179,8 +179,9 @@ class WebSocket : WebSocketExtension() {
 
     addDependency(project, GWT.ID, "$group.gdx-websockets:core:sources")
     addDependency(project, GWT.ID, "$group.gdx-websockets:html:sources")
-    addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocket")
-    addGwtInherit(project, "com.github.czyzby.gdx-websockets.websocket.GdxWebSocketGwt")
+
+    addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
+    addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
   }
 }
 
@@ -199,8 +200,7 @@ class WebSocketSerialization : WebSocketExtension() {
     addDependency(project, Server.ID, "$group.gdx-websockets:serialization")
 
     addDependency(project, GWT.ID, "$group.gdx-websockets:serialization:sources")
-    addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
-    addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
+    addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketSerialization")
 
     WebSocket().initiate(project)
   }

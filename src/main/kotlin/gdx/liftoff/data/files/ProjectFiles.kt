@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.PixmapIO
-import com.badlogic.gdx.graphics.PixmapIO.PNG
 import com.github.czyzby.kiwi.util.common.Strings
 import gdx.liftoff.data.platforms.Platform
 import java.io.File
@@ -173,4 +172,3 @@ class GeneratedImageFile private constructor(override val path: String, val cont
     PixmapIO.writePNG(destination.child(path), content, 4, false)
   }
 }
-
