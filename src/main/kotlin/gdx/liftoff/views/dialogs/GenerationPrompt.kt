@@ -43,7 +43,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
   @LmlActor("scroll")
   private val scrollPane: ScrollPane = inject()
 
-  @LmlActor("idea")
+  @LmlActor("openIdea")
   private val ideaButton: Button = inject()
 
   private val loggingBuffer = ConcurrentLinkedQueue<String>()
@@ -73,7 +73,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
     threadPool.execute {
       try {
-        val findIntellij = if (UIUtils.isWindows) arrayListOf("where.exe", "idea") else arrayListOf("which", "idea")
+        val findIntellij = if (UIUtils.isWindows) arrayListOf("where.exe", "openIdea") else arrayListOf("which", "openIdea")
 
         val process = ProcessBuilder(findIntellij).start()
         if (process.waitFor() != 0) {

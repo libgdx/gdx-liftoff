@@ -783,6 +783,42 @@
 		"regions": [],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"loading-anim": {
+		"region": "loading-frame-01",
+		"horizontalStretchAreas": [ 0, 166 ],
+		"verticalStretchAreas": [ 0, 165 ],
+		"tiling": false,
+		"minWidth": 167,
+		"minHeight": 166,
+		"rightWidth": 0,
+		"leftWidth": 0,
+		"bottomHeight": 0,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [
+			"loading-frame-01",
+			"loading-frame-02",
+			"loading-frame-03",
+			"loading-frame-04",
+			"loading-frame-05",
+			"loading-frame-06",
+			"loading-frame-07",
+			"loading-frame-08",
+			"loading-frame-09",
+			"loading-frame-10",
+			"loading-frame-11",
+			"loading-frame-12",
+			"loading-frame-13",
+			"loading-frame-14",
+			"loading-frame-15"
+		],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {

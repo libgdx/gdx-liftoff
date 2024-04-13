@@ -63,14 +63,23 @@ public class RootTable extends Table {
         transitionTable(true);
     }
 
+    public void showHomeTable() {
+        transitionTable(0);
+    }
+
     private void transitionTable(boolean goNext) {
-        LiftoffTable table = tables.get(tableIndex);
+        transitionTable(goNext ? tableIndex + 1 : tableIndex - 1);
+    }
+
+    private void transitionTable(int tableIndex) {
+        LiftoffTable table = tables.get(this.tableIndex);
         table.finishAnimation();
         table.setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
-        tableIndex = goNext ? tableIndex + 1 : tableIndex - 1;
         tableIndex = MathUtils.clamp(tableIndex, 0, tables.size);
+        boolean goNext = this.tableIndex - tableIndex != 1;
+        this.tableIndex = tableIndex;
         LiftoffTable newTable = tables.get(tableIndex);
 
         //initial setup
