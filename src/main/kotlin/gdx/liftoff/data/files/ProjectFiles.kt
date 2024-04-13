@@ -3,6 +3,8 @@ package gdx.liftoff.data.files
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
+import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.PixmapIO
 import com.github.czyzby.kiwi.util.common.Strings
 import gdx.liftoff.data.platforms.Platform
 import java.io.File
@@ -136,11 +138,7 @@ class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
   override fun save(destination: FileHandle) {
     val content = platforms.joinToString(
       prefix =
-      """// Can be used to automatically download a JDK with the correct version.
-plugins {
-    id('org.gradle.toolchains.foojay-resolver-convention') version '0.7.0'
-}
-// A list of which subprojects to load as part of the same larger project.
+      """// A list of which subprojects to load as part of the same larger project.
 // You can remove Strings from the list and reload the Gradle project
 // if you want to temporarily disable a subproject.
 include """,
@@ -148,5 +146,29 @@ include """,
       postfix = "\n"
     ) { "'${it.id}'" }
     destination.child(path).writeString(content, false, "UTF-8")
+  }
+}
+
+/**
+ * Base class for copied project resources.
+ */
+class GeneratedImageFile private constructor(override val path: String, val content: Pixmap) : ProjectFile {
+  /**
+   * @param projectName name of the project which should contain the file.
+   * @param path relative path inside the project with the exact file location.
+   * @param original internal path to the resource.
+   */
+  constructor(projectName: String = "", path: String, content: Pixmap) :
+    this(
+      if (projectName.isNotEmpty()) {
+        projectName + File.separator
+      } else {
+        ""
+      } + path,
+      content
+    )
+
+  override fun save(destination: FileHandle) {
+    PixmapIO.writePNG(destination.child(path), content, 4, false)
   }
 }

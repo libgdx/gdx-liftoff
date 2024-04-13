@@ -69,28 +69,17 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
     fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.each {
       assetsFile.append(it + "\n")
     }
-  }${if (project.hasPlatform(TeaVM.ID) && plugins.contains("kotlin")) {
+  }${if (plugins.contains("kotlin")) {
     """
-  compileKotlin {
-    compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-  }"""
+  compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
+    if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+      "1_8"
+    } else {
+      project.advanced.javaVersion.removePrefix("1.")
+    }})
+  """
   } else {
     ""
-  }}${
-  if (plugins.contains("kotlin")) {
-    """
-
-  kotlin {
-    jvmToolchain(${project.advanced.javaVersion.removePrefix("1.")})
-  }"""
-  } else {
-    """
-
-  java {
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(${project.advanced.javaVersion.removePrefix("1.")})
-    }
-  }"""
   }}
 }
 

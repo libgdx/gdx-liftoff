@@ -1546,7 +1546,6 @@ class TantrumLibgdx : ThirdPartyExtension() {
   }
 }
 
-
 /**
  * Tantrum support for RegExodus types.
  * @author Tommy Ettinger
