@@ -110,6 +110,7 @@ public class LandingTable extends LiftoffTable {
         table.add(textButton).fillX().space(20);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
+        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable));
 
         //begin small vertical group
         table = new Table();
@@ -127,6 +128,7 @@ public class LandingTable extends LiftoffTable {
         table.add(textButton).space(20);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
+        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable));
         //end vertical groups
 
         row();

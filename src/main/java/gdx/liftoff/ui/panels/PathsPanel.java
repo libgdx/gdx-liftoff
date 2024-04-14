@@ -29,12 +29,14 @@ public class PathsPanel extends Table implements Panel {
 
         addField("C:/users/yourname/gamename/");
 
-        row();
-        label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
-        label.setEllipsis("...");
-        add(label).minWidth(0);
+        if (1+1==2) {
+            row();
+            label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
+            label.setEllipsis("...");
+            add(label).minWidth(0);
 
-        addField("C:/users/yourname/android/");
+            addField("C:/users/yourname/android/");
+        }
     }
 
     private void addField(String text) {

@@ -19,15 +19,17 @@ import static gdx.liftoff.Main.*;
 public class RootTable extends Table {
     private Array<LiftoffTable> tables;
     private int tableIndex;
-    private LandingTable landingTable;
-    private AddOnsTable addOnsTable;
-    private ThirdPartyTable thirdPartyTable;
-    private SettingsTable settingsTable;
-    private CompleteTable completeTable;
+    public LandingTable landingTable;
+    public AddOnsTable addOnsTable;
+    public ThirdPartyTable thirdPartyTable;
+    public SettingsTable settingsTable;
+    public CompleteTable completeTable;
+    public QuickSettingsTable quickSettingsTable;
 
     public RootTable() {
-        pad(20);
         tables = new Array<>();
+        tableIndex = 0;
+        pad(20);
 
         landingTable = new LandingTable();
         add(landingTable).prefSize(600, 700);
@@ -38,7 +40,8 @@ public class RootTable extends Table {
         thirdPartyTable = new ThirdPartyTable();
         settingsTable = new SettingsTable();
         completeTable = new CompleteTable();
-        tables.addAll(landingTable, addOnsTable, thirdPartyTable, settingsTable, completeTable);
+        quickSettingsTable = new QuickSettingsTable();
+        tables.addAll(landingTable, addOnsTable, thirdPartyTable, settingsTable, completeTable, quickSettingsTable);
 
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
@@ -63,22 +66,22 @@ public class RootTable extends Table {
         transitionTable(true);
     }
 
-    public void showHomeTable() {
-        transitionTable(0);
+    public void transitionTable(boolean goNext) {
+        int newIndex = goNext ? tableIndex + 1 : tableIndex - 1;
+        transitionTable(newIndex, tableIndex - newIndex != 1);
     }
 
-    private void transitionTable(boolean goNext) {
-        transitionTable(goNext ? tableIndex + 1 : tableIndex - 1);
+    public void transitionTable(LiftoffTable table) {
+        transitionTable(tables.indexOf(table, true), true);
     }
 
-    private void transitionTable(int tableIndex) {
+    public void transitionTable(int tableIndex, boolean goNext) {
         LiftoffTable table = tables.get(this.tableIndex);
         table.finishAnimation();
         table.setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
         tableIndex = MathUtils.clamp(tableIndex, 0, tables.size);
-        boolean goNext = this.tableIndex - tableIndex != 1;
         this.tableIndex = tableIndex;
         LiftoffTable newTable = tables.get(tableIndex);
 

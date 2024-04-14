@@ -33,11 +33,9 @@ public class SettingsTable extends LiftoffTable {
         settingsPanel = new SettingsPanel();
         scrollTable.add(settingsPanel).growX().spaceTop(0).maxHeight(500);
 
-        if (1+1 == 2) {
-            scrollTable.row();
-            PathsPanel pathsPanel = new PathsPanel();
-            scrollTable.add(pathsPanel).growX().spaceTop(30);
-        }
+        scrollTable.row();
+        PathsPanel pathsPanel = new PathsPanel();
+        scrollTable.add(pathsPanel).growX().spaceTop(30);
 
         row();
         Table table = new Table();

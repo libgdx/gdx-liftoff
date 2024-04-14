@@ -1,6 +1,7 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -37,27 +38,9 @@ public class CompletePanel extends Table implements Panel {
         outputLabel.setWrap(true);
         scrollTable.add(outputLabel).grow();
 
-        row();
-        TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");
-        add(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
-        addHandListener(textButton);
-        onChange(textButton, () -> root.showHomeTable());
-
-        row();
-        Table table = new Table();
-        add(table);
-
-        table.defaults().fillX().space(10);
-        textButton = new TextButton(prop.getProperty("openIdea"), skin);
-        table.add(textButton);
-        addHandListener(textButton);
-
-        table.row();
-        textButton = new TextButton(prop.getProperty("exit"), skin);
-        table.add(textButton);
-        addHandListener(textButton);
-        onChange(textButton, () -> Gdx.app.exit());
+        addAction(Actions.delay(.3f, Actions.run(() -> {
+            scrollPane.setScrollPercentY(1);
+        })));
     }
 
     @Override

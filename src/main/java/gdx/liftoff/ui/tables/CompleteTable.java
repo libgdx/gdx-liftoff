@@ -2,6 +2,8 @@ package gdx.liftoff.ui.tables;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import gdx.liftoff.ui.panels.CompleteButtonsPanel;
 import gdx.liftoff.ui.panels.CompletePanel;
 import gdx.liftoff.ui.panels.GeneratingPanel;
 
@@ -20,19 +22,28 @@ public class CompleteTable extends LiftoffTable {
         pad(20).padLeft(30).padRight(30);
 
         GeneratingPanel generatingPanel = new GeneratingPanel();
+
+        Table table = new Table();
+        stack(generatingPanel, table);
+
+        table.defaults().space(10);
         CompletePanel completePanel = new CompletePanel();
-        stack(generatingPanel, completePanel);
+        table.add(completePanel);
+
+        table.row();
+        CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel();
+        table.add(completeButtonsPanel);
 
         //initial setup
-        completePanel.setColor(CLEAR_WHITE);
-        completePanel.setTouchable(Touchable.disabled);
+        table.setColor(CLEAR_WHITE);
+        table.setTouchable(Touchable.disabled);
 
         //animation
         addAction(sequence(
             delay(1f),
             targeting(generatingPanel, fadeOut(.3f)),
-            targeting(completePanel, fadeIn(.3f)),
-            targeting(completePanel, touchable(Touchable.enabled))
+            targeting(table, fadeIn(.3f)),
+            targeting(table, touchable(Touchable.enabled))
         ));
     }
 
