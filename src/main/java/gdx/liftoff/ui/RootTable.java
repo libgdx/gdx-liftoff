@@ -1,7 +1,5 @@
 package gdx.liftoff.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -9,8 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import gdx.liftoff.Main;
-import gdx.liftoff.ui.tables.*;
+import gdx.liftoff.ui.liftofftables.*;
 
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -32,7 +29,7 @@ public class RootTable extends Table {
         pad(20);
 
         landingTable = new LandingTable();
-        add(landingTable).prefSize(600, 700);
+        add(landingTable).prefSize(ROOT_TABLE_PREF_WIDTH, ROOT_TABLE_PREF_HEIGHT);
         landingTable.captureKeyboardFocus();
         landingTable.animate();
 
@@ -66,16 +63,16 @@ public class RootTable extends Table {
         transitionTable(true);
     }
 
-    public void transitionTable(boolean goNext) {
-        int newIndex = goNext ? tableIndex + 1 : tableIndex - 1;
+    public void transitionTable(boolean goToNextTable) {
+        int newIndex = goToNextTable ? tableIndex + 1 : tableIndex - 1;
         transitionTable(newIndex, tableIndex - newIndex != 1);
     }
 
-    public void transitionTable(LiftoffTable table) {
-        transitionTable(tables.indexOf(table, true), true);
+    public void transitionTable(LiftoffTable table, boolean rightToLeftTransition) {
+        transitionTable(tables.indexOf(table, true), rightToLeftTransition);
     }
 
-    public void transitionTable(int tableIndex, boolean goNext) {
+    public void transitionTable(int tableIndex, boolean rightToLeftTransition) {
         LiftoffTable table = tables.get(this.tableIndex);
         table.finishAnimation();
         table.setTouchable(Touchable.disabled);
@@ -91,7 +88,7 @@ public class RootTable extends Table {
         add(newTable).prefSize(600, 700);
         newTable.setTouchable(Touchable.disabled);
 
-        float distance = goNext ? stage.getWidth() : -stage.getWidth();
+        float distance = rightToLeftTransition ? stage.getWidth() : -stage.getWidth();
 
         addAction(sequence(
             //setup on first frame

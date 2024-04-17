@@ -19,7 +19,7 @@ public class CompleteButtonsPanel extends Table implements Panel {
         add(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         addHandListener(textButton);
-        onChange(textButton, () -> root.transitionTable(root.landingTable));
+        onChange(textButton, () -> root.transitionTable(root.landingTable, true));
 
         row();
         Table table = new Table();

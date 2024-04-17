@@ -34,7 +34,7 @@ public class LogoWidget extends Table {
         add(verticalCollapsibleGroup).minWidth(0).right();
 
         container = new Container();
-        container.padBottom(30).padTop(10);
+        container.padTop(10);
         verticalCollapsibleGroup.addActor(container);
 
         Label label = new Label(liftoffVersion, skin);

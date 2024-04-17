@@ -29,6 +29,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
 import com.ray3k.stripe.PopTable.PopTableStyle;
+import gdx.liftoff.ui.MaximizeButtonTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.views.MainView;
 import org.lwjgl.PointerBuffer;
@@ -48,6 +49,7 @@ public class Main extends ApplicationAdapter {
     public static FitViewport fitViewport;
     public static SpriteBatch batch;
     public static RootTable root;
+    public static MaximizeButtonTable maximizeButtonTable;
     public static SystemCursorListener handListener;
     public static SystemCursorListener ibeamListener;
     public static ScrollFocusListener scrollFocusListener;
@@ -56,6 +58,10 @@ public class Main extends ApplicationAdapter {
     public static boolean resizingWindow;
     public static Properties prop;
     private static GlyphLayout layout = new GlyphLayout();
+    public static final int MIN_WINDOW_WIDTH = 400;
+    public static final int MIN_WINDOW_HEIGHT = 410;
+    public static final float ROOT_TABLE_PREF_WIDTH = 600;
+    public static final float ROOT_TABLE_PREF_HEIGHT = 700;
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -63,7 +69,7 @@ public class Main extends ApplicationAdapter {
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
         config.setWindowedMode(800, 800);
-        config.setWindowSizeLimits(400,410, -1, -1);
+        config.setWindowSizeLimits(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT, -1, -1);
         config.setWindowIcon("icons/libgdx128.png", "icons/libgdx64.png", "icons/libgdx32.png", "icons/libgdx16.png");
         new Lwjgl3Application(new Main(), config);
     }
@@ -99,6 +105,10 @@ public class Main extends ApplicationAdapter {
         root = new RootTable();
         root.setFillParent(true);
         stage.addActor(root);
+
+        maximizeButtonTable = new MaximizeButtonTable();
+        maximizeButtonTable.setFillParent(true);
+        stage.addActor(maximizeButtonTable);
     }
 
     @Override

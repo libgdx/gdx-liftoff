@@ -5,24 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 
-/**
- * A layout widget that chooses the largest child to display that can fit in the available space of its given bounds.
- * For example, imagine this widget is set to horizontal = true and it has two children with minWidths 100 and 200. If
- * the widget's width is set to 300, the child with minWidth 200 is displayed. If the widget's width is set to 150, the
- * child with minWidth 100 is displayed.
- */
-public class CollapsibleGroup extends WidgetGroup {
-    private boolean horizontal;
+public class DualCollapsibleGroup extends WidgetGroup {
     private Actor visibleActor;
-
-    public CollapsibleGroup(boolean horizontal) {
-        this.horizontal = horizontal;
-    }
-
-    public CollapsibleGroup(boolean horizontal, Actor... actors) {
-        super(actors);
-        this.horizontal = horizontal;
-    }
 
     @Override
     public void layout() {
@@ -36,38 +20,56 @@ public class CollapsibleGroup extends WidgetGroup {
             child.setSize(getWidth(), getHeight());
         }
 
-        visibleActor = getFittest(horizontal, horizontal ? getWidth() : getHeight());
-        if (visibleActor == null) visibleActor = horizontal ? getSmallestMinWidth() : getSmallestMinHeight();
+        visibleActor = getFittest(getWidth(), getHeight());
+        if (visibleActor == null) visibleActor = getSmallestMinSize();
         if (visibleActor == null) return;
         visibleActor.setVisible(true);
     }
 
     @Override
     public float getMinWidth() {
-        Actor actor = horizontal ? getSmallestMinWidth() : getLargestMinWidth();
+        Actor actor = getSmallestMinWidth();
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
     }
 
     @Override
     public float getMinHeight() {
-        Actor actor = horizontal ? getLargestMinHeight() : getSmallestMinHeight();
+        Actor actor = getSmallestMinHeight();
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
     }
 
     @Override
     public float getPrefWidth() {
-        Actor actor = horizontal ? getLargestPrefWidth() : getLargestPrefHeight();
+        Actor actor = getLargestPrefWidth();
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getPrefWidth() : actor.getWidth();
     }
 
     @Override
     public float getPrefHeight() {
-        Actor actor = horizontal ? getLargestPrefWidth() : getLargestPrefHeight();
+        Actor actor = getLargestPrefHeight();
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getPrefHeight() : actor.getHeight();
+    }
+
+    private Actor getSmallestMinSize() {
+        if (getChildren().size == 0) return null;
+
+        float smallestSize = Float.MAX_VALUE;
+        Actor smallest = getChildren().first();
+        for (Actor actor : getChildren()) {
+            float width = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
+            float height = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+            float size = width * height;
+            if (size < smallestSize) {
+                smallestSize = size;
+                smallest = actor;
+            }
+        }
+
+        return smallest;
     }
 
     private Actor getSmallestMinWidth() {
@@ -198,16 +200,17 @@ public class CollapsibleGroup extends WidgetGroup {
         return largest;
     }
 
-    private Actor getFittest(boolean horizontal, float maxLength) {
-        float largestLength = -Float.MAX_VALUE;
+    private Actor getFittest(float maxWidth, float maxHeight) {
+        float largestWidth = -Float.MAX_VALUE;
+        float largestHeight = -Float.MAX_VALUE;
         Actor largest = null;
         for (Actor actor : getChildren()) {
-            float actorLength;
-            if (horizontal) actorLength = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
-            else actorLength = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+            float actorWidth = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
+            float actorHeight = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
 
-            if (actorLength <= maxLength && actorLength > largestLength) {
-                largestLength = actorLength;
+            if (actorWidth <= maxWidth && actorHeight <= maxHeight && actorWidth > largestWidth && actorHeight > largestHeight) {
+                largestWidth = actorWidth;
+                largestHeight = actorHeight;
                 largest = actor;
             }
         }

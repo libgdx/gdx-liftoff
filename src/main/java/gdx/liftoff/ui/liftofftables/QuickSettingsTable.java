@@ -1,4 +1,4 @@
-package gdx.liftoff.ui.tables;
+package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -33,13 +33,13 @@ public class QuickSettingsTable extends LiftoffTable {
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> root.transitionTable(root.completeTable));
+        onChange(textButton, () -> root.transitionTable(root.completeTable, true));
 
         table.row();
         textButton = new TextButton(prop.getProperty("quickCancel"), skin);
         table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> root.transitionTable(root.landingTable));
+        onChange(textButton, () -> root.transitionTable(root.landingTable, false));
     }
 
     @Override

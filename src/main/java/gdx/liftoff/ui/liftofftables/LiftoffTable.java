@@ -1,4 +1,4 @@
-package gdx.liftoff.ui.tables;
+package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 

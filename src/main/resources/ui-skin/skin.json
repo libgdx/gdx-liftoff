@@ -819,6 +819,66 @@
 		],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"pop-dialog-fullscreen-10": {
+		"region": "pop-dialog-fullscreen",
+		"horizontalStretchAreas": [ 12, 41 ],
+		"verticalStretchAreas": [ 12, 41 ],
+		"tiling": false,
+		"minWidth": 54,
+		"minHeight": 55,
+		"rightWidth": 12,
+		"leftWidth": 12,
+		"bottomHeight": 11,
+		"topHeight": 12,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"scroll-horizontal-fullscreen-10": {
+		"region": "scroll-horizontal-fullscreen",
+		"horizontalStretchAreas": [ 1, 21 ],
+		"verticalStretchAreas": [ 4, 4 ],
+		"tiling": false,
+		"minWidth": 23,
+		"minHeight": 9,
+		"rightWidth": 0,
+		"leftWidth": 0,
+		"bottomHeight": 0,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"scroll-vertical-fullscreen-10": {
+		"region": "scroll-vertical-fullscreen",
+		"horizontalStretchAreas": [ 4, 4 ],
+		"verticalStretchAreas": [ 2, 21 ],
+		"tiling": false,
+		"minWidth": 9,
+		"minHeight": 24,
+		"rightWidth": 0,
+		"leftWidth": 0,
+		"bottomHeight": 0,
+		"topHeight": 0,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -950,6 +1010,10 @@
 	"default": {
 		"hScrollKnob": "scroll-horizontal-10",
 		"vScrollKnob": "scroll-vertical-10"
+	},
+	"fullscreen": {
+		"hScrollKnob": "scroll-horizontal-fullscreen-10",
+		"vScrollKnob": "scroll-vertical-fullscreen-10"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
@@ -1065,6 +1129,10 @@
 		"background": "pop-dialog-10",
 		"titleFont": "font-label",
 		"stageBackground": "stage-bg"
+	},
+	"fullscreen": {
+		"background": "pop-dialog-fullscreen-10",
+		"titleFont": "font-label"
 	}
 }
 }

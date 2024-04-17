@@ -1,4 +1,4 @@
-package gdx.liftoff.ui.tables;
+package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -110,7 +110,7 @@ public class LandingTable extends LiftoffTable {
         table.add(textButton).fillX().space(20);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
-        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable));
+        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable, true));
 
         //begin small vertical group
         table = new Table();
@@ -128,7 +128,7 @@ public class LandingTable extends LiftoffTable {
         table.add(textButton).space(20);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
-        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable));
+        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable, true));
         //end vertical groups
 
         row();
