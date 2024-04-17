@@ -1,5 +1,6 @@
 package gdx.liftoff.data.platforms
 
+import com.github.tommyettinger.iconizer.Iconizer
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.project.Project
@@ -25,16 +26,22 @@ class Android : Platform {
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
-    addCopiedFile(project, "ic_launcher-web.png")
     addCopiedFile(project, "proguard-rules.pro")
     addCopiedFile(project, "project.properties")
-    addCopiedFile(project, "res", "drawable-hdpi", "ic_launcher.png")
-    addCopiedFile(project, "res", "drawable-mdpi", "ic_launcher.png")
-    addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
-    addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
-    addCopiedFile(project, "res", "drawable-xxxhdpi", "ic_launcher.png")
-    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
-    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
+
+    val iconizer = Iconizer()
+    val hash = Iconizer.scramble(project.basic.rootPackage, project.basic.name)
+
+    addGeneratedImageFile(project, iconizer.generate(48, 48, hash), "res", "drawable-mdpi", "ic_launcher.png")
+    addGeneratedImageFile(project, iconizer.generate(72, 72, hash), "res", "drawable-hdpi", "ic_launcher.png")
+    addGeneratedImageFile(project, iconizer.generate(96, 96, hash), "res", "drawable-xhdpi", "ic_launcher.png")
+    addGeneratedImageFile(project, iconizer.generate(144, 144, hash), "res", "drawable-xxhdpi", "ic_launcher.png")
+    addGeneratedImageFile(project, iconizer.generate(192, 192, hash), "res", "drawable-xxxhdpi", "ic_launcher.png")
+    addGeneratedImageFile(project, iconizer.generate(512, 512, hash), "ic_launcher-web.png")
+
+    // We really can't generate these vector images easily.
+//    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
+//    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
     addCopiedFile(project, "res", "values", "color.xml")
     addCopiedFile(project, "res", "values", "styles.xml")
 

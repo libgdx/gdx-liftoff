@@ -83,6 +83,8 @@ dependencies {
   implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
 
   implementation "org.slf4j:slf4j-nop:2.0.5"
+
+  implementation "com.github.tommyettinger:iconizer-gdx:$iconizerVersion"
 }
 
 tasks.register('sample', JavaExec) {

@@ -15,7 +15,6 @@ import com.github.czyzby.lml.annotation.LmlActor
 import com.github.czyzby.lml.parser.action.ActionContainer
 import com.kotcrab.vis.ui.widget.Tooltip
 import gdx.liftoff.config.inject
-import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.project.ProjectLogger
 import gdx.liftoff.views.MainView
@@ -50,43 +49,43 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
   override fun doBeforeShow(dialog: Window) {
     dialog.invalidate()
-    threadPool.execute {
-      try {
-        logNls("copyStart")
-        val project = mainView.createProject()
-        logNls("generationStart")
-        project.generate()
-        logNls("copyEnd")
-        mainView.revalidateForm()
-        project.includeGradleWrapper(this)
-        logNls("generationEnd")
-        logAlerts(project)
-      } catch (exception: Exception) {
-        log(exception.javaClass.name + ": " + exception.message)
-        exception.stackTrace.forEach { log("  at $it") }
-        exception.printStackTrace()
-        logNls("generationFail")
-      } finally {
-        buttons.forEach { it.isDisabled = false }
-      }
+//    threadPool.execute {
+    try {
+      logNls("copyStart")
+      val project = mainView.createProject()
+      logNls("generationStart")
+      project.generate()
+      logNls("copyEnd")
+      mainView.revalidateForm()
+      project.includeGradleWrapper(this)
+      logNls("generationEnd")
+      logAlerts(project)
+    } catch (exception: Exception) {
+      log(exception.javaClass.name + ": " + exception.message)
+      exception.stackTrace.forEach { log("  at $it") }
+      exception.printStackTrace()
+      logNls("generationFail")
+    } finally {
+      buttons.forEach { it.isDisabled = false }
     }
+//    }
 
-    threadPool.execute {
-      try {
-        val findIntellij = if (UIUtils.isWindows) arrayListOf("where.exe", "idea") else arrayListOf("which", "idea")
+//    threadPool.execute {
+    try {
+      val findIntellij = if (UIUtils.isWindows) arrayListOf("where.exe", "idea") else arrayListOf("which", "idea")
 
-        val process = ProcessBuilder(findIntellij).start()
-        if (process.waitFor() != 0) {
-          throw Exception("IntelliJ not found")
-        }
-
-        intellijPath = process.inputStream.bufferedReader().readLine()
-        ideaButton.isDisabled = false
-      } catch (e: Exception) {
-        Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
-        ideaButton.isDisabled = true
+      val process = ProcessBuilder(findIntellij).start()
+      if (process.waitFor() != 0) {
+        throw Exception("IntelliJ not found")
       }
+
+      intellijPath = process.inputStream.bufferedReader().readLine()
+      ideaButton.isDisabled = false
+    } catch (e: Exception) {
+      Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
+      ideaButton.isDisabled = true
     }
+//    }
   }
 
   override fun logNls(bundleLine: String) = log(locale.i18nBundle.get(bundleLine))
@@ -114,7 +113,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
   }
 
   @LmlAction("openIdea")
-  public fun openIdea() {
+  fun openIdea() {
     ProcessBuilder(intellijPath, ".").directory(mainView.getDestination().file()).start()
   }
 }
