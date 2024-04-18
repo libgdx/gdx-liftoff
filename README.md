@@ -101,8 +101,12 @@ font that the skin uses (under SIL OFL license).
 Other project contributors include [@Mr00Anderson](https://github.com/Mr00Anderson), [@lyze237](https://github.com/lyze237),
 [@metaphore](https://github.com/metaphore) (again!), and [@payne911](https://github.com/payne911).
 People who haven't directly contributed code have still helped a lot by spending their time to test on platforms
-like macOS and iOS;[@JojoIce](https://github.com/JojoIce) is one of several people who made a difference regarding iOS. And of course,
+like macOS and iOS; [@JojoIce](https://github.com/JojoIce) is one of several people who made a difference regarding iOS. And of course,
 many thanks go to all the early adopters for putting up with any partially-working releases early on!
+
+The randomized icons chopped up and used for Android projects come from the [OpenMoji](https://openmoji.org) project.
+If you want to use these icons in a less-mangled format, there's
+[openmoji-atlas](https://github.com/tommyettinger/openmoji-atlas) to access these emoji from libGDX conveniently.
 
 ---
 

@@ -24,7 +24,7 @@ jobs:
       - name: Save gdx-liftoff version
         run: echo "LIFTOFF_VERSION=$(cat version.txt)" >> $GITHUB_ENV
       - name: Publish default sample
-        uses: JamesIves/github-pages-deploy-action@daa009f998b3c55001be245134f4f91e640955fd
+        uses: JamesIves/github-pages-deploy-action@ec9c88baef04b842ca6f0a132fd61c762aa6c1b0
         with:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main
@@ -36,7 +36,7 @@ jobs:
       - name: Generate Kotlin sample
         run: ./gradlew sample --args="kotlin"
       - name: Publish Kotlin sample
-        uses: JamesIves/github-pages-deploy-action@daa009f998b3c55001be245134f4f91e640955fd
+        uses: JamesIves/github-pages-deploy-action@ec9c88baef04b842ca6f0a132fd61c762aa6c1b0
         with:
           token: ${{ secrets.DEMO_PUSH }}
           branch: main

@@ -222,3 +222,19 @@ goes back almost to 8.3. I'm not exactly clear on the nature of the incompatibil
 fixed in the next major Gradle release (8.8 or 9.0). Because that won't release for some time, MOE has been temporarily
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
 yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually. 
+
+### In 1.12.1.8 and later, the default icons for Android projects look terrible!
+
+This is all according to plan. The plan being, you should never be submitting an app to the Google Play Store with any
+default title, default description, or default icon, because that makes you look like a duplicate of any other app with
+those default properties. And duplicate apps get **suspended for plagiarism!** In order to at least avoid ever producing
+an identical icon, there are roughly 4 billion possible randomized icons that can be generated now. This involves
+randomly choosing some colors and two icons from [OpenMoji](https://openmoji.org), then chopping the icons in half,
+using a left and a right half, and chucking those icons into the Android app section, all poorly resized except for the
+hdpi one.
+
+The iOS project doesn't currently use a randomized icon because it hasn't been reported to be a problem there, yet.
+If it does become a good idea to randomize iOS icons, it won't be hard to make them random, too.
+
+In short, you should really pay attention to your icon when you are submitting to Google Play Store, but in case you
+don't one time, the awful random icon should not be currently in use by any actual apps. 
