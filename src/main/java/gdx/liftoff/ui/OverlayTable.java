@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.ray3k.stripe.DualCollapsibleGroup;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
@@ -28,6 +29,7 @@ public class OverlayTable extends Table {
         onChange(button, () -> {
             root.fadeOutTable();
             FullscreenDialog.show();
+            Main.maximizeWindow();
         });
 
         container = new Container();

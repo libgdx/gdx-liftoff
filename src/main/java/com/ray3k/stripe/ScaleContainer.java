@@ -22,6 +22,8 @@ public class ScaleContainer extends WidgetGroup {
     private Actor actor;
     private Value prefWidth = Value.prefWidth;
     private Value prefHeight = Value.prefHeight;
+    private Value minWidth = Value.zero;
+    private Value minHeight = Value.zero;
     private Scaling scaling;
     private int align = Align.center;
     private boolean clip;
@@ -91,14 +93,50 @@ public class ScaleContainer extends WidgetGroup {
         return super.hit(x, y, touchable);
     }
 
+    public void setMinWidth(Value minWidth) {
+        this.minWidth = minWidth;
+    }
+
+    public void setMinHeight(Value minHeight) {
+        this.minHeight = minHeight;
+    }
+
+    public void setMinSize(Value minWidth, Value minHeight) {
+        this.minWidth = minWidth;
+        this.minHeight = minHeight;
+    }
+
+    public void setMinSize(Value minSize) {
+        this.minWidth = minSize;
+        this.minHeight = minSize;
+    }
+
+    public void setMinWidth(float minWidth) {
+        this.minWidth = Fixed.valueOf(minWidth);
+    }
+
+    public void setMinHeight(float minHeight) {
+        this.minHeight = Fixed.valueOf(minHeight);
+    }
+
+    public void setMinSize(float minWidth, float minHeight) {
+        this.minWidth = Fixed.valueOf(minWidth);
+        this.minHeight = Fixed.valueOf(minHeight);
+    }
+
+    public void setMinSize(float minSize) {
+        this.minWidth = Fixed.valueOf(minSize);
+        this.minHeight = Fixed.valueOf(minSize);
+    }
+
     @Override
     public float getMinWidth() {
-        return 0;
+        return minWidth.get(actor);
     }
 
     @Override
     public float getMinHeight() {
-        return 0;
+        return minHeight.get(actor);
     }
 
     public void setPrefWidth(Value prefWidth) {

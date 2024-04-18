@@ -1,12 +1,12 @@
 package gdx.liftoff.ui.dialogs;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
+import com.ray3k.stripe.DualCollapsibleGroup;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
 
@@ -21,10 +21,28 @@ public class FullscreenDialog extends PopTable {
         setFillParent(true);
         pad(20);
 
+        DualCollapsibleGroup dualCollapsibleGroup = new DualCollapsibleGroup();
+        add(dualCollapsibleGroup).grow();
+
         Table contentTable = new Table();
         ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
         scaleContainer.setPrefSize(1920, 1080);
-        add(scaleContainer).grow();
+        scaleContainer.setMinSize(1920, 1080);
+        dualCollapsibleGroup.addActor(scaleContainer);
+        createPanels(contentTable);
+
+        contentTable = new Table();
+        createPanels(contentTable);
+
+        ScrollPane scrollPane = new ScrollPane(contentTable, skin);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setFlickScroll(false);
+        dualCollapsibleGroup.addActor(scrollPane);
+        addScrollFocusListener(scrollPane);
+    }
+
+    private void createPanels(Table contentTable) {
+
 
         contentTable.defaults().space(SPACING);
         Table table = new Table();
@@ -42,6 +60,7 @@ public class FullscreenDialog extends PopTable {
         onChange(button, () -> {
             hide();
             root.fadeInTable();
+            Main.restoreWindow();
         });
 
         contentTable.row();
@@ -61,7 +80,7 @@ public class FullscreenDialog extends PopTable {
         table = new Table();
         contentTable.add(table);
 
-        table.defaults().space(SPACING).uniformX().top().fillY();
+        table.defaults().space(SPACING).uniformX().top().fillY().maxHeight(500);
         AddOnsPanel addOnsPanel = new AddOnsPanel();
         table.add(addOnsPanel);
 

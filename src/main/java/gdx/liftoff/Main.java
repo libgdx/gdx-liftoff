@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -29,6 +30,7 @@ import com.ray3k.stripe.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import org.lwjgl.PointerBuffer;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
@@ -289,5 +291,15 @@ public class Main extends ApplicationAdapter {
         } finally {
             memFree(pathPointer);
         }
+    }
+
+    public static void maximizeWindow() {
+        Lwjgl3Graphics g = (Lwjgl3Graphics) Gdx.graphics;
+        g.getWindow().maximizeWindow();
+    }
+
+    public static void restoreWindow() {
+        Lwjgl3Graphics g = (Lwjgl3Graphics) Gdx.graphics;
+        g.getWindow().restoreWindow();
     }
 }

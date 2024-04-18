@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
 
@@ -37,6 +38,7 @@ public class FullscreenCompleteDialog extends PopTable {
         onChange(button, () -> {
             hide();
             root.fadeInTable();
+            Main.restoreWindow();
         });
 
         contentTable.row();
