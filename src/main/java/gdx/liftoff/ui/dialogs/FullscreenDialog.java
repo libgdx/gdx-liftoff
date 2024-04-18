@@ -1,7 +1,7 @@
 package gdx.liftoff.ui.dialogs;
 
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
@@ -10,6 +10,7 @@ import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
 public class FullscreenDialog extends PopTable {
@@ -38,7 +39,10 @@ public class FullscreenDialog extends PopTable {
         Button button = new Button(skin, "restore");
         table.add(button).expandX().right().top();
         addHandListener(button);
-        onChange(button, this::hide);
+        onChange(button, () -> {
+            hide();
+            root.fadeInTable();
+        });
 
         contentTable.row();
         table = new Table();
@@ -80,21 +84,10 @@ public class FullscreenDialog extends PopTable {
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         contentTable.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, this::hide);
-    }
-
-    @Override
-    public void show(Stage stage, Action action) {
-        super.show(stage, action);
-//        stage.setViewport(fitViewport);
-//        fitViewport.apply();
-//        fitViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-    }
-
-    @Override
-    public void hide(Action action) {
-        super.hide(action);
-//        stage.setViewport(screenViewport);
+        onChange(textButton, () -> hide(sequence(
+            fadeOut(.3f),
+            run(FullscreenCompleteDialog::show)
+        )));
     }
 
     public static void show() {

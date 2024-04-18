@@ -107,4 +107,21 @@ public class RootTable extends Table {
             })
         ));
     }
+
+    public void fadeOutTable() {
+        Table table = tables.get(tableIndex);
+        table.addAction(sequence(
+            fadeOut(.5f),
+            visible(false)
+        ));
+    }
+
+    public void fadeInTable() {
+        Table table = tables.get(tableIndex);
+        table.addAction(sequence(
+            delay(.1f),
+            visible(true),
+            fadeIn(.5f)
+        ));
+    }
 }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,17 +20,14 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
-import com.ray3k.stripe.PopTable.PopTableStyle;
-import gdx.liftoff.ui.MaximizeButtonTable;
+import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
-import gdx.liftoff.views.MainView;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
@@ -49,7 +45,7 @@ public class Main extends ApplicationAdapter {
     public static FitViewport fitViewport;
     public static SpriteBatch batch;
     public static RootTable root;
-    public static MaximizeButtonTable maximizeButtonTable;
+    public static OverlayTable overlayTable;
     public static SystemCursorListener handListener;
     public static SystemCursorListener ibeamListener;
     public static ScrollFocusListener scrollFocusListener;
@@ -106,9 +102,9 @@ public class Main extends ApplicationAdapter {
         root.setFillParent(true);
         stage.addActor(root);
 
-        maximizeButtonTable = new MaximizeButtonTable();
-        maximizeButtonTable.setFillParent(true);
-        stage.addActor(maximizeButtonTable);
+        overlayTable = new OverlayTable();
+        overlayTable.setFillParent(true);
+        stage.addActor(overlayTable);
     }
 
     @Override

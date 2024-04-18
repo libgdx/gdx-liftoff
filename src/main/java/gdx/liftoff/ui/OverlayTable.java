@@ -8,8 +8,8 @@ import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
 
-public class MaximizeButtonTable extends Table {
-    public MaximizeButtonTable() {
+public class OverlayTable extends Table {
+    public OverlayTable() {
         top().right().pad(10);
         DualCollapsibleGroup dualCollapsibleGroup = new DualCollapsibleGroup();
         add(dualCollapsibleGroup);
@@ -25,7 +25,10 @@ public class MaximizeButtonTable extends Table {
         Button button = new Button(skin, "maximize");
         table.add(button);
         addHandListener(button);
-        onChange(button, FullscreenDialog::show);
+        onChange(button, () -> {
+            root.fadeOutTable();
+            FullscreenDialog.show();
+        });
 
         container = new Container();
         dualCollapsibleGroup.addActor(container);
