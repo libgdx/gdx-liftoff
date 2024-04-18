@@ -50,7 +50,7 @@ public class FullscreenCompleteDialog extends PopTable {
         table.add(completePanel);
 
         table.row();
-        CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel();
+        CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this);
         table.add(completeButtonsPanel);
 
         //initial setup
