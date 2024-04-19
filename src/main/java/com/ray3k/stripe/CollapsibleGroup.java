@@ -16,6 +16,9 @@ public class CollapsibleGroup extends WidgetGroup {
         HORIZONTAL, VERTICAL, BOTH
     }
 
+    /**
+     * Which axis should the collapse size should be considered when determining minimum size
+     */
     private CollapseType collapseType = CollapseType.HORIZONTAL;
 
     /**
