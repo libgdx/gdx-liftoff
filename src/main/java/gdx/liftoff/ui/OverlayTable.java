@@ -3,7 +3,8 @@ package gdx.liftoff.ui;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.ray3k.stripe.DualCollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
@@ -12,7 +13,7 @@ import static gdx.liftoff.Main.*;
 public class OverlayTable extends Table {
     public OverlayTable() {
         top().right().pad(10);
-        DualCollapsibleGroup dualCollapsibleGroup = new DualCollapsibleGroup();
+        CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
         add(dualCollapsibleGroup);
 
         Container container = new Container();

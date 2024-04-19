@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
 import static gdx.liftoff.Main.prop;
 import static gdx.liftoff.Main.skin;
@@ -15,7 +16,7 @@ public class GeneratingPanel extends Table implements Panel {
         add(image);
 
         row();
-        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
+        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         add(collapsibleGroup).growX().spaceTop(30);
 
         Label label = new Label(prop.getProperty("generating"), skin, "button-big");

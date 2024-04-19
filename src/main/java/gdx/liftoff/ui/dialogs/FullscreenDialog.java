@@ -3,7 +3,8 @@ package gdx.liftoff.ui.dialogs;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
-import com.ray3k.stripe.DualCollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.Main;
@@ -21,7 +22,7 @@ public class FullscreenDialog extends PopTable {
         setFillParent(true);
         pad(20);
 
-        DualCollapsibleGroup dualCollapsibleGroup = new DualCollapsibleGroup();
+        CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
         add(dualCollapsibleGroup).grow();
 
         Table contentTable = new Table();

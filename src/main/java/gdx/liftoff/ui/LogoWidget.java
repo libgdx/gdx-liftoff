@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.Main.skin;
@@ -14,7 +15,7 @@ import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
 public class LogoWidget extends Table {
     public LogoWidget() {
-        CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(false);
+        CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         add(verticalCollapsibleGroup).minHeight(0);
 
         Container container = new Container();
@@ -30,7 +31,7 @@ public class LogoWidget extends Table {
         verticalCollapsibleGroup.addActor(container);
 
         row();
-        verticalCollapsibleGroup = new CollapsibleGroup(false);
+        verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         add(verticalCollapsibleGroup).minWidth(0).right();
 
         container = new Container();

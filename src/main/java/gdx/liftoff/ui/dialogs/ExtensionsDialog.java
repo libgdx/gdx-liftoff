@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
@@ -63,7 +64,7 @@ public class ExtensionsDialog extends PopTable  {
         //gdx-pay
         table.defaults().left().padLeft(10);
         table.row();
-        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(true);
+        CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         table.add(collapsibleGroup);
 
         TextButton textButton = new TextButton(prop.getProperty("gdxPayLink"), skin, "link");

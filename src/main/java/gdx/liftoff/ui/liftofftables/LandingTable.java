@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.ui.panels.ProjectPanel;
 import gdx.liftoff.ui.panels.SocialPanel;
 
@@ -47,7 +48,7 @@ public class LandingTable extends LiftoffTable {
         addTooltip(logoImage, Align.top, prop.getProperty("logoTip"));
 
         table.row();
-        CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(false);
+        CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         table.add(verticalCollapsibleGroup).minWidth(0);
 
         table = new Table();
@@ -83,14 +84,14 @@ public class LandingTable extends LiftoffTable {
         add(projectPanel).growX();
 
         row();
-        buttonsCollapsibleGroup = new CollapsibleGroup(false);
+        buttonsCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         add(buttonsCollapsibleGroup);
 
         //begin big vertical group
         table = new Table();
         buttonsCollapsibleGroup.addActor(table);
 
-        CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(true);
+        CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         table.add(horizontalCollapsibleGroup);
 
         TextButton textButton = new TextButton(prop.getProperty("createNewProject"), skin, "big");

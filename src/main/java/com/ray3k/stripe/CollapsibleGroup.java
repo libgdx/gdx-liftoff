@@ -8,26 +8,28 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 /**
  * A layout widget that chooses the largest child to display that can fit in the available space of its given bounds.
  * For example, imagine this widget is set to horizontal = true and it has two children with minWidths 100 and 200. If
- * the CollapsibleGroup widget's width is set to 300, the child with minWidth 200 is displayed. If the widget's width 
+ * the CollapsibleGroup widget's width is set to 300, the child with minWidth 200 is displayed. If the widget's width
  * is set to 150, the child with minWidth 100 is displayed. Widgets too large to display are set to visible = false.
  */
 public class CollapsibleGroup extends WidgetGroup {
-    /**
-     * Set to true if the children's minimum size will be measured horizontally
-     **/
-    private boolean horizontal;
+    public enum CollapseType {
+        HORIZONTAL, VERTICAL, BOTH
+    }
+
+    private CollapseType collapseType = CollapseType.HORIZONTAL;
+
     /**
      * The currently visible actor as determined by its minimum size
      **/
     private Actor visibleActor;
 
-    public CollapsibleGroup(boolean horizontal) {
-        this.horizontal = horizontal;
+    public CollapsibleGroup(CollapseType collapseType) {
+        this.collapseType = collapseType;
     }
 
-    public CollapsibleGroup(boolean horizontal, Actor... actors) {
+    public CollapsibleGroup(CollapseType collapseType, Actor... actors) {
         super(actors);
-        this.horizontal = horizontal;
+        this.collapseType = collapseType;
     }
 
     @Override
@@ -42,36 +44,89 @@ public class CollapsibleGroup extends WidgetGroup {
             child.setSize(getWidth(), getHeight());
         }
 
-        visibleActor = getFittest(horizontal, horizontal ? getWidth() : getHeight());
-        if (visibleActor == null) visibleActor = horizontal ? getSmallestMinWidth() : getSmallestMinHeight();
+        switch (collapseType) {
+            case HORIZONTAL:
+                visibleActor = getFittestHorizontal(getWidth());
+                if (visibleActor == null) visibleActor = getSmallestMinWidth();
+                break;
+            case VERTICAL:
+                visibleActor = getFittestVertical(getHeight());
+                if (visibleActor == null) visibleActor = getSmallestMinHeight();
+                break;
+            case BOTH:
+                visibleActor = getFittestBoth(getWidth(), getHeight());
+                if (visibleActor == null) visibleActor = getSmallestMinSize();
+                break;
+        }
+
         if (visibleActor == null) return;
         visibleActor.setVisible(true);
     }
 
     @Override
     public float getMinWidth() {
-        Actor actor = horizontal ? getSmallestMinWidth() : getLargestMinWidth();
+        Actor actor = null;
+        switch (collapseType) {
+            case HORIZONTAL:
+            case BOTH:
+                actor = getSmallestMinWidth();
+                break;
+            case VERTICAL:
+                actor = getLargestMinWidth();
+                break;
+        }
+
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
     }
 
     @Override
     public float getMinHeight() {
-        Actor actor = horizontal ? getLargestMinHeight() : getSmallestMinHeight();
+        Actor actor = null;
+        switch (collapseType) {
+            case HORIZONTAL:
+                actor = getLargestMinHeight();
+                break;
+            case VERTICAL:
+            case BOTH:
+                actor = getSmallestMinHeight();
+                break;
+        }
+
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
     }
 
     @Override
     public float getPrefWidth() {
-        Actor actor = horizontal ? getLargestPrefWidth() : getLargestPrefHeight();
+        Actor actor = null;
+        switch (collapseType) {
+            case HORIZONTAL:
+            case BOTH:
+                actor = getLargestPrefWidth();
+                break;
+            case VERTICAL:
+                actor = getLargestPrefHeight();
+                break;
+        }
+
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getPrefWidth() : actor.getWidth();
     }
 
     @Override
     public float getPrefHeight() {
-        Actor actor = horizontal ? getLargestPrefWidth() : getLargestPrefHeight();
+        Actor actor = null;
+        switch (collapseType) {
+            case HORIZONTAL:
+                actor = getLargestPrefWidth();
+                break;
+            case VERTICAL:
+            case BOTH:
+                actor = getLargestPrefHeight();
+                break;
+        }
+
         if (actor == null) return 0;
         return actor instanceof Layout ? ((Layout) actor).getPrefHeight() : actor.getHeight();
     }
@@ -101,6 +156,24 @@ public class CollapsibleGroup extends WidgetGroup {
             float height = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
             if (height < smallestHeight) {
                 smallestHeight = height;
+                smallest = actor;
+            }
+        }
+
+        return smallest;
+    }
+
+    private Actor getSmallestMinSize() {
+        if (getChildren().size == 0) return null;
+
+        float smallestSize = Float.MAX_VALUE;
+        Actor smallest = getChildren().first();
+        for (Actor actor : getChildren()) {
+            float width = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
+            float height = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+            float size = width * height;
+            if (size < smallestSize) {
+                smallestSize = size;
                 smallest = actor;
             }
         }
@@ -204,16 +277,47 @@ public class CollapsibleGroup extends WidgetGroup {
         return largest;
     }
 
-    private Actor getFittest(boolean horizontal, float maxLength) {
-        float largestLength = -Float.MAX_VALUE;
+    private Actor getFittestHorizontal(float maxWidth) {
+        float largestWidth = -Float.MAX_VALUE;
         Actor largest = null;
         for (Actor actor : getChildren()) {
-            float actorLength;
-            if (horizontal) actorLength = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
-            else actorLength = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+            float actorWidth = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
 
-            if (actorLength <= maxLength && actorLength > largestLength) {
-                largestLength = actorLength;
+            if (actorWidth <= maxWidth && actorWidth > largestWidth) {
+                largestWidth = actorWidth;
+                largest = actor;
+            }
+        }
+
+        return largest;
+    }
+
+    private Actor getFittestVertical(float maxHeight) {
+        float largestHeight = -Float.MAX_VALUE;
+        Actor largest = null;
+        for (Actor actor : getChildren()) {
+            float actorHeight = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+
+            if (actorHeight <= maxHeight && actorHeight > largestHeight) {
+                largestHeight = actorHeight;
+                largest = actor;
+            }
+        }
+
+        return largest;
+    }
+
+    private Actor getFittestBoth(float maxWidth, float maxHeight) {
+        float largestWidth = -Float.MAX_VALUE;
+        float largestHeight = -Float.MAX_VALUE;
+        Actor largest = null;
+        for (Actor actor : getChildren()) {
+            float actorWidth = actor instanceof Layout ? ((Layout) actor).getMinWidth() : actor.getWidth();
+            float actorHeight = actor instanceof Layout ? ((Layout) actor).getMinHeight() : actor.getHeight();
+
+            if (actorWidth <= maxWidth && actorHeight <= maxHeight && actorWidth > largestWidth && actorHeight > largestHeight) {
+                largestWidth = actorWidth;
+                largestHeight = actorHeight;
                 largest = actor;
             }
         }
