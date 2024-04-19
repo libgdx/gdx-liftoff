@@ -1,21 +1,18 @@
 package gdx.liftoff.ui.dialogs;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.Main;
-import gdx.liftoff.ui.LogoWidget;
-import gdx.liftoff.ui.panels.*;
+import gdx.liftoff.ui.panels.CompleteButtonsFullscreenPanel;
+import gdx.liftoff.ui.panels.CompletePanel;
+import gdx.liftoff.ui.panels.GeneratingPanel;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.touchable;
 import static gdx.liftoff.Main.*;
 
 public class FullscreenCompleteDialog extends PopTable {

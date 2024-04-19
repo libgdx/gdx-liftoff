@@ -42,8 +42,6 @@ public class FullscreenDialog extends PopTable {
     }
 
     private void createPanels(Table contentTable) {
-
-
         contentTable.defaults().space(SPACING);
         Table table = new Table();
         contentTable.add(table).growX();
@@ -78,9 +76,9 @@ public class FullscreenDialog extends PopTable {
 
         contentTable.row();
         table = new Table();
-        contentTable.add(table);
+        contentTable.add(table).growY();
 
-        table.defaults().space(SPACING).uniformX().top().fillY().maxHeight(500);
+        table.defaults().space(SPACING).uniformX().growY().maxHeight(500);
         AddOnsPanel addOnsPanel = new AddOnsPanel();
         table.add(addOnsPanel);
 

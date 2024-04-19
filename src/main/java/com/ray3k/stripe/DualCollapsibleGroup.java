@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 
 public class DualCollapsibleGroup extends WidgetGroup {
+    /**
+     * The currently visible actor as determined by its minimum size
+     **/
     private Actor visibleActor;
 
     @Override
