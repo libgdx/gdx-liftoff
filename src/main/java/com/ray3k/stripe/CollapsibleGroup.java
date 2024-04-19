@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 
 /**
  * A layout widget that chooses the largest child to display that can fit in the available space of its given bounds.
- * For example, imagine this widget is set to horizontal = true and it has two children with minWidths 100 and 200. If
- * the CollapsibleGroup widget's width is set to 300, the child with minWidth 200 is displayed. If the widget's width
- * is set to 150, the child with minWidth 100 is displayed. Widgets too large to display are set to visible = false.
+ * For example, imagine this widget is set to horizontal and it has two children with minWidths 100 and 200. If the
+ * CollapsibleGroup widget's width is set to 300, the child with minWidth 200 is displayed. If the widget's width is set
+ * to 150, the child with minWidth 100 is displayed. Widgets too large to display are set to visible = false.
  */
 public class CollapsibleGroup extends WidgetGroup {
     public enum CollapseType {
