@@ -40,31 +40,13 @@ public class PathsPanel extends Table implements Panel {
     }
 
     private void addField(String text) {
-        Stack stack = new Stack();
-        add(stack).growX();
-
-        Table chooseTable = new Table();
-        stack.add(chooseTable);
-
-        SmashGroup smashGroup = new SmashGroup(true);
-        smashGroup.space(20);
-        stack.add(smashGroup);
-
         TextButton browseFieldButton = new TextButton(text, skin, "field");
         browseFieldButton.getLabel().setAlignment(Align.left);
         browseFieldButton.getLabel().setEllipsis("...");
         browseFieldButton.getLabelCell().minWidth(0);
-        smashGroup.setFirstActor(browseFieldButton);
-        smashGroup.getFirstContainer().minWidth(50).prefWidth(150);
-
-        TextButton browseButton = new TextButton(prop.getProperty("browse"), skin);
-        smashGroup.setSecondActor(browseButton);
-
-        Container chooseContainer = new Container();
-        chooseContainer.setTouchable(Touchable.enabled);
-        stack.add(chooseContainer);
-        addHandListener(chooseContainer);
-        onClick(chooseContainer, () -> Main.pickDirectory(Gdx.files.absolute("C://"), new FileChooserAdapter() {
+        add(browseFieldButton).growX().minWidth(100);
+        addHandListener(browseFieldButton);
+        onChange(browseFieldButton, () -> Main.pickDirectory(Gdx.files.absolute("C://"), new FileChooserAdapter() {
             @Override
             public void canceled() {
                 super.canceled();
@@ -75,19 +57,6 @@ public class PathsPanel extends Table implements Panel {
                 super.selected(files);
             }
         }));
-        chooseContainer.addListener(new InputListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                browseButton.fire(event);
-                browseFieldButton.fire(event);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                browseButton.fire(event);
-                browseFieldButton.fire(event);
-            }
-        });
     }
 
     @Override

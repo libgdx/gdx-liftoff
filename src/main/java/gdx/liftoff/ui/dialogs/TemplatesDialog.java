@@ -20,7 +20,7 @@ import static gdx.liftoff.Main.*;
  */
 public class TemplatesDialog extends PopTable  {
     private static GlyphLayout layout = new GlyphLayout();
-    
+
     public TemplatesDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
