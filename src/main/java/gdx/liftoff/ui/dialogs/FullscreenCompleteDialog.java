@@ -15,6 +15,10 @@ import gdx.liftoff.ui.panels.GeneratingPanel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
+/**
+ * Dialog shown when in fullscreen layout mode and the user clicks the generate button. The layout scales up if the
+ * available space is larger than 1920x1080
+ */
 public class FullscreenCompleteDialog extends PopTable {
     private static final float SPACING = 30;
 

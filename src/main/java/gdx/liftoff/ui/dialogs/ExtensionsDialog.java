@@ -16,16 +16,23 @@ import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * The extensions dialog displayed when the user clicks the extensions list in the add-ons panel.
+ */
 public class ExtensionsDialog extends PopTable  {
+    private static GlyphLayout layout = new GlyphLayout();
+
     public ExtensionsDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
+        //title label
         Label label = new Label(prop.getProperty("extensions"), skin, "header");
         add(label);
 
+        //scrollable area including list of extensions and links
         row();
         Table scrollTable = new Table();
         scrollTable.pad(5);
@@ -37,6 +44,7 @@ public class ExtensionsDialog extends PopTable  {
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
+        //list of extensions
         scrollTable.defaults().left();
         Table table = new Table();
         table.left();
@@ -61,7 +69,7 @@ public class ExtensionsDialog extends PopTable  {
         label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
-        //gdx-pay
+        //gdx-pay link
         table.defaults().left().padLeft(10);
         table.row();
         CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
@@ -83,17 +91,23 @@ public class ExtensionsDialog extends PopTable  {
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
+        //OK button to close the dialog
         row();
         textButton = new TextButton("OK", skin);
         add(textButton).prefWidth(140).spaceTop(20);
         addHandListener(textButton);
-        onChange(textButton, () -> {
-            hide();
-        });
+        onChange(textButton, () -> hide());
     }
 
-    private static GlyphLayout layout = new GlyphLayout();
+    /**
+     * Convenience method that adds an extension to the given table
+     * @param table
+     * @param labelText
+     * @param description
+     * @param url
+     */
     private void addExtension(Table table, String labelText, String description, String url) {
+        //checkbox
         table.row();
         CheckBox checkBox = new CheckBox(labelText, skin);
         table.add(checkBox);
@@ -102,6 +116,7 @@ public class ExtensionsDialog extends PopTable  {
         Table subTable = new Table();
         table.add(subTable);
 
+        //description
         subTable.defaults().space(10);
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
@@ -109,12 +124,16 @@ public class ExtensionsDialog extends PopTable  {
         subTable.add(label).prefWidth(layout.width).minWidth(0);
         addLabelHighlight(checkBox, label);
 
+        //link
         Button button = new Button(skin, "external-link");
         subTable.add(button);
         addHandListener(button);
         onChange(button, () -> Gdx.net.openURI(url));
     }
 
+    /**
+     * Convenience method to display the dialog on the stage
+     */
     public static void show() {
         ExtensionsDialog dialog = new ExtensionsDialog();
         dialog.show(stage);
