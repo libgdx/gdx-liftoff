@@ -9,6 +9,9 @@ import com.ray3k.stripe.PopTable;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
+/**
+ * Dialog shown when the user clicks the languages list in the add-ons panel
+ */
 public class LanguagesDialog extends PopTable  {
     public LanguagesDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -16,9 +19,11 @@ public class LanguagesDialog extends PopTable  {
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
+        //title
         Label label = new Label(prop.getProperty("languages"), skin, "header");
         add(label);
 
+        //scrollable area includes languages and links
         row();
         Table scrollTable = new Table();
         scrollTable.pad(5);
@@ -35,64 +40,24 @@ public class LanguagesDialog extends PopTable  {
         table.left();
         scrollTable.add(table).spaceTop(10).growX();
 
+        //language label
         table.defaults().space(10);
         label = new Label(prop.getProperty("language"), skin, "field");
         table.add(label);
 
+        //version label
         label = new Label(prop.getProperty("languageVersion"), skin, "field");
         table.add(label);
 
         table.columnDefaults(0).left();
         table.columnDefaults(1).width(175);
 
-        //groovy
-        table.row();
-        CheckBox checkBox = new CheckBox(prop.getProperty("groovy"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
+        //languages
+        addLanguage(table, "groovy");
+        addLanguage(table, "kotlin");
+        addLanguage(table, "scala");
 
-        TextField textField = new TextField(groovyDefaultVersion, skin);
-        textField.setAlignment(Align.center);
-        table.add(textField);
-        addIbeamListener(textField);
-
-        Button button = new Button(skin, "external-link");
-        table.add(button);
-        addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(prop.getProperty("groovyUrl")));
-
-        //kotlin
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("kotlin"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        textField = new TextField(kotlinDefaultVersion, skin);
-        textField.setAlignment(Align.center);
-        table.add(textField);
-        addIbeamListener(textField);
-
-        button = new Button(skin, "external-link");
-        table.add(button);
-        addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(prop.getProperty("kotlinUrl")));
-
-        //scala
-        table.row();
-        checkBox = new CheckBox(prop.getProperty("scala"), skin);
-        table.add(checkBox);
-        addHandListener(checkBox);
-
-        textField = new TextField(scalaDefaultVersion, skin);
-        textField.setAlignment(Align.center);
-        table.add(textField);
-        addIbeamListener(textField);
-
-        button = new Button(skin, "external-link");
-        table.add(button);
-        addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(prop.getProperty("scalaUrl")));
-
+        //languages description
         scrollTable.row();
         label = new Label(prop.getProperty("languagesPrompt"), skin, "description");
         label.setWrap(true);
@@ -124,13 +89,34 @@ public class LanguagesDialog extends PopTable  {
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("otherJvmUrl")));
 
+        //ok button
         row();
         textButton = new TextButton("OK", skin);
         add(textButton).prefWidth(140).spaceTop(20);
         addHandListener(textButton);
-        onChange(textButton, () -> {
-            hide();
-        });
+        onChange(textButton, this::hide);
+    }
+
+    /**
+     * Convenience method to add a language to the table
+     * @param table
+     * @param name
+     */
+    private void addLanguage(Table table, String name) {
+        table.row();
+        CheckBox checkBox = new CheckBox(prop.getProperty(name), skin);
+        table.add(checkBox);
+        addHandListener(checkBox);
+
+        TextField textField = new TextField(groovyDefaultVersion, skin);
+        textField.setAlignment(Align.center);
+        table.add(textField);
+        addIbeamListener(textField);
+
+        Button button = new Button(skin, "external-link");
+        table.add(button);
+        addHandListener(button);
+        onChange(button, () -> Gdx.net.openURI(prop.getProperty(name + "Url")));
     }
 
     public static void show() {

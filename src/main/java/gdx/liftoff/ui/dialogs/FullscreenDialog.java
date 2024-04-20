@@ -14,6 +14,10 @@ import gdx.liftoff.ui.panels.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
+/**
+ * Dialog shown when in fullscreen layout mode. This includes all the panels at once. The layout scales up if the
+ * available space is larger than 1920x1080.
+ */
 public class FullscreenDialog extends PopTable {
     private static final float SPACING = 30;
 
@@ -22,6 +26,7 @@ public class FullscreenDialog extends PopTable {
         setFillParent(true);
         pad(20);
 
+        //collapsible group that alternates between screen scaled scrollpane and a fit scaled container based on available space
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
         add(dualCollapsibleGroup).grow();
 
@@ -48,11 +53,14 @@ public class FullscreenDialog extends PopTable {
         contentTable.add(table).growX();
         table.setTransform(true);
 
+        //empty cell for equal spacing with the restore button
         table.add().expandX();
 
+        //logo
         LogoWidget logoWidget = new LogoWidget();
         table.add(logoWidget).minHeight(Value.prefHeight);
 
+        //restore button
         Button button = new Button(skin, "restore");
         table.add(button).expandX().right().top();
         addHandListener(button);
@@ -66,10 +74,12 @@ public class FullscreenDialog extends PopTable {
         table = new Table();
         contentTable.add(table);
 
+        //new project title
         table.defaults().space(10);
         Label label = new Label(prop.getProperty("newProject"), skin, "header");
         table.add(label);
 
+        //new project panel
         table.row();
         ProjectPanel projectPanel = new ProjectPanel();
         table.add(projectPanel);
@@ -79,10 +89,12 @@ public class FullscreenDialog extends PopTable {
         table = new Table();
         contentTable.add(table).growY();
 
+        //add-ons panel
         table.defaults().space(SPACING).uniformX().growY().maxHeight(500);
         AddOnsPanel addOnsPanel = new AddOnsPanel();
         table.add(addOnsPanel);
 
+        //third-party panel
         ThirdPartyPanel thirdPartyPanel = new ThirdPartyPanel();
         table.add(thirdPartyPanel);
 
@@ -90,14 +102,17 @@ public class FullscreenDialog extends PopTable {
         subTable.top();
         table.add(subTable);
 
+        //settings panel
         subTable.defaults().space(20);
         SettingsPanel settingsPanel = new SettingsPanel();
         subTable.add(settingsPanel);
 
+        //paths panel
         subTable.row();
         PathsPanel pathsPanel = new PathsPanel();
         subTable.add(pathsPanel);
 
+        //generate button
         contentTable.row();
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         contentTable.add(textButton);

@@ -15,16 +15,23 @@ import com.ray3k.stripe.PopTable;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * The dialog shown when the user clicks the template button in the add-ons panel
+ */
 public class TemplatesDialog extends PopTable  {
+    private static GlyphLayout layout = new GlyphLayout();
+    
     public TemplatesDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
         pad(20).padTop(30).padBottom(30);
 
+        //title
         Label label = new Label(prop.getProperty("templates"), skin, "header");
         add(label);
 
+        //scrollable area includes basic templates, third-party templates, and links
         row();
         Table scrollTable = new Table();
         scrollTable.pad(5);
@@ -44,12 +51,14 @@ public class TemplatesDialog extends PopTable  {
         table.defaults().left().space(5);
         ButtonGroup buttonGroup = new ButtonGroup();
 
+        //basic templates title
         table.row();
         label = new Label(prop.getProperty("officialTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
         table.add(label).minWidth(0).spaceBottom(10).colspan(2).growX();
         addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
+        //basic templates
         addTemplate(table, buttonGroup, prop.getProperty("classic"), prop.getProperty("classicTip"));
         addTemplate(table, buttonGroup, prop.getProperty("applicationAdapter"), prop.getProperty("applicationAdapterTip"));
         addTemplate(table, buttonGroup, prop.getProperty("applicationListener"), prop.getProperty("applicationListenerTip"));
@@ -61,6 +70,7 @@ public class TemplatesDialog extends PopTable  {
         addTemplate(table, buttonGroup, prop.getProperty("scene2dTemplate"), prop.getProperty("scene2dTemplateTip"), true);
         addTemplate(table, buttonGroup, prop.getProperty("superKoalio"), prop.getProperty("superKoalioTip"));
 
+        //third-party templates title
         table.row();
         label = new Label(prop.getProperty("thirdPartyTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -68,6 +78,7 @@ public class TemplatesDialog extends PopTable  {
         table.add(label).minWidth(0).spaceTop(20).spaceBottom(10).colspan(2).growX();
         addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
+        //third-party templates
         addTemplate(table, buttonGroup, prop.getProperty("ktxTemplate"), prop.getProperty("ktxTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiInputTemplate"), prop.getProperty("lmlKiwiInputTemplateTip"));
         addTemplate(table, buttonGroup, prop.getProperty("lmlKiwiTemplate"), prop.getProperty("lmlKiwiTemplateTip"));
@@ -98,6 +109,7 @@ public class TemplatesDialog extends PopTable  {
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
 
+        //ok button
         row();
         textButton = new TextButton("OK", skin);
         add(textButton).prefWidth(140).spaceTop(20);
@@ -107,12 +119,18 @@ public class TemplatesDialog extends PopTable  {
         });
     }
 
-    private static GlyphLayout layout = new GlyphLayout();
-
     private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description) {
         addTemplate(table, buttonGroup, labelText, description, false);
     }
 
+    /**
+     * A convenience method to add a template to the table
+     * @param table
+     * @param buttonGroup
+     * @param labelText
+     * @param description
+     * @param showGuiTip
+     */
     private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description, boolean showGuiTip) {
         table.row();
         CheckBox checkBox = new CheckBox(labelText, skin, "radio");
@@ -120,7 +138,7 @@ public class TemplatesDialog extends PopTable  {
         table.add(checkBox).spaceRight(10).growX();
         buttonGroup.add(checkBox);
         addHandListener(checkBox);
-        if (showGuiTip) addTooltip(checkBox, Align.topLeft, prop.getProperty("templatesStar"));
+        if (showGuiTip) addTooltip(checkBox, Align.top, prop.getProperty("templatesStar"));
 
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");

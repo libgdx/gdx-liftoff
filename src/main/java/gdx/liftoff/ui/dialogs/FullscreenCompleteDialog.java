@@ -20,7 +20,7 @@ import static gdx.liftoff.Main.*;
 
 /**
  * Dialog shown when in fullscreen layout mode and the user clicks the generate button. The layout scales up if the
- * available space is larger than 1920x1080
+ * available space is larger than 1920x1080.
  */
 public class FullscreenCompleteDialog extends PopTable {
     private static final float SPACING = 30;
@@ -30,6 +30,7 @@ public class FullscreenCompleteDialog extends PopTable {
         setFillParent(true);
         pad(20);
 
+        //collapsible group that alternates between screen scaled scrollpane and a fit scaled container based on available space
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
         add(dualCollapsibleGroup).grow();
 
@@ -51,6 +52,7 @@ public class FullscreenCompleteDialog extends PopTable {
     }
 
     private void createPanels(Table contentTable) {
+        //restore button
         contentTable.defaults().space(SPACING);
         Button button = new Button(skin, "restore");
         contentTable.add(button).expandX().right();
@@ -61,16 +63,19 @@ public class FullscreenCompleteDialog extends PopTable {
             Main.restoreWindow();
         });
 
+        //generating panel is displayed first and is alternated with the complete panel upon completion of the animation
         contentTable.row();
         GeneratingPanel generatingPanel = new GeneratingPanel();
 
         Table table = new Table();
         contentTable.stack(generatingPanel, table);
 
+        //complete panel
         table.defaults().space(10);
         CompletePanel completePanel = new CompletePanel();
         table.add(completePanel);
 
+        //buttons for the complete panel while in fullscreen
         table.row();
         CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this);
         table.add(completeButtonsPanel);
