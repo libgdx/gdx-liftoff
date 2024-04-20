@@ -2,9 +2,12 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
+import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.Main;
@@ -27,11 +30,27 @@ public class FullscreenCompleteDialog extends PopTable {
         setFillParent(true);
         pad(20);
 
+        CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
+        add(dualCollapsibleGroup).grow();
+
         Table contentTable = new Table();
         ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
         scaleContainer.setPrefSize(1920, 1080);
-        add(scaleContainer).grow();
+        scaleContainer.setMinSize(1920, 1080);
+        dualCollapsibleGroup.addActor(scaleContainer);
+        createPanels(contentTable);
 
+        contentTable = new Table();
+        createPanels(contentTable);
+
+        ScrollPane scrollPane = new ScrollPane(contentTable, skin);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setFlickScroll(false);
+        dualCollapsibleGroup.addActor(scrollPane);
+        addScrollFocusListener(scrollPane);
+    }
+
+    private void createPanels(Table contentTable) {
         contentTable.defaults().space(SPACING);
         Button button = new Button(skin, "restore");
         contentTable.add(button).expandX().right();
