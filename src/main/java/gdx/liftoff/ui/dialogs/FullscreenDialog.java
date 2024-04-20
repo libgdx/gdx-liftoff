@@ -58,8 +58,8 @@ public class FullscreenDialog extends PopTable {
         addHandListener(button);
         onChange(button, () -> {
             hide();
-            root.fadeInTable();
             Main.restoreWindow();
+            root.fadeInTable();
         });
 
         contentTable.row();
