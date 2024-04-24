@@ -18,6 +18,7 @@ import gdx.liftoff.ui.panels.GeneratingPanel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
+//todo:add version
 /**
  * Dialog shown when in fullscreen layout mode and the user clicks the generate button. The layout scales up if the
  * available space is larger than 1920x1080.
