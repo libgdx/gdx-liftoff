@@ -82,7 +82,7 @@ public class RootTable extends Table {
         this.tableIndex = tableIndex;
         LiftoffTable newTable = tables.get(tableIndex);
 
-        //initial setup
+        //animation initial setup
         clearChildren();
         stage.addActor(table);
         add(newTable).prefSize(600, 700);

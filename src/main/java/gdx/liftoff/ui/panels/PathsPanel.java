@@ -19,26 +19,37 @@ import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * Table that displays the project path and the android sdk path if android is selected as a platform
+ */
 public class PathsPanel extends Table implements Panel {
 
     public PathsPanel() {
+        //project label
         defaults().space(10);
         Label label = new Label(prop.getProperty("destinationPrompt"), skin, "field");
         label.setEllipsis("...");
         add(label).minWidth(0);
 
+        //project field
         addField("C:/users/yourname/gamename/");
 
         if (1+1==2) {
+            //android label
             row();
             label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
             label.setEllipsis("...");
             add(label).minWidth(0);
 
+            //android field
             addField("C:/users/yourname/android/");
         }
     }
 
+    /**
+     * Convenience method to add fields to the table.
+     * @param text
+     */
     private void addField(String text) {
         TextButton browseFieldButton = new TextButton(text, skin, "field");
         browseFieldButton.getLabel().setAlignment(Align.left);

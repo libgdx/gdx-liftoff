@@ -9,10 +9,14 @@ import gdx.liftoff.ui.dialogs.*;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * A table to display the project settings
+ */
 public class SettingsPanel extends Table implements Panel {
     private Actor keyboardFocus;
 
     public SettingsPanel() {
+        //title
         Label label = new Label(prop.getProperty("advanced"), skin, "header");
         add(label).space(30);
 
@@ -67,6 +71,13 @@ public class SettingsPanel extends Table implements Panel {
         addField(text, tip, table, false);
     }
 
+    /**
+     * Convenience method to add a text field setting
+     * @param text
+     * @param tip
+     * @param table
+     * @param setKeyboardFocus
+     */
     private void addField(String text, String tip, Table table, boolean setKeyboardFocus) {
         table.row();
         Label label = new Label(text, skin, "field");
@@ -82,6 +93,12 @@ public class SettingsPanel extends Table implements Panel {
         if (setKeyboardFocus) keyboardFocus = textField;
     }
 
+    /**
+     * Convenience method to add a check mark setting
+     * @param text
+     * @param tip
+     * @param table
+     */
     private void addCheck(String text, String tip, Table table) {
         table.row();
         Label label = new Label(text, skin, "field");

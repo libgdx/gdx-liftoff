@@ -10,6 +10,10 @@ import gdx.liftoff.Main;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
+/**
+ * A table including fields for project name, package, and main class. A label displaying an applicable error message is
+ * shown below.
+ */
 public class ProjectPanel extends Table implements Panel {
     private static final float TOOLTIP_WIDTH = 300;
     private Actor keyboardActor;
@@ -19,10 +23,12 @@ public class ProjectPanel extends Table implements Panel {
         columnDefaults(1).growX();
         defaults().space(10);
 
+        //project label
         Label label = new Label(prop.getProperty("project"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH, prop.getProperty("nameTip"));
 
+        //project field
         TextField textField = new TextField("", skin);
         keyboardActor = textField;
         add(textField);
@@ -32,11 +38,13 @@ public class ProjectPanel extends Table implements Panel {
 
         });
 
+        //package label
         row();
         label = new Label(prop.getProperty("package"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH, prop.getProperty("packageTip"));
 
+        //package field
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
@@ -45,11 +53,13 @@ public class ProjectPanel extends Table implements Panel {
 
         });
 
+        //main class label
         row();
         label = new Label(prop.getProperty("mainClass"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH, prop.getProperty("classTip"));
 
+        //main class field
         textField = new TextField("", skin);
         add(textField);
         addIbeamListener(textField);
@@ -58,6 +68,7 @@ public class ProjectPanel extends Table implements Panel {
 
         });
 
+        //error label
         columnDefaults(0).reset();
         row();
         label = new Label("Project name cannot be empty", skin, "error");

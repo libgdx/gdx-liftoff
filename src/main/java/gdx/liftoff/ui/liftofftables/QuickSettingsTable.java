@@ -7,6 +7,9 @@ import gdx.liftoff.ui.panels.PathsPanel;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * A unique workflow table to bypass the full setup. This table includes the paths panel.
+ */
 public class QuickSettingsTable extends LiftoffTable {
     public QuickSettingsTable() {
         populate();
@@ -17,10 +20,12 @@ public class QuickSettingsTable extends LiftoffTable {
         setBackground(skin.getDrawable("black"));
         pad(20).padLeft(30).padRight(30);
 
+        //title
         defaults().space(30);
         Label label = new Label(prop.getProperty("pathSettings"), skin, "header");
         add(label);
 
+        //paths panel
         row();
         PathsPanel pathsPanel = new PathsPanel();
         add(pathsPanel).growX().spaceTop(30);
@@ -29,12 +34,14 @@ public class QuickSettingsTable extends LiftoffTable {
         Table table = new Table();
         add(table);
 
+        //generate button
         table.defaults().space(10).fillX();
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> root.transitionTable(root.completeTable, true));
 
+        //cancel button
         table.row();
         textButton = new TextButton(prop.getProperty("quickCancel"), skin);
         table.add(textButton);

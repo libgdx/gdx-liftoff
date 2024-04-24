@@ -40,6 +40,9 @@ import java.util.Properties;
 import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
+/**
+ * Main launcher of the app. Contains utility methods and object instances for use throughout the program
+ */
 public class Main extends ApplicationAdapter {
     public static Skin skin;
     public static Stage stage;
@@ -181,6 +184,16 @@ public class Main extends ApplicationAdapter {
         return addPopTableClickListener(actor, null, align, wrapWidth,  description);
     }
 
+    /**
+     * Utility method to attach a PopTable to an associated actor which will appear upon clicking the actor
+     * @param actor The actor to be clicked
+     * @param attachedActor The actor that the position of the PopTable will be relative to. This can differ from the
+     *                      actor
+     * @param align The alignment of the PopTable
+     * @param wrapWidth Set to 0 to not enable wrapping of the Label
+     * @param text The text to be added inside the PopTable
+     * @return
+     */
     public static PopTable addPopTableClickListener(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
         String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0  ? "tooltip-arrow-down" : (align & Align.left) != 0  ? "tooltip-arrow-right" : "tooltip-arrow-left";
         PopTableClickListener listener = new PopTableClickListener(align, align, skin, style);
@@ -204,6 +217,13 @@ public class Main extends ApplicationAdapter {
         addLabelHighlight(actor, label, true);
     }
 
+    /**
+     * Utility method to change the color of a label to make it look highlighted when the user enters another specified
+     * actor
+     * @param actor
+     * @param label
+     * @param changeColor
+     */
     public static void addLabelHighlight(Actor actor, Label label, boolean changeColor) {
         label.addListener(new ClickListener() {
             @Override
@@ -245,6 +265,11 @@ public class Main extends ApplicationAdapter {
         });
     }
 
+    /**
+     * Utility method to display a native file picker
+     * @param initialFolder
+     * @param callback
+     */
     public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
         String initialPath = initialFolder.path();
 

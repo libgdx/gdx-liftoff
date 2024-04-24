@@ -18,6 +18,11 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
+/**
+ * This table is the first table visible in the app. All the elements animate into view, but may be skipped by the user
+ * clicking the interface. It contains the logo, subtitle, update version and link, project planel, buttons to create
+ * projects, and relevant links.
+ */
 public class LandingTable extends LiftoffTable {
     private Image logoImage;
     private Label subtitleLabel;
@@ -42,6 +47,7 @@ public class LandingTable extends LiftoffTable {
         Table table = new Table();
         add(table);
 
+        //logo
         logoImage = new Image(skin, "title-small");
         logoImage.setScaling(Scaling.fit);
         table.add(logoImage).minSize(270, 30).maxHeight(50);
@@ -58,17 +64,20 @@ public class LandingTable extends LiftoffTable {
         Stack stack = new Stack();
         table.add(stack).minWidth(0);
 
+        //subtitle
         subtitleLabel = new Label(prop.getProperty("subtitle"), skin);
         subtitleLabel.setEllipsis("...");
         subtitleLabel.setAlignment(Align.center);
         subtitleLabel.setVisible(false);
         stack.add(subtitleLabel);
 
+        //version
         versionLabel = new Label(liftoffVersion, skin);
         versionLabel.setEllipsis("...");
         versionLabel.setAlignment(Align.center);
         stack.add(versionLabel);
 
+        //update link
         table.row();
         updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
         table.add(updateButton);
@@ -79,6 +88,7 @@ public class LandingTable extends LiftoffTable {
         Container container = new Container();
         verticalCollapsibleGroup.addActor(container);
 
+        //project panel
         row();
         projectPanel = new ProjectPanel();
         add(projectPanel).growX();
@@ -94,18 +104,21 @@ public class LandingTable extends LiftoffTable {
         CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         table.add(horizontalCollapsibleGroup);
 
+        //create new project vertically big button
         TextButton textButton = new TextButton(prop.getProperty("createNewProject"), skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
+        //new project vertically big button
         textButton = new TextButton(prop.getProperty("newProject"), skin, "mid");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
+        //quick project button
         table.row();
         textButton = new TextButton(prop.getProperty("quickProject"), skin, "mid");
         table.add(textButton).fillX().space(20);
@@ -117,6 +130,7 @@ public class LandingTable extends LiftoffTable {
         table = new Table();
         buttonsCollapsibleGroup.addActor(table);
 
+        //new project vertically small button
         table.defaults().uniformX().fillX();
         textButton = new TextButton(prop.getProperty("newProject"), skin);
         table.add(textButton);
@@ -124,6 +138,7 @@ public class LandingTable extends LiftoffTable {
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
+        //quick project vertically small button
         table.row();
         textButton = new TextButton(prop.getProperty("quickProject"), skin);
         table.add(textButton).space(20);
@@ -157,7 +172,7 @@ public class LandingTable extends LiftoffTable {
     }
 
     public void animate() {
-        //initial setup
+        //animation initial setup
         logoImage.setColor(CLEAR_WHITE);
         subtitleLabel.setText(prop.getProperty("subtitle"));
         subtitleLabel.setColor(CLEAR_WHITE);
@@ -172,6 +187,7 @@ public class LandingTable extends LiftoffTable {
         setTouchable(Touchable.disabled);
         stage.setKeyboardFocus(null);
 
+        //animation
         animationAction = sequence(
             //setup on the first frame
             run(() -> {

@@ -17,6 +17,9 @@ import gdx.liftoff.ui.dialogs.TemplatesDialog;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
 
+/**
+ * The table including the lists of platforms, languages, and extensions as well as a button to choose the template
+ */
 public class AddOnsPanel extends Table implements Panel {
     public AddOnsPanel() {
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
@@ -26,17 +29,19 @@ public class AddOnsPanel extends Table implements Panel {
         Table table = new Table();
         add(table).grow();
 
-        //Platforms
+        //platforms
         table.defaults().space(10).grow().minHeight(150).minWidth(90);
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, PlatformsDialog::show);
 
+        //platforms title
         label = new Label(prop.getProperty("platforms"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
+        //platforms list
         button.row();
         Table scrollTable = new Table();
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
@@ -46,16 +51,18 @@ public class AddOnsPanel extends Table implements Panel {
         populateAddOnTable(scrollTable, platformsNames);
         addScrollFocusListener(scrollPane);
 
-        //Languages
+        //languages
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, LanguagesDialog::show);
 
+        //languages title
         label = new Label(prop.getProperty("languages"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
+        //languages list
         button.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
@@ -65,16 +72,18 @@ public class AddOnsPanel extends Table implements Panel {
         populateAddOnTable(scrollTable, languagesNames);
         addScrollFocusListener(scrollPane);
 
-        //Extensions
+        //extensions
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
         onChange(button, ExtensionsDialog::show);
 
+        //extensions title
         label = new Label(prop.getProperty("extensions"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
+        //extensions list
         button.row();
         scrollTable = new Table();
         scrollPane = new ScrollPane(scrollTable, skin);
@@ -89,6 +98,7 @@ public class AddOnsPanel extends Table implements Panel {
         table = new Table();
         add(table).growX().spaceTop(20);
 
+        //template title
         label = new Label(prop.getProperty("template"), skin, "field");
         table.add(label).space(20);
 
@@ -102,11 +112,13 @@ public class AddOnsPanel extends Table implements Panel {
         smashGroup.space(20);
         stack.add(smashGroup);
 
+        //template button
         TextButton chooseFieldButton = new TextButton("CLASSIC", skin, "field");
         chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);
 
+        //template choose button
         TextButton chooseButton = new TextButton(prop.getProperty("choose"), skin);
         smashGroup.setSecondActor(chooseButton);
 
@@ -130,6 +142,11 @@ public class AddOnsPanel extends Table implements Panel {
         });
     }
 
+    /**
+     * Convenience method to populate each add-ons button with a list of add-ons
+     * @param table
+     * @param names
+     */
     private void populateAddOnTable(Table table, Array<String> names) {
         table.clearChildren();
         table.top();

@@ -80,7 +80,7 @@ public class FullscreenCompleteDialog extends PopTable {
         CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this);
         table.add(completeButtonsPanel);
 
-        //initial setup
+        //animation initial setup
         table.setColor(CLEAR_WHITE);
         table.setTouchable(Touchable.disabled);
         generatingPanel.setColor(CLEAR_WHITE);

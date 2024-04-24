@@ -15,20 +15,26 @@ import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * A table with a searchable list of third party libraries
+ */
 public class ThirdPartyPanel extends Table implements Panel {
     private Actor keyboardFocus;
     private Array<SearchEntry> searchEntries = new Array<>();
     private Table scrollTable;
 
     public ThirdPartyPanel() {
+        //title
         Label label = new Label(prop.getProperty("thirdParty"), skin, "header");
         add(label).space(10);
 
+        //subtitle
         row();
         label = new Label(prop.getProperty("thirdPartyWarn"), skin, "description");
         label.setEllipsis("...");
         add(label).minWidth(0);
 
+        //search field
         row();
         TextField textField = new TextField("", skin, "search");
         add(textField).growX().spaceTop(30);
@@ -36,12 +42,12 @@ public class ThirdPartyPanel extends Table implements Panel {
         keyboardFocus = textField;
         onChange(textField, () -> populateScrollTable(textField.getText()));
 
-        //Third Party Extensions
         row();
         Table table = new Table();
         table.setBackground(skin.getDrawable("button-outline-up-10"));
         add(table).grow().spaceTop(20);
 
+        //scrollable area includes all the third party libraries
         table.row();
         scrollTable = new Table();
         scrollTable.top();
@@ -52,6 +58,7 @@ public class ThirdPartyPanel extends Table implements Panel {
         table.add(scrollPane).grow();
         addScrollFocusListener(scrollPane);
 
+        //third party extensions
         addThirdParty("anim8");
         addThirdParty("artemisOdb");
         addThirdParty("autumn");
@@ -185,14 +192,15 @@ public class ThirdPartyPanel extends Table implements Panel {
         table = new Table();
         add(table).spaceTop(30).growX();
 
+        //links title
         table.defaults().space(5).expandX();
         label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
-        //submit an extension
         table.defaults().left().padLeft(10);
         table.row();
 
+        //submit an extension
         TextButton textButton = new TextButton(prop.getProperty("thirdPartyLink"), skin, "link");
         textButton.getLabel().setAlignment(Align.left);
         table.add(textButton);
@@ -204,12 +212,25 @@ public class ThirdPartyPanel extends Table implements Panel {
         return addThirdParty(prop.getProperty(name), prop.getProperty(name + "Tip"), prop.getProperty(name + "Url"),  prop.getProperty(name + "Terms"));
     }
 
+    /**
+     * Convenience method to add a third party library to the searchEntries list
+     * @param name
+     * @param description
+     * @param link
+     * @param keywords
+     * @return
+     */
     private SearchEntry addThirdParty(String name, String description, String link, String keywords) {
         SearchEntry searchEntry = new SearchEntry(name, description, link, keywords);
         searchEntries.add(searchEntry);
         return searchEntry;
     }
 
+    /**
+     * Clears the table and adds each SearchEntry containing the search string as a checkbox with an associated
+     * description and link
+     * @param search
+     */
     private void populateScrollTable(String search) {
         if (search != null) search = search.toLowerCase(Locale.ROOT).replaceAll("\\W", "");
         scrollTable.clearChildren();
@@ -242,6 +263,9 @@ public class ThirdPartyPanel extends Table implements Panel {
         stage.setKeyboardFocus(keyboardFocus);
     }
 
+    /**
+     * A data class to store the information for a third-party library
+     */
     private class SearchEntry {
         String name;
         String description;

@@ -13,6 +13,10 @@ import static gdx.liftoff.Main.*;
 import static gdx.liftoff.Main.skin;
 import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
+/**
+ * A table containing the logo image and version. It is resizable, hiding elements as necessary to fit in smaller
+ * spaces.
+ */
 public class LogoWidget extends Table {
     public LogoWidget() {
         CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
@@ -22,6 +26,7 @@ public class LogoWidget extends Table {
         container.minSize(260, 25).maxSize(300, 35).prefWidth(300);
         verticalCollapsibleGroup.addActor(container);
 
+        //logo
         Image logoImage = new Image(skin, "title-small");
         logoImage.setScaling(Scaling.fit);
         container.setActor(logoImage);
@@ -38,6 +43,7 @@ public class LogoWidget extends Table {
         container.padTop(10);
         verticalCollapsibleGroup.addActor(container);
 
+        //version
         Label label = new Label(liftoffVersion, skin);
         label.setEllipsis("...");
         container.setActor(label);

@@ -9,10 +9,15 @@ import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * The table to display the buttons to create a new project, open the project in IDEA, or exit the application after
+ * project generation is complete. This panel is intended for use only in the Fullscreen workflow.
+ */
 public class CompleteButtonsFullscreenPanel extends Table implements Panel {
     private static final float TOOLTIP_WIDTH = 200;
 
     public CompleteButtonsFullscreenPanel(PopTable popTable) {
+        //new project button
         defaults().space(10);
         TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");
         add(textButton);
@@ -27,11 +32,13 @@ public class CompleteButtonsFullscreenPanel extends Table implements Panel {
         Table table = new Table();
         add(table);
 
+        //idea button
         table.defaults().fillX().space(10);
         textButton = new TextButton(prop.getProperty("openIdea"), skin);
         table.add(textButton);
         addHandListener(textButton);
 
+        //exit button
         table.row();
         textButton = new TextButton(prop.getProperty("exit"), skin);
         table.add(textButton);

@@ -10,6 +10,10 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.CLEAR_WHITE;
 import static gdx.liftoff.Main.skin;
 
+/**
+ * The final table in the workflow. An animation begins by showing the generating panel first. Then it displays the
+ * complete and complete buttons panels.
+ */
 public class CompleteTable extends LiftoffTable {
     public CompleteTable() {
         populate();
@@ -20,20 +24,23 @@ public class CompleteTable extends LiftoffTable {
         setBackground(skin.getDrawable("black"));
         pad(20).padLeft(30).padRight(30);
 
+        //generating panel
         GeneratingPanel generatingPanel = new GeneratingPanel();
 
         Table table = new Table();
         stack(generatingPanel, table);
 
+        //complete panel
         table.defaults().space(10);
         CompletePanel completePanel = new CompletePanel();
         table.add(completePanel);
 
+        //complete buttons panel
         table.row();
         CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel();
         table.add(completeButtonsPanel);
 
-        //initial setup
+        //animation initial setup
         table.setColor(CLEAR_WHITE);
         table.setTouchable(Touchable.disabled);
 

@@ -12,18 +12,22 @@ import gdx.liftoff.ui.LogoWidget;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * The panel that displays the result of project generation
+ */
 public class CompletePanel extends Table implements Panel {
-    private static final float TOOLTIP_WIDTH = 200;
-
     public CompletePanel() {
+        //logo
         defaults().space(10);
         LogoWidget logo = new LogoWidget();
         add(logo);
 
+        //title
         row();
         Label label = new Label(prop.getProperty("complete"), skin, "header");
         add(label);
 
+        //scrollable area includes the output label only
         row();
         Table scrollTable = new Table();
         scrollTable.pad(5);
@@ -34,10 +38,12 @@ public class CompletePanel extends Table implements Panel {
         add(scrollPane).growX().maxWidth(350).maxHeight(300);
         addScrollFocusListener(scrollPane);
 
+        //output label
         Label outputLabel = new Label(prop.getProperty("generationEnd") + "\n" + prop.getProperty("generationEnd"), skin, "description");
         outputLabel.setWrap(true);
         scrollTable.add(outputLabel).grow();
 
+        //scroll to the bottom
         addAction(Actions.delay(.3f, Actions.run(() -> {
             scrollPane.setScrollPercentY(1);
         })));

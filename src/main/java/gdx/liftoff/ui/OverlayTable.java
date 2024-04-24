@@ -10,6 +10,9 @@ import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * A simple table to overlay the rest of the UI. This contains the maximize button and version.
+ */
 public class OverlayTable extends Table {
     public OverlayTable() {
         top().right().pad(10);
@@ -24,6 +27,7 @@ public class OverlayTable extends Table {
         table.top().right();
         container.setActor(table);
 
+        //maximize
         Button button = new Button(skin, "maximize");
         table.add(button);
         addHandListener(button);
@@ -35,5 +39,7 @@ public class OverlayTable extends Table {
 
         container = new Container();
         dualCollapsibleGroup.addActor(container);
+
+        //todo:version
     }
 }

@@ -10,6 +10,10 @@ import gdx.liftoff.ui.LogoWidget;
 
 import static gdx.liftoff.Main.*;
 
+/**
+ * The table to display the buttons to create a new project, open the project in IDEA, or exit the application after
+ * project generation is complete. This panel is intended for use only in the normal and quick project workflows.
+ */
 public class CompleteButtonsPanel extends Table implements Panel {
     private static final float TOOLTIP_WIDTH = 200;
 
