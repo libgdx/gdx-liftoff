@@ -23,7 +23,7 @@ public class GradleDialog extends PopTable  {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(20).padTop(30).padBottom(30);
+        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("gradleTasksPrompt"), skin, "field");
@@ -34,7 +34,7 @@ public class GradleDialog extends PopTable  {
         row();
         label = new Label(prop.getProperty("gradleTasksTip"), skin, "description");
         label.setWrap(true);
-        add(label).growX().spaceTop(20);
+        add(label).growX().spaceTop(SPACE_LARGE);
 
         //gradle commands textfield
         row();
@@ -46,7 +46,7 @@ public class GradleDialog extends PopTable  {
         //ok button
         row();
         TextButton textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(20);
+        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> hide());
     }

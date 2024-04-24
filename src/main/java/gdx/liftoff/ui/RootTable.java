@@ -26,7 +26,7 @@ public class RootTable extends Table {
     public RootTable() {
         tables = new Array<>();
         tableIndex = 0;
-        pad(20);
+        pad(SPACE_LARGE);
 
         landingTable = new LandingTable();
         add(landingTable).prefSize(ROOT_TABLE_PREF_WIDTH, ROOT_TABLE_PREF_HEIGHT);

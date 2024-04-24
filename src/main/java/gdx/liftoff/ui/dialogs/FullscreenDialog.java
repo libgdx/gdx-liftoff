@@ -20,12 +20,10 @@ import static gdx.liftoff.Main.*;
  * available space is larger than 1920x1080.
  */
 public class FullscreenDialog extends PopTable {
-    private static final float SPACING = 30;
-
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
         setFillParent(true);
-        pad(20);
+        pad(SPACE_LARGE);
 
         //collapsible group that alternates between screen scaled scrollpane and a fit scaled container based on available space
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
@@ -49,7 +47,7 @@ public class FullscreenDialog extends PopTable {
     }
 
     private void createPanels(Table contentTable) {
-        contentTable.defaults().space(SPACING);
+        contentTable.defaults().space(SPACE_HUGE);
         Table table = new Table();
         contentTable.add(table).growX();
         table.setTransform(true);
@@ -76,7 +74,7 @@ public class FullscreenDialog extends PopTable {
         contentTable.add(table);
 
         //new project title
-        table.defaults().space(10);
+        table.defaults().space(SPACE_MEDIUM);
         Label label = new Label(prop.getProperty("newProject"), skin, "header");
         table.add(label);
 
@@ -91,7 +89,7 @@ public class FullscreenDialog extends PopTable {
         contentTable.add(table).growY();
 
         //add-ons panel
-        table.defaults().space(SPACING).uniformX().growY().maxHeight(500);
+        table.defaults().space(SPACE_HUGE).uniformX().growY().maxHeight(500);
         AddOnsPanel addOnsPanel = new AddOnsPanel();
         table.add(addOnsPanel);
 
@@ -104,7 +102,7 @@ public class FullscreenDialog extends PopTable {
         table.add(subTable);
 
         //settings panel
-        subTable.defaults().space(20);
+        subTable.defaults().space(SPACE_LARGE);
         SettingsPanel settingsPanel = new SettingsPanel();
         subTable.add(settingsPanel);
 

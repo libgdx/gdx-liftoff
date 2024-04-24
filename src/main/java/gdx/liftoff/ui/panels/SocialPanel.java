@@ -13,7 +13,7 @@ import static gdx.liftoff.ui.data.Data.*;
  */
 public class SocialPanel extends Table implements Panel {
     public SocialPanel() {
-        defaults().space(15);
+        defaults().space(SPACE_MEDIUM);
 
         //libgdx.com
         TextButton textButton = new TextButton(prop.getProperty("libgdxButton"), skin, "link");

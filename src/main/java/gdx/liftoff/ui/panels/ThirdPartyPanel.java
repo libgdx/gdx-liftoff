@@ -253,7 +253,7 @@ public class ThirdPartyPanel extends Table implements Panel {
             addLabelHighlight(checkBox, label);
 
             Button button = new Button(skin, "external-link");
-            scrollTable.add(button).padRight(5);
+            scrollTable.add(button).padRight(SPACE_SMALL);
             addHandListener(button);
             onChange(button, () -> Gdx.net.openURI(searchEntry.link));
         }

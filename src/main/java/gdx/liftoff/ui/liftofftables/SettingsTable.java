@@ -22,11 +22,11 @@ public class SettingsTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //The scrollable area includs the settings and paths panels
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
@@ -34,14 +34,14 @@ public class SettingsTable extends LiftoffTable {
         addScrollFocusListener(scrollPane);
 
         //settings panel
-        scrollTable.defaults().space(30);
+        scrollTable.defaults().space(SPACE_LARGE);
         settingsPanel = new SettingsPanel();
         scrollTable.add(settingsPanel).growX().spaceTop(0).maxHeight(500);
 
         //paths panel
         scrollTable.row();
         PathsPanel pathsPanel = new PathsPanel();
-        scrollTable.add(pathsPanel).growX().spaceTop(30);
+        scrollTable.add(pathsPanel).growX().spaceTop(SPACE_HUGE);
 
         row();
         Table table = new Table();
@@ -54,7 +54,7 @@ public class SettingsTable extends LiftoffTable {
         onChange(textButton, () -> root.previousTable());
 
         //empty space between buttons
-        table.add().growX().space(5);
+        table.add().growX().space(SPACE_SMALL);
 
         //generate button
         textButton = new TextButton(prop.getProperty("generate"), skin);

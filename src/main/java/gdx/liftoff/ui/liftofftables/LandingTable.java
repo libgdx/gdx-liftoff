@@ -31,7 +31,6 @@ public class LandingTable extends LiftoffTable {
     private ProjectPanel projectPanel;
     private CollapsibleGroup buttonsCollapsibleGroup;
     private SocialPanel socialPanel;
-    private static final float TOOLTIP_WIDTH = 200;
     private Action animationAction;
 
     public LandingTable() {
@@ -41,7 +40,7 @@ public class LandingTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         defaults().space(30).expandY();
         Table table = new Table();
@@ -58,7 +57,7 @@ public class LandingTable extends LiftoffTable {
         table.add(verticalCollapsibleGroup).minWidth(0);
 
         table = new Table();
-        table.padTop(20);
+        table.padTop(SPACE_LARGE);
         verticalCollapsibleGroup.addActor(table);
 
         Stack stack = new Stack();
@@ -121,7 +120,7 @@ public class LandingTable extends LiftoffTable {
         //quick project button
         table.row();
         textButton = new TextButton(prop.getProperty("quickProject"), skin, "mid");
-        table.add(textButton).fillX().space(20);
+        table.add(textButton).fillX().space(SPACE_LARGE);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
         onChange(textButton, () -> root.transitionTable(root.quickSettingsTable, true));
@@ -141,7 +140,7 @@ public class LandingTable extends LiftoffTable {
         //quick project vertically small button
         table.row();
         textButton = new TextButton(prop.getProperty("quickProject"), skin);
-        table.add(textButton).space(20);
+        table.add(textButton).space(SPACE_LARGE);
         addQuickProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
         onChange(textButton, () -> root.transitionTable(root.quickSettingsTable, true));

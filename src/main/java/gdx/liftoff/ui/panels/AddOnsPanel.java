@@ -23,14 +23,14 @@ import static gdx.liftoff.ui.data.Data.*;
 public class AddOnsPanel extends Table implements Panel {
     public AddOnsPanel() {
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
-        add(label).space(30);
+        add(label).space(SPACE_HUGE);
 
         row();
         Table table = new Table();
         add(table).grow();
 
         //platforms
-        table.defaults().space(10).grow().minHeight(150).minWidth(90);
+        table.defaults().space(SPACE_MEDIUM).grow().minHeight(150).minWidth(90);
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
@@ -47,7 +47,7 @@ public class AddOnsPanel extends Table implements Panel {
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
-        button.add(scrollPane).grow().padTop(10);
+        button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
         populateAddOnTable(scrollTable, platformsNames);
         addScrollFocusListener(scrollPane);
 
@@ -68,7 +68,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
-        button.add(scrollPane).grow().padTop(10);
+        button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
         populateAddOnTable(scrollTable, languagesNames);
         addScrollFocusListener(scrollPane);
 
@@ -89,18 +89,18 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
-        button.add(scrollPane).grow().padTop(10);
+        button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
         populateAddOnTable(scrollTable, extensionsNames);
         addScrollFocusListener(scrollPane);
 
         //template
         row();
         table = new Table();
-        add(table).growX().spaceTop(20);
+        add(table).growX().spaceTop(SPACE_LARGE);
 
         //template title
         label = new Label(prop.getProperty("template"), skin, "field");
-        table.add(label).space(20);
+        table.add(label).space(SPACE_LARGE);
 
         Stack stack = new Stack();
         table.add(stack).growX();
@@ -109,7 +109,7 @@ public class AddOnsPanel extends Table implements Panel {
         stack.add(chooseTable);
 
         SmashGroup smashGroup = new SmashGroup(true);
-        smashGroup.space(20);
+        smashGroup.space(SPACE_LARGE);
         stack.add(smashGroup);
 
         //template button
@@ -151,7 +151,7 @@ public class AddOnsPanel extends Table implements Panel {
         table.clearChildren();
         table.top();
 
-        table.defaults().growX().space(5);
+        table.defaults().growX().space(SPACE_SMALL);
         for (String name : names) {
             Label label = new Label(name, skin);
             label.setEllipsis("...");

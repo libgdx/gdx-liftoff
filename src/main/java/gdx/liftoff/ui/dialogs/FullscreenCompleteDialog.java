@@ -24,8 +24,6 @@ import static gdx.liftoff.Main.*;
  * available space is larger than 1920x1080.
  */
 public class FullscreenCompleteDialog extends PopTable {
-    private static final float SPACING = 30;
-
     public FullscreenCompleteDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
         setFillParent(true);
@@ -54,7 +52,7 @@ public class FullscreenCompleteDialog extends PopTable {
 
     private void createPanels(Table contentTable) {
         //restore button
-        contentTable.defaults().space(SPACING);
+        contentTable.defaults().space(SPACE_HUGE);
         Button button = new Button(skin, "restore");
         contentTable.add(button).expandX().right();
         addHandListener(button);
@@ -72,7 +70,7 @@ public class FullscreenCompleteDialog extends PopTable {
         contentTable.stack(generatingPanel, table);
 
         //complete panel
-        table.defaults().space(10);
+        table.defaults().space(SPACE_MEDIUM);
         CompletePanel completePanel = new CompletePanel();
         table.add(completePanel);
 

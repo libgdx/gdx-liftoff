@@ -26,7 +26,7 @@ public class ExtensionsDialog extends PopTable  {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(20).padTop(30).padBottom(30);
+        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title label
         Label label = new Label(prop.getProperty("extensions"), skin, "header");
@@ -35,12 +35,12 @@ public class ExtensionsDialog extends PopTable  {
         //scrollable area including list of extensions and links
         row();
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(20);
+        add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
@@ -48,9 +48,9 @@ public class ExtensionsDialog extends PopTable  {
         scrollTable.defaults().left();
         Table table = new Table();
         table.left();
-        scrollTable.add(table).spaceTop(10).growX();
+        scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
-        table.defaults().left().spaceLeft(10);
+        table.defaults().left().spaceLeft(SPACE_MEDIUM);
         addExtension(table, prop.getProperty("ashley"), prop.getProperty("ashleyTip"), prop.getProperty("ashleyUrl"));
         addExtension(table, prop.getProperty("box2dlights"), prop.getProperty("box2dlightsTip"), prop.getProperty("gdx-box2dlightsUrl"));
         addExtension(table, prop.getProperty("gdx-ai"), prop.getProperty("gdx-aiTip"), prop.getProperty("gdx-aiUrl"));
@@ -63,14 +63,14 @@ public class ExtensionsDialog extends PopTable  {
         //links
         scrollTable.row();
         table = new Table();
-        scrollTable.add(table).spaceTop(30).growX();
+        scrollTable.add(table).spaceTop(SPACE_HUGE).growX();
 
-        table.defaults().space(5);
+        table.defaults().space(SPACE_SMALL);
         label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //gdx-pay link
-        table.defaults().left().padLeft(10);
+        table.defaults().left().padLeft(SPACE_MEDIUM);
         table.row();
         CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         table.add(collapsibleGroup);
@@ -94,7 +94,7 @@ public class ExtensionsDialog extends PopTable  {
         //OK button to close the dialog
         row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(20);
+        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> hide());
     }
@@ -117,7 +117,7 @@ public class ExtensionsDialog extends PopTable  {
         table.add(subTable);
 
         //description
-        subTable.defaults().space(10);
+        subTable.defaults().space(SPACE_MEDIUM);
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
         layout.setText(label.getStyle().font, description);

@@ -17,10 +17,10 @@ public class AddOnsTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //add-ons panel
-        defaults().space(30);
+        defaults().space(SPACE_HUGE);
         AddOnsPanel addOnsPanel = new AddOnsPanel();
         add(addOnsPanel).grow().spaceTop(0).maxHeight(500);
 
@@ -35,7 +35,7 @@ public class AddOnsTable extends LiftoffTable {
         onChange(textButton, () -> root.previousTable());
 
         //an empty space between the cells
-        table.add().growX().space(5);
+        table.add().growX().space(SPACE_SMALL);
 
         //next button
         textButton = new TextButton(prop.getProperty("next"), skin);

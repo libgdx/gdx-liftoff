@@ -17,7 +17,7 @@ public class LanguagesDialog extends PopTable  {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(20).padTop(30).padBottom(30);
+        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("languages"), skin, "header");
@@ -26,22 +26,22 @@ public class LanguagesDialog extends PopTable  {
         //scrollable area includes languages and links
         row();
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(20);
+        add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
         scrollTable.defaults().left();
         Table table = new Table();
         table.left();
-        scrollTable.add(table).spaceTop(10).growX();
+        scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
         //language label
-        table.defaults().space(10);
+        table.defaults().space(SPACE_MEDIUM);
         label = new Label(prop.getProperty("language"), skin, "field");
         table.add(label);
 
@@ -62,19 +62,19 @@ public class LanguagesDialog extends PopTable  {
         label = new Label(prop.getProperty("languagesPrompt"), skin, "description");
         label.setWrap(true);
         label.setAlignment(Align.left);
-        scrollTable.add(label).spaceTop(30).growX();
+        scrollTable.add(label).spaceTop(SPACE_HUGE).growX();
 
         //links
         scrollTable.row();
         table = new Table();
-        scrollTable.add(table).spaceTop(20).growX();
+        scrollTable.add(table).spaceTop(SPACE_LARGE).growX();
 
-        table.defaults().space(5);
+        table.defaults().space(SPACE_SMALL);
         label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //clojure
-        table.defaults().left().padLeft(10);
+        table.defaults().left().padLeft(SPACE_MEDIUM);
         table.row();
         TextButton textButton = new TextButton(prop.getProperty("clojureLink"), skin, "link");
         textButton.getLabel().setAlignment(Align.left);
@@ -92,7 +92,7 @@ public class LanguagesDialog extends PopTable  {
         //ok button
         row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(20);
+        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
     }

@@ -64,6 +64,13 @@ public class Main extends ApplicationAdapter {
     public static final float ROOT_TABLE_PREF_WIDTH = 600;
     public static final float ROOT_TABLE_PREF_HEIGHT = 700;
 
+    public static final float SPACE_SMALL = 5;
+    public static final float SPACE_MEDIUM = 10;
+    public static final float SPACE_LARGE = 20;
+    public static final float SPACE_HUGE = 30;
+    public static final float TOOLTIP_WIDTH = 200;
+    public static final float TOOLTIP_WIDTH_LARGE = 300;
+
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");

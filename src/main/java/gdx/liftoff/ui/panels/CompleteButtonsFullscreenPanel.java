@@ -14,11 +14,9 @@ import static gdx.liftoff.Main.*;
  * project generation is complete. This panel is intended for use only in the Fullscreen workflow.
  */
 public class CompleteButtonsFullscreenPanel extends Table implements Panel {
-    private static final float TOOLTIP_WIDTH = 200;
-
     public CompleteButtonsFullscreenPanel(PopTable popTable) {
         //new project button
-        defaults().space(10);
+        defaults().space(SPACE_MEDIUM);
         TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");
         add(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
@@ -33,7 +31,7 @@ public class CompleteButtonsFullscreenPanel extends Table implements Panel {
         add(table);
 
         //idea button
-        table.defaults().fillX().space(10);
+        table.defaults().fillX().space(SPACE_MEDIUM);
         textButton = new TextButton(prop.getProperty("openIdea"), skin);
         table.add(textButton);
         addHandListener(textButton);

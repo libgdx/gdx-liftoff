@@ -7,8 +7,7 @@ import gdx.liftoff.ui.panels.CompletePanel;
 import gdx.liftoff.ui.panels.GeneratingPanel;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static gdx.liftoff.Main.CLEAR_WHITE;
-import static gdx.liftoff.Main.skin;
+import static gdx.liftoff.Main.*;
 
 /**
  * The final table in the workflow. An animation begins by showing the generating panel first. Then it displays the
@@ -22,7 +21,7 @@ public class CompleteTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //generating panel
         GeneratingPanel generatingPanel = new GeneratingPanel();
@@ -31,7 +30,7 @@ public class CompleteTable extends LiftoffTable {
         stack(generatingPanel, table);
 
         //complete panel
-        table.defaults().space(10);
+        table.defaults().space(SPACE_MEDIUM);
         CompletePanel completePanel = new CompletePanel();
         table.add(completePanel);
 

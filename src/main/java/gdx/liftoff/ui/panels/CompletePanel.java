@@ -18,7 +18,7 @@ import static gdx.liftoff.Main.*;
 public class CompletePanel extends Table implements Panel {
     public CompletePanel() {
         //logo
-        defaults().space(10);
+        defaults().space(SPACE_MEDIUM);
         LogoWidget logo = new LogoWidget();
         add(logo);
 
@@ -30,7 +30,7 @@ public class CompletePanel extends Table implements Panel {
         //scrollable area includes the output label only
         row();
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);

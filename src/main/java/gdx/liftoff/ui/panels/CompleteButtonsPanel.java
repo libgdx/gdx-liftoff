@@ -15,10 +15,8 @@ import static gdx.liftoff.Main.*;
  * project generation is complete. This panel is intended for use only in the normal and quick project workflows.
  */
 public class CompleteButtonsPanel extends Table implements Panel {
-    private static final float TOOLTIP_WIDTH = 200;
-
     public CompleteButtonsPanel() {
-        defaults().space(10);
+        defaults().space(SPACE_MEDIUM);
         TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");
         add(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
@@ -29,7 +27,7 @@ public class CompleteButtonsPanel extends Table implements Panel {
         Table table = new Table();
         add(table);
 
-        table.defaults().fillX().space(10);
+        table.defaults().fillX().space(SPACE_MEDIUM);
         textButton = new TextButton(prop.getProperty("openIdea"), skin);
         table.add(textButton);
         addHandListener(textButton);

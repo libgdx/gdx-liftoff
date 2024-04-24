@@ -18,7 +18,7 @@ public class SettingsPanel extends Table implements Panel {
     public SettingsPanel() {
         //title
         Label label = new Label(prop.getProperty("advanced"), skin, "header");
-        add(label).space(30);
+        add(label).space(SPACE_HUGE);
 
         row();
         Table table = new Table();
@@ -27,7 +27,7 @@ public class SettingsPanel extends Table implements Panel {
         //libgdx version
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
-        table.defaults().spaceTop(5).spaceLeft(10);
+        table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
         addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), table, true);
 
         //java version
@@ -40,7 +40,7 @@ public class SettingsPanel extends Table implements Panel {
         addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), table);
 
         //add gui assets
-        table.defaults().spaceTop(10);
+        table.defaults().spaceTop(SPACE_MEDIUM);
         addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), table);
 
         //add readme
@@ -49,7 +49,7 @@ public class SettingsPanel extends Table implements Panel {
         //add gradle tasks
         row();
         TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);
-        add(textButton).spaceTop(30);
+        add(textButton).spaceTop(SPACE_HUGE);
         addHandListener(textButton);
         onChange(textButton, () -> {
             PopTable pop = GradleDialog.show();
@@ -87,7 +87,7 @@ public class SettingsPanel extends Table implements Panel {
 
         TextField textField = new TextField("", skin);
         table.add(textField);
-        addTooltip(textField, label, Align.top, 200, tip);
+        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, tip);
         addIbeamListener(textField);
         addLabelHighlight(textField, label, false);
         if (setKeyboardFocus) keyboardFocus = textField;
@@ -109,7 +109,7 @@ public class SettingsPanel extends Table implements Panel {
         ImageButton imageButton = new ImageButton(skin, "check");
         imageButton.left();
         table.add(imageButton);
-        addTooltip(imageButton, label, Align.top, 200, tip);
+        addTooltip(imageButton, label, Align.top, TOOLTIP_WIDTH, tip);
         addHandListener(imageButton);
         addLabelHighlight(imageButton, label);
     }

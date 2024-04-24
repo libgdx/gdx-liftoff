@@ -25,7 +25,7 @@ public class TemplatesDialog extends PopTable  {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(20).padTop(30).padBottom(30);
+        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("templates"), skin, "header");
@@ -34,28 +34,28 @@ public class TemplatesDialog extends PopTable  {
         //scrollable area includes basic templates, third-party templates, and links
         row();
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(20);
+        add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
         scrollTable.defaults().left();
         Table table = new Table();
         table.left();
-        scrollTable.add(table).spaceTop(10).growX();
+        scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
-        table.defaults().left().space(5);
+        table.defaults().left().space(SPACE_SMALL);
         ButtonGroup buttonGroup = new ButtonGroup();
 
         //basic templates title
         table.row();
         label = new Label(prop.getProperty("officialTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
-        table.add(label).minWidth(0).spaceBottom(10).colspan(2).growX();
+        table.add(label).minWidth(0).spaceBottom(SPACE_MEDIUM).colspan(2).growX();
         addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
         //basic templates
@@ -75,7 +75,7 @@ public class TemplatesDialog extends PopTable  {
         label = new Label(prop.getProperty("thirdPartyTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
         label.setEllipsis("...");
-        table.add(label).minWidth(0).spaceTop(20).spaceBottom(10).colspan(2).growX();
+        table.add(label).minWidth(0).spaceTop(SPACE_LARGE).spaceBottom(SPACE_MEDIUM).colspan(2).growX();
         addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
 
         //third-party templates
@@ -93,14 +93,14 @@ public class TemplatesDialog extends PopTable  {
         //links
         scrollTable.row();
         table = new Table();
-        scrollTable.add(table).spaceTop(30).growX();
+        scrollTable.add(table).spaceTop(SPACE_HUGE).growX();
 
-        table.defaults().space(5).expandX();
+        table.defaults().space(SPACE_SMALL).expandX();
         label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //propose a template
-        table.defaults().left().padLeft(10);
+        table.defaults().left().padLeft(SPACE_MEDIUM);
         table.row();
 
         TextButton textButton = new TextButton(prop.getProperty("templatesLink"), skin, "link");
@@ -112,7 +112,7 @@ public class TemplatesDialog extends PopTable  {
         //ok button
         row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(20);
+        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> {
             hide();
@@ -135,7 +135,7 @@ public class TemplatesDialog extends PopTable  {
         table.row();
         CheckBox checkBox = new CheckBox(labelText, skin, "radio");
         checkBox.left();
-        table.add(checkBox).spaceRight(10).growX();
+        table.add(checkBox).spaceRight(SPACE_MEDIUM).growX();
         buttonGroup.add(checkBox);
         addHandListener(checkBox);
         if (showGuiTip) addTooltip(checkBox, Align.top, prop.getProperty("templatesStar"));

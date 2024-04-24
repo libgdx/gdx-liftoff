@@ -19,10 +19,10 @@ public class ThirdPartyTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //third party panel
-        defaults().space(30);
+        defaults().space(SPACE_HUGE);
         thirdPartyPanel = new ThirdPartyPanel();
         add(thirdPartyPanel).grow().spaceTop(0).maxHeight(550);
 
@@ -37,7 +37,7 @@ public class ThirdPartyTable extends LiftoffTable {
         onChange(textButton, () -> root.previousTable());
 
         //empty space between the buttons
-        table.add().growX().space(5);
+        table.add().growX().space(SPACE_SMALL);
 
         //next button
         textButton = new TextButton(prop.getProperty("next"), skin);

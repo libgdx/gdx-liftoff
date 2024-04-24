@@ -40,7 +40,7 @@ public class LogoWidget extends Table {
         add(verticalCollapsibleGroup).minWidth(0).right();
 
         container = new Container();
-        container.padTop(10);
+        container.padTop(SPACE_MEDIUM);
         verticalCollapsibleGroup.addActor(container);
 
         //version

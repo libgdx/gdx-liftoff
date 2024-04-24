@@ -18,7 +18,7 @@ public class PlatformsDialog extends PopTable  {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(20).padTop(30).padBottom(30);
+        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("platforms"), skin, "header");
@@ -27,27 +27,27 @@ public class PlatformsDialog extends PopTable  {
         //scrollable area includes primary and secondary platforms
         row();
         Table scrollTable = new Table();
-        scrollTable.pad(5);
+        scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(20);
+        add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
         //primary platforms title
         scrollTable.defaults().left();
         label = new Label(prop.getProperty("primaryPlatforms"), skin, "field");
-        scrollTable.add(label).spaceTop(30);
+        scrollTable.add(label).spaceTop(SPACE_HUGE);
 
         scrollTable.row();
         Table table = new Table();
-        scrollTable.add(table).spaceTop(10).growX();
+        scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
         //primary platforms
         //manually add core to a button group of one to enforce that it is always checked
-        table.defaults().left().spaceLeft(20);
+        table.defaults().left().spaceLeft(SPACE_LARGE);
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.setMinCheckCount(1);
         CheckBox checkBox = addPlatform(table, prop.getProperty("core"), prop.getProperty("coreTip"));
@@ -63,14 +63,14 @@ public class PlatformsDialog extends PopTable  {
         //secondary platforms title
         scrollTable.row();
         label = new Label(prop.getProperty("secondaryPlatforms"), skin, "field");
-        scrollTable.add(label).spaceTop(30);
+        scrollTable.add(label).spaceTop(SPACE_HUGE);
 
         scrollTable.row();
         table = new Table();
-        scrollTable.add(table).spaceTop(10).growX();
+        scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
         //secondary platforms
-        table.defaults().left().spaceLeft(20);
+        table.defaults().left().spaceLeft(SPACE_LARGE);
         addPlatform(table, prop.getProperty("headless"), prop.getProperty("headlessTip"));
         addPlatform(table, prop.getProperty("teavm"), prop.getProperty("teavmTip"));
         addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2Tip"));
@@ -81,7 +81,7 @@ public class PlatformsDialog extends PopTable  {
         //ok button
         row();
         TextButton textButton = new TextButton(prop.getProperty("ok"), skin);
-        add(textButton).prefWidth(140).spaceTop(20);
+        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> {
             hide();

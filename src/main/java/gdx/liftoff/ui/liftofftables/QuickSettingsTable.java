@@ -18,24 +18,24 @@ public class QuickSettingsTable extends LiftoffTable {
     private void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
-        pad(20).padLeft(30).padRight(30);
+        pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //title
-        defaults().space(30);
+        defaults().space(SPACE_HUGE);
         Label label = new Label(prop.getProperty("pathSettings"), skin, "header");
         add(label);
 
         //paths panel
         row();
         PathsPanel pathsPanel = new PathsPanel();
-        add(pathsPanel).growX().spaceTop(30);
+        add(pathsPanel).growX().spaceTop(SPACE_HUGE);
 
         row();
         Table table = new Table();
         add(table);
 
         //generate button
-        table.defaults().space(10).fillX();
+        table.defaults().space(SPACE_MEDIUM).fillX();
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         table.add(textButton);
         addHandListener(textButton);

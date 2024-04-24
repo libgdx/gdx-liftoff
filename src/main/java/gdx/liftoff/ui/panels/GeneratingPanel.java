@@ -7,8 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
-import static gdx.liftoff.Main.prop;
-import static gdx.liftoff.Main.skin;
+import static gdx.liftoff.Main.*;
 
 /**
  * The loading animation displayed before the project is generated
@@ -21,7 +20,7 @@ public class GeneratingPanel extends Table implements Panel {
 
         row();
         CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
-        add(collapsibleGroup).growX().spaceTop(30);
+        add(collapsibleGroup).growX().spaceTop(SPACE_HUGE);
 
         //generating text big
         Label label = new Label(prop.getProperty("generating"), skin, "button-big");

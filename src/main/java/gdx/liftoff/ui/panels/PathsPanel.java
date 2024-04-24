@@ -26,7 +26,7 @@ public class PathsPanel extends Table implements Panel {
 
     public PathsPanel() {
         //project label
-        defaults().space(10);
+        defaults().space(SPACE_MEDIUM);
         Label label = new Label(prop.getProperty("destinationPrompt"), skin, "field");
         label.setEllipsis("...");
         add(label).minWidth(0);

@@ -15,7 +15,7 @@ import static gdx.liftoff.Main.*;
  */
 public class OverlayTable extends Table {
     public OverlayTable() {
-        top().right().pad(10);
+        top().right().pad(SPACE_MEDIUM);
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
         add(dualCollapsibleGroup);
 
