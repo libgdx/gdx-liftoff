@@ -13,8 +13,8 @@ import gdx.liftoff.ui.panels.*;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
-//todo:add version
 /**
  * Dialog shown when in fullscreen layout mode. This includes all the panels at once. The layout scales up if the
  * available space is larger than 1920x1080.
@@ -111,15 +111,25 @@ public class FullscreenDialog extends PopTable {
         PathsPanel pathsPanel = new PathsPanel();
         subTable.add(pathsPanel);
 
-        //generate button
         contentTable.row();
+        table = new Table();
+        contentTable.add(table).growX();
+
+        //empty cell for equal spacing
+        table.add().expandX();
+
+        //generate button
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
-        contentTable.add(textButton);
+        table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> hide(sequence(
             fadeOut(.3f),
             run(FullscreenCompleteDialog::show)
         )));
+
+        //version
+        label = new Label(liftoffVersion, skin);
+        table.add(label).expandX().right().bottom();
     }
 
     public static void show() {
