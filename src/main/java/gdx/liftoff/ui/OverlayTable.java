@@ -1,36 +1,52 @@
 package gdx.liftoff.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.Main;
+import gdx.liftoff.ui.data.Data;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.*;
 
 /**
- * A simple table to overlay the rest of the UI. This contains the maximize button and version.
+ * A simple table to overlay the rest of the UI. This contains the maximize button and version. It implements a reactive
+ * layout which only display the widgets if the window is large enough to show the root table at its preferred size with
+ * some padding.
  */
 public class OverlayTable extends Table {
     public OverlayTable() {
-        top().right().pad(SPACE_MEDIUM);
+        pad(SPACE_MEDIUM);
+
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
-        add(dualCollapsibleGroup);
+        add(dualCollapsibleGroup).grow();
 
+        //a content container that only cares about the minHeight
         Container container = new Container();
-        container.minSize(ROOT_TABLE_PREF_WIDTH + 70, ROOT_TABLE_PREF_HEIGHT + 70);
+        container.minSize(0, ROOT_TABLE_PREF_HEIGHT + 70);
+        container.fill();
         dualCollapsibleGroup.addActor(container);
+        container.setActor(createContentTable());
 
+        //a content container that only cares about the minWidth
+        container = new Container();
+        container.minSize(ROOT_TABLE_PREF_WIDTH + 140, 0);
+        container.fill();
+        dualCollapsibleGroup.addActor(container);
+        container.setActor(createContentTable());
+
+        container = new Container();
+        dualCollapsibleGroup.addActor(container);
+    }
+
+    private Table createContentTable() {
         Table table = new Table();
-        table.top().right();
-        container.setActor(table);
 
         //maximize
         Button button = new Button(skin, "maximize");
-        table.add(button);
+        table.add(button).expand().top().right();
         addHandListener(button);
         onChange(button, () -> {
             Main.maximizeWindow();
@@ -40,9 +56,11 @@ public class OverlayTable extends Table {
             });
         });
 
-        container = new Container();
-        dualCollapsibleGroup.addActor(container);
+        //version
+        table.row();
+        Label label = new Label(liftoffVersion, skin);
+        table.add(label).expand().bottom().right();
 
-        //todo:version
+        return table;
     }
 }

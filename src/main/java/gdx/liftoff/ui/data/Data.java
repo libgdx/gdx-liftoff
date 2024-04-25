@@ -2,7 +2,7 @@ package gdx.liftoff.ui.data;
 
 import com.badlogic.gdx.utils.Array;
 
-//todo: Remove this file and use nls.properties and other sources
+//todo: Remove this file and use a preferences file
 public class Data {
     //common
     public static String liftoffVersion = "v1.12.1.7";
