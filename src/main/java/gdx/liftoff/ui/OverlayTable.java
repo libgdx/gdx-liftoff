@@ -1,5 +1,6 @@
 package gdx.liftoff.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -32,9 +33,11 @@ public class OverlayTable extends Table {
         table.add(button);
         addHandListener(button);
         onChange(button, () -> {
-            root.fadeOutTable();
-            FullscreenDialog.show();
             Main.maximizeWindow();
+            Gdx.app.postRunnable(() -> {
+                root.fadeOutTable();
+                FullscreenDialog.show();
+            });
         });
 
         container = new Container();

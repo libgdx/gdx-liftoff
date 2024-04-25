@@ -15,7 +15,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
 //todo:add version
-//todo:root table is still visible
 /**
  * Dialog shown when in fullscreen layout mode. This includes all the panels at once. The layout scales up if the
  * available space is larger than 1920x1080.

@@ -109,7 +109,8 @@ public class RootTable extends Table {
     }
 
     public void fadeOutTable() {
-        Table table = tables.get(tableIndex);
+        LiftoffTable table = tables.get(tableIndex);
+        table.finishAnimation();
         table.addAction(sequence(
             fadeOut(.5f),
             visible(false)
