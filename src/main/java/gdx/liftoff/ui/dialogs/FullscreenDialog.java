@@ -67,6 +67,7 @@ public class FullscreenDialog extends PopTable {
             hide();
             Main.restoreWindow();
             root.fadeInTable();
+            overlayTable.fadeIn();
         });
 
         contentTable.row();

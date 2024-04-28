@@ -1,6 +1,7 @@
 package gdx.liftoff.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -50,6 +51,7 @@ public class OverlayTable extends Table {
         addHandListener(button);
         onChange(button, () -> {
             Main.maximizeWindow();
+            fadeOut();
             Gdx.app.postRunnable(() -> {
                 root.fadeOutTable();
                 FullscreenDialog.show();
@@ -62,5 +64,13 @@ public class OverlayTable extends Table {
         table.add(label).expand().bottom().right();
 
         return table;
+    }
+
+    public void fadeOut() {
+        addAction(Actions.fadeOut(.5f));
+    }
+
+    public void fadeIn() {
+        addAction(Actions.fadeIn(.5f));
     }
 }

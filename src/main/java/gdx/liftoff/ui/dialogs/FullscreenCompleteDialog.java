@@ -20,7 +20,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
-//todo:add version
 /**
  * Dialog shown when in fullscreen layout mode and the user clicks the generate button. The layout scales up if the
  * available space is larger than 1920x1080.
@@ -62,6 +61,7 @@ public class FullscreenCompleteDialog extends PopTable {
             hide();
             root.fadeInTable();
             Main.restoreWindow();
+            overlayTable.fadeIn();
         });
 
         //generating panel is displayed first and is alternated with the complete panel upon completion of the animation
