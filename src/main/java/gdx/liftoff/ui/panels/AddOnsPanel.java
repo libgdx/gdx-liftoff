@@ -59,7 +59,7 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, LanguagesDialog::show);
+        onChange(button, () -> LanguagesDialog.show(fullscreen));
 
         //languages title
         label = new Label(prop.getProperty("languages"), skin, "field");

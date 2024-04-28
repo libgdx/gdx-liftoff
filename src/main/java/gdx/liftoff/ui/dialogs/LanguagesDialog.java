@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
+import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
+import com.ray3k.stripe.ScaleContainer;
 
 import static gdx.liftoff.Main.*;
 import static gdx.liftoff.ui.data.Data.*;
@@ -13,26 +17,52 @@ import static gdx.liftoff.ui.data.Data.*;
  * Dialog shown when the user clicks the languages list in the add-ons panel
  */
 public class LanguagesDialog extends PopTable  {
-    //todo:Need to add fullscreen option that puts contents in a scalingGroup
-    public LanguagesDialog() {
+    public LanguagesDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
+
+        if (fullscreen) {
+            CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
+            add(collapsibleGroup).grow();
+
+            Table contentTable = new Table();
+            populate(contentTable);
+
+            Container container = new Container(contentTable);
+            container.minSize(0, 0);
+            collapsibleGroup.addActor(container);
+
+            contentTable = new Table();
+            populate(contentTable);
+
+            ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+            scaleContainer.setMinSize(1920, 1080);
+            scaleContainer.setPrefSize(1920, 1080);
+            collapsibleGroup.addActor(scaleContainer);
+        } else {
+            Table contentTable = new Table();
+            add(contentTable);
+            populate(contentTable);
+        }
+    }
+
+    private void populate(Table contentTable) {
+        contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("languages"), skin, "header");
-        add(label);
+        contentTable.add(label);
 
         //scrollable area includes languages and links
-        row();
+        contentTable.row();
         Table scrollTable = new Table();
         scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(SPACE_LARGE);
+        contentTable.add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
@@ -91,9 +121,9 @@ public class LanguagesDialog extends PopTable  {
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("otherJvmUrl")));
 
         //ok button
-        row();
+        contentTable.row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
+        contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
     }
@@ -120,8 +150,9 @@ public class LanguagesDialog extends PopTable  {
         onChange(button, () -> Gdx.net.openURI(prop.getProperty(name + "Url")));
     }
 
-    public static void show() {
-        LanguagesDialog dialog = new LanguagesDialog();
+    public static void show(boolean fullscreen) {
+        LanguagesDialog dialog = new LanguagesDialog(fullscreen);
+        dialog.setFillParent(fullscreen);
         dialog.show(stage);
     }
 }
