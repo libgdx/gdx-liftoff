@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
+import com.ray3k.stripe.ScaleContainer;
 
 import static gdx.liftoff.Main.*;
 
@@ -22,26 +24,52 @@ import static gdx.liftoff.Main.*;
 public class ExtensionsDialog extends PopTable  {
     private static GlyphLayout layout = new GlyphLayout();
 
-    //todo:Need to add fullscreen option that puts contents in a scalingGroup
-    public ExtensionsDialog() {
+    public ExtensionsDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
+
+        if (fullscreen) {
+            CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
+            add(collapsibleGroup).grow();
+
+            Table contentTable = new Table();
+            populate(contentTable);
+
+            Container container = new Container(contentTable);
+            container.minSize(0, 0);
+            collapsibleGroup.addActor(container);
+
+            contentTable = new Table();
+            populate(contentTable);
+
+            ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+            scaleContainer.setMinSize(1920, 1080);
+            scaleContainer.setPrefSize(1920, 1080);
+            collapsibleGroup.addActor(scaleContainer);
+        } else {
+            Table contentTable = new Table();
+            add(contentTable);
+            populate(contentTable);
+        }
+    }
+
+    private void populate(Table contentTable) {
+        contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title label
         Label label = new Label(prop.getProperty("extensions"), skin, "header");
-        add(label);
+        contentTable.add(label);
 
         //scrollable area including list of extensions and links
-        row();
+        contentTable.row();
         Table scrollTable = new Table();
         scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(SPACE_LARGE);
+        contentTable.add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
@@ -93,9 +121,9 @@ public class ExtensionsDialog extends PopTable  {
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
         //OK button to close the dialog
-        row();
+        contentTable.row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
+        contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> hide());
     }
@@ -135,8 +163,9 @@ public class ExtensionsDialog extends PopTable  {
     /**
      * Convenience method to display the dialog on the stage
      */
-    public static void show() {
-        ExtensionsDialog dialog = new ExtensionsDialog();
+    public static void show(boolean fullscreen) {
+        ExtensionsDialog dialog = new ExtensionsDialog(fullscreen);
+        dialog.setFillParent(fullscreen);
         dialog.show(stage);
     }
 }

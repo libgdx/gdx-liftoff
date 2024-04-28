@@ -80,7 +80,7 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, ExtensionsDialog::show);
+        onChange(button, () -> ExtensionsDialog.show(fullscreen));
 
         //extensions title
         label = new Label(prop.getProperty("extensions"), skin, "field");
