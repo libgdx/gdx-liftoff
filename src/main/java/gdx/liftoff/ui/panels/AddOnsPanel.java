@@ -22,6 +22,10 @@ import static gdx.liftoff.ui.data.Data.*;
  */
 public class AddOnsPanel extends Table implements Panel {
     public AddOnsPanel() {
+        this(false);
+    }
+
+    public AddOnsPanel(boolean fullscreen) {
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(SPACE_HUGE);
 
@@ -34,7 +38,7 @@ public class AddOnsPanel extends Table implements Panel {
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, PlatformsDialog::show);
+        onChange(button, () -> PlatformsDialog.show(fullscreen));
 
         //platforms title
         label = new Label(prop.getProperty("platforms"), skin, "field");

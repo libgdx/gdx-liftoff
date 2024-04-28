@@ -91,7 +91,7 @@ public class FullscreenDialog extends PopTable {
 
         //add-ons panel
         table.defaults().space(SPACE_HUGE).uniformX().growY().maxHeight(500);
-        AddOnsPanel addOnsPanel = new AddOnsPanel();
+        AddOnsPanel addOnsPanel = new AddOnsPanel(true);
         table.add(addOnsPanel);
 
         //third-party panel
