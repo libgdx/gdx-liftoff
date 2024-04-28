@@ -2,6 +2,7 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
@@ -17,6 +18,7 @@ import gdx.liftoff.ui.panels.GeneratingPanel;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
 //todo:add version
 /**
@@ -67,7 +69,7 @@ public class FullscreenCompleteDialog extends PopTable {
         GeneratingPanel generatingPanel = new GeneratingPanel();
 
         Table table = new Table();
-        contentTable.stack(generatingPanel, table);
+        contentTable.stack(generatingPanel, table).grow();
 
         //complete panel
         table.defaults().space(SPACE_MEDIUM);
@@ -92,6 +94,10 @@ public class FullscreenCompleteDialog extends PopTable {
             targeting(table, fadeIn(.3f)),
             targeting(table, touchable(Touchable.enabled))
         ));
+
+        contentTable.row();
+        Label label = new Label(liftoffVersion, skin);
+        contentTable.add(label).expandX().right();
     }
 
     public static void show() {

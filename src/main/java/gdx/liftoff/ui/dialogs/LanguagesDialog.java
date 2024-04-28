@@ -13,6 +13,7 @@ import static gdx.liftoff.ui.data.Data.*;
  * Dialog shown when the user clicks the languages list in the add-ons panel
  */
 public class LanguagesDialog extends PopTable  {
+    //todo:Need to add fullscreen option that puts contents in a scalingGroup
     public LanguagesDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);

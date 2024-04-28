@@ -71,6 +71,7 @@ public class Main extends ApplicationAdapter {
     public static final float TOOLTIP_WIDTH = 200;
     public static final float TOOLTIP_WIDTH_LARGE = 300;
 
+    //todo:add fade out/in methods for overlay table
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");

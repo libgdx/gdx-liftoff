@@ -19,6 +19,7 @@ import static gdx.liftoff.Main.*;
  * Dialog displayed when users click the "Add Gradle Tasks" button in the settings panel
  */
 public class GradleDialog extends PopTable  {
+    //todo:Need to add fullscreen option that puts contents in a scalingGroup
     public GradleDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);

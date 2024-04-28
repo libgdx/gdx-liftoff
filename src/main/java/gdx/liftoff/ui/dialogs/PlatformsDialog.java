@@ -14,6 +14,7 @@ import static gdx.liftoff.Main.*;
 public class PlatformsDialog extends PopTable  {
     private static GlyphLayout layout = new GlyphLayout();
 
+    //todo:Need to add fullscreen option that puts contents in a scalingGroup
     public PlatformsDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);

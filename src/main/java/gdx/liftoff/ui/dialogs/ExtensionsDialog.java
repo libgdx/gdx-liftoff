@@ -22,6 +22,7 @@ import static gdx.liftoff.Main.*;
 public class ExtensionsDialog extends PopTable  {
     private static GlyphLayout layout = new GlyphLayout();
 
+    //todo:Need to add fullscreen option that puts contents in a scalingGroup
     public ExtensionsDialog() {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
