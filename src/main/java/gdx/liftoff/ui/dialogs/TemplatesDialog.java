@@ -11,7 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
+import com.ray3k.stripe.CollapsibleGroup;
+import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
+import com.ray3k.stripe.ScaleContainer;
 
 import static gdx.liftoff.Main.*;
 
@@ -21,26 +25,53 @@ import static gdx.liftoff.Main.*;
 public class TemplatesDialog extends PopTable  {
     private static GlyphLayout layout = new GlyphLayout();
 
-    //todo:Need to add fullscreen option that puts contents in a scalingGroup
-    public TemplatesDialog() {
+    public TemplatesDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
         setHideOnUnfocus(true);
-        pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
+
+        if (fullscreen) {
+            CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
+            add(collapsibleGroup).grow();
+
+            Table contentTable = new Table();
+            populate(contentTable);
+
+            Container container = new Container(contentTable);
+            container.minSize(0, 0);
+            collapsibleGroup.addActor(container);
+
+            contentTable = new Table();
+            populate(contentTable);
+
+            ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+            scaleContainer.setMinSize(1920, 1080);
+            scaleContainer.setPrefSize(1920, 1080);
+            collapsibleGroup.addActor(scaleContainer);
+        } else {
+            Table contentTable = new Table();
+            add(contentTable);
+            populate(contentTable);
+        }
+    }
+
+    private void populate(Table contentTable) {
+        contentTable.clearChildren();
+        contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
         Label label = new Label(prop.getProperty("templates"), skin, "header");
-        add(label);
+        contentTable.add(label);
 
         //scrollable area includes basic templates, third-party templates, and links
-        row();
+        contentTable.row();
         Table scrollTable = new Table();
         scrollTable.pad(SPACE_SMALL);
         ScrollPane scrollPane = new ScrollPane(scrollTable, skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFlickScroll(false);
-        add(scrollPane).grow().spaceTop(SPACE_LARGE);
+        contentTable.add(scrollPane).grow().spaceTop(SPACE_LARGE);
         addScrollFocusListener(scrollPane);
         stage.setScrollFocus(scrollPane);
 
@@ -111,9 +142,9 @@ public class TemplatesDialog extends PopTable  {
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
 
         //ok button
-        row();
+        contentTable.row();
         textButton = new TextButton("OK", skin);
-        add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
+        contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, () -> {
             hide();
@@ -184,8 +215,9 @@ public class TemplatesDialog extends PopTable  {
         });
     }
 
-    public static void show() {
-        TemplatesDialog dialog = new TemplatesDialog();
+    public static void show(boolean fullscreen) {
+        TemplatesDialog dialog = new TemplatesDialog(fullscreen);
+        dialog.setFillParent(fullscreen);
         dialog.show(stage);
     }
 }

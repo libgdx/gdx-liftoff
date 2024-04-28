@@ -130,7 +130,7 @@ public class AddOnsPanel extends Table implements Panel {
         chooseContainer.setTouchable(Touchable.enabled);
         stack.add(chooseContainer);
         addHandListener(chooseContainer);
-        onClick(chooseContainer, TemplatesDialog::show);
+        onClick(chooseContainer, () -> TemplatesDialog.show(fullscreen));
         chooseContainer.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
