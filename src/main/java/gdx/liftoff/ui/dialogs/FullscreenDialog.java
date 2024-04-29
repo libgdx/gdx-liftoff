@@ -104,7 +104,7 @@ public class FullscreenDialog extends PopTable {
 
         //settings panel
         subTable.defaults().space(SPACE_LARGE);
-        SettingsPanel settingsPanel = new SettingsPanel();
+        SettingsPanel settingsPanel = new SettingsPanel(true);
         subTable.add(settingsPanel);
 
         //paths panel

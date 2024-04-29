@@ -16,6 +16,10 @@ public class SettingsPanel extends Table implements Panel {
     private Actor keyboardFocus;
 
     public SettingsPanel() {
+        this(false);
+    }
+
+    public SettingsPanel(boolean fullscreen) {
         //title
         Label label = new Label(prop.getProperty("advanced"), skin, "header");
         add(label).space(SPACE_HUGE);
@@ -52,7 +56,7 @@ public class SettingsPanel extends Table implements Panel {
         add(textButton).spaceTop(SPACE_HUGE);
         addHandListener(textButton);
         onChange(textButton, () -> {
-            PopTable pop = GradleDialog.show();
+            PopTable pop = GradleDialog.show(fullscreen);
             pop.addListener(new TableShowHideListener() {
                 @Override
                 public void tableShown(Event event) {
