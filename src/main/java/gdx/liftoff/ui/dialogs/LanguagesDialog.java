@@ -11,7 +11,6 @@ import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 /**
  * Dialog shown when the user clicks the languages list in the add-ons panel
@@ -139,7 +138,7 @@ public class LanguagesDialog extends PopTable  {
         table.add(checkBox);
         addHandListener(checkBox);
 
-        TextField textField = new TextField(groovyDefaultVersion, skin);
+        TextField textField = new TextField(data.getString("groovyDefaultVersion"), skin);
         textField.setAlignment(Align.center);
         table.add(textField);
         addIbeamListener(textField);

@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 /**
  * A table to display libGDX related links including libgdx.com, Discord, and the wiki

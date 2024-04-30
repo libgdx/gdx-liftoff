@@ -13,7 +13,6 @@ import gdx.liftoff.ui.panels.*;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
 /**
  * Dialog shown when in fullscreen layout mode. This includes all the panels at once. The layout scales up if the
@@ -129,7 +128,7 @@ public class FullscreenDialog extends PopTable {
         )));
 
         //version
-        label = new Label(liftoffVersion, skin);
+        label = new Label(data.getString("liftoffVersion"), skin);
         table.add(label).expandX().right().bottom();
     }
 

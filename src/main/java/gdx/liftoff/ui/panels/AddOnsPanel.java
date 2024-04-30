@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.dialogs.ExtensionsDialog;
 import gdx.liftoff.ui.dialogs.LanguagesDialog;
@@ -15,7 +14,6 @@ import gdx.liftoff.ui.dialogs.PlatformsDialog;
 import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 /**
  * The table including the lists of platforms, languages, and extensions as well as a button to choose the template
@@ -52,7 +50,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, platformsNames);
+        populateAddOnTable(scrollTable, splitData("platformNames"));
         addScrollFocusListener(scrollPane);
 
         //languages
@@ -73,7 +71,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, languagesNames);
+        populateAddOnTable(scrollTable, splitData("languagesNames"));
         addScrollFocusListener(scrollPane);
 
         //extensions
@@ -94,7 +92,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, extensionsNames);
+        populateAddOnTable(scrollTable, splitData("extensionsNames"));
         addScrollFocusListener(scrollPane);
 
         //template

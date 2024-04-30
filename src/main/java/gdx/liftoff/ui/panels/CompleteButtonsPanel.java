@@ -1,12 +1,9 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import gdx.liftoff.ui.LogoWidget;
 
 import static gdx.liftoff.Main.*;
 

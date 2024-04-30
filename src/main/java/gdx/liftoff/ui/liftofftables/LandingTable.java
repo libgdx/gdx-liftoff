@@ -16,7 +16,6 @@ import gdx.liftoff.ui.panels.SocialPanel;
 import static com.badlogic.gdx.math.Interpolation.exp10Out;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 /**
  * This table is the first table visible in the app. All the elements animate into view, but may be skipped by the user
@@ -71,7 +70,7 @@ public class LandingTable extends LiftoffTable {
         stack.add(subtitleLabel);
 
         //version
-        versionLabel = new Label(liftoffVersion, skin);
+        versionLabel = new Label(data.getString("liftoffVersion"), skin);
         versionLabel.setEllipsis("...");
         versionLabel.setAlignment(Align.center);
         stack.add(versionLabel);

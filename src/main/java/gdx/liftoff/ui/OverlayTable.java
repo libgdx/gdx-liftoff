@@ -2,15 +2,16 @@ package gdx.liftoff.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.Main;
-import gdx.liftoff.ui.data.Data;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.*;
 
 /**
  * A simple table to overlay the rest of the UI. This contains the maximize button and version. It implements a reactive
@@ -60,7 +61,7 @@ public class OverlayTable extends Table {
 
         //version
         table.row();
-        Label label = new Label(liftoffVersion, skin);
+        Label label = new Label(data.getString("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 
         return table;

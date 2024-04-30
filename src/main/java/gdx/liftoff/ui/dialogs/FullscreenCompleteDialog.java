@@ -18,7 +18,6 @@ import gdx.liftoff.ui.panels.GeneratingPanel;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
 /**
  * Dialog shown when in fullscreen layout mode and the user clicks the generate button. The layout scales up if the
@@ -96,7 +95,7 @@ public class FullscreenCompleteDialog extends PopTable {
         ));
 
         contentTable.row();
-        Label label = new Label(liftoffVersion, skin);
+        Label label = new Label(data.getString("liftoffVersion"), skin);
         contentTable.add(label).expandX().right();
     }
 

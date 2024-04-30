@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import gdx.liftoff.ui.liftofftables.*;
 
-import static com.badlogic.gdx.math.Interpolation.*;
+import static com.badlogic.gdx.math.Interpolation.exp5;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 

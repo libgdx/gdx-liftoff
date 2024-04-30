@@ -10,8 +10,6 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
 import static gdx.liftoff.Main.*;
-import static gdx.liftoff.Main.skin;
-import static gdx.liftoff.ui.data.Data.liftoffVersion;
 
 /**
  * A table containing the logo image and version. It is resizable, hiding elements as necessary to fit in smaller
@@ -44,7 +42,7 @@ public class LogoWidget extends Table {
         verticalCollapsibleGroup.addActor(container);
 
         //version
-        Label label = new Label(liftoffVersion, skin);
+        Label label = new Label(data.getString("liftoffVersion"), skin);
         label.setEllipsis("...");
         container.setActor(label);
 

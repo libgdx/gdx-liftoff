@@ -1,11 +1,13 @@
 package gdx.liftoff.ui.panels;
 
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.PopTable.TableShowHideListener;
-import gdx.liftoff.ui.dialogs.*;
+import gdx.liftoff.ui.dialogs.GradleDialog;
 
 import static gdx.liftoff.Main.*;
 

@@ -2,9 +2,11 @@ package gdx.liftoff;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -30,7 +32,6 @@ import com.ray3k.stripe.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import org.lwjgl.PointerBuffer;
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
@@ -71,6 +72,8 @@ public class Main extends ApplicationAdapter {
     public static final float TOOLTIP_WIDTH = 200;
     public static final float TOOLTIP_WIDTH_LARGE = 300;
 
+    public static Preferences data;
+
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
@@ -98,6 +101,8 @@ public class Main extends ApplicationAdapter {
         screenViewport = new ScreenViewport();
         batch = new SpriteBatch();
         stage = new Stage(screenViewport, batch);
+
+        data = new Lwjgl3Preferences(Gdx.files.internal("ui-data/data"));
 
         Gdx.input.setInputProcessor(stage);
 
@@ -333,5 +338,26 @@ public class Main extends ApplicationAdapter {
     public static void restoreWindow() {
         Lwjgl3Graphics g = (Lwjgl3Graphics) Gdx.graphics;
         g.getWindow().restoreWindow();
+    }
+
+    /**
+     * Splits a comma separated value list in a String and returns an Array{@literal <}String{@literal >}
+     *
+     * @param string
+     * @return
+     */
+    public static Array<String> splitCSV(String string) {
+        return new Array<>(string.split(","));
+    }
+
+    /**
+     * Splits a comma separated value list from the data preferences file and returns an Array{@literal
+     * <}String{@literal >}
+     *
+     * @param key
+     * @return
+     */
+    public static Array<String> splitData(String key) {
+        return splitCSV(data.getString(key));
     }
 }

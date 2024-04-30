@@ -2,20 +2,13 @@ package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
-import com.ray3k.stripe.CollapsibleGroup;
-import com.ray3k.stripe.PopTable;
-import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.Main;
-import gdx.liftoff.ui.dialogs.GradleDialog;
-import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
 import static gdx.liftoff.Main.*;
 
