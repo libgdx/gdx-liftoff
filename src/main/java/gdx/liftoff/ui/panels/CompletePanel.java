@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import gdx.liftoff.ui.LogoWidget;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -35,7 +36,7 @@ public class CompletePanel extends Table implements Panel {
         addScrollFocusListener(scrollPane);
 
         //output label
-        Label outputLabel = new Label(prop.getProperty("generationEnd") + "\n" + prop.getProperty("generationEnd"), skin, "description");
+        Label outputLabel = new Label(UserData.log, skin, "description");
         outputLabel.setWrap(true);
         scrollTable.add(outputLabel).grow();
 

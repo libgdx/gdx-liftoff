@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -25,9 +26,9 @@ public class PathsPanel extends Table implements Panel {
         add(label).minWidth(0);
 
         //project field
-        addField("C:/users/yourname/gamename/");
+        addField(UserData.projectPath);
 
-        if (1+1==2) {
+        if (UserData.platforms.contains("ANDROID", false)) {
             //android label
             row();
             label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
@@ -35,7 +36,7 @@ public class PathsPanel extends Table implements Panel {
             add(label).minWidth(0);
 
             //android field
-            addField("C:/users/yourname/android/");
+            addField(UserData.androidPath);
         }
     }
 

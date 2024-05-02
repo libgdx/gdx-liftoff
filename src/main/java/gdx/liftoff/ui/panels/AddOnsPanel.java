@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.SmashGroup;
+import gdx.liftoff.ui.data.UserData;
 import gdx.liftoff.ui.dialogs.ExtensionsDialog;
 import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
@@ -50,7 +51,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, splitData("platformsNames"));
+        populateAddOnTable(scrollTable, UserData.platforms);
         addScrollFocusListener(scrollPane);
 
         //languages
@@ -71,7 +72,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, splitData("languagesNames"));
+        populateAddOnTable(scrollTable, UserData.getLanguages());
         addScrollFocusListener(scrollPane);
 
         //extensions
@@ -92,7 +93,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, splitData("extensionsNames"));
+        populateAddOnTable(scrollTable, UserData.extensions);
         addScrollFocusListener(scrollPane);
 
         //template
@@ -115,7 +116,7 @@ public class AddOnsPanel extends Table implements Panel {
         stack.add(smashGroup);
 
         //template button
-        TextButton chooseFieldButton = new TextButton("CLASSIC", skin, "field");
+        TextButton chooseFieldButton = new TextButton(UserData.template, skin, "field");
         chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);

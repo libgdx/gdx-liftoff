@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import gdx.liftoff.ui.data.UserData;
 
 import java.util.Locale;
 
@@ -235,18 +236,22 @@ public class ThirdPartyPanel extends Table implements Panel {
                 !searchEntry.name.toLowerCase(Locale.ROOT).contains(search) &&
                 !searchEntry.keywords.toLowerCase(Locale.ROOT).contains(search)) continue;
 
+            //entry checkbox
             scrollTable.row();
             CheckBox checkBox = new CheckBox(searchEntry.name, skin);
+            checkBox.setChecked(UserData.thirdPartyLibs.contains(searchEntry.name, false));
             checkBox.getLabel().setWrap(true);
             checkBox.getLabelCell().growX().maxWidth(200);
             scrollTable.add(checkBox).left().growX();
             addHandListener(checkBox);
 
+            //entry label
             Label label = new Label(searchEntry.description, skin, "description");
             label.setWrap(true);
             scrollTable.add(label).growX().align(Align.left);
             addLabelHighlight(checkBox, label);
 
+            //entry link button
             Button button = new Button(skin, "external-link");
             scrollTable.add(button).padRight(SPACE_SMALL);
             addHandListener(button);

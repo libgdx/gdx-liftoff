@@ -373,5 +373,6 @@ public class Main extends ApplicationAdapter {
         UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
         UserData.projectPath = prop.getProperty("projectPathDefault");
         UserData.androidPath = prop.getProperty("androidPathDefault");
+        UserData.log = prop.getProperty("generationEnd") + "\n" + prop.getProperty("generationEnd");
     }
 }

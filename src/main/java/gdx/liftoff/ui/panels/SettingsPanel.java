@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.PopTable.TableShowHideListener;
+import gdx.liftoff.ui.data.UserData;
 import gdx.liftoff.ui.dialogs.GradleDialog;
 
 import static gdx.liftoff.Main.*;
@@ -34,23 +35,23 @@ public class SettingsPanel extends Table implements Panel {
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
         table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
-        addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), table, true);
+        addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), UserData.libgdxVersion, table, true);
 
         //java version
-        addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), table);
+        addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
 
         //application version
-        addField(prop.getProperty("version"), prop.getProperty("versionTip"), table);
+        addField(prop.getProperty("version"), prop.getProperty("versionTip"), UserData.appVersion, table);
 
         //robovm version
-        addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), table);
+        addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), UserData.robovmVersion, table);
 
         //add gui assets
         table.defaults().spaceTop(SPACE_MEDIUM);
-        addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), table);
+        addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), UserData.addGuiAssets, table);
 
         //add readme
-        addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), table);
+        addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), UserData.addReadme, table);
 
         //add gradle tasks
         row();
@@ -73,8 +74,8 @@ public class SettingsPanel extends Table implements Panel {
         });
     }
 
-    private void addField(String text, String tip, Table table) {
-        addField(text, tip, table, false);
+    private void addField(String text, String tip, String version, Table table) {
+        addField(text, tip, version, table, false);
     }
 
     /**
@@ -84,7 +85,7 @@ public class SettingsPanel extends Table implements Panel {
      * @param table
      * @param setKeyboardFocus
      */
-    private void addField(String text, String tip, Table table, boolean setKeyboardFocus) {
+    private void addField(String text, String tip, String version, Table table, boolean setKeyboardFocus) {
         table.row();
         Label label = new Label(text, skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -92,6 +93,7 @@ public class SettingsPanel extends Table implements Panel {
         table.add(label).minWidth(0);
 
         TextField textField = new TextField("", skin);
+        textField.setText(version);
         table.add(textField);
         addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, tip);
         addIbeamListener(textField);
@@ -105,7 +107,7 @@ public class SettingsPanel extends Table implements Panel {
      * @param tip
      * @param table
      */
-    private void addCheck(String text, String tip, Table table) {
+    private void addCheck(String text, String tip, Boolean checked, Table table) {
         table.row();
         Label label = new Label(text, skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -114,6 +116,7 @@ public class SettingsPanel extends Table implements Panel {
 
         ImageButton imageButton = new ImageButton(skin, "check");
         imageButton.left();
+        imageButton.setChecked(checked);
         table.add(imageButton);
         addTooltip(imageButton, label, Align.top, TOOLTIP_WIDTH, tip);
         addHandListener(imageButton);

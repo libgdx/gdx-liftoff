@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.Main;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -28,6 +29,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //project field
         TextField textField = new TextField("", skin);
+        textField.setText(UserData.projectName);
         keyboardActor = textField;
         add(textField);
         addIbeamListener(textField);
@@ -44,6 +46,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //package field
         textField = new TextField("", skin);
+        textField.setText(UserData.packageName);
         add(textField);
         addIbeamListener(textField);
         addTooltip(textField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
@@ -59,6 +62,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //main class field
         textField = new TextField("", skin);
+        textField.setText(UserData.mainClassName);
         add(textField);
         addIbeamListener(textField);
         addTooltip(textField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));

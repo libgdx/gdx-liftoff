@@ -42,7 +42,7 @@ public class LogoWidget extends Table {
         verticalCollapsibleGroup.addActor(container);
 
         //version
-        Label label = new Label(data.getString("liftoffVersion"), skin);
+        Label label = new Label(prop.getProperty("liftoffVersion"), skin);
         label.setEllipsis("...");
         container.setActor(label);
 

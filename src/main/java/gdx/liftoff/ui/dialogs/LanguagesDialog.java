@@ -9,6 +9,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -83,9 +84,9 @@ public class LanguagesDialog extends PopTable  {
         table.columnDefaults(1).width(175);
 
         //languages
-        addLanguage(table, "groovy");
-        addLanguage(table, "kotlin");
-        addLanguage(table, "scala");
+        addLanguage(table, "groovy", prop.getProperty("groovyDefaultVersion"));
+        addLanguage(table, "kotlin", prop.getProperty("kotlinDefaultVersion"));
+        addLanguage(table, "scala", prop.getProperty("scalaDefaultVersion"));
 
         //languages description
         scrollTable.row();
@@ -132,13 +133,13 @@ public class LanguagesDialog extends PopTable  {
      * @param table
      * @param name
      */
-    private void addLanguage(Table table, String name) {
+    private void addLanguage(Table table, String name, String version) {
         table.row();
         CheckBox checkBox = new CheckBox(prop.getProperty(name), skin);
         table.add(checkBox);
         addHandListener(checkBox);
 
-        TextField textField = new TextField(data.getString("groovyDefaultVersion"), skin);
+        TextField textField = new TextField(version, skin);
         textField.setAlignment(Align.center);
         table.add(textField);
         addIbeamListener(textField);

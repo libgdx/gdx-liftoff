@@ -1,7 +1,9 @@
 package gdx.liftoff.ui.data;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.OrderedMap;
+
 
 public class UserData {
     public static String projectName;
@@ -21,4 +23,13 @@ public class UserData {
     public static String gradleTasks;
     public static String projectPath;
     public static String androidPath;
+    public static String log;
+
+    public static Array<String> getLanguages() {
+        Array<String> languages = new Array<>();
+        for (Entry<String, String> entry : languageVersions.entries()) {
+            languages.add(entry.key + " " + entry.value);
+        }
+        return languages;
+    }
 }

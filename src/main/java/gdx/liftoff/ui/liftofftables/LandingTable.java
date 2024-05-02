@@ -70,7 +70,7 @@ public class LandingTable extends LiftoffTable {
         stack.add(subtitleLabel);
 
         //version
-        versionLabel = new Label(data.getString("liftoffVersion"), skin);
+        versionLabel = new Label(prop.getProperty("liftoffVersion"), skin);
         versionLabel.setEllipsis("...");
         versionLabel.setAlignment(Align.center);
         stack.add(versionLabel);
