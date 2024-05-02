@@ -50,7 +50,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, splitData("platformNames"));
+        populateAddOnTable(scrollTable, splitData("platformsNames"));
         addScrollFocusListener(scrollPane);
 
         //languages

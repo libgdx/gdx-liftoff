@@ -19,10 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
@@ -31,6 +28,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
+import gdx.liftoff.ui.data.UserData;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
@@ -95,6 +93,10 @@ public class Main extends ApplicationAdapter {
             throw new RuntimeException(e);
         }
 
+        data = new Lwjgl3Preferences(Gdx.files.internal("ui-data/data"));
+
+        setDefaultUserData();
+
         skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
 
         fitViewport = new FitViewport(1920, 1080);
@@ -102,7 +104,6 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         stage = new Stage(screenViewport, batch);
 
-        data = new Lwjgl3Preferences(Gdx.files.internal("ui-data/data"));
 
         Gdx.input.setInputProcessor(stage);
 
@@ -359,5 +360,32 @@ public class Main extends ApplicationAdapter {
      */
     public static Array<String> splitData(String key) {
         return splitCSV(data.getString(key));
+    }
+
+    public static void setDefaultUserData() {
+        UserData.projectName = data.getString("projectNameDefault");
+        UserData.packageName = data.getString("packageNameDefault");
+        UserData.mainClassName = data.getString("mainClassNameDefault");
+        UserData.platforms = splitData("platformsDefaultNames");
+
+        Array<String> languageNames = splitData("languagesDefaultNames");
+        Array<String> languageVersions = splitData("languagesDefaultVersions");
+        UserData.languageVersions = new OrderedMap<>();
+        for (int i = 0; i < languageNames.size; i++) {
+            UserData.languageVersions.put(languageNames.get(i), languageVersions.get(i));
+        }
+
+        UserData.extensions = splitData("extensionsDefaultNames");
+        UserData.template = data.getString("templateDefaultName");
+        UserData.thirdPartyLibs = splitData("platformsDefaultNames");
+        UserData.libgdxVersion = data.getString("libgdxDefaultVersion");
+        UserData.javaVersion = data.getString("javaDefaultVersion");
+        UserData.appVersion = data.getString("appDefaultVersion");
+        UserData.robovmVersion = data.getString("robovmDefaultVersion");
+        UserData.addGuiAssets = data.getBoolean("addGuiAssetsDefault");
+        UserData.addReadme = data.getBoolean("addReadmeDefault");
+        UserData.gradleTasks = data.getString("gradleTasksDefault");
+        UserData.projectPath = data.getString("projectPathDefault");
+        UserData.androidPath = data.getString("androidPathDefault");
     }
 }
