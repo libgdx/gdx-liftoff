@@ -70,8 +70,6 @@ public class Main extends ApplicationAdapter {
     public static final float TOOLTIP_WIDTH = 200;
     public static final float TOOLTIP_WIDTH_LARGE = 300;
 
-    public static Preferences data;
-
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
@@ -89,11 +87,10 @@ public class Main extends ApplicationAdapter {
         try {
             prop.load(Gdx.files.internal("ui-data/nls.properties").read());
             prop.load(Gdx.files.internal("ui-data/urls.properties").read());
+            prop.load(Gdx.files.internal("ui-data/defaults.properties").read());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        data = new Lwjgl3Preferences(Gdx.files.internal("ui-data/data"));
 
         setDefaultUserData();
 
@@ -351,41 +348,30 @@ public class Main extends ApplicationAdapter {
         return new Array<>(string.split(","));
     }
 
-    /**
-     * Splits a comma separated value list from the data preferences file and returns an Array{@literal
-     * <}String{@literal >}
-     *
-     * @param key
-     * @return
-     */
-    public static Array<String> splitData(String key) {
-        return splitCSV(data.getString(key));
-    }
-
     public static void setDefaultUserData() {
-        UserData.projectName = data.getString("projectNameDefault");
-        UserData.packageName = data.getString("packageNameDefault");
-        UserData.mainClassName = data.getString("mainClassNameDefault");
-        UserData.platforms = splitData("platformsDefaultNames");
+        UserData.projectName = prop.getProperty("projectNameDefault");
+        UserData.packageName = prop.getProperty("packageNameDefault");
+        UserData.mainClassName = prop.getProperty("mainClassNameDefault");
+        UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
 
-        Array<String> languageNames = splitData("languagesDefaultNames");
-        Array<String> languageVersions = splitData("languagesDefaultVersions");
+        Array<String> languageNames = splitCSV(prop.getProperty("languagesDefaultNames"));
+        Array<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
         UserData.languageVersions = new OrderedMap<>();
         for (int i = 0; i < languageNames.size; i++) {
             UserData.languageVersions.put(languageNames.get(i), languageVersions.get(i));
         }
 
-        UserData.extensions = splitData("extensionsDefaultNames");
-        UserData.template = data.getString("templateDefaultName");
-        UserData.thirdPartyLibs = splitData("platformsDefaultNames");
-        UserData.libgdxVersion = data.getString("libgdxDefaultVersion");
-        UserData.javaVersion = data.getString("javaDefaultVersion");
-        UserData.appVersion = data.getString("appDefaultVersion");
-        UserData.robovmVersion = data.getString("robovmDefaultVersion");
-        UserData.addGuiAssets = data.getBoolean("addGuiAssetsDefault");
-        UserData.addReadme = data.getBoolean("addReadmeDefault");
-        UserData.gradleTasks = data.getString("gradleTasksDefault");
-        UserData.projectPath = data.getString("projectPathDefault");
-        UserData.androidPath = data.getString("androidPathDefault");
+        UserData.extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
+        UserData.template = prop.getProperty("templateDefaultName");
+        UserData.thirdPartyLibs = splitCSV(prop.getProperty("platformsDefaultNames"));
+        UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
+        UserData.javaVersion = prop.getProperty("javaDefaultVersion");
+        UserData.appVersion = prop.getProperty("appDefaultVersion");
+        UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
+        UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
+        UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
+        UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
+        UserData.projectPath = prop.getProperty("projectPathDefault");
+        UserData.androidPath = prop.getProperty("androidPathDefault");
     }
 }
