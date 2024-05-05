@@ -10,6 +10,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -126,16 +127,21 @@ public class ExtensionsDialog extends PopTable  {
     /**
      * Convenience method that adds an extension to the given table
      * @param table
-     * @param labelText
+     * @param extensionName
      * @param description
      * @param url
      */
-    private void addExtension(Table table, String labelText, String description, String url) {
+    private void addExtension(Table table, String extensionName, String description, String url) {
         //checkbox
         table.row();
-        CheckBox checkBox = new CheckBox(labelText, skin);
+        CheckBox checkBox = new CheckBox(extensionName, skin);
+        checkBox.setChecked(UserData.extensions.contains(extensionName, false));
         table.add(checkBox);
         addHandListener(checkBox);
+        onChange(checkBox, () -> {
+            if (checkBox.isChecked() && !UserData.extensions.contains(extensionName, false)) UserData.extensions.add(extensionName);
+            else UserData.platforms.removeValue(extensionName, false);
+        });
 
         Table subTable = new Table();
         table.add(subTable);

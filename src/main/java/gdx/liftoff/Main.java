@@ -354,11 +354,11 @@ public class Main extends ApplicationAdapter {
         UserData.mainClassName = prop.getProperty("mainClassNameDefault");
         UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
 
-        Array<String> languageNames = splitCSV(prop.getProperty("languagesDefaultNames"));
+        UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
         Array<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
         UserData.languageVersions = new OrderedMap<>();
-        for (int i = 0; i < languageNames.size; i++) {
-            UserData.languageVersions.put(languageNames.get(i), languageVersions.get(i));
+        for (int i = 0; i < UserData.languages.size; i++) {
+            UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
         }
 
         UserData.extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));

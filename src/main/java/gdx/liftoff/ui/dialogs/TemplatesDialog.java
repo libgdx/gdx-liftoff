@@ -16,6 +16,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -159,18 +160,20 @@ public class TemplatesDialog extends PopTable  {
      * A convenience method to add a template to the table
      * @param table
      * @param buttonGroup
-     * @param labelText
+     * @param templateName
      * @param description
      * @param showGuiTip
      */
-    private void addTemplate(Table table, ButtonGroup buttonGroup, String labelText, String description, boolean showGuiTip) {
+    private void addTemplate(Table table, ButtonGroup buttonGroup, String templateName, String description, boolean showGuiTip) {
         table.row();
-        CheckBox checkBox = new CheckBox(labelText, skin, "radio");
+        CheckBox checkBox = new CheckBox(templateName, skin, "radio");
+        checkBox.setChecked(UserData.template.equals(templateName));
         checkBox.left();
         table.add(checkBox).spaceRight(SPACE_MEDIUM).growX();
         buttonGroup.add(checkBox);
         addHandListener(checkBox);
         if (showGuiTip) addTooltip(checkBox, Align.top, prop.getProperty("templatesStar"));
+        onChange(checkBox, () -> UserData.template = templateName);
 
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");

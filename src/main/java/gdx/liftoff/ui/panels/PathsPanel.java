@@ -17,7 +17,7 @@ import static gdx.liftoff.Main.*;
  * Table that displays the project path and the android sdk path if android is selected as a platform
  */
 public class PathsPanel extends Table implements Panel {
-
+//todo:highlight field
     public PathsPanel() {
         //project label
         defaults().space(SPACE_MEDIUM);
@@ -28,7 +28,7 @@ public class PathsPanel extends Table implements Panel {
         //project field
         addField(UserData.projectPath);
 
-        if (UserData.platforms.contains("ANDROID", false)) {
+        if (UserData.platforms.contains(prop.getProperty("android"), false)) {
             //android label
             row();
             label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");

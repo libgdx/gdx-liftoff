@@ -1,7 +1,6 @@
 package gdx.liftoff.ui.data;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.OrderedMap;
 
 
@@ -10,6 +9,7 @@ public class UserData {
     public static String packageName;
     public static String mainClassName;
     public static Array<String> platforms;
+    public static Array<String> languages;
     public static OrderedMap<String, String> languageVersions;
     public static Array<String> extensions;
     public static String template;
@@ -26,10 +26,10 @@ public class UserData {
     public static String log;
 
     public static Array<String> getLanguages() {
-        Array<String> languages = new Array<>();
-        for (Entry<String, String> entry : languageVersions.entries()) {
-            languages.add(entry.key + " " + entry.value);
+        Array<String> returnValue = new Array<>();
+        for (String language : languages) {
+            returnValue.add(language + " " + languageVersions.get(language));
         }
-        return languages;
+        return returnValue;
     }
 }

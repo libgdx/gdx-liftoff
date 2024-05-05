@@ -131,23 +131,39 @@ public class LanguagesDialog extends PopTable  {
     /**
      * Convenience method to add a language to the table
      * @param table
-     * @param name
+     * @param languageName
      */
-    private void addLanguage(Table table, String name, String version) {
+    private void addLanguage(Table table, String languageName, String defaultVersion) {
         table.row();
-        CheckBox checkBox = new CheckBox(prop.getProperty(name), skin);
+        CheckBox checkBox = new CheckBox(prop.getProperty(languageName), skin);
+        checkBox.setChecked(UserData.languages.contains(languageName, false));
         table.add(checkBox);
         addHandListener(checkBox);
 
-        TextField textField = new TextField(version, skin);
+        TextField textField = new TextField(defaultVersion, skin);
+        if (UserData.languageVersions.containsKey(languageName)) {
+            textField.setText(UserData.languageVersions.get(languageName));
+        }
         textField.setAlignment(Align.center);
         table.add(textField);
         addIbeamListener(textField);
 
+        onChange(checkBox, () -> {
+            if (checkBox.isChecked()) {
+                UserData.languages.add(languageName);
+                UserData.languageVersions.put(languageName, textField.getText());
+            }
+            else UserData.languages.removeValue(languageName, false);
+        });
+
+        onChange(textField, () -> {
+            UserData.languageVersions.put(languageName, textField.getText());
+        });
+
         Button button = new Button(skin, "external-link");
         table.add(button);
         addHandListener(button);
-        onChange(button, () -> Gdx.net.openURI(prop.getProperty(name + "Url")));
+        onChange(button, () -> Gdx.net.openURI(prop.getProperty(languageName + "Url")));
     }
 
     public static void show(boolean fullscreen) {

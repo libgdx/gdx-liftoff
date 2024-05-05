@@ -9,6 +9,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -123,16 +124,21 @@ public class PlatformsDialog extends PopTable  {
     /**
      * Convenience method to add platforms to the table
      * @param table
-     * @param labelString
+     * @param platformName
      * @param description
      * @return
      */
-    private CheckBox addPlatform(Table table, String labelString, String description) {
+    private CheckBox addPlatform(Table table, String platformName, String description) {
         table.row();
-        CheckBox checkBox = new CheckBox(labelString, skin);
+        CheckBox checkBox = new CheckBox(platformName, skin);
+        checkBox.setChecked(UserData.platforms.contains(platformName, false));
         checkBox.left();
         table.add(checkBox).growX();
         addHandListener(checkBox);
+        onChange(checkBox, () -> {
+            if (checkBox.isChecked() && !UserData.platforms.contains(platformName, false)) UserData.platforms.add(platformName);
+            else UserData.platforms.removeValue(platformName, false);
+        });
 
         Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
