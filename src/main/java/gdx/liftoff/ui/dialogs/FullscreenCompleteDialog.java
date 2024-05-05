@@ -12,7 +12,7 @@ import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.Main;
-import gdx.liftoff.ui.panels.CompleteButtonsFullscreenPanel;
+import gdx.liftoff.ui.panels.CompleteButtonsPanel;
 import gdx.liftoff.ui.panels.CompletePanel;
 import gdx.liftoff.ui.panels.GeneratingPanel;
 
@@ -77,7 +77,7 @@ public class FullscreenCompleteDialog extends PopTable {
 
         //buttons for the complete panel while in fullscreen
         table.row();
-        CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this, true);
+        CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel(this, true);
         table.add(completeButtonsPanel);
 
         //animation initial setup
