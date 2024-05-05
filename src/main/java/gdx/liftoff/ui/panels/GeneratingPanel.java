@@ -13,7 +13,12 @@ import static gdx.liftoff.Main.*;
  * The loading animation displayed before the project is generated
  */
 public class GeneratingPanel extends Table implements Panel {
-    public GeneratingPanel() {
+    public GeneratingPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    @Override
+    public void populate(boolean fullscreen) {
         //animation image
         Image image = new Image(skin,  "loading-anim");
         add(image);

@@ -14,7 +14,15 @@ import static gdx.liftoff.Main.*;
  * project generation is complete. This panel is intended for use only in the Fullscreen workflow.
  */
 public class CompleteButtonsFullscreenPanel extends Table implements Panel {
-    public CompleteButtonsFullscreenPanel(PopTable popTable) {
+    PopTable popTable;
+
+    public CompleteButtonsFullscreenPanel(PopTable popTable, boolean fullscreen) {
+        this.popTable = popTable;
+        populate(fullscreen);
+    }
+
+    @Override
+    public void populate(boolean fullscreen) {
         //new project button
         defaults().space(SPACE_MEDIUM);
         TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");

@@ -17,7 +17,12 @@ import static gdx.liftoff.Main.*;
 public class ProjectPanel extends Table implements Panel {
     private Actor keyboardActor;
 
-    public ProjectPanel() {
+    public ProjectPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    public void populate(boolean fullscreen) {
+        clearChildren();
         columnDefaults(0).right();
         columnDefaults(1).growX();
         defaults().space(SPACE_MEDIUM);
@@ -28,14 +33,14 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
 
         //project field
-        TextField textField = new TextField("", skin);
-        textField.setText(UserData.projectName);
-        keyboardActor = textField;
-        add(textField);
-        addIbeamListener(textField);
-        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
-        onChange(textField, () -> {
-
+        final TextField projectTextField = new TextField("", skin);
+        projectTextField.setText(UserData.projectName);
+        keyboardActor = projectTextField;
+        add(projectTextField);
+        addIbeamListener(projectTextField);
+        addTooltip(projectTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
+        onChange(projectTextField, () -> {
+            UserData.projectName = projectTextField.getText();
         });
 
         //package label
@@ -45,13 +50,13 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
 
         //package field
-        textField = new TextField("", skin);
-        textField.setText(UserData.packageName);
-        add(textField);
-        addIbeamListener(textField);
-        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
-        onChange(textField, () -> {
-
+        final TextField packageTextField = new TextField("", skin);
+        packageTextField.setText(UserData.packageName);
+        add(packageTextField);
+        addIbeamListener(packageTextField);
+        addTooltip(packageTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
+        onChange(packageTextField, () -> {
+            UserData.packageName = packageTextField.getText();
         });
 
         //main class label
@@ -61,15 +66,16 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
 
         //main class field
-        textField = new TextField("", skin);
-        textField.setText(UserData.mainClassName);
-        add(textField);
-        addIbeamListener(textField);
-        addTooltip(textField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
-        onChange(textField, () -> {
-
+        final TextField mainTextField = new TextField("", skin);
+        mainTextField.setText(UserData.mainClassName);
+        add(mainTextField);
+        addIbeamListener(mainTextField);
+        addTooltip(mainTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
+        onChange(mainTextField, () -> {
+            UserData.mainClassName = mainTextField.getText();
         });
 
+        //todo:update error label based on text entered in the fields
         //error label
         columnDefaults(0).reset();
         row();

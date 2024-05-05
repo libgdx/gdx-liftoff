@@ -80,7 +80,7 @@ public class FullscreenDialog extends PopTable {
 
         //new project panel
         table.row();
-        ProjectPanel projectPanel = new ProjectPanel();
+        ProjectPanel projectPanel = new ProjectPanel(true);
         table.add(projectPanel);
         projectPanel.captureKeyboardFocus();
 
@@ -94,7 +94,7 @@ public class FullscreenDialog extends PopTable {
         table.add(addOnsPanel);
 
         //third-party panel
-        ThirdPartyPanel thirdPartyPanel = new ThirdPartyPanel();
+        ThirdPartyPanel thirdPartyPanel = new ThirdPartyPanel(true);
         table.add(thirdPartyPanel);
 
         Table subTable = new Table();
@@ -108,7 +108,7 @@ public class FullscreenDialog extends PopTable {
 
         //paths panel
         subTable.row();
-        PathsPanel pathsPanel = new PathsPanel();
+        PathsPanel pathsPanel = new PathsPanel(true);
         subTable.add(pathsPanel);
 
         contentTable.row();

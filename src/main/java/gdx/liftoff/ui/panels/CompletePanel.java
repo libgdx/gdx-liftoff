@@ -13,7 +13,12 @@ import static gdx.liftoff.Main.*;
  * The panel that displays the result of project generation
  */
 public class CompletePanel extends Table implements Panel {
-    public CompletePanel() {
+    public CompletePanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    @Override
+    public void populate(boolean fullscreen) {
         //logo
         defaults().space(SPACE_MEDIUM);
         LogoWidget logo = new LogoWidget();

@@ -65,19 +65,19 @@ public class FullscreenCompleteDialog extends PopTable {
 
         //generating panel is displayed first and is alternated with the complete panel upon completion of the animation
         contentTable.row();
-        GeneratingPanel generatingPanel = new GeneratingPanel();
+        GeneratingPanel generatingPanel = new GeneratingPanel(true);
 
         Table table = new Table();
         contentTable.stack(generatingPanel, table).grow();
 
         //complete panel
         table.defaults().space(SPACE_MEDIUM);
-        CompletePanel completePanel = new CompletePanel();
+        CompletePanel completePanel = new CompletePanel(true);
         table.add(completePanel);
 
         //buttons for the complete panel while in fullscreen
         table.row();
-        CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this);
+        CompleteButtonsFullscreenPanel completeButtonsPanel = new CompleteButtonsFullscreenPanel(this, true);
         table.add(completeButtonsPanel);
 
         //animation initial setup

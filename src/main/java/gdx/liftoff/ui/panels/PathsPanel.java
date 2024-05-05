@@ -17,8 +17,11 @@ import static gdx.liftoff.Main.*;
  * Table that displays the project path and the android sdk path if android is selected as a platform
  */
 public class PathsPanel extends Table implements Panel {
-//todo:highlight field
-    public PathsPanel() {
+    public PathsPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    public void populate(boolean fullscreen) {
         //project label
         defaults().space(SPACE_MEDIUM);
         Label label = new Label(prop.getProperty("destinationPrompt"), skin, "field");

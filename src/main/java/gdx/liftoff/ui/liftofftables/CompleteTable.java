@@ -18,25 +18,26 @@ public class CompleteTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    @Override
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //generating panel
-        GeneratingPanel generatingPanel = new GeneratingPanel();
+        GeneratingPanel generatingPanel = new GeneratingPanel(false);
 
         Table table = new Table();
         stack(generatingPanel, table);
 
         //complete panel
         table.defaults().space(SPACE_MEDIUM);
-        CompletePanel completePanel = new CompletePanel();
+        CompletePanel completePanel = new CompletePanel(false);
         table.add(completePanel);
 
         //complete buttons panel
         table.row();
-        CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel();
+        CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel(false);
         table.add(completeButtonsPanel);
 
         //animation initial setup

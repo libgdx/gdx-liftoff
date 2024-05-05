@@ -11,7 +11,12 @@ import static gdx.liftoff.Main.*;
  * A table to display libGDX related links including libgdx.com, Discord, and the wiki
  */
 public class SocialPanel extends Table implements Panel {
-    public SocialPanel() {
+    public SocialPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    @Override
+    public void populate(boolean fullscreen) {
         defaults().space(SPACE_MEDIUM);
 
         //libgdx.com

@@ -19,7 +19,7 @@ public class SettingsTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
@@ -35,12 +35,12 @@ public class SettingsTable extends LiftoffTable {
 
         //settings panel
         scrollTable.defaults().space(SPACE_LARGE);
-        settingsPanel = new SettingsPanel();
+        settingsPanel = new SettingsPanel(false);
         scrollTable.add(settingsPanel).growX().spaceTop(0).maxHeight(500);
 
         //paths panel
         scrollTable.row();
-        PathsPanel pathsPanel = new PathsPanel();
+        PathsPanel pathsPanel = new PathsPanel(false);
         scrollTable.add(pathsPanel).growX().spaceTop(SPACE_HUGE);
 
         row();

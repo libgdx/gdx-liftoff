@@ -22,15 +22,11 @@ import static gdx.liftoff.Main.*;
  * The table including the lists of platforms, languages, and extensions as well as a button to choose the template
  */
 public class AddOnsPanel extends Table implements Panel {
-    public AddOnsPanel() {
-        this(false);
-    }
-
     public AddOnsPanel(boolean fullscreen) {
         populate(fullscreen);
     }
 
-    private void populate(boolean fullscreen) {
+    public void populate(boolean fullscreen) {
         clearChildren();
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(SPACE_HUGE);

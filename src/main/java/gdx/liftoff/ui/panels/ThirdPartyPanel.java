@@ -19,7 +19,12 @@ public class ThirdPartyPanel extends Table implements Panel {
     private Array<SearchEntry> searchEntries = new Array<>();
     private Table scrollTable;
 
-    public ThirdPartyPanel() {
+    public ThirdPartyPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    public void populate(boolean fullscreen) {
+        clearChildren();
         //title
         Label label = new Label(prop.getProperty("thirdParty"), skin, "header");
         add(label).space(10);

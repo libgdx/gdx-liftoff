@@ -15,7 +15,8 @@ public class QuickSettingsTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    @Override
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
@@ -27,7 +28,7 @@ public class QuickSettingsTable extends LiftoffTable {
 
         //paths panel
         row();
-        PathsPanel pathsPanel = new PathsPanel();
+        PathsPanel pathsPanel = new PathsPanel(false);
         add(pathsPanel).growX().spaceTop(SPACE_HUGE);
 
         row();

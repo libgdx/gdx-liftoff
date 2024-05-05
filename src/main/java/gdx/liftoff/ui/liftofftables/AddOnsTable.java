@@ -14,14 +14,15 @@ public class AddOnsTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    @Override
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //add-ons panel
         defaults().space(SPACE_HUGE);
-        AddOnsPanel addOnsPanel = new AddOnsPanel();
+        AddOnsPanel addOnsPanel = new AddOnsPanel(false);
         add(addOnsPanel).grow().spaceTop(0).maxHeight(500);
 
         row();

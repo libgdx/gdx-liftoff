@@ -18,11 +18,11 @@ import static gdx.liftoff.Main.*;
 public class SettingsPanel extends Table implements Panel {
     private Actor keyboardFocus;
 
-    public SettingsPanel() {
-        this(false);
+    public SettingsPanel(boolean fullscreen) {
+        populate(fullscreen);
     }
 
-    public SettingsPanel(boolean fullscreen) {
+    public void populate(boolean fullscreen) {
         //title
         Label label = new Label(prop.getProperty("advanced"), skin, "header");
         add(label).space(SPACE_HUGE);
@@ -35,23 +35,29 @@ public class SettingsPanel extends Table implements Panel {
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
         table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
-        addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), UserData.libgdxVersion, table, true);
+        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), UserData.libgdxVersion, table, true);
+        onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
-        addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
+        TextField javaTextField = addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
+        onChange(javaTextField, () -> UserData.libgdxVersion = javaTextField.getText());
 
         //application version
-        addField(prop.getProperty("version"), prop.getProperty("versionTip"), UserData.appVersion, table);
+        TextField applicationTextField = addField(prop.getProperty("version"), prop.getProperty("versionTip"), UserData.appVersion, table);
+        onChange(applicationTextField, () -> UserData.libgdxVersion = applicationTextField.getText());
 
         //robovm version
-        addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), UserData.robovmVersion, table);
+        TextField robovmTextField = addField(prop.getProperty("robovmVersion"), prop.getProperty("robovmVersionTip"), UserData.robovmVersion, table);
+        onChange(robovmTextField, () -> UserData.libgdxVersion = robovmTextField.getText());
 
         //add gui assets
         table.defaults().spaceTop(SPACE_MEDIUM);
-        addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), UserData.addGuiAssets, table);
+        ImageButton guiImageButton = addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), UserData.addGuiAssets, table);
+        onChange(guiImageButton, () -> UserData.addGuiAssets = guiImageButton.isChecked());
 
         //add readme
-        addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), UserData.addReadme, table);
+        ImageButton readmeImageButton = addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), UserData.addReadme, table);
+        onChange(readmeImageButton, () -> UserData.addReadme = readmeImageButton.isChecked());
 
         //add gradle tasks
         row();
@@ -74,8 +80,8 @@ public class SettingsPanel extends Table implements Panel {
         });
     }
 
-    private void addField(String text, String tip, String version, Table table) {
-        addField(text, tip, version, table, false);
+    private TextField addField(String text, String tip, String version, Table table) {
+        return addField(text, tip, version, table, false);
     }
 
     /**
@@ -85,7 +91,7 @@ public class SettingsPanel extends Table implements Panel {
      * @param table
      * @param setKeyboardFocus
      */
-    private void addField(String text, String tip, String version, Table table, boolean setKeyboardFocus) {
+    private TextField addField(String text, String tip, String version, Table table, boolean setKeyboardFocus) {
         table.row();
         Label label = new Label(text, skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -99,6 +105,7 @@ public class SettingsPanel extends Table implements Panel {
         addIbeamListener(textField);
         addLabelHighlight(textField, label, false);
         if (setKeyboardFocus) keyboardFocus = textField;
+        return textField;
     }
 
     /**
@@ -107,7 +114,7 @@ public class SettingsPanel extends Table implements Panel {
      * @param tip
      * @param table
      */
-    private void addCheck(String text, String tip, Boolean checked, Table table) {
+    private ImageButton addCheck(String text, String tip, Boolean checked, Table table) {
         table.row();
         Label label = new Label(text, skin, "field");
         label.setTouchable(Touchable.enabled);
@@ -121,6 +128,8 @@ public class SettingsPanel extends Table implements Panel {
         addTooltip(imageButton, label, Align.top, TOOLTIP_WIDTH, tip);
         addHandListener(imageButton);
         addLabelHighlight(imageButton, label);
+
+        return imageButton;
     }
 
     @Override

@@ -12,7 +12,12 @@ import static gdx.liftoff.Main.*;
  * project generation is complete. This panel is intended for use only in the normal and quick project workflows.
  */
 public class CompleteButtonsPanel extends Table implements Panel {
-    public CompleteButtonsPanel() {
+    public CompleteButtonsPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    @Override
+    public void populate(boolean fullscreen) {
         defaults().space(SPACE_MEDIUM);
         TextButton textButton = new TextButton(prop.getProperty("newProject"), skin, "big");
         add(textButton);

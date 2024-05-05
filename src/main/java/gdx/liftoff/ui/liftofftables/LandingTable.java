@@ -36,7 +36,8 @@ public class LandingTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    @Override
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
@@ -88,7 +89,7 @@ public class LandingTable extends LiftoffTable {
 
         //project panel
         row();
-        projectPanel = new ProjectPanel();
+        projectPanel = new ProjectPanel(false);
         add(projectPanel).growX();
 
         row();
@@ -146,7 +147,7 @@ public class LandingTable extends LiftoffTable {
         //end vertical groups
 
         row();
-        socialPanel = new SocialPanel();
+        socialPanel = new SocialPanel(false);
         add(socialPanel).right();
     }
 

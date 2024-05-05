@@ -16,14 +16,14 @@ public class ThirdPartyTable extends LiftoffTable {
         populate();
     }
 
-    private void populate() {
+    public void populate() {
         clearChildren();
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //third party panel
         defaults().space(SPACE_HUGE);
-        thirdPartyPanel = new ThirdPartyPanel();
+        thirdPartyPanel = new ThirdPartyPanel(false);
         add(thirdPartyPanel).grow().spaceTop(0).maxHeight(550);
 
         row();
