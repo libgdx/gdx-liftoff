@@ -2,6 +2,7 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
@@ -140,7 +141,7 @@ public class ExtensionsDialog extends PopTable  {
         addHandListener(checkBox);
         onChange(checkBox, () -> {
             if (checkBox.isChecked() && !UserData.extensions.contains(extensionName, false)) UserData.extensions.add(extensionName);
-            else UserData.platforms.removeValue(extensionName, false);
+            else UserData.extensions.removeValue(extensionName, false);
         });
 
         Table subTable = new Table();
@@ -164,9 +165,20 @@ public class ExtensionsDialog extends PopTable  {
     /**
      * Convenience method to display the dialog on the stage
      */
-    public static void show(boolean fullscreen) {
+    public static void show(boolean fullscreen, Runnable onHideRunnable) {
         ExtensionsDialog dialog = new ExtensionsDialog(fullscreen);
         dialog.setFillParent(fullscreen);
+        dialog.addListener(new PopTable.TableShowHideListener() {
+            @Override
+            public void tableHidden(Event event) {
+                onHideRunnable.run();
+            }
+
+            @Override
+            public void tableShown(Event event) {
+
+            }
+        });
         dialog.show(stage);
     }
 }

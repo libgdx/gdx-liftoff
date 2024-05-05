@@ -3,10 +3,7 @@ package gdx.liftoff.ui.dialogs;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -218,9 +215,20 @@ public class TemplatesDialog extends PopTable  {
         });
     }
 
-    public static void show(boolean fullscreen) {
+    public static void show(boolean fullscreen, Runnable onHideRunnable) {
         TemplatesDialog dialog = new TemplatesDialog(fullscreen);
         dialog.setFillParent(fullscreen);
+        dialog.addListener(new PopTable.TableShowHideListener() {
+            @Override
+            public void tableHidden(Event event) {
+                onHideRunnable.run();
+            }
+
+            @Override
+            public void tableShown(Event event) {
+
+            }
+        });
         dialog.show(stage);
     }
 }

@@ -1,6 +1,7 @@
 package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
@@ -152,9 +153,20 @@ public class PlatformsDialog extends PopTable  {
     /**
      * Convenience method to show the table on the stage
      */
-    public static void show(boolean fullscreen) {
+    public static void show(boolean fullscreen, Runnable onHideRunnable) {
         PlatformsDialog dialog = new PlatformsDialog(fullscreen);
         dialog.setFillParent(fullscreen);
+        dialog.addListener(new PopTable.TableShowHideListener() {
+            @Override
+            public void tableHidden(Event event) {
+                onHideRunnable.run();
+            }
+
+            @Override
+            public void tableShown(Event event) {
+
+            }
+        });
         dialog.show(stage);
     }
 }

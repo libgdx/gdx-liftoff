@@ -14,6 +14,8 @@ import gdx.liftoff.ui.dialogs.LanguagesDialog;
 import gdx.liftoff.ui.dialogs.PlatformsDialog;
 import gdx.liftoff.ui.dialogs.TemplatesDialog;
 
+import java.util.Locale;
+
 import static gdx.liftoff.Main.*;
 
 /**
@@ -25,6 +27,11 @@ public class AddOnsPanel extends Table implements Panel {
     }
 
     public AddOnsPanel(boolean fullscreen) {
+        populate(fullscreen);
+    }
+
+    private void populate(boolean fullscreen) {
+        clearChildren();
         Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(SPACE_HUGE);
 
@@ -37,7 +44,7 @@ public class AddOnsPanel extends Table implements Panel {
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> PlatformsDialog.show(fullscreen));
+        onChange(button, () -> PlatformsDialog.show(fullscreen, () -> populate(fullscreen)));
 
         //platforms title
         label = new Label(prop.getProperty("platforms"), skin, "field");
@@ -51,14 +58,14 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, UserData.platforms);
+        createButtons(scrollTable, UserData.platforms);
         addScrollFocusListener(scrollPane);
 
         //languages
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> LanguagesDialog.show(fullscreen));
+        onChange(button, () -> LanguagesDialog.show(fullscreen, () -> populate(fullscreen)));
 
         //languages title
         label = new Label(prop.getProperty("languages"), skin, "field");
@@ -72,14 +79,14 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, UserData.getLanguages());
+        createButtons(scrollTable, UserData.getLanguages());
         addScrollFocusListener(scrollPane);
 
         //extensions
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> ExtensionsDialog.show(fullscreen));
+        onChange(button, () -> ExtensionsDialog.show(fullscreen, () -> populate(fullscreen)));
 
         //extensions title
         label = new Label(prop.getProperty("extensions"), skin, "field");
@@ -93,7 +100,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        populateAddOnTable(scrollTable, UserData.extensions);
+        createButtons(scrollTable, UserData.extensions);
         addScrollFocusListener(scrollPane);
 
         //template
@@ -129,7 +136,7 @@ public class AddOnsPanel extends Table implements Panel {
         chooseContainer.setTouchable(Touchable.enabled);
         stack.add(chooseContainer);
         addHandListener(chooseContainer);
-        onClick(chooseContainer, () -> TemplatesDialog.show(fullscreen));
+        onClick(chooseContainer, () -> TemplatesDialog.show(fullscreen, () -> populate(fullscreen)));
         chooseContainer.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -150,13 +157,13 @@ public class AddOnsPanel extends Table implements Panel {
      * @param table
      * @param names
      */
-    private void populateAddOnTable(Table table, Array<String> names) {
+    private void createButtons(Table table, Array<String> names) {
         table.clearChildren();
         table.top();
 
         table.defaults().growX().space(SPACE_SMALL);
         for (String name : names) {
-            Label label = new Label(name, skin);
+            Label label = new Label(name.toUpperCase(Locale.ROOT), skin);
             label.setEllipsis("...");
             table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();

@@ -1,6 +1,7 @@
 package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
@@ -166,9 +167,20 @@ public class LanguagesDialog extends PopTable  {
         onChange(button, () -> Gdx.net.openURI(prop.getProperty(languageName + "Url")));
     }
 
-    public static void show(boolean fullscreen) {
+    public static void show(boolean fullscreen, Runnable onHideRunnable) {
         LanguagesDialog dialog = new LanguagesDialog(fullscreen);
         dialog.setFillParent(fullscreen);
+        dialog.addListener(new PopTable.TableShowHideListener() {
+            @Override
+            public void tableHidden(Event event) {
+                onHideRunnable.run();
+            }
+
+            @Override
+            public void tableShown(Event event) {
+
+            }
+        });
         dialog.show(stage);
     }
 }
