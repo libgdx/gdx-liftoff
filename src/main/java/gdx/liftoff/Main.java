@@ -345,7 +345,7 @@ public class Main extends ApplicationAdapter {
      * @return
      */
     public static Array<String> splitCSV(String string) {
-        return new Array<>(string.split(","));
+        return string.isEmpty() ? new Array<>() : new Array<>(string.split(","));
     }
 
     //todo:Use preferences for specific defaults
