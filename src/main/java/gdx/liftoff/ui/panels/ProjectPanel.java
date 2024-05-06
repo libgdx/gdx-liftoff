@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.data.UserData;
@@ -75,13 +76,26 @@ public class ProjectPanel extends Table implements Panel {
             UserData.mainClassName = mainTextField.getText();
         });
 
-        //todo:update error label based on text entered in the fields
         //error label
         columnDefaults(0).reset();
         row();
-        label = new Label("Project name cannot be empty", skin, "error");
-        label.setEllipsis("...");
-        add(label).colspan(2).minWidth(0);
+        Label errorLabel = new Label("Project name cannot be empty", skin, "error");
+        errorLabel.setEllipsis("...");
+        add(errorLabel).colspan(2).minWidth(0);
+
+        ChangeListener changeListener = new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (1+1 == 2) {
+                    //todo:update error label based on text entered in the fields
+                    errorLabel.setText("something");
+                }
+            }
+        };
+
+        projectTextField.addListener(changeListener);
+        packageTextField.addListener(changeListener);
+        mainTextField.addListener(changeListener);
     }
 
     public void captureKeyboardFocus() {
