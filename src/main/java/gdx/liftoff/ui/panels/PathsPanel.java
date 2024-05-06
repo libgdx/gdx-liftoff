@@ -68,6 +68,8 @@ public class PathsPanel extends Table implements Panel {
                         String path = files.first().path();
                         androidFieldButton.setText(path);
                         UserData.androidPath = path;
+                        pref.putString("AndroidSdk", path);
+                        pref.flush();
                     }
                 }
             }));

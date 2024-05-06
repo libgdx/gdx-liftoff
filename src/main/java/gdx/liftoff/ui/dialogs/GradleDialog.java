@@ -7,6 +7,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
+import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -64,6 +65,11 @@ public class GradleDialog extends PopTable  {
         contentTable.add(textField).width(350);
         addIbeamListener(textField);
         stage.setKeyboardFocus(textField);
+        onChange(textField, () -> {
+            UserData.gradleTasks = textField.getText();
+            pref.putString("GradleTasks", textField.getText());
+            pref.flush();
+        });
 
         //ok button
         contentTable.row();

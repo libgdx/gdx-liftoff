@@ -117,6 +117,7 @@ public class LandingTable extends LiftoffTable {
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
+        //todo:need to set UserData defaults for a quick project
         //quick project button
         table.row();
         textButton = new TextButton(prop.getProperty("quickProject"), skin, "mid");

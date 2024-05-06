@@ -57,6 +57,7 @@ public class Main extends ApplicationAdapter {
     public static Image bgImage = new Image();
     public static boolean resizingWindow;
     public static Properties prop;
+    public static Preferences pref;
     private static GlyphLayout layout = new GlyphLayout();
     public static final int MIN_WINDOW_WIDTH = 400;
     public static final int MIN_WINDOW_HEIGHT = 410;
@@ -91,6 +92,8 @@ public class Main extends ApplicationAdapter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        pref = Gdx.app.getPreferences("gdx-liftoff-prefs");
 
         setDefaultUserData();
 
@@ -348,11 +351,10 @@ public class Main extends ApplicationAdapter {
         return string.isEmpty() ? new Array<>() : new Array<>(string.split(","));
     }
 
-    //todo:Use preferences for specific defaults
     public static void setDefaultUserData() {
-        UserData.projectName = prop.getProperty("projectNameDefault");
-        UserData.packageName = prop.getProperty("packageNameDefault");
-        UserData.mainClassName = prop.getProperty("mainClassNameDefault");
+        UserData.projectName = pref.getString("Name", prop.getProperty("projectNameDefault"));
+        UserData.packageName = pref.getString("Package", prop.getProperty("packageNameDefault"));
+        UserData.mainClassName = pref.getString("MainClass", prop.getProperty("mainClassNameDefault"));
         UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
 
         UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
@@ -371,9 +373,9 @@ public class Main extends ApplicationAdapter {
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
-        UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
+        UserData.gradleTasks = pref.getString("GradleTasks", prop.getProperty("gradleTasksDefault"));
         UserData.projectPath = prop.getProperty("projectPathDefault");
-        UserData.androidPath = prop.getProperty("androidPathDefault");
+        UserData.androidPath = pref.getString("AndroidSdk", prop.getProperty("androidPathDefault"));
         UserData.log = prop.getProperty("generationEnd") + "\n" + prop.getProperty("generationEnd");
     }
 }

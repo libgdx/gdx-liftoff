@@ -42,6 +42,8 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(projectTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
         onChange(projectTextField, () -> {
             UserData.projectName = projectTextField.getText();
+            pref.putString("Name", projectTextField.getText());
+            pref.flush();
         });
 
         //package label
@@ -58,6 +60,8 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(packageTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
         onChange(packageTextField, () -> {
             UserData.packageName = packageTextField.getText();
+            pref.putString("Package", packageTextField.getText());
+            pref.flush();
         });
 
         //main class label
@@ -74,6 +78,8 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(mainTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
         onChange(mainTextField, () -> {
             UserData.mainClassName = mainTextField.getText();
+            pref.putString("MainClass", mainTextField.getText());
+            pref.flush();
         });
 
         //error label
