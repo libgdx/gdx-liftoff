@@ -9,6 +9,7 @@ import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
+//todo:enable color
 /**
  * The panel that displays the result of project generation
  */

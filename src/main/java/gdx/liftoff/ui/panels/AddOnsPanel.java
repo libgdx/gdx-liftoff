@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
 
+//todo:capitalizing the split csv is not a good idea
 /**
  * The table including the lists of platforms, languages, and extensions as well as a button to choose the template
  */
