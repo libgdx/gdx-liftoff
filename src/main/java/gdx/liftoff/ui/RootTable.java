@@ -81,6 +81,7 @@ public class RootTable extends Table {
         tableIndex = MathUtils.clamp(tableIndex, 0, tables.size);
         this.tableIndex = tableIndex;
         LiftoffTable newTable = tables.get(tableIndex);
+        newTable.populate();
 
         //animation initial setup
         clearChildren();
