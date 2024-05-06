@@ -15,7 +15,7 @@ import static gdx.liftoff.Main.*;
  * shown below.
  */
 public class ProjectPanel extends Table implements Panel {
-    private Actor keyboardActor;
+    private TextField keyboardActor;
 
     public ProjectPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -86,5 +86,6 @@ public class ProjectPanel extends Table implements Panel {
 
     public void captureKeyboardFocus() {
         Main.stage.setKeyboardFocus(keyboardActor);
+        keyboardActor.selectAll();
     }
 }
