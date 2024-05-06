@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
@@ -14,16 +15,24 @@ import gdx.liftoff.ui.panels.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
-//todo:update pathspanel from add ons panel
 /**
  * Dialog shown when in fullscreen layout mode. This includes all the panels at once. The layout scales up if the
  * available space is larger than 1920x1080.
  */
 public class FullscreenDialog extends PopTable {
+    public static FullscreenDialog fullscreenDialog;
+
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
+        fullscreenDialog = this;
         setFillParent(true);
         pad(SPACE_LARGE);
+
+        populate();
+    }
+
+    public void populate() {
+        clearChildren();
 
         //collapsible group that alternates between screen scaled scrollpane and a fit scaled container based on available space
         CollapsibleGroup dualCollapsibleGroup = new CollapsibleGroup(CollapseType.BOTH);
@@ -131,6 +140,12 @@ public class FullscreenDialog extends PopTable {
         //version
         label = new Label(prop.getProperty("liftoffVersion"), skin);
         table.add(label).expandX().right().bottom();
+    }
+
+    @Override
+    public void hide(Action action) {
+        super.hide(action);
+        fullscreenDialog = null;
     }
 
     public static void show() {

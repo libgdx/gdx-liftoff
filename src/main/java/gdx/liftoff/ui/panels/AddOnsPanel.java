@@ -9,10 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.data.UserData;
-import gdx.liftoff.ui.dialogs.ExtensionsDialog;
-import gdx.liftoff.ui.dialogs.LanguagesDialog;
-import gdx.liftoff.ui.dialogs.PlatformsDialog;
-import gdx.liftoff.ui.dialogs.TemplatesDialog;
+import gdx.liftoff.ui.dialogs.*;
 
 import java.util.Locale;
 
@@ -40,7 +37,12 @@ public class AddOnsPanel extends Table implements Panel {
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> PlatformsDialog.show(fullscreen, () -> populate(fullscreen)));
+        onChange(button, () -> PlatformsDialog.show(fullscreen, () -> {
+            populate(fullscreen);
+            if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
+                FullscreenDialog.fullscreenDialog.populate();
+            }
+        }));
 
         //platforms title
         label = new Label(prop.getProperty("platforms"), skin, "field");
@@ -61,7 +63,12 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> LanguagesDialog.show(fullscreen, () -> populate(fullscreen)));
+        onChange(button, () -> LanguagesDialog.show(fullscreen, () -> {
+            populate(fullscreen);
+            if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
+                FullscreenDialog.fullscreenDialog.populate();
+            }
+        }));
 
         //languages title
         label = new Label(prop.getProperty("languages"), skin, "field");
@@ -82,7 +89,12 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
-        onChange(button, () -> ExtensionsDialog.show(fullscreen, () -> populate(fullscreen)));
+        onChange(button, () -> ExtensionsDialog.show(fullscreen, () -> {
+            populate(fullscreen);
+            if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
+                FullscreenDialog.fullscreenDialog.populate();
+            }
+        }));
 
         //extensions title
         label = new Label(prop.getProperty("extensions"), skin, "field");
