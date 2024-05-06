@@ -60,7 +60,10 @@ public class SettingsTable extends LiftoffTable {
         textButton = new TextButton(prop.getProperty("generate"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
-        onChange(textButton, () -> root.nextTable());
+        onChange(textButton, () -> {
+            //todo:insert project generation code based on UserData here
+            root.nextTable();
+        });
     }
 
     @Override

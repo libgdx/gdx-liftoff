@@ -134,7 +134,10 @@ public class FullscreenDialog extends PopTable {
         addHandListener(textButton);
         onChange(textButton, () -> hide(sequence(
             fadeOut(.3f),
-            run(FullscreenCompleteDialog::show)
+            run(() -> {
+                //todo:insert project generation code based on UserData here
+                FullscreenCompleteDialog.show();
+            })
         )));
 
         //version

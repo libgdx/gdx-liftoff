@@ -24,7 +24,7 @@ import static gdx.liftoff.Main.*;
  * available space is larger than 1920x1080.
  */
 public class FullscreenCompleteDialog extends PopTable {
-    public FullscreenCompleteDialog() {
+    public FullscreenCompleteDialog(boolean showGeneration) {
         super(skin.get("fullscreen", WindowStyle.class));
         setFillParent(true);
         pad(20);
@@ -38,10 +38,10 @@ public class FullscreenCompleteDialog extends PopTable {
         scaleContainer.setPrefSize(1920, 1080);
         scaleContainer.setMinSize(1920, 1080);
         dualCollapsibleGroup.addActor(scaleContainer);
-        createPanels(contentTable);
+        createPanels(contentTable, showGeneration);
 
         contentTable = new Table();
-        createPanels(contentTable);
+        createPanels(contentTable, showGeneration);
 
         ScrollPane scrollPane = new ScrollPane(contentTable, skin);
         scrollPane.setFadeScrollBars(false);
@@ -50,7 +50,7 @@ public class FullscreenCompleteDialog extends PopTable {
         addScrollFocusListener(scrollPane);
     }
 
-    private void createPanels(Table contentTable) {
+    private void createPanels(Table contentTable, boolean showGeneration) {
         //restore button
         contentTable.defaults().space(SPACE_HUGE);
         Button button = new Button(skin, "restore");
@@ -86,13 +86,20 @@ public class FullscreenCompleteDialog extends PopTable {
         generatingPanel.setColor(CLEAR_WHITE);
 
         //animation
-        addAction(sequence(
-            targeting(generatingPanel, fadeIn(.5f)),
-            delay(1f),
-            targeting(generatingPanel, fadeOut(.3f)),
-            targeting(table, fadeIn(.3f)),
-            targeting(table, touchable(Touchable.enabled))
-        ));
+        if (showGeneration) {
+            addAction(sequence(
+                targeting(generatingPanel, fadeIn(.5f)),
+                delay(1f),
+                targeting(generatingPanel, fadeOut(.3f)),
+                targeting(table, fadeIn(.3f)),
+                targeting(table, touchable(Touchable.enabled))
+            ));
+        } else {
+            addAction(sequence(
+                targeting(table, fadeIn(.3f)),
+                targeting(table, touchable(Touchable.enabled))
+            ));
+        }
 
         contentTable.row();
         Label label = new Label(prop.getProperty("liftoffVersion"), skin);
@@ -100,7 +107,11 @@ public class FullscreenCompleteDialog extends PopTable {
     }
 
     public static void show() {
-        FullscreenCompleteDialog fullscreenDialog = new FullscreenCompleteDialog();
+        show(true);
+    }
+
+    public static void show(boolean showGeneration) {
+        FullscreenCompleteDialog fullscreenDialog = new FullscreenCompleteDialog(showGeneration);
         fullscreenDialog.show(stage);
     }
 }

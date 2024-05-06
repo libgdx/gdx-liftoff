@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.Main;
+import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
@@ -55,7 +56,8 @@ public class OverlayTable extends Table {
             fadeOut();
             Gdx.app.postRunnable(() -> {
                 root.fadeOutTable();
-                FullscreenDialog.show();
+                if (root.getCurrentTable() == root.completeTable) FullscreenCompleteDialog.show(false);
+                else FullscreenDialog.show();
             });
         });
 

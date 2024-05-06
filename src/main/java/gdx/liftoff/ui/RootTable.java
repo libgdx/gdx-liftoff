@@ -55,6 +55,10 @@ public class RootTable extends Table {
         if (resizingWindow) tables.get(tableIndex).finishAnimation();
     }
 
+    public LiftoffTable getCurrentTable() {
+        return tables.get(tableIndex);
+    }
+
     public void previousTable() {
         transitionTable(false);
     }

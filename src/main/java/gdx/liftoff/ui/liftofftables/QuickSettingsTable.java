@@ -40,7 +40,10 @@ public class QuickSettingsTable extends LiftoffTable {
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         table.add(textButton);
         addHandListener(textButton);
-        onChange(textButton, () -> root.transitionTable(root.completeTable, true));
+        onChange(textButton, () -> {
+            //todo:insert project generation code based on UserData here
+            root.transitionTable(root.completeTable, true);
+        });
 
         //cancel button
         table.row();
