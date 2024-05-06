@@ -110,7 +110,7 @@ public class FullscreenDialog extends PopTable {
         //paths panel
         subTable.row();
         PathsPanel pathsPanel = new PathsPanel(true);
-        subTable.add(pathsPanel);
+        subTable.add(pathsPanel).minWidth(450);
 
         contentTable.row();
         table = new Table();

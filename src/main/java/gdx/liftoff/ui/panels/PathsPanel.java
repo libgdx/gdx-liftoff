@@ -31,7 +31,7 @@ public class PathsPanel extends Table implements Panel {
 
         //project field
         TextButton projectFieldButton = addField(UserData.projectPath);
-        onChange(projectFieldButton, () -> Main.pickDirectory(Gdx.files.absolute("C://"), new FileChooserAdapter() {
+        onChange(projectFieldButton, () -> Main.pickDirectory(Gdx.files.absolute(Gdx.files.getExternalStoragePath()), new FileChooserAdapter() {
             @Override
             public void canceled() {
 
@@ -56,7 +56,7 @@ public class PathsPanel extends Table implements Panel {
 
             //android field
             TextButton androidFieldButton = addField(UserData.androidPath);
-            onChange(androidFieldButton, () -> Main.pickDirectory(Gdx.files.absolute("C://"), new FileChooserAdapter() {
+            onChange(androidFieldButton, () -> Main.pickDirectory(Gdx.files.absolute(Gdx.files.getExternalStoragePath()), new FileChooserAdapter() {
                 @Override
                 public void canceled() {
 
