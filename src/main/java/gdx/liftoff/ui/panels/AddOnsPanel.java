@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
 
-//todo:capitalizing the split csv is not a good idea
 /**
  * The table including the lists of platforms, languages, and extensions as well as a button to choose the template
  */
@@ -57,7 +56,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        createButtons(scrollTable, UserData.platforms);
+        createButtons(scrollTable, UserData.platforms, false);
         addScrollFocusListener(scrollPane);
 
         //languages
@@ -83,7 +82,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        createButtons(scrollTable, UserData.getLanguages());
+        createButtons(scrollTable, UserData.getLanguages(), true);
         addScrollFocusListener(scrollPane);
 
         //extensions
@@ -109,7 +108,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        createButtons(scrollTable, UserData.extensions);
+        createButtons(scrollTable, UserData.extensions, true);
         addScrollFocusListener(scrollPane);
 
         //template
@@ -166,13 +165,13 @@ public class AddOnsPanel extends Table implements Panel {
      * @param table
      * @param names
      */
-    private void createButtons(Table table, Array<String> names) {
+    private void createButtons(Table table, Array<String> names, boolean capitalize) {
         table.clearChildren();
         table.top();
 
         table.defaults().growX().space(SPACE_SMALL);
         for (String name : names) {
-            Label label = new Label(name.toUpperCase(Locale.ROOT), skin);
+            Label label = new Label(capitalize ? name.toUpperCase(Locale.ROOT) : name, skin);
             label.setEllipsis("...");
             table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();

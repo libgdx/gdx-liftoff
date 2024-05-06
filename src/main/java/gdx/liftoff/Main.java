@@ -39,6 +39,7 @@ import java.util.Properties;
 import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
+//todo:Fix openal error
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program
  */
