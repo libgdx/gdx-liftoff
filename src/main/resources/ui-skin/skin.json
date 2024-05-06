@@ -41,6 +41,12 @@
 		"scaledSize": -1,
 		"markupEnabled": false,
 		"flip": false
+	},
+	"font-label-tooltipMarkup": {
+		"file": "font-label-tooltip.fnt",
+		"scaledSize": -1,
+		"markupEnabled": true,
+		"flip": false
 	}
 },
 "com.badlogic.gdx.graphics.Color": {
@@ -1004,6 +1010,9 @@
 	},
 	"description": {
 		"font": "font-label-tooltip"
+	},
+	"descriptionWithMarkup": {
+		"font": "font-label-tooltipMarkup"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {

@@ -9,7 +9,6 @@ import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
-//todo:enable color
 /**
  * The panel that displays the result of project generation
  */
@@ -42,7 +41,7 @@ public class CompletePanel extends Table implements Panel {
         addScrollFocusListener(scrollPane);
 
         //output label
-        Label outputLabel = new Label(UserData.log, skin, "description");
+        Label outputLabel = new Label(UserData.log, skin, "descriptionWithMarkup");
         outputLabel.setWrap(true);
         scrollTable.add(outputLabel).grow();
 
