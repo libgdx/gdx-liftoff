@@ -12,6 +12,7 @@ import gdx.liftoff.ui.dialogs.GradleDialog;
 
 import static gdx.liftoff.Main.*;
 
+//todo:select all with keyboard focus
 /**
  * A table to display the project settings
  */

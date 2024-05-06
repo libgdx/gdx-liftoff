@@ -9,6 +9,7 @@ import gdx.liftoff.ui.panels.GeneratingPanel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
+//todo:maximize on complete table should show fullscreencomplete dialog
 /**
  * The final table in the workflow. An animation begins by showing the generating panel first. Then it displays the
  * complete and complete buttons panels.

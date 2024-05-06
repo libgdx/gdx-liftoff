@@ -15,6 +15,7 @@ import gdx.liftoff.ui.data.UserData;
 import static gdx.liftoff.Main.*;
 
 //todo:add an error label
+//todo:default path should be what's in the field
 /**
  * Table that displays the project path and the android sdk path if android is selected as a platform
  */
