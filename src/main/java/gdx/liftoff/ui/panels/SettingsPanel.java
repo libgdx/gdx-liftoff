@@ -12,12 +12,11 @@ import gdx.liftoff.ui.dialogs.GradleDialog;
 
 import static gdx.liftoff.Main.*;
 
-//todo:select all with keyboard focus
 /**
  * A table to display the project settings
  */
 public class SettingsPanel extends Table implements Panel {
-    private Actor keyboardFocus;
+    private TextField keyboardFocus;
 
     public SettingsPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -136,5 +135,6 @@ public class SettingsPanel extends Table implements Panel {
     @Override
     public void captureKeyboardFocus() {
         stage.setKeyboardFocus(keyboardFocus);
+        keyboardFocus.selectAll();
     }
 }
