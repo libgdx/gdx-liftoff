@@ -3,7 +3,6 @@ package gdx.liftoff.ui.data;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 
-
 public class UserData {
     public static String projectName;
     public static String packageName;

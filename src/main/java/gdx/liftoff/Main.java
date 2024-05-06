@@ -348,6 +348,7 @@ public class Main extends ApplicationAdapter {
         return new Array<>(string.split(","));
     }
 
+    //todo:Use preferences for specific defaults
     public static void setDefaultUserData() {
         UserData.projectName = prop.getProperty("projectNameDefault");
         UserData.packageName = prop.getProperty("packageNameDefault");
