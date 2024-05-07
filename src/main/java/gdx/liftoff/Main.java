@@ -40,6 +40,7 @@ import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
 //todo:Fix openal error
+//todo:add preference to start in fullscreen
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program
  */

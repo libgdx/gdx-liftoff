@@ -14,11 +14,12 @@ import gdx.liftoff.ui.data.UserData;
 
 import static gdx.liftoff.Main.*;
 
-//todo:add an error label
 /**
  * Table that displays the project path and the android sdk path if android is selected as a platform
  */
 public class PathsPanel extends Table implements Panel {
+    private Label errorLabel;
+
     public PathsPanel(boolean fullscreen) {
         populate(fullscreen);
     }
@@ -48,6 +49,7 @@ public class PathsPanel extends Table implements Panel {
                         String path = files.first().path();
                         projectFieldButton.setText(path);
                         UserData.projectPath = path;
+                        updateError();
                     }
                 }
             });
@@ -80,10 +82,23 @@ public class PathsPanel extends Table implements Panel {
                             UserData.androidPath = path;
                             pref.putString("AndroidSdk", path);
                             pref.flush();
+                            updateError();
                         }
                     }
                 });
             });
+        }
+
+        row();
+        errorLabel = new Label("Project path cannot be empty", skin, "error");
+        errorLabel.setAlignment(Align.center);
+        errorLabel.setEllipsis("...");
+        add(errorLabel).minWidth(0).colspan(2).growX();
+    }
+
+    private void updateError() {
+        if (1+1==2) {
+            errorLabel.setText("");
         }
     }
 
