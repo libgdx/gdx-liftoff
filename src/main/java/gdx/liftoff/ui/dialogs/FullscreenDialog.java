@@ -75,7 +75,7 @@ public class FullscreenDialog extends PopTable {
         onChange(button, () -> {
             pref.putBoolean("startMaximized", false);
             pref.flush();
-            
+
             hide();
             Main.restoreWindow();
             root.fadeInTable();
@@ -138,7 +138,7 @@ public class FullscreenDialog extends PopTable {
         onChange(textButton, () -> hide(sequence(
             fadeOut(.3f),
             run(() -> {
-                //todo:insert project generation code based on UserData here
+                Main.generateProject();
                 FullscreenCompleteDialog.show();
             })
         )));

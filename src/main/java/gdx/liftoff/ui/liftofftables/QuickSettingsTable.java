@@ -3,6 +3,7 @@ package gdx.liftoff.ui.liftofftables;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.panels.PathsPanel;
 
 import static gdx.liftoff.Main.*;
@@ -41,7 +42,7 @@ public class QuickSettingsTable extends LiftoffTable {
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> {
-            //todo:insert project generation code based on UserData here
+            Main.generateProject();
             root.transitionTable(root.completeTable, true);
         });
 

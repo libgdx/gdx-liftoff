@@ -3,6 +3,7 @@ package gdx.liftoff.ui.liftofftables;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import gdx.liftoff.Main;
 import gdx.liftoff.ui.panels.PathsPanel;
 import gdx.liftoff.ui.panels.SettingsPanel;
 
@@ -61,7 +62,7 @@ public class SettingsTable extends LiftoffTable {
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
         onChange(textButton, () -> {
-            //todo:insert project generation code based on UserData here
+            Main.generateProject();
             root.nextTable();
         });
     }

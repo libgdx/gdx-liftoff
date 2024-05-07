@@ -412,4 +412,11 @@ public class Main extends ApplicationAdapter {
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
     }
+
+    /**
+     * Placeholder for project generation.
+     */
+    public static void generateProject() {
+        //todo:insert project generation code based on UserData here
+    }
 }
