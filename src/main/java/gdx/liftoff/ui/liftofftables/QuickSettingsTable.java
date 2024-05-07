@@ -36,6 +36,7 @@ public class QuickSettingsTable extends LiftoffTable {
         Table table = new Table();
         add(table);
 
+        //todo:disable button if UserData is not valid
         //generate button
         table.defaults().space(SPACE_MEDIUM).fillX();
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");

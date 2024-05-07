@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.github.czyzby.kiwi.util.common.Strings;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.data.UserData;
 
@@ -17,6 +18,7 @@ import static gdx.liftoff.Main.*;
  */
 public class ProjectPanel extends Table implements Panel {
     private TextField keyboardActor;
+    private Label errorLabel;
 
     public ProjectPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -29,7 +31,7 @@ public class ProjectPanel extends Table implements Panel {
         defaults().space(SPACE_MEDIUM);
 
         //project label
-        Label label = new Label(prop.getProperty("project"), skin);
+        Label label = new Label(prop.getProperty("projectName"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
 
@@ -48,7 +50,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //package label
         row();
-        label = new Label(prop.getProperty("package"), skin);
+        label = new Label(prop.getProperty("packageName"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
 
@@ -66,7 +68,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //main class label
         row();
-        label = new Label(prop.getProperty("mainClass"), skin);
+        label = new Label(prop.getProperty("mainClassName"), skin);
         add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
 
@@ -85,23 +87,49 @@ public class ProjectPanel extends Table implements Panel {
         //error label
         columnDefaults(0).reset();
         row();
-        Label errorLabel = new Label("Project name cannot be empty", skin, "error");
+        errorLabel = new Label("", skin, "error");
         errorLabel.setEllipsis("...");
         add(errorLabel).colspan(2).minWidth(0);
+        updateError();
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (1+1 == 2) {
-                    //todo:update error label based on text entered in the fields
-                    errorLabel.setText("something");
-                }
+                updateError();
             }
         };
-
         projectTextField.addListener(changeListener);
         packageTextField.addListener(changeListener);
         mainTextField.addListener(changeListener);
+    }
+
+    private void updateError() {
+        if (UserData.projectName.isEmpty()) {
+            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("name")));
+            return;
+        }
+
+        if (UserData.packageName.isEmpty()) {
+            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("package")));
+            return;
+        }
+
+        if (!isValidPackageName(UserData.packageName)) {
+            errorLabel.setText(prop.getProperty("packageNotValid"));
+            return;
+        }
+
+        if (UserData.mainClassName.isEmpty()) {
+            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("class")));
+            return;
+        }
+
+        if (!isValidClassName(UserData.mainClassName)) {
+            errorLabel.setText(prop.getProperty("classNotValid"));
+            return;
+        }
+
+        errorLabel.setText("");
     }
 
     public void captureKeyboardFocus() {

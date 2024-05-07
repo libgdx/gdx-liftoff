@@ -131,6 +131,7 @@ public class FullscreenDialog extends PopTable {
         //empty cell for equal spacing
         table.add().expandX();
 
+        //todo:disable button if UserData is not valid
         //generate button
         TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
         table.add(textButton);

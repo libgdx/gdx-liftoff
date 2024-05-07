@@ -6,7 +6,6 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -29,12 +28,13 @@ import com.ray3k.stripe.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.data.UserData;
-import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -418,5 +418,59 @@ public class Main extends ApplicationAdapter {
      */
     public static void generateProject() {
         //todo:insert project generation code based on UserData here
+    }
+
+    private final static HashSet<String> BLOCKED_TYPES = new HashSet<>(Arrays.asList("absolutefilehandleresolver", "abstractgraphics", "abstractinput", "action", "actions", "actor", "actorgesturelistener", "addaction", "addlisteneraction", "affine2", "afteraction", "align", "alphaaction", "ambientcubemap", "animatedtiledmaptile", "animation", "animation", "animationcontroller", "annotation", "application", "applicationadapter", "applicationlistener", "applicationlogger", "array", "arraymap", "arrayreflection", "arrayselection", "arraytexturespritebatch", "arrowshapebuilder", "assetdescriptor", "asseterrorlistener", "assetloader", "assetloaderparameters", "assetmanager", "asyncexecutor", "asynchronousassetloader", "asyncresult", "asynctask", "atlastmxmaploader", "atomicqueue", "attribute", "attributes", "audio", "audiodevice", "audiorecorder", "base", "base64coder", "baseanimationcontroller", "basedrawable", "basejsonreader", "baselight", "baseshader", "baseshaderprovider", "baseshapebuilder", "basetmxmaploader", "batch", "batchtiledmaprenderer", "bezier", "billboardcontrollerrenderdata", "billboardparticlebatch", "billboardrenderer", "binaryheap", "bintree", "bitmapfont", "bitmapfontcache", "bitmapfontloader", "bits", "bittreedecoder", "bittreeencoder", "blendingattribute", "booleanarray", "boundingbox", "boxshapebuilder", "bresenham2", "bspline", "bufferedparticlebatch", "bufferutils", "button", "buttongroup", "bytearray", "camera", "cameragroupstrategy", "camerainputcontroller", "capsuleshapebuilder", "catmullromspline", "cell", "changelistener", "chararray", "checkbox", "circle", "circlemapobject", "classpathfilehandleresolver", "classreflection", "clicklistener", "clipboard", "collections", "color", "coloraction", "colorattribute", "colorinfluencer", "colors", "coneshapebuilder", "constructor", "container", "convexhull", "countdowneventaction", "cpuspritebatch", "crc", "cubemap", "cubemapattribute", "cubemapdata", "cubemaploader", "cullable", "cumulativedistribution", "cursor", "customtexture3ddata", "cylindershapebuilder", "cylinderspawnshapevalue", "databuffer", "datainput", "dataoutput", "decal", "decalbatch", "decalmaterial", "decoder", "decoder", "defaultrenderablesorter", "defaultshader", "defaultshaderprovider", "defaulttexturebinder", "delaunaytriangulator", "delayaction", "delayedremovalarray", "delegateaction", "depthshader", "depthshaderprovider", "depthtestattribute", "dialog", "directionallight", "directionallightsattribute", "directionalshadowlight", "disableable", "disposable", "distancefieldfont", "draganddrop", "draglistener", "dragscrolllistener", "drawable", "dynamicsinfluencer", "dynamicsmodifier", "earclippingtriangulator", "ellipse", "ellipsemapobject", "ellipseshapebuilder", "ellipsespawnshapevalue", "emitter", "encoder", "encoder", "environment", "etc1", "etc1texturedata", "event", "eventaction", "eventlistener", "extendviewport", "externalfilehandleresolver", "facedcubemapdata", "field", "filehandle", "filehandleresolver", "filehandlestream", "files", "filetexturearraydata", "filetexturedata", "fillviewport", "firstpersoncameracontroller", "fitviewport", "floataction", "floatarray", "floatattribute", "floatcounter", "floatframebuffer", "floattexturedata", "flushablepool", "focuslistener", "fpslogger", "framebuffer", "framebuffercubemap", "frustum", "frustumshapebuilder", "g3dmodelloader", "game", "gdx", "gdx2dpixmap", "gdxnativesloader", "gdxruntimeexception", "geometryutils", "gesturedetector", "gl20", "gl20interceptor", "gl30", "gl30interceptor", "gl31", "gl31interceptor", "gl32", "gl32interceptor", "glerrorlistener", "glframebuffer", "glinterceptor", "glonlytexturedata", "glprofiler", "gltexture", "glversion", "glyphlayout", "gradientcolorvalue", "graphics", "gridpoint2", "gridpoint3", "group", "groupplug", "groupstrategy", "hdpimode", "hdpiutils", "hexagonaltiledmaprenderer", "horizontalgroup", "httpparametersutils", "httprequestbuilder", "httprequestheader", "httpresponseheader", "httpstatus", "i18nbundle", "i18nbundleloader", "icodeprogress", "identitymap", "image", "imagebutton", "imageresolver", "imagetextbutton", "immediatemoderenderer", "immediatemoderenderer20", "indexarray", "indexbufferobject", "indexbufferobjectsubdata", "indexdata", "influencer", "input", "inputadapter", "inputevent", "inputeventqueue", "inputlistener", "inputmultiplexer", "inputprocessor", "instancebufferobject", "instancebufferobjectsubdata", "instancedata", "intaction", "intarray", "intattribute", "internalfilehandleresolver", "interpolation", "intersector", "intfloatmap", "intintmap", "intmap", "intset", "inwindow", "isometricstaggeredtiledmaprenderer", "isometrictiledmaprenderer", "json", "jsonreader", "jsonvalue", "jsonwriter", "ktxtexturedata", "label", "layout", "layoutaction", "lifecyclelistener", "linespawnshapevalue", "list", "littleendianinputstream", "localfilehandleresolver", "logger", "longarray", "longmap", "longqueue", "lzma", "map", "mapgrouplayer", "maplayer", "maplayers", "mapobject", "mapobjects", "mapproperties", "maprenderer", "material", "mathutils", "matrix3", "matrix4", "mesh", "meshbuilder", "meshpart", "meshpartbuilder", "meshspawnshapevalue", "method", "mipmapgenerator", "mipmaptexturedata", "model", "modelanimation", "modelbatch", "modelbuilder", "modelcache", "modeldata", "modelinfluencer", "modelinstance", "modelinstancecontrollerrenderdata", "modelinstanceparticlebatch", "modelinstancerenderer", "modelloader", "modelmaterial", "modelmesh", "modelmeshpart", "modelnode", "modelnodeanimation", "modelnodekeyframe", "modelnodepart", "modeltexture", "movebyaction", "movetoaction", "music", "musicloader", "nativeinputconfiguration", "net", "netjavaimpl", "netjavaserversocketimpl", "netjavasocketimpl", "ninepatch", "ninepatchdrawable", "node", "nodeanimation", "nodekeyframe", "nodepart", "null", "numberutils", "numericvalue", "objectfloatmap", "objectintmap", "objectlongmap", "objectmap", "objectset", "objloader", "octree", "orderedmap", "orderedset", "orientedboundingbox", "orthocachedtiledmaprenderer", "orthogonaltiledmaprenderer", "orthographiccamera", "outwindow", "parallelaction", "parallelarray", "particlebatch", "particlechannels", "particlecontroller", "particlecontrollercomponent", "particlecontrollercontrollerrenderer", "particlecontrollerfinalizerinfluencer", "particlecontrollerinfluencer", "particlecontrollerrenderdata", "particlecontrollerrenderer", "particleeffect", "particleeffect", "particleeffectactor", "particleeffectloader", "particleeffectloader", "particleeffectpool", "particleemitter", "particleshader", "particlesorter", "particlesystem", "particlevalue", "patchshapebuilder", "path", "pauseablethread", "performancecounter", "performancecounters", "perspectivecamera", "pixmap", "pixmapio", "pixmaploader", "pixmappacker", "pixmappackerio", "pixmaptexturedata", "plane", "pluggablegroupstrategy", "pointlight", "pointlightsattribute", "pointspawnshapevalue", "pointspritecontrollerrenderdata", "pointspriteparticlebatch", "pointspriterenderer", "polygon", "polygonbatch", "polygonmapobject", "polygonregion", "polygonregionloader", "polygonsprite", "polygonspritebatch", "polyline", "polylinemapobject", "pool", "pooledlinkedlist", "pools", "predicate", "preferences", "prefixfilehandleresolver", "primitivespawnshapevalue", "progressbar", "propertiesutils", "quadtreefloat", "quaternion", "queue", "quickselect", "randomxs128", "rangednumericvalue", "ray", "rectangle", "rectanglemapobject", "rectanglespawnshapevalue", "reflectionexception", "reflectionpool", "regioninfluencer", "regularemitter", "relativetemporalaction", "remoteinput", "remotesender", "removeaction", "removeactoraction", "removelisteneraction", "renderable", "renderableprovider", "renderableshapebuilder", "renderablesorter", "rendercontext", "repeatablepolygonsprite", "repeataction", "resolutionfileresolver", "resourcedata", "rotatebyaction", "rotatetoaction", "runnableaction", "scalebyaction", "scalednumericvalue", "scaleinfluencer", "scaletoaction", "scaling", "scalingviewport", "scissorstack", "screen", "screenadapter", "screenutils", "screenviewport", "scrollpane", "segment", "select", "selectbox", "selection", "sequenceaction", "serializationexception", "serversocket", "serversockethints", "shader", "shaderprogram", "shaderprogramloader", "shaderprovider", "shadowmap", "shape2d", "shapecache", "shaperenderer", "shortarray", "simpleinfluencer", "simpleorthogroupstrategy", "sizebyaction", "sizetoaction", "skin", "skinloader", "slider", "snapshotarray", "socket", "sockethints", "sort", "sortedintlist", "sound", "soundloader", "spawninfluencer", "spawnshapevalue", "sphere", "sphereshapebuilder", "sphericalharmonics", "splitpane", "spotlight", "spotlightsattribute", "sprite", "spritebatch", "spritecache", "spritedrawable", "stack", "stage", "statictiledmaptile", "streamutils", "stretchviewport", "stringbuilder", "synchronousassetloader", "table", "temporalaction", "textarea", "textbutton", "textfield", "textinputwrapper", "texttooltip", "texture", "texture3d", "texture3ddata", "texturearray", "texturearraydata", "textureatlas", "textureatlasloader", "textureattribute", "texturebinder", "texturedata", "texturedescriptor", "textureloader", "texturemapobject", "textureprovider", "textureregion", "textureregiondrawable", "threadutils", "tidemaploader", "tileddrawable", "tiledmap", "tiledmapimagelayer", "tiledmaprenderer", "tiledmaptile", "tiledmaptilelayer", "tiledmaptilemapobject", "tiledmaptileset", "tiledmaptilesets", "timer", "timescaleaction", "timeutils", "tmxmaploader", "tooltip", "tooltipmanager", "touchable", "touchableaction", "touchpad", "transformdrawable", "tree", "ubjsonreader", "ubjsonwriter", "uiutils", "unweightedmeshspawnshapevalue", "value", "vector", "vector2", "vector3", "vector4", "version", "vertexarray", "vertexattribute", "vertexattributes", "vertexbufferobject", "vertexbufferobjectsubdata", "vertexbufferobjectwithvao", "vertexdata", "verticalgroup", "viewport", "visibleaction", "weightmeshspawnshapevalue", "widget", "widgetgroup", "window", "windowedmean", "xmlreader", "xmlwriter"));
+    private final static String[] FORBIDDEN_NAMES = {"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while", "_", "con", "prn", "aux", "nul", "com1", "com2", "com3", "com4", "com5", "com6", "com7", "com8", "com9", "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9"};
+
+    public static boolean isValidPackageName(String input) {
+        if (input == null || input.isEmpty() || !Character.isJavaIdentifierStart(input.charAt(0)) || input.contains("..") || input.endsWith(".")) {
+            return false;
+        }
+
+        boolean previousDot = false;
+        for (int id = 1; id < input.length(); id++) {
+            if (input.charAt(id) == '.') {
+                previousDot = true;
+            } else {
+                if ((previousDot && !Character.isJavaIdentifierStart(input.charAt(id))) || !Character.isJavaIdentifierPart(input.charAt(id))) {
+                    return false;
+                }
+                previousDot = false;
+            }
+        }
+
+        // case-insensitive check for any Java reserved word, then keep checking for Win32 reserved file/folder names.
+        boolean containsForbiddenName = false;
+        for (String forbiddenName : FORBIDDEN_NAMES) {
+            if (input.matches("(?i).*(^|\\.)" + forbiddenName + "(\\.|$).*")) {
+                containsForbiddenName = true;
+                break;
+            }
+        }
+
+        return !(!input.contains(".") || containsForbiddenName);
+    }
+
+    public static boolean isValidClassName(String input) {
+        if (input == null || input.isEmpty() || !Character.isJavaIdentifierStart(input.charAt(0))) {
+            return false;
+        } else if (input.length() == 1) {
+            return true;
+        }
+        for (int i = 1; i < input.length(); i++) {
+            if (!Character.isJavaIdentifierPart(input.charAt(i))) {
+                return false;
+            }
+        }
+        boolean containsForbiddenName = false;
+        for (String forbiddenName : FORBIDDEN_NAMES) {
+            if (input.matches("(?i)" + forbiddenName)) {
+                containsForbiddenName = true;
+                break;
+            }
+        }
+
+        return !containsForbiddenName && !BLOCKED_TYPES.contains(input.toLowerCase());
     }
 }

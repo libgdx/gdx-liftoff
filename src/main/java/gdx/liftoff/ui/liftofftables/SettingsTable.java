@@ -57,6 +57,7 @@ public class SettingsTable extends LiftoffTable {
         //empty space between buttons
         table.add().growX().space(SPACE_SMALL);
 
+        //todo:disable button if UserData is not valid
         //generate button
         textButton = new TextButton(prop.getProperty("generate"), skin);
         table.add(textButton).uniformX().fillX();
