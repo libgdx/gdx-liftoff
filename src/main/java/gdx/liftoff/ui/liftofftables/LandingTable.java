@@ -1,6 +1,7 @@
 package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -249,6 +250,7 @@ public class LandingTable extends LiftoffTable {
     @Override
     public void finishAnimation() {
         if (animationAction != null && getActions().contains(animationAction, true)) {
+            bgImage.setColor(Color.WHITE);
             removeAction(animationAction);
             populate();
             setTouchable(Touchable.childrenOnly);

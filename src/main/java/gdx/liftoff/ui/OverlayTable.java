@@ -52,6 +52,9 @@ public class OverlayTable extends Table {
         table.add(button).expand().top().right();
         addHandListener(button);
         onChange(button, () -> {
+            pref.putBoolean("startMaximized", true);
+            pref.flush();
+
             Main.maximizeWindow();
             fadeOut();
             Gdx.app.postRunnable(() -> {

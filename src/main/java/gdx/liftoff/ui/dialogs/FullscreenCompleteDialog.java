@@ -57,6 +57,9 @@ public class FullscreenCompleteDialog extends PopTable {
         contentTable.add(button).expandX().right();
         addHandListener(button);
         onChange(button, () -> {
+            pref.putBoolean("startMaximized", false);
+            pref.flush();
+
             hide();
             root.fadeInTable();
             Main.restoreWindow();

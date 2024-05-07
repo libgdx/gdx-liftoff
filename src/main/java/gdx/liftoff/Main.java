@@ -29,6 +29,8 @@ import com.ray3k.stripe.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
+import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
@@ -40,7 +42,6 @@ import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
 //todo:Fix openal error
-//todo:add preference to start in fullscreen
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program
  */
@@ -125,6 +126,15 @@ public class Main extends ApplicationAdapter {
         overlayTable = new OverlayTable();
         overlayTable.setFillParent(true);
         stage.addActor(overlayTable);
+
+        if (pref.getBoolean("startMaximized", false)) {
+            Main.maximizeWindow();
+            Gdx.app.postRunnable(() -> {
+                overlayTable.fadeOut();
+                root.fadeOutTable();
+                FullscreenDialog.show();
+            });
+        }
     }
 
     @Override
