@@ -97,6 +97,7 @@ public class PathsPanel extends Table implements Panel {
     }
 
     private void updateError() {
+        //todo:update error label based on text entered in the fields
         if (1+1==2) {
             errorLabel.setText("");
         }
