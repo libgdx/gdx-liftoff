@@ -229,7 +229,7 @@ construo {
         // macOS needs an identifier
         identifier.set("i.should.be.changed.before.merge." + appName)
         // Optional: icon for macOS
-        macIcon.set(project.file("path/to/mac-icon.icns"))
+        macIcon.set(project.file("icons/logo.icns"))
       }
       create("winX64", Target.Windows) {
         architecture.set(Target.Architecture.X86_64)
