@@ -144,25 +144,24 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
   }
 
-  override fun getContent(): String = """buildscript {
+  // language=groovy
+  override fun getContent(): String = """
+import io.github.fourlastor.construo.Target
+
+buildscript {
   repositories {
     gradlePluginPortal()
   }
   dependencies {
-// using jpackage only works if the JDK version is 14 or higher.
-// your JAVA_HOME environment variable may also need to be a JDK with version 14 or higher.
-    if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-      classpath "org.beryx:badass-runtime-plugin:1.13.0"
-    }
     if(enableGraalNative == 'true') {
       classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
     }
   }
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
-if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-  apply plugin: 'org.beryx.runtime'
+plugins {
+  id "io.github.fourlastor.construo" version "1.1.1"
 }
+${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 else {
   apply plugin: 'application'
 }
@@ -211,40 +210,32 @@ jar {
   }
 }
 
-if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_14)) {
-  tasks.jpackageImage.doNotTrackState("This task both reads from and writes to the build folder.")
-  runtime {
-    options.set(['--strip-debug',
-           '--compress', '2',
-           '--no-header-files',
-           '--no-man-pages',
-           '--strip-native-commands',
-           '--vm', 'server'])
-// you could very easily need more modules than this one.
-// use the lwjgl3:suggestModules task to see which modules may be needed.
-    modules.set([
-        'jdk.unsupported'
-    ])
-    distDir.set(file(project.layout.buildDirectory))
-    jpackage {
-      imageName = appName
-// you can set this to false if you want to build an installer, or keep it as true to build just an app.
-      skipInstaller = true
-// this may need to be set to a different path if your JAVA_HOME points to a low JDK version.
-      jpackageHome = javaHome.getOrElse("")
-      mainJar = jarName
-      if (os.contains('win')) {
-        imageOptions = ["--icon", "icons/logo.ico"]
-      } else if (os.contains('nix') || os.contains('nux') || os.contains('bsd')) {
-        imageOptions = ["--icon", "icons/logo.png"]
-      } else if (os.contains('mac')) {
-// If you are making a jpackage image on macOS, the below line should work thanks to StartupHelper.
-        imageOptions = ["--icon", "icons/logo.icns"]
-// If the above line doesn't produce a runnable executable, you can try using the below line instead of the above one.
-//        imageOptions = ["--icon", "icons/logo.icns", "--java-options", "\"-XstartOnFirstThread\""]
+construo {
+    // name of the executable
+    name.set(appName)
+    // human-readable name, used for example in the `.app` name for macOS
+    humanName.set(appName)
+    // Optional, defaults to project version
+    version.set("0.0.0")
+
+    targets.configure {
+      create("linuxX64", Target.Linux) {
+        architecture.set(Target.Architecture.X86_64)
+        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.11_9.tar.gz")
+      }
+      create("macM1", Target.MacOs) {
+        architecture.set(Target.Architecture.AARCH64)
+        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.11_9.tar.gz")
+        // macOS needs an identifier
+        identifier.set("i.should.be.changed.before.merge." + appName)
+        // Optional: icon for macOS
+        macIcon.set(project.file("path/to/mac-icon.icns"))
+      }
+      create("winX64", Target.Windows) {
+        architecture.set(Target.Architecture.X86_64)
+        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_x64_windows_hotspot_17.0.11_9.zip")
       }
     }
-  }
 }
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.
@@ -255,5 +246,6 @@ tasks.register('dist') {
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
-"""
+
+""".trimIndent()
 }
