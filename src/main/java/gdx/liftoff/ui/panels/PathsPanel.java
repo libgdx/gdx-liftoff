@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
@@ -90,17 +89,48 @@ public class PathsPanel extends Table implements Panel {
         }
 
         row();
-        errorLabel = new Label("Project path cannot be empty", skin, "error");
+        errorLabel = new Label("", skin, "error");
         errorLabel.setAlignment(Align.center);
-        errorLabel.setEllipsis("...");
-        add(errorLabel).minWidth(0).colspan(2).growX();
+        errorLabel.setWrap(true);
+        add(errorLabel).minSize(0, errorLabel.getStyle().font.getLineHeight() * 2).colspan(2).growX();
+        updateError();
     }
 
     private void updateError() {
-        //todo:update error label based on text entered in the fields
-        if (1+1==2) {
-            errorLabel.setText("");
+        if (UserData.projectPath == null) {
+            errorLabel.setText(prop.getProperty("nullDirectory"));
+            return;
         }
+
+        FileHandle tempFileHandle = Gdx.files.absolute(UserData.projectPath);
+        if (!tempFileHandle.exists() || !tempFileHandle.isDirectory()) {
+            errorLabel.setText(prop.getProperty("notDirectory"));
+            return;
+        }
+
+        if (tempFileHandle.list().length != 0) {
+            errorLabel.setText(prop.getProperty("notEmptyDirectory"));
+            return;
+        }
+
+        boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
+        if (android && UserData.androidPath == null) {
+            errorLabel.setText(prop.getProperty("sdkNullDirectory"));
+            return;
+        }
+
+        tempFileHandle = Gdx.files.absolute(UserData.androidPath);
+        if (android && (!tempFileHandle.exists() || !tempFileHandle.isDirectory())) {
+            errorLabel.setText(prop.getProperty("sdkNotDirectory"));
+            return;
+        }
+
+        if (android && !Main.isAndroidSdkDirectory(UserData.androidPath)) {
+            errorLabel.setText(prop.getProperty("invalidSdkDirectory"));
+            return;
+        }
+
+        errorLabel.setText("");
     }
 
     /**

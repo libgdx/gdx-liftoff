@@ -42,6 +42,7 @@ import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
 //todo:Fix openal error
+//todo:Look at autoupdate code
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program
  */
@@ -472,5 +473,20 @@ public class Main extends ApplicationAdapter {
         }
 
         return !containsForbiddenName && !BLOCKED_TYPES.contains(input.toLowerCase());
+    }
+
+    public static boolean isAndroidSdkDirectory(String path) {
+        try {
+            FileHandle file = Gdx.files.absolute(path);
+            if (file.isDirectory()) {
+                return (file.child("tools").isDirectory() ||
+                    file.child("cmdline-tools").isDirectory() ||
+                    file.child("build-tools").isDirectory()) &&
+                    file.child("platforms").isDirectory();
+            }
+        } catch (Exception exception) {
+            // Probably not the Android SDK.
+        }
+        return false;
     }
 }
