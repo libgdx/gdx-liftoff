@@ -160,11 +160,9 @@ buildscript {
 }
 plugins {
   id "io.github.fourlastor.construo" version "1.1.1"
+  id "application"
 }
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
-else {
-  apply plugin: 'application'
-}
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
