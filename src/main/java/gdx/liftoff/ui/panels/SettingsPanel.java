@@ -31,6 +31,7 @@ public class SettingsPanel extends Table implements Panel {
         Table table = new Table();
         add(table).growX();
 
+        //todo:replace latest version parameter
         //libgdx version
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
