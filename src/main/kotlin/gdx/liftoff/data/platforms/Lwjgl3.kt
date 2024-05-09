@@ -229,6 +229,14 @@ construo {
         // Optional: icon for macOS
         macIcon.set(project.file("icons/logo.icns"))
       }
+      create("macX64", Target.MacOs) {
+        architecture.set(Target.Architecture.X86_64)
+        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_x64_mac_hotspot_17.0.11_9.tar.gz")
+        // macOS needs an identifier
+        identifier.set("i.should.be.changed.before.merge." + appName)
+        // Optional: icon for macOS
+        macIcon.set(project.file("icons/logo.icns"))
+      }
       create("winX64", Target.Windows) {
         architecture.set(Target.Architecture.X86_64)
         jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.11%2B9/OpenJDK17U-jdk_x64_windows_hotspot_17.0.11_9.zip")
