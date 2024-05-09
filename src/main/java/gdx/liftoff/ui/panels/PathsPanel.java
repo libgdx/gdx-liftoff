@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.dialogs.FullscreenDialog;
+import gdx.liftoff.ui.liftofftables.QuickSettingsTable;
 
 import static gdx.liftoff.Main.*;
 
@@ -49,6 +51,8 @@ public class PathsPanel extends Table implements Panel {
                         projectFieldButton.setText(path);
                         UserData.projectPath = path;
                         updateError();
+                        if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButton();
+                        root.quickSettingsTable.populate();
                     }
                 }
             });
@@ -138,11 +142,12 @@ public class PathsPanel extends Table implements Panel {
      * @param text
      */
     private TextButton addField(String text) {
+        //todo:add tooltips
         TextButton browseFieldButton = new TextButton(text, skin, "field");
         browseFieldButton.getLabel().setAlignment(Align.left);
         browseFieldButton.getLabel().setEllipsis("...");
         browseFieldButton.getLabelCell().minWidth(0);
-        add(browseFieldButton).growX().minWidth(100);
+        add(browseFieldButton).growX().minWidth(100).maxWidth(300);
         addHandListener(browseFieldButton);
 
         return browseFieldButton;

@@ -59,6 +59,7 @@ public class SettingsPanel extends Table implements Panel {
         ImageButton readmeImageButton = addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), UserData.addReadme, table);
         onChange(readmeImageButton, () -> UserData.addReadme = readmeImageButton.isChecked());
 
+        //todo:add tooltips
         //add gradle tasks
         row();
         TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);

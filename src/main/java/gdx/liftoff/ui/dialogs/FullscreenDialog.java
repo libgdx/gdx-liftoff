@@ -21,6 +21,7 @@ import static gdx.liftoff.Main.*;
  */
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
+    private TextButton generateButton;
 
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
@@ -53,6 +54,10 @@ public class FullscreenDialog extends PopTable {
         scrollPane.setFlickScroll(false);
         dualCollapsibleGroup.addActor(scrollPane);
         addScrollFocusListener(scrollPane);
+    }
+
+    public void updateGenerateButton() {
+        generateButton.setDisabled(!validateUserData());
     }
 
     private void createPanels(Table contentTable) {
@@ -131,12 +136,12 @@ public class FullscreenDialog extends PopTable {
         //empty cell for equal spacing
         table.add().expandX();
 
-        //todo:disable button if UserData is not valid
         //generate button
-        TextButton textButton = new TextButton(prop.getProperty("generate"), skin, "big");
-        table.add(textButton);
-        addHandListener(textButton);
-        onChange(textButton, () -> hide(sequence(
+        generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
+        updateGenerateButton();
+        table.add(generateButton);
+        addHandListener(generateButton);
+        onChange(generateButton, () -> hide(sequence(
             fadeOut(.3f),
             run(() -> {
                 Main.generateProject();

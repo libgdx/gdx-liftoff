@@ -62,6 +62,12 @@
 		"b": 1,
 		"a": 0
 	},
+	"disabled": {
+		"r": 0.34901962,
+		"g": 0.34901962,
+		"b": 0.34901962,
+		"a": 1
+	},
 	"red": {
 		"r": 0.8,
 		"g": 0,
@@ -885,6 +891,66 @@
 		"regions": [],
 		"playMode": 2,
 		"crushMode": 0
+	},
+	"button-big-disabled-10": {
+		"region": "button-big-disabled",
+		"horizontalStretchAreas": [ 7, 70 ],
+		"verticalStretchAreas": [ 9, 72 ],
+		"tiling": false,
+		"minWidth": 78,
+		"minHeight": 80,
+		"rightWidth": 18,
+		"leftWidth": 18,
+		"bottomHeight": 7,
+		"topHeight": 5,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"button-mid-disabled-10": {
+		"region": "button-mid-disabled",
+		"horizontalStretchAreas": [ 5, 32 ],
+		"verticalStretchAreas": [ 7, 34 ],
+		"tiling": false,
+		"minWidth": 38,
+		"minHeight": 40,
+		"rightWidth": 11,
+		"leftWidth": 11,
+		"bottomHeight": 6,
+		"topHeight": 4,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
+	},
+	"button-small-disabled-10": {
+		"region": "button-small-disabled",
+		"horizontalStretchAreas": [ 2, 46 ],
+		"verticalStretchAreas": [ 3, 21 ],
+		"tiling": false,
+		"minWidth": 49,
+		"minHeight": 24,
+		"rightWidth": 14,
+		"leftWidth": 14,
+		"bottomHeight": 4,
+		"topHeight": 3,
+		"offsetX": 0,
+		"offsetY": 0,
+		"offsetXspeed": 0,
+		"offsetYspeed": 0,
+		"frameDuration": 0.03,
+		"regions": [],
+		"playMode": 2,
+		"crushMode": 0
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
@@ -1030,25 +1096,31 @@
 		"font": "font-button-small",
 		"fontColor": "black",
 		"overFontColor": "white",
+		"disabledFontColor": "disabled",
 		"up": "button-small-up-10",
 		"down": "button-small-down-10",
-		"over": "button-small-over-10"
+		"over": "button-small-over-10",
+		"disabled": "button-small-disabled-10"
 	},
 	"mid": {
 		"font": "font-button-mid",
 		"fontColor": "black",
 		"overFontColor": "white",
+		"disabledFontColor": "disabled",
 		"up": "button-mid-up-10",
 		"down": "button-mid-down-10",
-		"over": "button-mid-over-10"
+		"over": "button-mid-over-10",
+		"disabled": "button-mid-disabled-10"
 	},
 	"big": {
 		"font": "font-button-big",
 		"fontColor": "black",
 		"overFontColor": "white",
+		"disabledFontColor": "disabled",
 		"up": "button-big-up-10",
 		"down": "button-big-down-10",
-		"over": "button-big-over-10"
+		"over": "button-big-over-10",
+		"disabled": "button-big-disabled-10"
 	},
 	"link": {
 		"font": "font-label",

@@ -414,6 +414,57 @@ public class Main extends ApplicationAdapter {
         UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
     }
 
+    public static boolean validateUserData() {
+        if (UserData.projectName.isEmpty()) {
+            return false;
+        }
+
+        if (UserData.packageName.isEmpty()) {
+            return false;
+        }
+
+        if (!isValidPackageName(UserData.packageName)) {
+            return false;
+        }
+
+        if (UserData.mainClassName.isEmpty()) {
+            return false;
+        }
+
+        if (!isValidClassName(UserData.mainClassName)) {
+            return false;
+        }
+
+        if (UserData.projectPath == null) {
+            return false;
+        }
+
+        FileHandle tempFileHandle = Gdx.files.absolute(UserData.projectPath);
+        if (!tempFileHandle.exists() || !tempFileHandle.isDirectory()) {
+            return false;
+        }
+
+        if (tempFileHandle.list().length != 0) {
+            return false;
+        }
+
+        boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
+        if (android && UserData.androidPath == null) {
+            return false;
+        }
+
+        tempFileHandle = Gdx.files.absolute(UserData.androidPath);
+        if (android && (!tempFileHandle.exists() || !tempFileHandle.isDirectory())) {
+            return false;
+        }
+
+        if (android && !Main.isAndroidSdkDirectory(UserData.androidPath)) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Placeholder for project generation.
      */

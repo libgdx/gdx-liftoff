@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.github.czyzby.kiwi.util.common.Strings;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
 
@@ -26,20 +27,24 @@ public class ProjectPanel extends Table implements Panel {
 
     public void populate(boolean fullscreen) {
         clearChildren();
-        columnDefaults(0).right();
-        columnDefaults(1).growX();
-        defaults().space(SPACE_MEDIUM);
+
+        Table table = new Table();
+        add(table);
+
+        table.columnDefaults(0).right();
+        table.columnDefaults(1).growX();
+        table.defaults().space(SPACE_MEDIUM);
 
         //project label
         Label label = new Label(prop.getProperty("projectName"), skin);
-        add(label);
+        table.add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
 
         //project field
         final TextField projectTextField = new TextField("", skin);
         projectTextField.setText(UserData.projectName);
         keyboardActor = projectTextField;
-        add(projectTextField);
+        table.add(projectTextField);
         addIbeamListener(projectTextField);
         addTooltip(projectTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
         onChange(projectTextField, () -> {
@@ -49,15 +54,15 @@ public class ProjectPanel extends Table implements Panel {
         });
 
         //package label
-        row();
+        table.row();
         label = new Label(prop.getProperty("packageName"), skin);
-        add(label);
+        table.add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
 
         //package field
         final TextField packageTextField = new TextField("", skin);
         packageTextField.setText(UserData.packageName);
-        add(packageTextField);
+        table.add(packageTextField);
         addIbeamListener(packageTextField);
         addTooltip(packageTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
         onChange(packageTextField, () -> {
@@ -67,15 +72,15 @@ public class ProjectPanel extends Table implements Panel {
         });
 
         //main class label
-        row();
+        table.row();
         label = new Label(prop.getProperty("mainClassName"), skin);
-        add(label);
+        table.add(label);
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
 
         //main class field
         final TextField mainTextField = new TextField("", skin);
         mainTextField.setText(UserData.mainClassName);
-        add(mainTextField);
+        table.add(mainTextField);
         addIbeamListener(mainTextField);
         addTooltip(mainTextField, label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
         onChange(mainTextField, () -> {
@@ -85,17 +90,17 @@ public class ProjectPanel extends Table implements Panel {
         });
 
         //error label
-        columnDefaults(0).reset();
         row();
         errorLabel = new Label("", skin, "error");
         errorLabel.setEllipsis("...");
-        add(errorLabel).colspan(2).minWidth(0);
+        add(errorLabel).minWidth(0);
         updateError();
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 updateError();
+                if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButton();
             }
         };
         projectTextField.addListener(changeListener);
