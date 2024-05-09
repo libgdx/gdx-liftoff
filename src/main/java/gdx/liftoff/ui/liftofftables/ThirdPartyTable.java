@@ -2,6 +2,7 @@ package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.ui.panels.ThirdPartyPanel;
 
 import static gdx.liftoff.Main.*;
@@ -34,6 +35,7 @@ public class ThirdPartyTable extends LiftoffTable {
         TextButton textButton = new TextButton(prop.getProperty("previous"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("previousTip"));
         onChange(textButton, () -> root.previousTable());
 
         //empty space between the buttons
@@ -43,6 +45,7 @@ public class ThirdPartyTable extends LiftoffTable {
         textButton = new TextButton(prop.getProperty("next"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("nextTip"));
         onChange(textButton, () -> root.nextTable());
     }
 

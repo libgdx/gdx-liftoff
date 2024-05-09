@@ -435,7 +435,7 @@ public class Main extends ApplicationAdapter {
             return false;
         }
 
-        if (UserData.projectPath == null) {
+        if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
             return false;
         }
 
@@ -449,7 +449,7 @@ public class Main extends ApplicationAdapter {
         }
 
         boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
-        if (android && UserData.androidPath == null) {
+        if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
             return false;
         }
 

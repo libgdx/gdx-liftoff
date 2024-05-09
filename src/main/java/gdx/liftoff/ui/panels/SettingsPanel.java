@@ -59,12 +59,12 @@ public class SettingsPanel extends Table implements Panel {
         ImageButton readmeImageButton = addCheck(prop.getProperty("generateReadme"), prop.getProperty("generateReadmeTip"), UserData.addReadme, table);
         onChange(readmeImageButton, () -> UserData.addReadme = readmeImageButton.isChecked());
 
-        //todo:add tooltips
         //add gradle tasks
         row();
         TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);
         add(textButton).spaceTop(SPACE_HUGE);
         addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("gradleTasksTipShort"));
         onChange(textButton, () -> {
             PopTable pop = GradleDialog.show(fullscreen);
             pop.addListener(new TableShowHideListener() {

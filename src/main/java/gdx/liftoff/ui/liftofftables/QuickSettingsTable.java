@@ -3,6 +3,7 @@ package gdx.liftoff.ui.liftofftables;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.panels.PathsPanel;
 
@@ -30,7 +31,7 @@ public class QuickSettingsTable extends LiftoffTable {
         //paths panel
         row();
         PathsPanel pathsPanel = new PathsPanel(false);
-        add(pathsPanel).growX().spaceTop(SPACE_HUGE);
+        add(pathsPanel).expandX().spaceTop(SPACE_HUGE);
 
         row();
         Table table = new Table();
@@ -42,6 +43,7 @@ public class QuickSettingsTable extends LiftoffTable {
         textButton.setDisabled(!validateUserData());
         table.add(textButton);
         addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("generateTip"));
         onChange(textButton, () -> {
             Main.generateProject();
             root.transitionTable(root.completeTable, true);
@@ -52,6 +54,7 @@ public class QuickSettingsTable extends LiftoffTable {
         textButton = new TextButton(prop.getProperty("quickCancel"), skin);
         table.add(textButton);
         addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("cancelTip"));
         onChange(textButton, () -> root.transitionTable(root.landingTable, false));
     }
 

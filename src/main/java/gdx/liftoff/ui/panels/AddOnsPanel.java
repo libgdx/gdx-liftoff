@@ -37,6 +37,7 @@ public class AddOnsPanel extends Table implements Panel {
         Button button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
+        addTooltip(button, Align.top, prop.getProperty("platformsTip"));
         onChange(button, () -> PlatformsDialog.show(fullscreen, () -> {
             populate(fullscreen);
             if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
@@ -63,6 +64,7 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
+        addTooltip(button, Align.top, prop.getProperty("languagesTip"));
         onChange(button, () -> LanguagesDialog.show(fullscreen, () -> {
             populate(fullscreen);
             if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
@@ -89,6 +91,7 @@ public class AddOnsPanel extends Table implements Panel {
         button = new Button(skin, "card-plus");
         table.add(button).prefWidth(150);
         addHandListener(button);
+        addTooltip(button, Align.top, prop.getProperty("extensionsTip"));
         onChange(button, () -> ExtensionsDialog.show(fullscreen, () -> {
             populate(fullscreen);
             if (fullscreen && FullscreenDialog.fullscreenDialog != null) {
@@ -119,6 +122,7 @@ public class AddOnsPanel extends Table implements Panel {
         //template title
         label = new Label(prop.getProperty("template"), skin, "field");
         table.add(label).space(SPACE_LARGE);
+        addTooltip(label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
         Stack stack = new Stack();
         table.add(stack).growX();
@@ -135,10 +139,12 @@ public class AddOnsPanel extends Table implements Panel {
         chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);
+        addTooltip(chooseFieldButton, label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
         //template choose button
         TextButton chooseButton = new TextButton(prop.getProperty("choose"), skin);
         smashGroup.setSecondActor(chooseButton);
+        addTooltip(chooseButton, label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
         Container chooseContainer = new Container();
         chooseContainer.setTouchable(Touchable.enabled);

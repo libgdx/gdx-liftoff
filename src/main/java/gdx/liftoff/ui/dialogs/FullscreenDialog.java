@@ -3,6 +3,7 @@ package gdx.liftoff.ui.dialogs;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -141,6 +142,7 @@ public class FullscreenDialog extends PopTable {
         updateGenerateButton();
         table.add(generateButton);
         addHandListener(generateButton);
+        addTooltip(generateButton, Align.top, prop.getProperty("generateTip"));
         onChange(generateButton, () -> hide(sequence(
             fadeOut(.3f),
             run(() -> {

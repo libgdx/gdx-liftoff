@@ -31,9 +31,11 @@ public class PathsPanel extends Table implements Panel {
         Label label = new Label(prop.getProperty("destinationPrompt"), skin, "field");
         label.setEllipsis("...");
         add(label).minWidth(0);
+        addTooltip(label, Align.top, 0, prop.getProperty("destinationTip"));
 
         //project field
         TextButton projectFieldButton = addField(UserData.projectPath);
+        addTooltip(projectFieldButton, label, Align.top, 0, prop.getProperty("destinationTip"));
         onChange(projectFieldButton, () -> {
             FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
             if (UserData.projectPath != null && !UserData.projectPath.isEmpty()) initialFolder = Gdx.files.absolute(UserData.projectPath);
@@ -64,9 +66,11 @@ public class PathsPanel extends Table implements Panel {
             label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
             label.setEllipsis("...");
             add(label).minWidth(0);
+            addTooltip(label, Align.top, 0, prop.getProperty("sdkTip"));
 
             //android field
             TextButton androidFieldButton = addField(UserData.androidPath);
+            addTooltip(androidFieldButton, label, Align.top, 0, prop.getProperty("sdkTip"));
             onChange(androidFieldButton, () -> {
                 FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
                 if (UserData.androidPath != null && !UserData.androidPath.isEmpty()) initialFolder = Gdx.files.absolute(UserData.androidPath);
@@ -101,7 +105,7 @@ public class PathsPanel extends Table implements Panel {
     }
 
     private void updateError() {
-        if (UserData.projectPath == null) {
+        if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
             errorLabel.setText(prop.getProperty("nullDirectory"));
             return;
         }
@@ -118,7 +122,7 @@ public class PathsPanel extends Table implements Panel {
         }
 
         boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
-        if (android && UserData.androidPath == null) {
+        if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
             errorLabel.setText(prop.getProperty("sdkNullDirectory"));
             return;
         }
@@ -142,7 +146,6 @@ public class PathsPanel extends Table implements Panel {
      * @param text
      */
     private TextButton addField(String text) {
-        //todo:add tooltips
         TextButton browseFieldButton = new TextButton(text, skin, "field");
         browseFieldButton.getLabel().setAlignment(Align.left);
         browseFieldButton.getLabel().setEllipsis("...");
