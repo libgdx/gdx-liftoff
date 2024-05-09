@@ -253,5 +253,5 @@ if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
 
-""".trimIndent()
+  """.trimIndent()
 }
