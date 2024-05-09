@@ -30,13 +30,12 @@ public class SettingsPanel extends Table implements Panel {
         row();
         Table table = new Table();
         add(table).growX();
-
-        //todo:replace latest version parameter
+        
         //libgdx version
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
         table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
-        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"), prop.getProperty("gdxVersionTip"), UserData.libgdxVersion, table, true);
+        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"), String.format(prop.getProperty("gdxVersionTip"), prop.getProperty("libgdxDefaultVersion")), UserData.libgdxVersion, table, true);
         onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
