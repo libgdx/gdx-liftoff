@@ -1,4 +1,4 @@
-package gdx.liftoff.ui.data;
+package gdx.liftoff.ui;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;

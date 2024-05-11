@@ -13,7 +13,7 @@ import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
-import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.UserData;
 
 import static gdx.liftoff.Main.*;
 

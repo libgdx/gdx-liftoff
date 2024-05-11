@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.SmashGroup;
-import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.*;
 
 import java.util.Locale;

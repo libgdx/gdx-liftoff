@@ -9,9 +9,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
-import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
-import gdx.liftoff.ui.liftofftables.QuickSettingsTable;
 
 import static gdx.liftoff.Main.*;
 

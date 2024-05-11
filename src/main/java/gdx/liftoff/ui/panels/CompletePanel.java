@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import gdx.liftoff.ui.LogoWidget;
-import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.UserData;
 
 import static gdx.liftoff.Main.*;
 

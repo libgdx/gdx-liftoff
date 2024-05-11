@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import gdx.liftoff.ui.data.UserData;
+import gdx.liftoff.ui.UserData;
 
 import java.util.Locale;
 
