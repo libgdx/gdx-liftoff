@@ -2,6 +2,9 @@ package gdx.liftoff;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net.HttpRequest;
+import com.badlogic.gdx.Net.HttpResponse;
+import com.badlogic.gdx.Net.HttpResponseListener;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -25,6 +29,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
+import gdx.liftoff.config.Configuration;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.data.UserData;
@@ -126,6 +131,8 @@ public class Main extends ApplicationAdapter {
         overlayTable = new OverlayTable();
         overlayTable.setFillParent(true);
         stage.addActor(overlayTable);
+
+        checkSetupVersion();
 
         if (pref.getBoolean("startMaximized", false)) {
             Main.maximizeWindow();
@@ -538,5 +545,39 @@ public class Main extends ApplicationAdapter {
             // Probably not the Android SDK.
         }
         return false;
+    }
+
+    public static void checkSetupVersion() {
+        // When using snapshots, we don't care if the version matches the latest stable.
+        if (Configuration.VERSION.endsWith("SNAPSHOT")) return;
+
+        HttpRequest request = new HttpRequestBuilder().newRequest()
+            .method("GET")
+            .url("https://raw.githubusercontent.com/libgdx/gdx-liftoff/master/version.txt")
+            .build();
+
+        HttpResponseListener listener = new HttpResponseListener() {
+            @Override
+            public void handleHttpResponse(HttpResponse httpResponse) {
+                String latestStable = httpResponse.getResultAsString().trim();
+                if (!Configuration.VERSION.equals(latestStable)) {
+                    Gdx.app.postRunnable(() -> {
+                        root.landingTable.animateUpdateLabel();
+                    });
+                }
+            }
+
+            @Override
+            public void cancelled() {
+                // Never cancelled.
+            }
+
+            @Override
+            public void failed(Throwable t) {
+                // Ignored. The user might not be connected.
+            }
+        };
+
+        Gdx.net.sendHttpRequest(request, listener);
     }
 }

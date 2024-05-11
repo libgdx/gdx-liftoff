@@ -27,6 +27,7 @@ public class LandingTable extends LiftoffTable {
     private Image logoImage;
     private Label subtitleLabel;
     private Label versionLabel;
+    private Container updateContainer;
     private TextButton updateButton;
     private ProjectPanel projectPanel;
     private CollapsibleGroup buttonsCollapsibleGroup;
@@ -79,8 +80,14 @@ public class LandingTable extends LiftoffTable {
 
         //update link
         table.row();
+        updateContainer = new Container();
+        updateContainer.setColor(CLEAR_WHITE);
+        table.add(updateContainer);
+
         updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
-        table.add(updateButton);
+        updateButton.setColor(CLEAR_WHITE);
+        updateButton.setDisabled(true);
+        updateContainer.setActor(updateButton);
         addHandListener(updateButton);
         addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
         onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
@@ -181,7 +188,7 @@ public class LandingTable extends LiftoffTable {
         subtitleLabel.setColor(CLEAR_WHITE);
         subtitleLabel.setVisible(true);
         versionLabel.setColor(CLEAR_WHITE);
-        updateButton.setColor(CLEAR_WHITE);
+        updateContainer.setColor(CLEAR_WHITE);
         projectPanel.setColor(CLEAR_WHITE);
         buttonsCollapsibleGroup.setColor(CLEAR_WHITE);
         socialPanel.setColor(CLEAR_WHITE);
@@ -234,7 +241,7 @@ public class LandingTable extends LiftoffTable {
                     targeting(subtitleLabel, visible(false)),
                     parallel(
                         targeting(versionLabel, fadeIn(.5f)),
-                        targeting(updateButton, delay(.35f, targeting(updateButton, fadeIn(.5f))))
+                        targeting(updateContainer, delay(.35f, targeting(updateContainer, fadeIn(.5f))))
                     )
                 )))
             ),
@@ -256,5 +263,11 @@ public class LandingTable extends LiftoffTable {
             setTouchable(Touchable.childrenOnly);
             captureKeyboardFocus();
         }
+    }
+
+    public void animateUpdateLabel() {
+        updateButton.setColor(CLEAR_WHITE);
+        updateButton.setDisabled(false);
+        addAction(targeting(updateButton, fadeIn(.5f)));
     }
 }
