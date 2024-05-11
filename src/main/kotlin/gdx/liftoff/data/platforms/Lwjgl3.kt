@@ -146,8 +146,6 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
 
   // language=groovy
   override fun getContent(): String = """
-import io.github.fourlastor.construo.Target
-
 buildscript {
   repositories {
     gradlePluginPortal()
@@ -163,6 +161,8 @@ plugins {
   id "application"
 }
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
+
+import io.github.fourlastor.construo.Target
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
