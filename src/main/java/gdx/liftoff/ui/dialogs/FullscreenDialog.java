@@ -152,7 +152,7 @@ public class FullscreenDialog extends PopTable {
         )));
 
         //version
-        label = new Label(prop.getProperty("liftoffVersion"), skin);
+        label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expandX().right().bottom();
     }
 

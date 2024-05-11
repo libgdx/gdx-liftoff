@@ -66,7 +66,7 @@ public class OverlayTable extends Table {
 
         //version
         table.row();
-        Label label = new Label(prop.getProperty("liftoffVersion"), skin);
+        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 
         return table;

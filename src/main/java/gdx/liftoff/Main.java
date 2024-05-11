@@ -549,7 +549,7 @@ public class Main extends ApplicationAdapter {
 
     public static void checkSetupVersion() {
         // When using snapshots, we don't care if the version matches the latest stable.
-        if (Configuration.VERSION.endsWith("SNAPSHOT")) return;
+        if (prop.getProperty("liftoffVersion").endsWith("SNAPSHOT")) return;
 
         HttpRequest request = new HttpRequestBuilder().newRequest()
             .method("GET")
@@ -560,7 +560,7 @@ public class Main extends ApplicationAdapter {
             @Override
             public void handleHttpResponse(HttpResponse httpResponse) {
                 String latestStable = httpResponse.getResultAsString().trim();
-                if (!Configuration.VERSION.equals(latestStable)) {
+                if (!prop.getProperty("liftoffVersion").equals(latestStable)) {
                     Gdx.app.postRunnable(() -> {
                         root.landingTable.animateUpdateLabel();
                     });

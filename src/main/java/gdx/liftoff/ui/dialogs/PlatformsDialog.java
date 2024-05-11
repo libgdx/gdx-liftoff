@@ -110,7 +110,6 @@ public class PlatformsDialog extends PopTable  {
         addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2Tip"));
         addPlatform(table, prop.getProperty("server"), prop.getProperty("serverTip"));
         addPlatform(table, prop.getProperty("shared"), prop.getProperty("sharedTip"));
-        addPlatform(table, prop.getProperty("ios-moe"), prop.getProperty("ios-moeTip"));
 
         //ok button
         contentTable.row();
