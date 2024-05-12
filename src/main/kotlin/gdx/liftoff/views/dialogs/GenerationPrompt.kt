@@ -42,7 +42,7 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
   @LmlActor("scroll")
   private val scrollPane: ScrollPane = inject()
 
-  @LmlActor("openIdea")
+  @LmlActor("idea")
   private val ideaButton: Button = inject()
 
   private val loggingBuffer = ConcurrentLinkedQueue<String>()
