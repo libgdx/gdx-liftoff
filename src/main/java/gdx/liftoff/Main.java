@@ -227,7 +227,10 @@ public class Main extends ApplicationAdapter {
      * @return
      */
     public static PopTable addPopTableClickListener(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
-        String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0  ? "tooltip-arrow-down" : (align & Align.left) != 0  ? "tooltip-arrow-right" : "tooltip-arrow-left";
+        String style = "tooltip-arrow-left";
+        if ((align & Align.bottom) != 0) style = "tooltip-arrow-up";
+        else if ((align & Align.top) != 0) style = "tooltip-arrow-down";
+        else if ((align & Align.left) != 0) style = "tooltip-arrow-right";
         PopTableClickListener listener = new PopTableClickListener(align, align, skin, style);
         listener.attachedActor = attachedActor;
         actor.addListener(listener);
