@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -304,7 +305,7 @@ public class Main extends ApplicationAdapter {
     public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
         String initialPath = initialFolder.path();
 
-        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("win")) {
+        if (UIUtils.isWindows) {
             initialPath = initialPath.replace("/", "\\");
         }
 
