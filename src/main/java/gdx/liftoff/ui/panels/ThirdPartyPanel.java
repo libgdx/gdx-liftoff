@@ -215,11 +215,12 @@ public class ThirdPartyPanel extends Table implements Panel {
 
     /**
      * Convenience method to add a third party library to the searchEntries list
-     * @param name
-     * @param description
-     * @param link
-     * @param keywords
-     * @return
+     * @param name The name of the library
+     * @param description A short description of the library
+     * @param link The URL pointing to the library's home page
+     * @param keywords Search terms to be implemented in the search TextField. The library name is already included with
+     *                 the keywords.
+     * @return The data object containing the details of the third-party library
      */
     private SearchEntry addThirdParty(String name, String description, String link, String keywords) {
         SearchEntry searchEntry = new SearchEntry(name, description, link, keywords);

@@ -142,7 +142,7 @@ public class PathsPanel extends Table implements Panel {
 
     /**
      * Convenience method to add fields to the table.
-     * @param text
+     * @param text The name of the field
      */
     private TextButton addField(String text) {
         TextButton browseFieldButton = new TextButton(text, skin, "field");

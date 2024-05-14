@@ -40,13 +40,11 @@ import org.lwjgl.util.nfd.NativeFileDialog;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Properties;
 
 import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
-//todo:Look at autoupdate code
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program
  */
@@ -224,7 +222,7 @@ public class Main extends ApplicationAdapter {
      * @param align The alignment of the PopTable
      * @param wrapWidth Set to 0 to not enable wrapping of the Label
      * @param text The text to be added inside the PopTable
-     * @return
+     * @return The generated PopTable that is shown when the user clicks the actor
      */
     public static PopTable addPopTableClickListener(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
         String style = "tooltip-arrow-left";
@@ -255,9 +253,9 @@ public class Main extends ApplicationAdapter {
     /**
      * Utility method to change the color of a label to make it look highlighted when the user enters another specified
      * actor
-     * @param actor
-     * @param label
-     * @param changeColor
+     * @param actor The affected actor
+     * @param label The label to be highlighted
+     * @param changeColor The color of the highlight
      */
     public static void addLabelHighlight(Actor actor, Label label, boolean changeColor) {
         label.addListener(new ClickListener() {
@@ -302,8 +300,8 @@ public class Main extends ApplicationAdapter {
 
     /**
      * Utility method to display a native file picker
-     * @param initialFolder
-     * @param callback
+     * @param initialFolder The initial folder that the picker will start in
+     * @param callback Adapter that will be called if the user clicks okay or cancels the dialog
      */
     public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
         String initialPath = initialFolder.path();
@@ -366,8 +364,8 @@ public class Main extends ApplicationAdapter {
     /**
      * Splits a comma separated value list in a String and returns an Array{@literal <}String{@literal >}
      *
-     * @param string
-     * @return
+     * @param string The raw String of comma separated values
+     * @return The array of String values
      */
     public static Array<String> splitCSV(String string) {
         return string.isEmpty() ? new Array<>() : new Array<>(string.split(","));

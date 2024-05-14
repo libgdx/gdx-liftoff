@@ -131,8 +131,8 @@ public class LanguagesDialog extends PopTable  {
 
     /**
      * Convenience method to add a language to the table
-     * @param table
-     * @param languageName
+     * @param table The table to add widgets to
+     * @param languageName The name of the language
      */
     private void addLanguage(Table table, String languageName, String defaultVersion) {
         table.row();

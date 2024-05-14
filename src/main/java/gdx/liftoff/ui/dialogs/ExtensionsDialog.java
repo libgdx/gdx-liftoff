@@ -127,10 +127,10 @@ public class ExtensionsDialog extends PopTable  {
 
     /**
      * Convenience method that adds an extension to the given table
-     * @param table
-     * @param extensionName
-     * @param description
-     * @param url
+     * @param table The table to add widgets to
+     * @param extensionName The name of the extension
+     * @param description A short description of the extension
+     * @param url The URL pointing to the home page of the extension
      */
     private void addExtension(Table table, String extensionName, String description, String url) {
         //checkbox

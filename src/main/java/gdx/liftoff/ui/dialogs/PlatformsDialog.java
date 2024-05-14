@@ -123,10 +123,10 @@ public class PlatformsDialog extends PopTable  {
 
     /**
      * Convenience method to add platforms to the table
-     * @param table
-     * @param platformName
-     * @param description
-     * @return
+     * @param table The table to add the widgets to
+     * @param platformName The name of the platform
+     * @param description A short description of the platform
+     * @return The CheckBox created for the platform
      */
     private CheckBox addPlatform(Table table, String platformName, String description) {
         table.row();

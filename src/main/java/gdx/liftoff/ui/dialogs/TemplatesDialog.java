@@ -155,11 +155,12 @@ public class TemplatesDialog extends PopTable  {
 
     /**
      * A convenience method to add a template to the table
-     * @param table
-     * @param buttonGroup
-     * @param templateName
-     * @param description
-     * @param showGuiTip
+     * @param table The table to add the widgets
+     * @param buttonGroup The button group that the checkbox should belong to
+     * @param templateName The name of the template
+     * @param description A short description of the template
+     * @param showGuiTip When set to true, a tooltip is shown that signifies that the widget depends on the default
+     *                   GUI Skin
      */
     private void addTemplate(Table table, ButtonGroup buttonGroup, String templateName, String description, boolean showGuiTip) {
         table.row();
