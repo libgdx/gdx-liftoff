@@ -217,7 +217,7 @@ dependencies {
     } else {
       ""
     }}
-${joinDependencies(dependencies)}
+${joinDependencies(dependencies + "\"com.getkeepsafe.relinker:relinker:1.4.4\"")}
 ${joinDependencies(nativeDependencies, "natives")}
 }
 
