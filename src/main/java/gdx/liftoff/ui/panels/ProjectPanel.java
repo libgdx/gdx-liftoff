@@ -28,7 +28,7 @@ public class ProjectPanel extends Table implements Panel {
         clearChildren();
 
         Table table = new Table();
-        add(table);
+        add(table).growX();
 
         table.columnDefaults(0).right();
         table.columnDefaults(1).growX();

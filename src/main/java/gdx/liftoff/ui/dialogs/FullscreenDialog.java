@@ -90,17 +90,17 @@ public class FullscreenDialog extends PopTable {
 
         contentTable.row();
         table = new Table();
-        contentTable.add(table);
+        contentTable.add(table).growX();
 
         //new project title
         table.defaults().space(SPACE_MEDIUM);
         Label label = new Label(prop.getProperty("options"), skin, "header");
         table.add(label);
 
-        //new project panel
+        //project panel
         table.row();
         ProjectPanel projectPanel = new ProjectPanel(true);
-        table.add(projectPanel);
+        table.add(projectPanel).growX().maxWidth(400);
         projectPanel.captureKeyboardFocus();
 
         contentTable.row();

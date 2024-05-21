@@ -98,7 +98,7 @@ public class LandingTable extends LiftoffTable {
         //project panel
         row();
         projectPanel = new ProjectPanel(false);
-        add(projectPanel).growX();
+        add(projectPanel).growX().maxWidth(400);
 
         row();
         buttonsCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
