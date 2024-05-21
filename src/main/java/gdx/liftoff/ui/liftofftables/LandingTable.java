@@ -112,14 +112,14 @@ public class LandingTable extends LiftoffTable {
         table.add(horizontalCollapsibleGroup);
 
         //create new project vertically big button
-        TextButton textButton = new TextButton(prop.getProperty("createNewProject"), skin, "big");
+        TextButton textButton = new TextButton(prop.getProperty("projectOptions"), skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
         //new project vertically big button
-        textButton = new TextButton(prop.getProperty("newProject"), skin, "mid");
+        textButton = new TextButton(prop.getProperty("options"), skin, "mid");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
@@ -142,7 +142,7 @@ public class LandingTable extends LiftoffTable {
 
         //new project vertically small button
         table.defaults().uniformX().fillX();
-        textButton = new TextButton(prop.getProperty("newProject"), skin);
+        textButton = new TextButton(prop.getProperty("options"), skin);
         table.add(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));

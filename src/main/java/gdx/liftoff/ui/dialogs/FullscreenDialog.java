@@ -94,7 +94,7 @@ public class FullscreenDialog extends PopTable {
 
         //new project title
         table.defaults().space(SPACE_MEDIUM);
-        Label label = new Label(prop.getProperty("newProject"), skin, "header");
+        Label label = new Label(prop.getProperty("options"), skin, "header");
         table.add(label);
 
         //new project panel
