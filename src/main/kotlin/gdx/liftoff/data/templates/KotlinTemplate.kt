@@ -48,6 +48,8 @@ import android.os.Bundle
 
 import com.badlogic.gdx.backends.android.AndroidApplication
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
+import com.badlogic.gdx.backends.android.GdxNativeLoader
+import com.getkeepsafe.relinker.ReLinker
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the Android application. */
@@ -56,6 +58,7 @@ class AndroidLauncher : AndroidApplication() {
         super.onCreate(savedInstanceState)
         initialize(${project.basic.mainClass}(), AndroidApplicationConfiguration().apply {
             // Configure your application here.
+            nativeLoader = GdxNativeLoader { ReLinker.loadLibrary(this, "gdx") }
             useImmersiveMode = true // Recommended, but not required.
         })
     }
