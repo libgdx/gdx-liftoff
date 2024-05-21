@@ -135,7 +135,7 @@ public class AddOnsPanel extends Table implements Panel {
         stack.add(smashGroup);
 
         //template button
-        TextButton chooseFieldButton = new TextButton(UserData.template, skin, "field");
+        TextButton chooseFieldButton = new TextButton(UserData.template, skin, "select");
         chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);
