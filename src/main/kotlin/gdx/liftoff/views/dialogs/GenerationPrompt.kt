@@ -102,8 +102,9 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
         val ids = arrayListOf("com.jetbrains.IntelliJ-IDEA-Ultimate", "com.jetbrains.IntelliJ-IDEA-Community")
         val output = process.inputStream.bufferedReader().readLines().stream().filter { ids.contains(it) }.findFirst().orElse(null)
-        if (output == null)
+        if (output == null) {
           throw Exception("Flatpak Intellij not installed")
+        }
 
         intellijPath = output
         intellijIsFlatpak = true
