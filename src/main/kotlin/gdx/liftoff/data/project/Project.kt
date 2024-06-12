@@ -90,16 +90,36 @@ class Project(
   }
 
   fun generate() {
+    var start = System.currentTimeMillis()
     addBasicFiles()
+    println("addBasicFiles took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     template.apply(this)
+    println("template took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addJvmLanguagesSupport()
+    println("languages took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addExtensions()
+    println("extensions took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addPlatforms()
+    println("platforms took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addSkinAssets()
+    println("skin took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addReadmeFile()
+    println("readme took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     addEditorConfig()
+    println("editorConfig took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     saveProperties()
+    println("properties took ${System.currentTimeMillis() - start} ms")
+    start = System.currentTimeMillis();
     saveFiles()
+    println("saveFiles took ${System.currentTimeMillis() - start} ms")
   }
 
   private fun addBasicFiles() {

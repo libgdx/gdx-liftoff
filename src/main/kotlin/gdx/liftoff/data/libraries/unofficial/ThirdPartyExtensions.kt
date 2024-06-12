@@ -29,7 +29,9 @@ abstract class ThirdPartyExtension : Library {
 
   override fun initiate(project: Project) {
     project.properties[id + "Version"] = version
+    val start = System.currentTimeMillis()
     initiateDependencies(project)
+    println("Initializing deps of $name took ${System.currentTimeMillis() - start} ms")
   }
 
   abstract fun initiateDependencies(project: Project)
