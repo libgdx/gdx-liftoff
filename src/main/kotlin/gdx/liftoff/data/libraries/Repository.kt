@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.badlogic.gdx.utils.JsonReader
 import com.github.kittinunf.fuel.Fuel.get
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * HTTP request timeout when fetching extension versions.
@@ -25,17 +24,17 @@ interface Repository {
    */
   object MavenCentral : CachedRepository() {
     override fun fetchLatestVersion(group: String, name: String): String? {
-      var res : String? = null
+      var res: String? = null
       try {
-        res = fetchVersionFromMavenCentral(group, name);
-      } catch (_:Exception) {
+        res = fetchVersionFromMavenCentral(group, name)
+      } catch (_: Exception) {
       }
       return res
     }
 
     private fun fetchVersionFromMavenCentral(group: String, name: String): String {
       val response = get(
-        //https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"jdkgdxds"&rows=1&wt=json
+        // https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"jdkgdxds"&rows=1&wt=json
         "https://search.maven.org/solrsearch/select",
         listOf(
           // yes, we actually do need the spaces in here.
