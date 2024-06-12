@@ -37,7 +37,8 @@ public class PathsPanel extends Table implements Panel {
         addTooltip(projectFieldButton, label, Align.top, 0, prop.getProperty("destinationTip"));
         onChange(projectFieldButton, () -> {
             FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
-            if (UserData.projectPath != null && !UserData.projectPath.isEmpty()) initialFolder = Gdx.files.absolute(UserData.projectPath);
+            if (UserData.projectPath != null && !UserData.projectPath.isEmpty())
+                initialFolder = Gdx.files.absolute(UserData.projectPath);
 
             Main.pickDirectory(initialFolder, new FileChooserAdapter() {
                 @Override
@@ -51,15 +52,19 @@ public class PathsPanel extends Table implements Panel {
                         String path = files.first().path();
                         projectFieldButton.setText(path);
                         UserData.projectPath = path;
+                        pref.putString("projectPath", path);
+                        pref.flush();
                         updateError();
-                        if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButton();
+                        if (FullscreenDialog.fullscreenDialog != null)
+                            FullscreenDialog.fullscreenDialog.updateGenerateButton();
+                        if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
                         root.quickSettingsTable.populate();
                     }
                 }
             });
         });
 
-        if (UserData.platforms.contains(prop.getProperty("android"), false)) {
+        if (UserData.platforms.contains("android")) {
             //android label
             row();
             label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
@@ -72,7 +77,8 @@ public class PathsPanel extends Table implements Panel {
             addTooltip(androidFieldButton, label, Align.top, 0, prop.getProperty("sdkTip"));
             onChange(androidFieldButton, () -> {
                 FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
-                if (UserData.androidPath != null && !UserData.androidPath.isEmpty()) initialFolder = Gdx.files.absolute(UserData.androidPath);
+                if (UserData.androidPath != null && !UserData.androidPath.isEmpty())
+                    initialFolder = Gdx.files.absolute(UserData.androidPath);
 
                 Main.pickDirectory(initialFolder, new FileChooserAdapter() {
                     @Override
@@ -115,12 +121,7 @@ public class PathsPanel extends Table implements Panel {
             return;
         }
 
-        if (tempFileHandle.list().length != 0) {
-            errorLabel.setText(prop.getProperty("notEmptyDirectory"));
-            return;
-        }
-
-        boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
+        boolean android = UserData.platforms.contains("android");
         if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
             errorLabel.setText(prop.getProperty("sdkNullDirectory"));
             return;
@@ -137,11 +138,22 @@ public class PathsPanel extends Table implements Panel {
             return;
         }
 
+        tempFileHandle = Gdx.files.absolute(UserData.projectPath);
+        if (tempFileHandle.list().length != 0) {
+            errorLabel.setText(prop.getProperty("notEmptyDirectory"));
+            return;
+        }
+
         errorLabel.setText("");
+    }
+
+    public boolean hasError() {
+        return errorLabel.getText().notEmpty();
     }
 
     /**
      * Convenience method to add fields to the table.
+     *
      * @param text The name of the field
      */
     private TextButton addField(String text) {

@@ -614,9 +614,15 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 public class TeaVMLauncher {
     public static void main(String[] args) {
         TeaApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
-        // change these to both 0 to use all available space, or both -1 for the canvas size.
-        config.width = $width;
-        config.height = $height;
+        //// If width and height are each greater than 0, then the app will use a fixed size.
+        //config.width = $width;
+        //config.height = $height;
+        //// If width and height are both 0, then the app will use all available space.
+        //config.width = 0;
+        //config.height = 0;
+        //// If width and height are both -1, then the app will fill the canvas size.
+        config.width = -1;
+        config.height = -1;
         new TeaApplication(new ${project.basic.mainClass}(), config);
     }
 }

@@ -20,6 +20,7 @@ import gdx.liftoff.data.project.ProjectLogger
 import gdx.liftoff.views.MainView
 import gdx.liftoff.views.widgets.ScrollableTextArea
 import java.util.concurrent.ConcurrentLinkedQueue
+import kotlin.properties.Delegates
 
 /**
  * Displayed after generation request was sent.
@@ -28,6 +29,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 @Suppress("unused") // Referenced via reflection.
 class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
   private lateinit var intellijPath: String
+  private var intellijIsFlatpak by Delegates.notNull<Boolean>()
 
   @Inject private val locale: LocaleService = inject()
 
@@ -80,12 +82,39 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
       }
 
       intellijPath = process.inputStream.bufferedReader().readLine()
+      intellijIsFlatpak = false
+
       ideaButton.isDisabled = false
     } catch (e: Exception) {
       Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
       ideaButton.isDisabled = true
     }
 //    }
+
+    if (ideaButton.isDisabled && UIUtils.isLinux) {
+      try {
+        val findFlatpakIntellij = arrayListOf("flatpak", "list", "--app", "--columns=application")
+
+        val process = ProcessBuilder(findFlatpakIntellij).start()
+        if (process.waitFor() != 0) {
+          throw Exception("Flatpak Intellij not found")
+        }
+
+        val ids = arrayListOf("com.jetbrains.IntelliJ-IDEA-Ultimate", "com.jetbrains.IntelliJ-IDEA-Community")
+        val output = process.inputStream.bufferedReader().readLines().stream().filter { ids.contains(it) }.findFirst().orElse(null)
+        if (output == null) {
+          throw Exception("Flatpak Intellij not installed")
+        }
+
+        intellijPath = output
+        intellijIsFlatpak = true
+
+        ideaButton.isDisabled = false
+      } catch (e: Exception) {
+        Tooltip.Builder("Couldn't find IntelliJ in PATH or as a flatpak.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
+        ideaButton.isDisabled = true
+      }
+    }
   }
 
   override fun logNls(bundleLine: String) = log(locale.i18nBundle.get(bundleLine))
@@ -114,6 +143,10 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
   @LmlAction("openIdea")
   fun openIdea() {
-    ProcessBuilder(intellijPath, ".").directory(mainView.getDestination().file()).start()
+    if (intellijIsFlatpak) {
+      ProcessBuilder(arrayListOf("flatpak", "run", intellijPath, ".")).directory(mainView.getDestination().file()).start()
+    } else {
+      ProcessBuilder(intellijPath, ".").directory(mainView.getDestination().file()).start()
+    }
   }
 }

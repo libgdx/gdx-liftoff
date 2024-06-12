@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,8 +25,11 @@ import static gdx.liftoff.Main.*;
  * available space is larger than 1920x1080.
  */
 public class FullscreenCompleteDialog extends PopTable {
+    public static FullscreenCompleteDialog fullscreenCompleteDialog;
+
     public FullscreenCompleteDialog(boolean showGeneration) {
         super(skin.get("fullscreen", WindowStyle.class));
+        fullscreenCompleteDialog = this;
         setFillParent(true);
         pad(20);
 
@@ -51,23 +55,7 @@ public class FullscreenCompleteDialog extends PopTable {
     }
 
     private void createPanels(Table contentTable, boolean showGeneration) {
-        //restore button
-        contentTable.defaults().space(SPACE_HUGE);
-        Button button = new Button(skin, "restore");
-        contentTable.add(button).expandX().right();
-        addHandListener(button);
-        onChange(button, () -> {
-            pref.putBoolean("startMaximized", false);
-            pref.flush();
-
-            hide();
-            root.fadeInTable();
-            Main.restoreWindow();
-            overlayTable.fadeIn();
-        });
-
         //generating panel is displayed first and is alternated with the complete panel upon completion of the animation
-        contentTable.row();
         GeneratingPanel generatingPanel = new GeneratingPanel(true);
 
         Table table = new Table();
@@ -93,6 +81,16 @@ public class FullscreenCompleteDialog extends PopTable {
             addAction(sequence(
                 targeting(generatingPanel, fadeIn(.5f)),
                 delay(1f),
+                new Action() {
+                    @Override
+                    public boolean act(float v) {
+                        if (generatingProject) return false;
+                        else {
+                            completePanel.populate(true);
+                            return true;
+                        }
+                    }
+                },
                 targeting(generatingPanel, fadeOut(.3f)),
                 targeting(table, fadeIn(.3f)),
                 targeting(table, touchable(Touchable.enabled))

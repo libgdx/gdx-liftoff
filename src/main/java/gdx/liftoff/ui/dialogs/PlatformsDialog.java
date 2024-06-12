@@ -17,8 +17,8 @@ import static gdx.liftoff.Main.*;
 /**
  * The dialog shown when the user clicks the platforms list in the add-ons panel
  */
-public class PlatformsDialog extends PopTable  {
-    private static GlyphLayout layout = new GlyphLayout();
+public class PlatformsDialog extends PopTable {
+    private static final GlyphLayout layout = new GlyphLayout();
 
     public PlatformsDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -32,7 +32,7 @@ public class PlatformsDialog extends PopTable  {
             Table contentTable = new Table();
             populate(contentTable);
 
-            Container container = new Container(contentTable);
+            Container<Table> container = new Container<>(contentTable);
             container.minSize(0, 0);
             collapsibleGroup.addActor(container);
 
@@ -82,17 +82,17 @@ public class PlatformsDialog extends PopTable  {
         //primary platforms
         //manually add core to a button group of one to enforce that it is always checked
         table.defaults().left().spaceLeft(SPACE_LARGE);
-        ButtonGroup buttonGroup = new ButtonGroup();
+        ButtonGroup<CheckBox> buttonGroup = new ButtonGroup<>();
         buttonGroup.setMinCheckCount(1);
-        CheckBox checkBox = addPlatform(table, prop.getProperty("core"), prop.getProperty("coreTip"));
+        CheckBox checkBox = addPlatform(table, ("core"), prop.getProperty("coreTip"));
         buttonGroup.add(checkBox);
         PopTable pop = addTooltip(checkBox, Align.top, prop.getProperty("coreMandatoryTip"));
         onClick(checkBox, () -> pop.show(stage));
 
-        addPlatform(table, prop.getProperty("lwjgl3"), prop.getProperty("lwjgl3Tip"));
-        addPlatform(table, prop.getProperty("android"), prop.getProperty("androidTip"));
-        addPlatform(table, prop.getProperty("ios"), prop.getProperty("iosTip"));
-        addPlatform(table, prop.getProperty("html"), prop.getProperty("htmlTip"));
+        addPlatform(table, ("lwjgl3"), prop.getProperty("lwjgl3Tip"));
+        addPlatform(table, ("android"), prop.getProperty("androidTip"));
+        addPlatform(table, ("ios"), prop.getProperty("iosTip"));
+        addPlatform(table, ("html"), prop.getProperty("htmlTip"));
 
         //secondary platforms title
         scrollTable.row();
@@ -105,39 +105,42 @@ public class PlatformsDialog extends PopTable  {
 
         //secondary platforms
         table.defaults().left().spaceLeft(SPACE_LARGE);
-        addPlatform(table, prop.getProperty("headless"), prop.getProperty("headlessTip"));
-        addPlatform(table, prop.getProperty("teavm"), prop.getProperty("teavmTip"));
-        addPlatform(table, prop.getProperty("lwjgl2"), prop.getProperty("lwjgl2Tip"));
-        addPlatform(table, prop.getProperty("server"), prop.getProperty("serverTip"));
-        addPlatform(table, prop.getProperty("shared"), prop.getProperty("sharedTip"));
+        addPlatform(table, ("headless"), prop.getProperty("headlessTip"));
+        addPlatform(table, ("teavm"), prop.getProperty("teavmTip"));
+        addPlatform(table, ("lwjgl2"), prop.getProperty("lwjgl2Tip"));
+        addPlatform(table, ("server"), prop.getProperty("serverTip"));
+        addPlatform(table, ("shared"), prop.getProperty("sharedTip"));
 
         //ok button
         contentTable.row();
         TextButton textButton = new TextButton(prop.getProperty("ok"), skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
-        onChange(textButton, () -> {
-            hide();
-        });
+        onChange(textButton, this::hide);
     }
 
     /**
      * Convenience method to add platforms to the table
-     * @param table The table to add the widgets to
+     *
+     * @param table        The table to add the widgets to
      * @param platformName The name of the platform
-     * @param description A short description of the platform
+     * @param description  A short description of the platform
      * @return The CheckBox created for the platform
      */
     private CheckBox addPlatform(Table table, String platformName, String description) {
         table.row();
-        CheckBox checkBox = new CheckBox(platformName, skin);
-        checkBox.setChecked(UserData.platforms.contains(platformName, false));
+        String localName = prop.getProperty(platformName);
+        CheckBox checkBox = new CheckBox(localName, skin);
+        checkBox.setChecked(UserData.platforms.contains(platformName));
         checkBox.left();
         table.add(checkBox).growX();
         addHandListener(checkBox);
         onChange(checkBox, () -> {
-            if (checkBox.isChecked() && !UserData.platforms.contains(platformName, false)) UserData.platforms.add(platformName);
-            else UserData.platforms.removeValue(platformName, false);
+            if (checkBox.isChecked() && !UserData.platforms.contains(platformName))
+                UserData.platforms.add(platformName);
+            else UserData.platforms.remove(platformName);
+            pref.putString("Platforms", String.join(",", UserData.platforms));
+            pref.flush();
         });
 
         Label label = new Label(description, skin, "description");

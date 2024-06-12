@@ -91,8 +91,10 @@ public class ProjectPanel extends Table implements Panel {
         //error label
         row();
         errorLabel = new Label("", skin, "error");
-        errorLabel.setEllipsis("...");
-        add(errorLabel).minWidth(0);
+        errorLabel.setWrap(true);
+        errorLabel.setAlignment(Align.top);
+        add(errorLabel).growX().spaceTop(SPACE_MEDIUM).minHeight(40);
+
         updateError();
 
         ChangeListener changeListener = new ChangeListener() {

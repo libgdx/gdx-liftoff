@@ -20,17 +20,17 @@ import static gdx.liftoff.Main.*;
 
 /**
  * This table is the first table visible in the app. All the elements animate into view, but may be skipped by the user
- * clicking the interface. It contains the logo, subtitle, update version and link, project planel, buttons to create
+ * clicking the interface. It contains the logo, subtitle, update version and link, project panel, a button to create
  * projects, and relevant links.
  */
 public class LandingTable extends LiftoffTable {
     private Image logoImage;
     private Label subtitleLabel;
     private Label versionLabel;
-    private Container updateContainer;
+    private Container<Actor> updateContainer;
     private TextButton updateButton;
     private ProjectPanel projectPanel;
-    private CollapsibleGroup buttonsCollapsibleGroup;
+    private Table buttonsTable;
     private SocialPanel socialPanel;
     private Action animationAction;
 
@@ -44,7 +44,7 @@ public class LandingTable extends LiftoffTable {
         setBackground(skin.getDrawable("black"));
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
-        defaults().space(30).expandY();
+        defaults().space(SPACE_HUGE);
         Table table = new Table();
         add(table);
 
@@ -80,7 +80,7 @@ public class LandingTable extends LiftoffTable {
 
         //update link
         table.row();
-        updateContainer = new Container();
+        updateContainer = new Container<>();
         updateContainer.setColor(CLEAR_WHITE);
         table.add(updateContainer);
 
@@ -92,70 +92,31 @@ public class LandingTable extends LiftoffTable {
         addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
         onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
 
-        Container container = new Container();
-        verticalCollapsibleGroup.addActor(container);
-
         //project panel
         row();
         projectPanel = new ProjectPanel(false);
         add(projectPanel).growX().maxWidth(400);
 
         row();
-        buttonsCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
-        add(buttonsCollapsibleGroup);
-
-        //begin big vertical group
-        table = new Table();
-        buttonsCollapsibleGroup.addActor(table);
+        buttonsTable = new Table();
+        add(buttonsTable).top();
 
         CollapsibleGroup horizontalCollapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
-        table.add(horizontalCollapsibleGroup);
+        buttonsTable.add(horizontalCollapsibleGroup);
 
-        //create new project vertically big button
+        //project options horizontally big button
         TextButton textButton = new TextButton(prop.getProperty("projectOptions"), skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
 
-        //new project vertically big button
-        textButton = new TextButton(prop.getProperty("options"), skin, "mid");
+        //options horizontally small button
+        textButton = new TextButton(prop.getProperty("options"), skin, "big");
         horizontalCollapsibleGroup.addActor(textButton);
         addNewProjectListeners(textButton);
         addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
         onChange(textButton, () -> root.nextTable());
-
-        //quick project button
-        table.row();
-        textButton = new TextButton(prop.getProperty("quickProject"), skin, "mid");
-        table.add(textButton).fillX().space(SPACE_LARGE);
-        addQuickProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
-        onChange(textButton, () -> {
-            setQuickProjectDefaultUserData();
-            root.transitionTable(root.quickSettingsTable, true);
-        });
-
-        //begin small vertical group
-        table = new Table();
-        buttonsCollapsibleGroup.addActor(table);
-
-        //new project vertically small button
-        table.defaults().uniformX().fillX();
-        textButton = new TextButton(prop.getProperty("options"), skin);
-        table.add(textButton);
-        addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
-        onChange(textButton, () -> root.nextTable());
-
-        //quick project vertically small button
-        table.row();
-        textButton = new TextButton(prop.getProperty("quickProject"), skin);
-        table.add(textButton).space(SPACE_LARGE);
-        addQuickProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("quickProjectTip"));
-        onChange(textButton, () -> root.transitionTable(root.quickSettingsTable, true));
-        //end vertical groups
 
         row();
         socialPanel = new SocialPanel(false);
@@ -190,7 +151,7 @@ public class LandingTable extends LiftoffTable {
         versionLabel.setColor(CLEAR_WHITE);
         updateContainer.setColor(CLEAR_WHITE);
         projectPanel.setColor(CLEAR_WHITE);
-        buttonsCollapsibleGroup.setColor(CLEAR_WHITE);
+        buttonsTable.setColor(CLEAR_WHITE);
         socialPanel.setColor(CLEAR_WHITE);
         bgImage.setColor(CLEAR_WHITE);
         float offsetAmount = 150f;
@@ -203,7 +164,7 @@ public class LandingTable extends LiftoffTable {
             run(() -> {
                 logoImage.moveBy(0, offsetAmount);
                 projectPanel.moveBy(offsetAmount, 0);
-                buttonsCollapsibleGroup.moveBy(-offsetAmount, 0);
+                buttonsTable.moveBy(-offsetAmount, 0);
                 socialPanel.moveBy(offsetAmount, 0);
             }),
             //fade in bg image
@@ -224,9 +185,9 @@ public class LandingTable extends LiftoffTable {
                 ))),
 
                 //fade in buttons
-                targeting(buttonsCollapsibleGroup, delay(.3f, parallel(
-                    targeting(buttonsCollapsibleGroup, fadeIn(1f)),
-                    targeting(buttonsCollapsibleGroup, Actions.moveBy(offsetAmount, 0, 1f, exp10Out))
+                targeting(buttonsTable, delay(.3f, parallel(
+                    targeting(buttonsTable, fadeIn(1f)),
+                    targeting(buttonsTable, Actions.moveBy(offsetAmount, 0, 1f, exp10Out))
                 ))),
 
                 //fade in social panel

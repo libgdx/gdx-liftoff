@@ -1,6 +1,7 @@
 package gdx.liftoff.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -27,45 +28,27 @@ public class OverlayTable extends Table {
         add(dualCollapsibleGroup).grow();
 
         //a content container that only cares about the minHeight
-        Container container = new Container();
+        Container<Actor> container = new Container<>();
         container.minSize(0, ROOT_TABLE_PREF_HEIGHT + 70);
         container.fill();
         dualCollapsibleGroup.addActor(container);
         container.setActor(createContentTable());
 
         //a content container that only cares about the minWidth
-        container = new Container();
+        container = new Container<>();
         container.minSize(ROOT_TABLE_PREF_WIDTH + 140, 0);
         container.fill();
         dualCollapsibleGroup.addActor(container);
         container.setActor(createContentTable());
 
-        container = new Container();
+        container = new Container<>();
         dualCollapsibleGroup.addActor(container);
     }
 
     private Table createContentTable() {
         Table table = new Table();
 
-        //maximize
-        Button button = new Button(skin, "maximize");
-        table.add(button).expand().top().right();
-        addHandListener(button);
-        onChange(button, () -> {
-            pref.putBoolean("startMaximized", true);
-            pref.flush();
-
-            Main.maximizeWindow();
-            fadeOut();
-            Gdx.app.postRunnable(() -> {
-                root.fadeOutTable();
-                if (root.getCurrentTable() == root.completeTable) FullscreenCompleteDialog.show(false);
-                else FullscreenDialog.show();
-            });
-        });
-
         //version
-        table.row();
         Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 

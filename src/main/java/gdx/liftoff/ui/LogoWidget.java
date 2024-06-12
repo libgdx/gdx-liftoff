@@ -1,5 +1,6 @@
 package gdx.liftoff.ui;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,11 +17,11 @@ import static gdx.liftoff.Main.*;
  * spaces.
  */
 public class LogoWidget extends Table {
-    public LogoWidget() {
+    public LogoWidget(boolean showVersion) {
         CollapsibleGroup verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         add(verticalCollapsibleGroup).minHeight(0);
 
-        Container container = new Container();
+        Container<Actor> container = new Container<>();
         container.minSize(260, 25).maxSize(300, 35).prefWidth(300);
         verticalCollapsibleGroup.addActor(container);
 
@@ -30,23 +31,25 @@ public class LogoWidget extends Table {
         container.setActor(logoImage);
         addTooltip(logoImage, Align.top, prop.getProperty("logoTip"));
 
-        container = new Container();
+        container = new Container<>();
         verticalCollapsibleGroup.addActor(container);
 
         row();
         verticalCollapsibleGroup = new CollapsibleGroup(CollapseType.VERTICAL);
         add(verticalCollapsibleGroup).minWidth(0).right();
 
-        container = new Container();
+        container = new Container<>();
         container.padTop(SPACE_MEDIUM);
         verticalCollapsibleGroup.addActor(container);
 
-        //version
-        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
-        label.setEllipsis("...");
-        container.setActor(label);
+        if (showVersion) {
+            //version
+            Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
+            label.setEllipsis("...");
+            container.setActor(label);
 
-        container = new Container();
-        verticalCollapsibleGroup.addActor(container);
+            container = new Container<>();
+            verticalCollapsibleGroup.addActor(container);
+        }
     }
 }

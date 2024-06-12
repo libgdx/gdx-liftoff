@@ -332,8 +332,15 @@ import ${project.basic.rootPackage}.${project.basic.mainClass}
 /** Launches the TeaVM/HTML application. */
 fun main() {
     val config = TeaApplicationConfiguration("canvas").apply {
-        width = $width
-        height = $height
+        //// If width and height are each greater than 0, then the app will use a fixed size.
+        //width = $width
+        //height = $height
+        //// If width and height are both 0, then the app will use all available space.
+        //width = 0
+        //height = 0
+        //// If width and height are both -1, then the app will fill the canvas size.
+        width = -1
+        height = -1
     }
     TeaApplication(${project.basic.mainClass}(), config)
 }

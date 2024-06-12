@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
@@ -23,6 +24,7 @@ import static gdx.liftoff.Main.*;
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
     private TextButton generateButton;
+    private Table versionTable;
 
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
@@ -62,35 +64,18 @@ public class FullscreenDialog extends PopTable {
     }
 
     private void createPanels(Table contentTable) {
-        contentTable.defaults().space(SPACE_HUGE);
+        contentTable.defaults().space(SPACE_SMALL);
         Table table = new Table();
         contentTable.add(table).growX();
         table.setTransform(true);
 
-        //empty cell for equal spacing with the restore button
-        table.add().expandX();
-
         //logo
-        LogoWidget logoWidget = new LogoWidget();
-        table.add(logoWidget).minHeight(Value.prefHeight);
-
-        //restore button
-        Button button = new Button(skin, "restore");
-        table.add(button).expandX().right().top();
-        addHandListener(button);
-        onChange(button, () -> {
-            pref.putBoolean("startMaximized", false);
-            pref.flush();
-
-            hide();
-            Main.restoreWindow();
-            root.fadeInTable();
-            overlayTable.fadeIn();
-        });
+        LogoWidget logoWidget = new LogoWidget(false);
+        table.add(logoWidget).minHeight(Value.prefHeight).spaceBottom(0);
 
         contentTable.row();
         table = new Table();
-        contentTable.add(table).growX();
+        contentTable.add(table).growX().spaceTop(0);
 
         //new project title
         table.defaults().space(SPACE_MEDIUM);
@@ -135,7 +120,7 @@ public class FullscreenDialog extends PopTable {
         contentTable.add(table).growX();
 
         //empty cell for equal spacing
-        table.add().expandX();
+        table.add().expandX().uniformX();
 
         //generate button
         generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
@@ -152,14 +137,31 @@ public class FullscreenDialog extends PopTable {
         )));
 
         //version
-        label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
-        table.add(label).expandX().right().bottom();
+        versionTable = new Table();
+        table.add(versionTable).expandX().right().bottom().uniformX();
+        updateVersion();
     }
 
     @Override
     public void hide(Action action) {
         super.hide(action);
         fullscreenDialog = null;
+    }
+
+    public void updateVersion() {
+        versionTable.clearChildren();
+
+        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
+        versionTable.add(label);
+
+        if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
+            versionTable.row();
+            TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
+            versionTable.add(updateButton);
+            addHandListener(updateButton);
+            addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
+            onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
+        }
     }
 
     public static void show() {

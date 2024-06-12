@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.UserData;
 
@@ -19,9 +20,10 @@ public class CompletePanel extends Table implements Panel {
 
     @Override
     public void populate(boolean fullscreen) {
+        clearChildren();
         //logo
         defaults().space(SPACE_MEDIUM);
-        LogoWidget logo = new LogoWidget();
+        LogoWidget logo = new LogoWidget(true);
         add(logo);
 
         //title
@@ -43,6 +45,7 @@ public class CompletePanel extends Table implements Panel {
         //output label
         Label outputLabel = new Label(UserData.log, skin, "descriptionWithMarkup");
         outputLabel.setWrap(true);
+        outputLabel.setAlignment(Align.center, Align.center);
         scrollTable.add(outputLabel).grow();
 
         //scroll to the bottom

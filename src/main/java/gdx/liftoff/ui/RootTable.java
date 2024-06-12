@@ -1,5 +1,6 @@
 package gdx.liftoff.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -14,7 +15,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
 public class RootTable extends Table {
-    private Array<LiftoffTable> tables;
+    private final Array<LiftoffTable> tables;
     private int tableIndex;
     public LandingTable landingTable;
     public AddOnsTable addOnsTable;
@@ -100,8 +101,8 @@ public class RootTable extends Table {
             targeting(newTable, Actions.moveBy(distance, 0)),
             //move the tables horizontally
             parallel(
-                targeting(table, Actions.moveBy(-distance, 0, 1f, exp5)),
-                targeting(newTable, Actions.moveBy(-distance, 0, 1f, exp5))
+                targeting(table, Actions.moveBy(-distance, 0, .7f, exp5)),
+                targeting(newTable, Actions.moveBy(-distance, 0, .7f, exp5))
             ),
             //remove the old table
             targeting(table, Actions.removeActor()),
@@ -111,6 +112,28 @@ public class RootTable extends Table {
                 newTable.captureKeyboardFocus();
             })
         ));
+    }
+
+    public void showTableInstantly(LiftoffTable table) {
+        showTableInstantly(tables.indexOf(table, true));
+    }
+
+    public void showTableInstantly(int tableIndex) {
+        LiftoffTable table = tables.get(this.tableIndex);
+        table.finishAnimation();
+        table.setTouchable(Touchable.disabled);
+        table.setColor(Color.WHITE);
+        stage.setKeyboardFocus(null);
+
+        tableIndex = MathUtils.clamp(tableIndex, 0, tables.size);
+        this.tableIndex = tableIndex;
+        LiftoffTable newTable = tables.get(tableIndex);
+        newTable.populate();
+        newTable.finishAnimation();
+        clearChildren();
+        add(newTable).prefSize(600, 700);
+        newTable.setTouchable(Touchable.childrenOnly);
+        newTable.captureKeyboardFocus();
     }
 
     public void fadeOutTable() {

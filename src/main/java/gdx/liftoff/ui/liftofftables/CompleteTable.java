@@ -1,5 +1,7 @@
 package gdx.liftoff.ui.liftofftables;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import gdx.liftoff.ui.panels.CompleteButtonsPanel;
@@ -14,6 +16,10 @@ import static gdx.liftoff.Main.*;
  * complete and complete buttons panels.
  */
 public class CompleteTable extends LiftoffTable {
+    private GeneratingPanel generatingPanel;
+    private Table completeTable;
+    private CompletePanel completePanel;
+
     public CompleteTable() {
         populate();
     }
@@ -25,31 +31,41 @@ public class CompleteTable extends LiftoffTable {
         pad(SPACE_LARGE).padLeft(SPACE_HUGE).padRight(SPACE_HUGE);
 
         //generating panel
-        GeneratingPanel generatingPanel = new GeneratingPanel(false);
+        generatingPanel = new GeneratingPanel(false);
 
-        Table table = new Table();
-        stack(generatingPanel, table);
+        completeTable = new Table();
+        stack(generatingPanel, completeTable);
 
         //complete panel
-        table.defaults().space(SPACE_MEDIUM);
-        CompletePanel completePanel = new CompletePanel(false);
-        table.add(completePanel);
+        completeTable.defaults().space(SPACE_MEDIUM);
+        completePanel = new CompletePanel(false);
+        completeTable.add(completePanel);
 
         //complete buttons panel
-        table.row();
+        completeTable.row();
         CompleteButtonsPanel completeButtonsPanel = new CompleteButtonsPanel(false);
-        table.add(completeButtonsPanel);
+        completeTable.add(completeButtonsPanel);
 
         //animation initial setup
-        table.setColor(CLEAR_WHITE);
-        table.setTouchable(Touchable.disabled);
+        completeTable.setColor(CLEAR_WHITE);
+        completeTable.setTouchable(Touchable.disabled);
 
         //animation
         addAction(sequence(
             delay(1f),
+            new Action() {
+                @Override
+                public boolean act(float v) {
+                    if (generatingProject) return false;
+                    else {
+                        completePanel.populate(false);
+                        return true;
+                    }
+                }
+            },
             targeting(generatingPanel, fadeOut(.3f)),
-            targeting(table, fadeIn(.3f)),
-            targeting(table, touchable(Touchable.enabled))
+            targeting(completeTable, fadeIn(.3f)),
+            targeting(completeTable, touchable(Touchable.enabled))
         ));
     }
 
@@ -61,5 +77,13 @@ public class CompleteTable extends LiftoffTable {
     @Override
     public void finishAnimation() {
 
+    }
+
+    public void showCompletePanel() {
+        clearActions();
+        completePanel.populate(false);
+        generatingPanel.setColor(CLEAR_WHITE);
+        completeTable.setColor(Color.WHITE);
+        completeTable.setTouchable(Touchable.enabled);
     }
 }

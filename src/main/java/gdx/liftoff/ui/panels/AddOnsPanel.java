@@ -6,11 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.*;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
@@ -57,7 +57,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        createButtons(scrollTable, UserData.platforms, false);
+        createButtons(scrollTable, UserData.platforms, true);
         addScrollFocusListener(scrollPane);
 
         //languages
@@ -84,7 +84,7 @@ public class AddOnsPanel extends Table implements Panel {
         scrollPane.setFlickScroll(false);
         scrollPane.setFadeScrollBars(false);
         button.add(scrollPane).grow().padTop(SPACE_MEDIUM);
-        createButtons(scrollTable, UserData.getLanguages(), true);
+        createButtons(scrollTable, UserData.languages, true);
         addScrollFocusListener(scrollPane);
 
         //extensions
@@ -135,7 +135,7 @@ public class AddOnsPanel extends Table implements Panel {
         stack.add(smashGroup);
 
         //template button
-        TextButton chooseFieldButton = new TextButton(UserData.template, skin, "select");
+        TextButton chooseFieldButton = new TextButton(prop.getProperty(UserData.template), skin, "select");
         chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);
@@ -146,7 +146,7 @@ public class AddOnsPanel extends Table implements Panel {
         smashGroup.setSecondActor(chooseButton);
         addTooltip(chooseButton, label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
-        Container chooseContainer = new Container();
+        Container<Actor> chooseContainer = new Container<>();
         chooseContainer.setTouchable(Touchable.enabled);
         stack.add(chooseContainer);
         addHandListener(chooseContainer);
@@ -168,16 +168,18 @@ public class AddOnsPanel extends Table implements Panel {
 
     /**
      * Convenience method to populate each add-ons button with a list of add-ons
+     *
      * @param table
      * @param names
      */
-    private void createButtons(Table table, Array<String> names, boolean capitalize) {
+    private void createButtons(Table table, Collection<String> names, boolean localize) {
         table.clearChildren();
         table.top();
 
         table.defaults().growX().space(SPACE_SMALL);
         for (String name : names) {
-            Label label = new Label(capitalize ? name.toUpperCase(Locale.ROOT) : name, skin);
+            name = localize ? prop.getProperty(name, name) : name;
+            Label label = new Label(name, skin);
             label.setEllipsis("...");
             table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();

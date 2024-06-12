@@ -26,6 +26,7 @@ class TemplatesView : AbstractAnnotationProcessor<ProjectTemplate>() {
 
   fun getSelectedTemplate(): Template = templates.first { it.id == templatesTable.buttonGroup.checked.name }
 
+  fun getTemplateByName(name: String): Template = templates.first { it.id == name }
   // Automatic scanning of project templates:
 
   override fun getSupportedAnnotationType(): Class<ProjectTemplate> = ProjectTemplate::class.java

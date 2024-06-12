@@ -27,6 +27,12 @@ class LanguagesView : AbstractAnnotationProcessor<JvmLanguage>() {
   val languageButtons: ObjectSet<Button> = inject()
   private val languageVersions = ObjectMap<String, VisTextField>()
 
+  val languageObjects: List<Language>
+    get() = jvmLanguages.values.toList()
+
+  val languageVersionMap: Map<String, String>
+    get() = jvmLanguages.mapValues { it.value.version }
+
   val languages: Array<String>
     get() = jvmLanguages.values.map { it.id }.sorted().toTypedArray()
 

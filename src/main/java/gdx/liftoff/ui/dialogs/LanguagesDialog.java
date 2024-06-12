@@ -17,7 +17,7 @@ import static gdx.liftoff.Main.*;
 /**
  * Dialog shown when the user clicks the languages list in the add-ons panel
  */
-public class LanguagesDialog extends PopTable  {
+public class LanguagesDialog extends PopTable {
     public LanguagesDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
@@ -30,7 +30,7 @@ public class LanguagesDialog extends PopTable  {
             Table contentTable = new Table();
             populate(contentTable);
 
-            Container container = new Container(contentTable);
+            Container<Table> container = new Container<>(contentTable);
             container.minSize(0, 0);
             collapsibleGroup.addActor(container);
 
@@ -131,13 +131,15 @@ public class LanguagesDialog extends PopTable  {
 
     /**
      * Convenience method to add a language to the table
-     * @param table The table to add widgets to
+     *
+     * @param table        The table to add widgets to
      * @param languageName The name of the language
      */
     private void addLanguage(Table table, String languageName, String defaultVersion) {
         table.row();
-        CheckBox checkBox = new CheckBox(prop.getProperty(languageName), skin);
-        checkBox.setChecked(UserData.languages.contains(languageName, false));
+        String localName = prop.getProperty(languageName);
+        CheckBox checkBox = new CheckBox(localName, skin);
+        checkBox.setChecked(UserData.languages.contains(languageName));
         table.add(checkBox);
         addHandListener(checkBox);
 
@@ -153,8 +155,11 @@ public class LanguagesDialog extends PopTable  {
             if (checkBox.isChecked()) {
                 UserData.languages.add(languageName);
                 UserData.languageVersions.put(languageName, textField.getText());
-            }
-            else UserData.languages.removeValue(languageName, false);
+            } else UserData.languages.remove(languageName);
+            pref.putString("Languages", String.join(",", UserData.languages));
+            pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
+            pref.flush();
+
         });
 
         onChange(textField, () -> {

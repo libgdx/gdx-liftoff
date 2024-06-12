@@ -2,6 +2,7 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
@@ -18,8 +19,8 @@ import static gdx.liftoff.Main.*;
 /**
  * The extensions dialog displayed when the user clicks the extensions list in the add-ons panel.
  */
-public class ExtensionsDialog extends PopTable  {
-    private static GlyphLayout layout = new GlyphLayout();
+public class ExtensionsDialog extends PopTable {
+    private static final GlyphLayout layout = new GlyphLayout();
 
     public ExtensionsDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -33,7 +34,7 @@ public class ExtensionsDialog extends PopTable  {
             Table contentTable = new Table();
             populate(contentTable);
 
-            Container container = new Container(contentTable);
+            Container<Table> container = new Container<>(contentTable);
             container.minSize(0, 0);
             collapsibleGroup.addActor(container);
 
@@ -77,14 +78,14 @@ public class ExtensionsDialog extends PopTable  {
         scrollTable.add(table).spaceTop(SPACE_MEDIUM).growX();
 
         table.defaults().left().spaceLeft(SPACE_MEDIUM);
-        addExtension(table, prop.getProperty("ashley"), prop.getProperty("ashleyTip"), prop.getProperty("ashleyUrl"));
-        addExtension(table, prop.getProperty("box2dlights"), prop.getProperty("box2dlightsTip"), prop.getProperty("gdx-box2dlightsUrl"));
-        addExtension(table, prop.getProperty("gdx-ai"), prop.getProperty("gdx-aiTip"), prop.getProperty("gdx-aiUrl"));
-        addExtension(table, prop.getProperty("gdx-box2d"), prop.getProperty("gdx-box2dTip"), prop.getProperty("gdx-box2dUrl"));
-        addExtension(table, prop.getProperty("gdx-bullet"), prop.getProperty("gdx-bulletTip"), prop.getProperty("gdx-bulletUrl"));
-        addExtension(table, prop.getProperty("gdx-controllers"), prop.getProperty("gdx-controllersTip"), prop.getProperty("gdx-controllersUrl"));
-        addExtension(table, prop.getProperty("gdx-freetype"), prop.getProperty("gdx-freetypeTip"), prop.getProperty("gdx-freetypeUrl"));
-        addExtension(table, prop.getProperty("gdx-tools"), prop.getProperty("gdx-toolsTip"), prop.getProperty("gdx-toolsUrl"));
+        addExtension(table, ("ashley"), prop.getProperty("ashleyTip"), prop.getProperty("ashleyUrl"));
+        addExtension(table, ("box2dlights"), prop.getProperty("box2dlightsTip"), prop.getProperty("gdx-box2dlightsUrl"));
+        addExtension(table, ("gdx-ai"), prop.getProperty("gdx-aiTip"), prop.getProperty("gdx-aiUrl"));
+        addExtension(table, ("gdx-box2d"), prop.getProperty("gdx-box2dTip"), prop.getProperty("gdx-box2dUrl"));
+        addExtension(table, ("gdx-bullet"), prop.getProperty("gdx-bulletTip"), prop.getProperty("gdx-bulletUrl"));
+        addExtension(table, ("gdx-controllers"), prop.getProperty("gdx-controllersTip"), prop.getProperty("gdx-controllersUrl"));
+        addExtension(table, ("gdx-freetype"), prop.getProperty("gdx-freetypeTip"), prop.getProperty("gdx-freetypeUrl"));
+        addExtension(table, ("gdx-tools"), prop.getProperty("gdx-toolsTip"), prop.getProperty("gdx-toolsUrl"));
 
         //links
         scrollTable.row();
@@ -107,7 +108,7 @@ public class ExtensionsDialog extends PopTable  {
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
-        Container container = new Container();
+        Container<Actor> container = new Container<>();
         container.left();
         collapsibleGroup.addActor(container);
 
@@ -122,26 +123,32 @@ public class ExtensionsDialog extends PopTable  {
         textButton = new TextButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
-        onChange(textButton, () -> hide());
+        onChange(textButton, this::hide);
     }
 
     /**
-     * Convenience method that adds an extension to the given table
-     * @param table The table to add widgets to
+     * Convenience method that adds an extension to the given table.
+     *
+     * @param table         The table to add widgets to
      * @param extensionName The name of the extension
-     * @param description A short description of the extension
-     * @param url The URL pointing to the home page of the extension
+     * @param description   A short description of the extension
+     * @param url           The URL pointing to the home page of the extension
      */
     private void addExtension(Table table, String extensionName, String description, String url) {
         //checkbox
         table.row();
-        CheckBox checkBox = new CheckBox(extensionName, skin);
-        checkBox.setChecked(UserData.extensions.contains(extensionName, false));
-        table.add(checkBox);
+        String localName = prop.getProperty(extensionName);
+        CheckBox checkBox = new CheckBox(localName, skin);
+        checkBox.left();
+        checkBox.setChecked(UserData.extensions.contains(extensionName));
+        table.add(checkBox).fillX();
         addHandListener(checkBox);
         onChange(checkBox, () -> {
-            if (checkBox.isChecked() && !UserData.extensions.contains(extensionName, false)) UserData.extensions.add(extensionName);
-            else UserData.extensions.removeValue(extensionName, false);
+            if (checkBox.isChecked() && !UserData.extensions.contains(extensionName))
+                UserData.extensions.add(extensionName);
+            else UserData.extensions.remove(extensionName);
+            pref.putString("Extensions", String.join(",", UserData.extensions));
+            pref.flush();
         });
 
         Table subTable = new Table();

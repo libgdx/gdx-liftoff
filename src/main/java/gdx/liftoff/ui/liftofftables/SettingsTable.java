@@ -16,6 +16,7 @@ import static gdx.liftoff.Main.*;
  */
 public class SettingsTable extends LiftoffTable {
     private SettingsPanel settingsPanel;
+    private TextButton generateButton;
 
     public SettingsTable() {
         populate();
@@ -60,12 +61,12 @@ public class SettingsTable extends LiftoffTable {
         table.add().growX().space(SPACE_SMALL);
 
         //generate button
-        textButton = new TextButton(prop.getProperty("generate"), skin);
-        textButton.setDisabled(!validateUserData());
-        table.add(textButton).uniformX().fillX();
-        addHandListener(textButton);
-        addTooltip(textButton, Align.top, prop.getProperty("generateTip"));
-        onChange(textButton, () -> {
+        generateButton = new TextButton(prop.getProperty("generate"), skin);
+        generateButton.setDisabled(!validateUserData());
+        table.add(generateButton).uniformX().fillX();
+        addHandListener(generateButton);
+        addTooltip(generateButton, Align.top, prop.getProperty("generateTip"));
+        onChange(generateButton, () -> {
             Main.generateProject();
             root.nextTable();
         });
@@ -80,4 +81,9 @@ public class SettingsTable extends LiftoffTable {
     public void finishAnimation() {
 
     }
+
+    public void updateGenerateButton() {
+        generateButton.setDisabled(!validateUserData());
+    }
+
 }

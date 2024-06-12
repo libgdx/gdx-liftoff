@@ -14,7 +14,7 @@ import static gdx.liftoff.Main.*;
 /**
  * Dialog displayed when users click the "Add Gradle Tasks" button in the settings panel
  */
-public class GradleDialog extends PopTable  {
+public class GradleDialog extends PopTable {
     public GradleDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
         setKeepCenteredInWindow(true);
@@ -27,7 +27,7 @@ public class GradleDialog extends PopTable  {
             Table contentTable = new Table();
             populate(contentTable);
 
-            Container container = new Container(contentTable);
+            Container<Table> container = new Container<>(contentTable);
             container.minSize(0, 0);
             collapsibleGroup.addActor(container);
 
@@ -76,7 +76,7 @@ public class GradleDialog extends PopTable  {
         TextButton textButton = new TextButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
-        onChange(textButton, () -> hide());
+        onChange(textButton, this::hide);
     }
 
     public static PopTable show(boolean fullscreen) {

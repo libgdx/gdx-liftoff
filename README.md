@@ -2,14 +2,20 @@
 
 # 🚀 gdx-liftoff 🚀
 
+## 🎛 UI Redesign 🎛
+
 A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
 [![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/libgdx/gdx-liftoff/releases)
 
 <h1 style="text-align: center;">
     📥
-    <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD</a></strong>
+    <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD STABLE</a></strong>
     📥
+<br>
+    🎉
+    Or, <a href="https://github.com/tommyettinger/gdx-liftoff-ui-redesign/releases">DOWNLOAD PREVIEW</a>
+    🎉
 </h1>
 
 To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application
@@ -21,9 +27,7 @@ java -jar gdx-liftoff-VERSION.jar
 
 **You should use Java 17+ !** Android tools now require your installed JDK to be version 17 or higher.
 You can still target other releases, as low as 8 typically, while building with any of the JDK versions 17 and up.
-Java 21 works now, but when Java 22 is released (or if you are using an early access build), it won't work right
-away. That's just how Gradle is. When Gradle releases a version that expands JVM compatibility, we try to update
-quickly to that version.
+All stable releases of Java from 8 to 22 work here now.
 
 If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 

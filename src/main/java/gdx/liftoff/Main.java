@@ -2,18 +2,20 @@ package gdx.liftoff;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Graphics.Monitor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.Net.HttpResponseListener;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
+import com.badlogic.gdx.backends.lwjgl3.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,18 +32,25 @@ import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
+import gdx.liftoff.data.platforms.Platform;
+import gdx.liftoff.data.project.*;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.UserData;
+import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
+import java.lang.StringBuilder;
+import java.util.*;
+import java.util.Collections;
 
+import static gdx.liftoff.ui.UserData.*;
+import static gdx.liftoff.ui.dialogs.FullscreenCompleteDialog.*;
+import static gdx.liftoff.ui.dialogs.FullscreenDialog.fullscreenDialog;
 import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
@@ -62,11 +71,16 @@ public class Main extends ApplicationAdapter {
     public static Color CLEAR_WHITE = new Color(1, 1, 1, 0);
     public static Image bgImage = new Image();
     public static boolean resizingWindow;
+    public static boolean generatingProject;
+    public static String latestStableVersion;
     public static Properties prop;
     public static Preferences pref;
-    private static GlyphLayout layout = new GlyphLayout();
+    private static final GlyphLayout layout = new GlyphLayout();
     public static final int MIN_WINDOW_WIDTH = 400;
     public static final int MIN_WINDOW_HEIGHT = 410;
+    public static final int WINDOW_BORDER = 50;
+    public static final float FULLSCREEN_MIN_WIDTH = 1500;
+    public static final float FULLSCREEN_MIN_HEIGHT = 880;
     public static final float ROOT_TABLE_PREF_WIDTH = 600;
     public static final float ROOT_TABLE_PREF_HEIGHT = 700;
 
@@ -77,14 +91,109 @@ public class Main extends ApplicationAdapter {
     public static final float TOOLTIP_WIDTH = 200;
     public static final float TOOLTIP_WIDTH_LARGE = 300;
 
+    private static String exceptionToString(Throwable ex) {
+        StringBuilder sb = new StringBuilder();
+        for (StackTraceElement ste : ex.getStackTrace()) {
+            sb.append(ste.toString()).append('\n');
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
+        if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
+        config.disableAudio(true);
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
-        config.setWindowedMode(800, 800);
+        config.setIdleFPS(8);
+
+        DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
+        int monitorWidth = primaryDesktopMode.width;
+        int monitorHeight=  primaryDesktopMode.height;
+        int windowWidth = Math.max(MathUtils.round(monitorWidth / 1920f * 800f), 800);
+        int windowHeight = Math.max(MathUtils.round(monitorHeight / 1080f * 800f), 800);
+        config.setWindowedMode(Math.min(windowWidth, monitorWidth - WINDOW_BORDER * 2), Math.min(windowHeight, monitorHeight - WINDOW_BORDER * 2));
+
         config.setWindowSizeLimits(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT, -1, -1);
         config.setWindowIcon("icons/libgdx128.png", "icons/libgdx64.png", "icons/libgdx32.png", "icons/libgdx16.png");
+        config.setAutoIconify(true);
+        final Lwjgl3WindowListener windowListener = new Lwjgl3WindowListener() {
+            @Override
+            public void created(Lwjgl3Window lwjgl3Window) {
+
+            }
+
+            @Override
+            public void iconified(boolean b) {
+
+            }
+
+            @Override
+            public void maximized(boolean isMax) {
+                if (isMax){
+                    boolean fullscreenMode = Gdx.graphics.getWidth() > FULLSCREEN_MIN_WIDTH &&
+                        Gdx.graphics.getHeight() > FULLSCREEN_MIN_HEIGHT;
+                    if (fullscreenMode && root != null) {
+                        Gdx.app.postRunnable(() -> {
+                            root.getCurrentTable().finishAnimation();
+                            if (root.getCurrentTable() == root.completeTable) FullscreenCompleteDialog.show(false);
+                            else FullscreenDialog.show();
+                            root.fadeOutTable();
+                        });
+                    }
+                    if(fullscreenMode && overlayTable != null)
+                        overlayTable.fadeOut();
+                } else {
+                    if (fullscreenDialog != null) {
+                        fullscreenDialog.hide();
+                        root.getCurrentTable().populate();
+                        root.fadeInTable();
+                        overlayTable.fadeIn();
+                    } else if (fullscreenCompleteDialog != null) {
+                        fullscreenCompleteDialog.hide();
+                        if (root != null) {
+                            root.fadeInTable();
+                            overlayTable.fadeIn();
+
+                            if (root.getCurrentTable() != root.completeTable) {
+                                root.showTableInstantly(root.completeTable);
+                                root.completeTable.showCompletePanel();
+                            }
+                        }
+                    }
+                }
+                pref.putBoolean("startMaximized", isMax);
+                pref.flush();
+
+            }
+
+            @Override
+            public void focusLost() {
+                Gdx.graphics.setContinuousRendering(false);
+            }
+
+            @Override
+            public void focusGained() {
+                Gdx.graphics.setContinuousRendering(true);
+            }
+
+            @Override
+            public boolean closeRequested() {
+                return true;
+            }
+
+            @Override
+            public void filesDropped(String[] strings) {
+
+            }
+
+            @Override
+            public void refreshRequested() {
+
+            }
+        };
+        config.setWindowListener(windowListener);
         new Lwjgl3Application(new Main(), config);
     }
 
@@ -104,6 +213,8 @@ public class Main extends ApplicationAdapter {
         setDefaultUserData();
 
         skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
+
+        skin.getFont("font-label-tooltip").getData().breakChars = new char[]{'-'};
 
         fitViewport = new FitViewport(1920, 1080);
         screenViewport = new ScreenViewport();
@@ -132,13 +243,11 @@ public class Main extends ApplicationAdapter {
 
         checkSetupVersion();
 
-        if (pref.getBoolean("startMaximized", false)) {
+        DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
+        int width = primaryDesktopMode.width;
+        int height = primaryDesktopMode.height;
+        if (!pref.contains("startMaximized") && width > 1920 && height > 1080 || pref.getBoolean("startMaximized", false)) {
             Main.maximizeWindow();
-            Gdx.app.postRunnable(() -> {
-                overlayTable.fadeOut();
-                root.fadeOutTable();
-                FullscreenDialog.show();
-            });
         }
     }
 
@@ -195,11 +304,11 @@ public class Main extends ApplicationAdapter {
     }
 
     public static PopTable addTooltip(Actor actor, int align, float wrapWidth, String text) {
-        return addTooltip(actor, null, align, wrapWidth,  text);
+        return addTooltip(actor, null, align, wrapWidth, text);
     }
 
     public static PopTable addTooltip(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
-        String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0  ? "tooltip-arrow-down" : (align & Align.left) != 0  ? "tooltip-arrow-right" : "tooltip-arrow-left";
+        String style = (align & Align.bottom) != 0 ? "tooltip-arrow-up" : (align & Align.top) != 0 ? "tooltip-arrow-down" : (align & Align.left) != 0 ? "tooltip-arrow-right" : "tooltip-arrow-left";
         PopTableTextHoverListener listener = new PopTableTextHoverListener(text, wrapWidth, align, align, skin, style);
         listener.attachedActor = attachedActor;
         actor.addListener(listener);
@@ -211,17 +320,18 @@ public class Main extends ApplicationAdapter {
     }
 
     public static PopTable addPopTableClickListener(Actor actor, int align, float wrapWidth, String description) {
-        return addPopTableClickListener(actor, null, align, wrapWidth,  description);
+        return addPopTableClickListener(actor, null, align, wrapWidth, description);
     }
 
     /**
      * Utility method to attach a PopTable to an associated actor which will appear upon clicking the actor
-     * @param actor The actor to be clicked
+     *
+     * @param actor         The actor to be clicked
      * @param attachedActor The actor that the position of the PopTable will be relative to. This can differ from the
      *                      actor
-     * @param align The alignment of the PopTable
-     * @param wrapWidth Set to 0 to not enable wrapping of the Label
-     * @param text The text to be added inside the PopTable
+     * @param align         The alignment of the PopTable
+     * @param wrapWidth     Set to 0 to not enable wrapping of the Label
+     * @param text          The text to be added inside the PopTable
      * @return The generated PopTable that is shown when the user clicks the actor
      */
     public static PopTable addPopTableClickListener(Actor actor, Actor attachedActor, int align, float wrapWidth, String text) {
@@ -235,7 +345,7 @@ public class Main extends ApplicationAdapter {
         PopTable pop = listener.getPopTable();
 
         Label label = new Label(text, skin, "tooltip");
-        Cell cell = pop.add(label);
+        Cell<Label> cell = pop.add(label);
         if (wrapWidth != 0) {
             cell.width(wrapWidth);
         } else {
@@ -253,8 +363,9 @@ public class Main extends ApplicationAdapter {
     /**
      * Utility method to change the color of a label to make it look highlighted when the user enters another specified
      * actor
-     * @param actor The affected actor
-     * @param label The label to be highlighted
+     *
+     * @param actor       The affected actor
+     * @param label       The label to be highlighted
      * @param changeColor The color of the highlight
      */
     public static void addLabelHighlight(Actor actor, Label label, boolean changeColor) {
@@ -300,8 +411,9 @@ public class Main extends ApplicationAdapter {
 
     /**
      * Utility method to display a native file picker
+     *
      * @param initialFolder The initial folder that the picker will start in
-     * @param callback Adapter that will be called if the user clicks okay or cancels the dialog
+     * @param callback      Adapter that will be called if the user clicks okay or cancels the dialog
      */
     public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
         String initialPath = initialFolder.path();
@@ -362,60 +474,75 @@ public class Main extends ApplicationAdapter {
     }
 
     /**
-     * Splits a comma separated value list in a String and returns an Array{@literal <}String{@literal >}
+     * Splits a comma separated value list in a String and returns an ArrayList{@literal <}String{@literal >}.
      *
      * @param string The raw String of comma separated values
-     * @return The array of String values
+     * @return The list of String values
      */
-    public static Array<String> splitCSV(String string) {
-        return string.isEmpty() ? new Array<>() : new Array<>(string.split(","));
+    public static ArrayList<String> splitCSV(String string) {
+        return string.isEmpty() ? new ArrayList<>() : new ArrayList<>(Arrays.asList(string.split(",")));
+    }
+
+    /**
+     * Splits a comma separated value list in a String and returns a LinkedHashSet{@literal <}String{@literal >}.
+     *
+     * @param string The raw String of comma separated values
+     * @return The set of String values, in order
+     */
+    public static LinkedHashSet<String> splitCSVSet(String string) {
+        return string.isEmpty() ? new LinkedHashSet<>() : new LinkedHashSet<>(Arrays.asList(string.split(",")));
     }
 
     public static void setDefaultUserData() {
         UserData.projectName = pref.getString("Name", prop.getProperty("projectNameDefault"));
         UserData.packageName = pref.getString("Package", prop.getProperty("packageNameDefault"));
         UserData.mainClassName = pref.getString("MainClass", prop.getProperty("mainClassNameDefault"));
-        UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
+        UserData.platforms = splitCSV(pref.getString("Platforms", prop.getProperty("platformsDefaultNames")));
 
-        UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
-        Array<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
-        UserData.languageVersions = new OrderedMap<>();
-        for (int i = 0; i < UserData.languages.size; i++) {
+        UserData.languages = splitCSV(pref.getString("Languages", prop.getProperty("languagesDefaultNames")));
+        ArrayList<String> languageVersions = splitCSV(pref.getString("LanguageVersions", prop.getProperty("languagesDefaultVersions")));
+        UserData.languageVersions = new LinkedHashMap<>();
+        for (int i = 0; i < UserData.languages.size(); i++) {
             UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
         }
 
-        UserData.extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
+        extensions = splitCSV(pref.getString("Extensions", prop.getProperty("extensionsDefaultNames")));
         UserData.template = prop.getProperty("templateDefaultName");
-        UserData.thirdPartyLibs = splitCSV(prop.getProperty("platformsDefaultNames"));
+        UserData.thirdPartyLibs = splitCSVSet(pref.getString("ThirdParty", prop.getProperty("thirdPartyDefaultNames")));
+        thirdPartyLibs.retainAll(Listing.unofficialNames);
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
         UserData.javaVersion = prop.getProperty("javaDefaultVersion");
-        UserData.appVersion = prop.getProperty("appDefaultVersion");
+        appVersion = prop.getProperty("appDefaultVersion");
+        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
+        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         UserData.gradleTasks = pref.getString("GradleTasks", prop.getProperty("gradleTasksDefault"));
-        UserData.projectPath = prop.getProperty("projectPathDefault");
+        UserData.projectPath = pref.getString("projectPath", prop.getProperty("projectPathDefault"));
         UserData.androidPath = pref.getString("AndroidSdk", prop.getProperty("androidPathDefault"));
-        UserData.log = prop.getProperty("generationEnd") + "\n" + prop.getProperty("generationEnd");
+        UserData.log = "";
     }
 
     public static void setQuickProjectDefaultUserData() {
         UserData.platforms = splitCSV(prop.getProperty("qp_platformsDefaultNames"));
 
         UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
-        Array<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
-        UserData.languageVersions = new OrderedMap<>();
-        for (int i = 0; i < UserData.languages.size; i++) {
+        ArrayList<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
+        UserData.languageVersions = new LinkedHashMap<>();
+        for (int i = 0; i < UserData.languages.size(); i++) {
             UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
         }
 
-        UserData.extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
+        extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
         UserData.template = prop.getProperty("templateDefaultName");
-        UserData.thirdPartyLibs = splitCSV(prop.getProperty("platformsDefaultNames"));
+        UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("platformsDefaultNames"));
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
         UserData.javaVersion = prop.getProperty("javaDefaultVersion");
-        UserData.appVersion = prop.getProperty("appDefaultVersion");
+        appVersion = prop.getProperty("appDefaultVersion");
+        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
+        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
@@ -451,11 +578,11 @@ public class Main extends ApplicationAdapter {
             return false;
         }
 
-        if (tempFileHandle.list().length != 0) {
-            return false;
-        }
+//        if (tempFileHandle.list().length != 0) {
+//            return false;
+//        }
 
-        boolean android = UserData.platforms.contains(prop.getProperty("android"), false);
+        boolean android = UserData.platforms.contains("android");
         if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
             return false;
         }
@@ -476,7 +603,50 @@ public class Main extends ApplicationAdapter {
      * Placeholder for project generation.
      */
     public static void generateProject() {
-        //todo:insert project generation code based on UserData here
+        generatingProject = true;
+        Thread generateThread = new Thread(() -> {
+            try {
+                BasicProjectData basicData = new BasicProjectData(
+                    UserData.projectName, UserData.packageName, UserData.mainClassName,
+                    Gdx.files.absolute(UserData.projectPath), Gdx.files.absolute(UserData.androidPath));
+                AdvancedProjectData advancedData = new AdvancedProjectData(appVersion, libgdxVersion, javaVersion,
+                    androidPluginVersion, robovmVersion,
+                    gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme,
+                    gradleTasks != null && !gradleTasks.isEmpty()
+                        ? Arrays.asList(gradleTasks.split("\\s+"))
+                        : Collections.emptyList(),
+                    true, 4);
+
+                LinkedHashMap<String, Platform> platforms = new LinkedHashMap<>(UserData.platforms.size());
+                for (String p : UserData.platforms) {
+                    platforms.put(p, Listing.platformsByName.get(p));
+                }
+                LanguagesData languagesData = new LanguagesData(Listing.chooseLanguages(languages), UserData.languageVersions);
+                ExtensionsData extensionsData = new ExtensionsData(Listing.chooseOfficialLibraries(extensions),
+                    Listing.chooseUnofficialLibraries(thirdPartyLibs));
+
+                Project project = new Project(basicData, platforms, advancedData, languagesData, extensionsData,
+                    Listing.templatesByName.getOrDefault(template, Listing.templates.get(0)));
+                project.generate();
+                project.includeGradleWrapper(new ProjectLogger() {
+                    @Override
+                    public void log(@NotNull String message) {
+                        System.out.println(message);
+                    }
+
+                    @Override
+                    public void logNls(@NotNull String bundleLine) {
+                        System.out.println(prop.getProperty(bundleLine, "???"));
+                    }
+                }, false);
+                log = prop.getProperty("generationEnd");
+                generatingProject = false;
+            } catch (Exception e) {
+                log = exceptionToString(e) + "\n\n" + prop.getProperty("generationFail");
+                generatingProject = false;
+            }
+        });
+        generateThread.start();
     }
 
     private final static HashSet<String> BLOCKED_TYPES = new HashSet<>(Arrays.asList("absolutefilehandleresolver", "abstractgraphics", "abstractinput", "action", "actions", "actor", "actorgesturelistener", "addaction", "addlisteneraction", "affine2", "afteraction", "align", "alphaaction", "ambientcubemap", "animatedtiledmaptile", "animation", "animation", "animationcontroller", "annotation", "application", "applicationadapter", "applicationlistener", "applicationlogger", "array", "arraymap", "arrayreflection", "arrayselection", "arraytexturespritebatch", "arrowshapebuilder", "assetdescriptor", "asseterrorlistener", "assetloader", "assetloaderparameters", "assetmanager", "asyncexecutor", "asynchronousassetloader", "asyncresult", "asynctask", "atlastmxmaploader", "atomicqueue", "attribute", "attributes", "audio", "audiodevice", "audiorecorder", "base", "base64coder", "baseanimationcontroller", "basedrawable", "basejsonreader", "baselight", "baseshader", "baseshaderprovider", "baseshapebuilder", "basetmxmaploader", "batch", "batchtiledmaprenderer", "bezier", "billboardcontrollerrenderdata", "billboardparticlebatch", "billboardrenderer", "binaryheap", "bintree", "bitmapfont", "bitmapfontcache", "bitmapfontloader", "bits", "bittreedecoder", "bittreeencoder", "blendingattribute", "booleanarray", "boundingbox", "boxshapebuilder", "bresenham2", "bspline", "bufferedparticlebatch", "bufferutils", "button", "buttongroup", "bytearray", "camera", "cameragroupstrategy", "camerainputcontroller", "capsuleshapebuilder", "catmullromspline", "cell", "changelistener", "chararray", "checkbox", "circle", "circlemapobject", "classpathfilehandleresolver", "classreflection", "clicklistener", "clipboard", "collections", "color", "coloraction", "colorattribute", "colorinfluencer", "colors", "coneshapebuilder", "constructor", "container", "convexhull", "countdowneventaction", "cpuspritebatch", "crc", "cubemap", "cubemapattribute", "cubemapdata", "cubemaploader", "cullable", "cumulativedistribution", "cursor", "customtexture3ddata", "cylindershapebuilder", "cylinderspawnshapevalue", "databuffer", "datainput", "dataoutput", "decal", "decalbatch", "decalmaterial", "decoder", "decoder", "defaultrenderablesorter", "defaultshader", "defaultshaderprovider", "defaulttexturebinder", "delaunaytriangulator", "delayaction", "delayedremovalarray", "delegateaction", "depthshader", "depthshaderprovider", "depthtestattribute", "dialog", "directionallight", "directionallightsattribute", "directionalshadowlight", "disableable", "disposable", "distancefieldfont", "draganddrop", "draglistener", "dragscrolllistener", "drawable", "dynamicsinfluencer", "dynamicsmodifier", "earclippingtriangulator", "ellipse", "ellipsemapobject", "ellipseshapebuilder", "ellipsespawnshapevalue", "emitter", "encoder", "encoder", "environment", "etc1", "etc1texturedata", "event", "eventaction", "eventlistener", "extendviewport", "externalfilehandleresolver", "facedcubemapdata", "field", "filehandle", "filehandleresolver", "filehandlestream", "files", "filetexturearraydata", "filetexturedata", "fillviewport", "firstpersoncameracontroller", "fitviewport", "floataction", "floatarray", "floatattribute", "floatcounter", "floatframebuffer", "floattexturedata", "flushablepool", "focuslistener", "fpslogger", "framebuffer", "framebuffercubemap", "frustum", "frustumshapebuilder", "g3dmodelloader", "game", "gdx", "gdx2dpixmap", "gdxnativesloader", "gdxruntimeexception", "geometryutils", "gesturedetector", "gl20", "gl20interceptor", "gl30", "gl30interceptor", "gl31", "gl31interceptor", "gl32", "gl32interceptor", "glerrorlistener", "glframebuffer", "glinterceptor", "glonlytexturedata", "glprofiler", "gltexture", "glversion", "glyphlayout", "gradientcolorvalue", "graphics", "gridpoint2", "gridpoint3", "group", "groupplug", "groupstrategy", "hdpimode", "hdpiutils", "hexagonaltiledmaprenderer", "horizontalgroup", "httpparametersutils", "httprequestbuilder", "httprequestheader", "httpresponseheader", "httpstatus", "i18nbundle", "i18nbundleloader", "icodeprogress", "identitymap", "image", "imagebutton", "imageresolver", "imagetextbutton", "immediatemoderenderer", "immediatemoderenderer20", "indexarray", "indexbufferobject", "indexbufferobjectsubdata", "indexdata", "influencer", "input", "inputadapter", "inputevent", "inputeventqueue", "inputlistener", "inputmultiplexer", "inputprocessor", "instancebufferobject", "instancebufferobjectsubdata", "instancedata", "intaction", "intarray", "intattribute", "internalfilehandleresolver", "interpolation", "intersector", "intfloatmap", "intintmap", "intmap", "intset", "inwindow", "isometricstaggeredtiledmaprenderer", "isometrictiledmaprenderer", "json", "jsonreader", "jsonvalue", "jsonwriter", "ktxtexturedata", "label", "layout", "layoutaction", "lifecyclelistener", "linespawnshapevalue", "list", "littleendianinputstream", "localfilehandleresolver", "logger", "longarray", "longmap", "longqueue", "lzma", "map", "mapgrouplayer", "maplayer", "maplayers", "mapobject", "mapobjects", "mapproperties", "maprenderer", "material", "mathutils", "matrix3", "matrix4", "mesh", "meshbuilder", "meshpart", "meshpartbuilder", "meshspawnshapevalue", "method", "mipmapgenerator", "mipmaptexturedata", "model", "modelanimation", "modelbatch", "modelbuilder", "modelcache", "modeldata", "modelinfluencer", "modelinstance", "modelinstancecontrollerrenderdata", "modelinstanceparticlebatch", "modelinstancerenderer", "modelloader", "modelmaterial", "modelmesh", "modelmeshpart", "modelnode", "modelnodeanimation", "modelnodekeyframe", "modelnodepart", "modeltexture", "movebyaction", "movetoaction", "music", "musicloader", "nativeinputconfiguration", "net", "netjavaimpl", "netjavaserversocketimpl", "netjavasocketimpl", "ninepatch", "ninepatchdrawable", "node", "nodeanimation", "nodekeyframe", "nodepart", "null", "numberutils", "numericvalue", "objectfloatmap", "objectintmap", "objectlongmap", "objectmap", "objectset", "objloader", "octree", "orderedmap", "orderedset", "orientedboundingbox", "orthocachedtiledmaprenderer", "orthogonaltiledmaprenderer", "orthographiccamera", "outwindow", "parallelaction", "parallelarray", "particlebatch", "particlechannels", "particlecontroller", "particlecontrollercomponent", "particlecontrollercontrollerrenderer", "particlecontrollerfinalizerinfluencer", "particlecontrollerinfluencer", "particlecontrollerrenderdata", "particlecontrollerrenderer", "particleeffect", "particleeffect", "particleeffectactor", "particleeffectloader", "particleeffectloader", "particleeffectpool", "particleemitter", "particleshader", "particlesorter", "particlesystem", "particlevalue", "patchshapebuilder", "path", "pauseablethread", "performancecounter", "performancecounters", "perspectivecamera", "pixmap", "pixmapio", "pixmaploader", "pixmappacker", "pixmappackerio", "pixmaptexturedata", "plane", "pluggablegroupstrategy", "pointlight", "pointlightsattribute", "pointspawnshapevalue", "pointspritecontrollerrenderdata", "pointspriteparticlebatch", "pointspriterenderer", "polygon", "polygonbatch", "polygonmapobject", "polygonregion", "polygonregionloader", "polygonsprite", "polygonspritebatch", "polyline", "polylinemapobject", "pool", "pooledlinkedlist", "pools", "predicate", "preferences", "prefixfilehandleresolver", "primitivespawnshapevalue", "progressbar", "propertiesutils", "quadtreefloat", "quaternion", "queue", "quickselect", "randomxs128", "rangednumericvalue", "ray", "rectangle", "rectanglemapobject", "rectanglespawnshapevalue", "reflectionexception", "reflectionpool", "regioninfluencer", "regularemitter", "relativetemporalaction", "remoteinput", "remotesender", "removeaction", "removeactoraction", "removelisteneraction", "renderable", "renderableprovider", "renderableshapebuilder", "renderablesorter", "rendercontext", "repeatablepolygonsprite", "repeataction", "resolutionfileresolver", "resourcedata", "rotatebyaction", "rotatetoaction", "runnableaction", "scalebyaction", "scalednumericvalue", "scaleinfluencer", "scaletoaction", "scaling", "scalingviewport", "scissorstack", "screen", "screenadapter", "screenutils", "screenviewport", "scrollpane", "segment", "select", "selectbox", "selection", "sequenceaction", "serializationexception", "serversocket", "serversockethints", "shader", "shaderprogram", "shaderprogramloader", "shaderprovider", "shadowmap", "shape2d", "shapecache", "shaperenderer", "shortarray", "simpleinfluencer", "simpleorthogroupstrategy", "sizebyaction", "sizetoaction", "skin", "skinloader", "slider", "snapshotarray", "socket", "sockethints", "sort", "sortedintlist", "sound", "soundloader", "spawninfluencer", "spawnshapevalue", "sphere", "sphereshapebuilder", "sphericalharmonics", "splitpane", "spotlight", "spotlightsattribute", "sprite", "spritebatch", "spritecache", "spritedrawable", "stack", "stage", "statictiledmaptile", "streamutils", "stretchviewport", "stringbuilder", "synchronousassetloader", "table", "temporalaction", "textarea", "textbutton", "textfield", "textinputwrapper", "texttooltip", "texture", "texture3d", "texture3ddata", "texturearray", "texturearraydata", "textureatlas", "textureatlasloader", "textureattribute", "texturebinder", "texturedata", "texturedescriptor", "textureloader", "texturemapobject", "textureprovider", "textureregion", "textureregiondrawable", "threadutils", "tidemaploader", "tileddrawable", "tiledmap", "tiledmapimagelayer", "tiledmaprenderer", "tiledmaptile", "tiledmaptilelayer", "tiledmaptilemapobject", "tiledmaptileset", "tiledmaptilesets", "timer", "timescaleaction", "timeutils", "tmxmaploader", "tooltip", "tooltipmanager", "touchable", "touchableaction", "touchpad", "transformdrawable", "tree", "ubjsonreader", "ubjsonwriter", "uiutils", "unweightedmeshspawnshapevalue", "value", "vector", "vector2", "vector3", "vector4", "version", "vertexarray", "vertexattribute", "vertexattributes", "vertexbufferobject", "vertexbufferobjectsubdata", "vertexbufferobjectwithvao", "vertexdata", "verticalgroup", "viewport", "visibleaction", "weightmeshspawnshapevalue", "widget", "widgetgroup", "window", "windowedmean", "xmlreader", "xmlwriter"));
@@ -560,10 +730,11 @@ public class Main extends ApplicationAdapter {
         HttpResponseListener listener = new HttpResponseListener() {
             @Override
             public void handleHttpResponse(HttpResponse httpResponse) {
-                String latestStable = httpResponse.getResultAsString().trim();
-                if (!prop.getProperty("liftoffVersion").equals(latestStable)) {
+                latestStableVersion = httpResponse.getResultAsString().trim();
+                if (!prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
                     Gdx.app.postRunnable(() -> {
                         root.landingTable.animateUpdateLabel();
+                        if (fullscreenDialog != null) fullscreenDialog.updateVersion();
                     });
                 }
             }
