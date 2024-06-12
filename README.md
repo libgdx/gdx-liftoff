@@ -12,10 +12,6 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
     📥
     <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD STABLE</a></strong>
     📥
-<br>
-    🎉
-    Or, <a href="https://github.com/tommyettinger/gdx-liftoff-ui-redesign/releases">DOWNLOAD PREVIEW</a>
-    🎉
 </h1>
 
 To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application
@@ -29,7 +25,7 @@ java -jar gdx-liftoff-VERSION.jar
 You can still target other releases, as low as 8 typically, while building with any of the JDK versions 17 and up.
 All stable releases of Java from 8 to 22 work here now.
 
-If you have any trouble, you can try our new [🐛Troubleshooting Guide🐛](Troubleshooting.md).
+If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
 ## Features
 
@@ -60,7 +56,16 @@ applications, is also here, and works with Kotlin and other JVM languages as wel
 
 ## Guide
 
-Gdx-Liftoff is a relatively straightforward GUI application; you enter a project name/package/path, you select options
+Gdx-Liftoff is a relatively straightforward GUI application.
+ - Enter a project name/package/main-class-name.
+ - Click Project Options.
+ - Select options you want (additional platforms, non-Java languages, official extensions, and/or a template).
+ - Click Next.
+ - Select any third-party extensions you want to add.
+ - Click Next.
+ - Enter a project path and optionally change Java version (such as to 8 for better iOS support).
+ - Click Generate, and let the magic happen.
+ - You can 
 on the tabs you want to change, and you click "Generate Project". After that you can open the project in the path you
 specified, or open it more quickly in IDEA if it's installed how Liftoff can see it (using
 [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/), most likely). You can add official extensions such as
