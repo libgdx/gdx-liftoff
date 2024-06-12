@@ -41,12 +41,11 @@ interface Repository {
       // MVNrepository is much faster than Maven Central search, but it does not report
       // beta versions and release candidates. If no version was found, the application usually
       // fallbacks to the slower Maven Central search performed in parallel.
+      // Currently, this API isn't returning anything, so the request is useless.
       val versions = MvnRepositoryApi.create().getArtifactVersions(group, name)
       if (versions.isNotEmpty()) {
-//        println("MvnRepository yielded ${versions.first()} when asked for $name")
         return versions.first()
       }
-      println("MvnRepository yielded nothing for $name")
       throw GdxRuntimeException("Unable to fetch $group:$name version from MVNrepository.")
     }
 
@@ -62,13 +61,10 @@ interface Repository {
         )
       ).timeout(REQUEST_TIMEOUT)
       val results = json.parse(response.responseString().third.get())["response"]["docs"]
-//      println("Maven Central results: $results")
       if (results.notEmpty()) {
         val res = results[0].getString("latestVersion")
-//        println("Maven Central yielded $res when asked for $name")
         return res
       }
-      println("Maven Central yielded nothing for $name")
       throw GdxRuntimeException("Unable to fetch $group:$name version from Maven Central.")
     }
   }
@@ -99,7 +95,6 @@ abstract class CachedRepository : Repository {
 
   override fun getLatestVersion(group: String, name: String): String? {
     val identifier = "$group:$name"
-    println("versions[$identifier] = ${versions[identifier]}")
     versions[identifier]?.let {
       return@getLatestVersion it
     }

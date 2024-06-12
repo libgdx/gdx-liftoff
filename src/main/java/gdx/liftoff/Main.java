@@ -627,9 +627,7 @@ public class Main extends ApplicationAdapter {
 
                 Project project = new Project(basicData, platforms, advancedData, languagesData, extensionsData,
                     Listing.templatesByName.getOrDefault(template, Listing.templates.get(0)));
-                long startGenTime = System.currentTimeMillis();
                 project.generate();
-                System.out.println((System.currentTimeMillis() - startGenTime) + "ms taken during project.generate()");
                 project.includeGradleWrapper(new ProjectLogger() {
                     @Override
                     public void log(@NotNull String message) {
