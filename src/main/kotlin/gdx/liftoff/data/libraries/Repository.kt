@@ -4,10 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.badlogic.gdx.utils.JsonReader
 import com.github.kittinunf.fuel.Fuel.get
-import devcsrj.mvnrepository.MvnRepositoryApi
-import gdx.liftoff.config.executeAnyOf
-import gdx.liftoff.config.threadPool
-import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -29,24 +25,12 @@ interface Repository {
    */
   object MavenCentral : CachedRepository() {
     override fun fetchLatestVersion(group: String, name: String): String? {
-      // Fetching versions from multiple services in parallel - the first result is returned:
-      val res = executeAnyOf(
-//        CompletableFuture.supplyAsync({ fetchVersionFromMvnRepository(group, name) }, threadPool),
-        CompletableFuture.supplyAsync({ fetchVersionFromMavenCentral(group, name) }, threadPool)
-      ).get()
-      return res
-    }
-
-    private fun fetchVersionFromMvnRepository(group: String, name: String): String {
-      // MVNrepository is much faster than Maven Central search, but it does not report
-      // beta versions and release candidates. If no version was found, the application usually
-      // fallbacks to the slower Maven Central search performed in parallel.
-      // Currently, this API isn't returning anything, so the request is useless.
-      val versions = MvnRepositoryApi.create().getArtifactVersions(group, name)
-      if (versions.isNotEmpty()) {
-        return versions.first()
+      var res : String? = null
+      try {
+        res = fetchVersionFromMavenCentral(group, name);
+      } catch (_:Exception) {
       }
-      throw GdxRuntimeException("Unable to fetch $group:$name version from MVNrepository.")
+      return res
     }
 
     private fun fetchVersionFromMavenCentral(group: String, name: String): String {
@@ -91,7 +75,7 @@ interface Repository {
  * Abstract implementation of [Repository]. Caches fetched versions.
  */
 abstract class CachedRepository : Repository {
-  private val versions: MutableMap<String, String> = ConcurrentHashMap()
+  private val versions: MutableMap<String, String> = HashMap(64)
 
   override fun getLatestVersion(group: String, name: String): String? {
     val identifier = "$group:$name"

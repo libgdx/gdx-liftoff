@@ -28,7 +28,6 @@ import com.kotcrab.vis.ui.widget.file.FileChooserAdapter
 import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.config.inject
-import gdx.liftoff.config.threadPool
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
@@ -108,16 +107,16 @@ class MainView : ActionContainer {
     )
   }
 
-  @LmlAction("prefetchVersion")
-  fun prefetchLibraryVersion(button: Button) {
-    if (button.isChecked) {
-      threadPool.execute {
-        // Prefetching library version - all Maven repositories use group and name cache,
-        // so prefetching the version asynchronously cuts down on project generation time.
-        extensionsData.extensionsById[button.name]?.version
-      }
-    }
-  }
+//  @LmlAction("prefetchVersion")
+//  fun prefetchLibraryVersion(button: Button) {
+//    if (button.isChecked) {
+//      threadPool.execute {
+//        // Prefetching library version - all Maven repositories use group and name cache,
+//        // so prefetching the version asynchronously cuts down on project generation time.
+//        extensionsData.extensionsById[button.name]?.version
+//      }
+//    }
+//  }
 
   private fun pickDirectory(initialFolder: FileHandle, callback: FileChooserAdapter) {
     var initialPath = initialFolder.path()

@@ -81,11 +81,6 @@ dependencies {
   implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
   // for some network requests, such as checking the versions of dependencies
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
-  // specifically for getting the latest stable versions from https://mvnrepository.com
-  // this was just updated, but this version has 4 vulnerable dependencies: okhttp, okio, retrofit, and jsoup
-//  implementation "com.github.devcsrj:mvnrepository-api-client:2.0.2"
-  // this is about the same code, but does not have any of the above vulnerable dependency versions
-  implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
 
   implementation "org.slf4j:slf4j-nop:2.0.5"
 

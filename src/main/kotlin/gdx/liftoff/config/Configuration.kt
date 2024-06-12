@@ -104,13 +104,4 @@ class Configuration {
       "tooltip"
     )
   }
-
-  @Destroy
-  fun destroyThreadPool() {
-    try {
-      threadPool.shutdownNow()
-    } catch (exception: Exception) {
-      Exceptions.ignore(exception)
-    }
-  }
 }

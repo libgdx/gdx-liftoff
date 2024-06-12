@@ -5,7 +5,8 @@
             <table defaultPad="2">
                 <:for lib="$thirdPartyExtensions" url="$thirdPartyExtensionsUrls"
                       version="$thirdPartyExtensionsVersions">
-                    <checkBox id="{lib}" align="left" onClick="prefetchVersion" padBottom="6">@{lib}</checkBox>
+                    <checkBox id="{lib}" align="left" padBottom="6">@{lib}</checkBox>
+<!--                    <checkBox id="{lib}" align="left" onClick="prefetchVersion" padBottom="6">@{lib}</checkBox>-->
                     <label style="small" padRight="5" align="left">@{lib}Tip</label>
                     <linkLabel row="true" url="{url}">?</linkLabel>
                 </:for>
