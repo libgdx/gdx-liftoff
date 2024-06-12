@@ -18,16 +18,19 @@ buildscript {
 }
 
 version = "1.12.1.10-SNAPSHOT"
-mainClassName = 'gdx.liftoff.MainKt'
+mainClassName = 'gdx.liftoff.Main'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 
 kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
 
+def jarName = "gdx-liftoff-${version}.jar"
+
 jar {
   manifest {
     attributes 'Main-Class': mainClassName
   }
+  archiveFileName.set(jarName)
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
@@ -64,6 +67,8 @@ dependencies {
   implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion"
+  implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
+  implementation "com.github.raeleus.stripe:stripe:2.0.0"
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"

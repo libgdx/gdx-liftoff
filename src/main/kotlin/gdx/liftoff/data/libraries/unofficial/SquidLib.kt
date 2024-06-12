@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.0-beta1"
+  override val defaultVersion = "4.0.0-beta2"
   override val group = "com.squidpony"
   override val name: String
     get() = id.lowercase()
@@ -347,6 +347,27 @@ class SquidSquadStoreOld : SquidSquadExtension() {
 }
 
 /**
+ * SquidSquad's JSON compatibility code for SquidPath.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStorePath : SquidSquadExtension() {
+  override val id = "squidStorePath"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstorepath")
+
+    SquidSquadStoreCore().initiate(project)
+    SquidSquadStoreGrid().initiate(project)
+    SquidSquadPath().initiate(project)
+  }
+}
+
+/**
  * SquidSquad's JSON compatibility code for SquidText.
  * @author Eben Howard
  * @author Tommy Ettinger
@@ -422,6 +443,24 @@ class SquidSquadFreezeOld : SquidSquadExtension() {
 }
 
 /**
+ * SquidSquad's Kryo compatibility code for SquidPath.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezePath : SquidSquadExtension() {
+  override val id = "squidFreezePath"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadPath().initiate(project)
+    SquidSquadFreezeCore().initiate(project)
+    SquidSquadFreezeGrid().initiate(project)
+  }
+}
+
+/**
  * SquidSquad's Kryo compatibility code for SquidText.
  * @author Eben Howard
  * @author Tommy Ettinger
@@ -435,5 +474,94 @@ class SquidSquadFreezeText : SquidSquadExtension() {
 
     SquidSquadText().initiate(project)
     SquidSquadFreezeCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fury compatibility code for SquidCore.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathCore : SquidSquadExtension() {
+  override val id = "squidWrathCore"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadCore().initiate(project)
+    Fury().initiate(project)
+    TantrumRegExodus().initiate(project)
+    TantrumDigital().initiate(project)
+    TantrumJdkgdxds().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fury compatibility code for SquidGrid.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathGrid : SquidSquadExtension() {
+  override val id = "squidWrathGrid"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadGrid().initiate(project)
+    SquidSquadWrathCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fury compatibility code for SquidOld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathOld : SquidSquadExtension() {
+  override val id = "squidWrathOld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadOld().initiate(project)
+    SquidSquadWrathCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fury compatibility code for SquidPath.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathPath : SquidSquadExtension() {
+  override val id = "squidWrathPath"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadPath().initiate(project)
+    SquidSquadWrathCore().initiate(project)
+    SquidSquadWrathGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fury compatibility code for SquidText.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathText : SquidSquadExtension() {
+  override val id = "squidWrathText"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadText().initiate(project)
+    SquidSquadWrathCore().initiate(project)
   }
 }

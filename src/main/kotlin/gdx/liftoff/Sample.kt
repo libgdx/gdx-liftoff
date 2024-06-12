@@ -97,8 +97,7 @@ enum class Preset {
       get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
-        val scanner = DesktopClassScanner()
-        return scanner.find<Extension>()
+        return DesktopClassScanner().find<Extension>()
           .filter { !isOfficial(it) }
           .initiate<Library>()
           .filter { it.repository === KtxRepository }
@@ -122,8 +121,7 @@ enum class Preset {
       get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
-        val scanner = DesktopClassScanner()
-        return scanner.find<Extension>()
+        return DesktopClassScanner().find<Extension>()
           .filter { !isOfficial(it) }
           .initiate<Library>()
           .filter { library ->
@@ -219,8 +217,7 @@ fun main(arguments: Array<String>) {
   Gdx.files = Lwjgl3Files()
 
   val preset = getPreset(arguments)
-  val scanner = DesktopClassScanner()
-  val officialExtensions = scanner.find<GdxExtension>().filter(::isOfficial).initiate<OfficialExtension>()
+  val officialExtensions = DesktopClassScanner().find<GdxExtension>().filter(::isOfficial).initiate<OfficialExtension>()
   val basicData = BasicProjectData(
     name = preset.projectName,
     rootPackage = preset.rootPackage,

@@ -29,6 +29,7 @@ import com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.config.inject
 import gdx.liftoff.config.threadPool
+import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.project.Project
 import org.lwjgl.glfw.GLFW
@@ -294,6 +295,12 @@ class MainView : ActionContainer {
   @LmlAction("thirdPartyExtensionsUrls")
   fun getThirdPartyExtensionsUrls(): Array<String> =
     extensionsData.thirdParty.sortedBy { it.id }.map { it.url }.toTypedArray()
+
+  fun getOfficialExtensionsByName(names: Collection<String>): List<Library> =
+    extensionsData.official.filter { names.contains(it.id) }.toList()
+
+  fun getThirdPartyExtensionsByName(names: Collection<String>): List<Library> =
+    extensionsData.thirdParty.filter { names.contains(it.id) }.toList()
 
   @LmlAction("initTabs")
   fun initiateTabbedPane(tabbedPane: TabbedPane.TabbedPaneTable) {
