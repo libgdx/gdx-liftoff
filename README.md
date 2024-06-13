@@ -104,7 +104,8 @@ thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now
 [Particle Park skin for scene2d.ui](https://ray3k.wordpress.com/particle-park-ui-skin-for-scene2d-ui/),
 which was adapted to be the default skin added to new projects (if the _"Generate UI Assets"_ option is selected).
 "Accademia di Belle Arti di Urbino and students of MA course of Visual design" has created the _Titillium Web_
-font that the skin uses (under SIL OFL license).
+font that the skin uses (under SIL OFL license). Oh yeah, and he did some other stuff starting in version 1.12.1.10,
+such as *almost the entire release*. Huge thanks to raeleus for the complete overhaul of the user experience!
 
 Other project contributors include [@Mr00Anderson](https://github.com/Mr00Anderson), [@lyze237](https://github.com/lyze237),
 [@metaphore](https://github.com/metaphore) (again!), and [@payne911](https://github.com/payne911).
