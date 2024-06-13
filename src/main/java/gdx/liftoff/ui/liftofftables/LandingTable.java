@@ -84,13 +84,10 @@ public class LandingTable extends LiftoffTable {
         table.add(updateContainer);
 
         updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
-        boolean upToDate = prop.getProperty("liftoffVersion").equals(latestStableVersion);
-        updateButton.setColor(upToDate ? CLEAR_WHITE : Color.WHITE);
-        updateButton.setDisabled(!upToDate);
+        checkSetupVersion();
+        updateButton.setColor(CLEAR_WHITE);
+        updateButton.setDisabled(false);
         updateContainer.setActor(updateButton);
-        addHandListener(updateButton);
-        addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
-        onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
 
         //project panel
         row();
@@ -129,13 +126,6 @@ public class LandingTable extends LiftoffTable {
     }
 
     private void addNewProjectListeners(Actor actor) {
-        addHandListener(actor);
-        onChange(actor, () -> {
-
-        });
-    }
-
-    private void addQuickProjectListeners(Actor actor) {
         addHandListener(actor);
         onChange(actor, () -> {
 
@@ -229,6 +219,9 @@ public class LandingTable extends LiftoffTable {
     public void animateUpdateLabel() {
         updateButton.setColor(CLEAR_WHITE);
         updateButton.setDisabled(false);
+        addHandListener(updateButton);
+        addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
+        onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
         addAction(targeting(updateButton, fadeIn(.5f)));
     }
 }
