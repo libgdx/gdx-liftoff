@@ -81,12 +81,12 @@ public class LandingTable extends LiftoffTable {
         //update link
         table.row();
         updateContainer = new Container<>();
-        updateContainer.setColor(CLEAR_WHITE);
         table.add(updateContainer);
 
         updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
-        updateButton.setColor(CLEAR_WHITE);
-        updateButton.setDisabled(true);
+        boolean upToDate = prop.getProperty("liftoffVersion").equals(latestStableVersion);
+        updateButton.setColor(upToDate ? CLEAR_WHITE : Color.WHITE);
+        updateButton.setDisabled(!upToDate);
         updateContainer.setActor(updateButton);
         addHandListener(updateButton);
         addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
