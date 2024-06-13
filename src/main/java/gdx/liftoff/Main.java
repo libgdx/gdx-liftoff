@@ -32,6 +32,7 @@ import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
+import gdx.liftoff.config.LiftoffVersion;
 import gdx.liftoff.data.platforms.Platform;
 import gdx.liftoff.data.project.*;
 import gdx.liftoff.ui.OverlayTable;
@@ -731,7 +732,11 @@ public class Main extends ApplicationAdapter {
             @Override
             public void handleHttpResponse(HttpResponse httpResponse) {
                 latestStableVersion = httpResponse.getResultAsString().trim();
-                if (!prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
+                LiftoffVersion mine = LiftoffVersion.Companion.parseLiftoffVersion(prop.getProperty("liftoffVersion"));
+                if(mine == null) return;
+                LiftoffVersion latest = LiftoffVersion.Companion.parseLiftoffVersion(latestStableVersion);
+                if(latest == null) return;
+                if (mine.compareTo(latest) < 0) {
                     Gdx.app.postRunnable(() -> {
                         root.landingTable.animateUpdateLabel();
                         if (fullscreenDialog != null) fullscreenDialog.updateVersion();

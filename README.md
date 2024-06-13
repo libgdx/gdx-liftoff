@@ -65,13 +65,12 @@ Gdx-Liftoff is a relatively straightforward GUI application.
  - Click Next.
  - Enter a project path and optionally change Java version (such as to 8 for better iOS support).
  - Click Generate, and let the magic happen.
- - You can 
-on the tabs you want to change, and you click "Generate Project". After that you can open the project in the path you
-specified, or open it more quickly in IDEA if it's installed how Liftoff can see it (using
-[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/), most likely). You can add official extensions such as
-`Box2D` on the Extensions tab, or third-party extensions such as `Artemis-ODB` on the `Third-Party` tab. You can also
-choose languages on the Languages tab, and starting templates on the Templates tab. If you want to use Kotlin, a Kotlin
-template is recommended (such as `Kotlin Logo`).
+
+After that you can open the project in the path you specified, or open it more quickly in IDEA if it's installed how
+Liftoff can see it (using [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/), most likely).
+
+If you want to use Kotlin, a Kotlin template is recommended (such as `Kotlin Logo`). The KTX libraries are all available
+as third-party extensions; these aren't required for Kotlin projects, but they can be helpful.
 
 Some things are structured differently in Liftoff projects, compared to gdx-setup projects. Where gdx-setup puts almost
 all configuration in `/build.gradle` (in the project root), including for subprojects like `android` or `html`, Liftoff
@@ -99,7 +98,7 @@ The project was forked from the [`czyzby/gdx-setup`](https://github.com/czyzby/g
 [@czyzby](https://github.com/czyzby) and [@kotcrab](https://github.com/kotcrab) have created the original application,
 as well as a set of libraries that it depends on (`gdx-lml` and VisUI respectively). Since then, the project is
 maintained by [@tommyettinger](https://github.com/tommyettinger). Graciously, czyzby came back and made a wide variety of improvements, so big
-thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now maintains gdx-lml (which this uses).
+thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now maintains gdx-lml (which this used and may still use).
 
 [@raeleus](https://github.com/raeleus) created the
 [Particle Park skin for scene2d.ui](https://ray3k.wordpress.com/particle-park-ui-skin-for-scene2d-ui/),
