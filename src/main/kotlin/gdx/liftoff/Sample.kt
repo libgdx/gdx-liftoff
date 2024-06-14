@@ -238,7 +238,7 @@ fun main(arguments: Array<String>) {
     desktopJavaVersion = defaultJavaVersion,
     generateSkin = preset.addSkin,
     generateReadme = true,
-    gradleTasks = mutableListOf()
+    gradleTasks = arrayListOf()
   )
   val extensions = ExtensionsData(
     officialExtensions = preset.officialExtensions.orElse(officialExtensions),

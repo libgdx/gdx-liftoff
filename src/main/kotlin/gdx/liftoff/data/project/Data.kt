@@ -27,7 +27,7 @@ data class AdvancedProjectData(
   // Templates might force skin generation.
   var generateSkin: Boolean,
   val generateReadme: Boolean,
-  val gradleTasks: MutableList<String>,
+  val gradleTasks: ArrayList<String>,
   val generateEditorConfig: Boolean = true,
   val indentSize: Int = 4
 ) {

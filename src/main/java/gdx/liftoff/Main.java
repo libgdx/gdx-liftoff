@@ -614,8 +614,8 @@ public class Main extends ApplicationAdapter {
                     androidPluginVersion, robovmVersion,
                     gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme,
                     gradleTasks != null && !gradleTasks.isEmpty()
-                        ? Arrays.asList(gradleTasks.split("\\s+"))
-                        : Collections.emptyList(),
+                        ? Maker.makeList(gradleTasks.split("\\s+"))
+                        : new ArrayList<>(0),
                     true, 4);
 
                 LinkedHashMap<String, Platform> platforms = new LinkedHashMap<>(UserData.platforms.size());
