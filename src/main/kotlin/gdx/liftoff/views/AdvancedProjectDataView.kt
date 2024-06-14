@@ -86,8 +86,10 @@ class AdvancedProjectDataView {
     desktopJavaVersion = desktopJavaVersion,
     generateSkin = generateSkinButton.isChecked,
     generateReadme = generateReadmeButton.isChecked,
-    gradleTasks = ArrayList(gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter {
-      it.isNotBlank()
-    })
+    gradleTasks = ArrayList(
+      gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter {
+        it.isNotBlank()
+      }
+    )
   )
 }
