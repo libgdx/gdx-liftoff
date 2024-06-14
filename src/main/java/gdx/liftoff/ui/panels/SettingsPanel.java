@@ -34,22 +34,26 @@ public class SettingsPanel extends Table implements Panel {
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
         table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
-        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"), String.format(prop.getProperty("gdxVersionTip"), prop.getProperty("libgdxDefaultVersion")), UserData.libgdxVersion, table, true);
+        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"),
+            String.format(prop.getProperty("gdxVersionTip"), prop.getProperty("libgdxDefaultVersion")),
+            UserData.libgdxVersion, table, true);
         onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
-        TextField javaTextField = addField(prop.getProperty("javaVersion"), prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
-        onChange(javaTextField, () -> UserData.libgdxVersion = javaTextField.getText());
+        TextField javaTextField = addField(prop.getProperty("javaVersion"),
+            prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
+        onChange(javaTextField, () -> UserData.javaVersion = javaTextField.getText());
 
         //application version
-        TextField applicationTextField = addField(prop.getProperty("version"), prop.getProperty("versionTip"), UserData.appVersion, table);
-        onChange(applicationTextField, () -> UserData.libgdxVersion = applicationTextField.getText());
+        TextField applicationTextField = addField(prop.getProperty("version"),
+            prop.getProperty("versionTip"), UserData.appVersion, table);
+        onChange(applicationTextField, () -> UserData.appVersion = applicationTextField.getText());
 
         //robovm version
         if (UserData.platforms.contains("ios")) {
             TextField robovmTextField = addField(prop.getProperty("robovmVersion"),
                 prop.getProperty("robovmVersionTip"), UserData.robovmVersion, table);
-            onChange(robovmTextField, () -> UserData.libgdxVersion = robovmTextField.getText());
+            onChange(robovmTextField, () -> UserData.robovmVersion = robovmTextField.getText());
         }
 
         //add gui assets
