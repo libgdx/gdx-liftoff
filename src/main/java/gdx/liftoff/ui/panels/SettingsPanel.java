@@ -42,7 +42,11 @@ public class SettingsPanel extends Table implements Panel {
         //java version
         TextField javaTextField = addField(prop.getProperty("javaVersion"),
             prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
-        onChange(javaTextField, () -> UserData.javaVersion = javaTextField.getText());
+        onChange(javaTextField, () -> {
+            if(UserData.platforms.contains("ios") && !"7".equals(javaTextField.getText()))
+                javaTextField.setText("8");
+            UserData.javaVersion = javaTextField.getText();
+        });
 
         //application version
         TextField applicationTextField = addField(prop.getProperty("version"),
