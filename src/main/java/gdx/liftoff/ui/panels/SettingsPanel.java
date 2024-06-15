@@ -40,6 +40,8 @@ public class SettingsPanel extends Table implements Panel {
         onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
+        if(UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion))
+            UserData.javaVersion = "8";
         TextField javaTextField = addField(prop.getProperty("javaVersion"),
             prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
         onChange(javaTextField, () -> {
