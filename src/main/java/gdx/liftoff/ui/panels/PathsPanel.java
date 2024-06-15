@@ -2,6 +2,7 @@ package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
+import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
 import static gdx.liftoff.Main.*;
@@ -19,6 +21,7 @@ import static gdx.liftoff.Main.*;
  */
 public class PathsPanel extends Table implements Panel {
     private Label errorLabel;
+    private Button deleteProjectPathButton;
 
     public PathsPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -59,10 +62,24 @@ public class PathsPanel extends Table implements Panel {
                             FullscreenDialog.fullscreenDialog.updateGenerateButton();
                         if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
                         root.quickSettingsTable.populate();
+                        updateDeleteProjectPathButton();
                     }
                 }
             });
         });
+
+        Button button = new Button(skin, "folder");
+        add(button);
+        addHandListener(button);
+        addTooltip(button, Align.top, 0, prop.getProperty("destinationTip"));
+        onChange(button, () -> projectFieldButton.setChecked(!projectFieldButton.isChecked()));
+
+        deleteProjectPathButton = new Button(skin, "delete-folder");
+        add(deleteProjectPathButton);
+        addHandListener(deleteProjectPathButton);
+        addTooltip(deleteProjectPathButton, Align.top, 0, prop.getProperty("deleteFolder"));
+        onChange(deleteProjectPathButton, ConfirmDeleteProjectFolder::showDialog);
+        updateDeleteProjectPathButton();
 
         if (UserData.platforms.contains("android")) {
             //android label
@@ -99,14 +116,24 @@ public class PathsPanel extends Table implements Panel {
                     }
                 });
             });
+
+            button = new Button(skin, "folder");
+            add(button);
+            addHandListener(button);
+            addTooltip(button, Align.top, 0, prop.getProperty("sdkTip"));
+            onChange(button, () -> androidFieldButton.setChecked(!androidFieldButton.isChecked()));
         }
 
         row();
         errorLabel = new Label("", skin, "error");
         errorLabel.setAlignment(Align.center);
         errorLabel.setWrap(true);
-        add(errorLabel).minSize(0, errorLabel.getStyle().font.getLineHeight() * 2).colspan(2).growX();
+        add(errorLabel).minSize(0, errorLabel.getStyle().font.getLineHeight() * 2).colspan(4).growX();
         updateError();
+    }
+
+    private void updateDeleteProjectPathButton() {
+        deleteProjectPathButton.setDisabled(UserData.projectPath == null || UserData.projectPath.isEmpty());
     }
 
     private void updateError() {

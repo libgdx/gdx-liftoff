@@ -1074,6 +1074,17 @@
 		"up": "button-card-up-10",
 		"down": "button-card-down-10",
 		"over": "button-card-over-10"
+	},
+	"delete-folder": {
+		"up": "icon-delete-folder-up",
+		"down": "icon-delete-folder-down",
+		"over": "icon-delete-folder-over",
+		"disabled": "icon-delete-folder-disabled"
+	},
+	"folder": {
+		"up": "icon-folder-up",
+		"down": "icon-folder-down",
+		"over": "icon-folder-over"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
