@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -118,6 +119,8 @@ public class PlatformsDialog extends PopTable {
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
+        key(Keys.ENTER, this::hide);
+        key(Keys.ESCAPE, this::hide);
     }
 
     /**
