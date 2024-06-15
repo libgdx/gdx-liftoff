@@ -1,5 +1,6 @@
 package gdx.liftoff.ui.dialogs;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
@@ -77,6 +78,8 @@ public class GradleDialog extends PopTable {
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
+        key(Keys.ENTER, this::hide);
+        key(Keys.ESCAPE, this::hide);
     }
 
     public static PopTable show(boolean fullscreen) {
