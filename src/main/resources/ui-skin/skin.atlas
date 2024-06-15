@@ -6,7 +6,7 @@ filter: Linear, Linear
 repeat: none
 white-pixel
   rotate: false
-  xy: 1923, 745
+  xy: 1985, 1824
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -69,21 +69,21 @@ button-card-up
   index: -1
 button-delete-down
   rotate: false
-  xy: 1467, 484
+  xy: 1952, 988
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-delete-over
   rotate: false
-  xy: 1431, 484
+  xy: 1501, 465
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-delete-up
   rotate: false
-  xy: 1449, 484
+  xy: 1952, 1007
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
@@ -104,28 +104,28 @@ button-external-link-over
   index: -1
 button-external-link-up
   rotate: false
-  xy: 1485, 484
+  xy: 1952, 969
   size: 15, 17
   orig: 15, 17
   offset: 0, 0
   index: -1
 button-maximize-down
   rotate: false
-  xy: 1923, 997
+  xy: 1923, 815
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-maximize-over
   rotate: false
-  xy: 1923, 968
+  xy: 1923, 786
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-maximize-up
   rotate: false
-  xy: 1923, 939
+  xy: 1923, 757
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
@@ -160,63 +160,63 @@ button-mid-up
   index: -1
 button-outline-down
   rotate: false
-  xy: 1923, 748
+  xy: 1327, 477
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
   index: -1
 button-outline-over
   rotate: false
-  xy: 1162, 477
+  xy: 1352, 477
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
   index: -1
 button-outline-up
   rotate: false
-  xy: 1187, 477
+  xy: 1377, 477
   size: 23, 24
   orig: 23, 24
   offset: 0, 0
   index: -1
 button-plus-down
   rotate: false
-  xy: 1377, 484
+  xy: 1447, 465
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-plus-over
   rotate: false
-  xy: 1395, 484
+  xy: 1465, 465
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-plus-up
   rotate: false
-  xy: 1413, 484
+  xy: 1483, 465
   size: 16, 17
   orig: 16, 17
   offset: 0, 0
   index: -1
 button-restore-down
   rotate: false
-  xy: 1923, 910
+  xy: 1162, 474
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-restore-over
   rotate: false
-  xy: 1923, 881
+  xy: 1190, 474
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
   index: -1
 button-restore-up
   rotate: false
-  xy: 1923, 852
+  xy: 1218, 474
   size: 26, 27
   orig: 26, 27
   offset: 0, 0
@@ -265,7 +265,7 @@ check-box-checked-over
   index: -1
 check-box-checked-up
   rotate: false
-  xy: 1212, 484
+  xy: 1402, 484
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
@@ -347,9 +347,58 @@ font-label-tooltip
   orig: 505, 42
   offset: 0, 0
   index: -1
+icon-delete-folder-disabled
+  rotate: false
+  xy: 1923, 844
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-delete-folder-down
+  rotate: false
+  xy: 1923, 1000
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-delete-folder-over
+  rotate: false
+  xy: 1923, 974
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-delete-folder-up
+  rotate: false
+  xy: 1923, 948
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-folder-down
+  rotate: false
+  xy: 1923, 922
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-folder-over
+  rotate: false
+  xy: 1923, 896
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+icon-folder-up
+  rotate: false
+  xy: 1923, 870
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
 icon-invalid
   rotate: false
-  xy: 1356, 482
+  xy: 1426, 463
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
@@ -503,35 +552,35 @@ pop-dialog-fullscreen
   index: -1
 radio-checked-down
   rotate: false
-  xy: 1284, 484
+  xy: 1474, 484
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
   index: -1
 radio-checked-over
   rotate: false
-  xy: 1236, 484
+  xy: 1426, 484
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
   index: -1
 radio-checked-up
   rotate: false
-  xy: 1308, 484
+  xy: 1498, 484
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
   index: -1
 radio-unchecked-over
   rotate: false
-  xy: 1260, 484
+  xy: 1450, 484
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
   index: -1
 radio-unchecked-up
   rotate: false
-  xy: 1332, 484
+  xy: 1402, 465
   size: 22, 17
   orig: 22, 17
   offset: 0, 0
@@ -615,7 +664,7 @@ title-small
   index: -1
 underline-down
   rotate: false
-  xy: 1923, 774
+  xy: 1300, 477
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
@@ -643,14 +692,14 @@ underline-external-link-up
   index: -1
 underline-over
   rotate: false
-  xy: 1923, 826
+  xy: 1246, 477
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 underline-up
   rotate: false
-  xy: 1923, 800
+  xy: 1273, 477
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
