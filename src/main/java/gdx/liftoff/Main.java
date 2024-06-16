@@ -3,8 +3,6 @@ package gdx.liftoff;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.Graphics.Monitor;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.Net.HttpResponseListener;
@@ -47,7 +45,6 @@ import org.lwjgl.util.nfd.NativeFileDialog;
 import java.io.IOException;
 import java.lang.StringBuilder;
 import java.util.*;
-import java.util.Collections;
 
 import static gdx.liftoff.ui.UserData.*;
 import static gdx.liftoff.ui.dialogs.FullscreenCompleteDialog.*;

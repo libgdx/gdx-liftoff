@@ -91,7 +91,7 @@ public class RootTable extends Table {
         //animation initial setup
         clearChildren();
         stage.addActor(table);
-        add(newTable).prefSize(600, 700);
+        add(newTable).prefSize(ROOT_TABLE_PREF_WIDTH, ROOT_TABLE_PREF_HEIGHT);
         newTable.setTouchable(Touchable.disabled);
 
         float distance = rightToLeftTransition ? stage.getWidth() : -stage.getWidth();
@@ -131,7 +131,7 @@ public class RootTable extends Table {
         newTable.populate();
         newTable.finishAnimation();
         clearChildren();
-        add(newTable).prefSize(600, 700);
+        add(newTable).prefSize(ROOT_TABLE_PREF_WIDTH, ROOT_TABLE_PREF_HEIGHT);
         newTable.setTouchable(Touchable.childrenOnly);
         newTable.captureKeyboardFocus();
     }

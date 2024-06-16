@@ -11,7 +11,6 @@ import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.*;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
 
