@@ -1229,6 +1229,14 @@
 		"up": "select-box-up-10",
 		"down": "select-box-down-10",
 		"over": "select-box-over-10"
+	},
+	"path": {
+		"font": "font-label-tooltip",
+		"fontColor": "white",
+		"overFontColor": "red",
+		"up": "field-up",
+		"down": "field-down",
+		"over": "field-over"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
