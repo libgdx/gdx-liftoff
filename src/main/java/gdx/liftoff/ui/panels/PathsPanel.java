@@ -188,7 +188,7 @@ public class PathsPanel extends Table implements Panel {
         browseFieldButton.getLabel().setAlignment(Align.left);
         browseFieldButton.getLabel().setEllipsis("...");
         browseFieldButton.getLabelCell().minWidth(0);
-        add(browseFieldButton).growX().minWidth(100).maxWidth(300);
+        add(browseFieldButton).growX().minWidth(100);
         addHandListener(browseFieldButton);
 
         return browseFieldButton;
