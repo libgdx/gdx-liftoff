@@ -1,18 +1,13 @@
 package gdx.liftoff.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Null;
-import gdx.liftoff.Main;
 import gdx.liftoff.ui.liftofftables.*;
 
 import static com.badlogic.gdx.math.Interpolation.exp5;
@@ -35,19 +30,7 @@ public class RootTable extends Table {
         pad(SPACE_LARGE);
 
         landingTable = new LandingTable();
-        rootWidth = new Value() {
-            public float get (@Null Actor context) {
-                return Gdx.graphics.getBackBufferWidth() * 0.9f;
-            }
-        };
-
-        rootHeight = new Value() {
-            public float get (@Null Actor context) {
-                return Gdx.graphics.getBackBufferHeight() * 0.9f;
-            }
-        };
-
-        add(landingTable).prefSize(rootWidth, rootHeight);
+        add(landingTable).prefSize(ROOT_TABLE_PREF_WIDTH, ROOT_TABLE_PREF_HEIGHT);
         landingTable.captureKeyboardFocus();
         landingTable.animate();
 
@@ -108,7 +91,7 @@ public class RootTable extends Table {
         //animation initial setup
         clearChildren();
         stage.addActor(table);
-        add(newTable).prefSize(rootWidth, rootHeight);
+        add(newTable).prefSize(600, 700);
         newTable.setTouchable(Touchable.disabled);
 
         float distance = rightToLeftTransition ? stage.getWidth() : -stage.getWidth();
@@ -148,7 +131,7 @@ public class RootTable extends Table {
         newTable.populate();
         newTable.finishAnimation();
         clearChildren();
-        add(newTable).prefSize(rootWidth, rootHeight);
+        add(newTable).prefSize(600, 700);
         newTable.setTouchable(Touchable.childrenOnly);
         newTable.captureKeyboardFocus();
     }
