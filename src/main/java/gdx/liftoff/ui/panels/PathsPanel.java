@@ -184,11 +184,11 @@ public class PathsPanel extends Table implements Panel {
      * @param text The name of the field
      */
     private TextButton addField(String text) {
-        TextButton browseFieldButton = new TextButton(text, skin, "field");
+        TextButton browseFieldButton = new TextButton(text, skin, "path");
         browseFieldButton.getLabel().setAlignment(Align.left);
-        browseFieldButton.getLabel().setEllipsis("...");
+        browseFieldButton.getLabel().setWrap(true);
         browseFieldButton.getLabelCell().minWidth(0);
-        add(browseFieldButton).growX().minWidth(100);
+        add(browseFieldButton).growX().minWidth(100).maxWidth(300);
         addHandListener(browseFieldButton);
 
         return browseFieldButton;
