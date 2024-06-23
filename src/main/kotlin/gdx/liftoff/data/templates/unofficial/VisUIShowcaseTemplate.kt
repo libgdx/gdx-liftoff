@@ -116,7 +116,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
     @Override
     public void render () {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        ScreenUtils.clear(0f, 0f, 0f, 1f);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
