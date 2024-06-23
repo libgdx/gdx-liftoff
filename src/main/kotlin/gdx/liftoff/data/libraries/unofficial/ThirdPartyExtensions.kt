@@ -813,15 +813,15 @@ class PieMenu : ThirdPartyExtension() {
 @Extension
 class JBump : ThirdPartyExtension() {
   override val id = "jbump"
-  override val defaultVersion = "v1.0.1"
-  override val url = "https://github.com/tommyettinger/jbump"
+  override val defaultVersion = "v1.0.2"
+  override val url = "https://github.com/implicit-invocation/jbump"
   override val repository = Repository.JitPack
-  override val group = "com.github.tommyettinger"
+  override val group = "com.github.implicit-invocation"
   override val name = "jbump"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.tommyettinger:jbump")
-    addDependency(project, GWT.ID, "com.github.tommyettinger:jbump:sources")
+    addDependency(project, Core.ID, "com.github.implicit-invocation:jbump")
+    addDependency(project, GWT.ID, "com.github.implicit-invocation:jbump:sources")
     addGwtInherit(project, "com.dongbat.jbump")
   }
 }
