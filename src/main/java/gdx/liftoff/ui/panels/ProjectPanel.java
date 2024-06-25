@@ -110,8 +110,8 @@ public class ProjectPanel extends Table implements Panel {
     }
 
     private void updateError() {
-        if (UserData.projectName.isEmpty()) {
-            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("name")));
+        if (!isValidProjectName(UserData.projectName)) {
+            errorLabel.setText(String.format(prop.getProperty("nameNotValid")));
             return;
         }
 
