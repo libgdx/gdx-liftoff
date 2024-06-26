@@ -525,6 +525,37 @@ public class Main extends ApplicationAdapter {
         UserData.log = "";
     }
 
+    public static void resetUserData() {
+        UserData.projectName = prop.getProperty("projectNameDefault");
+        UserData.packageName = prop.getProperty("packageNameDefault");
+        UserData.mainClassName = prop.getProperty("mainClassNameDefault");
+        UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
+
+        UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
+        ArrayList<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
+        UserData.languageVersions = new LinkedHashMap<>();
+        for (int i = 0; i < UserData.languages.size(); i++) {
+            UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
+        }
+
+        extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
+        UserData.template = prop.getProperty("templateDefaultName");
+        UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("thirdPartyDefaultNames"));
+        thirdPartyLibs.retainAll(Listing.unofficialNames);
+        UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
+        UserData.javaVersion = prop.getProperty("javaDefaultVersion");
+        appVersion = prop.getProperty("appDefaultVersion");
+        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
+        UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
+        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
+        UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
+        UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
+        UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
+        UserData.projectPath = prop.getProperty("projectPathDefault");
+        UserData.androidPath = prop.getProperty("androidPathDefault");
+        UserData.log = "";
+    }
+
     public static void setQuickProjectDefaultUserData() {
         UserData.platforms = splitCSV(prop.getProperty("qp_platformsDefaultNames"));
 

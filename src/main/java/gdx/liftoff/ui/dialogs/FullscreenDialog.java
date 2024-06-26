@@ -69,9 +69,19 @@ public class FullscreenDialog extends PopTable {
         contentTable.add(table).growX();
         table.setTransform(true);
 
+        //empty cell to ensure logo is centered
+        table.add().uniformX();
+
         //logo
         LogoWidget logoWidget = new LogoWidget(false);
-        table.add(logoWidget).minHeight(Value.prefHeight).spaceBottom(0);
+        table.add(logoWidget).minHeight(Value.prefHeight).spaceBottom(0).expandX();
+
+        //reset button
+        Button button = new Button(skin, "reload");
+        table.add(button).top().right().uniformX();
+        addTooltip(button, Align.left, prop.getProperty("reset"));
+        addHandListener(button);
+        onChange(button, ConfirmResetUserData::showDialog);
 
         contentTable.row();
         table = new Table();

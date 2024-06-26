@@ -1085,6 +1085,11 @@
 		"up": "icon-folder-up",
 		"down": "icon-folder-down",
 		"over": "icon-folder-over"
+	},
+	"reload": {
+		"up": "icon-reload",
+		"down": "icon-reload-down",
+		"over": "icon-reload-over"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {

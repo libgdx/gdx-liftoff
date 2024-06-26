@@ -1,12 +1,17 @@
 package gdx.liftoff.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
+import gdx.liftoff.Main;
+import gdx.liftoff.ui.dialogs.ConfirmResetUserData;
 
 import static gdx.liftoff.Main.*;
 
@@ -43,7 +48,14 @@ public class OverlayTable extends Table {
     private Table createContentTable() {
         Table table = new Table();
 
+        Button button = new Button(skin, "reload");
+        table.add(button).expand().top().right();
+        addTooltip(button, Align.left, prop.getProperty("reset"));
+        addHandListener(button);
+        onChange(button, ConfirmResetUserData::showDialog);
+
         //version
+        table.row();
         Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 
