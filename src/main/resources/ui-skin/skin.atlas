@@ -104,7 +104,7 @@ button-external-link-over
   index: -1
 button-external-link-up
   rotate: false
-  xy: 1952, 969
+  xy: 1952, 897
   size: 15, 17
   orig: 15, 17
   offset: 0, 0
@@ -401,6 +401,27 @@ icon-invalid
   xy: 1426, 463
   size: 19, 19
   orig: 19, 19
+  offset: 0, 0
+  index: -1
+icon-reload
+  rotate: false
+  xy: 1952, 964
+  size: 16, 22
+  orig: 16, 22
+  offset: 0, 0
+  index: -1
+icon-reload-down
+  rotate: false
+  xy: 1952, 916
+  size: 16, 22
+  orig: 16, 22
+  offset: 0, 0
+  index: -1
+icon-reload-over
+  rotate: false
+  xy: 1952, 940
+  size: 16, 22
+  orig: 16, 22
   offset: 0, 0
   index: -1
 loading-frame-01
