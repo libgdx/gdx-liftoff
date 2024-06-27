@@ -554,6 +554,19 @@ public class Main extends ApplicationAdapter {
         UserData.projectPath = prop.getProperty("projectPathDefault");
         UserData.androidPath = prop.getProperty("androidPathDefault");
         UserData.log = "";
+
+        pref.putString("Name", projectName);
+        pref.putString("Package", packageName);
+        pref.putString("MainClass", mainClassName);
+        pref.putString("Platforms", String.join(",", platforms));
+        pref.putString("Languages", String.join(",", languages));
+        pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
+        pref.putString("Extensions", String.join(",", UserData.extensions));
+        pref.putString("ThirdParty", String.join(",", UserData.thirdPartyLibs));
+        pref.putString("GradleTasks", gradleTasks);
+        pref.putString("projectPath", projectPath);
+        pref.putString("AndroidSdk", androidPath);
+        pref.flush();
     }
 
     public static void setQuickProjectDefaultUserData() {
