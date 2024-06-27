@@ -157,7 +157,7 @@ buildscript {
   }
 }
 plugins {
-  id "io.github.fourlastor.construo" version "1.1.1"
+  id "io.github.fourlastor.construo" version "1.2.0"
   id "application"
 }
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
