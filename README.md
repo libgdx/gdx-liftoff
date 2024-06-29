@@ -2,15 +2,13 @@
 
 # 🚀 gdx-liftoff 🚀
 
-## 🎛 UI Redesign 🎛
-
 A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 
 [![Screenshot of gdx-liftoff](.github/screenshot.png)](https://github.com/libgdx/gdx-liftoff/releases)
 
 <h1 style="text-align: center;">
     📥
-    <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD STABLE</a></strong>
+    <strong><a href="https://github.com/libgdx/gdx-liftoff/releases">DOWNLOAD</a></strong>
     📥
 </h1>
 
