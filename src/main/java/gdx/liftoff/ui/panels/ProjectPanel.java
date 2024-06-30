@@ -101,7 +101,7 @@ public class ProjectPanel extends Table implements Panel {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 updateError();
-                if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButton();
+                if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButtons();
             }
         };
         projectTextField.addListener(changeListener);

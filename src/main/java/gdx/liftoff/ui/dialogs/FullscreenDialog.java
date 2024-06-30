@@ -14,6 +14,8 @@ import gdx.liftoff.Main;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
 
+import java.util.ArrayList;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
@@ -23,7 +25,7 @@ import static gdx.liftoff.Main.*;
  */
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
-    private TextButton generateButton;
+    private final ArrayList<TextButton> generateButtons = new ArrayList<>();
     private Table versionTable;
 
     public FullscreenDialog() {
@@ -59,8 +61,9 @@ public class FullscreenDialog extends PopTable {
         addScrollFocusListener(scrollPane);
     }
 
-    public void updateGenerateButton() {
-        generateButton.setDisabled(!validateUserData());
+    public void updateGenerateButtons() {
+        boolean disable = !validateUserData();
+        generateButtons.forEach(textButton -> textButton.setDisabled(disable));
     }
 
     private void createPanels(Table contentTable) {
@@ -133,8 +136,9 @@ public class FullscreenDialog extends PopTable {
         table.add().expandX().uniformX();
 
         //generate button
-        generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
-        updateGenerateButton();
+        TextButton generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
+        generateButtons.add(generateButton);
+        updateGenerateButtons();
         table.add(generateButton);
         addHandListener(generateButton);
         addTooltip(generateButton, Align.top, prop.getProperty("generateTip"));
