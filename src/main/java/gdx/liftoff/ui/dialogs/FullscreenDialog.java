@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -13,6 +14,8 @@ import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
+
+import java.util.ArrayList;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
@@ -25,6 +28,7 @@ public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
     private TextButton generateButton;
     private Table versionTable;
+    private ArrayList<PathsPanel> pathsPanel = new ArrayList<>();
 
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
@@ -122,8 +126,9 @@ public class FullscreenDialog extends PopTable {
 
         //paths panel
         subTable.row();
-        PathsPanel pathsPanel = new PathsPanel(true);
-        subTable.add(pathsPanel).minWidth(450);
+        PathsPanel pathPanel = new PathsPanel(true);
+        subTable.add(pathPanel).minWidth(450);
+        pathsPanel.add(pathPanel);
 
         contentTable.row();
         table = new Table();
@@ -172,6 +177,10 @@ public class FullscreenDialog extends PopTable {
             addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
             onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
         }
+    }
+
+    public void updatePathsError() {
+        pathsPanel.forEach(PathsPanel::updateError);
     }
 
     public static void show() {
