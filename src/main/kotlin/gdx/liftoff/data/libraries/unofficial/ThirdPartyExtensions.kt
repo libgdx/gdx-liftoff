@@ -531,7 +531,7 @@ class TenPatch : ThirdPartyExtension() {
 @Extension
 class Stripe : ThirdPartyExtension() {
   override val id = "stripe"
-  override val defaultVersion = "1.4.6"
+  override val defaultVersion = "2.0.0"
   override val url = "https://github.com/raeleus/stripe"
   override val group = "com.github.raeleus.stripe"
   override val name = "Stripe"
@@ -1028,7 +1028,7 @@ class GdxPsx : ThirdPartyExtension() {
 @Extension
 class GdxFlexBox : ThirdPartyExtension() {
   override val id = "flexBox"
-  override val defaultVersion = "425149b588"
+  override val defaultVersion = "ed13b3c7ca"
   override val url = "https://github.com/lyze237/gdx-FlexBox"
   override val repository = Repository.JitPack
   override val group = "com.github.lyze327"
@@ -1048,7 +1048,7 @@ class GdxFlexBox : ThirdPartyExtension() {
 @Extension
 class GdxUnBox2D : ThirdPartyExtension() {
   override val id = "unbox2d"
-  override val defaultVersion = "7dae636b62"
+  override val defaultVersion = "da1ce30edb"
   override val url = "https://github.com/lyze237/gdx-UnBox2D"
   override val repository = Repository.JitPack
   override val group = "com.github.lyze327"
