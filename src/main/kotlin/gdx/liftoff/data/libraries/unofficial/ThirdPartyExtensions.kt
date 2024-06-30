@@ -1634,7 +1634,7 @@ class TantrumJdkgdxds : ThirdPartyExtension() {
 @Extension
 class GameJoltApi : ThirdPartyExtension() {
   override val id = "gameJoltApi"
-  override val defaultVersion = "0.0.4"
+  override val defaultVersion = "0.0.5"
   override val url = "https://github.com/raeleus/game-jolt-api"
   override val group = "com.github.raeleus"
   override val name = "game-jolt-api"
