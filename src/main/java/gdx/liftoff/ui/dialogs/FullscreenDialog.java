@@ -26,7 +26,7 @@ import static gdx.liftoff.Main.*;
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
     private final ArrayList<TextButton> generateButtons = new ArrayList<>();
-    private Table versionTable;
+    private final ArrayList<Table> versionTables = new ArrayList<>();
 
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
@@ -151,9 +151,10 @@ public class FullscreenDialog extends PopTable {
         )));
 
         //version
-        versionTable = new Table();
+        Table versionTable = new Table();
         table.add(versionTable).expandX().right().bottom().uniformX();
-        updateVersion();
+        versionTables.add(versionTable);
+        updateVersions();
     }
 
     @Override
@@ -162,20 +163,22 @@ public class FullscreenDialog extends PopTable {
         fullscreenDialog = null;
     }
 
-    public void updateVersion() {
-        versionTable.clearChildren();
+    public void updateVersions() {
+        versionTables.forEach(versionTable -> {
+            versionTable.clearChildren();
 
-        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
-        versionTable.add(label);
+            Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
+            versionTable.add(label);
 
-        if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
-            versionTable.row();
-            TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
-            versionTable.add(updateButton);
-            addHandListener(updateButton);
-            addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
-            onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
-        }
+            if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
+                versionTable.row();
+                TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
+                versionTable.add(updateButton);
+                addHandListener(updateButton);
+                addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
+                onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
+            }
+        });
     }
 
     public static void show() {
