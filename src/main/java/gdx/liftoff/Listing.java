@@ -103,6 +103,7 @@ public final class Listing {
             new Anim8(),
             new TenPatch(),
             new Stripe(),
+            new GameJoltApi(),
             new GdxGltf(),
             new HackLights(),
             new SpineRuntime(),

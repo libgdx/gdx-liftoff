@@ -1627,6 +1627,26 @@ class TantrumJdkgdxds : ThirdPartyExtension() {
   }
 }
 
+/**
+ * Utilities for accessing the Game Jolt API for highscores and data storage.
+ * @author Raymond Buckley
+ */
+@Extension
+class GameJoltApi : ThirdPartyExtension() {
+  override val id = "gameJoltApi"
+  override val defaultVersion = "0.0.4"
+  override val url = "https://github.com/raeleus/game-jolt-api"
+  override val group = "com.github.raeleus"
+  override val name = "game-jolt-api"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.raeleus:game-jolt-api")
+
+    addDependency(project, GWT.ID, "com.github.raeleus:game-jolt-api:sources")
+    addGwtInherit(project, "com.github.raeleus.gamejoltapi")
+  }
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.
