@@ -14,6 +14,8 @@ import gdx.liftoff.Main;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.panels.*;
 
+import java.util.ArrayList;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
 
@@ -23,8 +25,8 @@ import static gdx.liftoff.Main.*;
  */
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
-    private TextButton generateButton;
-    private Table versionTable;
+    private final ArrayList<TextButton> generateButtons = new ArrayList<>();
+    private final ArrayList<Table> versionTables = new ArrayList<>();
 
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
@@ -59,8 +61,9 @@ public class FullscreenDialog extends PopTable {
         addScrollFocusListener(scrollPane);
     }
 
-    public void updateGenerateButton() {
-        generateButton.setDisabled(!validateUserData());
+    public void updateGenerateButtons() {
+        boolean disable = !validateUserData();
+        generateButtons.forEach(textButton -> textButton.setDisabled(disable));
     }
 
     private void createPanels(Table contentTable) {
@@ -133,8 +136,9 @@ public class FullscreenDialog extends PopTable {
         table.add().expandX().uniformX();
 
         //generate button
-        generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
-        updateGenerateButton();
+        TextButton generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
+        generateButtons.add(generateButton);
+        updateGenerateButtons();
         table.add(generateButton);
         addHandListener(generateButton);
         addTooltip(generateButton, Align.top, prop.getProperty("generateTip"));
@@ -147,9 +151,10 @@ public class FullscreenDialog extends PopTable {
         )));
 
         //version
-        versionTable = new Table();
+        Table versionTable = new Table();
         table.add(versionTable).expandX().right().bottom().uniformX();
-        updateVersion();
+        versionTables.add(versionTable);
+        updateVersions();
     }
 
     @Override
@@ -158,20 +163,22 @@ public class FullscreenDialog extends PopTable {
         fullscreenDialog = null;
     }
 
-    public void updateVersion() {
-        versionTable.clearChildren();
+    public void updateVersions() {
+        versionTables.forEach(versionTable -> {
+            versionTable.clearChildren();
 
-        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
-        versionTable.add(label);
+            Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
+            versionTable.add(label);
 
-        if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
-            versionTable.row();
-            TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
-            versionTable.add(updateButton);
-            addHandListener(updateButton);
-            addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
-            onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
-        }
+            if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
+                versionTable.row();
+                TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
+                versionTable.add(updateButton);
+                addHandListener(updateButton);
+                addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));
+                onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
+            }
+        });
     }
 
     public static void show() {
