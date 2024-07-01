@@ -59,7 +59,7 @@ public class PathsPanel extends Table implements Panel {
                         pref.flush();
                         updateError();
                         if (FullscreenDialog.fullscreenDialog != null)
-                            FullscreenDialog.fullscreenDialog.updateGenerateButton();
+                            FullscreenDialog.fullscreenDialog.updateGenerateButtons();
                         if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
                         root.quickSettingsTable.populate();
                         updateDeleteProjectPathButton();

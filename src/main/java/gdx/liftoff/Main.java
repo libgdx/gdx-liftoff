@@ -774,7 +774,7 @@ public class Main extends ApplicationAdapter {
                 if (mine.compareTo(latest) < 0) {
                     Gdx.app.postRunnable(() -> {
                         root.landingTable.animateUpdateLabel();
-                        if (fullscreenDialog != null) fullscreenDialog.updateVersion();
+                        if (fullscreenDialog != null) fullscreenDialog.updateVersions();
                     });
                 }
             }
