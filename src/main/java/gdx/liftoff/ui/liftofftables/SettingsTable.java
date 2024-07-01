@@ -17,6 +17,7 @@ import static gdx.liftoff.Main.*;
 public class SettingsTable extends LiftoffTable {
     private SettingsPanel settingsPanel;
     private TextButton generateButton;
+    private PathsPanel pathsPanel;
 
     public SettingsTable() {
         populate();
@@ -43,7 +44,7 @@ public class SettingsTable extends LiftoffTable {
 
         //paths panel
         scrollTable.row();
-        PathsPanel pathsPanel = new PathsPanel(false);
+        pathsPanel = new PathsPanel(false);
         scrollTable.add(pathsPanel).growX().spaceTop(SPACE_HUGE);
 
         row();
@@ -86,4 +87,7 @@ public class SettingsTable extends LiftoffTable {
         generateButton.setDisabled(!validateUserData());
     }
 
+    public void updateError() {
+        pathsPanel.updateError();
+    }
 }

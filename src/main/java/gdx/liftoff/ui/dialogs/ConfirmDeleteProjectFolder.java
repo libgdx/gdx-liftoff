@@ -12,6 +12,7 @@ import com.ray3k.stripe.PopTable;
 import gdx.liftoff.ui.UserData;
 
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.dialogs.FullscreenDialog.*;
 
 public class ConfirmDeleteProjectFolder extends PopTable {
     public ConfirmDeleteProjectFolder() {
@@ -54,6 +55,8 @@ public class ConfirmDeleteProjectFolder extends PopTable {
         for (FileHandle child : fileHandle.list()) {
             child.deleteDirectory();
         }
+        Gdx.app.postRunnable(() -> root.settingsTable.updateError());
+        if (fullscreenDialog != null) fullscreenDialog.updatePathsError();
         hide();
     }
 

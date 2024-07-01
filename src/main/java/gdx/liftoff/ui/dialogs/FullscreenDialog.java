@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -27,7 +28,8 @@ public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
     private final ArrayList<TextButton> generateButtons = new ArrayList<>();
     private final ArrayList<Table> versionTables = new ArrayList<>();
-
+    private final ArrayList<PathsPanel> pathsPanel = new ArrayList<>();
+  
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
         fullscreenDialog = this;
@@ -125,8 +127,9 @@ public class FullscreenDialog extends PopTable {
 
         //paths panel
         subTable.row();
-        PathsPanel pathsPanel = new PathsPanel(true);
-        subTable.add(pathsPanel).minWidth(450);
+        PathsPanel pathPanel = new PathsPanel(true);
+        subTable.add(pathPanel).minWidth(450);
+        pathsPanel.add(pathPanel);
 
         contentTable.row();
         table = new Table();
@@ -179,6 +182,10 @@ public class FullscreenDialog extends PopTable {
                 onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
             }
         });
+    }
+
+    public void updatePathsError() {
+        pathsPanel.forEach(PathsPanel::updateError);
     }
 
     public static void show() {

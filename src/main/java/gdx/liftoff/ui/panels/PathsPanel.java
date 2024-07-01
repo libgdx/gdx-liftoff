@@ -68,12 +68,14 @@ public class PathsPanel extends Table implements Panel {
             });
         });
 
+        //select folder button
         Button button = new Button(skin, "folder");
         add(button);
         addHandListener(button);
         addTooltip(button, Align.top, 0, prop.getProperty("destinationTip"));
         onChange(button, () -> projectFieldButton.setChecked(!projectFieldButton.isChecked()));
 
+        //delete folder contents button
         deleteProjectPathButton = new Button(skin, "delete-folder");
         add(deleteProjectPathButton);
         addHandListener(deleteProjectPathButton);
@@ -136,7 +138,7 @@ public class PathsPanel extends Table implements Panel {
         deleteProjectPathButton.setDisabled(UserData.projectPath == null || UserData.projectPath.isEmpty());
     }
 
-    private void updateError() {
+    public void updateError() {
         if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
             errorLabel.setText(prop.getProperty("nullDirectory"));
             return;
