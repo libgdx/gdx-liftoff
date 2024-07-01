@@ -12,6 +12,7 @@ import com.ray3k.stripe.PopTable;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
+import static gdx.liftoff.ui.dialogs.FullscreenCompleteDialog.*;
 import static gdx.liftoff.ui.dialogs.FullscreenDialog.*;
 
 public class ConfirmResetUserData extends PopTable {
@@ -48,13 +49,18 @@ public class ConfirmResetUserData extends PopTable {
         hide();
         resetUserData();
 
-        if (fullscreenDialog == null) {
+        if (fullscreenDialog != null) {
+            Action action = sequence(alpha(0), Actions.run(() -> fullscreenDialog.populate()), fadeIn(.2f));
+            fullscreenDialog.addAction(action);
+        } else if (fullscreenCompleteDialog != null) {
+            fullscreenCompleteDialog.hide();
+            FullscreenDialog.show();
+        } else if (root.getCurrentTable() == root.completeTable) {
+            root.transitionTable(root.landingTable,true);
+        } else {
             root.getCurrentTable().populate();
             root.getCurrentTable().setColor(1, 1, 1, 0);
             Gdx.app.postRunnable(() -> root.fadeInTable());
-        } else {
-            Action action = sequence(alpha(0), Actions.run(() -> fullscreenDialog.populate()), fadeIn(.2f));
-            fullscreenDialog.addAction(action);
         }
     }
 

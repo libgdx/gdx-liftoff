@@ -2,10 +2,12 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -56,6 +58,14 @@ public class FullscreenCompleteDialog extends PopTable {
         //generating panel is displayed first and is alternated with the complete panel upon completion of the animation
         GeneratingPanel generatingPanel = new GeneratingPanel(true);
 
+        //reset button
+        Button button = new Button(skin, "reload");
+        contentTable.add(button).expandX().right();
+        addTooltip(button, Align.left, prop.getProperty("reset"));
+        addHandListener(button);
+        onChange(button, ConfirmResetUserData::showDialog);
+
+        contentTable.row();
         Table table = new Table();
         contentTable.stack(generatingPanel, table).grow();
 
