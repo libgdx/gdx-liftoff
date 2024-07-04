@@ -56,7 +56,11 @@ class GWT : Platform {
         content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.11.0//EN" "https://www.gwtproject.org/doctype/2.11.0/gwt-module.dtd">
 <module>
-  <source path="" />${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "\n") { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
+  <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
+  <source path="" />
+  <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
+  <!-- You can include a full package by not including the name of a type at the end. -->
+${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "") { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
 </module>"""
       )
     )
@@ -72,7 +76,17 @@ class GWT : Platform {
           content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.11.0//EN" "https://www.gwtproject.org/doctype/2.11.0/gwt-module.dtd">
 <module>
+  <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
   <source path="" />
+
+  <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
+  <!-- You can include a full package by not including the name of a type at the end. -->
+  <!-- <extend-configuration-property name="gdx.reflect.include" value="fully.qualified.TypeName" /> -->
+
+  <!-- Rarely, projects may need to include files but do not have access to the complete assets. -->
+  <!-- This happens for libraries and shared projects, typically, and the configuration goes in that project. -->
+  <!-- You can include individual files like this, and access them with Gdx.files.classpath("path/to/file.png") : -->
+  <!-- <extend-configuration-property name="gdx.files.classpath" value="path/to/file.png" /> -->
 </module>"""
         )
       )
@@ -88,9 +102,25 @@ class GWT : Platform {
         content = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.11.0//EN" "https://www.gwtproject.org/doctype/2.11.0/gwt-module.dtd">
 <module rename-to="html">
+  <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
   <source path="" />
+
+  <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
+  <!-- You can include a full package by not including the name of a type at the end. -->
+  <!-- <extend-configuration-property name="gdx.reflect.include" value="fully.qualified.TypeName" /> -->
+
+  <!-- Rarely, projects may need to include files but do not have access to the complete assets. -->
+  <!-- This happens for libraries and shared projects, typically, and the configuration goes in that project. -->
+  <!-- You can include individual files like this, and access them with Gdx.files.classpath("path/to/file.png") : -->
+  <!-- <extend-configuration-property name="gdx.files.classpath" value="path/to/file.png" /> -->
+
+  <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
+
+  <!-- You must change this if you rename packages later, or rename GwtLauncher. -->
   <entry-point class="${project.basic.rootPackage}.gwt.GwtLauncher" />
+
+  <!-- You usually won't need to make changes to the rest of this. -->
   <set-configuration-property name="gdx.assetpath" value="../assets" />
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
   <!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
