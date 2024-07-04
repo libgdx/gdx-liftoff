@@ -114,6 +114,9 @@ public class PathsPanel extends Table implements Panel {
                             pref.putString("AndroidSdk", path);
                             pref.flush();
                             updateError();
+                            if (FullscreenDialog.fullscreenDialog != null)
+                                FullscreenDialog.fullscreenDialog.updateGenerateButtons();
+                            if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
                         }
                     }
                 });
