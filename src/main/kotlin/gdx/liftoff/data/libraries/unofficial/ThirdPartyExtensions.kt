@@ -1004,20 +1004,20 @@ class TinyVG : ThirdPartyExtension() {
 
 /**
  * LibGDX PSX-style render features. Not GWT-compatible.
- * @author FXGaming
+ * @author bonenaut7
  */
 @Extension
 class GdxPsx : ThirdPartyExtension() {
   override val id = "gdxPsx"
-  override val defaultVersion = "0.1.5"
-  override val url = "https://github.com/fxgaming/gdx-psx"
+  override val defaultVersion = "1.0.0"
+  override val url = "https://github.com/bonenaut7/gdx-psx"
   override val repository = Repository.JitPack
-  override val group = "com.github.fxgaming"
+  override val group = "com.github.bonenaut7.gdx-psx"
   override val name = "gdx-psx"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.fxgaming:gdx-psx")
-//        addDependency(project, GWT.ID, "com.github.fxgaming:gdx-psx:sources")
+    addDependency(project, Core.ID, "com.github.bonenaut7.gdx-psx:gdx-psx")
+//        addDependency(project, GWT.ID, "com.github.bonenaut7.gdx-psx:gdx-psx:sources")
   }
 }
 
