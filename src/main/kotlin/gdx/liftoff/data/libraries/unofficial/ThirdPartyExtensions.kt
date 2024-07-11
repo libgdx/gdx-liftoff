@@ -1009,14 +1009,14 @@ class TinyVG : ThirdPartyExtension() {
 @Extension
 class GdxPsx : ThirdPartyExtension() {
   override val id = "gdxPsx"
-  override val defaultVersion = "1.0.0"
+  override val defaultVersion = "1.0.1"
   override val url = "https://github.com/bonenaut7/gdx-psx"
   override val repository = Repository.JitPack
   override val group = "com.github.bonenaut7.gdx-psx"
-  override val name = "gdx-psx"
+  override val name = "gdx-psx-core"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.bonenaut7.gdx-psx:gdx-psx")
+    addDependency(project, Core.ID, "com.github.bonenaut7.gdx-psx:gdx-psx-core")
 //        addDependency(project, GWT.ID, "com.github.bonenaut7.gdx-psx:gdx-psx:sources")
   }
 }
