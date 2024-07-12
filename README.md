@@ -27,7 +27,7 @@ If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Trouble
 
 ## Features
 
-In addition to most features of the original `gdx-setup`, the `gdx-liffoff` tool offers:
+In addition to most features of the original `gdx-setup`, the `gdx-liftoff` tool offers:
  
 - **Project templates.** You can choose one of many project skeletons highlighting various libGDX features.
 - **Instant input validation.** Your project data is validated as you type it in.
