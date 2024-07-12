@@ -76,7 +76,8 @@ public final class Listing {
         new Freetype(),
         new Tools()
     );
-    public static final TreeSet<Library> unofficialLibraries = new TreeSet<>(Comparator.comparing(Library::getId));
+    public static final TreeSet<Library> unofficialLibraries = new TreeSet<>(
+        (a, b) -> NaturalTextComparator.CASE_INSENSITIVE.compare(a.getName().replaceFirst("(?i)gdx([ -]?)", ""), b.getName().replaceFirst("(?i)gdx([ -]?)", "")));
 
     static {
         unofficialLibraries.addAll(makeList(
