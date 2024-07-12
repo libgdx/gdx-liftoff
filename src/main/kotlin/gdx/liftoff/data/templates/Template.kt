@@ -629,6 +629,7 @@ public class TeaVMLauncher {
 """
   fun getTeaVMBuilderContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
 
+import com.github.xpenatan.gdx.backends.teavm.config.AssetFileHandle;
 import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildConfiguration;
 import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder;
 import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier;
@@ -643,7 +644,7 @@ import org.teavm.vm.TeaVMOptimizationLevel;
 public class TeaVMBuilder {
     public static void main(String[] args) throws IOException {
         TeaBuildConfiguration teaBuildConfiguration = new TeaBuildConfiguration();
-        teaBuildConfiguration.assetsPath.add(new File("../${Assets.ID}"));
+        teaBuildConfiguration.assetsPath.add(new AssetFileHandle("../${Assets.ID}"));
         teaBuildConfiguration.webappPath = new File("build/dist").getCanonicalPath();
 
         // Register any extra classpath assets here:
@@ -657,6 +658,7 @@ ${generateTeaVMReflectionIncludes(project)}
         // For many (or most) applications, using the highest optimization won't add much to build time.
         // If your builds take too long, and runtime performance doesn't matter, you can change FULL to SIMPLE .
         tool.setOptimizationLevel(TeaVMOptimizationLevel.FULL);
+        tool.setObfuscated(true);
         TeaBuilder.build(tool);
     }
 }
