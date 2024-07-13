@@ -9,19 +9,34 @@ buildscript {
   repositories {
     mavenCentral()
     gradlePluginPortal()
+    maven { url 'https://s01.oss.sonatype.org' }
+    mavenLocal()
+    google()
   }
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     classpath "org.jlleitschuh.gradle:ktlint-gradle:11.5.0"
+    if(enableGraalNative == 'true') {
+      classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
+    }
   }
+}
+
+if(enableGraalNative == 'true') {
+  apply plugin: "org.graalvm.buildtools.native"
 }
 
 version = "1.12.1.13-SNAPSHOT"
 mainClassName = 'gdx.liftoff.Main'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
-
-kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
+if(enableGraalNative == 'true') {
+  java.sourceCompatibility = JavaVersion.VERSION_11
+  java.targetCompatibility = JavaVersion.VERSION_11
+  kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+} else {
+  java.sourceCompatibility = JavaVersion.VERSION_1_8
+  java.targetCompatibility = JavaVersion.VERSION_1_8
+  kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
+}
 
 def jarName = "gdx-liftoff-${version}.jar"
 
@@ -84,6 +99,32 @@ dependencies {
   implementation "org.slf4j:slf4j-nop:2.0.5"
 
   implementation "com.github.tommyettinger:iconizer-gdx:$iconizerVersion"
+
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:$graalHelperVersion"
+
+  }
+}
+
+
+if(enableGraalNative == 'true') {
+  graalvmNative {
+    binaries {
+      main {
+        imageName = "gdx-liftoff-${version}"
+        mainClass = project.mainClassName
+        requiredVersion = '23.0'
+        buildArgs.add("-march=compatibility")
+        jvmArgs.addAll("-Dfile.encoding=UTF8")
+        sharedLibrary = false
+      }
+    }
+  }
+
+  run {
+    doNotTrackState("Running the app should not be affected by Graal.")
+  }
 }
 
 tasks.register('sample', JavaExec) {

@@ -1,0 +1,87 @@
+{
+  "resources":{
+  "includes":[
+      {
+          "pattern": ".*(libgdx.+\\.png|lsans.+)"
+      }, {
+    "pattern":"\\QMETA-INF/MANIFEST.MF\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+  }, {
+    "pattern":"\\Qgdx64.dll\\E"
+  }, {
+    "pattern":"\\Qgenerator/gitattributes\\E"
+  }, {
+    "pattern":"\\Qgenerator/gitignore\\E"
+  }, {
+    "pattern":"\\Qgenerator/gradle/wrapper/gradle-wrapper.jar\\E"
+  }, {
+    "pattern":"\\Qgenerator/gradle/wrapper/gradle-wrapper.properties\\E"
+  }, {
+    "pattern":"\\Qgenerator/gradlew.bat\\E"
+  }, {
+    "pattern":"\\Qgenerator/gradlew\\E"
+  }, {
+    "pattern":"\\Qgenerator/templates/libgdx.png\\E"
+  }, {
+    "pattern":"\\Qicons/libgdx128.png\\E"
+  }, {
+    "pattern":"\\Qicons/libgdx16.png\\E"
+  }, {
+    "pattern":"\\Qicons/libgdx32.png\\E"
+  }, {
+    "pattern":"\\Qicons/libgdx64.png\\E"
+  }, {
+    "pattern":"\\Qicons/logo.icns\\E"
+  }, {
+    "pattern":"\\Qicons/logo.ico\\E"
+  }, {
+    "pattern":"\\Qicons/logo.png\\E"
+  }, {
+    "pattern":"\\Qopengl32.dll\\E"
+  }, {
+    "pattern":"\\Qorg/lwjgl/Version.class\\E"
+  }, {
+    "pattern":"\\Qui-data/defaults.properties\\E"
+  }, {
+    "pattern":"\\Qui-data/nls.properties\\E"
+  }, {
+    "pattern":"\\Qui-data/urls.properties\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-button-big.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-button-mid.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-button-small.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-label-field.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-label-header.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-label-tooltip.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-label.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/font-labelMarkup.fnt\\E"
+  }, {
+    "pattern":"\\Qui-skin/skin.atlas\\E"
+  }, {
+    "pattern":"\\Qui-skin/skin.json\\E"
+  }, {
+    "pattern":"\\Qui-skin/skin.png\\E"
+  }, {
+    "pattern":"\\Qwindows/x64/org/lwjgl/glfw/glfw.dll\\E"
+  }, {
+    "pattern":"\\Qwindows/x64/org/lwjgl/jemalloc/jemalloc.dll\\E"
+  }, {
+    "pattern":"\\Qwindows/x64/org/lwjgl/lwjgl.dll\\E"
+  }, {
+    "pattern":"\\Qwindows/x64/org/lwjgl/nfd/lwjgl_nfd.dll\\E"
+  }, {
+    "pattern":"\\Qwindows/x64/org/lwjgl/opengl/lwjgl_opengl.dll\\E"
+  }]},
+  "bundles":[{
+    "name":"sun.text.resources.cldr.FormatData",
+    "locales":["en", "en-US", "und"]
+  }]
+}

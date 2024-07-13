@@ -1,0 +1,223 @@
+[
+{
+  "name":"[I"
+},
+{
+  "name":"[Lcom.badlogic.gdx.graphics.g2d.TextureRegion;"
+},
+{
+  "name":"[Lcom.badlogic.gdx.scenes.scene2d.Actor;"
+},
+{
+  "name":"[Lcom.badlogic.gdx.scenes.scene2d.Stage$TouchFocus;"
+},
+{
+  "name":"[Ljava.lang.Object;"
+},
+{
+  "name":"com.badlogic.gdx.graphics.Color"
+},
+{
+  "name":"com.badlogic.gdx.graphics.g2d.BitmapFont"
+},
+{
+  "name":"com.badlogic.gdx.graphics.g2d.GlyphLayout",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.graphics.g2d.GlyphLayout$GlyphRun",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.math.Rectangle",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.InputEvent",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.Stage$TouchFocus",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.AlphaAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.DelayAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.MoveByAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.ParallelAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.RunnableAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.SequenceAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.TouchableAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.actions.VisibleAction",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable"
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.utils.ChangeListener$ChangeEvent",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.utils.FocusListener$FocusEvent",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable",
+  "allDeclaredFields":true
+},
+{
+  "name":"com.badlogic.gdx.utils.Array",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.ray3k.tenpatch.TenPatchDrawable",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.Buffer",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.ByteBuffer",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.DirectByteBuffer",
+  "allDeclaredFields":true,
+  "unsafeAllocated":true
+},
+{
+  "name":"java.nio.DirectCharBufferU",
+  "allDeclaredFields":true,
+  "unsafeAllocated":true
+},
+{
+  "name":"java.nio.DirectDoubleBufferU",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.DirectFloatBufferU",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.DirectIntBufferU",
+  "allDeclaredFields":true,
+  "unsafeAllocated":true
+},
+{
+  "name":"java.nio.DirectLongBufferU",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.DirectShortBufferU",
+  "allDeclaredFields":true
+},
+{
+  "name":"java.nio.MappedByteBuffer",
+  "allDeclaredFields":true
+},
+{
+  "name":"org.lwjgl.glfw.GLFW",
+  "allDeclaredFields":true
+},
+{
+  "name":"org.lwjgl.system.CallbackI",
+  "methods":[{"name":"callback","parameterTypes":["long","long"] }]
+},
+{
+  "name":"org.lwjgl.system.CustomBuffer",
+  "fields":[{"name":"capacity"}, {"name":"container"}, {"name":"limit"}, {"name":"mark"}, {"name":"position"}]
+},
+{
+  "name":"org.lwjgl.system.Pointer$Default",
+  "fields":[{"name":"address"}]
+},
+{
+  "name":"org.lwjgl.system.jemalloc.JEmallocAllocator",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.misc.Unsafe",
+  "allDeclaredFields":true
+},
+{
+  "name":"sun.security.provider.SHA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+}
+]
