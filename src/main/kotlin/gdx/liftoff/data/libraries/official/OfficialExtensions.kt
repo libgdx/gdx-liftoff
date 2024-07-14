@@ -207,7 +207,7 @@ class Freetype : OfficialExtension() {
 }
 
 /**
- * Official libGDX tools extension; only usable by Desktop ("Legacy" LWJGL 2) modules.
+ * Official libGDX tools extension; uses LWJGL2, but partly usable by LWJGL3.
  */
 @Extension(official = true)
 class Tools : OfficialExtension() {
@@ -216,6 +216,7 @@ class Tools : OfficialExtension() {
 
   override fun initiate(project: Project) {
     addDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
+    addSpecialDependency(project, Lwjgl3.ID, "implementation(\"com.badlogicgames.gdx:gdx-tools:\$gdxVersion\"){exclude group: 'com.badlogicgames.gdx', module: 'gdx-backend-lwjgl'}")
 
     // Headless is unlikely to work because gdx-tools relies on graphics classes.
     // addDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-tools:\$gdxVersion")
