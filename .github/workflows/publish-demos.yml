@@ -15,7 +15,7 @@ jobs:
       - name: JDK setup
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: temurin
       - name: Gradle setup
         uses: gradle/gradle-build-action@3b1b3b9a2104c2b47fbae53f3938079c00c9bb87
