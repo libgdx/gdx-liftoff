@@ -594,23 +594,7 @@ public class Main extends ApplicationAdapter {
     }
 
     public static boolean validateUserData() {
-        if (!isValidProjectName(UserData.projectName)) {
-            return false;
-        }
-
-        if (UserData.packageName.isEmpty()) {
-            return false;
-        }
-
-        if (!isValidPackageName(UserData.packageName)) {
-            return false;
-        }
-
-        if (UserData.mainClassName.isEmpty()) {
-            return false;
-        }
-
-        if (!isValidClassName(UserData.mainClassName)) {
+        if (!validateUserProjectData()) {
             return false;
         }
 
@@ -638,6 +622,30 @@ public class Main extends ApplicationAdapter {
         }
 
         if (android && !Main.isAndroidSdkDirectory(UserData.androidPath)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean validateUserProjectData() {
+        if (!isValidProjectName(UserData.projectName)) {
+            return false;
+        }
+
+        if (UserData.packageName.isEmpty()) {
+            return false;
+        }
+
+        if (!isValidPackageName(UserData.packageName)) {
+            return false;
+        }
+
+        if (UserData.mainClassName.isEmpty()) {
+            return false;
+        }
+
+        if (!isValidClassName(UserData.mainClassName)) {
             return false;
         }
 

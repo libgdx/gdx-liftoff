@@ -33,6 +33,8 @@ public class LandingTable extends LiftoffTable {
     private Table buttonsTable;
     private SocialPanel socialPanel;
     private Action animationAction;
+    private TextButton bigOptionsButton;
+    private TextButton smallOptionsButton;
 
     public LandingTable() {
         populate();
@@ -102,18 +104,20 @@ public class LandingTable extends LiftoffTable {
         buttonsTable.add(horizontalCollapsibleGroup);
 
         //project options horizontally big button
-        TextButton textButton = new TextButton(prop.getProperty("projectOptions"), skin, "big");
-        horizontalCollapsibleGroup.addActor(textButton);
-        addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
-        onChange(textButton, () -> root.nextTable());
+        bigOptionsButton = new TextButton(prop.getProperty("projectOptions"), skin, "big");
+        horizontalCollapsibleGroup.addActor(bigOptionsButton);
+        addNewProjectListeners(bigOptionsButton);
+        addTooltip(bigOptionsButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
+        onChange(bigOptionsButton, () -> root.nextTable());
 
         //options horizontally small button
-        textButton = new TextButton(prop.getProperty("options"), skin, "big");
-        horizontalCollapsibleGroup.addActor(textButton);
-        addNewProjectListeners(textButton);
-        addTooltip(textButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
-        onChange(textButton, () -> root.nextTable());
+        smallOptionsButton = new TextButton(prop.getProperty("options"), skin, "big");
+        horizontalCollapsibleGroup.addActor(smallOptionsButton);
+        addNewProjectListeners(smallOptionsButton);
+        addTooltip(smallOptionsButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("newProjectTip"));
+        onChange(smallOptionsButton, () -> root.nextTable());
+
+        updateOptionsButtons();
 
         row();
         socialPanel = new SocialPanel(false);
@@ -223,5 +227,11 @@ public class LandingTable extends LiftoffTable {
         addTooltip(updateButton, Align.bottom, prop.getProperty("updateTip"));
         onChange(updateButton, () -> Gdx.net.openURI(prop.getProperty("updateUrl")));
         addAction(targeting(updateButton, fadeIn(.5f)));
+    }
+
+    public void updateOptionsButtons() {
+        boolean valid = validateUserProjectData();
+        bigOptionsButton.setDisabled(!valid);
+        smallOptionsButton.setDisabled(!valid);
     }
 }
