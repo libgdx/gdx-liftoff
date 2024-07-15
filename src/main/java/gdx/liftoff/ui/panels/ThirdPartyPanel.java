@@ -9,6 +9,7 @@ import gdx.liftoff.Listing;
 import gdx.liftoff.data.libraries.Library;
 import gdx.liftoff.ui.UserData;
 
+import java.util.Comparator;
 import java.util.Locale;
 
 import static gdx.liftoff.Main.*;
@@ -66,6 +67,7 @@ public class ThirdPartyPanel extends Table implements Panel {
         for (Library lib : Listing.unofficialLibraries) {
             addThirdParty(lib.getId());
         }
+        searchEntries.sort(Comparator.comparing(o -> o.name.toLowerCase(Locale.ROOT)));
 
         //selected filter checkbox
         row();
