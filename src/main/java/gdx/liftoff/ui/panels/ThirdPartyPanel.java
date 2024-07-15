@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import gdx.liftoff.Listing;
+import gdx.liftoff.NaturalTextComparator;
 import gdx.liftoff.data.libraries.Library;
 import gdx.liftoff.ui.UserData;
 
@@ -66,6 +67,7 @@ public class ThirdPartyPanel extends Table implements Panel {
         for (Library lib : Listing.unofficialLibraries) {
             addThirdParty(lib.getId());
         }
+        searchEntries.sort((a, b) -> NaturalTextComparator.CASE_INSENSITIVE.compare(a.name.replaceFirst("(?i)gdx([ -]?)", ""), b.name.replaceFirst("(?i)gdx([ -]?)", "")));
 
         //selected filter checkbox
         row();
