@@ -1,11 +1,14 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -102,6 +105,7 @@ public class ProjectPanel extends Table implements Panel {
             public void changed(ChangeEvent event, Actor actor) {
                 updateError();
                 if (FullscreenDialog.fullscreenDialog != null) FullscreenDialog.fullscreenDialog.updateGenerateButtons();
+                root.landingTable.updateOptionsButtons();
             }
         };
         projectTextField.addListener(changeListener);
@@ -110,32 +114,18 @@ public class ProjectPanel extends Table implements Panel {
     }
 
     private void updateError() {
-        if (!isValidProjectName(UserData.projectName)) {
+        if (!isValidProjectName(UserData.projectName))
             errorLabel.setText(String.format(prop.getProperty("nameNotValid")));
-            return;
-        }
-
-        if (UserData.packageName.isEmpty()) {
+        else if (UserData.packageName.isEmpty())
             errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("package")));
-            return;
-        }
-
-        if (!isValidPackageName(UserData.packageName)) {
+        else if (!isValidPackageName(UserData.packageName))
             errorLabel.setText(prop.getProperty("packageNotValid"));
-            return;
-        }
-
-        if (UserData.mainClassName.isEmpty()) {
+        else if (UserData.mainClassName.isEmpty())
             errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("class")));
-            return;
-        }
-
-        if (!isValidClassName(UserData.mainClassName)) {
+        else if (!isValidClassName(UserData.mainClassName))
             errorLabel.setText(prop.getProperty("classNotValid"));
-            return;
-        }
-
-        errorLabel.setText("");
+        else
+            errorLabel.setText("");
     }
 
     public void captureKeyboardFocus() {
