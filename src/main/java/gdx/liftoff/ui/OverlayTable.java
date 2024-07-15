@@ -41,8 +41,7 @@ public class OverlayTable extends Table {
         dualCollapsibleGroup.addActor(container);
         container.setActor(createContentTable());
 
-        container = new Container<>();
-        dualCollapsibleGroup.addActor(container);
+        dualCollapsibleGroup.addActor(createMinimalistTable());
     }
 
     private Table createContentTable() {
@@ -59,6 +58,17 @@ public class OverlayTable extends Table {
         Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 
+        return table;
+    }
+
+    private Table createMinimalistTable() {
+        Table table = new Table();
+        
+        Button button = new Button(skin, "reload");
+        table.add(button).expand().top().right();
+        addTooltip(button, Align.left, prop.getProperty("reset"));
+        addHandListener(button);
+        onChange(button, ConfirmResetUserData::showDialog);
         return table;
     }
 
