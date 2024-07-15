@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.ray3k.stripe.PopTable;
+import gdx.liftoff.Main;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static gdx.liftoff.Main.*;
@@ -41,8 +42,8 @@ public class ConfirmResetUserData extends PopTable {
         TextButton cancelButton = new TextButton(prop.getProperty("quickCancel"), skin);
         table.add(cancelButton).uniformX().fillX();
         addHandListener(cancelButton);
-        onChange(cancelButton, this::hide);
-        key(Keys.ESCAPE, this::hide);
+        onChange(cancelButton, this::cancel);
+        key(Keys.ESCAPE, this::cancel);
     }
 
     private void resetConfirmed() {
@@ -56,15 +57,22 @@ public class ConfirmResetUserData extends PopTable {
             fullscreenCompleteDialog.hide();
             FullscreenDialog.show();
         } else if (root.getCurrentTable() == root.completeTable) {
-            root.transitionTable(root.landingTable,true);
+            root.transitionTable(root.landingTable, true);
         } else {
             root.getCurrentTable().populate();
             root.getCurrentTable().setColor(1, 1, 1, 0);
             Gdx.app.postRunnable(() -> root.fadeInTable());
+            root.getCurrentTable().captureKeyboardFocus();
         }
     }
 
+    private void cancel() {
+        hide();
+        root.getCurrentTable().captureKeyboardFocus();
+    }
+
     public static void showDialog() {
+        stage.setKeyboardFocus(null);
         ConfirmResetUserData pop = new ConfirmResetUserData();
         pop.show(stage);
     }
