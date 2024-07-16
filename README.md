@@ -54,6 +54,12 @@ applications, is also here, and works with Kotlin and other JVM languages as wel
 
 ## Guide
 
+For the video-inclined, [@raeleus](https://github.com/raeleus) produced this tutorial video.
+
+[![Gdx-Liftoff Tutorial Video](https://img.youtube.com/vi/VF6N_X_oWr0/hqdefault.jpg)](https://www.youtube.com/embed/VF6N_X_oWr0)
+
+If you'd rather read text, then here you go...
+
 Gdx-Liftoff is a relatively straightforward GUI application.
  - Enter a project name/package/main-class-name.
  - Click Project Options.
