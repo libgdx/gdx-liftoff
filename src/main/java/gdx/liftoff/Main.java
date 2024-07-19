@@ -133,8 +133,8 @@ public class Main extends ApplicationAdapter {
             @Override
             public void maximized(boolean isMax) {
                 if (isMax){
-                    boolean fullscreenMode = Gdx.graphics.getWidth() > FULLSCREEN_MIN_WIDTH &&
-                        Gdx.graphics.getHeight() > FULLSCREEN_MIN_HEIGHT;
+                    boolean fullscreenMode = Gdx.graphics.getBackBufferWidth() > FULLSCREEN_MIN_WIDTH &&
+                        Gdx.graphics.getBackBufferHeight() > FULLSCREEN_MIN_HEIGHT;
                     if (fullscreenMode && root != null) {
                         Gdx.app.postRunnable(() -> {
                             root.getCurrentTable().finishAnimation();
