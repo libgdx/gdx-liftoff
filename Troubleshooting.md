@@ -238,3 +238,35 @@ If it does become a good idea to randomize iOS icons, it won't be hard to make t
 
 In short, you should really pay attention to your icon when you are submitting to Google Play Store, but in case you
 don't one time, the awful random icon should not be currently in use by any actual apps. 
+
+### In 1.12.1.9 and later, jpackage configuration is gone; how do I produce .exe and other apps?
+
+While jpackage may be gone from Liftoff projects out of the box, in that box, in its place, is Construo! This is a
+relatively new project by [@fourlastor](https://github.com/fourlastor). It acts like the earlier Packr project, but
+works in more places and can target most widely-used OS-architecture combinations (notably ARM Macs, such as those with
+an M1 or newer processor, aren't supported by Packr but are supported by Construo). Like with Packr, and unlike with
+jpackage, you can build for any target from any OS that can run Construo Gradle tasks. These tasks are typically grouped
+under lwjgl3/construo/ , and the ones you actually want to run have names that start with "package".
+Currently, that means lwjgl3:packageLinuxX64 , lwjgl3:packageMacM1 , lwjgl3:packageMacX64 , and lwjgl3:packageWinX64 . 
+Each of these will output a working executable for that OS in the `lwjgl3/build/construo/` folder. For Windows, the
+.exe is in the `winX64/` subfolder, and a ready-to-upload .zip file is in `dist/`. Other platforms place their
+executables in different folders, such as `linuxX64/`, but still place .zip files in `dist/`. There will be several
+other folders created in the process of shrinking down the release's size, but they usually won't affect you.
+
+Construo has some uncommon advantages, such as how it tries to run on discrete graphics instead of integrated graphics
+if both are available (such as on many laptops). It also has some pitfalls, though not many. It requires a Java 17 or
+newer JDK to build the project, though not necessarily to run the resulting game, even if compiled to a JAR. It uses
+`jdeps` to determine which parts of the JDK to use, and `jlink` to create a JRE without any parts the game doesn't use.
+The jdeps/jlink step can go wrong if certain deprecated parts of the JDK are used, which is the case with the
+commonly-used dependency VisUI up to its version 1.5.3 . You can change your dependency on VisUI to:
+
+`implementation "com.github.kotcrab.vis-ui:vis-ui:1aef382077"`
+
+Which gets a more-recent commit built by JitPack, and that more-recent code has a fix that makes it compatible with
+Construo (and with jlink in general). When VisUI releases a new stable version, Liftoff will update to that, and your
+project can as well. If that release is called 1.5.4 (which it might, but it could be 1.6.0 or even 2.0.0), use a
+dependency like this when the release is available:
+
+`implementation "com.kotcrab.vis:vis-ui:1.5.4"` // Note that this isn't available yet!
+
+Other dependencies may also have issues, but no one has found them yet.
