@@ -1647,6 +1647,40 @@ class GameJoltApi : ThirdPartyExtension() {
   }
 }
 
+/**
+ * LWJGL3-compatible version of the TexturePacker from gdx-tools.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TexturePackerOnly : ThirdPartyExtension() {
+  override val id = "texturePackerOnly"
+  override val defaultVersion = "1.12.1.0"
+  override val url = "https://github.com/tommyettinger/libgdx-texturepacker"
+  override val group = "com.github.tommyettinger"
+  override val name = "libgdx-texturepacker"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-texturepacker")
+  }
+}
+
+/**
+ * LWJGL3-compatible version of the TextureUnpacker from gdx-tools.
+ * @author Tommy Ettinger
+ */
+@Extension
+class TextureUnpackerOnly : ThirdPartyExtension() {
+  override val id = "textureUnpackerOnly"
+  override val defaultVersion = "1.12.1.0"
+  override val url = "https://github.com/tommyettinger/libgdx-texturepacker"
+  override val group = "com.github.tommyettinger"
+  override val name = "libgdx-textureunpacker"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:libgdx-textureunpacker")
+  }
+}
+
 //
 //    /**
 //     * An immediate-mode GUI library (LWJGL3-only!) that can be an alternative to scene2d.ui.

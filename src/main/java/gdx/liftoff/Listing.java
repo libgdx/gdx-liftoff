@@ -155,6 +155,8 @@ public final class Listing {
             new TantrumRegExodus(),
             new TantrumDigital(),
             new TantrumJdkgdxds(),
+            new TexturePackerOnly(),
+            new TextureUnpackerOnly(),
 
             new SquidLibUtil(),
             new SquidLib(),
