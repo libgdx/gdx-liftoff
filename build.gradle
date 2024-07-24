@@ -134,6 +134,23 @@ construo {
   }
 }
 
+distributions {
+  main {
+    contents {
+      into('lib') {
+        project.configurations.runtimeClasspath.files.findAll { file ->
+          file.getName() != project.tasks.jar.outputs.files.singleFile.name
+        }.each { file ->
+          exclude file.name
+        }
+      }
+    }
+  }
+}
+
+startScripts.dependsOn('jar')
+startScripts.classpath = project.tasks.jar.outputs.files
+
 tasks.register('sample', JavaExec) {
   dependsOn classes
   setDescription("Generates a sample libGDX project into build/dist/sample")

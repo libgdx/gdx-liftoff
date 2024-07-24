@@ -249,6 +249,23 @@ tasks.register('dist') {
   dependsOn 'jar'
 }
 
+distributions {
+  main {
+    contents {
+      into('lib') {
+        project.configurations.runtimeClasspath.files.findAll { file ->
+          file.getName() != project.tasks.jar.outputs.files.singleFile.name
+        }.each { file ->
+          exclude file.name
+        }
+      }
+    }
+  }
+}
+
+startScripts.dependsOn(':lwjgl3:jar')
+startScripts.classpath = project.tasks.jar.outputs.files
+
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
