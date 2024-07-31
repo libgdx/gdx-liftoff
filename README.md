@@ -19,9 +19,10 @@ To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-**You should use Java 17+ !** Android tools now require your installed JDK to be version 17 or higher.
-You can still target other releases, as low as 8 typically, while building with any of the JDK versions 17 and up.
-All stable releases of Java from 8 to 22 work here now.
+**You must build with Java 17 or newer!** Android tools now require your installed JDK to be version 17 or higher.
+Even if you target only desktop, the included [Construo](https://github.com/fourlastor-alexandria/construo) plugin needs 
+a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
+the JDK versions 17 and up. All stable target releases of Java from 8 to 22 work here now.
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
@@ -51,6 +52,9 @@ as Gradle or libGDX itself.
 - **More backends are supported.** The headless backend has been part of libGDX for a long time, but wasn't easily
 accessed in gdx-setup; it is a checkbox here. TeaVM, an increasingly-popular alternative to GWT for browser-based 
 applications, is also here, and works with Kotlin and other JVM languages as well as it does with Java.
+- **Build native executables out-of-the-box.** The Construo plugin lets you assemble a JDK with your project's JAR and
+launch it with a native Win64 .exe, MacOS (x64 or AARCH64) .app, or Linux x64 executable. Configuration is also included
+for Graal Native Image, though this is less likely to "just work" immediately.
 
 ## Guide
 
@@ -120,6 +124,10 @@ many thanks go to all the early adopters for putting up with any partially-worki
 The randomized icons chopped up and used for Android projects come from the [OpenMoji](https://openmoji.org) project.
 If you want to use these icons in a less-mangled format, there's
 [openmoji-atlas](https://github.com/tommyettinger/openmoji-atlas) to access these emoji from libGDX conveniently.
+
+Thanks also to everyone who has made the various libraries and tools Liftoff depends upon. From the huge team
+responsible for Graal Native Image, to [Construo](https://github.com/fourlastor-alexandria/construo) by pretty much a
+team of one, some of the best features of Liftoff aren't in Liftoff code at all.
 
 ---
 
