@@ -144,6 +144,7 @@ class Project(
   private fun saveProperties() {
     // Adding libGDX version property:
     properties["gdxVersion"] = advanced.gdxVersion
+    properties["gameVersion"] = advanced.version
     PropertiesFile(properties).save(basic.destination)
   }
 

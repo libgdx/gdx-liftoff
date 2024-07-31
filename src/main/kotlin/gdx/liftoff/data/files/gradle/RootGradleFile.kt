@@ -84,7 +84,7 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
 }
 
 subprojects {
-  version = '${project.advanced.version}'
+  version = '${'$'}gameVersion'
   ext.appName = '${project.basic.name}'
   repositories {
     mavenCentral()
