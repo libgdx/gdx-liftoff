@@ -213,8 +213,8 @@ construo {
     name.set(appName)
     // human-readable name, used for example in the `.app` name for macOS
     humanName.set(appName)
-    // Optional, defaults to project version
-    version.set('${'$'}gameVersion')
+    // Optional, defaults to project version property
+    version.set('${'$'}projectVersion')
 
     targets.configure {
       create("linuxX64", Target.Linux) {
