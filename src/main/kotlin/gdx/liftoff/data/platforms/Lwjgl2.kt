@@ -60,7 +60,10 @@ application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-lwjgl2'
 java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
-
+if (JavaVersion.current().isJava9Compatible()) {
+        compileJava.options.release.set(${project.advanced.desktopJavaVersion})
+}
+${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if(project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
 dependencies {
 ${joinDependencies(dependencies)}}
 
