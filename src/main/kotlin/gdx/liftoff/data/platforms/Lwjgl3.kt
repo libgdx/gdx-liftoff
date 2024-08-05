@@ -51,7 +51,7 @@ class Lwjgl3 : Platform {
     addGradleTaskDescription(
       project,
       "jar",
-      "builds application's runnable jar, which can be found at `$id/build/lib`."
+      "builds application's runnable jar, which can be found at `$id/build/libs`."
     )
     project.properties["graalHelperVersion"] = "2.0.1"
     project.properties["enableGraalNative"] = "false"
@@ -173,11 +173,10 @@ java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(${project.advanced.desktopJavaVersion})
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if(project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
+${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
 dependencies {
 ${joinDependencies(dependencies)}}
 
-def jarName = "${'$'}{appName}-${'$'}{version}.jar"
 def os = System.properties['os.name'].toLowerCase()
 
 run {
@@ -188,10 +187,8 @@ run {
 }
 
 jar {
-// sets the name of the .jar file this produces to the name of the game or app.
-  archiveFileName.set(jarName)
-// using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
-  destinationDirectory = file("${'$'}{project.layout.buildDirectory.asFile.get().absolutePath}/lib")
+// sets the name of the .jar file this produces to the name of the game or app, with the version after.
+  archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}.jar")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   dependsOn configurations.runtimeClasspath
@@ -255,7 +252,7 @@ tasks.register('dist') {
 distributions {
   main {
     contents {
-      into('lib') {
+      into('libs') {
         project.configurations.runtimeClasspath.files.findAll { file ->
           file.getName() != project.tasks.jar.outputs.files.singleFile.name
         }.each { file ->

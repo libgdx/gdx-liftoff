@@ -41,7 +41,7 @@ java.targetCompatibility = ${project.advanced.serverJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(${project.advanced.serverJavaVersion})
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if(project.advanced.serverJavaVersion == "8") "1_8" else project.advanced.serverJavaVersion) + ")\n" else ""}
+${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.serverJavaVersion == "8") "1_8" else project.advanced.serverJavaVersion) + ")\n" else ""}
 mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
 application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-server'
