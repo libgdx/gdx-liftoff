@@ -9,7 +9,7 @@ public class UserData {
     public static String packageName;
     public static String mainClassName;
     public static ArrayList<String> platforms;
-    public static ArrayList<String> languages;
+    public static LinkedHashSet<String> languages;
     public static LinkedHashMap<String, String> languageVersions;
     public static ArrayList<String> extensions;
     public static String template;

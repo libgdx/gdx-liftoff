@@ -500,11 +500,12 @@ public class Main extends ApplicationAdapter {
         UserData.mainClassName = pref.getString("MainClass", prop.getProperty("mainClassNameDefault"));
         UserData.platforms = splitCSV(pref.getString("Platforms", prop.getProperty("platformsDefaultNames")));
 
-        UserData.languages = splitCSV(pref.getString("Languages", prop.getProperty("languagesDefaultNames")));
+        UserData.languages = splitCSVSet(pref.getString("Languages", prop.getProperty("languagesDefaultNames")));
         ArrayList<String> languageVersions = splitCSV(pref.getString("LanguageVersions", prop.getProperty("languagesDefaultVersions")));
         UserData.languageVersions = new LinkedHashMap<>();
-        for (int i = 0; i < UserData.languages.size(); i++) {
-            UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
+        int languageIndex = 0;
+        for(String language : languages){
+            UserData.languageVersions.put(language, languageVersions.get(languageIndex++));
         }
 
         extensions = splitCSV(pref.getString("Extensions", prop.getProperty("extensionsDefaultNames")));
@@ -531,11 +532,12 @@ public class Main extends ApplicationAdapter {
         UserData.mainClassName = prop.getProperty("mainClassNameDefault");
         UserData.platforms = splitCSV(prop.getProperty("platformsDefaultNames"));
 
-        UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
+        UserData.languages = splitCSVSet(prop.getProperty("languagesDefaultNames"));
         ArrayList<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
         UserData.languageVersions = new LinkedHashMap<>();
-        for (int i = 0; i < UserData.languages.size(); i++) {
-            UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
+        int languageIndex = 0;
+        for(String language : languages){
+            UserData.languageVersions.put(language, languageVersions.get(languageIndex++));
         }
 
         extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));
@@ -572,11 +574,12 @@ public class Main extends ApplicationAdapter {
     public static void setQuickProjectDefaultUserData() {
         UserData.platforms = splitCSV(prop.getProperty("qp_platformsDefaultNames"));
 
-        UserData.languages = splitCSV(prop.getProperty("languagesDefaultNames"));
+        UserData.languages = splitCSVSet(prop.getProperty("languagesDefaultNames"));
         ArrayList<String> languageVersions = splitCSV(prop.getProperty("languagesDefaultVersions"));
         UserData.languageVersions = new LinkedHashMap<>();
-        for (int i = 0; i < UserData.languages.size(); i++) {
-            UserData.languageVersions.put(UserData.languages.get(i), languageVersions.get(i));
+        int languageIndex = 0;
+        for(String language : languages){
+            UserData.languageVersions.put(language, languageVersions.get(languageIndex++));
         }
 
         extensions = splitCSV(prop.getProperty("extensionsDefaultNames"));

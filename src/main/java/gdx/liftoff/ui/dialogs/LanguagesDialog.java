@@ -158,7 +158,10 @@ public class LanguagesDialog extends PopTable {
             if (checkBox.isChecked()) {
                 UserData.languages.add(languageName);
                 UserData.languageVersions.put(languageName, textField.getText());
-            } else UserData.languages.remove(languageName);
+            } else {
+                UserData.languages.remove(languageName);
+                UserData.languageVersions.remove(languageName);
+            }
             pref.putString("Languages", String.join(",", UserData.languages));
             pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
             pref.flush();
@@ -166,7 +169,16 @@ public class LanguagesDialog extends PopTable {
         });
 
         onChange(textField, () -> {
-            UserData.languageVersions.put(languageName, textField.getText());
+            if (checkBox.isChecked()) {
+                UserData.languages.add(languageName);
+                UserData.languageVersions.put(languageName, textField.getText());
+            } else {
+                UserData.languages.remove(languageName);
+                UserData.languageVersions.remove(languageName);
+            }
+            pref.putString("Languages", String.join(",", UserData.languages));
+            pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
+            pref.flush();
         });
 
         Button button = new Button(skin, "external-link");
