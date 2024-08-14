@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.PopTable;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class CompleteButtonsPanel extends Table implements Panel {
     PopTable popTable;
 
     String intellijPath = null;
+    boolean intellijIsFlatpak = false;
 
     public CompleteButtonsPanel(boolean fullscreen) {
         this(null, fullscreen);
@@ -68,37 +70,34 @@ public class CompleteButtonsPanel extends Table implements Panel {
         try {
             List<String> findIntellijExecutable = (UIUtils.isWindows) ? Arrays.asList("where.exe", "idea") : Arrays.asList("which", "idea");
 
-            Process process = new ProcessBuilder(findIntellijExecutable).start();
-            if (process.waitFor() == 0) {
-                intellijPath = new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
+            Process whereProcess = new ProcessBuilder(findIntellijExecutable).start();
+            if (whereProcess.waitFor() == 0) {
+                intellijPath = new BufferedReader(new InputStreamReader(whereProcess.getInputStream())).readLine();
                 ideaButton.setDisabled(false);
             } else {
-                if (!UIUtils.isWindows) {
+                if (UIUtils.isLinux) {
+                    intellijPath = findFlatpakIntellij();
+                    intellijIsFlatpak = true;
+                    ideaButton.setDisabled(false);
+                } else if (UIUtils.isWindows) {
+                    intellijPath = findManuallyInstalledIntellijOnWindows();
+                    ideaButton.setDisabled(false);
+                } else {
                     throw new Exception("IntelliJ not found");
                 }
-
-                String programFilesFolder = System.getenv("PROGRAMFILES");
-                File jetbrainsFolder = new File(programFilesFolder, "JetBrains");
-                File[] ideaFolders = jetbrainsFolder.listFiles((dir, name) -> name.contains("IDEA"));
-                if (ideaFolders == null) {
-                    throw new Exception("IntelliJ not found");
-                }
-
-                File intellijFolder = Stream.of(ideaFolders)
-                    .max(Comparator.comparingLong(File::lastModified))
-                    .orElseThrow(() -> new Exception("IntelliJ not found"));
-
-                intellijPath = new File(intellijFolder, "bin/idea64.exe").getAbsolutePath();
-                ideaButton.setDisabled(false);
             }
-
         } catch (Exception e) {
             addTooltip(ideaButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("ideaNotFoundTip"));
             ideaButton.setDisabled(true);
         }
+
         onChange(ideaButton, () -> {
             try {
-                new ProcessBuilder(intellijPath, ".").directory(Gdx.files.absolute(UserData.projectPath).file()).start();
+                if (intellijIsFlatpak) {
+                    new ProcessBuilder("flatpak", "run", intellijPath, ".").directory(Gdx.files.absolute(UserData.projectPath).file()).start();
+                } else {
+                    new ProcessBuilder(intellijPath, ".").directory(Gdx.files.absolute(UserData.projectPath).file()).start();
+                }
             } catch (IOException e) {
                 ideaButton.setText("WHOOPS");
             }
@@ -110,6 +109,42 @@ public class CompleteButtonsPanel extends Table implements Panel {
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.app.exit());
+    }
+
+    private static String findManuallyInstalledIntellijOnWindows() throws Exception {
+        String programFilesFolder = System.getenv("PROGRAMFILES");
+        File jetbrainsFolder = new File(programFilesFolder, "JetBrains");
+        File[] ideaFolders = jetbrainsFolder.listFiles((dir, name) -> name.contains("IDEA"));
+        if (ideaFolders == null) {
+            throw new Exception("IntelliJ not found");
+        }
+
+        File intellijFolder = Stream.of(ideaFolders)
+            .max(Comparator.comparingLong(File::lastModified))
+            .orElseThrow(() -> new Exception("IntelliJ not found"));
+
+        return new File(intellijFolder, "bin/idea64.exe").getAbsolutePath();
+    }
+
+    @NotNull
+    private static String findFlatpakIntellij() throws Exception {
+        List<String> findFlatpakIntelliJ = Arrays.asList("flatpak", "list", "--app", "--columns=application");
+
+        Process flatpakProcess = new ProcessBuilder(findFlatpakIntelliJ).start();
+        if (flatpakProcess.waitFor() != 0) {
+            throw new Exception("Flatpak not found");
+        }
+
+        List<String> intellijIds = Arrays.asList("com.jetbrains.IntelliJ-IDEA-Ultimate", "com.jetbrains.IntelliJ-IDEA-Community");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(flatpakProcess.getInputStream()));
+
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            if (intellijIds.contains(line)) {
+                return line;
+            }
+        }
+        throw new Exception("Flatpak IntelliJ not installed");
     }
 
     @Override
