@@ -9,11 +9,11 @@ import com.ray3k.stripe.PopTable;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static gdx.liftoff.Main.*;
 
@@ -66,15 +66,32 @@ public class CompleteButtonsPanel extends Table implements Panel {
         table.add(ideaButton);
         addHandListener(ideaButton);
         try {
-            List<String> findIntellij = (UIUtils.isWindows) ? Arrays.asList("where.exe", "idea") : Arrays.asList("which", "idea");
+            List<String> findIntellijExecutable = (UIUtils.isWindows) ? Arrays.asList("where.exe", "idea") : Arrays.asList("which", "idea");
 
-            Process process = new ProcessBuilder(findIntellij).start();
-            if (process.waitFor() != 0) {
-                throw new Exception("IntelliJ not found");
+            Process process = new ProcessBuilder(findIntellijExecutable).start();
+            if (process.waitFor() == 0) {
+                intellijPath = new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
+                ideaButton.setDisabled(false);
+            } else {
+                if (!UIUtils.isWindows) {
+                    throw new Exception("IntelliJ not found");
+                }
+
+                String programFilesFolder = System.getenv("PROGRAMFILES");
+                File jetbrainsFolder = new File(programFilesFolder, "JetBrains");
+                File[] ideaFolders = jetbrainsFolder.listFiles((dir, name) -> name.contains("IDEA"));
+                if (ideaFolders == null) {
+                    throw new Exception("IntelliJ not found");
+                }
+
+                File intellijFolder = Stream.of(ideaFolders)
+                    .max(Comparator.comparingLong(File::lastModified))
+                    .orElseThrow(() -> new Exception("IntelliJ not found"));
+
+                intellijPath = new File(intellijFolder, "bin/idea64.exe").getAbsolutePath();
+                ideaButton.setDisabled(false);
             }
 
-            intellijPath = new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
-            ideaButton.setDisabled(false);
         } catch (Exception e) {
             addTooltip(ideaButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("ideaNotFoundTip"));
             ideaButton.setDisabled(true);
