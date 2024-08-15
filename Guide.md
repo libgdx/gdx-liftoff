@@ -86,8 +86,8 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
               for iOS projects to work more cleanly with libGDX 1.10.0.
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
-          Gradle 8.5, having an Android project present shouldn't interfere with other platforms or IDE integration, as
-          long as your IDE supports Gradle 8.5 (current Android Studio and IDEA both support it).
+          Gradle 8.10, having an Android project present shouldn't interfere with other platforms or IDE integration, as
+          long as your IDE supports Gradle 8.10 (current Android Studio and IDEA both support it).
             - **You must set your project's JDK to a version 17 or higher** to use Android, due to a new requirement of the
               Android Gradle Plugin used by Android Studio and IDEA. JDK 17 is the most versatile option right now, because
               it can be used with gdx-setup projects and Android projects. JDK 17 or 18 will work. You could have to

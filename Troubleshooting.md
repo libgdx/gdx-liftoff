@@ -5,6 +5,15 @@ followed by any ways that help resolve those problems.
 
 This guide is brand new, and will be added to as new solutions are found for problems.
 
+### First things first, make sure you're using Java 17 or newer.
+
+Seriously. Do this first. Many parts of a Gradle project will fail now if you are using too old of a JDK.
+You can check this version in IntelliJ IDEA under File -> Project Structure. If you don't have any
+JDKs that are version 17 or newer, go into SDKs in the sidebar, and click the `+` at the very top of the window. You can
+then download a JDK, such as `Version: 17`, `Vendor: Eclipse Temurin`, which is a solid choice. You can also download a
+GraalVM JDK if you want in this way, which enables using LWJGL3's native-image configuration much later on. You can have
+many JDKs installed if you want, of various versions.
+
 ### Some older docs mention Gradle tasks using a "desktop" module.
 
 This would include docs telling you to run a Gradle task like `desktop:run` or `desktop:dist`.
@@ -58,6 +67,8 @@ Well, install Java 17 or higher and try again. You may need to set your JDK in y
 `File -> Project Structure`; in that window, you can even download a JDK automatically in the SDKs tab by clicking `+`
 and then `Download JDK`. Android Studio doesn't provide as many ways to configure the JDK because it should include one
 that works with the latest Android tools already.
+
+I feel like I covered this one already...
 
 ### A Kotlin project that contains an Android module gives the message `jvm target compatibility should be set to the same Java version.`
 
@@ -149,7 +160,9 @@ likely grow.
 
 Liftoff 1.12.1.6 is the first to use GWT 2.11.0, which is almost entirely backwards-compatible... at an API level,
 at least. It has different dependencies for `gwt-user`, both because the version is newer, and that JAR is provided in
-a different "group" -- `org.gwtproject:gwt-user:2.11.0` instead of the older `com.google.gwt:gwt-user:2.8.2`.
+a different "group" -- `org.gwtproject:gwt-user:2.11.0` instead of the older `com.google.gwt:gwt-user:2.8.2`. This
+shouldn't be a problem in the libGDX release after 1.12.1, since it should use GWT 2.11.0, but the fixes here won't
+cause problems if they remain in a project updated to a newer libGDX version.
 
 Before I start with the general solution, there's often a much easier one: for libraries that Liftoff has in its
 third-party extensions, any that need special treatment for GWT should already have that taken care of. The rest of this
@@ -221,7 +234,7 @@ The iOS backend using Multi-OS Engine (MOE) seems to have some incompatibility w
 goes back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, other than it's supposed to be
 fixed in the next major Gradle release (8.8 or 9.0). Because that won't release for some time, MOE has been temporarily
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
-yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually. 
+yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually.
 
 ### In 1.12.1.8 and later, the default icons for Android projects look terrible!
 
