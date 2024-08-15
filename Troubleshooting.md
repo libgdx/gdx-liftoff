@@ -236,6 +236,8 @@ fixed in the next major Gradle release (8.8 or 9.0). Because that won't release 
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
 yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually.
 
+MOE is not present in gdx-liftoff 1.12.1.13, but it could and hopefully will be added back later.
+
 ### In 1.12.1.8 and later, the default icons for Android projects look terrible!
 
 This is all according to plan. The plan being, you should never be submitting an app to the Google Play Store with any
