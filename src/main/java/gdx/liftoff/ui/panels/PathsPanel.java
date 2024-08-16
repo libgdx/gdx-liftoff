@@ -43,37 +43,34 @@ public class PathsPanel extends Table implements Panel {
             Gdx.input.setInputProcessor(null);
             Gdx.graphics.setSystemCursor(SystemCursor.Arrow);
 
-            Thread filePickerThread = new Thread(() -> {
-                FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
-                if (UserData.projectPath != null && !UserData.projectPath.isEmpty())
-                    initialFolder = Gdx.files.absolute(UserData.projectPath);
+            FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
+            if (UserData.projectPath != null && !UserData.projectPath.isEmpty())
+                initialFolder = Gdx.files.absolute(UserData.projectPath);
 
-                Main.pickDirectory(initialFolder, new FileChooserAdapter() {
-                    @Override
-                    public void canceled() {
-                        Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
-                    }
+            Main.pickDirectory(initialFolder, new FileChooserAdapter() {
+                @Override
+                public void canceled() {
+                    Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                }
 
-                    @Override
-                    public void selected(Array<FileHandle> files) {
-                        if (files.size > 0) {
-                            String path = files.first().path();
-                            projectFieldButton.setText(path);
-                            UserData.projectPath = path;
-                            pref.putString("projectPath", path);
-                            pref.flush();
-                            updateError();
-                            if (FullscreenDialog.fullscreenDialog != null)
-                                FullscreenDialog.fullscreenDialog.updateGenerateButtons();
-                            if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
-                            root.quickSettingsTable.populate();
-                            updateDeleteProjectPathButton();
-                        }
-                        Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                @Override
+                public void selected(Array<FileHandle> files) {
+                    if (files.size > 0) {
+                        String path = files.first().path();
+                        projectFieldButton.setText(path);
+                        UserData.projectPath = path;
+                        pref.putString("projectPath", path);
+                        pref.flush();
+                        updateError();
+                        if (FullscreenDialog.fullscreenDialog != null)
+                            FullscreenDialog.fullscreenDialog.updateGenerateButtons();
+                        if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
+                        root.quickSettingsTable.populate();
+                        updateDeleteProjectPathButton();
                     }
-                });
+                    Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                }
             });
-            filePickerThread.start();
         });
 
         //select folder button
@@ -106,35 +103,32 @@ public class PathsPanel extends Table implements Panel {
                 Gdx.input.setInputProcessor(null);
                 Gdx.graphics.setSystemCursor(SystemCursor.Arrow);
 
-                Thread filePickerThread = new Thread(() -> {
-                    FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
-                    if (UserData.androidPath != null && !UserData.androidPath.isEmpty())
-                        initialFolder = Gdx.files.absolute(UserData.androidPath);
+                FileHandle initialFolder = Gdx.files.absolute(Gdx.files.getExternalStoragePath());
+                if (UserData.androidPath != null && !UserData.androidPath.isEmpty())
+                    initialFolder = Gdx.files.absolute(UserData.androidPath);
 
-                    Main.pickDirectory(initialFolder, new FileChooserAdapter() {
-                        @Override
-                        public void canceled() {
-                            Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
-                        }
+                Main.pickDirectory(initialFolder, new FileChooserAdapter() {
+                    @Override
+                    public void canceled() {
+                        Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                    }
 
-                        @Override
-                        public void selected(Array<FileHandle> files) {
-                            if (files.size > 0) {
-                                String path = files.first().path();
-                                androidFieldButton.setText(path);
-                                UserData.androidPath = path;
-                                pref.putString("AndroidSdk", path);
-                                pref.flush();
-                                updateError();
-                                if (FullscreenDialog.fullscreenDialog != null)
-                                    FullscreenDialog.fullscreenDialog.updateGenerateButtons();
-                                if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
-                            }
-                            Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                    @Override
+                    public void selected(Array<FileHandle> files) {
+                        if (files.size > 0) {
+                            String path = files.first().path();
+                            androidFieldButton.setText(path);
+                            UserData.androidPath = path;
+                            pref.putString("AndroidSdk", path);
+                            pref.flush();
+                            updateError();
+                            if (FullscreenDialog.fullscreenDialog != null)
+                                FullscreenDialog.fullscreenDialog.updateGenerateButtons();
+                            if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
                         }
-                    });
+                        Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
+                    }
                 });
-                filePickerThread.start();
             });
 
             button = new Button(skin, "folder");

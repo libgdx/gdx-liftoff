@@ -72,7 +72,7 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"
+  implementation("com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"){ exclude group: "com.kotcrab.vis", module: "vis-ui" }
   implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
