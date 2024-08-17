@@ -236,7 +236,7 @@ fixed in the next major Gradle release (8.8 or 9.0). Because that won't release 
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
 yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually.
 
-MOE is not present in gdx-liftoff 1.12.1.13, but it could and hopefully will be added back later.
+MOE is not present in gdx-liftoff 1.12.1.13 or 1.12.1.14, but it could and hopefully will be added back later.
 
 ### In 1.12.1.8 and later, the default icons for Android projects look terrible!
 
@@ -285,3 +285,11 @@ dependency like this when the release is available:
 `implementation "com.kotcrab.vis:vis-ui:1.5.4"` // Note that this isn't available yet!
 
 Other dependencies may also have issues, but no one has found them yet.
+
+### Opening a folder picker crashes on MacOS!
+
+This was a bug in 1.12.1.13 and possibly some earlier versions, and it has been fixed in 1.12.1.14.
+It was caused by opening the file picker dialog on its own thread, which other OSes don't mind at all, but MacOS can't
+handle at all. It causes a crash in native code (which can't be caught with try/catch). The fix turns out to be to just
+lock input to the rest of the Liftoff program as we were doing before, but permit the file dialog to do its thing, and
+re-enable input when the dialog closes.
