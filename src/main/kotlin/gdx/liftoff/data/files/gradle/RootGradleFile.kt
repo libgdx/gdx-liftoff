@@ -50,16 +50,15 @@ configure(subprojects${if (project.hasPlatform(Android.ID)) {
   }}) {
 ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   sourceCompatibility = ${project.advanced.javaVersion}
-  compileJava {
-    options.incremental = true
-  }
+
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
-  compileJava.doLast {
+  tasks.register('generateAssetList') {
+    inputs.dir("${'$'}{project.rootDir}/assets/")
     // projectFolder/assets
-    def assetsFolder = new File("${'$'}{project.rootDir}/assets/")
+    File assetsFolder = new File("${'$'}{project.rootDir}/assets/")
     // projectFolder/assets/assets.txt
-    def assetsFile = new File(assetsFolder, "assets.txt")
+    File assetsFile = new File(assetsFolder, "assets.txt")
     // delete that file in case we've already created it
     assetsFile.delete()
 
@@ -69,6 +68,11 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
     fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.each {
       assetsFile.append(it + "\n")
     }
+  }
+  processResources.dependsOn 'generateAssetList'
+
+  compileJava {
+    options.incremental = true
   }${if (plugins.contains("kotlin")) {
     """
   compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
