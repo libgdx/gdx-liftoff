@@ -28,7 +28,26 @@
 		581773AE1E37A7EF004E28A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581773AD1E37A7EF004E28A9 /* UIKit.framework */; };
 		C995F7171EAA5D0A003E34E1 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = C995F7161EAA5D0A003E34E1 /* assets */; };
 		E21F0FA41F8922D8003761DD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E21F0FA31F8922D8003761DD /* Media.xcassets */; };
+		F0BD09F02C793DD000C03AF2 /* gdx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0BD09EC2C793DCA00C03AF2 /* gdx.xcframework */; };
+		F0BD09F12C793DD000C03AF2 /* gdx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0BD09EC2C793DCA00C03AF2 /* gdx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F0BD09F32C793DD100C03AF2 /* ObjectAL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0BD09ED2C793DCA00C03AF2 /* ObjectAL.xcframework */; };
+		F0BD09F42C793DD100C03AF2 /* ObjectAL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0BD09ED2C793DCA00C03AF2 /* ObjectAL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F0BD09F22C793DD000C03AF2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F0BD09F12C793DD000C03AF2 /* gdx.xcframework in Embed Frameworks */,
+				F0BD09F42C793DD100C03AF2 /* ObjectAL.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1E152A74253836079FA1075F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -57,6 +76,8 @@
 		AE849253332D33EDDC76AB2C /* moe-main-interfaces.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "moe-main-interfaces.m"; path = "../build/moe/main/ui-headers/moe-main-interfaces.m"; sourceTree = "<group>"; };
 		C995F7161EAA5D0A003E34E1 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../%ASSET_PATH%"; sourceTree = "<group>"; };
 		E21F0FA31F8922D8003761DD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		F0BD09EC2C793DCA00C03AF2 /* gdx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = gdx.xcframework; path = native/ios/gdx.xcframework; sourceTree = "<group>"; };
+		F0BD09ED2C793DCA00C03AF2 /* ObjectAL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ObjectAL.xcframework; path = native/ios/ObjectAL.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0BD09F02C793DD000C03AF2 /* gdx.xcframework in Frameworks */,
+				F0BD09F32C793DD100C03AF2 /* ObjectAL.xcframework in Frameworks */,
 				581773A61E37A2DB004E28A9 /* AudioToolbox.framework in Frameworks */,
 				581773A71E37A2DB004E28A9 /* AVFoundation.framework in Frameworks */,
 				581773A81E37A2DB004E28A9 /* CoreGraphics.framework in Frameworks */,
@@ -96,6 +119,8 @@
 		5817739E1E37A2DA004E28A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0BD09EC2C793DCA00C03AF2 /* gdx.xcframework */,
+				F0BD09ED2C793DCA00C03AF2 /* ObjectAL.xcframework */,
 				581773AD1E37A7EF004E28A9 /* UIKit.framework */,
 				5817739F1E37A2DB004E28A9 /* AudioToolbox.framework */,
 				581773A01E37A2DB004E28A9 /* AVFoundation.framework */,
@@ -202,6 +227,7 @@
 				58C6F5201DA66CB600309CB6 /* Sources */,
 				58C6F5211DA66CB600309CB6 /* Frameworks */,
 				58C6F5221DA66CB600309CB6 /* Resources */,
+				F0BD09F22C793DD000C03AF2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
