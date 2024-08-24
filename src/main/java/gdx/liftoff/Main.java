@@ -423,10 +423,11 @@ public class Main extends ApplicationAdapter {
             initialPath = initialPath.replace("/", "\\");
         }
 
+        NativeFileDialog.NFD_Init();
         PointerBuffer pathPointer = memAllocPointer(1);
 
         try {
-            int status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer);
+            int status = NativeFileDialog.NFD_PickFolder(pathPointer, initialPath);
 
             if (status == NativeFileDialog.NFD_CANCEL) {
                 callback.canceled();
@@ -439,7 +440,7 @@ public class Main extends ApplicationAdapter {
             }
 
             String folder = pathPointer.getStringUTF8(0);
-            NativeFileDialog.nNFD_Free(pathPointer.get(0));
+            NativeFileDialog.nNFD_FreePath(pathPointer.get(0));
 
             Array<FileHandle> array = new Array<>();
             array.add(Gdx.files.absolute(folder));
@@ -460,6 +461,7 @@ public class Main extends ApplicationAdapter {
 
             stage.addActor(fileChooser.fadeIn());
         } finally {
+            NativeFileDialog.NFD_Quit();
             memFree(pathPointer);
         }
     }
