@@ -30,7 +30,7 @@ public final class Listing {
         new GWT(),
         new Headless(),
         new IOS(),
-//        new IOSMOE(),
+        new IOSMOE(),
         new Lwjgl2(),
         new Lwjgl3(),
         new Server(),
