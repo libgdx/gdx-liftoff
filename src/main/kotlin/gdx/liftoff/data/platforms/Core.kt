@@ -40,7 +40,11 @@ class CoreGradleFile : GradleFile(Core.ID) {
 eclipse.project.name = appName + '-core'
 
 dependencies {
-${joinDependencies(dependencies, "api")}}
+${joinDependencies(dependencies, "api")}
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:${'$'}graalHelperVersion"
+  }
+}
 """
   }
 }

@@ -65,14 +65,6 @@ class Lwjgl3 : Platform {
 project(":lwjgl3") {
   apply plugin: "org.graalvm.buildtools.native"
 
-  dependencies {
-    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:""" + '$' + """graalHelperVersion"
-""" +
-          (if (project.extensions.isSelected("gdx-box2d")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-bullet")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
-          (if (project.extensions.isSelected("gdx-freetype")) "    implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
-          """  }
   graalvmNative {
     binaries {
       main {
@@ -82,6 +74,7 @@ project(":lwjgl3") {
         buildArgs.add("-march=compatibility")
         jvmArgs.addAll("-Dfile.encoding=UTF8")
         sharedLibrary = false
+        resources.autodetect()
       }
     }
   }
@@ -120,12 +113,6 @@ project(":lwjgl3") {
   "bundles":[]
 }""${'"'}
     )
-  }
-}
-
-project(":core") {
-  dependencies {
-    implementation "io.github.berstanio:gdx-svmhelper-annotations:""" + '$' + """graalHelperVersion"
   }
 }
 """
@@ -175,7 +162,17 @@ if (JavaVersion.current().isJava9Compatible()) {
 }
 ${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
 dependencies {
-${joinDependencies(dependencies)}}
+${joinDependencies(dependencies)}
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
+""" +
+        (if (project.extensions.isSelected("gdx-box2d")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
+        (if (project.extensions.isSelected("gdx-bullet")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
+        (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
+        (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
+        """    }
+
+}
 
 def os = System.properties['os.name'].toLowerCase()
 
