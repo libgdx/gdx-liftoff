@@ -170,12 +170,12 @@ is only needed if a library you want to use isn't known to Liftoff and depends o
 
 Any library dependencies, not installed via a checkbox in Liftoff, that have code specifically for GWT, and depend
 either directly on gwt-user (or gwt-dev) or indirectly via any version of `com.badlogicgames.gdx:gdx-backend-gwt`, can
-trigger version conflicts from two different releases of GWT. That means if you are trying to use 2.11.0, but 2.10.0, 
-2.8.2, or 2.8.0 gets into the dependencies, because the groups are different, the older version won't be replaced by the
-newer one. The solution is to exclude gwt-user (or the gdx-backend-gwt in the `com.badlogicsgames.gdx` group) from any
-dependencies that themselves depend on the older GWT. You can identify which dependencies these are by running the
-Gradle task `gradlew html:dependencies`, and searching through it for `com.google.gwt:gwt-user` . The output you're
-trying to find looks like this:
+trigger version conflicts from two different releases of GWT. That means if you are trying to use 2.11.0, but 2.10.1, 
+2.10.0, 2.9.0, 2.8.2, or 2.8.0 gets into the dependencies, because the groups are different, the older version won't be 
+replaced by the newer one. The solution is to exclude gwt-user (or the gdx-backend-gwt in the `com.badlogicsgames.gdx`
+group) from any dependencies that themselves depend on the older GWT. You can identify which dependencies these are by
+running the Gradle task `gradlew html:dependencies`, and searching through it for `com.google.gwt:gwt-user` . The output
+you're trying to find looks like this:
 
 ```
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
@@ -205,7 +205,8 @@ implementation("com.crashinvaders.basisu:basisu-gdx-gwt:$gdxBasisUniversalVersio
 ```
 
 It is approximately equivalent to exclude the older gwt-user directly, and this may be better for some libraries that
-don't depend on libGDX, but do depend on GWT. You could do that with this block instead of the one above:
+don't depend on libGDX, but do depend on GWT. This step could still be required even in the next version of libGDX, if
+libraries don't see updates. You could do that with this block instead of the one above:
 
 ```
 implementation("com.crashinvaders.basisu:basisu-gdx-gwt:$gdxBasisUniversalVersion:sources") {
@@ -230,13 +231,11 @@ dependencies to be automatically excluded, that would be very welcome!)
 
 ### Selecting MOE causes the project to not generate correctly, and errors are logged.
 
-The iOS backend using Multi-OS Engine (MOE) seems to have some incompatibility with the current Gradle, 8.7, that also
-goes back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, other than it's supposed to be
-fixed in the next major Gradle release (8.8 or 9.0). Because that won't release for some time, MOE has been temporarily
+The iOS backend using Multi-OS Engine (MOE) seems to have some incompatibility with some Gradle versions, and they go
+back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, other than it's supposed to be
+fixed in an upcoming Gradle release. Because that hadn't happened yet, MOE was temporarily
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
-yourself to 8.3. This isn't an outcome I'm happy with, but it should get resolved eventually.
-
-MOE is not present in gdx-liftoff 1.12.1.13 or 1.12.1.14, but it could and hopefully will be added back later.
+yourself to 8.3. Gradle 8.10 appears to work with MOE again, and the next Liftoff release (1.12.1.15) should have it.
 
 ### In 1.12.1.8 and later, the default icons for Android projects look terrible!
 
@@ -286,10 +285,34 @@ dependency like this when the release is available:
 
 Other dependencies may also have issues, but no one has found them yet.
 
-### Opening a folder picker crashes on MacOS!
+### Opening a folder picker crashes on macOS!
 
-This was a bug in 1.12.1.13 and possibly some earlier versions, and it has been fixed in 1.12.1.14.
-It was caused by opening the file picker dialog on its own thread, which other OSes don't mind at all, but MacOS can't
+This was a bug in 1.12.1.13 and possibly some earlier versions, and it has been fixed in 1.12.1.14 (probably).
+It was caused by opening the file picker dialog on its own thread, which other OSes don't mind at all, but macOS can't
 handle at all. It causes a crash in native code (which can't be caught with try/catch). The fix turns out to be to just
 lock input to the rest of the Liftoff program as we were doing before, but permit the file dialog to do its thing, and
 re-enable input when the dialog closes.
+
+1.12.1.15 will use a newer version of the file dialog library (we're going from LWJGL 3.3.1's NFD binding to LWJGL
+3.34's NFDe binding). This may have some bug fixes, and it may have all kinds of new bugs, but at the very least it's
+more modern than the rather old NFD version we were using.
+
+### The native distributions for macOS won't run how they should!
+
+This is a bit of a tricky issue, because the native distributions are built (currently) on Windows 11, which doesn't
+have the same ways it can mark files as macOS. However, once you have downloaded the macOS M1 or macOS x64 distribution,
+you can (on macOS) run these two commands from the same directory as `gdx-liftoff.app` :
+
+```
+xattr -cr gdx-liftoff.app
+chmod +x gdx-liftoff.app/Contents/MacOS/gdx-liftoff
+```
+
+After running those two commands, the .app should be normally runnable via double-click.
+
+These were found by JojoIce in [this issue thread](https://github.com/libgdx/gdx-liftoff/issues/194#issuecomment-2299071552);
+more future discoveries could be in that thread or in other issues. As far as I can tell, the first command clears any
+attributes on the downloaded `.app`, which removes any quarantine settings, and the second command sets the entry point
+inside the `.app` to be executable. Since the quarantine settings are applied to the .app when it is downloaded, there
+isn't really any change that could be made to how Liftoff is built that would make it somehow avoid being quarantined.
+If there is something out there, please post an issue and let us know about it!
