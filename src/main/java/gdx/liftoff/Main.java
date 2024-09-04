@@ -1,5 +1,6 @@
 package gdx.liftoff;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -23,10 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
@@ -100,6 +98,15 @@ public class Main extends ApplicationAdapter {
         return sb.toString();
     }
 
+    public static void flushPref() {
+        try {
+            pref.flush();
+        } catch (GdxRuntimeException e) {
+            Gdx.app.error("Liftoff", "Could not save preferences; ensure you can write to the preferences file.\n  "
+                + e);
+        }
+    }
+
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
@@ -165,7 +172,7 @@ public class Main extends ApplicationAdapter {
                     }
                 }
                 pref.putBoolean("startMaximized", isMax);
-                pref.flush();
+                flushPref();
 
             }
 
@@ -200,6 +207,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Application.LOG_ERROR);
         prop = new Properties();
         try {
             prop.load(Gdx.files.internal("ui-data/nls.properties").read());
@@ -570,7 +578,7 @@ public class Main extends ApplicationAdapter {
         pref.putString("GradleTasks", gradleTasks);
         pref.putString("projectPath", projectPath);
         pref.putString("AndroidSdk", androidPath);
-        pref.flush();
+        flushPref();
     }
 
     public static void setQuickProjectDefaultUserData() {

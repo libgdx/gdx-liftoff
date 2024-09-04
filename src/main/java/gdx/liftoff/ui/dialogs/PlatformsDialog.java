@@ -144,7 +144,7 @@ public class PlatformsDialog extends PopTable {
                 UserData.platforms.add(platformName);
             else UserData.platforms.remove(platformName);
             pref.putString("Platforms", String.join(",", UserData.platforms));
-            pref.flush();
+            flushPref();
             if(checkBox.isChecked() && "ios".equals(platformName) && !"7".equals(UserData.javaVersion)){
                 UserData.javaVersion = "8";
             }

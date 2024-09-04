@@ -151,7 +151,7 @@ public class ExtensionsDialog extends PopTable {
                 UserData.extensions.add(extensionName);
             else UserData.extensions.remove(extensionName);
             pref.putString("Extensions", String.join(",", UserData.extensions));
-            pref.flush();
+            flushPref();
         });
 
         Table subTable = new Table();

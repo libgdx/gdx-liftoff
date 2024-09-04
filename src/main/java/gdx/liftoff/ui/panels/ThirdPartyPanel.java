@@ -149,7 +149,7 @@ public class ThirdPartyPanel extends Table implements Panel {
                     UserData.thirdPartyLibs.add(searchEntry.id);
                 else UserData.thirdPartyLibs.remove(searchEntry.id);
                 pref.putString("ThirdParty", String.join(",", UserData.thirdPartyLibs));
-                pref.flush();
+                flushPref();
                 updateFilterCheckBox();
             });
             addHandListener(checkBox);

@@ -60,7 +60,7 @@ public class PathsPanel extends Table implements Panel {
                         projectFieldButton.setText(path);
                         UserData.projectPath = path;
                         pref.putString("projectPath", path);
-                        pref.flush();
+                        flushPref();
                         updateError();
                         if (FullscreenDialog.fullscreenDialog != null)
                             FullscreenDialog.fullscreenDialog.updateGenerateButtons();
@@ -120,7 +120,7 @@ public class PathsPanel extends Table implements Panel {
                             androidFieldButton.setText(path);
                             UserData.androidPath = path;
                             pref.putString("AndroidSdk", path);
-                            pref.flush();
+                            flushPref();
                             updateError();
                             if (FullscreenDialog.fullscreenDialog != null)
                                 FullscreenDialog.fullscreenDialog.updateGenerateButtons();

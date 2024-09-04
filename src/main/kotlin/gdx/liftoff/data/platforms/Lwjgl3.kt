@@ -18,10 +18,10 @@ class Lwjgl3 : Platform {
   }
 
   override val id = ID
-  override val description = "Primary desktop platform using LWJGL3."
+  override val description = "Primary desktop platform using LWJGL3; was called 'desktop' in older docs."
   override val order = ORDER
 
-  // override val isStandard = true // true is the default, and we want to prefer this to desktop
+  // override val isStandard = true
   override fun createGradleFile(project: Project): GradleFile = Lwjgl3GradleFile(project)
   override fun initiate(project: Project) {
     // Adding game icons:

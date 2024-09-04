@@ -1,14 +1,11 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -52,7 +49,7 @@ public class ProjectPanel extends Table implements Panel {
         onChange(projectTextField, () -> {
             UserData.projectName = projectTextField.getText();
             pref.putString("Name", projectTextField.getText());
-            pref.flush();
+            flushPref();
         });
 
         //package label
@@ -70,7 +67,7 @@ public class ProjectPanel extends Table implements Panel {
         onChange(packageTextField, () -> {
             UserData.packageName = packageTextField.getText();
             pref.putString("Package", packageTextField.getText());
-            pref.flush();
+            flushPref();
         });
 
         //main class label
@@ -88,7 +85,7 @@ public class ProjectPanel extends Table implements Panel {
         onChange(mainTextField, () -> {
             UserData.mainClassName = mainTextField.getText();
             pref.putString("MainClass", mainTextField.getText());
-            pref.flush();
+            flushPref();
         });
 
         //error label

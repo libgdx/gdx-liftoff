@@ -69,7 +69,7 @@ public class GradleDialog extends PopTable {
         onChange(textField, () -> {
             UserData.gradleTasks = textField.getText();
             pref.putString("GradleTasks", textField.getText());
-            pref.flush();
+            flushPref();
         });
 
         //ok button

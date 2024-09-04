@@ -164,7 +164,7 @@ public class LanguagesDialog extends PopTable {
             }
             pref.putString("Languages", String.join(",", UserData.languages));
             pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
-            pref.flush();
+            flushPref();
 
         });
 
@@ -178,7 +178,7 @@ public class LanguagesDialog extends PopTable {
             }
             pref.putString("Languages", String.join(",", UserData.languages));
             pref.putString("LanguageVersions", String.join(",", UserData.languageVersions.values()));
-            pref.flush();
+            flushPref();
         });
 
         Button button = new Button(skin, "external-link");
