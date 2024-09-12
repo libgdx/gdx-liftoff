@@ -14,7 +14,8 @@ import gdx.liftoff.views.JvmLanguage
 @Suppress("unused") // Class accessed via reflection.
 class Scala : Language {
   override val id = "scala"
-  override val version = "2.13.8"
+//  override val version = "2.13.14"
+  override val version = "3.5.0"
 
   override fun initiate(project: Project) {
     project.rootGradle.plugins.add(id)
@@ -23,6 +24,7 @@ class Scala : Language {
       val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
       gradleFile.srcFolders.add("'src/main/scala'")
     }
-    addDependency(project, "org.scala-lang:scala-library:\$scalaVersion")
+//    addDependency(project, "org.scala-lang:scala-library:\$scalaVersion")
+    addDependency(project, "org.scala-lang:scala3-library_3:\$scalaVersion")
   }
 }
