@@ -20,9 +20,9 @@ java -jar gdx-liftoff-VERSION.jar
 ```
 
 **You must build with Java 17 or newer!** Gradle's current version, as well as current Android tools, now require your
-installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 needs 
+installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10.1 needs 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. All stable target releases of Java from 8 to 23 work here now. We use Gradle 8.10 because it
+the JDK versions 17 and up. All stable target releases of Java from 8 to 23 work here now. We use Gradle 8.10.1 because it
 will work out-of-the-box with Java 23 even before it has a final release (which will be soon, if not already complete).
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
