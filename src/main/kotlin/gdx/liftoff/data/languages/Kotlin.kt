@@ -14,7 +14,7 @@ import gdx.liftoff.views.JvmLanguage
 @Suppress("unused") // Class accessed via reflection.
 class Kotlin : Language {
   override val id = "kotlin"
-  override val version = "1.9.25"
+  override val version = "2.0.20"
 
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add("\"org.jetbrains.kotlin:kotlin-gradle-plugin:\$kotlinVersion\"")

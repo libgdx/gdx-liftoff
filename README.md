@@ -81,8 +81,11 @@ Liftoff can see it (using [JetBrains Toolbox](https://www.jetbrains.com/toolbox-
 If you want to use Kotlin, a Kotlin template is recommended (such as `Kotlin Logo`); these mention that they use "Kotlin
 launchers" in their descriptions. The KTX libraries are all available as third-party extensions; these aren't required
 for Kotlin projects, but they can be helpful. KTX and other Kotlin-based libraries need Kotlin enabled. Currently,
-projects generated here default to using Kotlin 1.9.25, and not the newer, incompatible 2.x line. When more libraries
-have had time to update to 2.x compatibility, Liftoff will update as well.
+projects generated here default to using Kotlin 2.0.20, which may have some incompatibilities with the earlier 1.9.x
+releases. You could instead set the version to the newest 1.9.x release (currently 1.9.25), in the Languages dialog,
+when you select Kotlin as an option. The 2.x series of releases claims a number of nice improvements, however, and most
+libraries appear to be either very close to compatible, or are compatible already. Liftoff itself is built using Kotlin
+2.x , as well as substantial Java code (compatible with Java 8).
 
 Some things are structured differently in Liftoff projects, compared to gdx-setup projects. Where gdx-setup puts almost
 all configuration in `/build.gradle` (in the project root), including for subprojects like `android` or `html`, Liftoff
