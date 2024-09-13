@@ -3,7 +3,7 @@
 This is organized as a list of possible messages or signs there is a problem,
 followed by any ways that help resolve those problems.
 
-This guide is brand new, and will be added to as new solutions are found for problems.
+This guide is a little new, and will be added to as new solutions are found for problems.
 
 ### First things first, make sure you're using Java 17 or newer.
 
@@ -299,20 +299,60 @@ more modern than the rather old NFD version we were using.
 
 ### The native distributions for macOS won't run how they should!
 
+First off, if you can run a .jar file normally, you should try that before any of the following steps. The runnable .jar
+file is always provided with Liftoff releases. The native distribution is meant for cases when you don't have a JDK
+installed at the system level (such as if your IDE has its own JDK, and you haven't added one).
+
 This is a bit of a tricky issue, because the native distributions are built (currently) on Windows 11, which doesn't
-have the same ways it can mark files as macOS. However, once you have downloaded the macOS M1 or macOS x64 distribution,
-you can (on macOS) run these two commands from the same directory as `gdx-liftoff.app` :
+have the same ways it can mark files as macOS. Liftoff version 1.12.1.15 and newer does mark the right file as
+executable, but still has to deal with how macOS browsers like to put downloaded files in "quarantine." 
+Once you have downloaded the macOS M1 or macOS x64 distribution, you can (on macOS) run this command from the same
+directory as `gdx-liftoff.app` :
 
 ```
 xattr -cr gdx-liftoff.app
-chmod +x gdx-liftoff.app/Contents/MacOS/gdx-liftoff
 ```
 
-After running those two commands, the .app should be normally runnable via double-click.
+This removes `gdx-liftoff.app` from quarantine. After running that command, the .app should be normally runnable via
+double-click. If that doesn't work, you may have an older Liftoff distribution (1.12.1.14 or older), which if you need
+to use that version for some reason, needs an extra step after the above one:
+
+```
+chmod +x gdx-liftoff.app/Contents/MacOS/gdx-liftoff
+```
 
 These were found by JojoIce in [this issue thread](https://github.com/libgdx/gdx-liftoff/issues/194#issuecomment-2299071552);
 more future discoveries could be in that thread or in other issues. As far as I can tell, the first command clears any
 attributes on the downloaded `.app`, which removes any quarantine settings, and the second command sets the entry point
-inside the `.app` to be executable. Since the quarantine settings are applied to the .app when it is downloaded, there
+inside the `.app` to be executable. The second command isn't needed anymore thanks to changes in Liftoff 1.12.1.15,
+which uses construo 1.4.1 . Since the quarantine settings are applied to the .app when it is downloaded, there
 isn't really any change that could be made to how Liftoff is built that would make it somehow avoid being quarantined.
-If there is something out there, please post an issue and let us know about it!
+The only ways I know of that handle quarantine settings are to a) download gdx-liftoff.app via a tool such as curl, or
+b) download it however you want and use the above `xattr` command to remove the file from quarantine. Using curl will
+simply not apply quarantine to any files it downloads, but I haven't used it in a while (and never on recent macOS), so
+the exact command-line syntax is something you'd have to look up.
+
+### Weird Gradle issues with "Cannot call Task.usesService(Provider)..."
+
+These have been reported intermittently with Gradle 8.10.1, which Liftoff 1.12.1.15 (and possibly newer) uses, but that
+version of Liftoff also includes one of the recommended workarounds for that Gradle version - disabling Gradle's daemon
+service. It is entirely likely that the way the daemon is disabled might not work, because Gradle really likes to try to
+use the daemon even when it is broken. Disabling the daemon doesn't appear to have much performance impact, especially
+since Gradle 8.10.1 is mostly meant to fix a performance regression in Gradle 8.10, and so could be faster either with
+or without the daemon. If you are encountering this, you should downgrade Gradle to 8.10:
+
+- Open the file `gradle/wrapper/gradle-wrapper.properties` in your project.
+- Find where it has the version string `8.10.1` ; this is on a line that starts with `distributionUrl` .
+- Change `8.10.1` to `8.10` .
+- Save and reload your Gradle project.
+  - If you don't know how to reload your Gradle project, it is done automatically by Android Studio, so you don't need
+    to do anything but save there. Otherwise, in IDEA:
+  - Click the sideways `Gradle` tab on the right side of the window.
+  - Click the two circling arrows ("Reload All Gradle Projects") in the pane that appears.
+  - This clears out most IDE-specific configuration you may have done via "Project Structure"; that configuration is
+    meant to be controlled by Gradle, so Gradle changes will take priority. Usually Project Structure changes beyond the
+    JDK setting aren't needed, and the JDK settings won't be cleared out.
+
+At some point in the near future, you could upgrade Gradle to 8.10.2 instead, but that hasn't been released yet. When it
+does release, the steps will be the same as above, just that you would change to "8.10.2" instead of "8.10" . The
+version might also be called "8.11" . Gradle 9.0 is expected to have at least some breaking changes, however.

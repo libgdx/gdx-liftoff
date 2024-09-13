@@ -39,7 +39,7 @@ class Project(
   val rootGradle: RootGradleFile
   val properties = mutableMapOf(
     "org.gradle.daemon" to "false",
-//    "org.gradle.jvmargs" to "-Xms512M -Xmx1G",
+    "org.gradle.jvmargs" to "-Xms512M -Xmx1G -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8",
     "org.gradle.configureondemand" to "false"
   )
   val gwtInherits = mutableSetOf<String>()
