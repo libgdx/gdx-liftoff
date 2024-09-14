@@ -235,7 +235,8 @@ The iOS backend using Multi-OS Engine (MOE) seems to have some incompatibility w
 back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, other than it's supposed to be
 fixed in an upcoming Gradle release. Because that hadn't happened yet, MOE was temporarily
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
-yourself to 8.3. Gradle 8.10 appears to work with MOE again, and the next Liftoff release (1.12.1.15) should have it.
+yourself to 8.3. Gradle 8.10 appears to work with MOE again, and the latest Liftoff releases (starting with 1.12.1.16)
+should have it.
 
 ### In 1.12.1.8 and later, the default icons for Android projects look terrible!
 
@@ -293,9 +294,9 @@ handle at all. It causes a crash in native code (which can't be caught with try/
 lock input to the rest of the Liftoff program as we were doing before, but permit the file dialog to do its thing, and
 re-enable input when the dialog closes.
 
-1.12.1.15 will use a newer version of the file dialog library (we're going from LWJGL 3.3.1's NFD binding to LWJGL
-3.34's NFDe binding). This may have some bug fixes, and it may have all kinds of new bugs, but at the very least it's
-more modern than the rather old NFD version we were using.
+1.12.1.15 and up use a newer version of the file dialog library (we went from LWJGL 3.3.1's NFD binding to LWJGL 3.3.4's
+NFDe binding). This may have some bug fixes, and it may have all kinds of new bugs, but at the very least it's more
+modern than the rather old, sometimes-buggy NFD version we were using.
 
 ### The native distributions for macOS won't run how they should!
 
@@ -356,3 +357,14 @@ or without the daemon. If you are encountering this, you should downgrade Gradle
 At some point in the near future, you could upgrade Gradle to 8.10.2 instead, but that hasn't been released yet. When it
 does release, the steps will be the same as above, just that you would change to "8.10.2" instead of "8.10" . The
 version might also be called "8.11" . Gradle 9.0 is expected to have at least some breaking changes, however.
+
+### Where is MOE? What is MOE?
+
+The Multi-OS Engine target, which lets you build libGDX games/apps for iOS using a different method than RoboVM, wasn't
+working for a while, and was removed from Liftoff's options while any combination of Gradle, Gradle plugins, and MOE
+itself were experiencing bugs. This should be resolved as of 1.12.1.16 ! You can now select MOE in the Platforms
+selection box. How well could it work? That depends on what you want to do with it. You need a macOS machine at some
+point to deploy to iOS, but unlike RoboVM, MOE should be able to allow you to write code on Windows or Linux and send it
+to a (possibly remote) macOS machine to build it.
+[The latest MOE release posting is here](https://discuss.multi-os-engine.org/t/moe-1-10-0-released/3000), and that forum
+is also where to go for MOE-specific questions.
