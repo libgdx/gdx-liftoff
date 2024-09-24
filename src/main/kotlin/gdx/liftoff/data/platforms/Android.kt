@@ -21,8 +21,6 @@ class Android : Platform {
   override val order = ORDER
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
-    // the AGP Upgrade Assistant doesn't recognize versions in properties files
-    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.1.4\"")
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
@@ -136,7 +134,17 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
   override fun getContent(): String {
     // The core library desugaring feature depends heavily on the current Android Gradle Plugin version.
     val agpVersion = project.advanced.androidPluginVersion.split('.').map { it.toInt() }
-    return """${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+    return """
+buildscript {
+  repositories {
+    mavenCentral()
+    google()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.5.2'
+  }
+}
+${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {

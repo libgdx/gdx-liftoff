@@ -38,8 +38,6 @@ class GWT : Platform {
   override fun createGradleFile(project: Project): GradleFile = GWTGradleFile(project)
 
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"org.docstr:gwt-gradle-plugin:\$gwtPluginVersion\"")
-
     addGradleTaskDescription(project, "superDev", "compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/$id](http://localhost:8080/$id). Use only during development.")
     addGradleTaskDescription(project, "dist", "compiles GWT sources. The compiled application can be found at `$id/build/dist`: you can use any HTTP server to deploy it.")
 
@@ -229,6 +227,8 @@ buildscript {
   }
   dependencies {
     classpath 'org.gretty:gretty:${project.advanced.grettyVersion}'
+    classpath "org.docstr:gwt-gradle-plugin:${'$'}gwtPluginVersion"
+
   }
 }
 apply plugin: "gwt"
