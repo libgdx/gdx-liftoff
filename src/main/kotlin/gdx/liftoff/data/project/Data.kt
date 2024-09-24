@@ -33,10 +33,10 @@ data class AdvancedProjectData(
 ) {
 
   /**
-   * Currently hard-coded to 34, since the Play Store requires that or will require that soon. This should be updated
+   * Currently hard-coded to 35, since the Play Store requires that or will require that soon. This should be updated
    * as the Play Store requirement changes.
    */
-  val androidSdkVersion: String = "34"
+  val androidSdkVersion: String = "35"
 
   /**
    * Will be set to 2.11.0 if using a Java version greater than 8; otherwise adapts to what the libGDX version uses.
