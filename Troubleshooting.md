@@ -335,16 +335,16 @@ the exact command-line syntax is something you'd have to look up.
 
 ### Weird Gradle issues with "Cannot call Task.usesService(Provider)..."
 
-These have been reported intermittently with Gradle 8.10.1, which Liftoff 1.12.1.15 (and possibly newer) uses, but that
+These have been reported intermittently with Gradle 8.10.1, which Liftoff 1.12.1.15 uses, but that
 version of Liftoff also includes one of the recommended workarounds for that Gradle version - disabling Gradle's daemon
 service. It is entirely likely that the way the daemon is disabled might not work, because Gradle really likes to try to
 use the daemon even when it is broken. Disabling the daemon doesn't appear to have much performance impact, especially
 since Gradle 8.10.1 is mostly meant to fix a performance regression in Gradle 8.10, and so could be faster either with
-or without the daemon. If you are encountering this, you should downgrade Gradle to 8.10:
+or without the daemon. If you are encountering this, you should upgrade Gradle to 8.10.2, which fixes the bug:
 
 - Open the file `gradle/wrapper/gradle-wrapper.properties` in your project.
 - Find where it has the version string `8.10.1` ; this is on a line that starts with `distributionUrl` .
-- Change `8.10.1` to `8.10` .
+- Change `8.10.1` to `8.10.2` .
 - Save and reload your Gradle project.
   - If you don't know how to reload your Gradle project, it is done automatically by Android Studio, so you don't need
     to do anything but save there. Otherwise, in IDEA:
@@ -354,15 +354,11 @@ or without the daemon. If you are encountering this, you should downgrade Gradle
     meant to be controlled by Gradle, so Gradle changes will take priority. Usually Project Structure changes beyond the
     JDK setting aren't needed, and the JDK settings won't be cleared out.
 
-At some point in the near future, you could upgrade Gradle to 8.10.2 instead, but that hasn't been released yet. When it
-does release, the steps will be the same as above, just that you would change to "8.10.2" instead of "8.10" . The
-version might also be called "8.11" . Gradle 9.0 is expected to have at least some breaking changes, however.
-
 ### Where is MOE? What is MOE?
 
 The Multi-OS Engine target, which lets you build libGDX games/apps for iOS using a different method than RoboVM, wasn't
 working for a while, and was removed from Liftoff's options while any combination of Gradle, Gradle plugins, and MOE
-itself were experiencing bugs. This should be resolved as of 1.12.1.16 ! You can now select MOE in the Platforms
+itself were experiencing bugs. This should be resolved as of ~~1.12.1.16~~ 1.12.1.17 ! You can now select MOE in the Platforms
 selection box. How well could it work? That depends on what you want to do with it. You need a macOS machine at some
 point to deploy to iOS, but unlike RoboVM, MOE should be able to allow you to write code on Windows or Linux and send it
 to a (possibly remote) macOS machine to build it.

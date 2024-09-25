@@ -153,6 +153,7 @@ Thumbs.db
 *~
 *.*#
 *#*#
+/.kotlin/
 /assets/assets.txt
 
 ## Special cases:
