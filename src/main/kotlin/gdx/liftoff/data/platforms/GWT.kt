@@ -355,6 +355,7 @@ ${if (project.hasPlatform(Shared.ID)) "    sourceSets.main.compileClasspath += f
 task distZip(type: Zip, dependsOn: dist){
   //// This uses the output of the dist task, which removes the superdev button from index.html .
   from(outputPath)
+  archiveVersion = projectVersion
   archiveBaseName.set("${'$'}{appName}-dist")
   //// The result will be in html/build/ with a name containing "-dist".
   destinationDirectory.set(file("build"))
