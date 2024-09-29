@@ -138,6 +138,7 @@ public final class Listing {
             new GdxMiniAudio(),
             new UniversalTween(),
             new Crux(),
+            new Gdcrux(),
             new Gand(),
             new Cringe(),
             new Digital(),

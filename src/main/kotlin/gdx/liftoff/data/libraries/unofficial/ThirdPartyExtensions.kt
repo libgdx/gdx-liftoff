@@ -1105,7 +1105,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
 @Extension
 class Lombok : ThirdPartyExtension() {
   override val id = "lombok"
-  override val defaultVersion = "1.18.32"
+  override val defaultVersion = "1.18.34"
   override val url = "https://projectlombok.org/"
   override val group = "org.projectlombok"
   override val name = "lombok"
@@ -1255,7 +1255,7 @@ class UniversalTween : ThirdPartyExtension() {
 }
 
 /**
- * Shared interfaces for points, such as Vector2.
+ * Shared interfaces for points, i.e. Vector2. 'gdcrux' implements this.
  * @author Tommy Ettinger
  */
 @Extension
@@ -1271,6 +1271,28 @@ class Crux : ThirdPartyExtension() {
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:crux:sources")
     addGwtInherit(project, "com.github.tommyettinger.crux")
+  }
+}
+
+/**
+ * Extends libGDX Vector/GridPoint types and implements 'crux'.
+ * @author Tommy Ettinger
+ */
+@Extension
+class Gdcrux : ThirdPartyExtension() {
+  override val id = "gdcrux"
+  override val defaultVersion = "0.0.1"
+  override val url = "https://github.com/tommyettinger/gdcrux"
+  override val group = "com.github.tommyettinger"
+  override val name = "gdcrux"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:gdcrux")
+
+    addDependency(project, GWT.ID, "com.github.tommyettinger:gdcrux:sources")
+    addGwtInherit(project, "com.github.tommyettinger.gdcrux")
+
+    Crux().initiate(project)
   }
 }
 
