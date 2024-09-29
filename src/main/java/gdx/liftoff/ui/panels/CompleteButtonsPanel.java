@@ -11,9 +11,7 @@ import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static gdx.liftoff.Main.*;
@@ -30,6 +28,12 @@ public class CompleteButtonsPanel extends Table implements Panel {
 
     String intellijPath = null;
     boolean intellijIsFlatpak = false;
+
+    private static final List<String> manuallyInstalledLinuxIdeaNames = Arrays.asList(
+        "idea",
+        "intellij-idea-ultimate-edition",
+        "intellij-idea-community-edition"
+    );
 
     public CompleteButtonsPanel(boolean fullscreen) {
         this(null, fullscreen);
@@ -68,23 +72,37 @@ public class CompleteButtonsPanel extends Table implements Panel {
         table.add(ideaButton);
         addHandListener(ideaButton);
         try {
-            List<String> findIntellijExecutable = (UIUtils.isWindows) ? Arrays.asList("where.exe", "idea") : Arrays.asList("which", "idea");
+            if (UIUtils.isWindows) {
+                List<String> findIntellijExecutable = Arrays.asList("where.exe", "idea");
 
-            Process whereProcess = new ProcessBuilder(findIntellijExecutable).start();
-            if (whereProcess.waitFor() == 0) {
-                intellijPath = new BufferedReader(new InputStreamReader(whereProcess.getInputStream())).readLine();
-                ideaButton.setDisabled(false);
-            } else {
-                if (UIUtils.isLinux) {
+                Process whereProcess = new ProcessBuilder(findIntellijExecutable).start();
+
+                if (whereProcess.waitFor() == 0) {
+                    intellijPath = new BufferedReader(new InputStreamReader(whereProcess.getInputStream())).readLine();
+                    ideaButton.setDisabled(false);
+                } else {
+                    intellijPath = findManuallyInstalledIntellijOnWindows();
+                    ideaButton.setDisabled(false);
+                }
+            } else if (UIUtils.isLinux) {
+                List<String> whichCommand = new ArrayList<>();
+                whichCommand.add("which");
+                whichCommand.addAll(manuallyInstalledLinuxIdeaNames);
+
+                Process whichProcess = new ProcessBuilder(whichCommand).start();
+
+                int exitCode = whichProcess.waitFor();
+
+                if (exitCode < manuallyInstalledLinuxIdeaNames.size() && exitCode >= 0) {
+                    intellijPath = new BufferedReader(new InputStreamReader(whichProcess.getInputStream())).readLine();
+                    ideaButton.setDisabled(false);
+                } else {
                     intellijPath = findFlatpakIntellij();
                     intellijIsFlatpak = true;
                     ideaButton.setDisabled(false);
-                } else if (UIUtils.isWindows) {
-                    intellijPath = findManuallyInstalledIntellijOnWindows();
-                    ideaButton.setDisabled(false);
-                } else {
-                    throw new Exception("IntelliJ not found");
                 }
+            } else {
+                throw new Exception("IntelliJ not found");
             }
         } catch (Exception e) {
             addTooltip(ideaButton, Align.top, TOOLTIP_WIDTH, prop.getProperty("ideaNotFoundTip"));
