@@ -23,6 +23,7 @@ class Core : Platform {
   }
 
   override fun initiate(project: Project) {
+    project.properties["enableGraalNative"] = "false"
     // Core has no external dependencies by default.
   }
 }

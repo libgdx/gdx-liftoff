@@ -54,7 +54,6 @@ class Lwjgl3 : Platform {
       "builds application's runnable jar, which can be found at `$id/build/libs`."
     )
     project.properties["graalHelperVersion"] = "2.0.1"
-    project.properties["enableGraalNative"] = "false"
 
     project.files.add(
       SourceFile(
