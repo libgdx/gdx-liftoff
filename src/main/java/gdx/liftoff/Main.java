@@ -704,7 +704,7 @@ public class Main extends ApplicationAdapter {
                     public void logNls(@NotNull String bundleLine) {
                         System.out.println(prop.getProperty(bundleLine, "???"));
                     }
-                }, false);
+                }, true);
                 log = prop.getProperty("generationEnd");
                 generatingProject = false;
             } catch (Exception e) {
