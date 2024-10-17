@@ -148,6 +148,11 @@ public class PlatformsDialog extends PopTable {
             if(checkBox.isChecked() && "ios".equals(platformName) && !"7".equals(UserData.javaVersion)){
                 UserData.javaVersion = "8";
             }
+            if(checkBox.isChecked() && "ios-moe".equals(platformName)){
+                UserData.gradleTasks = UserData.gradleTasks == null
+                    ? "ios-moe:moeUpdateXcodeSettings \nios-moe:copyNatives \n"
+                    : "ios-moe:moeUpdateXcodeSettings \nios-moe:copyNatives \n" + UserData.gradleTasks;
+            }
         });
 
         Label label = new Label(description, skin, "description");
