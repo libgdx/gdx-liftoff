@@ -37,7 +37,7 @@ import gdx.liftoff.views.widgets.ScrollableTextArea
 @Suppress("unused") // Fields accessed via reflection.
 class Configuration {
   companion object {
-    const val VERSION = "1.12.1.17"
+    const val VERSION = "1.13.0.0-SNAPSHOT"
     const val WIDTH = 600
     const val HEIGHT = 700
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"

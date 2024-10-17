@@ -58,6 +58,10 @@ way to work around GWT's oddities, though.
     - `String.format()`, and in fact anything that uses `Formatter`, is just not present.
       - You can partly get around this by using the third-party extension Formic, which provides a `Stringf.format()`
         function that acts exactly like `String.format()` on most platforms, or mostly like it on GWT.
+      - Formic may or may not work on TeaVM. It looks like most of the code for
+        Formatter has been present on TeaVM for a while, so you may be able to
+        directly use Formatter if String.format() doesn't work, but it might be
+        fine already. Formic could also just fail there, since it's meant for GWT.
     - Regular expressions are poorly-supported by GWT out-of-the-box, though libGDX adds part of the `java.util.regex`
       package to the standard library. When regular expressions are available, they use JS behavior on GWT, and regular
       desktop-JVM behavior on desktop. [JS behavior is missing some key features.](https://www.regular-expressions.info/javascript.html)
@@ -72,11 +76,11 @@ way to work around GWT's oddities, though.
       - `Integer.rotateRight(num, amt)` is equivalent to `(num << 32 - amt | num >>> amt)`.
 
 GWT has had a few new releases since GDX-Liftoff's debut. For a very long time, libGDX used GWT 2.8.2, which was
-compatible up to Java 8. This is what's used by libGDX 1.12.1, unless you use the alternative backend that Liftoff
-defaults to. The alternative backend is built on MrStahlfelge's work isolating the libGDX backends for easier expansion,
-and it currently can use GWT 2.10.0 or 2.11.0 with libGDX 1.12.1 . Both of these newer GWT versions are compatible with
-Java 11 to some extent, allowing you to use `var` and parts of the new API in Java 11.
-
-[The part of the standard library that GWT 2.8.2 emulates can be viewed here.](https://github.com/gwtproject/gwt-site/blob/44d0195c987929871fb4710337bae74d195be1e4/src/main/markdown/doc/latest/RefJreEmulation.md)
+compatible up to Java 8. This is what's used by libGDX up to and including 1.12.1, unless you use the alternative backend that Liftoff
+defaulted to. The alternative backend isn't needed or used as of libGDX 1.13.0, since this version is up-to-date on GWT 2.11.0. This newer GWT version is compatible with
+Java 11 to some extent, allowing you to use `var` and parts of the new API in Java 11. If you're using an earlier version of Liftoff, such as 1.12.1.17 or earlier, then that uses libGDX 1.12.1 and the alternative backend to still use GWT 2.11.0 .
 
 [The part of the standard library that GWT 2.11.0 emulates can be viewed here.](https://github.com/gwtproject/gwt-site/blob/becd13c39f53d45e55233ac29c8dfa7ebcf92dca/src/main/markdown/doc/latest/RefJreEmulation.md)
+
+In case you need this information for compatibility with older libGDX versions,
+[the part of the standard library that GWT 2.8.2 emulates can be viewed here.](https://github.com/gwtproject/gwt-site/blob/44d0195c987929871fb4710337bae74d195be1e4/src/main/markdown/doc/latest/RefJreEmulation.md)

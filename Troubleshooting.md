@@ -161,7 +161,7 @@ likely grow.
 Liftoff 1.12.1.6 is the first to use GWT 2.11.0, which is almost entirely backwards-compatible... at an API level,
 at least. It has different dependencies for `gwt-user`, both because the version is newer, and that JAR is provided in
 a different "group" -- `org.gwtproject:gwt-user:2.11.0` instead of the older `com.google.gwt:gwt-user:2.8.2`. This
-shouldn't be a problem in the libGDX release after 1.12.1, since it should use GWT 2.11.0, but the fixes here won't
+isn't a problem in libGDX 1.13.0, since it uses GWT 2.11.0, but the fixes here won't
 cause problems if they remain in a project updated to a newer libGDX version.
 
 Before I start with the general solution, there's often a much easier one: for libraries that Liftoff has in its
@@ -169,7 +169,7 @@ third-party extensions, any that need special treatment for GWT should already h
 is only needed if a library you want to use isn't known to Liftoff and depends on an older GWT version.
 
 Any library dependencies, not installed via a checkbox in Liftoff, that have code specifically for GWT, and depend
-either directly on gwt-user (or gwt-dev) or indirectly via any version of `com.badlogicgames.gdx:gdx-backend-gwt`, can
+either directly on gwt-user (or gwt-dev) or indirectly via any version of `com.badlogicgames.gdx:gdx-backend-gwt` before 1.13.0, can
 trigger version conflicts from two different releases of GWT. That means if you are trying to use 2.11.0, but 2.10.1, 
 2.10.0, 2.9.0, 2.8.2, or 2.8.0 gets into the dependencies, because the groups are different, the older version won't be 
 replaced by the newer one. The solution is to exclude gwt-user (or the gdx-backend-gwt in the `com.badlogicsgames.gdx`
