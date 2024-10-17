@@ -110,8 +110,8 @@ When submitting a pull request, please format the application with the `ktlintFo
 ## Credits
 
 The project was forked from the [`czyzby/gdx-setup`](https://github.com/czyzby/gdx-setup) repository.
-[@czyzby](https://github.com/czyzby) and [@kotcrab](https://github.com/kotcrab) have created the original application,
-as well as a set of libraries that it depends on (`gdx-lml` and VisUI respectively). Since then, the project is
+[@czyzby](https://github.com/czyzby) and [@kotcrab](https://github.com/kotcrab) created the original application,
+as well as a set of libraries that it depends on (`gdx-lml` and `VisUI` respectively). Since then, the project is
 maintained by [@tommyettinger](https://github.com/tommyettinger). Graciously, czyzby came back and made a wide variety of improvements, so big
 thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now maintains gdx-lml (which this used and may still use).
 
@@ -134,7 +134,7 @@ If you want to use these icons in a less-mangled format, there's
 
 Thanks also to everyone who has made the various libraries and tools Liftoff depends upon. From the huge team
 responsible for Graal Native Image, to [Construo](https://github.com/fourlastor-alexandria/construo) by pretty much a
-team of one, some of the best features of Liftoff aren't in Liftoff code at all.
+[team of one](https://github.com/fourlastor), some of the best features of Liftoff aren't in Liftoff code at all.
 
 ---
 
