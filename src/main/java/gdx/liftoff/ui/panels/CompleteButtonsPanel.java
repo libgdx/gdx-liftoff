@@ -73,7 +73,7 @@ public class CompleteButtonsPanel extends Table implements Panel {
         addHandListener(ideaButton);
         try {
             if (UIUtils.isWindows) {
-                List<String> findIntellijExecutable = Arrays.asList("where.exe", "idea");
+                List<String> findIntellijExecutable = Arrays.asList("where.exe", "idea.cmd");
 
                 Process whereProcess = new ProcessBuilder(findIntellijExecutable).start();
 
