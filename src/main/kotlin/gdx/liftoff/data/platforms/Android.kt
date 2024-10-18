@@ -21,6 +21,7 @@ class Android : Platform {
   override val order = ORDER
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
+    project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
