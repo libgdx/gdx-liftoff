@@ -43,53 +43,15 @@ allprojects {
   }
 }
 
-configure(subprojects${if (project.hasPlatform(Android.ID)) {
-    " - project(':android')"
-  } else {
-    ""
-  }}) {
-${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
-  sourceCompatibility = ${project.advanced.javaVersion}
-
-  // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
-  // The article can be helpful when using assets.txt in your project.
-  tasks.register('generateAssetList') {
-    inputs.dir("${'$'}{project.rootDir}/assets/")
-    // projectFolder/assets
-    File assetsFolder = new File("${'$'}{project.rootDir}/assets/")
-    // projectFolder/assets/assets.txt
-    File assetsFile = new File(assetsFolder, "assets.txt")
-    // delete that file in case we've already created it
-    assetsFile.delete()
-
-    // iterate through all files inside that folder
-    // convert it to a relative path
-    // and append it to the file assets.txt
-    fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.sort().each {
-      assetsFile.append(it + "\n")
-    }
-  }
-  processResources.dependsOn 'generateAssetList'
-
-  compileJava {
-    options.incremental = true
-  }${if (plugins.contains("kotlin")) {
-    """
-  compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
-    if (project.advanced.javaVersion.removePrefix("1.") == "8") {
-      "1_8"
-    } else {
-      project.advanced.javaVersion.removePrefix("1.")
-    }})
-  """
-  } else {
-    ""
-  }}
-}
-
 subprojects {
   version = '${'$'}projectVersion'
   ext.appName = '${project.basic.name}'
+}
+
+eclipse.project.name = '${project.basic.name}' + '-parent'
+"""
+}
+/*
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
@@ -104,8 +66,4 @@ subprojects {
     ""
   }}
   }
-}
-
-eclipse.project.name = '${project.basic.name}' + '-parent'
-"""
-}
+ */

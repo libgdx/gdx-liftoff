@@ -148,8 +148,9 @@ buildscript {
     classpath 'com.android.tools.build:gradle:8.5.2'
   }
 }
-${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
-${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
+plugins {
+  id "com.android.application" version "8.4.2"
+  ${if (latePlugin) "  id 'org.jetbrains.kotlin.android' version '2.0.21'\n" else ""}}
 
 android {
   namespace "${project.basic.rootPackage}"
@@ -205,11 +206,6 @@ android {
     } else {
       ""
     }}
-}
-
-repositories {
-  // needed for AAPT2, may be needed for other tools
-  google()
 }
 
 configurations { natives }
