@@ -150,7 +150,7 @@ buildscript {
 }
 plugins {
   id "com.android.application" version "8.4.2"
-  ${if (latePlugin) "  id 'org.jetbrains.kotlin.android' version '2.0.21'\n" else ""}}
+  ${if (latePlugin) "  id 'org.jetbrains.kotlin.android' version '${project.languages.getVersion("kotlin")}'\n" else ""}}
 
 android {
   namespace "${project.basic.rootPackage}"

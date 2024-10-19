@@ -145,7 +145,7 @@ buildscript {
 plugins {
   id "io.github.fourlastor.construo" version "1.4.1"
   id "application"
-${if (project.rootGradle.plugins.contains("kotlin")) "  id 'org.jetbrains.kotlin.jvm' version '2.0.21'\n" else ""}}
+${if (project.rootGradle.plugins.contains("kotlin")) "  id 'org.jetbrains.kotlin.jvm' version '${project.languages.getVersion("kotlin")}'\n" else ""}}
 
 import io.github.fourlastor.construo.Target
 
