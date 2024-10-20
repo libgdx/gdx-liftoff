@@ -17,6 +17,7 @@ class Kotlin : Language {
   override val version = "2.0.21"
 
   override fun initiate(project: Project) {
+    project.rootGradle.buildDependencies.add("\"org.jetbrains.kotlin:kotlin-gradle-plugin:\$kotlinVersion\"")
     project.rootGradle.plugins.add(id)
     project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "kotlin"))) }
     if (project.hasPlatform(Android.ID)) {

@@ -21,6 +21,7 @@ class Android : Platform {
   override val order = ORDER
   override val isStandard = false // user should only jump through android hoops on request
   override fun initiate(project: Project) {
+    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.5.2\"")
     project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
@@ -144,13 +145,9 @@ buildscript {
     mavenCentral()
     google()
   }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:8.5.2'
-  }
 }
-plugins {
-  id "com.android.application" version "8.4.2"
-  ${if (latePlugin) "  id 'org.jetbrains.kotlin.android' version '${project.languages.getVersion("kotlin")}'\n" else ""}}
+${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
+${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
   namespace "${project.basic.rootPackage}"
@@ -206,6 +203,11 @@ android {
     } else {
       ""
     }}
+}
+
+repositories {
+  // needed for AAPT2, may be needed for other tools
+  google()
 }
 
 configurations { natives }

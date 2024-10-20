@@ -137,15 +137,17 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
+    classpath "io.github.fourlastor:construo:1.4.2"
     if(enableGraalNative == 'true') {
       classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
     }
   }
 }
 plugins {
-  id "io.github.fourlastor.construo" version "1.4.1"
   id "application"
-${if (project.rootGradle.plugins.contains("kotlin")) "  id 'org.jetbrains.kotlin.jvm' version '${project.languages.getVersion("kotlin")}'\n" else ""}}
+}
+apply plugin: 'io.github.fourlastor.construo'
+${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 import io.github.fourlastor.construo.Target
 

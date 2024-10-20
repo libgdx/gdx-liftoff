@@ -138,28 +138,7 @@ class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
   override fun save(destination: FileHandle) {
     val content = platforms.joinToString(
       prefix =
-      """
-pluginManagement {
-  repositories {
-    google {
-      content {
-        includeGroupByRegex("com\\.android.*")
-        includeGroupByRegex("com\\.google.*")
-        includeGroupByRegex("androidx.*")
-      }
-    }
-    mavenCentral()
-    gradlePluginPortal()
-  }
-}
-dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-  repositories {
-    google()
-    mavenCentral()
-  }
-}
-// A list of which subprojects to load as part of the same larger project.
+      """// A list of which subprojects to load as part of the same larger project.
 // You can remove Strings from the list and reload the Gradle project
 // if you want to temporarily disable a subproject.
 include """,
