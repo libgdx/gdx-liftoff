@@ -81,6 +81,12 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
     } else {
       project.advanced.javaVersion.removePrefix("1.")
     }})
+  compileTestKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
+    if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+      "1_8"
+    } else {
+      project.advanced.javaVersion.removePrefix("1.")
+    }})
   """
   } else {
     ""
