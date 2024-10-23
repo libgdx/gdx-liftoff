@@ -9,16 +9,17 @@ buildscript {
     google()
   }
   dependencies {
+    classpath "io.github.fourlastor:construo:1.4.3"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     classpath "org.jlleitschuh.gradle:ktlint-gradle:11.5.0"
   }
 }
 
 plugins {
-  id "io.github.fourlastor.construo" version "1.4.2"
   id "application"
 }
 
+apply plugin: 'io.github.fourlastor.construo'
 apply plugin: 'org.jetbrains.kotlin.jvm'
 apply plugin: 'kotlin'
 apply plugin: 'java-library'
