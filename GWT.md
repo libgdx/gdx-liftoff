@@ -77,7 +77,7 @@ way to work around GWT's oddities, though.
 
 GWT has had a few new releases since GDX-Liftoff's debut. For a very long time, libGDX used GWT 2.8.2, which was
 compatible up to Java 8. This is what's used by libGDX up to and including 1.12.1, unless you use the alternative backend that Liftoff
-defaulted to. The alternative backend isn't needed or used as of libGDX 1.13.0, since this version is up-to-date on GWT 2.11.0. This newer GWT version is compatible with
+defaulted to. The alternative backend isn't needed or used since libGDX 1.13.0, since this version is up-to-date on GWT 2.11.0. This newer GWT version is compatible with
 Java 11 to some extent, allowing you to use `var` and parts of the new API in Java 11. If you're using an earlier version of Liftoff, such as 1.12.1.17 or earlier, then that uses libGDX 1.12.1 and the alternative backend to still use GWT 2.11.0 .
 
 [The part of the standard library that GWT 2.11.0 emulates can be viewed here.](https://github.com/gwtproject/gwt-site/blob/becd13c39f53d45e55233ac29c8dfa7ebcf92dca/src/main/markdown/doc/latest/RefJreEmulation.md)

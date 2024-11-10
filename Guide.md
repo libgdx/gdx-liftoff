@@ -11,8 +11,8 @@ code, which is built on [czyzby's code](https://github.com/czyzby/gdx-setup), gi
 This allows new projects to "just work" on machines where Java 8 through 21 could be the default, and the moderate amount of configuration
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.13.0 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.13.0 . You can choose any released version of
+Currently, gdx-liftoff projects depend on libGDX 1.12.1 by default, and allow using earlier versions, the newer, possibly-problematic 1.13.0 version, or snapshots as well.
+The current version of libGDX is 1.13.0, and using it was attempted, but there are frequent antivirus software complaints about the version of LWJGL it uses (3.3.4). To allow users to get Liftoff at all, we've downgraded the version that Liftoff uses to LWJGL 3.3.3 (and libGDX to 1.12.1), and also as a courtesy I've decided to default projects to libGDX 1.12.1 so this antivirus mess doesn't happen to you when you decide to release. You can choose any released version of
 libGDX (or a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
@@ -117,6 +117,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
           for more. It's very likely that you won't notice any difference unless you try to make behavior identical on GWT
           and other platforms, and even then there may be nothing apparent.
             - GWT 2.11.0 is available and used by default with libGDX 1.13.0 .
+            - GWT 2.11.0 is also available and used by default with libGDX 1.12.1, via a third-party backend. The changes in that backend are almost identical to the ones made in 1.13.0 .
     - For dependencies, you don't need libGDX checked (the tool is ready to download libGDX and set it as a
       dependency in all cases).
         - There are lots of potential dependencies you can add, some official but most third-party (unofficial).
