@@ -125,9 +125,10 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
     addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
     // TODO: This may be best if it can be removed in the version after libGDX 1.13.0, or established as a GDX dep.
-    val ver : GdxVersion? = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
-    if(ver?.major == 1 && ver.minor == 13 && ver.revision == 0)
+    val ver: GdxVersion? = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
+    if (ver?.major == 1 && ver.minor == 13 && ver.revision == 0) {
       addDependency("androidx.core:core:1.13.1")
+    }
 
     plugins.add("com.android.application")
   }
