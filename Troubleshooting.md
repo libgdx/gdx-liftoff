@@ -326,7 +326,7 @@ These were found by JojoIce in [this issue thread](https://github.com/libgdx/gdx
 more future discoveries could be in that thread or in other issues. As far as I can tell, the first command clears any
 attributes on the downloaded `.app`, which removes any quarantine settings, and the second command sets the entry point
 inside the `.app` to be executable. The second command isn't needed anymore thanks to changes in Liftoff 1.12.1.15,
-which uses construo 1.4.1 . Since the quarantine settings are applied to the .app when it is downloaded, there
+which uses construo 1.4.1 (the current version uses 1.5.1). Since the quarantine settings are applied to the .app when it is downloaded, there
 isn't really any change that could be made to how Liftoff is built that would make it somehow avoid being quarantined.
 The only ways I know of that handle quarantine settings are to a) download gdx-liftoff.app via a tool such as curl, or
 b) download it however you want and use the above `xattr` command to remove the file from quarantine. Using curl will
