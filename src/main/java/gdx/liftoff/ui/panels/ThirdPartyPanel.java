@@ -100,7 +100,7 @@ public class ThirdPartyPanel extends Table implements Panel {
     }
 
     private SearchEntry addThirdParty(String name) {
-        return addThirdParty(name, prop.getProperty(name), prop.getProperty(name + "Tip"), prop.getProperty(name + "Url"), prop.getProperty(name + "Terms"));
+        return addThirdParty(name, prop.getProperty(name, name), prop.getProperty(name + "Tip", "Unknown third-party extension."), prop.getProperty(name + "Url", ""), prop.getProperty(name + "Terms", "unknown"));
     }
 
     /**
