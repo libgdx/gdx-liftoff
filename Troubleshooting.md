@@ -340,11 +340,11 @@ version of Liftoff also includes one of the recommended workarounds for that Gra
 service. It is entirely likely that the way the daemon is disabled might not work, because Gradle really likes to try to
 use the daemon even when it is broken. Disabling the daemon doesn't appear to have much performance impact, especially
 since Gradle 8.10.1 is mostly meant to fix a performance regression in Gradle 8.10, and so could be faster either with
-or without the daemon. If you are encountering this, you should upgrade Gradle to 8.10.2, which fixes the bug:
+or without the daemon. If you are encountering this, you should upgrade Gradle to 8.10.2 or (better) 8.11.1, either of which fixes the bug:
 
 - Open the file `gradle/wrapper/gradle-wrapper.properties` in your project.
 - Find where it has the version string `8.10.1` ; this is on a line that starts with `distributionUrl` .
-- Change `8.10.1` to `8.10.2` .
+- Change `8.10.1` to `8.11.1` .
 - Save and reload your Gradle project.
   - If you don't know how to reload your Gradle project, it is done automatically by Android Studio, so you don't need
     to do anything but save there. Otherwise, in IDEA:
