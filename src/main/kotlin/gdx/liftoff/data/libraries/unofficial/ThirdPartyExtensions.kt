@@ -850,7 +850,7 @@ class CommonsCollections : ThirdPartyExtension() {
 @Extension
 class Fury : ThirdPartyExtension() {
   override val id = "fury"
-  override val defaultVersion = "0.8.0"
+  override val defaultVersion = "0.9.0"
   override val url = "https://fury.apache.org/"
   override val group = "org.apache.fury" // was org.furyio before 0.5.0
   override val name = "fury-core"
@@ -1261,7 +1261,7 @@ class UniversalTween : ThirdPartyExtension() {
 @Extension
 class Crux : ThirdPartyExtension() {
   override val id = "crux"
-  override val defaultVersion = "0.1.0"
+  override val defaultVersion = "0.1.2"
   override val url = "https://github.com/tommyettinger/crux"
   override val group = "com.github.tommyettinger"
   override val name = "crux"
@@ -1281,7 +1281,7 @@ class Crux : ThirdPartyExtension() {
 @Extension
 class Gdcrux : ThirdPartyExtension() {
   override val id = "gdcrux"
-  override val defaultVersion = "0.0.4"
+  override val defaultVersion = "0.1.0"
   override val url = "https://github.com/tommyettinger/gdcrux"
   override val group = "com.github.tommyettinger"
   override val name = "gdcrux"
@@ -1303,7 +1303,7 @@ class Gdcrux : ThirdPartyExtension() {
 @Extension
 class Gand : ThirdPartyExtension() {
   override val id = "gand"
-  override val defaultVersion = "0.2.1"
+  override val defaultVersion = "0.3.1"
   override val url = "https://github.com/tommyettinger/gand"
   override val group = "com.github.tommyettinger"
   override val name = "gand"
@@ -1315,6 +1315,7 @@ class Gand : ThirdPartyExtension() {
     addGwtInherit(project, "com.github.tommyettinger.gand")
 
     Crux().initiate(project)
+    Gdcrux().initiate(project)
   }
 }
 
@@ -1346,7 +1347,7 @@ class Cringe : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.5.3"
+  override val defaultVersion = "0.5.4"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
