@@ -88,6 +88,7 @@ dependencies {
   implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion"
   implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
   implementation "com.github.raeleus.stripe:stripe:2.0.0"
+  implementation "com.rafaskoberg.gdx:typing-label:1.4.0"
 
 
 

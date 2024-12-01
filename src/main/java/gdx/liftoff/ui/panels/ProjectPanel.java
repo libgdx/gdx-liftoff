@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -18,7 +19,7 @@ import static gdx.liftoff.Main.*;
  */
 public class ProjectPanel extends Table implements Panel {
     private TextField keyboardActor;
-    private Label errorLabel;
+    private TypingLabel errorLabel;
 
     public ProjectPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -90,7 +91,7 @@ public class ProjectPanel extends Table implements Panel {
 
         //error label
         row();
-        errorLabel = new Label("", skin, "error");
+        errorLabel = new TypingLabel("", skin, "error");
         errorLabel.setWrap(true);
         errorLabel.setAlignment(Align.top);
         add(errorLabel).growX().spaceTop(SPACE_MEDIUM).minHeight(40);
@@ -112,17 +113,18 @@ public class ProjectPanel extends Table implements Panel {
 
     private void updateError() {
         if (!isValidProjectName(UserData.projectName))
-            errorLabel.setText(String.format(prop.getProperty("nameNotValid")));
+            errorLabel.restart(String.format(prop.getProperty("nameNotValid")));
         else if (UserData.packageName.isEmpty())
-            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("package")));
+            errorLabel.restart(String.format(prop.getProperty("notEmpty"), prop.getProperty("package")));
         else if (!isValidPackageName(UserData.packageName))
-            errorLabel.setText(prop.getProperty("packageNotValid"));
+            errorLabel.restart(prop.getProperty("packageNotValid"));
         else if (UserData.mainClassName.isEmpty())
-            errorLabel.setText(String.format(prop.getProperty("notEmpty"), prop.getProperty("class")));
+            errorLabel.restart(String.format(prop.getProperty("notEmpty"), prop.getProperty("class")));
         else if (!isValidClassName(UserData.mainClassName))
-            errorLabel.setText(prop.getProperty("classNotValid"));
+            errorLabel.restart(prop.getProperty("classNotValid"));
         else
-            errorLabel.setText("");
+            errorLabel.restart("");
+        errorLabel.skipToTheEnd();
     }
 
     public void captureKeyboardFocus() {

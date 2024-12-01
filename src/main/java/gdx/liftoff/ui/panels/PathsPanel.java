@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
@@ -21,7 +22,7 @@ import static gdx.liftoff.Main.*;
  * Table that displays the project path and the android sdk path if android is selected as a platform
  */
 public class PathsPanel extends Table implements Panel {
-    private Label errorLabel;
+    private TypingLabel errorLabel;
     private Button deleteProjectPathButton;
 
     public PathsPanel(boolean fullscreen) {
@@ -139,7 +140,8 @@ public class PathsPanel extends Table implements Panel {
         }
 
         row();
-        errorLabel = new Label("", skin, "error");
+        errorLabel = new TypingLabel("", skin, "error");
+        errorLabel.skipToTheEnd();
         errorLabel.setAlignment(Align.center);
         errorLabel.setWrap(true);
         add(errorLabel).minSize(0, errorLabel.getStyle().font.getLineHeight() * 2).colspan(4).growX();
@@ -152,40 +154,47 @@ public class PathsPanel extends Table implements Panel {
 
     public void updateError() {
         if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
-            errorLabel.setText(prop.getProperty("nullDirectory"));
+            errorLabel.restart(prop.getProperty("nullDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
         FileHandle tempFileHandle = Gdx.files.absolute(UserData.projectPath);
         if (!tempFileHandle.exists() || !tempFileHandle.isDirectory()) {
-            errorLabel.setText(prop.getProperty("notDirectory"));
+            errorLabel.restart(prop.getProperty("notDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
         boolean android = UserData.platforms.contains("android");
         if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
-            errorLabel.setText(prop.getProperty("sdkNullDirectory"));
+            errorLabel.restart(prop.getProperty("sdkNullDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.androidPath);
         if (android && (!tempFileHandle.exists() || !tempFileHandle.isDirectory())) {
-            errorLabel.setText(prop.getProperty("sdkNotDirectory"));
+            errorLabel.restart(prop.getProperty("sdkNotDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
         if (android && !Main.isAndroidSdkDirectory(UserData.androidPath)) {
-            errorLabel.setText(prop.getProperty("invalidSdkDirectory"));
+            errorLabel.restart(prop.getProperty("invalidSdkDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.projectPath);
         if (tempFileHandle.list().length != 0) {
-            errorLabel.setText(prop.getProperty("notEmptyDirectory"));
+            errorLabel.restart(prop.getProperty("notEmptyDirectory"));
+            errorLabel.skipToTheEnd();
             return;
         }
 
-        errorLabel.setText("");
+        errorLabel.restart("");
+        errorLabel.skipToTheEnd();
     }
 
     public boolean hasError() {
