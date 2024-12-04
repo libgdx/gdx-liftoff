@@ -152,6 +152,8 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
 //  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
 
