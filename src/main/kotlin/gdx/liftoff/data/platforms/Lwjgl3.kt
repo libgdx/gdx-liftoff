@@ -193,7 +193,7 @@ jar {
 // these "exclude" lines remove some unnecessary duplicate files in the output JAR.
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'${if(project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else ""})
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'${if (project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else ""})
   }
 // setting the manifest makes the JAR runnable.
   manifest {
