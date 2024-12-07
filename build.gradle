@@ -44,10 +44,9 @@ jar {
   archiveFileName.set(jarName)
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA',
-  'gdx.dll')
+  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**', 'windows/x86/**')
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
@@ -148,22 +147,24 @@ dependencies {
 ////  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
 ////  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
 
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
 //  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
 
 
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
 
 
   // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
