@@ -44,9 +44,10 @@ jar {
   archiveFileName.set(jarName)
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/freebsd/**', 'gdx.dll')
   dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**', 'META-INF/freebsd/**',
+      'windows/x86/**', 'META-INF/windows/x86/**')
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
@@ -141,16 +142,16 @@ dependencies {
   implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
-  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
