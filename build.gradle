@@ -71,11 +71,11 @@ dependencies {
     exclude group: "org.jcraft", module: "jorbis"
     exclude group: "org.lwjgl", module: "lwjgl-openal"
 
-//    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
-//    exclude group: 'org.lwjgl', module: 'lwjgl'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
+    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
+    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
+    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
+    exclude group: 'org.lwjgl', module: 'lwjgl'
+    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
   }
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
