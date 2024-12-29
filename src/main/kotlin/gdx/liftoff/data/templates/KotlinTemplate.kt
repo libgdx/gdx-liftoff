@@ -260,7 +260,7 @@ class StartupHelper private constructor() {
 
   override fun getIOSLauncherContent(project: Project): String = """@file:JvmName("IOSLauncher")
 
-package ${project.basic.rootPackage}.ios
+package ${project.basic.rootPackage}
 
 import org.robovm.apple.foundation.NSAutoreleasePool
 import org.robovm.apple.uikit.UIApplication
