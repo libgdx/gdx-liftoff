@@ -84,7 +84,7 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
               template applications, first add a Viewport like you would for any other platform, and see if there is still
               an issue. If you still have clipping or a smaller view area, post an issue. Several changes happened in
               libGDX 1.10.0 to improve behavior on iOS, and gdx-liftoff may need to apply some changes to template code
-              for iOS projects to work more cleanly with libGDX 1.10.0.
+              for iOS projects to work more cleanly with libGDX 1.10.0 (and newer).
         - Android should only be checked if you've set up your computer for Android development. Since gdx-liftoff uses
           Gradle 8.11.1, having an Android project present shouldn't interfere with other platforms or IDE integration, as
           long as your IDE supports Gradle 8.11.1 (current Android Studio and IDEA both support it).

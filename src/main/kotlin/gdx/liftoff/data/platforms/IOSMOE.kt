@@ -28,7 +28,7 @@ class IOSMOE : Platform {
 
   override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
   override fun initiate(project: Project) {
-    project.properties["multiOsEngineVersion"] = "1.10.0"
+    project.properties["multiOsEngineVersion"] = "1.10.1"
     // Best would be to just copy the "xcode" directory
     arrayOf(
       "app-store-icon-1024@1x.png",
