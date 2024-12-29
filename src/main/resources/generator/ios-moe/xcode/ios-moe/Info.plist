@@ -21,7 +21,7 @@
   <key>LSRequiresIPhoneOS</key>
   <true/>
   <key>MOE.Main.Class</key>
-  <string>%PACKAGE%.ios.IOSLauncher</string>
+  <string>%PACKAGE%.IOSLauncher</string>
   <key>UIApplicationExitsOnSuspend</key>
   <false/>
   <key>UIRequiredDeviceCapabilities</key>

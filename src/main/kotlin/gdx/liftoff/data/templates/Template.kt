@@ -273,13 +273,13 @@ public class HeadlessLauncher {
     addSourceFile(
       project = project,
       platform = IOS.ID,
-      packageName = "${project.basic.rootPackage}.ios",
+      packageName = project.basic.rootPackage,
       fileName = "IOSLauncher.$launcherExtension",
       content = getIOSLauncherContent(project)
     )
   }
 
-  fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
+  fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
@@ -307,13 +307,13 @@ public class IOSLauncher extends IOSApplication.Delegate {
     addSourceFile(
       project = project,
       platform = IOSMOE.ID,
-      packageName = "${project.basic.rootPackage}.ios",
+      packageName = project.basic.rootPackage,
       fileName = "IOSLauncher.$launcherExtension",
       content = getIOSMOELauncherContent(project)
     )
   }
 
-  fun getIOSMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
+  fun getIOSMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import apple.uikit.c.UIKit;
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;

@@ -43,7 +43,7 @@ class IOS : Platform {
         fileName = "robovm.properties",
         content = """app.version=${project.advanced.version.replace("[^0-9\\.]", "")}
 app.id=${project.basic.rootPackage}
-app.mainclass=${project.basic.rootPackage}.ios.IOSLauncher
+app.mainclass=${project.basic.rootPackage}.IOSLauncher
 app.executable=IOSLauncher
 app.build=1
 app.name=${project.basic.name}"""
@@ -213,7 +213,7 @@ apply plugin: 'robovm'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
-  mainClassName = "${project.basic.rootPackage}.ios.IOSLauncher"
+  mainClassName = "${project.basic.rootPackage}.IOSLauncher"
 }
 
 launchIPhoneSimulator.dependsOn build

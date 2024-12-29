@@ -219,7 +219,7 @@ public class HeadlessLauncher {
     }
 }"""
 
-  override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.ios;
+  override fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage};
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
