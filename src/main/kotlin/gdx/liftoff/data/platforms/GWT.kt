@@ -103,20 +103,23 @@ ${(project.reflectedClasses + project.reflectedPackages).joinToString(separator 
   <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
   <source path="" />
 
-  <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
-  <!-- You can include a full package by not including the name of a type at the end. -->
-  <!-- <extend-configuration-property name="gdx.reflect.include" value="fully.qualified.TypeName" /> -->
-
-  <!-- Rarely, projects may need to include files but do not have access to the complete assets. -->
-  <!-- This happens for libraries and shared projects, typically, and the configuration goes in that project. -->
-  <!-- You can include individual files like this, and access them with Gdx.files.classpath("path/to/file.png") : -->
-  <!-- <extend-configuration-property name="gdx.files.classpath" value="path/to/file.png" /> -->
-
   <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
 
   <!-- You must change this if you rename packages later, or rename GwtLauncher. -->
   <entry-point class="${project.basic.rootPackage}.gwt.GwtLauncher" />
+
+  <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
+  <!-- You can include a full package by not including the name of a type at the end. -->
+  <!-- This is a feature of libGDX, so these lines go after the above "inherits" that brings in libGDX. -->
+  <!-- <extend-configuration-property name="gdx.reflect.include" value="fully.qualified.TypeName" /> -->
+
+  <!-- Rarely, projects may need to include files but do not have access to the complete assets. -->
+  <!-- This happens for libraries and shared projects, typically, and the configuration goes in that project. -->
+  <!-- The value is a path, separated by forward slashes, where the root is your html project's resources root. -->
+  <!-- You can include individual files like this, and access them with Gdx.files.classpath("path/to/file.png") : -->
+  <!-- This is also a feature of libGDX, so these lines go after the above "inherits" that brings in libGDX. -->
+  <!-- <extend-configuration-property name="gdx.files.classpath" value="path/to/file.png" /> -->
 
   <!-- You usually won't need to make changes to the rest of this. -->
   <set-configuration-property name="gdx.assetpath" value="../assets" />
