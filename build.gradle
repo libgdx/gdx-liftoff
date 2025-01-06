@@ -66,17 +66,6 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
   implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
   implementation "org.apache.commons:commons-exec:$commonsExecVersion"
-  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
-    exclude group: "org.jcraft", module: "jorbis"
-    exclude group: "org.lwjgl", module: "lwjgl-openal"
-
-    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
-    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
-    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
-    exclude group: 'org.lwjgl', module: 'lwjgl'
-    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
-  }
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
   implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
@@ -91,6 +80,17 @@ dependencies {
   implementation "com.rafaskoberg.gdx:typing-label:1.4.0"
 
 
+  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
+    exclude group: "org.jcraft", module: "jorbis"
+    exclude group: "org.lwjgl", module: "lwjgl-openal"
+
+    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
+    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
+    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
+    exclude group: 'org.lwjgl', module: 'lwjgl'
+    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
+  }
 
   implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version"
@@ -142,16 +142,16 @@ dependencies {
   implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows"
   implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
