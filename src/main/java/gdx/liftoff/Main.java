@@ -54,7 +54,7 @@ import static org.lwjgl.system.MemoryUtil.memAllocPointer;
 import static org.lwjgl.system.MemoryUtil.memFree;
 
 /**
- * Main launcher of the app. Contains utility methods and object instances for use throughout the program
+ * Main launcher of the app. Contains utility methods and object instances for use throughout the program.
  */
 public class Main extends ApplicationAdapter {
     public static Skin skin;
@@ -113,7 +113,7 @@ public class Main extends ApplicationAdapter {
         config.setTitle("GDX-Liftoff");
         config.disableAudio(true);
         config.useVsync(true);
-        config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
+        config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate+1);
         config.setIdleFPS(8);
 
         DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();

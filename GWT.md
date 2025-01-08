@@ -67,6 +67,8 @@ way to work around GWT's oddities, though.
       desktop-JVM behavior on desktop. [JS behavior is missing some key features.](https://www.regular-expressions.info/javascript.html)
       - The third-party extension RegExodus provides an alternative regular expression API that works the same on GWT
         and other platforms, and adds a few other features that aren't in `java.util.regex`.
+      - However, RegExodus isn't the same in syntax as java.util.regex or JS regexes, so you need to write a regex sometimes specifically
+        using its feature set and syntax on all platforms. Simple regexes usually don't need special treatment.
     - `Long.rotateLeft(long, int)`, `Long.rotateRight(long, int)`, `Integer.rotateLeft(int, int)`, and
       `Integer.rotateRight(int, int)` all work in GWT, but are implemented in a bizarre and very slow way.
       You should just write these inline if you intend to use them; their replacements are:
@@ -74,11 +76,14 @@ way to work around GWT's oddities, though.
       - `Long.rotateRight(num, amt)` is equivalent to `(num << 64 - amt | num >>> amt)`.
       - `Integer.rotateLeft(num, amt)` is equivalent to `(num << amt | num >>> 32 - amt)`.
       - `Integer.rotateRight(num, amt)` is equivalent to `(num << 32 - amt | num >>> amt)`.
+      - These could in theory be changed in GWT itself, but they're considered a `wontfix` issue.
 
 GWT has had a few new releases since GDX-Liftoff's debut. For a very long time, libGDX used GWT 2.8.2, which was
 compatible up to Java 8. This is what's used by libGDX up to and including 1.12.1, unless you use the alternative backend that Liftoff
-defaulted to. The alternative backend isn't needed or used since libGDX 1.13.0, since this version is up-to-date on GWT 2.11.0. This newer GWT version is compatible with
-Java 11 to some extent, allowing you to use `var` and parts of the new API in Java 11. If you're using an earlier version of Liftoff, such as 1.12.1.17 or earlier, then that uses libGDX 1.12.1 and the alternative backend to still use GWT 2.11.0 .
+defaulted to. The alternative backend isn't needed or used since libGDX 1.13.0, since this version uses the newer GWT 2.11.0. This newer GWT version is compatible with
+Java 11 to some extent, allowing you to use `var` and parts of the new API in Java 11. If you're using an earlier version of Liftoff, such as 1.12.1.17 or earlier, then
+that uses libGDX 1.12.1 and the alternative backend to still use GWT 2.11.0 . There is a newer GWT release, 2.12.1, that isn't currently used by libGDX, or any alternative
+backends; this may change in future releases.
 
 [The part of the standard library that GWT 2.11.0 emulates can be viewed here.](https://github.com/gwtproject/gwt-site/blob/becd13c39f53d45e55233ac29c8dfa7ebcf92dca/src/main/markdown/doc/latest/RefJreEmulation.md)
 

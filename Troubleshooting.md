@@ -161,7 +161,7 @@ likely grow.
 Liftoff 1.12.1.6 is the first to use GWT 2.11.0, which is almost entirely backwards-compatible... at an API level,
 at least. It has different dependencies for `gwt-user`, both because the version is newer, and that JAR is provided in
 a different "group" -- `org.gwtproject:gwt-user:2.11.0` instead of the older `com.google.gwt:gwt-user:2.8.2`. This
-isn't a problem in libGDX 1.13.0, since it uses GWT 2.11.0, but the fixes here won't
+isn't a problem in libGDX 1.13.0 or newer, since they use GWT 2.11.0, but the fixes here won't
 cause problems if they remain in a project updated to a newer libGDX version.
 
 Before I start with the general solution, there's often a much easier one: for libraries that Liftoff has in its
@@ -181,7 +181,7 @@ you're trying to find looks like this:
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
 |    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
 |    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
-|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.12.1 (*)
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.13.1 (*)
 |         \--- com.google.gwt:gwt-user:2.8.2
 |              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
 |              +--- javax.validation:validation-api:1.0.0.GA
