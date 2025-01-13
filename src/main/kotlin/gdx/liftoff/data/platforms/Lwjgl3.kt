@@ -178,7 +178,8 @@ def os = System.properties['os.name'].toLowerCase()
 
 run {
   workingDir = rootProject.file('assets').path
-  setIgnoreExitValue(true)
+// You can uncomment the next line if your IDE claims a build failure even when the app closed properly.
+  //setIgnoreExitValue(true)
 
   if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
 }
@@ -193,7 +194,9 @@ jar {
 // these "exclude" lines remove some unnecessary duplicate files in the output JAR.
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'${if (project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else ""})
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'""" +
+    (if (project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else "") +
+""")
   }
 // setting the manifest makes the JAR runnable.
   manifest {
@@ -269,5 +272,5 @@ if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
 
-    """.trimIndent()
+""".trimIndent()
 }
