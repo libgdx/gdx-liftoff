@@ -125,11 +125,10 @@ class MainView : ActionContainer {
       initialPath = initialPath.replace("/", "\\")
     }
 
-    NativeFileDialog.NFD_Init()
     val pathPointer = memAllocPointer(1)
 
     try {
-      val status = NativeFileDialog.NFD_PickFolder(pathPointer, initialPath)
+      val status = NativeFileDialog.NFD_PickFolder(initialPath, pathPointer)
 
       if (status == NativeFileDialog.NFD_CANCEL) {
         callback.canceled()
@@ -142,7 +141,7 @@ class MainView : ActionContainer {
       }
 
       val folder = pathPointer.getStringUTF8(0)
-      NativeFileDialog.nNFD_FreePath(pathPointer.get(0))
+      NativeFileDialog.nNFD_Free(pathPointer.get(0))
 
       val array = GdxArray<FileHandle>()
       array.add(Gdx.files.absolute(folder))
@@ -163,7 +162,6 @@ class MainView : ActionContainer {
 
       form.stage.addActor(fileChooser.fadeIn())
     } finally {
-      NativeFileDialog.NFD_Quit()
       memFree(pathPointer)
     }
   }

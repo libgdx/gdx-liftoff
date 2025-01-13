@@ -43,7 +43,12 @@ used to avoid vulnerable log4j versions, now that Gradle has updated and conside
 LWJGL 3.3.4 and 3.3.5 were problematic for a variety of reasons, and if you choose to update LWJGL to a different version
 than what Liftoff generates (currently LWJGL 3.3.3 for any project using libGDX 1.12.1 or 1.13.1), you should use 3.3.6
 and be aware that it has some problems with heavy audio over-logging on macOS. Disabling audio in Lwjgl3Launcher should
-prevent the logging issue, if you have no audio to begin with. That's what Liftoff 1.13.1.0 does.
+prevent the logging issue, if you have no audio to begin with. Otherwise, you can set an environment variable,
+`ALSOFT_LOGLEVEL=0`, to disable audio logging entirely while keeping sounds and music in your game. This only would need
+to be set on macOS, and might be possible to do by editing StartupHelper, but that isn't exactly supported. Using LWJGL3
+3.3.3 is generally a good option. Some other LWJGL3 modules have issues in a variety of versions, such as NFD (which
+Liftoff uses) for native file dialogs. That module needs to be downgraded to 3.3.1 to work at all; you can see how that
+can be done in Liftoff's Gradle files and sources.
 
 ## Usage
 
