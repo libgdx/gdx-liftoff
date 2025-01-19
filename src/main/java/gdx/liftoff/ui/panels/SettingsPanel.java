@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.PopTable.TableShowHideListener;
 import gdx.liftoff.ui.UserData;
+import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import gdx.liftoff.ui.dialogs.GradleDialog;
 
 import static gdx.liftoff.Main.*;
@@ -40,14 +41,18 @@ public class SettingsPanel extends Table implements Panel {
         onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
-        if(UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion))
-            UserData.javaVersion = "8";
         TextField javaTextField = addField(prop.getProperty("javaVersion"),
             prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
         onChange(javaTextField, () -> {
-            if(UserData.platforms.contains("ios") && !"7".equals(javaTextField.getText()))
-                javaTextField.setText("8");
             UserData.javaVersion = javaTextField.getText();
+            if (FullscreenDialog.fullscreenDialog != null) {
+                FullscreenDialog.fullscreenDialog.updatePathsError();
+                FullscreenDialog.fullscreenDialog.updateGenerateButtons();
+            }
+            if (root.settingsTable != null) {
+                root.settingsTable.updateError();
+                root.settingsTable.updateGenerateButton();
+            }
         });
 
         //application version

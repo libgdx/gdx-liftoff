@@ -660,6 +660,10 @@ public class Main extends ApplicationAdapter {
             return false;
         }
 
+        if (UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion) && !"8".equals(UserData.javaVersion)) {
+            return false;
+        }
+
         return true;
     }
 
