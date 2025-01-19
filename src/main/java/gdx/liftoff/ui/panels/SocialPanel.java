@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import static gdx.liftoff.Main.*;
 
 /**
- * A table to display libGDX related links including libgdx.com, Discord, and the wiki
+ * A table to display libGDX related links including libgdx.com, Discord, the wiki, and a recommended JDK.
  */
 public class SocialPanel extends Table implements Panel {
     public SocialPanel(boolean fullscreen) {
@@ -39,6 +39,13 @@ public class SocialPanel extends Table implements Panel {
         addHandListener(textButton);
         addTooltip(textButton, Align.top, prop.getProperty("wikiTip"));
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("wikiUrl")));
+
+        //jdk
+        textButton = new TextButton(prop.getProperty("jdkButton"), skin, "link");
+        add(textButton);
+        addHandListener(textButton);
+        addTooltip(textButton, Align.top, prop.getProperty("jdkTip"));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("jdkUrl")));
     }
 
     @Override
