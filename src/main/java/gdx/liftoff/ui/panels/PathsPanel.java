@@ -66,7 +66,6 @@ public class PathsPanel extends Table implements Panel {
                         if (FullscreenDialog.fullscreenDialog != null)
                             FullscreenDialog.fullscreenDialog.updateGenerateButtons();
                         if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
-                        root.quickSettingsTable.populate();
                         updateDeleteProjectPathButton();
                     }
                     Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));

@@ -22,7 +22,6 @@ public class RootTable extends Table {
     public ThirdPartyTable thirdPartyTable;
     public SettingsTable settingsTable;
     public CompleteTable completeTable;
-    public QuickSettingsTable quickSettingsTable;
 
     public RootTable() {
         tables = new Array<>();
@@ -38,8 +37,7 @@ public class RootTable extends Table {
         thirdPartyTable = new ThirdPartyTable();
         settingsTable = new SettingsTable();
         completeTable = new CompleteTable();
-        quickSettingsTable = new QuickSettingsTable();
-        tables.addAll(landingTable, addOnsTable, thirdPartyTable, settingsTable, completeTable, quickSettingsTable);
+        tables.addAll(landingTable, addOnsTable, thirdPartyTable, settingsTable, completeTable);
 
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
