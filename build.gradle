@@ -44,10 +44,9 @@ jar {
   archiveFileName.set(jarName)
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/freebsd/**', 'gdx.dll')
+  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/freebsd/**')
   dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**', 'META-INF/freebsd/**',
-      'windows/x86/**', 'META-INF/windows/x86/**')
+    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**', 'META-INF/freebsd/**')
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
