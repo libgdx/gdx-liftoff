@@ -24,7 +24,7 @@ public class SocialPanel extends Table implements Panel {
         add(textButton);
         addHandListener(textButton);
         addTooltip(textButton, Align.top, prop.getProperty("libgdxTip"));
-        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("libGdxUrl")));
+        onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("libgdxUrl")));
 
         //discord
         textButton = new TextButton(prop.getProperty("discordButton"), skin, "link");
