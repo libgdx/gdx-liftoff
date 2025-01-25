@@ -66,7 +66,6 @@ public class PathsPanel extends Table implements Panel {
                         if (FullscreenDialog.fullscreenDialog != null)
                             FullscreenDialog.fullscreenDialog.updateGenerateButtons();
                         if (root.settingsTable != null) root.settingsTable.updateGenerateButton();
-                        root.quickSettingsTable.populate();
                         updateDeleteProjectPathButton();
                     }
                     Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
@@ -153,6 +152,12 @@ public class PathsPanel extends Table implements Panel {
     }
 
     public void updateError() {
+        if (UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion) && !"8".equals(UserData.javaVersion)) {
+            errorLabel.restart(prop.getProperty("iosWrongJavaVersion"));
+            errorLabel.skipToTheEnd();
+            return;
+        }
+
         if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
             errorLabel.restart(prop.getProperty("nullDirectory"));
             errorLabel.skipToTheEnd();
