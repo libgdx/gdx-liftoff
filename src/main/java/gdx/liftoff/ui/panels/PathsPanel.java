@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import gdx.liftoff.Main;
+import gdx.liftoff.config.Configuration;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -152,8 +153,20 @@ public class PathsPanel extends Table implements Panel {
     }
 
     public void updateError() {
+        if (UserData.platforms.contains("ios") && UserData.platforms.contains("teavm")) {
+            errorLabel.restart(prop.getProperty("iosTeavmIncompatible"));
+            errorLabel.skipToTheEnd();
+            return;
+        }
+
         if (UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion) && !"8".equals(UserData.javaVersion)) {
             errorLabel.restart(prop.getProperty("iosWrongJavaVersion"));
+            errorLabel.skipToTheEnd();
+            return;
+        }
+
+        if (UserData.platforms.contains("teavm") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) < 11.0) {
+            errorLabel.restart(prop.getProperty("teavmWrongJavaVersion"));
             errorLabel.skipToTheEnd();
             return;
         }

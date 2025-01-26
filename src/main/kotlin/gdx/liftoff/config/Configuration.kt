@@ -41,6 +41,10 @@ class Configuration {
     const val WIDTH = 600
     const val HEIGHT = 700
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"
+
+    fun parseJavaVersion(version: String): Double {
+      return version.removeSurrounding("1.", ".0").toDouble()
+    }
   }
 
   @LmlParserSyntax

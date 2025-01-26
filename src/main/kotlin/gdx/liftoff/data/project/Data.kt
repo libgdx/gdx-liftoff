@@ -1,6 +1,7 @@
 package gdx.liftoff.data.project
 
 import com.badlogic.gdx.files.FileHandle
+import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
@@ -42,7 +43,7 @@ data class AdvancedProjectData(
    * Will be set to 2.11.0 if using a Java version of at least 8; otherwise adapts to what the libGDX version uses.
    */
   val gwtVersion: String
-    get() = if (javaVersion.removeSurrounding("1.", ".0").toDouble().compareTo(8.0) >= 0 ||
+    get() = if (Configuration.parseJavaVersion(javaVersion).compareTo(8.0) >= 0 ||
       (gdxVersion.startsWith("1.13."))
     ) {
       "2.11.0"
