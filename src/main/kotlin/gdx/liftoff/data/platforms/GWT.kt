@@ -258,6 +258,7 @@ dependencies {
 ${joinDependencies(dependencies)}
 }
 
+import org.akhikhl.gretty.AppAfterIntegrationTestTask
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.docstr.gradle.plugins.gwt.GwtSuperDev
 
@@ -291,10 +292,22 @@ task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
   interactive false
 }
 
-task superDev(type: GwtSuperDev) {
+
+task afterRun(type: AppAfterIntegrationTestTask) {
+  doFirst {
+    println("Closing down the GWT app's processes.")
+    println("This may print harmless failure messages.")
+  }
+  doLast {
+    System.exit(0)
+  }
+}
+
+task superDev(type: GwtSuperDev, dependsOn: beforeRun) {
   doFirst {
     gwt.modules = gwt.devModules
   }
+  finalizedBy("afterRun")
 }
 
 //// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.

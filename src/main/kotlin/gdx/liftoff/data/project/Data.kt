@@ -70,7 +70,7 @@ data class AdvancedProjectData(
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
    */
-  val grettyVersion: String = "3.1.0"
+  val grettyVersion: String = "3.1.5"
 }
 
 /** Stores alternative JVM languages data. */
