@@ -273,16 +273,17 @@ if both are available (such as on many laptops). It also has some pitfalls, thou
 newer JDK to build the project, though not necessarily to run the resulting game, even if compiled to a JAR. It uses
 `jdeps` to determine which parts of the JDK to use, and `jlink` to create a JRE without any parts the game doesn't use.
 The jdeps/jlink step can go wrong if certain deprecated parts of the JDK are used, which is the case with the
-commonly-used dependency VisUI up to its version 1.5.3 . You can change your dependency on VisUI to:
+commonly-used dependency VisUI up to its version 1.5.3 . VisUI recently released a new stable version, and Liftoff
+updated to it; so can your project. That release is version 1.5.5, and uses this dependency:
+
+`implementation "com.kotcrab.vis:vis-ui:1.5.5"`
+
+You could instead change your dependency on VisUI to a known-working commit on JitPack if you encounter any issues:
 
 `implementation "com.github.kotcrab.vis-ui:vis-ui:1aef382077"`
 
-Which gets a more-recent commit built by JitPack, and that more-recent code has a fix that makes it compatible with
-Construo (and with jlink in general). When VisUI releases a new stable version, Liftoff will update to that, and your
-project can as well. If that release is called 1.5.4 (which it might, but it could be 1.6.0 or even 2.0.0), use a
-dependency like this when the release is available:
-
-`implementation "com.kotcrab.vis:vis-ui:1.5.4"` // Note that this isn't available yet!
+Which gets a sort-of-recent commit built by JitPack, and that code has a fix for 1.5.3 that makes it compatible with
+Construo (and with jlink in general). Using 1.5.5 is probably a better idea unless some new issue surfaces.
 
 Other dependencies may also have issues, but no one has found them yet.
 
@@ -294,9 +295,11 @@ handle at all. It causes a crash in native code (which can't be caught with try/
 lock input to the rest of the Liftoff program as we were doing before, but permit the file dialog to do its thing, and
 re-enable input when the dialog closes.
 
-1.12.1.15 and up use a newer version of the file dialog library (we went from LWJGL 3.3.1's NFD binding to LWJGL 3.3.4's
-NFDe binding). This may have some bug fixes, and it may have all kinds of new bugs, but at the very least it's more
-modern than the rather old, sometimes-buggy NFD version we were using.
+1.12.1.15 ~~and up~~ use a newer version of the file dialog library (we went from LWJGL 3.3.1's NFD binding to LWJGL
+3.3.4's NFDe binding). This had some bug fixes, but also had all kinds of new bugs, so the current releases are
+back to using 3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
+encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
+This might eventually let NFDe become useful for us here, but for now we need to use the older NFD.
 
 ### The native distributions for macOS won't run how they should!
 
