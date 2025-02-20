@@ -15,7 +15,7 @@ class TeaVM : Platform {
   }
 
   override val id = ID
-  override val description = "Experimental web platform using TeaVM and WebGL."
+  override val description = "Web backend that supports most JVM languages."
   override val order = ORDER
   override val isStandard = false
 
@@ -52,7 +52,7 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
 
   override fun getContent() = """plugins {
   id 'java'
-  id 'org.gretty' version '${project.advanced.grettyVersion}'
+  id 'org.gretty' version "${project.advanced.grettyVersion}"
 }
 
 gretty {
@@ -61,8 +61,8 @@ gretty {
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-project.ext.mainClassName = '${project.basic.rootPackage}.teavm.TeaVMBuilder'
-eclipse.project.name = appName + '-teavm'
+project.ext.mainClassName = "${project.basic.rootPackage}.teavm.TeaVMBuilder"
+eclipse.project.name = appName + "-teavm"
 
 // This must be at least 11, and no higher than the JDK version this project is built with.
 java.targetCompatibility = "${project.advanced.javaVersion}"
@@ -74,7 +74,7 @@ dependencies {
 ${joinDependencies(dependencies)}
 }
 
-tasks.register('buildJavaScript', JavaExec) {
+tasks.register("buildJavaScript", JavaExec) {
   dependsOn classes
   setDescription("Transpile bytecode to JavaScript via TeaVM")
   mainClass.set(project.mainClassName)

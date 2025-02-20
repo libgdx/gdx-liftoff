@@ -280,6 +280,7 @@ task startHttpServer (dependsOn: [draftCompileGwt]) {
     }
   }
 }
+
 task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
   // The next line allows ports to be reused instead of
   // needing a process to be manually terminated.
@@ -292,13 +293,17 @@ task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
   interactive false
 }
 
-
 task afterRun(type: AppAfterIntegrationTestTask) {
   doFirst {
-    println("Closing down the GWT app's processes.")
-    println("This may print harmless failure messages.")
+    println("\nCLOSING SUPERDEV\n")
+    println("Now closing down the GWT app's processes.")
+    println("This may print *harmless* failure messages.")
   }
   doLast {
+    // This forces all threads to stop immediately, which is not ideal, but
+    // it is better than leaving some thread running and occupying a port that
+    // we will need on a later run of superDev . If you have a better way to close
+    // all Gretty's threads from Gradle, please post a GitHub issue for gdx-liftoff!
     System.exit(0)
   }
 }
