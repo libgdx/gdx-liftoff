@@ -9,7 +9,7 @@ buildscript {
     google()
   }
   dependencies {
-    classpath "io.github.fourlastor:construo:1.6.1"
+    classpath "io.github.fourlastor:construo:1.7.0"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     classpath "org.jlleitschuh.gradle:ktlint-gradle:11.5.0"
   }
