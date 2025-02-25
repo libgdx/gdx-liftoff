@@ -186,6 +186,9 @@ construo {
   // Optional, defaults to project version
   version.set("$project.version")
 
+  jlink {
+    includeDefaultCryptoModules.set(false) // we don't need any encryption in Liftoff itself.
+  }
   targets.configure {
     create("linuxX64", Target.Linux) {
       architecture.set(Target.Architecture.X86_64)
