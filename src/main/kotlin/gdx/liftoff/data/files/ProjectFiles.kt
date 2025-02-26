@@ -138,7 +138,11 @@ class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
   override fun save(destination: FileHandle) {
     val content = platforms.joinToString(
       prefix =
-      """// A list of which subprojects to load as part of the same larger project.
+      """plugins {
+  // Applies the foojay-resolver plugin to allow automatic download of JDKs.
+  id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
+}
+// A list of which subprojects to load as part of the same larger project.
 // You can remove Strings from the list and reload the Gradle project
 // if you want to temporarily disable a subproject.
 include """,

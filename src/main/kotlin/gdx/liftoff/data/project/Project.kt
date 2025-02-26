@@ -303,6 +303,7 @@ trim_trailing_whitespace = false
     arrayOf(
       "gradlew",
       "gradlew.bat",
+      path("gradle", "gradle-daemon-jvm.properties"),
       path("gradle", "wrapper", "gradle-wrapper.jar"),
       path("gradle", "wrapper", "gradle-wrapper.properties")
     ).forEach {
