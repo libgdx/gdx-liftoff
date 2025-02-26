@@ -243,10 +243,11 @@ gwt {
   maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
   minHeapSize = '1G'
 
-  src = files(file('src/main/java')) // Needs to be in front of "modules" below.
-  modules '${project.basic.rootPackage}.GdxDefinition'
-  devModules '${project.basic.rootPackage}.GdxDefinitionSuperdev'
-  project.webAppDirName = 'webapp'
+  // Needs to be in front of "modules" below.
+  src = files(file('src/main/java'), project(":core").file('src/main/java'))
+  modules += ["${project.basic.rootPackage}.GdxDefinition"]
+  devModules += ["${project.basic.rootPackage}.GdxDefinitionSuperdev"]
+  project.webAppDirName = "webapp"
 
   compiler.strict = true
   compiler.disableCastChecking = true
@@ -267,7 +268,8 @@ gretty.resourceBase = "${'$'}{project.layout.buildDirectory.asFile.get().absolut
 gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"
 
-task startHttpServer (dependsOn: [draftCompileGwt]) {
+tasks.register('startHttpServer') {
+  dependsOn("draftCompileGwt")
   doFirst {
     copy {
       from "webapp"
@@ -280,19 +282,20 @@ task startHttpServer (dependsOn: [draftCompileGwt]) {
   }
 }
 
-task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
+tasks.register('beforeRun', AppBeforeIntegrationTestTask) {
+  dependsOn("startHttpServer")
+  gretty {
+    integrationTestTask("superDev")
+  }
   // The next line allows ports to be reused instead of
   // needing a process to be manually terminated.
   file("build/TEMP_PORTS.properties").delete()
-  // Somewhat of a hack; uses Gretty's support for wrapping a task in
-  // a start and then stop of a Jetty server that serves files while
-  // also running the SuperDev code server.
-  integrationTestTask 'superDev'
-
-  interactive false
+  interactive = false
 }
 
-task superDev(type: GwtSuperDev) {
+tasks.register('superDev', GwtSuperDev) {
+  group("gwt")
+  dependsOn("beforeRun")
   doFirst {
     gwt.modules = gwt.devModules
   }
@@ -307,7 +310,8 @@ clean.delete += [file("war")]
 // This is relative to the html/ folder.
 var outputPath = "build/dist/"
 
-task dist(dependsOn: [clean, compileGwt]) {
+tasks.register('dist') {
+  dependsOn(["clean", "compileGwt"])
   doLast {
     // Uncomment the next line if you have changed outputPath and know that its contents
     // should be replaced by a new dist build. Some large JS files are not cleaned up by
@@ -318,7 +322,7 @@ task dist(dependsOn: [clean, compileGwt]) {
 
     file(outputPath).mkdirs()
     copy {
-      from("build/gwt/out"){
+      from("build/gwt/out") {
         exclude '**/*.symbolMap' // Not used by a dist, and these can be large.
       }
       into outputPath
@@ -329,7 +333,7 @@ task dist(dependsOn: [clean, compileGwt]) {
         exclude 'refresh.png' // We don't need this button; this saves some bytes.
       }
       into outputPath
-      }
+    }
     copy {
       from("webapp") {
         // These next two lines take the index.html page and remove the superdev refresh button.
@@ -340,7 +344,7 @@ task dist(dependsOn: [clean, compileGwt]) {
         // either remove or comment out only the "filter" line above this.
       }
       into outputPath
-      }
+    }
     copy {
       from "war"
       into outputPath
@@ -348,7 +352,7 @@ task dist(dependsOn: [clean, compileGwt]) {
   }
 }
 
-task addSource {
+tasks.register('addSource') {
   doLast {
     sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
     sourceSets.main.compileClasspath += files("../core/build/generated/sources/annotationProcessor/java/main")
@@ -356,7 +360,8 @@ ${if (project.hasPlatform(Shared.ID)) "    sourceSets.main.compileClasspath += f
   }
 }
 
-task distZip(type: Zip, dependsOn: dist){
+tasks.register("distZip", Zip) {
+  dependsOn("dist")
   //// This uses the output of the dist task, which removes the superdev button from index.html .
   from(outputPath)
   archiveVersion = projectVersion
@@ -365,9 +370,9 @@ task distZip(type: Zip, dependsOn: dist){
   destinationDirectory.set(file("build"))
 }
 
-tasks.compileGwt.dependsOn(addSource)
-tasks.draftCompileGwt.dependsOn(addSource)
-tasks.checkGwt.dependsOn(addSource)
+tasks.compileGwt.dependsOn("addSource")
+tasks.draftCompileGwt.dependsOn("addSource")
+tasks.checkGwt.dependsOn("addSource")
 
 java.sourceCompatibility = ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
 java.targetCompatibility = ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
