@@ -258,7 +258,6 @@ dependencies {
 ${joinDependencies(dependencies)}
 }
 
-import org.akhikhl.gretty.AppAfterIntegrationTestTask
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.docstr.gradle.plugins.gwt.GwtSuperDev
 
@@ -293,26 +292,10 @@ task beforeRun(type: AppBeforeIntegrationTestTask, dependsOn: startHttpServer) {
   interactive false
 }
 
-task afterRun(type: AppAfterIntegrationTestTask) {
-  doFirst {
-    println("\nCLOSING SUPERDEV\n")
-    println("Now closing down the GWT app's processes.")
-    println("This may print *harmless* failure messages.")
-  }
-  doLast {
-    // This forces all threads to stop immediately, which is not ideal, but
-    // it is better than leaving some thread running and occupying a port that
-    // we will need on a later run of superDev . If you have a better way to close
-    // all Gretty's threads from Gradle, please post a GitHub issue for gdx-liftoff!
-    System.exit(0)
-  }
-}
-
-task superDev(type: GwtSuperDev, dependsOn: beforeRun) {
+task superDev(type: GwtSuperDev) {
   doFirst {
     gwt.modules = gwt.devModules
   }
-  finalizedBy("afterRun")
 }
 
 //// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.
