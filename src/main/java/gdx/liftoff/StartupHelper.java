@@ -16,6 +16,8 @@
 
 package gdx.liftoff;
 
+import com.badlogic.gdx.Version;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader;
 import org.lwjgl.system.macosx.LibC;
 
 import java.io.BufferedReader;
@@ -73,7 +75,17 @@ public class StartupHelper {
 // By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
 // If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
 // By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
-                System.setProperty("java.io.tmpdir", System.getenv("ProgramData") + "/libGDX-temp");
+// We also temporarily change the "user.name" property to one without any chars that would be invalid.
+// We revert our changes immediately after loading LWJGL3 natives.
+                String programData = System.getenv("ProgramData");
+                if(programData == null) programData = "C:\\Temp\\"; // if ProgramData isn't set, try some fallback.
+                String prevTmpDir = System.getProperty("java.io.tmpdir", programData);
+                String prevUser = System.getProperty("user.name", "libGDX_User");
+                System.setProperty("java.io.tmpdir", programData + "/libGDX-temp");
+                System.setProperty("user.name", ("User_" + prevUser.hashCode() + "_GDX" + Version.VERSION).replace('.', '_'));
+                Lwjgl3NativesLoader.load();
+                System.setProperty("java.io.tmpdir", prevTmpDir);
+                System.setProperty("user.name", prevUser);
             }
             return false;
         }
@@ -100,7 +112,7 @@ public class StartupHelper {
 
         // Restart the JVM with -XstartOnFirstThread
         ArrayList<String> jvmArgs = new ArrayList<>();
-        String separator = System.getProperty("file.separator");
+        String separator = System.getProperty("file.separator", "/");
         // The following line is used assuming you target Java 8, the minimum for LWJGL3.
         String javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java";
         // If targeting Java 9 or higher, you could use the following instead of the above line:

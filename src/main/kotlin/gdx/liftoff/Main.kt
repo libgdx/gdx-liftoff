@@ -1,10 +1,8 @@
 package gdx.liftoff
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener
+import com.badlogic.gdx.Version
+import com.badlogic.gdx.backends.lwjgl3.*
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.github.czyzby.autumn.context.ContextInitializer
@@ -40,7 +38,16 @@ fun startNewJvmIfRequired(): Boolean {
       // By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
       // If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
       // By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
-      System.setProperty("java.io.tmpdir", "${System.getenv("ProgramData")}/libGDX-temp")
+      // We also temporarily change the "user.name" property to one without any chars that would be invalid.
+      // We revert our changes immediately after loading LWJGL3 natives.
+      val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
+      val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
+      val prevUser = System.getProperty("user.name", "libGDX_User")
+      System.setProperty("java.io.tmpdir", "$programData/libGDX-temp")
+      System.setProperty("user.name", "User_${prevUser.hashCode()}_GDX${Version.VERSION}".replace('.', '_'))
+      Lwjgl3NativesLoader.load()
+      System.setProperty("java.io.tmpdir", prevTmpDir)
+      System.setProperty("user.name", prevUser)
     }
     return false
   }
