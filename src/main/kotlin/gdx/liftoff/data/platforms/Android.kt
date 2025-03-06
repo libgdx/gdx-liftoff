@@ -34,6 +34,8 @@ class Android : Platform {
     addCopiedFile(project, "res", "drawable-xhdpi", "ic_launcher.png")
     addCopiedFile(project, "res", "drawable-xxhdpi", "ic_launcher.png")
     addCopiedFile(project, "res", "drawable-xxxhdpi", "ic_launcher.png")
+    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
+    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
     addCopiedFile(project, "ic_launcher-web.png")
 
     // We really can't generate these vector images easily.
