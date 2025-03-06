@@ -29,6 +29,7 @@ import com.kotcrab.vis.ui.widget.Tooltip
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.file.FileChooser
 import gdx.liftoff.views.widgets.ScrollableTextArea
+import java.lang.NumberFormatException
 
 /**
  * Configures Autumn MVC application.
@@ -43,7 +44,12 @@ class Configuration {
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"
 
     fun parseJavaVersion(version: String): Double {
-      return version.removeSurrounding("1.", ".0").toDouble()
+      val d = try {
+        version.removeSurrounding("1.", ".0").toDouble()
+      } catch (nfe : NumberFormatException) {
+        8.0
+      }
+      return d;
     }
   }
 
