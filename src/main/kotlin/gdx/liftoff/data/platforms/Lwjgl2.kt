@@ -20,6 +20,7 @@ class Lwjgl2 : Platform {
   override val description = "Legacy desktop platform using LWJGL2."
   override val order = ORDER
   override val isStandard = false // use lwjgl3 instead
+
   override fun createGradleFile(project: Project): GradleFile = Lwjgl2GradleFile(project)
 
   override fun initiate(project: Project) {
@@ -31,8 +32,8 @@ class Lwjgl2 : Platform {
           CopiedFile(
             projectName = ID,
             path = path("src", "main", "resources", icon),
-            original = path("icons", icon)
-          )
+            original = path("icons", icon),
+          ),
         )
       }
 
@@ -51,7 +52,8 @@ class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
   }
 
-  override fun getContent(): String = """apply plugin: 'application'
+  override fun getContent(): String =
+    """apply plugin: 'application'
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
@@ -63,7 +65,14 @@ java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(${project.advanced.desktopJavaVersion})
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
+${if (project.rootGradle.plugins.contains(
+        "kotlin",
+      )
+    ) {
+      "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n"
+    } else {
+      ""
+    }}
 dependencies {
 ${joinDependencies(dependencies)}}
 

@@ -69,7 +69,11 @@ class Configuration {
   val viewportProvider = ObjectProvider<Viewport> { FitViewport(WIDTH.toFloat(), HEIGHT.toFloat()) }
 
   @Initiate(priority = AutumnActionPriority.TOP_PRIORITY)
-  fun initiate(skinService: SkinService, interfaceService: InterfaceService, localeService: LocaleService) {
+  fun initiate(
+    skinService: SkinService,
+    interfaceService: InterfaceService,
+    localeService: LocaleService,
+  ) {
     VisUI.setSkipGdxVersionCheck(true)
     if (!VisUI.isLoaded()) {
       VisUI.load(Gdx.files.internal("skin/tinted.json"))
@@ -92,7 +96,13 @@ class Configuration {
     interfaceService.parser.syntax.addAttributeProcessor(
       object : LmlAttribute<Actor> {
         override fun getHandledType(): Class<Actor> = Actor::class.java
-        override fun process(parser: LmlParser, tag: LmlTag, actor: Actor, rawAttributeData: String) {
+
+        override fun process(
+          parser: LmlParser,
+          tag: LmlTag,
+          actor: Actor,
+          rawAttributeData: String,
+        ) {
           val tooltip = Tooltip()
           val label = VisLabel(parser.parseString(rawAttributeData, actor), "small")
           label.wrap = true
@@ -103,7 +113,7 @@ class Configuration {
           tooltip.pack()
         }
       },
-      "tooltip"
+      "tooltip",
     )
   }
 }

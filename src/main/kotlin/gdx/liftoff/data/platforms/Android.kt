@@ -20,6 +20,7 @@ class Android : Platform {
   override val description = "Android mobile platform. Needs Android SDK."
   override val order = ORDER
   override val isStandard = false // user should only jump through android hoops on request
+
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.6.1\"")
     project.properties["android.useAndroidX"] = "true"
@@ -50,8 +51,8 @@ class Android : Platform {
         sourceFolderPath = "",
         packageName = "",
         fileName = "local.properties",
-        content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}"
-      )
+        content = "# Location of the Android SDK:\nsdk.dir=${project.basic.androidSdk}",
+      ),
     )
     project.files.add(
       SourceFile(
@@ -63,8 +64,8 @@ class Android : Platform {
 <resources>
   <string name="app_name">${project.basic.name}</string>
 </resources>
-"""
-      )
+""",
+      ),
     )
     project.files.add(
       SourceFile(
@@ -99,8 +100,8 @@ class Android : Platform {
   </application>
 ${project.androidPermissions.joinToString(separator = "\n") { "  <uses-permission android:name=\"${it}\" />" }}
 </manifest>
-"""
-      )
+""",
+      ),
     )
   }
 
@@ -115,6 +116,7 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
   val srcFolders = mutableListOf("'src/main/java'")
   val nativeDependencies = mutableSetOf<String>()
   var latePlugin = false
+
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
@@ -131,7 +133,9 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
     plugins.add("com.android.application")
   }
 
-  fun insertLatePlugin() { latePlugin = true }
+  fun insertLatePlugin() {
+    latePlugin = true
+  }
 
   /**
    * @param dependency will be added as "natives" dependency, quoted.
@@ -192,19 +196,19 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }${
-    if (latePlugin) {
-      """
+      if (latePlugin) {
+        """
 
   kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
-      if (project.advanced.javaVersion.removePrefix("1.") == "8") {
-        "1_8"
-      } else {
-        project.advanced.javaVersion.removePrefix("1.")
-      }})
+          if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+            "1_8"
+          } else {
+            project.advanced.javaVersion.removePrefix("1.")
+          }})
   """
-    } else {
-      ""
-    }}
+      } else {
+        ""
+      }}
 }
 
 repositories {
@@ -225,7 +229,7 @@ dependencies {
           } else {
             "2.0.4"
           }
-          ) + "'"
+        ) + "'"
     } else {
       ""
     }}

@@ -23,6 +23,7 @@ class Lwjgl3 : Platform {
 
   // override val isStandard = true
   override fun createGradleFile(project: Project): GradleFile = Lwjgl3GradleFile(project)
+
   override fun initiate(project: Project) {
     // Adding game icons:
     arrayOf(16, 32, 64, 128)
@@ -32,8 +33,8 @@ class Lwjgl3 : Platform {
           CopiedFile(
             projectName = ID,
             path = path("src", "main", "resources", icon),
-            original = path("icons", icon)
-          )
+            original = path("icons", icon),
+          ),
         )
       }
     arrayOf("logo.png", "logo.ico", "logo.icns")
@@ -42,8 +43,8 @@ class Lwjgl3 : Platform {
           CopiedFile(
             projectName = ID,
             path = path("icons", icon),
-            original = path("icons", icon)
-          )
+            original = path("icons", icon),
+          ),
         )
       }
 
@@ -51,7 +52,7 @@ class Lwjgl3 : Platform {
     addGradleTaskDescription(
       project,
       "jar",
-      "builds application's runnable jar, which can be found at `$id/build/libs`."
+      "builds application's runnable jar, which can be found at `$id/build/libs`.",
     )
     project.properties["graalHelperVersion"] = "2.0.1"
 
@@ -114,8 +115,8 @@ project(":lwjgl3") {
     )
   }
 }
-"""
-      )
+""",
+      ),
     )
   }
 }
@@ -131,7 +132,8 @@ class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
   }
 
   // language=groovy
-  override fun getContent(): String = """
+  override fun getContent(): String =
+    """
 buildscript {
   repositories {
     gradlePluginPortal()
@@ -166,11 +168,11 @@ ${joinDependencies(dependencies)}
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
 """ +
-    (if (project.extensions.isSelected("gdx-box2d")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
-    (if (project.extensions.isSelected("gdx-bullet")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
-    (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
-    (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
-    """    }
+      (if (project.extensions.isSelected("gdx-box2d")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
+      (if (project.extensions.isSelected("gdx-bullet")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
+      (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
+      (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
+      """    }
 
 }
 
@@ -195,8 +197,9 @@ jar {
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
     exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'""" +
-    (if (project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else "") +
-""")
+      (if (project.advanced.gdxVersion == "1.13.0") ", 'windows/x86/**'" else "") +
+"""
+)
   }
 // setting the manifest makes the JAR runnable.
   manifest {

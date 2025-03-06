@@ -11,6 +11,9 @@ indent_size = 4
 
 [*.{kt,kts,gradle,lml}]
 indent_size = 2
+max_line_length = 200
+# noinspection EditorConfigKeyCorrectness
+ktlint_standard_no-wildcard-imports = disabled
 
 [*.md]
 trim_trailing_whitespace = false

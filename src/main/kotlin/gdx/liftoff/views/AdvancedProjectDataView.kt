@@ -50,14 +50,16 @@ class AdvancedProjectDataView {
   private val gradleTasksField: VisTextField = inject()
 
   private fun String.toJavaVersion(): String = wrangleVersion(removeSuffix(".0"))
-  private fun wrangleVersion(text: String): String = (
-    if (text.length == 1 || text == "10") {
-      "1.$text"
-    } else if (text.startsWith("1.")) {
-      text.substring(2)
-    } else {
-      text
-    }
+
+  private fun wrangleVersion(text: String): String =
+    (
+      if (text.length == 1 || text == "10") {
+        "1.$text"
+      } else if (text.startsWith("1.")) {
+        text.substring(2)
+      } else {
+        text
+      }
     )
 
   var androidSdkVersion: String
@@ -75,21 +77,23 @@ class AdvancedProjectDataView {
       return if (version.toDouble() < javaVersion.toDouble()) javaVersion else version
     }
 
-  fun exportData(): AdvancedProjectData = AdvancedProjectData(
-    version = versionField.text,
-    gdxVersion = gdxVersionField.text,
-    javaVersion = javaVersionField.model.text.toJavaVersion(),
-    androidPluginVersion = "8.1.4",
-    robovmVersion = robovmVersionField.text,
-    gwtPluginVersion = gwtPluginVersionField.text,
-    serverJavaVersion = serverJavaVersionField.model.text.toJavaVersion(),
-    desktopJavaVersion = desktopJavaVersion,
-    generateSkin = generateSkinButton.isChecked,
-    generateReadme = generateReadmeButton.isChecked,
-    gradleTasks = ArrayList(
-      gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter {
-        it.isNotBlank()
-      }
+  fun exportData(): AdvancedProjectData =
+    AdvancedProjectData(
+      version = versionField.text,
+      gdxVersion = gdxVersionField.text,
+      javaVersion = javaVersionField.model.text.toJavaVersion(),
+      androidPluginVersion = "8.1.4",
+      robovmVersion = robovmVersionField.text,
+      gwtPluginVersion = gwtPluginVersionField.text,
+      serverJavaVersion = serverJavaVersionField.model.text.toJavaVersion(),
+      desktopJavaVersion = desktopJavaVersion,
+      generateSkin = generateSkinButton.isChecked,
+      generateReadme = generateReadmeButton.isChecked,
+      gradleTasks =
+        ArrayList(
+          gradleTasksField.text.split(Regex(Strings.WHITESPACE_SPLITTER_REGEX)).filter {
+            it.isNotBlank()
+          },
+        ),
     )
-  )
 }

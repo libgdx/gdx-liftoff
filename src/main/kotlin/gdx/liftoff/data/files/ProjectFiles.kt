@@ -54,7 +54,7 @@ open class SourceFile private constructor(val content: String, override val path
     projectName: String,
     sourceFolderPath: String = path("src", "main", "java"),
     packageName: String,
-    fileName: String
+    fileName: String,
   ) :
     this(content, toRelativePath(projectName, sourceFolderPath, packageName, fileName))
 
@@ -70,7 +70,7 @@ open class SourceFile private constructor(val content: String, override val path
         fileName
       } else {
         path(projectName, fileName)
-      }
+      },
     )
 
   override fun save(destination: FileHandle) {
@@ -78,7 +78,12 @@ open class SourceFile private constructor(val content: String, override val path
   }
 }
 
-fun toRelativePath(projectName: String, sourceFolderPath: String, packageName: String, fileName: String): String {
+fun toRelativePath(
+  projectName: String,
+  sourceFolderPath: String,
+  packageName: String,
+  fileName: String,
+): String {
   if (projectName.isEmpty() && sourceFolderPath.isEmpty() && packageName.isEmpty()) {
     return fileName
   }
@@ -110,7 +115,7 @@ open class CopiedFile private constructor(override val path: String, val origina
         ""
       } + path,
       original,
-      fileType
+      fileType,
     )
 
   override fun save(destination: FileHandle) {
@@ -135,10 +140,12 @@ class PropertiesFile(val properties: Map<String, String>) : ProjectFile {
  */
 class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
   override val path = "settings.gradle"
+
   override fun save(destination: FileHandle) {
-    val content = platforms.joinToString(
-      prefix =
-      """plugins {
+    val content =
+      platforms.joinToString(
+        prefix =
+          """plugins {
   // Applies the foojay-resolver plugin to allow automatic download of JDKs.
   id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
@@ -146,9 +153,9 @@ class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
 // You can remove Strings from the list and reload the Gradle project
 // if you want to temporarily disable a subproject.
 include """,
-      separator = ", ",
-      postfix = "\n"
-    ) { "'${it.id}'" }
+        separator = ", ",
+        postfix = "\n",
+      ) { "'${it.id}'" }
     destination.child(path).writeString(content, false, "UTF-8")
   }
 }
@@ -169,7 +176,7 @@ class GeneratedImageFile private constructor(override val path: String, val cont
       } else {
         ""
       } + path,
-      content
+      content,
     )
 
   override fun save(destination: FileHandle) {

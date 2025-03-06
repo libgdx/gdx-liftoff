@@ -20,7 +20,8 @@ interface KotlinTemplate : Template {
     project.languages.selectLanguage<Kotlin>()
   }
 
-  override fun getLwjgl2LauncherContent(project: Project): String = """@file:JvmName("Lwjgl2Launcher")
+  override fun getLwjgl2LauncherContent(project: Project): String =
+    """@file:JvmName("Lwjgl2Launcher")
 
 package ${project.basic.rootPackage}.lwjgl2
 
@@ -42,7 +43,8 @@ fun main() {
 }
 """
 
-  override fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android
+  override fun getAndroidLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.android
 
 import android.os.Bundle
 
@@ -62,7 +64,8 @@ class AndroidLauncher : AndroidApplication() {
 }
 """
 
-  override fun getHeadlessLauncherContent(project: Project): String = """@file:JvmName("HeadlessLauncher")
+  override fun getHeadlessLauncherContent(project: Project): String =
+    """@file:JvmName("HeadlessLauncher")
 
 package ${project.basic.rootPackage}.headless
 
@@ -79,7 +82,8 @@ fun main() {
 }
 """
 
-  override fun getLwjgl3LauncherContent(project: Project): String = """@file:JvmName("Lwjgl3Launcher")
+  override fun getLwjgl3LauncherContent(project: Project): String =
+    """@file:JvmName("Lwjgl3Launcher")
 
 package ${project.basic.rootPackage}.lwjgl3
 
@@ -269,7 +273,8 @@ class StartupHelper private constructor() {
 """
   }
 
-  override fun getIOSLauncherContent(project: Project): String = """@file:JvmName("IOSLauncher")
+  override fun getIOSLauncherContent(project: Project): String =
+    """@file:JvmName("IOSLauncher")
 
 package ${project.basic.rootPackage}
 
@@ -299,7 +304,8 @@ class IOSLauncher : IOSApplication.Delegate() {
     }
 }"""
 
-  override fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
+  override fun getGwtLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -322,7 +328,8 @@ public class GwtLauncher extends GwtApplication {
 }
 """
 
-  override fun getServerLauncherContent(project: Project) = """@file:JvmName("ServerLauncher")
+  override fun getServerLauncherContent(project: Project) =
+    """@file:JvmName("ServerLauncher")
 
 package ${project.basic.rootPackage}.server
 
@@ -332,7 +339,8 @@ fun main() {
 }
 """
 
-  override fun getTeaVMLauncherContent(project: Project): String = """@file:JvmName("TeaVMLauncher")
+  override fun getTeaVMLauncherContent(project: Project): String =
+    """@file:JvmName("TeaVMLauncher")
 
 package ${project.basic.rootPackage}.teavm
 
@@ -357,7 +365,8 @@ fun main() {
 }
 """
 
-  override fun getTeaVMBuilderContent(project: Project) = """package ${project.basic.rootPackage}.teavm
+  override fun getTeaVMBuilderContent(project: Project) =
+    """package ${project.basic.rootPackage}.teavm
 
 import java.io.File
 import com.github.xpenatan.gdx.backends.teavm.config.AssetFileHandle

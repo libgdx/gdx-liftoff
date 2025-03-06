@@ -38,7 +38,8 @@ class Shared : Platform {
  * client applications.
  */
 class SharedGradleFile(val project: Project) : GradleFile(Shared.ID) {
-  override fun getContent(): String = """eclipse.project.name = appName + '-shared'
+  override fun getContent(): String =
+    """eclipse.project.name = appName + '-shared'
 
 dependencies {
 ${joinDependencies(dependencies)}}

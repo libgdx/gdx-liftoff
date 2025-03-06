@@ -68,7 +68,7 @@ fun startNewJvmIfRequired(): Boolean {
   // avoids looping, but most certainly leads to a crash
   if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
     System.err.println(
-      "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument"
+      "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument",
     )
     return false
   }
@@ -85,12 +85,13 @@ fun startNewJvmIfRequired(): Boolean {
   var mainClass = System.getenv("JAVA_MAIN_CLASS_$pid")
   if (mainClass == null) {
     val trace = Thread.currentThread().stackTrace
-    mainClass = if (trace.isNotEmpty()) {
-      trace[trace.size - 1].className
-    } else {
-      System.err.println("The main class could not be determined.")
-      return false
-    }
+    mainClass =
+      if (trace.isNotEmpty()) {
+        trace[trace.size - 1].className
+      } else {
+        System.err.println("The main class could not be determined.")
+        return false
+      }
   }
   jvmArgs.add(mainClass!!)
   try {
@@ -123,16 +124,30 @@ fun main() {
   config.setIdleFPS(8)
   config.setAutoIconify(true)
   config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
-  val windowListener: Lwjgl3WindowListener = object : Lwjgl3WindowListener {
-    override fun focusLost() { Gdx.graphics.isContinuousRendering = false }
-    override fun focusGained() { Gdx.graphics.isContinuousRendering = true }
-    override fun created(window: Lwjgl3Window) {}
-    override fun iconified(isIconified: Boolean) {}
-    override fun maximized(isMaximized: Boolean) {}
-    override fun closeRequested(): Boolean { return true }
-    override fun filesDropped(files: Array<String>) {}
-    override fun refreshRequested() {}
-  }
+  val windowListener: Lwjgl3WindowListener =
+    object : Lwjgl3WindowListener {
+      override fun focusLost() {
+        Gdx.graphics.isContinuousRendering = false
+      }
+
+      override fun focusGained() {
+        Gdx.graphics.isContinuousRendering = true
+      }
+
+      override fun created(window: Lwjgl3Window) {}
+
+      override fun iconified(isIconified: Boolean) {}
+
+      override fun maximized(isMaximized: Boolean) {}
+
+      override fun closeRequested(): Boolean {
+        return true
+      }
+
+      override fun filesDropped(files: Array<String>) {}
+
+      override fun refreshRequested() {}
+    }
   config.setWindowListener(windowListener)
 
   try {
@@ -145,18 +160,18 @@ fun main() {
             Extension::class.java,
             ProjectTemplate::class.java,
             JvmLanguage::class.java,
-            GdxPlatform::class.java
+            GdxPlatform::class.java,
           )
         }
       },
-      config
+      config,
     )
   } catch (error: ExceptionInInitializerError) {
     if (OsUtils.isMac() && error.cause is IllegalStateException) {
       if (error.stackTraceToString().contains("XstartOnFirstThread")) {
         println(
           "Application was not launched on first thread. " +
-            "Add VM argument -XstartOnFirstThread to avoid this."
+            "Add VM argument -XstartOnFirstThread to avoid this.",
         )
       }
     }
@@ -171,11 +186,11 @@ fun main() {
             Extension::class.java,
             ProjectTemplate::class.java,
             JvmLanguage::class.java,
-            GdxPlatform::class.java
+            GdxPlatform::class.java,
           )
         }
       },
-      config
+      config,
     )
   }
 }

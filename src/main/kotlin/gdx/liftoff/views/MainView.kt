@@ -88,7 +88,7 @@ class MainView : ActionContainer {
             basicData.setDestination(file.path())
           }
         }
-      }
+      },
     )
   }
 
@@ -103,7 +103,7 @@ class MainView : ActionContainer {
             basicData.setAndroidSdkPath(file.path())
           }
         }
-      }
+      },
     )
   }
 
@@ -118,7 +118,10 @@ class MainView : ActionContainer {
 //    }
 //  }
 
-  private fun pickDirectory(initialFolder: FileHandle, callback: FileChooserAdapter) {
+  private fun pickDirectory(
+    initialFolder: FileHandle,
+    callback: FileChooserAdapter,
+  ) {
     var initialPath = initialFolder.path()
 
     if (System.getProperty("os.name").lowercase().contains("win")) {
@@ -152,7 +155,7 @@ class MainView : ActionContainer {
         "NFD",
         "The Native File Dialog library could not be loaded.\n" +
           "Check if you have multiple LWJGL3 applications open simultaneously,\n" +
-          "since that can cause this error."
+          "since that can cause this error.",
       )
       Gdx.app.error("NFD", e.stackTraceToString())
       val fileChooser = FileChooser(FileChooser.Mode.OPEN)
@@ -212,33 +215,34 @@ class MainView : ActionContainer {
 
     val request = Net.HttpRequest(Net.HttpMethods.GET)
     request.url = "https://raw.githubusercontent.com/libgdx/gdx-liftoff/master/version.txt"
-    val listener = object : Net.HttpResponseListener {
-      override fun handleHttpResponse(httpResponse: Net.HttpResponse) {
-        val latestStable = httpResponse.resultAsString.trim()
-        if (Configuration.VERSION != latestStable) {
-          Gdx.app.postRunnable {
-            logo.setZIndex(0)
-            logo.addAction(
-              Actions.sequence(
-                Actions.fadeOut(1.5f),
-                Actions.run {
-                  versionLink.addAction(Actions.fadeIn(1f))
-                  versionUpdate.addAction(Actions.fadeIn(1f))
-                }
+    val listener =
+      object : Net.HttpResponseListener {
+        override fun handleHttpResponse(httpResponse: Net.HttpResponse) {
+          val latestStable = httpResponse.resultAsString.trim()
+          if (Configuration.VERSION != latestStable) {
+            Gdx.app.postRunnable {
+              logo.setZIndex(0)
+              logo.addAction(
+                Actions.sequence(
+                  Actions.fadeOut(1.5f),
+                  Actions.run {
+                    versionLink.addAction(Actions.fadeIn(1f))
+                    versionUpdate.addAction(Actions.fadeIn(1f))
+                  },
+                ),
               )
-            )
+            }
           }
         }
-      }
 
-      override fun cancelled() {
-        // Never cancelled.
-      }
+        override fun cancelled() {
+          // Never cancelled.
+        }
 
-      override fun failed(t: Throwable?) {
-        // Ignored. The user might not be connected.
+        override fun failed(t: Throwable?) {
+          // Ignored. The user might not be connected.
+        }
       }
-    }
     Gdx.net.sendHttpRequest(request, listener)
   }
 
@@ -249,8 +253,7 @@ class MainView : ActionContainer {
   }
 
   @LmlAction("platforms")
-  fun getPlatforms(): Iterable<*> =
-    platformsView.platforms.entries.sortedBy { it.value.order }.map { it.key }
+  fun getPlatforms(): Iterable<*> = platformsView.platforms.entries.sortedBy { it.value.order }.map { it.key }
 
   @LmlAction("show")
   fun getTabShowingAction(): Action = Actions.sequence(Actions.alpha(0f), Actions.fadeIn(0.1f))
@@ -272,34 +275,38 @@ class MainView : ActionContainer {
 
   @LmlAction("templates")
   fun getOfficialTemplates(): Array<String> =
-    templatesView.officialTemplates.map { it.id }.sortedWith { left, right -> if (left == "classic") -1 else if (right == "classic") 1 else left.compareTo(right) }
+    templatesView.officialTemplates.map { it.id }.sortedWith {
+        left,
+        right,
+      ->
+      if (left == "classic") {
+        -1
+      } else if (right == "classic") {
+        1
+      } else {
+        left.compareTo(right)
+      }
+    }
       .toTypedArray()
 
   @LmlAction("thirdPartyTemplates")
-  fun getThirdPartyTemplates(): Array<String> =
-    templatesView.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()
+  fun getThirdPartyTemplates(): Array<String> = templatesView.thirdPartyTemplates.map { it.id }.sorted().toTypedArray()
 
   @LmlAction("officialExtensions")
-  fun getOfficialExtensions(): Array<String> =
-    extensionsData.official.map { it.id }.sorted().toTypedArray()
+  fun getOfficialExtensions(): Array<String> = extensionsData.official.map { it.id }.sorted().toTypedArray()
 
   @LmlAction("officialExtensionsUrls")
-  fun getOfficialExtensionsUrls(): Array<String> =
-    extensionsData.official.sortedBy { it.id }.map { it.url }.toTypedArray()
+  fun getOfficialExtensionsUrls(): Array<String> = extensionsData.official.sortedBy { it.id }.map { it.url }.toTypedArray()
 
   @LmlAction("thirdPartyExtensions")
-  fun getThirdPartyExtensions(): Array<String> =
-    extensionsData.thirdParty.map { it.id }.sorted().toTypedArray()
+  fun getThirdPartyExtensions(): Array<String> = extensionsData.thirdParty.map { it.id }.sorted().toTypedArray()
 
   @LmlAction("thirdPartyExtensionsUrls")
-  fun getThirdPartyExtensionsUrls(): Array<String> =
-    extensionsData.thirdParty.sortedBy { it.id }.map { it.url }.toTypedArray()
+  fun getThirdPartyExtensionsUrls(): Array<String> = extensionsData.thirdParty.sortedBy { it.id }.map { it.url }.toTypedArray()
 
-  fun getOfficialExtensionsByName(names: Collection<String>): List<Library> =
-    extensionsData.official.filter { names.contains(it.id) }.toList()
+  fun getOfficialExtensionsByName(names: Collection<String>): List<Library> = extensionsData.official.filter { names.contains(it.id) }.toList()
 
-  fun getThirdPartyExtensionsByName(names: Collection<String>): List<Library> =
-    extensionsData.thirdParty.filter { names.contains(it.id) }.toList()
+  fun getThirdPartyExtensionsByName(names: Collection<String>): List<Library> = extensionsData.thirdParty.filter { names.contains(it.id) }.toList()
 
   @LmlAction("initTabs")
   fun initiateTabbedPane(tabbedPane: TabbedPane.TabbedPaneTable) {
@@ -307,16 +314,18 @@ class MainView : ActionContainer {
   }
 
   fun getDestination(): FileHandle = basicData.destination
+
   private fun getAndroidSdkVersion(): FileHandle = basicData.androidSdk
 
-  fun createProject(): Project = Project(
-    basic = basicData.exportData(),
-    platforms = platformsView.getSelectedPlatforms(),
-    advanced = advancedData.exportData(),
-    languages = languagesView.exportData(),
-    extensions = extensionsData.exportData(),
-    template = templatesView.getSelectedTemplate()
-  )
+  fun createProject(): Project =
+    Project(
+      basic = basicData.exportData(),
+      platforms = platformsView.getSelectedPlatforms(),
+      advanced = advancedData.exportData(),
+      languages = languagesView.exportData(),
+      extensions = extensionsData.exportData(),
+      template = templatesView.getSelectedTemplate(),
+    )
 
   @LmlAction("minimize")
   fun iconify() = GLFW.glfwIconifyWindow(GLFW.glfwGetCurrentContext())
@@ -358,17 +367,31 @@ class MainView : ActionContainer {
    * I have no idea how to register this on an LML Actor. LML docs are no help. Agh.
    */
   fun assignScrollFocus(actor: Actor) {
-    actor.addListener(object : ClickListener() {
-      override fun enter(event: InputEvent?, x: Float, y: Float, pointer: Int, fromActor: Actor?) {
-        actor.stage?.scrollFocus = actor
-      }
-
-      override fun exit(event: InputEvent?, x: Float, y: Float, pointer: Int, toActor: Actor?) {
-        super.exit(event, x, y, pointer, toActor)
-        if (actor.stage?.scrollFocus == actor) {
-          actor.stage?.scrollFocus = null
+    actor.addListener(
+      object : ClickListener() {
+        override fun enter(
+          event: InputEvent?,
+          x: Float,
+          y: Float,
+          pointer: Int,
+          fromActor: Actor?,
+        ) {
+          actor.stage?.scrollFocus = actor
         }
-      }
-    })
+
+        override fun exit(
+          event: InputEvent?,
+          x: Float,
+          y: Float,
+          pointer: Int,
+          toActor: Actor?,
+        ) {
+          super.exit(event, x, y, pointer, toActor)
+          if (actor.stage?.scrollFocus == actor) {
+            actor.stage?.scrollFocus = null
+          }
+        }
+      },
+    )
   }
 }

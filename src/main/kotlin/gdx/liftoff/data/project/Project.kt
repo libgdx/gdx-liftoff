@@ -32,16 +32,17 @@ class Project(
   val advanced: AdvancedProjectData,
   val languages: LanguagesData,
   val extensions: ExtensionsData,
-  val template: Template
+  val template: Template,
 ) {
   private val gradleFiles: Map<String, GradleFile>
   val files = mutableListOf<ProjectFile>()
   val rootGradle: RootGradleFile
-  val properties = mutableMapOf(
-    "org.gradle.daemon" to "false",
-    "org.gradle.jvmargs" to "-Xms512M -Xmx1G -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8",
-    "org.gradle.configureondemand" to "false"
-  )
+  val properties =
+    mutableMapOf(
+      "org.gradle.daemon" to "false",
+      "org.gradle.jvmargs" to "-Xms512M -Xmx1G -Dfile.encoding=UTF-8 -Dconsole.encoding=UTF-8",
+      "org.gradle.configureondemand" to "false",
+    )
   val gwtInherits = mutableSetOf<String>()
   val androidPermissions = mutableSetOf<String>()
 
@@ -72,7 +73,7 @@ class Project(
         "--daemon" to "thanks to this flag, Gradle daemon will be used to run chosen tasks.",
         "--offline" to "when using this flag, cached dependency archives will be used.",
         "--continue" to "when using this flag, errors will not stop the tasks from running.",
-        "--refresh-dependencies" to "this flag forces validation of all dependencies. Useful for snapshot versions."
+        "--refresh-dependencies" to "this flag forces validation of all dependencies. Useful for snapshot versions.",
       ).forEach {
         gradleTaskDescriptions[it.first] = it.second
       }
@@ -83,7 +84,10 @@ class Project(
 
   fun getGradleFile(id: String): GradleFile = gradleFiles[id]!!
 
-  fun addGradleTaskDescription(task: String, description: String) {
+  fun addGradleTaskDescription(
+    task: String,
+    description: String,
+  ) {
     if (advanced.generateReadme) {
       gradleTaskDescriptions[task] = description
     }
@@ -158,50 +162,50 @@ class Project(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "uiskin.atlas"),
-          original = path("generator", "assets", "ui", "uiskin.atlas")
-        )
+          original = path("generator", "assets", "ui", "uiskin.atlas"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "uiskin.json"),
-          original = path("generator", "assets", "ui", "uiskin.json")
-        )
+          original = path("generator", "assets", "ui", "uiskin.json"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "uiskin.png"),
-          original = path("generator", "assets", "ui", "uiskin.png")
-        )
+          original = path("generator", "assets", "ui", "uiskin.png"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "font.fnt"),
-          original = path("generator", "assets", "ui", "font.fnt")
-        )
+          original = path("generator", "assets", "ui", "font.fnt"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "font-list.fnt"),
-          original = path("generator", "assets", "ui", "font-list.fnt")
-        )
+          original = path("generator", "assets", "ui", "font-list.fnt"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "font-subtitle.fnt"),
-          original = path("generator", "assets", "ui", "font-subtitle.fnt")
-        )
+          original = path("generator", "assets", "ui", "font-subtitle.fnt"),
+        ),
       )
       files.add(
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "font-window.fnt"),
-          original = path("generator", "assets", "ui", "font-window.fnt")
-        )
+          original = path("generator", "assets", "ui", "font-window.fnt"),
+        ),
       )
 
       // Android does not support classpath fonts loading through skins.
@@ -214,8 +218,8 @@ class Project(
               projectName = Assets.ID,
               path = path,
               original = path,
-              fileType = Files.FileType.Classpath
-            )
+              fileType = Files.FileType.Classpath,
+            ),
           )
         }
       }
@@ -250,8 +254,8 @@ ${gradleTaskDescriptions.map { "- `${it.key}`: ${it.value}" }.sorted().joinToStr
 
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
-"""
-        )
+""",
+        ),
       )
     }
   }
@@ -280,8 +284,8 @@ indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
-"""
-      )
+""",
+      ),
     )
   }
 
@@ -299,13 +303,16 @@ trim_trailing_whitespace = false
     return alerts
   }
 
-  fun includeGradleWrapper(logger: ProjectLogger, executeGradleTasks: Boolean = true) {
+  fun includeGradleWrapper(
+    logger: ProjectLogger,
+    executeGradleTasks: Boolean = true,
+  ) {
     arrayOf(
       "gradlew",
       "gradlew.bat",
       path("gradle", "gradle-daemon-jvm.properties"),
       path("gradle", "wrapper", "gradle-wrapper.jar"),
-      path("gradle", "wrapper", "gradle-wrapper.properties")
+      path("gradle", "wrapper", "gradle-wrapper.properties"),
     ).forEach {
       CopiedFile(path = it, original = path("generator", it)).save(basic.destination)
     }
@@ -317,8 +324,9 @@ trim_trailing_whitespace = false
       logger.logNls("runningGradleTasks")
       val commands = determineGradleCommand() + gradleTasks
       logger.log(commands.joinToString(separator = " "))
-      val process = ProcessBuilder(*commands).directory(basic.destination.file())
-        .redirectErrorStream(true).start()
+      val process =
+        ProcessBuilder(*commands).directory(basic.destination.file())
+          .redirectErrorStream(true).start()
       val stream = BufferedReader(InputStreamReader(process.inputStream))
       var line = stream.readLine()
       while (line != null) {
@@ -343,5 +351,6 @@ trim_trailing_whitespace = false
 
 interface ProjectLogger {
   fun log(message: String)
+
   fun logNls(bundleLine: String)
 }

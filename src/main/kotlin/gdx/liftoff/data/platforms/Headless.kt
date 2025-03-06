@@ -26,7 +26,10 @@ class Headless : Platform {
     addGradleTaskDescription(
       project,
       "run",
-      "starts the $id application. Note: if $id sources were not modified - and the application still creates `ApplicationListener` from `core` project - this task might fail due to no graphics support."
+      "starts the $id application. " +
+        "Note: if $id sources were not modified - " +
+        "and the application still creates `ApplicationListener` from `core` project - " +
+        "this task might fail due to no graphics support.",
     )
   }
 }
@@ -42,7 +45,8 @@ class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
   }
 
-  override fun getContent(): String = """apply plugin: 'application'
+  override fun getContent(): String =
+    """apply plugin: 'application'
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 java.sourceCompatibility = ${project.advanced.serverJavaVersion}
@@ -50,7 +54,14 @@ java.targetCompatibility = ${project.advanced.serverJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(${project.advanced.serverJavaVersion})
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.serverJavaVersion == "8") "1_8" else project.advanced.serverJavaVersion) + ")\n" else ""}
+${if (project.rootGradle.plugins.contains(
+        "kotlin",
+      )
+    ) {
+      "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.serverJavaVersion == "8") "1_8" else project.advanced.serverJavaVersion) + ")\n"
+    } else {
+      ""
+    }}
 mainClassName = "${project.basic.rootPackage}.headless.HeadlessLauncher"
 application.setMainClass(mainClassName)
 eclipse.project.name = appName + '-headless'

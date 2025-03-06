@@ -6,10 +6,9 @@ package gdx.liftoff.config
 data class GdxVersion(
   val major: Int,
   val minor: Int,
-  val revision: Int
+  val revision: Int,
 ) : Comparable<GdxVersion> {
-  override operator fun compareTo(other: GdxVersion) =
-    compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision })
+  override operator fun compareTo(other: GdxVersion) = compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision })
 
   companion object {
     fun parseGdxVersion(version: String): GdxVersion? {

@@ -26,6 +26,7 @@ class IOS : Platform {
   override val isStandard = false
 
   override fun createGradleFile(project: Project): GradleFile = IOSGradleFile(project)
+
   override fun initiate(project: Project) {
     project.properties["robovmVersion"] = project.advanced.robovmVersion
 
@@ -34,8 +35,8 @@ class IOS : Platform {
       CopiedFile(
         projectName = ID,
         path = "Info.plist.xml",
-        original = path("generator", "ios", "Info.plist.xml")
-      )
+        original = path("generator", "ios", "Info.plist.xml"),
+      ),
     )
     project.files.add(
       SourceFile(
@@ -46,8 +47,8 @@ app.id=${project.basic.rootPackage}
 app.mainclass=${project.basic.rootPackage}.IOSLauncher
 app.executable=IOSLauncher
 app.build=1
-app.name=${project.basic.name}"""
-      )
+app.name=${project.basic.name}""",
+      ),
     )
     project.files.add(
       SourceFile(
@@ -102,16 +103,16 @@ ${if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVers
     <framework>GameController</framework>
 ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) "    <framework>GameKit</framework>" else ""}
   </frameworks>
-</config>"""
-      )
+</config>""",
+      ),
     )
 
     project.files.add(
       CopiedFile(
         projectName = ID,
         path = path("data", "Media.xcassets", "Contents.json"),
-        original = path("generator", "ios", "data", "Media.xcassets", "Contents.json")
-      )
+        original = path("generator", "ios", "data", "Media.xcassets", "Contents.json"),
+      ),
     )
     arrayOf(
       "app-store-icon-1024@1x.png",
@@ -132,43 +133,43 @@ ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) 
       "iphone-spotlight-icon-40@2x.png",
       "iphone-spotlight-icon-40@3x.png",
       "iphone-spotlight-settings-icon-29@2x.png",
-      "iphone-spotlight-settings-icon-29@3x.png"
+      "iphone-spotlight-settings-icon-29@3x.png",
     ).forEach {
       project.files.add(
         CopiedFile(
           projectName = ID,
           path = path("data", "Media.xcassets", "AppIcon.appiconset", it),
-          original = path("generator", "ios", "data", "Media.xcassets", "AppIcon.appiconset", it)
-        )
+          original = path("generator", "ios", "data", "Media.xcassets", "AppIcon.appiconset", it),
+        ),
       )
     }
     arrayOf(
       "Contents.json",
       "libgdx@1x.png",
       "libgdx@2x.png",
-      "libgdx@3x.png"
+      "libgdx@3x.png",
     ).forEach {
       project.files.add(
         CopiedFile(
           projectName = ID,
           path = path("data", "Media.xcassets", "Logo.imageset", it),
-          original = path("generator", "ios", "data", "Media.xcassets", "Logo.imageset", it)
-        )
+          original = path("generator", "ios", "data", "Media.xcassets", "Logo.imageset", it),
+        ),
       )
     }
     project.files.add(
       CopiedFile(
         projectName = ID,
         path = path("data", "Base.lproj", "LaunchScreen.storyboard"),
-        original = path("generator", "ios", "data", "Base.lproj", "LaunchScreen.storyboard")
-      )
+        original = path("generator", "ios", "data", "Base.lproj", "LaunchScreen.storyboard"),
+      ),
     )
     project.files.add(
       CopiedFile(
         projectName = ID,
         path = path("data", "PrivacyInfo.xcprivacy"),
-        original = path("generator", "ios", "data", "PrivacyInfo.xcprivacy")
-      )
+        original = path("generator", "ios", "data", "PrivacyInfo.xcprivacy"),
+      ),
     )
 
     // Including reflected classes:
@@ -184,8 +185,8 @@ ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) 
 ${project.reflectedPackages.joinToString(separator = "\n") { "    <pattern>$it.**</pattern>" }}
 ${project.reflectedClasses.joinToString(separator = "\n") { "    <pattern>$it</pattern>" }}
   </forceLinkClasses>
-</config>"""
-        )
+</config>""",
+        ),
       )
     }
   }
@@ -200,7 +201,8 @@ class IOSGradleFile(val project: Project) : GradleFile(IOS.ID) {
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios")
   }
 
-  override fun getContent() = """buildscript {
+  override fun getContent() =
+    """buildscript {
   repositories {
     mavenCentral()
   }

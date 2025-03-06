@@ -19,9 +19,10 @@ class LmlTemplate : Template {
     get() = "$mainClass.WIDTH"
   override val height: String
     get() = "$mainClass.HEIGHT"
-  override val description = "Project template included simple launchers and an `AbstractApplicationListener` " +
-    "extension (from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws " +
-    "a simple GUI created using [LML](https://github.com/crashinvaders/gdx-lml/tree/master/lml)."
+  override val description =
+    "Project template included simple launchers and an `AbstractApplicationListener` " +
+      "extension (from [Kiwi](https://github.com/crashinvaders/gdx-lml/tree/master/kiwi) library) that draws " +
+      "a simple GUI created using [LML](https://github.com/crashinvaders/gdx-lml/tree/master/lml)."
 
   override fun apply(project: Project) {
     mainClass = project.basic.mainClass
@@ -42,12 +43,13 @@ class LmlTemplate : Template {
 <window title="Example" style="border" defaultPad="4" oneColumn="true" alpha="0" onShow="fadeIn">
   This is a simple LML view.
   <textButton onClick="setClicked" tablePad="8">Click me!</textButton>
-</window>"""
-      )
+</window>""",
+      ),
     )
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;

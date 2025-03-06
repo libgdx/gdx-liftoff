@@ -34,7 +34,11 @@ abstract class ThirdPartyExtension : Library {
 
   abstract fun initiateDependencies(project: Project)
 
-  override fun addDependency(project: Project, platform: String, dependency: String) {
+  override fun addDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     if (dependency.count { it == ':' } > 1) {
       super.addDependency(project, platform, dependency.substringBeforeLast(':') + ":\$${id}Version:" + dependency.substringAfterLast(':'))
     } else {
@@ -42,7 +46,11 @@ abstract class ThirdPartyExtension : Library {
     }
   }
 
-  fun addExternalDependency(project: Project, platform: String, dependency: String) {
+  fun addExternalDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     super.addDependency(project, platform, dependency)
   }
 }
@@ -63,8 +71,16 @@ class ArtemisOdb : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb")
 
-    addSpecialDependency(project, GWT.ID, "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
-    addSpecialDependency(project, GWT.ID, "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version:sources\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}")
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}",
+    )
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$${id}Version:sources\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}",
+    )
     addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:sources")
     addGwtInherit(project, "com.artemis.backends.artemis_backends_gwt")
     if (project.hasPlatform(GWT.ID)) {
@@ -72,8 +88,8 @@ class ArtemisOdb : ThirdPartyExtension() {
         CopiedFile(
           projectName = GWT.ID,
           original = path("generator", GWT.ID, "jsr305.gwt.xml"),
-          path = path("src", "main", "java", "jsr305.gwt.xml")
-        )
+          path = path("src", "main", "java", "jsr305.gwt.xml"),
+        ),
       )
       addGwtInherit(project, "jsr305")
     }
@@ -146,7 +162,11 @@ class Facebook : ThirdPartyExtension() {
 //        addDependency(project, iOS.ID, "de.tomgrill.gdxfacebook:gdx-facebook-ios")
 
     addDependency(project, GWT.ID, "de.tomgrill.gdxfacebook:gdx-facebook-core:sources")
-    addSpecialDependency(project, GWT.ID, "implementation(\"de.tomgrill.gdxfacebook:gdx-facebook-html:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"de.tomgrill.gdxfacebook:gdx-facebook-html:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}",
+    )
     addGwtInherit(project, "de.tomgrill.gdxfacebook.html.gdx_facebook_gwt")
   }
 }
@@ -585,15 +605,15 @@ class HackLights : ThirdPartyExtension() {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", "lights.png"),
-        path = path("lights.png")
-      )
+        path = path("lights.png"),
+      ),
     )
     project.files.add(
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", "lights.atlas"),
-        path = path("lights.atlas")
-      )
+        path = path("lights.atlas"),
+      ),
     )
   }
 }
@@ -640,8 +660,16 @@ class ControllerUtils : ThirdPartyExtension() {
     addDependency(project, Android.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-android")
     addDependency(project, IOS.ID, "de.golfgl.gdxcontrollerutils:gdx-controllers-iosrvm")
 
-    addSpecialDependency(project, GWT.ID, "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
-    addSpecialDependency(project, GWT.ID, "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}",
+    )
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}",
+    )
     addGwtInherit(project, "com.badlogic.gdx.controllers.controllers-gwt")
   }
 }
@@ -917,7 +945,11 @@ class Guacamole : ThirdPartyExtension() {
     addDependency(project, Lwjgl3.ID, "com.github.crykn.guacamole:gdx-desktop")
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:core:sources")
     addDependency(project, GWT.ID, "com.github.crykn.guacamole:gdx:sources")
-    addSpecialDependency(project, GWT.ID, "implementation(\"com.github.crykn.guacamole:gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"com.github.crykn.guacamole:gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}",
+    )
     addGwtInherit(project, "guacamole_gdx_gwt")
     if (project.platforms.containsKey(GWT.ID)) {
       Formic().initiate(project)
@@ -1090,7 +1122,11 @@ class GdxBasisUniversal : ThirdPartyExtension() {
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-arm64-v8a")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86")
     addNativeAndroidDependency(project, "com.crashinvaders.basisu:basisu-wrapper:natives-x86_64")
-    addSpecialDependency(project, GWT.ID, "implementation(\"com.crashinvaders.basisu:basisu-gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}")
+    addSpecialDependency(
+      project,
+      GWT.ID,
+      "implementation(\"com.crashinvaders.basisu:basisu-gdx-gwt:\$${id}Version:sources\"){exclude group: \"com.badlogicgames.gdx\", module: \"gdx-backend-gwt\"}",
+    )
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-gdx:sources")
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:sources")
     addDependency(project, GWT.ID, "com.crashinvaders.basisu:basisu-wrapper:natives-web")
@@ -1224,9 +1260,15 @@ class GdxMiniAudio : ThirdPartyExtension() {
     addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio:natives-x86_64")
   }
 
-  override fun addNativeAndroidDependency(project: Project, dependency: String) {
+  override fun addNativeAndroidDependency(
+    project: Project,
+    dependency: String,
+  ) {
     if (dependency.count { it == ':' } > 1) {
-      super.addNativeAndroidDependency(project, dependency.substringBeforeLast(':') + ":\$${id}Version:" + dependency.substringAfterLast(':'))
+      super.addNativeAndroidDependency(
+        project,
+        dependency.substringBeforeLast(':') + ":\$${id}Version:" + dependency.substringAfterLast(':'),
+      )
     } else {
       super.addNativeAndroidDependency(project, dependency + ":\$${id}Version")
     }

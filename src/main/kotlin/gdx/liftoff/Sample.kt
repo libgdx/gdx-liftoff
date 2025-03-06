@@ -185,7 +185,7 @@ enum class Preset {
     override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe())
     override val template: Template
       get() = KotlinClassicTemplate()
-  };
+  }, ;
 
   abstract val projectName: String
   abstract val rootPackage: String
@@ -200,17 +200,18 @@ enum class Preset {
     get() = LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
 }
 
-fun getPreset(arguments: Array<String>): Preset = when {
-  arguments.isEmpty() -> Preset.DEFAULT
-  else -> {
-    val name = arguments.first()
-    try {
-      Preset.valueOf(name.uppercase())
-    } catch (exception: IllegalArgumentException) {
-      Preset.DEFAULT
+fun getPreset(arguments: Array<String>): Preset =
+  when {
+    arguments.isEmpty() -> Preset.DEFAULT
+    else -> {
+      val name = arguments.first()
+      try {
+        Preset.valueOf(name.uppercase())
+      } catch (exception: IllegalArgumentException) {
+        Preset.DEFAULT
+      }
     }
   }
-}
 
 fun main(arguments: Array<String>) {
   GdxNativesLoader.load()
@@ -218,41 +219,45 @@ fun main(arguments: Array<String>) {
 
   val preset = getPreset(arguments)
   val officialExtensions = DesktopClassScanner().find<GdxExtension>().filter(::isOfficial).initiate<OfficialExtension>()
-  val basicData = BasicProjectData(
-    name = preset.projectName,
-    rootPackage = preset.rootPackage,
-    mainClass = "Main",
-    destination = FileHandle(File("build/dist/sample")),
-    androidSdk = FileHandle(File("."))
-  )
+  val basicData =
+    BasicProjectData(
+      name = preset.projectName,
+      rootPackage = preset.rootPackage,
+      mainClass = "Main",
+      destination = FileHandle(File("build/dist/sample")),
+      androidSdk = FileHandle(File(".")),
+    )
   val defaultJavaVersion = Java().version
   val defaults = GlobalActionContainer()
-  val advancedData = AdvancedProjectData(
-    version = Configuration.VERSION,
-    gdxVersion = Version.VERSION,
-    javaVersion = defaultJavaVersion,
-    androidPluginVersion = defaults.getDefaultAndroidPluginVersion(),
-    robovmVersion = defaults.getDefaultRoboVMVersion(),
-    gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),
-    serverJavaVersion = defaultJavaVersion,
-    desktopJavaVersion = defaultJavaVersion,
-    generateSkin = preset.addSkin,
-    generateReadme = true,
-    gradleTasks = arrayListOf()
-  )
-  val extensions = ExtensionsData(
-    officialExtensions = preset.officialExtensions.orElse(officialExtensions),
-    thirdPartyExtensions = preset.thirdPartyExtensions
-  )
+  val advancedData =
+    AdvancedProjectData(
+      version = Configuration.VERSION,
+      gdxVersion = Version.VERSION,
+      javaVersion = defaultJavaVersion,
+      androidPluginVersion = defaults.getDefaultAndroidPluginVersion(),
+      robovmVersion = defaults.getDefaultRoboVMVersion(),
+      gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),
+      serverJavaVersion = defaultJavaVersion,
+      desktopJavaVersion = defaultJavaVersion,
+      generateSkin = preset.addSkin,
+      generateReadme = true,
+      gradleTasks = arrayListOf(),
+    )
+  val extensions =
+    ExtensionsData(
+      officialExtensions = preset.officialExtensions.orElse(officialExtensions),
+      thirdPartyExtensions = preset.thirdPartyExtensions,
+    )
 
-  val project = Project(
-    basic = basicData,
-    advanced = advancedData,
-    platforms = preset.platforms.associateBy { it.id },
-    languages = preset.languagesData,
-    extensions = extensions,
-    template = preset.template
-  )
+  val project =
+    Project(
+      basic = basicData,
+      advanced = advancedData,
+      platforms = preset.platforms.associateBy { it.id },
+      languages = preset.languagesData,
+      extensions = extensions,
+      template = preset.template,
+    )
   project.generate()
   project.includeGradleWrapper(NullLogger, executeGradleTasks = false)
   exitProcess(0)
@@ -261,14 +266,12 @@ fun main(arguments: Array<String>) {
 /** No-op logger for interfacing with the project generator. */
 object NullLogger : ProjectLogger {
   override fun log(message: String) {}
+
   override fun logNls(bundleLine: String) {}
 }
 
-inline fun <reified T : Annotation> DesktopClassScanner.find(): GdxArray<Class<*>> =
-  findClassesAnnotatedWith(Root::class.java, listOf(T::class.java))
+inline fun <reified T : Annotation> DesktopClassScanner.find(): GdxArray<Class<*>> = findClassesAnnotatedWith(Root::class.java, listOf(T::class.java))
 
-fun isOfficial(extensionClass: Class<*>): Boolean =
-  extensionClass.getAnnotation(GdxExtension::class.java).official
+fun isOfficial(extensionClass: Class<*>): Boolean = extensionClass.getAnnotation(GdxExtension::class.java).official
 
-inline fun <reified T : Any> Iterable<Class<*>>.initiate(): List<T> =
-  map { it.getDeclaredConstructor().newInstance() as T }
+inline fun <reified T : Any> Iterable<Class<*>>.initiate(): List<T> = map { it.getDeclaredConstructor().newInstance() as T }

@@ -14,8 +14,9 @@ import gdx.liftoff.views.ProjectTemplate
 open class ClassicTemplate : Template {
   override val id = "classic"
   override val description: String
-    get() = "This project was generated with a template including simple application launchers and an " +
-      "`ApplicationAdapter` extension that draws libGDX logo."
+    get() =
+      "This project was generated with a template including simple application launchers and an " +
+        "`ApplicationAdapter` extension that draws libGDX logo."
 
   override fun apply(project: Project) {
     super.apply(project)
@@ -23,12 +24,13 @@ open class ClassicTemplate : Template {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "templates", "libgdx.png"),
-        path = "libgdx.png"
-      )
+        path = "libgdx.png",
+      ),
     )
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

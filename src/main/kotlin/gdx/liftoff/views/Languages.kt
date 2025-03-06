@@ -43,32 +43,35 @@ class LanguagesView : AbstractAnnotationProcessor<JvmLanguage>() {
     jvmLanguages.values.forEach {
       languageVersions.put(
         it.id,
-        parser.actorsMappedByIds.get(it.id + "Version") as VisTextField
+        parser.actorsMappedByIds.get(it.id + "Version") as VisTextField,
       )
     }
   }
 
-  private fun getSelectedLanguages(): List<Language> = languageButtons.filter { it.isChecked }.map {
-    jvmLanguages[it.name]!!
-  }.toList()
+  private fun getSelectedLanguages(): List<Language> =
+    languageButtons.filter { it.isChecked }.map {
+      jvmLanguages[it.name]!!
+    }.toList()
 
   fun exportData(): LanguagesData {
     val languages = getSelectedLanguages()
     return LanguagesData(
       list = languages.toMutableList(),
-      versions = languageVersions.associate { it.key to it.value.text }
+      versions = languageVersions.associate { it.key to it.value.text },
     )
   }
 
   override fun getSupportedAnnotationType(): Class<JvmLanguage> = JvmLanguage::class.java
+
   override fun isSupportingTypes(): Boolean = true
+
   override fun processType(
     type: Class<*>,
     annotation: JvmLanguage,
     component: Any,
     context: Context,
     initializer: ContextInitializer,
-    contextDestroyer: ContextDestroyer
+    contextDestroyer: ContextDestroyer,
   ) {
     val language = component as Language
     jvmLanguages[language.id] = language

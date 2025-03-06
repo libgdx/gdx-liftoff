@@ -7,10 +7,9 @@ data class LiftoffVersion(
   val major: Int,
   val minor: Int,
   val revision: Int,
-  val liftoff: Int
+  val liftoff: Int,
 ) : Comparable<LiftoffVersion> {
-  override operator fun compareTo(other: LiftoffVersion) =
-    compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision }, { it.liftoff })
+  override operator fun compareTo(other: LiftoffVersion) = compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision }, { it.liftoff })
 
   companion object {
     fun parseLiftoffVersion(version: String): LiftoffVersion? {

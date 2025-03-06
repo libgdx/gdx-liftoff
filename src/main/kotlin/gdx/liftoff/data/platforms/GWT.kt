@@ -18,16 +18,17 @@ class GWT : Platform {
     const val ID = "html"
     const val ORDER = IOS.ORDER + 1
     const val BASIC_INHERIT = "com.badlogic.gdx.backends.gdx_backends_gwt"
-    val INHERIT_COMPARATOR = Comparator<String> { a, b ->
-      // Basic GWT inherit has to be first:
-      if (a == BASIC_INHERIT) {
-        -1
-      } else if (b == BASIC_INHERIT) {
-        1
-      } else {
-        a.compareTo(b)
+    val INHERIT_COMPARATOR =
+      Comparator<String> { a, b ->
+        // Basic GWT inherit has to be first:
+        if (a == BASIC_INHERIT) {
+          -1
+        } else if (b == BASIC_INHERIT) {
+          1
+        } else {
+          a.compareTo(b)
+        }
       }
-    }
   }
 
   override val id = ID
@@ -38,8 +39,16 @@ class GWT : Platform {
   override fun createGradleFile(project: Project): GradleFile = GWTGradleFile(project)
 
   override fun initiate(project: Project) {
-    addGradleTaskDescription(project, "superDev", "compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/$id](http://localhost:8080/$id). Use only during development.")
-    addGradleTaskDescription(project, "dist", "compiles GWT sources. The compiled application can be found at `$id/build/dist`: you can use any HTTP server to deploy it.")
+    addGradleTaskDescription(
+      project,
+      "superDev",
+      "compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/$id](http://localhost:8080/$id). Use only during development.",
+    )
+    addGradleTaskDescription(
+      project,
+      "dist",
+      "compiles GWT sources. The compiled application can be found at `$id/build/dist`: you can use any HTTP server to deploy it.",
+    )
 
     project.gwtInherits.add(BASIC_INHERIT)
     project.properties["gwtFrameworkVersion"] = project.advanced.gwtVersion
@@ -58,9 +67,12 @@ class GWT : Platform {
   <source path="" />
   <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
   <!-- You can include a full package by not including the name of a type at the end. -->
-${(project.reflectedClasses + project.reflectedPackages).joinToString(separator = "\n", prefix = "") { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
-</module>"""
-      )
+${(project.reflectedClasses + project.reflectedPackages).joinToString(
+          separator = "\n",
+          prefix = "",
+        ) { "  <extend-configuration-property name=\"gdx.reflect.include\" value=\"$it\" />" }}
+</module>""",
+      ),
     )
     project.gwtInherits.add("${project.basic.rootPackage}.${project.basic.mainClass}")
 
@@ -85,8 +97,8 @@ ${(project.reflectedClasses + project.reflectedPackages).joinToString(separator 
   <!-- This happens for libraries and shared projects, typically, and the configuration goes in that project. -->
   <!-- You can include individual files like this, and access them with Gdx.files.classpath("path/to/file.png") : -->
   <!-- <extend-configuration-property name="gdx.files.classpath" value="path/to/file.png" /> -->
-</module>"""
-        )
+</module>""",
+        ),
       )
       project.gwtInherits.add("${project.basic.rootPackage}.Shared")
     }
@@ -128,8 +140,8 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
   <set-property name="user.agent" value="gecko1_8, safari"/>
   <collapse-property name="user.agent" values="*" />
   <!-- Remove the "user.agent" lines above if you encounter issues with Safari or other Gecko browsers. -->
-</module>"""
-      )
+</module>""",
+      ),
     )
 
     // Adding SuperDev definition:
@@ -146,8 +158,8 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
   <add-linker name="xsiframe"/>
   <set-configuration-property name="devModeRedirectEnabled" value="true"/>
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
-</module>"""
-      )
+</module>""",
+      ),
     )
 
     // Copying webapp files:
@@ -159,8 +171,8 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
         CopiedFile(
           projectName = id,
           original = path("generator", id, "webapp", "index_old.html"),
-          path = path("webapp", "index.html")
-        )
+          path = path("webapp", "index.html"),
+        ),
       )
     } else {
       project.files.add(
@@ -169,9 +181,10 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
           fileName = "index.html",
           sourceFolderPath = "webapp",
           packageName = "",
-          content = Gdx.files.internal(path("generator", id, "webapp", "index.html")).readString("UTF8")
-            .replaceFirst("@@libGDX application@@", project.basic.name)
-        )
+          content =
+            Gdx.files.internal(path("generator", id, "webapp", "index.html")).readString("UTF8")
+              .replaceFirst("@@libGDX application@@", project.basic.name),
+        ),
       )
     }
     addSoundManagerSource(project)
@@ -181,23 +194,24 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 
   private fun addSoundManagerSource(project: Project) {
     val version = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
-    val soundManagerSource = when {
-      // Invalid, user-entered libGDX version - defaulting to current lack of SoundManager:
-      version == null -> ""
-      // Pre-1.9.6: using old SoundManager sources:
-      version < GdxVersion(major = 1, minor = 9, revision = 6) -> "soundmanager2-jsmin_old.js"
-      // Recent libGDX version - using latest SoundManager:
-      version < GdxVersion(major = 1, minor = 9, revision = 12) -> "soundmanager2-jsmin.js"
-      // after 1.9.11, soundmanager is no longer used
-      else -> ""
-    }
+    val soundManagerSource =
+      when {
+        // Invalid, user-entered libGDX version - defaulting to current lack of SoundManager:
+        version == null -> ""
+        // Pre-1.9.6: using old SoundManager sources:
+        version < GdxVersion(major = 1, minor = 9, revision = 6) -> "soundmanager2-jsmin_old.js"
+        // Recent libGDX version - using latest SoundManager:
+        version < GdxVersion(major = 1, minor = 9, revision = 12) -> "soundmanager2-jsmin.js"
+        // after 1.9.11, soundmanager is no longer used
+        else -> ""
+      }
     if (soundManagerSource.isNotEmpty()) {
       project.files.add(
         CopiedFile(
           projectName = id,
           original = path("generator", id, "webapp", soundManagerSource),
-          path = path("webapp", "soundmanager2-jsmin.js")
-        )
+          path = path("webapp", "soundmanager2-jsmin.js"),
+        ),
       )
     }
   }
@@ -223,7 +237,8 @@ class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
     }
   }
 
-  override fun getContent(): String = """
+  override fun getContent(): String =
+    """
 buildscript {
   repositories {
     mavenCentral()
@@ -380,8 +395,8 @@ sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
 eclipse.project.name = appName + "-html"
 """ + (
-    if (project.extensions.isSelected("lombok")) {
-      """
+      if (project.extensions.isSelected("lombok")) {
+        """
 
 configurations { lom }
 dependencies {
@@ -408,8 +423,8 @@ superDev {
   }
 }
 """
-    } else {
-      ""
-    }
+      } else {
+        ""
+      }
     )
 }

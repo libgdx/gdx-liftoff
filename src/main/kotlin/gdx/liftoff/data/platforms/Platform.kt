@@ -44,16 +44,27 @@ interface Platform {
    */
   fun initiate(project: Project)
 
-  fun addCopiedFile(project: Project, vararg file: String) {
+  fun addCopiedFile(
+    project: Project,
+    vararg file: String,
+  ) {
     val originalFile = arrayOf("generator", id) + file
     project.files.add(CopiedFile(projectName = id, original = path(*originalFile), path = path(*file)))
   }
 
-  fun addGeneratedImageFile(project: Project, content: Pixmap, vararg file: String) {
+  fun addGeneratedImageFile(
+    project: Project,
+    content: Pixmap,
+    vararg file: String,
+  ) {
     project.files.add(GeneratedImageFile(projectName = id, content = content, path = path(*file)))
   }
 
-  fun addGradleTaskDescription(project: Project, task: String, description: String) {
+  fun addGradleTaskDescription(
+    project: Project,
+    task: String,
+    description: String,
+  ) {
     project.addGradleTaskDescription("$id:$task", description)
   }
 }

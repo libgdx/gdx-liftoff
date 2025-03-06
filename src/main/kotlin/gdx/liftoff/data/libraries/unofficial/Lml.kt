@@ -16,8 +16,8 @@ import gdx.liftoff.data.platforms.Shared
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
-private const val defaultGroup = "com.crashinvaders.lml"
-private const val fallbackVersion = "1.10.1.12.0"
+private const val DEFAULT_GROUP = "com.crashinvaders.lml"
+private const val FALLBACK_VERSION = "1.10.1.12.0"
 
 /**
  * Various utilities for libGDX APIs including GUI building and dependency injection.
@@ -28,9 +28,9 @@ abstract class LmlExtension : Library {
   /**
    * Latest version of gdx-lml libraries from the Crashinvaders fork.
    */
-  override val defaultVersion = fallbackVersion
+  override val defaultVersion = FALLBACK_VERSION
   override val repository = LmlRepository
-  override val group = defaultGroup
+  override val group = DEFAULT_GROUP
   override val official = false
   override val name: String
     get() = "gdx-" + id.camelCaseToKebabCase()
@@ -46,7 +46,11 @@ abstract class LmlExtension : Library {
 
   open fun initiateDependencies(project: Project) {}
 
-  override fun addDependency(project: Project, platform: String, dependency: String) {
+  override fun addDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     if (dependency.count { it == ':' } > 1) {
       super.addDependency(project, platform, dependency.substringBeforeLast(':') + ":\$lmlVersion:" + dependency.substringAfterLast(':'))
     } else {
@@ -54,7 +58,11 @@ abstract class LmlExtension : Library {
     }
   }
 
-  fun addExternalDependency(project: Project, platform: String, dependency: String) {
+  fun addExternalDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     super.addDependency(project, platform, dependency)
   }
 }
@@ -62,9 +70,9 @@ abstract class LmlExtension : Library {
 /**
  * Fetches and caches latest gdx-lml libraries version.
  */
-object LmlRepository : SingleVersionRepository(fallbackVersion) {
+object LmlRepository : SingleVersionRepository(FALLBACK_VERSION) {
   override fun fetchLatestVersion(): String? {
-    return Repository.MavenCentral.getLatestVersion(defaultGroup, "gdx-lml")
+    return Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "gdx-lml")
   }
 }
 

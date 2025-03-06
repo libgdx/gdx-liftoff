@@ -27,12 +27,12 @@ class TeaVM : Platform {
     addGradleTaskDescription(
       project,
       "run",
-      "serves the JavaScript application at http://localhost:8080 via a local Jetty server."
+      "serves the JavaScript application at http://localhost:8080 via a local Jetty server.",
     )
     addGradleTaskDescription(
       project,
       "build",
-      "builds the JavaScript application into the build/dist/webapp folder."
+      "builds the JavaScript application into the build/dist/webapp folder.",
     )
   }
 }
@@ -50,7 +50,8 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
     addDependency("org.teavm:teavm-jso-impl:\$teaVMVersion")
   }
 
-  override fun getContent() = """plugins {
+  override fun getContent() =
+    """plugins {
   id 'java'
   id 'org.gretty' version "${project.advanced.grettyVersion}"
 }

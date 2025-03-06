@@ -21,7 +21,8 @@ class RootGradleFile(val project: Project) : GradleFile("") {
     buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
   }
 
-  override fun getContent(): String = """buildscript {
+  override fun getContent(): String =
+    """buildscript {
   repositories {
 ${buildRepositories.joinToString(separator = "\n") { "    $it" }}
   }
@@ -44,10 +45,10 @@ allprojects {
 }
 
 configure(subprojects${if (project.hasPlatform(Android.ID)) {
-    " - project(':android')"
-  } else {
-    ""
-  }}) {
+      " - project(':android')"
+    } else {
+      ""
+    }}) {
 ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   sourceCompatibility = ${project.advanced.javaVersion}
 
@@ -74,23 +75,23 @@ ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   compileJava {
     options.incremental = true
   }${if (plugins.contains("kotlin")) {
-    """
+      """
   compileKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
-    if (project.advanced.javaVersion.removePrefix("1.") == "8") {
-      "1_8"
-    } else {
-      project.advanced.javaVersion.removePrefix("1.")
-    }})
+        if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+          "1_8"
+        } else {
+          project.advanced.javaVersion.removePrefix("1.")
+        }})
   compileTestKotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_${
-    if (project.advanced.javaVersion.removePrefix("1.") == "8") {
-      "1_8"
-    } else {
-      project.advanced.javaVersion.removePrefix("1.")
-    }})
+        if (project.advanced.javaVersion.removePrefix("1.") == "8") {
+          "1_8"
+        } else {
+          project.advanced.javaVersion.removePrefix("1.")
+        }})
   """
-  } else {
-    ""
-  }}
+    } else {
+      ""
+    }}
 }
 
 subprojects {
@@ -104,11 +105,11 @@ subprojects {
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://jitpack.io' }${
-  if (project.hasPlatform(TeaVM.ID)) {
-    "\n    maven { url 'https://teavm.org/maven/repository/' }"
-  } else {
-    ""
-  }}
+      if (project.hasPlatform(TeaVM.ID)) {
+        "\n    maven { url 'https://teavm.org/maven/repository/' }"
+      } else {
+        ""
+      }}
   }
 }
 

@@ -15,15 +15,20 @@ val json = JsonReader()
  * Interface for the supported Maven repositories. Fetches the latest versions of the registered libraries.
  */
 interface Repository {
-
   /** Returns the latest version of "[group]:[name]" artifact in this Maven repository or null if unable to fetch. */
-  fun getLatestVersion(group: String, name: String): String?
+  fun getLatestVersion(
+    group: String,
+    name: String,
+  ): String?
 
   /**
    * Maven Central repository. Fetches version of libraries available through Maven Central or Sonatype OSS.
    */
   object MavenCentral : CachedRepository() {
-    override fun fetchLatestVersion(group: String, name: String): String? {
+    override fun fetchLatestVersion(
+      group: String,
+      name: String,
+    ): String? {
       var res: String? = null
       try {
         res = fetchVersionFromMavenCentral(group, name)
@@ -32,17 +37,21 @@ interface Repository {
       return res
     }
 
-    private fun fetchVersionFromMavenCentral(group: String, name: String): String {
-      val response = get(
-        // https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"jdkgdxds"&rows=1&wt=json
-        "https://search.maven.org/solrsearch/select",
-        listOf(
-          // yes, we actually do need the spaces in here.
-          "q" to """g:"$group" AND a:"$name"""",
-          "rows" to "1",
-          "wt" to "json"
-        )
-      ).timeout(REQUEST_TIMEOUT)
+    private fun fetchVersionFromMavenCentral(
+      group: String,
+      name: String,
+    ): String {
+      val response =
+        get(
+          // https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"jdkgdxds"&rows=1&wt=json
+          "https://search.maven.org/solrsearch/select",
+          listOf(
+            // yes, we actually do need the spaces in here.
+            "q" to """g:"$group" AND a:"$name"""",
+            "rows" to "1",
+            "wt" to "json",
+          ),
+        ).timeout(REQUEST_TIMEOUT)
       val results = json.parse(response.responseString().third.get())["response"]["docs"]
       if (results.notEmpty()) {
         val res = results[0].getString("latestVersion")
@@ -56,10 +65,14 @@ interface Repository {
    * JitPack Maven repository. Fetches version of libraries available through JitPack.
    */
   object JitPack : CachedRepository() {
-    override fun fetchLatestVersion(group: String, name: String): String? {
+    override fun fetchLatestVersion(
+      group: String,
+      name: String,
+    ): String? {
       return try {
-        val response = get("https://jitpack.io/api/builds/$group/$name/latest")
-          .timeout(REQUEST_TIMEOUT)
+        val response =
+          get("https://jitpack.io/api/builds/$group/$name/latest")
+            .timeout(REQUEST_TIMEOUT)
         // removeSurrounding gets rid of some broken version sections resulting from JitPack -SNAPSHOT usage.
         json.parse(response.responseString().third.get()).getString("version").removeSurrounding("-", "-1")
       } catch (exception: Exception) {
@@ -76,7 +89,10 @@ interface Repository {
 abstract class CachedRepository : Repository {
   private val versions: MutableMap<String, String> = HashMap(64)
 
-  override fun getLatestVersion(group: String, name: String): String? {
+  override fun getLatestVersion(
+    group: String,
+    name: String,
+  ): String? {
     val identifier = "$group:$name"
     versions[identifier]?.let {
       return@getLatestVersion it
@@ -93,7 +109,10 @@ abstract class CachedRepository : Repository {
     return version
   }
 
-  abstract fun fetchLatestVersion(group: String, name: String): String?
+  abstract fun fetchLatestVersion(
+    group: String,
+    name: String,
+  ): String?
 }
 
 /**
@@ -103,7 +122,10 @@ abstract class CachedRepository : Repository {
 abstract class SingleVersionRepository(private val fallbackVersion: String) : Repository {
   val version by lazy { fetchLatestVersion() ?: fallbackVersion }
 
-  override fun getLatestVersion(group: String, name: String): String = version
+  override fun getLatestVersion(
+    group: String,
+    name: String,
+  ): String = version
 
   abstract fun fetchLatestVersion(): String?
 }

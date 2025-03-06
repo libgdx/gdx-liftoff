@@ -18,7 +18,10 @@ interface Language {
    */
   fun initiate(project: Project)
 
-  fun addDependency(project: Project, dependency: String) {
+  fun addDependency(
+    project: Project,
+    dependency: String,
+  ) {
     project.getGradleFile(Core.ID).addDependency(dependency)
     if (project.hasPlatform(Shared.ID)) {
       project.getGradleFile(Shared.ID).addDependency(dependency)

@@ -30,26 +30,34 @@ class ExtensionsView : AbstractAnnotationProcessor<Extension>() {
   private val thirdPartyButtons: ObjectMap<String, Button> = inject()
 
   private fun getSelectedOfficialExtensions(): List<Library> = official.filter { officialButtons.get(it.id).isChecked }
+
   private fun getSelectedThirdPartyExtensions(): List<Library> = thirdParty.filter { thirdPartyButtons.get(it.id).isChecked }
 
-  fun exportData(): ExtensionsData = ExtensionsData(
-    officialExtensions = getSelectedOfficialExtensions(),
-    thirdPartyExtensions = getSelectedThirdPartyExtensions()
-  )
+  fun exportData(): ExtensionsData =
+    ExtensionsData(
+      officialExtensions = getSelectedOfficialExtensions(),
+      thirdPartyExtensions = getSelectedThirdPartyExtensions(),
+    )
 
   // Automatic scanning of extensions:
   override fun getSupportedAnnotationType(): Class<Extension> = Extension::class.java
+
   override fun isSupportingTypes(): Boolean = true
+
   override fun processType(
     type: Class<*>,
     annotation: Extension,
     component: Any,
     context: Context,
     initializer: ContextInitializer,
-    contextDestroyer: ContextDestroyer
+    contextDestroyer: ContextDestroyer,
   ) {
     val library = component as Library
-    if (annotation.official) { official } else { thirdParty }.add(library)
+    if (annotation.official) {
+      official
+    } else {
+      thirdParty
+    }.add(library)
     extensionsById[library.id] = library
   }
 }

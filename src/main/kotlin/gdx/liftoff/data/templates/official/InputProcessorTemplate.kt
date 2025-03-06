@@ -15,8 +15,9 @@ import gdx.liftoff.views.ProjectTemplate
 class InputProcessorTemplate : Template {
   override val id = "inputProcessor"
   override val description: String
-    get() = "This project was generated with a template including simple application launchers and " +
-      "an `ApplicationListener` implementation that listens to user input."
+    get() =
+      "This project was generated with a template including simple application launchers and " +
+        "an `ApplicationListener` implementation that listens to user input."
 
   override fun apply(project: Project) {
     super.apply(project)
@@ -24,12 +25,13 @@ class InputProcessorTemplate : Template {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep"
-      )
+        path = ".gitkeep",
+      ),
     )
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

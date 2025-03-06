@@ -14,23 +14,27 @@ abstract class GradleFile private constructor(override val path: String) : Proje
       projectName + File.separator
     } else {
       ""
-    } + fileName
+    } + fileName,
   )
 
-  fun joinDependencies(dependencies: Collection<String>, type: String = "implementation", indent: String = "  "): String {
+  fun joinDependencies(
+    dependencies: Collection<String>,
+    type: String = "implementation",
+    indent: String = "  ",
+  ): String {
     return (
       if (dependencies.isEmpty()) {
         "\n"
       } else {
         dependencies.sorted().joinToString(prefix = "$indent$type ", separator = "\n$indent$type ", postfix = "\n")
       }
-      ) + (
+    ) + (
       if (specialDependencies.isEmpty()) {
         ""
       } else {
         specialDependencies.sorted().joinToString(prefix = indent, separator = "\n$indent", postfix = "\n")
       }
-      )
+    )
   }
 
   /**

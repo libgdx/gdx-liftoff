@@ -16,8 +16,8 @@ import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
-private const val defaultGroup = "io.github.libktx"
-private const val fallbackVersion = "1.12.1-rc1"
+private const val DEFAULT_GROUP = "io.github.libktx"
+private const val FALLBACK_VERSION = "1.12.1-rc1"
 
 /**
  * Modular Kotlin utilities.
@@ -25,10 +25,10 @@ private const val fallbackVersion = "1.12.1-rc1"
  * @author libKTX group
  */
 abstract class KtxExtension : Library {
-  override val defaultVersion = fallbackVersion
+  override val defaultVersion = FALLBACK_VERSION
   override val official = false
   override val repository = KtxRepository
-  override val group = defaultGroup
+  override val group = DEFAULT_GROUP
   override val name
     get() = id.camelCaseToKebabCase()
   override val url: String
@@ -42,11 +42,19 @@ abstract class KtxExtension : Library {
 
   open fun initiateDependencies(project: Project) {}
 
-  override fun addDependency(project: Project, platform: String, dependency: String) {
+  override fun addDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     super.addDependency(project, platform, "$dependency:\$ktxVersion")
   }
 
-  fun addExternalDependency(project: Project, platform: String, dependency: String) {
+  fun addExternalDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     super.addDependency(project, platform, dependency)
   }
 }
@@ -54,14 +62,14 @@ abstract class KtxExtension : Library {
 /**
  * Fetches and caches the latest KTX version.
  */
-object KtxRepository : SingleVersionRepository(fallbackVersion) {
+object KtxRepository : SingleVersionRepository(FALLBACK_VERSION) {
   override fun fetchLatestVersion(): String? {
     return try {
       // Fetching and caching KTX version from the repo:
       get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").timeout(30000).responseString().third.get().trim()
     } catch (exception: Exception) {
       Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
-      Repository.MavenCentral.getLatestVersion(defaultGroup, "ktx-app")
+      Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "ktx-app")
     }
   }
 }

@@ -19,6 +19,7 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
   init {
     style.font.data.markupEnabled = true
   }
+
   override fun getPrefWidth(): Float {
     return width
   }
@@ -34,7 +35,10 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
     super.setText(Strings.stripCharacter(str, '\r'))
   }
 
-  override fun draw(batch: Batch?, parentAlpha: Float) {
+  override fun draw(
+    batch: Batch?,
+    parentAlpha: Float,
+  ) {
     try {
       super.draw(batch, parentAlpha)
     } catch (getYourActTogetherScene2D: IndexOutOfBoundsException) {
@@ -47,8 +51,11 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
    * @author Kotcrab
    */
   class ScrollableTextAreaLmlTagProvider : LmlTagProvider {
-    override fun create(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder): LmlTag =
-      ScrollableTextAreaLmlTag(parser, parentTag, rawTagData)
+    override fun create(
+      parser: LmlParser,
+      parentTag: LmlTag,
+      rawTagData: StringBuilder,
+    ): LmlTag = ScrollableTextAreaLmlTag(parser, parentTag, rawTagData)
   }
 
   /**
@@ -57,7 +64,6 @@ class ScrollableTextArea(text: String, styleName: String) : VisTextArea(text, st
    */
   class ScrollableTextAreaLmlTag(parser: LmlParser, parentTag: LmlTag, rawTagData: StringBuilder) :
     VisTextAreaLmlTag(parser, parentTag, rawTagData) {
-    override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField =
-      ScrollableTextArea(textBuilder.text, textBuilder.styleName)
+    override fun getNewInstanceOfTextField(textBuilder: TextLmlActorBuilder): VisTextField = ScrollableTextArea(textBuilder.text, textBuilder.styleName)
   }
 }

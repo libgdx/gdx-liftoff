@@ -41,37 +41,57 @@ interface Library {
    */
   fun initiate(project: Project)
 
-  fun addDependency(project: Project, platform: String, dependency: String) {
+  fun addDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     if (project.hasPlatform(platform)) {
       project.getGradleFile(platform).addDependency(dependency)
     }
   }
 
-  fun addSpecialDependency(project: Project, platform: String, dependency: String) {
+  fun addSpecialDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
     if (project.hasPlatform(platform)) {
       project.getGradleFile(platform).addSpecialDependency(dependency)
     }
   }
 
-  fun addDesktopDependency(project: Project, dependency: String) {
+  fun addDesktopDependency(
+    project: Project,
+    dependency: String,
+  ) {
     addDependency(project, Lwjgl2.ID, dependency)
     addDependency(project, Lwjgl3.ID, dependency)
   }
 
-  fun addNativeAndroidDependency(project: Project, dependency: String) {
+  fun addNativeAndroidDependency(
+    project: Project,
+    dependency: String,
+  ) {
     if (project.hasPlatform(Android.ID)) {
       val gradle = project.getGradleFile(Android.ID) as AndroidGradleFile
       gradle.addNativeDependency(dependency)
     }
   }
 
-  fun addGwtInherit(project: Project, inherit: String) {
+  fun addGwtInherit(
+    project: Project,
+    inherit: String,
+  ) {
     if (project.hasPlatform(GWT.ID)) {
       project.gwtInherits.add(inherit)
     }
   }
 
-  fun addAndroidPermission(project: Project, permissionName: String) {
+  fun addAndroidPermission(
+    project: Project,
+    permissionName: String,
+  ) {
     if (project.hasPlatform(Android.ID)) {
       project.androidPermissions.add(permissionName)
     }

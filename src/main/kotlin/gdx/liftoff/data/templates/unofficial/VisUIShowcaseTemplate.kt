@@ -22,10 +22,12 @@ class VisUIShowcaseTemplate : Template {
   override val height: String
     get() = "600"
   override val description: String
-    get() = "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
-      "of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
+    get() =
+      "Project template included simple launchers and an `ApplicationAdapter` extension with a showcase " +
+        "of widgets created using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -135,8 +137,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep"
-      )
+        path = ".gitkeep",
+      ),
     )
     VisUI().initiate(project)
 
@@ -363,7 +365,7 @@ public class TestWindow extends VisWindow {
         return pickerTable;
     }
 }
-"""
+""",
     )
 
     addSourceFile(
@@ -499,7 +501,7 @@ public class TestListView extends VisWindow {
         }
     }
 }
-"""
+""",
     )
 
     addSourceFile(
@@ -581,7 +583,7 @@ public class TestTabbedPane extends VisWindow {
         }
     }
 }
-"""
+""",
     )
 
     addSourceFile(
@@ -636,7 +638,7 @@ public class TestCollapsible extends VisWindow {
         pack();
     }
 }
-"""
+""",
     )
   }
 }

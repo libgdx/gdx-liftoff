@@ -86,7 +86,9 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
       ideaButton.isDisabled = false
     } catch (e: Exception) {
-      Tooltip.Builder("Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
+      Tooltip.Builder(
+        "Couldn't find IntelliJ in PATH.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.",
+      ).target(ideaButton).build()
       ideaButton.isDisabled = true
     }
 //    }
@@ -111,13 +113,16 @@ class GenerationPrompt : ViewDialogShower, ProjectLogger, ActionContainer {
 
         ideaButton.isDisabled = false
       } catch (e: Exception) {
-        Tooltip.Builder("Couldn't find IntelliJ in PATH or as a flatpak.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.").target(ideaButton).build()
+        Tooltip.Builder(
+          "Couldn't find IntelliJ in PATH or as a flatpak.\nMake sure that you have JetBrains Toolbox and \"Generate shell scripts\" checked in its settings.",
+        ).target(ideaButton).build()
         ideaButton.isDisabled = true
       }
     }
   }
 
   override fun logNls(bundleLine: String) = log(locale.i18nBundle.get(bundleLine))
+
   override fun log(message: String) {
     loggingBuffer.offer(message)
     Gdx.app.postRunnable {

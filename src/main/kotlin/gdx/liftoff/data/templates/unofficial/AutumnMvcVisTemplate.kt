@@ -17,20 +17,21 @@ open class AutumnMvcVisTemplate : AutumnMvcBasicTemplate() {
   override val id = "lmlMvcVisTemplate"
   override val generateSkin = false
   override val description: String
-    get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
-      "class scanners and a basic [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application."
+    get() =
+      "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+        "class scanners and a basic [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application."
 
-  override fun getReflectedClasses(project: Project): Array<String> =
-    arrayOf("com.github.czyzby.autumn.mvc.component.preferences.dto.AbstractPreference")
+  override fun getReflectedClasses(project: Project): Array<String> = arrayOf("com.github.czyzby.autumn.mvc.component.preferences.dto.AbstractPreference")
 
   override fun getReflectedPackages(project: Project): Array<String> =
     arrayOf(
       "${project.basic.rootPackage}.configuration",
       "${project.basic.rootPackage}.controller",
-      "${project.basic.rootPackage}.service"
+      "${project.basic.rootPackage}.service",
     )
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 /** This class serves only as the application scanning root. Any classes in its package (or any of the sub-packages)
  * with proper Autumn MVC annotations will be found, scanned and initiated. */
@@ -53,15 +54,15 @@ public class ${project.basic.mainClass} {
       CopiedFile(
         projectName = Assets.ID,
         path = path("images", "libgdx.png"),
-        original = path("generator", "templates", "libgdx.png")
-      )
+        original = path("generator", "templates", "libgdx.png"),
+      ),
     )
     project.files.add(
       CopiedFile(
         projectName = Assets.ID,
         path = path("music", "theme.ogg"),
-        original = path("generator", "templates", "autumn", "theme.ogg")
-      )
+        original = path("generator", "templates", "autumn", "theme.ogg"),
+      ),
     )
     // Adding I18N bundle:
     arrayOf("", "_en", "_pl").forEach {
@@ -70,8 +71,8 @@ public class ${project.basic.mainClass} {
         CopiedFile(
           projectName = Assets.ID,
           path = path("i18n", fileName),
-          original = path("generator", "templates", "autumn", fileName)
-        )
+          original = path("generator", "templates", "autumn", fileName),
+        ),
       )
     }
   }
@@ -162,8 +163,8 @@ public class ${project.basic.mainClass} {
             // speeding up method look-up:
             Lml.EXTRACT_UNANNOTATED_METHODS = false;
         }
-    }"""
-      )
+    }""",
+      ),
     )
     project.files.add(
       SourceFile(
@@ -202,8 +203,8 @@ public class ${project.basic.mainClass} {
         protected String serialize(final SkinScale preference) {
             return preference.name();
         }
-    }"""
-      )
+    }""",
+      ),
     )
 
     project.files.add(
@@ -241,8 +242,8 @@ public class ${project.basic.mainClass} {
             stage.act(delta);
             stage.draw();
         }
-    }"""
-      )
+    }""",
+      ),
     )
 
     project.files.add(
@@ -282,8 +283,8 @@ public class ${project.basic.mainClass} {
 
             stage.draw();
         }
-    }"""
-      )
+    }""",
+      ),
     )
 
     project.files.add(
@@ -307,8 +308,8 @@ public class ${project.basic.mainClass} {
         @LmlAction("close")
         public void noOp() {
         }
-    }"""
-      )
+    }""",
+      ),
     )
 
     project.files.add(
@@ -346,8 +347,8 @@ public class ${project.basic.mainClass} {
             final SkinScale scale = scaleService.getPreference().extractFromActor(actor);
             scaleService.changeScale(scale);
         }
-    }"""
-      )
+    }""",
+      ),
     )
 
     project.files.add(
@@ -410,8 +411,8 @@ public class ${project.basic.mainClass} {
                 }
             });
         }
-    }"""
-      )
+    }""",
+      ),
     )
   }
 
@@ -427,8 +428,8 @@ public class ${project.basic.mainClass} {
 <window title="@loadingTitle" titleAlign="center">
     <!-- Thanks to "goto:menu" action, menu.lml will be shown after this bar is fully loaded. -->
     <progressBar id="loadingBar" animateDuration="0.4" onComplete="goto:menu"/>
-</window>"""
-      )
+</window>""",
+      ),
     )
 
     project.files.add(
@@ -442,8 +443,8 @@ public class ${project.basic.mainClass} {
     <textButton onChange="show:settings">@settings</textButton>
     <!-- "app:exit" will automatically try to exit the application when the button is clicked. -->
     <textButton onChange="app:exit">@exit</textButton>
-</table>"""
-      )
+</table>""",
+      ),
     )
 
     project.files.add(
@@ -493,8 +494,8 @@ public class ${project.basic.mainClass} {
     </tabbedPane>
     <!-- "close" action is defined in Global class. -->
     <textButton onResult="close">@exit</textButton>
-</dialog>"""
-      )
+</dialog>""",
+      ),
     )
 
     project.files.add(
@@ -511,8 +512,8 @@ public class ${project.basic.mainClass} {
     <!-- "content" will be replaced with the data between macro tags. -->
     {content}
 </tab>
-</:macro>"""
-      )
+</:macro>""",
+      ),
     )
   }
 }

@@ -27,6 +27,7 @@ class IOSMOE : Platform {
   override val isStandard = false
 
   override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
+
   override fun initiate(project: Project) {
     project.properties["gdxMoeVersion"] = "1.12.1"
     project.properties["multiOsEngineVersion"] = "1.10.1"
@@ -50,14 +51,14 @@ class IOSMOE : Platform {
       "iphone-spotlight-icon-40@2x.png",
       "iphone-spotlight-icon-40@3x.png",
       "iphone-spotlight-settings-icon-29@2x.png",
-      "iphone-spotlight-settings-icon-29@3x.png"
+      "iphone-spotlight-settings-icon-29@3x.png",
     ).forEach {
       project.files.add(
         CopiedFile(
           projectName = ID,
           path = path("xcode", "ios-moe", "Media.xcassets", "AppIcon.appiconset", it),
-          original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "AppIcon.appiconset", it)
-        )
+          original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "AppIcon.appiconset", it),
+        ),
       )
     }
 
@@ -65,8 +66,8 @@ class IOSMOE : Platform {
       CopiedFile(
         projectName = ID,
         path = path("xcode", "ios-moe", "Media.xcassets", "Contents.json"),
-        original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "Contents.json")
-      )
+        original = path("generator", "ios-moe", "xcode", "ios-moe", "Media.xcassets", "Contents.json"),
+      ),
     )
 
     arrayOf(
@@ -79,14 +80,14 @@ class IOSMOE : Platform {
       "Default-568h@2x.png",
       "Default~ipad.png",
       "Default.png",
-      "main.cpp"
+      "main.cpp",
     ).forEach {
       project.files.add(
         CopiedFile(
           projectName = ID,
           path = path("xcode", "ios-moe", it),
-          original = path("generator", "ios-moe", "xcode", "ios-moe", it)
-        )
+          original = path("generator", "ios-moe", "xcode", "ios-moe", it),
+        ),
       )
     }
 
@@ -95,8 +96,8 @@ class IOSMOE : Platform {
         projectName = ID,
         path = path("xcode", "ios-moe", "Info.plist"),
         original = path("generator", "ios-moe", "xcode", "ios-moe", "Info.plist"),
-        replaceMap = mapOf(Pair("%PACKAGE%", project.basic.rootPackage))
-      )
+        replaceMap = mapOf(Pair("%PACKAGE%", project.basic.rootPackage)),
+      ),
     )
 
     project.files.add(
@@ -104,12 +105,13 @@ class IOSMOE : Platform {
         projectName = ID,
         path = path("xcode", "ios-moe.xcodeproj", "project.pbxproj"),
         original = path("generator", "ios-moe", "xcode", "ios-moe.xcodeproj", "project.pbxproj"),
-        replaceMap = mapOf(
-          Pair("%PACKAGE%", project.basic.rootPackage),
-          Pair("%ASSET_PATH%", "assets/"),
-          Pair("%APP_NAME%", project.basic.name)
-        )
-      )
+        replaceMap =
+          mapOf(
+            Pair("%PACKAGE%", project.basic.rootPackage),
+            Pair("%ASSET_PATH%", "assets/"),
+            Pair("%APP_NAME%", project.basic.name),
+          ),
+      ),
     )
 
     arrayOf("Info.plist", "main.cpp").forEach {
@@ -117,8 +119,8 @@ class IOSMOE : Platform {
         CopiedFile(
           projectName = ID,
           path = path("xcode", "ios-moe-Test", it),
-          original = path("generator", "ios-moe", "xcode", "ios-moe-Test", it)
-        )
+          original = path("generator", "ios-moe", "xcode", "ios-moe-Test", it),
+        ),
       )
     }
     project.advanced.gradleTasks.add("ios-moe:moeUpdateXcodeSettings")
@@ -126,7 +128,12 @@ class IOSMOE : Platform {
   }
 }
 
-class ReplacedContentFile(projectName: String = "", path: String, original: String, fileType: Files.FileType = Files.FileType.Internal, private val replaceMap: Map<String, String>) : CopiedFile(projectName, path, original, fileType) {
+class ReplacedContentFile(projectName: String = "", path: String, original: String, fileType: Files.FileType = Files.FileType.Internal, private val replaceMap: Map<String, String>) : CopiedFile(
+  projectName,
+  path,
+  original,
+  fileType,
+) {
   override fun save(destination: FileHandle) {
     var input = Gdx.files.getFileHandle(original, fileType).readString("UTF-8")
     replaceMap.forEach { (t, u) -> input = input.replace(t, u) }
@@ -141,7 +148,8 @@ class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
     addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios\"")
   }
 
-  override fun getContent() = """buildscript {
+  override fun getContent() =
+    """buildscript {
   repositories {
     mavenCentral()
   }

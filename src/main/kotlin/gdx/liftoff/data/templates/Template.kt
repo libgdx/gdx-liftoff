@@ -66,7 +66,7 @@ interface Template {
       platform = Core.ID,
       packageName = project.basic.rootPackage,
       fileName = "${project.basic.mainClass}.$applicationListenerExtension",
-      content = getApplicationListenerContent(project)
+      content = getApplicationListenerContent(project),
     )
   }
 
@@ -82,11 +82,12 @@ interface Template {
       platform = Lwjgl2.ID,
       packageName = "${project.basic.rootPackage}.lwjgl2",
       fileName = "Lwjgl2Launcher.$launcherExtension",
-      content = getLwjgl2LauncherContent(project)
+      content = getLwjgl2LauncherContent(project),
     )
   }
 
-  fun getLwjgl2LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl2;
+  fun getLwjgl2LauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.lwjgl2;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -126,11 +127,12 @@ public class Lwjgl2Launcher {
       content = getGwtLauncherContent(project),
       // GWT supports only Java sources:
       fileName = "GwtLauncher.java",
-      sourceFolderPath = path("src", "main", "java")
+      sourceFolderPath = path("src", "main", "java"),
     )
   }
 
-  fun getGwtLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.gwt;
+  fun getGwtLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -139,8 +141,8 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {""" + (
-    if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 9, 12)) {
-      """
+      if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 9, 12)) {
+        """
         ////USE THIS CODE FOR A FIXED SIZE APPLICATION
         @Override
         public GwtApplicationConfiguration getConfig () {
@@ -178,8 +180,8 @@ public class GwtLauncher extends GwtApplication {""" + (
         //    }
         ////END OF CODE FOR RESIZABLE APPLICATION
 """
-    } else {
-      """
+      } else {
+        """
         @Override
         public GwtApplicationConfiguration getConfig () {
             // Resizable application, uses available space in browser with no padding:
@@ -192,7 +194,7 @@ public class GwtLauncher extends GwtApplication {""" + (
             //return new GwtApplicationConfiguration($width, $height);
         }
 """
-    }
+      }
     ) +
 """
         @Override
@@ -208,11 +210,12 @@ public class GwtLauncher extends GwtApplication {""" + (
       platform = Android.ID,
       packageName = project.basic.rootPackage,
       fileName = "android/AndroidLauncher.$launcherExtension",
-      content = getAndroidLauncherContent(project)
+      content = getAndroidLauncherContent(project),
     )
   }
 
-  fun getAndroidLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.android;
+  fun getAndroidLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.android;
 
 import android.os.Bundle;
 
@@ -237,11 +240,12 @@ public class AndroidLauncher extends AndroidApplication {
       platform = Headless.ID,
       packageName = "${project.basic.rootPackage}.headless",
       fileName = "HeadlessLauncher.$launcherExtension",
-      content = getHeadlessLauncherContent(project)
+      content = getHeadlessLauncherContent(project),
     )
   }
 
-  fun getHeadlessLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.headless;
+  fun getHeadlessLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.headless;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
@@ -275,11 +279,12 @@ public class HeadlessLauncher {
       platform = IOS.ID,
       packageName = project.basic.rootPackage,
       fileName = "IOSLauncher.$launcherExtension",
-      content = getIOSLauncherContent(project)
+      content = getIOSLauncherContent(project),
     )
   }
 
-  fun getIOSLauncherContent(project: Project): String = """package ${project.basic.rootPackage};
+  fun getIOSLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
@@ -309,11 +314,12 @@ public class IOSLauncher extends IOSApplication.Delegate {
       platform = IOSMOE.ID,
       packageName = project.basic.rootPackage,
       fileName = "IOSLauncher.$launcherExtension",
-      content = getIOSMOELauncherContent(project)
+      content = getIOSMOELauncherContent(project),
     )
   }
 
-  fun getIOSMOELauncherContent(project: Project): String = """package ${project.basic.rootPackage};
+  fun getIOSMOELauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import apple.uikit.c.UIKit;
 import com.badlogic.gdx.backends.iosmoe.IOSApplication;
@@ -344,18 +350,19 @@ public class IOSLauncher extends IOSApplication.Delegate {
       platform = Lwjgl3.ID,
       packageName = "${project.basic.rootPackage}.lwjgl3",
       fileName = "Lwjgl3Launcher.$launcherExtension",
-      content = getLwjgl3LauncherContent(project)
+      content = getLwjgl3LauncherContent(project),
     )
     addSourceFile(
       project = project,
       platform = Lwjgl3.ID,
       packageName = "${project.basic.rootPackage}.lwjgl3",
       fileName = "StartupHelper.$launcherExtension",
-      content = getLwjgl3StartupContent(project)
+      content = getLwjgl3StartupContent(project),
     )
   }
 
-  fun getLwjgl3LauncherContent(project: Project): String = """package ${project.basic.rootPackage}.lwjgl3;
+  fun getLwjgl3LauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -391,7 +398,8 @@ public class Lwjgl3Launcher {
     }
 }"""
 
-  fun getLwjgl3StartupContent(project: Project): String = """/*
+  fun getLwjgl3StartupContent(project: Project): String =
+    """/*
  * Copyright 2020 damios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -590,11 +598,12 @@ public class StartupHelper {
       platform = Server.ID,
       packageName = "${project.basic.rootPackage}.server",
       fileName = "ServerLauncher.$launcherExtension",
-      content = getServerLauncherContent(project)
+      content = getServerLauncherContent(project),
     )
   }
 
-  fun getServerLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.server;
+  fun getServerLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.server;
 
 /** Launches the server application. */
 public class ServerLauncher {
@@ -609,17 +618,19 @@ public class ServerLauncher {
       platform = TeaVM.ID,
       packageName = "${project.basic.rootPackage}.teavm",
       fileName = "TeaVMLauncher.$launcherExtension",
-      content = getTeaVMLauncherContent(project)
+      content = getTeaVMLauncherContent(project),
     )
     addSourceFile(
       project = project,
       platform = TeaVM.ID,
       packageName = "${project.basic.rootPackage}.teavm",
       fileName = "TeaVMBuilder.$launcherExtension",
-      content = getTeaVMBuilderContent(project)
+      content = getTeaVMBuilderContent(project),
     )
   }
-  fun getTeaVMLauncherContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
+
+  fun getTeaVMLauncherContent(project: Project): String =
+    """package ${project.basic.rootPackage}.teavm;
 
 import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration;
 import com.github.xpenatan.gdx.backends.teavm.TeaApplication;
@@ -644,7 +655,9 @@ public class TeaVMLauncher {
     }
 }
 """
-  fun getTeaVMBuilderContent(project: Project): String = """package ${project.basic.rootPackage}.teavm;
+
+  fun getTeaVMBuilderContent(project: Project): String =
+    """package ${project.basic.rootPackage}.teavm;
 
 import com.github.xpenatan.gdx.backends.teavm.config.AssetFileHandle;
 import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildConfiguration;
@@ -684,7 +697,7 @@ ${generateTeaVMReflectionIncludes(project)}
   fun generateTeaVMReflectionIncludes(
     project: Project,
     indent: String = " ".repeat(8),
-    trailingSemicolon: Boolean = true
+    trailingSemicolon: Boolean = true,
   ): String {
     val semicolon = if (trailingSemicolon) ";" else ""
     return if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
@@ -702,7 +715,7 @@ ${generateTeaVMReflectionIncludes(project)}
     packageName: String,
     fileName: String,
     content: String,
-    sourceFolderPath: String = defaultSourceFolder
+    sourceFolderPath: String = defaultSourceFolder,
   ) {
     if (project.hasPlatform(platform)) {
       project.files.add(
@@ -711,8 +724,8 @@ ${generateTeaVMReflectionIncludes(project)}
           sourceFolderPath = sourceFolderPath,
           packageName = packageName,
           fileName = fileName,
-          content = content
-        )
+          content = content,
+        ),
       )
     }
   }

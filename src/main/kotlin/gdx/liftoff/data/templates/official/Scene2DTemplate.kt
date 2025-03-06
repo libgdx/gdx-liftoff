@@ -12,15 +12,17 @@ import gdx.liftoff.views.ProjectTemplate
 class Scene2DTemplate : Template {
   override val id = "scene2dTemplate"
   override val description: String
-    get() = "This project was generated with a template including simple application launchers and " +
-      "an `ApplicationAdapter` extension that draws a simple GUI on the screen."
+    get() =
+      "This project was generated with a template including simple application launchers and " +
+        "an `ApplicationAdapter` extension that draws a simple GUI on the screen."
 
   override fun apply(project: Project) {
     super.apply(project)
     project.advanced.generateSkin = true
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

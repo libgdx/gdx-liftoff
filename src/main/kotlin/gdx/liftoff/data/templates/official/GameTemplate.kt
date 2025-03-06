@@ -16,10 +16,12 @@ import gdx.liftoff.views.ProjectTemplate
 class GameTemplate : Template {
   override val id = "gameTemplate"
   override val description: String
-    get() = "This project was generated with a template including simple application launchers and " +
-      "a main class extending `Game` that sets the first screen."
+    get() =
+      "This project was generated with a template including simple application launchers and " +
+        "a main class extending `Game` that sets the first screen."
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.Game;
 
@@ -37,8 +39,8 @@ public class ${project.basic.mainClass} extends Game {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep"
-      )
+        path = ".gitkeep",
+      ),
     )
     addSourceFile(
       project = project,
@@ -85,7 +87,7 @@ public class FirstScreen implements Screen {
     public void dispose() {
         // Destroy screen's assets here.
     }
-}"""
+}""",
     )
   }
 }

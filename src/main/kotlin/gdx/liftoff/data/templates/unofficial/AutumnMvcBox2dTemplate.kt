@@ -18,10 +18,11 @@ import gdx.liftoff.views.ProjectTemplate
 class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
   override val id = "lmlMvcBox2dTemplate"
   override val description: String
-    get() = "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
-      "class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application " +
-      "showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens " +
-      "and dialogs was provided, including a settings view that allows the players to choose their controls."
+    get() =
+      "Project template included launchers with [Autumn](https://github.com/crashinvaders/gdx-lml/tree/master/autumn) " +
+        "class scanners and an [Autumn MVC](https://github.com/czyzby/gdx-lml/tree/master/mvc) application " +
+        "showing usage of Box2D and Controllers libGDX extensions. A simple GUI consisting of several screens " +
+        "and dialogs was provided, including a settings view that allows the players to choose their controls."
 
   override fun apply(project: Project) {
     super.apply(project)
@@ -36,8 +37,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
       CopiedFile(
         projectName = Assets.ID,
         path = path("music", "theme.ogg"),
-        original = path("generator", "templates", "autumn", "theme.ogg")
-      )
+        original = path("generator", "templates", "autumn", "theme.ogg"),
+      ),
     )
     // Adding I18N bundle:
     arrayOf("", "_en", "_pl").forEach {
@@ -46,8 +47,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
         CopiedFile(
           projectName = Assets.ID,
           path = path("i18n", fileName),
-          original = path("generator", "templates", "autumn", "box2d", fileName)
-        )
+          original = path("generator", "templates", "autumn", "box2d", fileName),
+        ),
       )
     }
     // Adding LML views:
@@ -56,8 +57,8 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "templates", it),
-          original = path("generator", "templates", "autumn", "box2d", it)
-        )
+          original = path("generator", "templates", "autumn", "box2d", it),
+        ),
       )
     }
     arrayOf("controls.lml", "edit.lml", "inactive.lml", "settings.lml", "switch.lml").forEach {
@@ -65,16 +66,16 @@ class AutumnMvcBox2dTemplate : AutumnMvcVisTemplate() {
         CopiedFile(
           projectName = Assets.ID,
           path = path("ui", "templates", "dialogs", it),
-          original = path("generator", "templates", "autumn", "box2d", "dialogs", it)
-        )
+          original = path("generator", "templates", "autumn", "box2d", "dialogs", it),
+        ),
       )
     }
     project.files.add(
       CopiedFile(
         projectName = Assets.ID,
         path = path("ui", "templates", "macros", "global.lml"),
-        original = path("generator", "templates", "autumn", "box2d", "macros", "global.lml")
-      )
+        original = path("generator", "templates", "autumn", "box2d", "macros", "global.lml"),
+      ),
     )
   }
 
@@ -161,8 +162,8 @@ public class Configuration {
       }
     };
   }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -199,8 +200,8 @@ public class ControlsData {
   public ControlsData(final ControlType type) {
     this.type = type;
   }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -255,8 +256,8 @@ public class ControlsPreference extends AbstractPreference<Array<ControlsData>> 
     protected String serialize(final Array<ControlsData> preference) {
         return Base64Coder.encodeString(json.toJson(preference, Array.class, ControlsData.class));
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -311,8 +312,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         stage.act(delta);
         stage.draw();
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -350,8 +351,8 @@ public class LoadingController implements ViewRenderer {
         stage.act(delta);
         stage.draw();
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -397,8 +398,8 @@ public class MenuController implements ActionContainer {
         }
         return false;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -436,8 +437,8 @@ public class Global implements ActionContainer {
     public int getPlayersAmount() {
         return Configuration.PLAYERS_AMOUNT;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -506,8 +507,8 @@ public class ControlsController implements ActionContainer, ViewDialogShower {
         controlsSwitch.setPlayerId(playerId);
         interfaceService.showDialog(ControlsSwitchController.class);
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -826,8 +827,8 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
             return (control.getMovementDirection().y + 1f) / 2f;
         }
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -926,8 +927,8 @@ public class ControlsSwitchController implements ActionContainer, ViewDialogShow
             interfaceService.showDialog(ControlsEditController.class);
         }
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -942,8 +943,8 @@ import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 /** Shown when there are no players with active controls. */
 @ViewDialog(id = "inactive", value = "ui/templates/dialogs/inactive.lml", cacheInstance = true)
 public class NotEnoughPlayersErrorController {
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1002,8 +1003,8 @@ public class SettingsController implements ActionContainer {
     public void setWindowedMode() {
         fullscreenService.resetFullscreen();
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1070,8 +1071,8 @@ public class Player implements ControlListener {
     public void jump() {
         jumped = true;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1224,8 +1225,8 @@ public class Box2DService {
             world = null;
         }
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1293,8 +1294,8 @@ public class ControlsService {
     public Array<Control> getControls() {
         return controls;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1353,8 +1354,8 @@ public class FullscreenService {
             Gdx.app.getApplicationListener().resize(${project.basic.mainClass}.WIDTH, ${project.basic.mainClass}.HEIGHT);
         }
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1501,8 +1502,8 @@ public abstract class AbstractButtonControl extends AbstractControl {
     public void setJump(final int jump) {
         this.jump = jump;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1560,8 +1561,8 @@ public abstract class AbstractControl implements Control {
     public void reset() {
         movement.set(0f, 0f);
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1606,8 +1607,8 @@ public interface Control {
 
     /** Clears state variables. */
     void reset();
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1621,8 +1622,8 @@ public interface Control {
 public interface ControlListener {
     /** Invoked when controller detects jump input event. */
     void jump();
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1681,8 +1682,8 @@ public enum ControlType {
     /** @param data serialized controls.
      * @return deserialized controller. */
     public abstract Control create(ControlsData data);
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -1960,8 +1961,8 @@ public class GamePadControl extends AbstractButtonControl {
     public ControlType getType() {
         return ControlType.PAD;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -2021,8 +2022,8 @@ public class InactiveControl implements Control {
     @Override
     public void reset() {
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -2081,8 +2082,8 @@ public class KeyboardControl extends AbstractButtonControl {
     public ControlType getType() {
         return ControlType.KEYBOARD;
     }
-}"""
-      )
+}""",
+      ),
     )
 
     project.files.add(
@@ -2162,12 +2163,13 @@ public class TouchControl extends AbstractControl {
     public ControlType getType() {
         return ControlType.TOUCH;
     }
-}"""
-      )
+}""",
+      ),
     )
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 /** This class serves only as the application scanning root. Any classes in its package (or any of the sub-packages)
  * with proper Autumn MVC annotations will be found, scanned and initiated. */

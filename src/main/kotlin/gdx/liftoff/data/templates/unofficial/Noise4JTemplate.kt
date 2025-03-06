@@ -18,8 +18,9 @@ class Noise4JTemplate : Template {
   override val height: String
     get() = "$mainClass.SIZE * 2"
   override val description: String
-    get() = "Project template included simple launchers and an `ApplicationAdapter` extension that draws random " +
-      "maps created using [Noise4J](https://github.com/czyzby/noise4j)."
+    get() =
+      "Project template included simple launchers and an `ApplicationAdapter` extension that draws random " +
+        "maps created using [Noise4J](https://github.com/czyzby/noise4j)."
 
   override fun apply(project: Project) {
     mainClass = project.basic.mainClass
@@ -28,14 +29,15 @@ class Noise4JTemplate : Template {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep"
-      )
+        path = ".gitkeep",
+      ),
     )
     // Including noise4j dependency:
     Noise4J().initiate(project)
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

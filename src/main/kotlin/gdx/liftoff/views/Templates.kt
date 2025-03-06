@@ -30,14 +30,16 @@ class TemplatesView : AbstractAnnotationProcessor<ProjectTemplate>() {
   // Automatic scanning of project templates:
 
   override fun getSupportedAnnotationType(): Class<ProjectTemplate> = ProjectTemplate::class.java
+
   override fun isSupportingTypes(): Boolean = true
+
   override fun processType(
     type: Class<*>,
     annotation: ProjectTemplate,
     component: Any,
     context: Context,
     initializer: ContextInitializer,
-    contextDestroyer: ContextDestroyer
+    contextDestroyer: ContextDestroyer,
   ) {
     val template = component as Template
     templates.add(template)

@@ -15,8 +15,9 @@ import gdx.liftoff.views.ProjectTemplate
 class ApplicationAdapterTemplate : Template {
   override val id = "applicationAdapter"
   override val description: String
-    get() = "This project was generated with a template including simple application launchers and an empty " +
-      "`ApplicationAdapter` extension."
+    get() =
+      "This project was generated with a template including simple application launchers and an empty " +
+        "`ApplicationAdapter` extension."
 
   override fun apply(project: Project) {
     super.apply(project)
@@ -24,12 +25,13 @@ class ApplicationAdapterTemplate : Template {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep"
-      )
+        path = ".gitkeep",
+      ),
     )
   }
 
-  override fun getApplicationListenerContent(project: Project): String = """package ${project.basic.rootPackage};
+  override fun getApplicationListenerContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import com.badlogic.gdx.ApplicationAdapter;
 
