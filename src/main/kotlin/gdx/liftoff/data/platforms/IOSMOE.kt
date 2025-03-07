@@ -29,7 +29,7 @@ class IOSMOE : Platform {
   override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
 
   override fun initiate(project: Project) {
-    project.properties["gdxMoeVersion"] = "1.12.1"
+    project.properties["gdxMoeVersion"] = "1.13.1"
     project.properties["multiOsEngineVersion"] = "1.10.1"
     // Best would be to just copy the "xcode" directory
     arrayOf(
@@ -146,6 +146,7 @@ class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
     dependencies.add("project(':${Core.ID}')")
     addDependency("io.github.berstanio:gdx-backend-moe:\$gdxMoeVersion")
     addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios\"")
+    addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-backend-robovm-metalangle:\$gdxVersion\"")
   }
 
   override fun getContent() =
