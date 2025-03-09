@@ -44,12 +44,13 @@ class Configuration {
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"
 
     fun parseJavaVersion(version: String): Double {
-      val d = try {
-        version.removeSurrounding("1.", ".0").toDouble()
-      } catch (nfe : NumberFormatException) {
-        8.0
-      }
-      return d;
+      val d =
+        try {
+          version.removeSurrounding("1.", ".0").toDouble()
+        } catch (nfe: NumberFormatException) {
+          8.0
+        }
+      return d
     }
   }
 
