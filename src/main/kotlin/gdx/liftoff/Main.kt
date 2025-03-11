@@ -2,7 +2,11 @@ package gdx.liftoff
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Version
-import com.badlogic.gdx.backends.lwjgl3.*
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.github.czyzby.autumn.context.ContextInitializer
@@ -15,7 +19,9 @@ import gdx.liftoff.views.Extension
 import gdx.liftoff.views.GdxPlatform
 import gdx.liftoff.views.JvmLanguage
 import gdx.liftoff.views.ProjectTemplate
+import org.lwjgl.system.JNI
 import org.lwjgl.system.macosx.LibC
+import org.lwjgl.system.macosx.ObjCRuntime
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
@@ -57,6 +63,13 @@ fun startNewJvmIfRequired(): Boolean {
     return false
   }
 
+  // Checks if we are already on the main thread, such as from running via Construo.
+  val objcMsgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
+  val nsThread = ObjCRuntime.objc_getClass("NSThread")
+  val currentThread = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
+  val isMainThread = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
+  if (isMainThread) return false
+
   val pid = LibC.getpid()
 
   // check whether -XstartOnFirstThread is enabled
@@ -75,7 +88,7 @@ fun startNewJvmIfRequired(): Boolean {
 
   // Restart the JVM with -XstartOnFirstThread
   val jvmArgs = ArrayList<String>()
-  val separator = System.getProperty("file.separator")
+  val separator = System.getProperty("file.separator", "/")
   jvmArgs.add(System.getProperty("java.home") + separator + "bin" + separator + "java")
   jvmArgs.add("-XstartOnFirstThread")
   jvmArgs.add("-D$JVM_RESTARTED_ARG=true")

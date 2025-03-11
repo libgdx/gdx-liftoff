@@ -19,12 +19,18 @@ package gdx.liftoff;
 import com.badlogic.gdx.Version;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader;
 import org.lwjgl.system.macosx.LibC;
+import org.lwjgl.system.macosx.ObjCRuntime;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+
+import static org.lwjgl.system.JNI.invokePPP;
+import static org.lwjgl.system.JNI.invokePPZ;
+import static org.lwjgl.system.macosx.ObjCRuntime.objc_getClass;
+import static org.lwjgl.system.macosx.ObjCRuntime.sel_getUid;
 
 /**
  * Adds some utilities to ensure that the JVM was started with the
@@ -94,6 +100,13 @@ public class StartupHelper {
         if (!System.getProperty("org.graalvm.nativeimage.imagecode", "").isEmpty()) {
             return false;
         }
+
+        // Checks if we are already on the main thread, such as from running via Construo.
+        long objc_msgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend");
+        long NSThread      = objc_getClass("NSThread");
+        long currentThread = invokePPP(NSThread, sel_getUid("currentThread"), objc_msgSend);
+        boolean isMainThread = invokePPZ(currentThread, sel_getUid("isMainThread"), objc_msgSend);
+        if(isMainThread) return false;
 
         long pid = LibC.getpid();
 

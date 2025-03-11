@@ -98,7 +98,19 @@ fun main() {
       return
     Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
         setTitle("${project.basic.name}")
+        //// Vsync limits the frames per second to what your hardware can display, and helps eliminate
+        //// screen tearing. This setting doesn't always work on Linux, so the line after is a safeguard.
+        setVsync(true)
+        //// Limits FPS to the refresh rate of the currently active monitor, plus 1 to try to match fractional
+        //// refresh rates. The Vsync setting above should limit the actual FPS to match the monitor.
+        setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate + 1)
+        //// If you remove the above line and set Vsync to false, you can get unlimited FPS, which can be
+        //// useful for testing performance, but can also be very stressful to some hardware.
+        //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
+
         setWindowedMode($width, $height)
+        //// You can change these files; they are in lwjgl3/src/main/resources/ .
+        //// They can also be loaded from the root of assets/ .
         setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
     })
 }
@@ -125,7 +137,9 @@ package ${project.basic.rootPackage}.lwjgl3
 
 import com.badlogic.gdx.Version
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader
+import org.lwjgl.system.JNI
 import org.lwjgl.system.macosx.LibC
+import org.lwjgl.system.macosx.ObjCRuntime
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -177,20 +191,20 @@ class StartupHelper private constructor() {
             val osName = System.getProperty("os.name").lowercase(Locale.getDefault())
             if (!osName.contains("mac")) {
                 if (osName.contains("windows")) {
-      // Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.
-      // By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
-      // If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
-      // By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
-      // We also temporarily change the "user.name" property to one without any chars that would be invalid.
-      // We revert our changes immediately after loading LWJGL3 natives.
-      val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
-      val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
-      val prevUser = System.getProperty("user.name", "libGDX_User")
-      System.setProperty("java.io.tmpdir", "${'$'}programData/libGDX-temp")
-      System.setProperty("user.name", "User_${'$'}{prevUser.hashCode()}_GDX${'$'}{Version.VERSION}".replace('.', '_'))
-      Lwjgl3NativesLoader.load()
-      System.setProperty("java.io.tmpdir", prevTmpDir)
-      System.setProperty("user.name", prevUser)
+                  // Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.
+                  // By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
+                  // If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
+                  // By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
+                  // We also temporarily change the "user.name" property to one without any chars that would be invalid.
+                  // We revert our changes immediately after loading LWJGL3 natives.
+                  val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
+                  val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
+                  val prevUser = System.getProperty("user.name", "libGDX_User")
+                  System.setProperty("java.io.tmpdir", "${'$'}programData/libGDX-temp")
+                  System.setProperty("user.name", "User_${'$'}{prevUser.hashCode()}_GDX${'$'}{Version.VERSION}".replace('.', '_'))
+                  Lwjgl3NativesLoader.load()
+                  System.setProperty("java.io.tmpdir", prevTmpDir)
+                  System.setProperty("user.name", prevUser)
                 }
                 return false
             }
@@ -199,6 +213,13 @@ class StartupHelper private constructor() {
             if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isNotEmpty()) {
                 return false
             }
+
+            // Checks if we are already on the main thread, such as from running via Construo.
+            val objcMsgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
+            val nsThread = ObjCRuntime.objc_getClass("NSThread")
+            val currentThread = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
+            val isMainThread = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
+            if (isMainThread) return false
 
             val pid = LibC.getpid()
 
@@ -218,7 +239,7 @@ class StartupHelper private constructor() {
 
             // Restart the JVM with -XstartOnFirstThread
             val jvmArgs = ArrayList<String?>()
-            val separator = System.getProperty("file.separator")
+            val separator = System.getProperty("file.separator", "/")
             // The following line is used assuming you target Java 8, the minimum for LWJGL3.
             val javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java"
             // If targeting Java 9 or higher, you could use the following instead of the above line:
