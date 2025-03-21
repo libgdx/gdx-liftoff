@@ -402,7 +402,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "2.0.0"
+  override val defaultVersion = "2.0.1"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -1368,7 +1368,7 @@ class Gand : ThirdPartyExtension() {
 @Extension
 class Cringe : ThirdPartyExtension() {
   override val id = "cringe"
-  override val defaultVersion = "0.2.0"
+  override val defaultVersion = "0.2.2"
   override val url = "https://github.com/tommyettinger/cringe"
   override val group = "com.github.tommyettinger"
   override val name = "cringe"
@@ -1389,7 +1389,7 @@ class Cringe : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.6.1"
+  override val defaultVersion = "0.6.2"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1423,7 +1423,7 @@ class Funderby : ThirdPartyExtension() {
 }
 
 /**
- * Random number generators with easy serialization.
+ * Random number generators/distributions with easy serialization.
  * @author Tommy Ettinger
  */
 @Extension
@@ -1517,7 +1517,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.6.1.1"
+  override val defaultVersion = "0.6.2.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1579,7 +1579,7 @@ class KryoJdkgdxds : ThirdPartyExtension() {
 @Extension
 class KryoCringe : ThirdPartyExtension() {
   override val id = "kryoCringe"
-  override val defaultVersion = "0.2.0.1"
+  override val defaultVersion = "0.2.2.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-cringe"
@@ -1658,7 +1658,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.6.1.7"
+  override val defaultVersion = "0.6.2.7"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-digital"
