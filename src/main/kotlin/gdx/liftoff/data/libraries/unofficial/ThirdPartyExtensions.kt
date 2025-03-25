@@ -833,7 +833,7 @@ class PieMenu : ThirdPartyExtension() {
 }
 
 /**
- * A 2D AABB collision detection and response library; like a basic/easy version of box2d.
+ * A 2D AABB collision detection and response library; like a basic/easy version of Box2D.
  * Note, AABB means this only handles non-rotated rectangular collision boxes.
  * @author implicit-invocation
  * @author Raymond Buckley

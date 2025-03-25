@@ -22,8 +22,11 @@ java -jar gdx-liftoff-VERSION.jar
 **You must build with Java 17 or newer!** Gradle's current version, as well as current Android tools, now require your
 installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. All stable target releases of Java from 8 to 23 work here now. We use Gradle 8.11.1 because it
-works out-of-the-box with Java 23 (even though it was only recently released!).
+the JDK versions 17 and up. All stable target releases of Java from 8 to 23 work here now. Java 24, the most recent
+release, is not yet fully compatible with Gradle, so you should make sure the JDK Gradle uses is Java 17, and the JDK
+you use to run your project can be anything from 8 to 23. **If you use a JDK version 18 or newer** for Gradle, then the
+automatic packaging with Construo will need its URLs changed so it downloads the same version of JDK that Gradle uses.
+Using 17 exactly is recommended for this reason.
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
@@ -52,7 +55,8 @@ provides simple checkboxes to add any and all official platforms, plus some spec
 as Gradle or libGDX itself.
 - **More backends are supported.** The headless backend has been part of libGDX for a long time, but wasn't easily
 accessed in gdx-setup; it is a checkbox here. TeaVM, an increasingly-popular alternative to GWT for browser-based 
-applications, is also here, and works with Kotlin and other JVM languages as well as it does with Java.
+applications, is also here, and works with Kotlin and other JVM languages as well as it does with Java. MOE, an
+alternative backend for iOS, is also here, and works with newer Java versions than the official RoboVM.
 - **Build native executables out-of-the-box.** The Construo plugin lets you assemble a JDK with your project's JAR and
 launch it with a native Win64 .exe, MacOS (x64 or AARCH64) .app, or Linux x64 executable. Configuration is also included
 for Graal Native Image, though this is less likely to "just work" immediately.
