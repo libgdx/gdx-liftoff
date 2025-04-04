@@ -65,6 +65,7 @@ class GWT : Platform {
 <module>
   <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
   <source path="" />
+
   <!-- Reflection includes may be needed for your code or library code. Each value is separated by periods ('.'). -->
   <!-- You can include a full package by not including the name of a type at the end. -->
 ${(project.reflectedClasses + project.reflectedPackages).joinToString(
@@ -114,6 +115,10 @@ ${(project.reflectedClasses + project.reflectedPackages).joinToString(
 <module rename-to="html">
   <!-- Paths to source are relative to this file and separated by slashes ('/'). -->
   <source path="" />
+
+  <!-- Any resources placed under package public_html, relative to this file, will be copied verbatim into the final webapp folder. -->
+  <!-- This is where you can place your JavaScript, CSS and other resources for advanced JS integration. -->
+  <public path="public_html" />
 
   <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
 ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
@@ -371,6 +376,7 @@ tasks.register('addSource') {
   doLast {
     sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
     sourceSets.main.compileClasspath += files("../core/build/generated/sources/annotationProcessor/java/main")
+    sourceSets.main.compileClasspath += files(sourceSets.main.output.resourcesDir)
 ${if (project.hasPlatform(Shared.ID)) "    sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
   }
 }
