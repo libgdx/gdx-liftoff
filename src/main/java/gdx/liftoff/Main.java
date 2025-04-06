@@ -521,14 +521,16 @@ public class Main extends ApplicationAdapter {
         UserData.thirdPartyLibs = splitCSVSet(pref.getString("ThirdParty", prop.getProperty("thirdPartyDefaultNames")));
         thirdPartyLibs.retainAll(Listing.unofficialNames);
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        UserData.javaVersion = prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
-        UserData.gradleTasks = pref.getString("GradleTasks", prop.getProperty("gradleTasksDefault"));
+        // This is set to empty because we don't currently have a way to remove tasks, only add them...
+        UserData.gradleTasks = "";//pref.getString("GradleTasks", prop.getProperty("gradleTasksDefault"));
         UserData.projectPath = pref.getString("projectPath", prop.getProperty("projectPathDefault"));
         UserData.androidPath = pref.getString("AndroidSdk", prop.getProperty("androidPathDefault"));
         UserData.log = "";
@@ -553,14 +555,16 @@ public class Main extends ApplicationAdapter {
         UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("thirdPartyDefaultNames"));
         thirdPartyLibs.retainAll(Listing.unofficialNames);
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        UserData.javaVersion = prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
-        UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
+        // This is set to empty because we don't currently have a way to remove tasks, only add them...
+        UserData.gradleTasks = "";//prop.getProperty("gradleTasksDefault");
         UserData.projectPath = prop.getProperty("projectPathDefault");
         UserData.androidPath = prop.getProperty("androidPathDefault");
         UserData.log = "";
@@ -594,14 +598,16 @@ public class Main extends ApplicationAdapter {
         UserData.template = prop.getProperty("templateDefaultName");
         UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("platformsDefaultNames"));
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        UserData.javaVersion = prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
-        UserData.gradleTasks = prop.getProperty("gradleTasksDefault");
+        // This is set to empty because we don't currently have a way to remove tasks, only add them...
+        UserData.gradleTasks = "";//prop.getProperty("gradleTasksDefault");
     }
 
     public static boolean validateUserData() {
