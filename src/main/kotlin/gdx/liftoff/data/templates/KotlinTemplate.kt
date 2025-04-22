@@ -413,7 +413,7 @@ ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemic
 
         val tool = TeaBuilder.config(teaBuildConfiguration)
         tool.mainClass = "${project.basic.rootPackage}.teavm.TeaVMLauncher"
-        tool.optimizationLevel = TeaVMOptimizationLevel.FULL
+        tool.optimizationLevel = TeaVMOptimizationLevel.ADVANCED
         tool.setObfuscated(true)
         TeaBuilder.build(tool)
     }
