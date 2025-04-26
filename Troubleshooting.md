@@ -238,21 +238,24 @@ removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go b
 yourself to 8.3. Gradle 8.10 appears to work with MOE again, and the latest Liftoff releases (starting with 1.12.1.16)
 should have it.
 
-### In 1.12.1.8 and later, the default icons for Android projects look terrible!
+### In 1.12.1.8 through 1.13.1.2, the default icons for Android projects look terrible!
+
+SUPERSEDED BY:
+
+### In 1.13.1.3 and later, the default icons just say "CHANGE THIS" in bold letters!
 
 This is all according to plan. The plan being, you should never be submitting an app to the Google Play Store with any
 default title, default description, or default icon, because that makes you look like a duplicate of any other app with
-those default properties. And duplicate apps get **suspended for plagiarism!** In order to at least avoid ever producing
-an identical icon, there are roughly 4 billion possible randomized icons that can be generated now. This involves
-randomly choosing some colors and two icons from [OpenMoji](https://openmoji.org), then chopping the icons in half,
-using a left and a right half, and chucking those icons into the Android app section, all poorly resized except for the
-hdpi one.
+those default properties. And duplicate apps get **suspended for plagiarism!** In earlier versions, a hideous default
+icon was randomly generated to make sure a duplicate icon would never be submitted. People apparently didn't like having
+a hideous icon at any point, so in 1.13.1.3 and later, the icon says, bluntly, "CHANGE THIS" to remind you that you
+really, really, should change the icon before even making a testing release to Google Play! If you don't, well, you can
+blame the people who complained about the hideous random icons all you like, but the only person who deserves that blame
+would be, well, you. So please, just change your Android icons before touching the Google Play Store. Your icon is
+a huge part of your app's identity, and being lazy with it just marks your app as low-effort.
 
-The iOS project doesn't currently use a randomized icon because it hasn't been reported to be a problem there, yet.
-If it does become a good idea to randomize iOS icons, it won't be hard to make them random, too.
-
-In short, you should really pay attention to your icon when you are submitting to Google Play Store, but in case you
-don't one time, the awful random icon should not be currently in use by any actual apps. 
+In short, you should really pay attention to your icon when you are submitting to Google Play Store, and you should
+always "CHANGE THIS" icon that is generated!
 
 ### In 1.12.1.9 and later, jpackage configuration is gone; how do I produce .exe and other apps?
 
