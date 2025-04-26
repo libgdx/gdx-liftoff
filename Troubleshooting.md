@@ -370,3 +370,33 @@ point to deploy to iOS, but unlike RoboVM, MOE should be able to allow you to wr
 to a (possibly remote) macOS machine to build it.
 [The latest MOE release posting is here](https://discuss.multi-os-engine.org/t/moe-1-10-0-released/3000), and that forum
 is also where to go for MOE-specific questions.
+
+### How do I change the Construo JDK download links, so I can bundle a JDK other than JDK 17?
+
+The links in `lwjgl3/build.gradle` and its `construo` configuration block all point to Adoptium OpenJDK links to JDK 17,
+at the time of writing, `17.0.15_6`, which should only include small bug-fixes to the original JDK 17 release. But, if
+you want to bundle a different JDK version with your application, you have some important steps to take.
+
+First, make sure Gradle itself uses the JDK version you want to bundle. In IDEA and AS, navigate to:
+`File | Settings | Build, Execution, Deployment | Build Tools | Gradle` and select the version you want in the bottom
+drop-down menu. If I want to build with and bundle Java 24, for example, I would select a Java 24 version from there,
+like "Eclipse Temurin 24" or "BellSoft Liberica 24". If you don't have any Java installation of the version you want,
+Navigate to `File | Project Structure | SDKs`, Click the `+` at top, and `Download JDK` to get the version you want.
+If you just downloaded a JDK, you can do the first step again and actually select your wanted version this time.
+Click Apply or OK once you have selected your wanted version in the drop-down.
+
+Second, you'll need to make the links in `lwjgl3/build.gradle` match the JDK you selected, with the same major version
+and hopefully the most recent minor version you can manage. The links currently used by default in Construo are taken
+from https://github.com/adoptium/temurin17-binaries/releases , on the only section with blue links listed inside it.
+If you want the recent Java 24, you'll want to look in https://github.com/adoptium/temurin24-binaries/releases instead
+(note, the only change is from "17" to "24"). Other versions are similar; 17 is just about the first version of JDK that
+Construo should work with, and is definitely the only one still receiving support from any OpenJDK vendor. The actual
+links probably don't matter too much, but you may want to copy the link matching a description like
+`OpenJDK24U-jdk_x64_windows_hotspot_24.0.1_9.zip` to make sure everything matches. The reason the link doesn't matter is
+that you can usually just change the version from `17.0.15` to `24.0.1` (in this case) and then change the last number
+where it appears to match as well (`6` to `9`), which is after an `_` underscore in one place and after the escape `%2B`
+in another place.
+
+Once you've changed the link for each platform you want to support (probably Windows, maybe also Linux, and unlikely
+also macOS, AARCH64 and x64), you can run the Construo package task for that platform, such as `lwjgl3:packageWinX64` .
+Then you're done!
