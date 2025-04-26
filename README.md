@@ -22,11 +22,10 @@ java -jar gdx-liftoff-VERSION.jar
 **You must build with Java 17 or newer!** Gradle's current version, as well as current Android tools, now require your
 installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. All stable target releases of Java from 8 to 23 work here now. Java 24, the most recent
-release, is not yet fully compatible with Gradle, so you should make sure the JDK Gradle uses is Java 17, and the JDK
-you use to run your project can be anything from 8 to 23. **If you use a JDK version 18 or newer** for Gradle, then the
-automatic packaging with Construo will need its URLs changed so it downloads the same version of JDK that Gradle uses.
-Using 17 exactly is recommended for this reason.
+the JDK versions 17 and up. All stable target releases of Java from 8 to 24 work here now. **If you use a JDK version 18
+or newer** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
+downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using 17 exactly is recommended
+for this reason.
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
