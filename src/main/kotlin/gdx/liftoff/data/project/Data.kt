@@ -43,7 +43,8 @@ data class AdvancedProjectData(
   val androidPluginVersion: String = "8.6.1"
 
   /**
-   * Will be set to this value if using a Java version of at least 8.
+   * Should be updated as Android's latest desugaring library updates, but must always be a version that works
+   * with the currently-used Android Plugin Version (above).
    */
   val androidDesugaringLibraryVersion: String = "2.1.5"
 
