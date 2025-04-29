@@ -234,7 +234,6 @@ fun main(arguments: Array<String>) {
       version = Configuration.VERSION,
       gdxVersion = Version.VERSION,
       javaVersion = defaultJavaVersion,
-      androidPluginVersion = defaults.getDefaultAndroidPluginVersion(),
       robovmVersion = defaults.getDefaultRoboVMVersion(),
       gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),
       serverJavaVersion = defaultJavaVersion,

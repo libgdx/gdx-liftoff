@@ -13,10 +13,6 @@
         @serverJavaVersion
         <floatSpinner id="serverJavaVersion" min="7" max="99" value="11" step="1" precision="1" row="true"
                       tooltip="@serverJavaVersionTip"/>
-<!--
-        @androidPluginVersion
-        <textField id="androidPluginVersion" tooltip="@androidPluginVersionTip">$androidPluginVersion</textField>
--->
         @desktopJavaVersion
         <floatSpinner id="desktopJavaVersion" min="7" max="99" value="11" step="1" precision="1"
                       tooltip="@desktopJavaVersionTip"/>

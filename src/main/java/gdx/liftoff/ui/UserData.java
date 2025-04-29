@@ -17,7 +17,6 @@ public class UserData {
     public static String libgdxVersion;
     public static String javaVersion;
     public static String appVersion;
-    public static String androidPluginVersion;
     public static String robovmVersion;
     public static String gwtPluginVersion;
     public static boolean addGuiAssets;

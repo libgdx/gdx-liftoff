@@ -524,7 +524,6 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
@@ -558,7 +557,6 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
@@ -601,7 +599,6 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        androidPluginVersion = prop.getProperty("androidPluginDefaultVersion");
         UserData.robovmVersion = prop.getProperty("robovmDefaultVersion");
         gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
@@ -684,8 +681,7 @@ public class Main extends ApplicationAdapter {
                     UserData.projectName, UserData.packageName, UserData.mainClassName,
                     Gdx.files.absolute(UserData.projectPath), Gdx.files.absolute(UserData.androidPath));
                 AdvancedProjectData advancedData = new AdvancedProjectData(appVersion, libgdxVersion, javaVersion,
-                    androidPluginVersion, robovmVersion,
-                    gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme,
+                    robovmVersion, gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme,
                     gradleTasks != null && !gradleTasks.isEmpty()
                         ? Maker.makeList(gradleTasks.split("\\s+"))
                         : new ArrayList<>(0),
