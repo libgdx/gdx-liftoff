@@ -1,0 +1,5 @@
+<resources>
+    <style name="GdxTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:colorBackground">@color/background</item>
+    </style>
+</resources>

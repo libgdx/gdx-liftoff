@@ -38,12 +38,9 @@ class Android : Platform {
     addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
     addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
     addCopiedFile(project, "ic_launcher-web.png")
-
-    // We really can't generate these vector images easily.
-//    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher.xml")
-//    addCopiedFile(project, "res", "drawable-anydpi-v26", "ic_launcher_foreground.xml")
     addCopiedFile(project, "res", "values", "color.xml")
     addCopiedFile(project, "res", "values", "styles.xml")
+    addCopiedFile(project, "res", "values-v21", "styles.xml")
 
     project.files.add(
       SourceFile(
