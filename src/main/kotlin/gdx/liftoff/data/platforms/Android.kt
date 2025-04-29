@@ -22,7 +22,7 @@ class Android : Platform {
   override val isStandard = false // user should only jump through android hoops on request
 
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:8.6.1\"")
+    project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:${project.advanced.androidPluginVersion}\"")
     project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
@@ -143,8 +143,6 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
   fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
   override fun getContent(): String {
-    // The core library desugaring feature depends heavily on the current Android Gradle Plugin version.
-    val agpVersion = project.advanced.androidPluginVersion.split('.').map { it.toInt() }
     return """
 buildscript {
   repositories {
@@ -220,16 +218,7 @@ configurations { natives }
 
 dependencies {
   ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7") {
-      "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:" +
-        (
-          if (agpVersion[0] < 7 || (agpVersion[0] == 7) && agpVersion[1] < 3) {
-            "1.1.5"
-          } else if (agpVersion[0] == 7 && agpVersion[1] == 3) {
-            "1.2.2"
-          } else {
-            "2.0.4"
-          }
-        ) + "'"
+      "coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:${project.advanced.androidDesugaringLibraryVersion}'"
     } else {
       ""
     }}
