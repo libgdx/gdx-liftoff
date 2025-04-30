@@ -1,243 +1,73 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 buildscript {
   repositories {
     mavenCentral()
-    gradlePluginPortal()
     maven { url 'https://s01.oss.sonatype.org' }
+    gradlePluginPortal()
     mavenLocal()
     google()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
   }
   dependencies {
-    classpath "io.github.fourlastor:construo:1.7.1"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
+
+
   }
 }
 
-plugins {
-  id "application"
-}
+allprojects {
+  apply plugin: 'eclipse'
+  apply plugin: 'idea'
 
-apply plugin: 'io.github.fourlastor.construo'
-apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'kotlin'
-apply plugin: 'java-library'
-apply plugin: 'application'
-apply plugin: 'org.jlleitschuh.gradle.ktlint'
-
-import io.github.fourlastor.construo.Target
-
-version = "$liftoffVersion"
-mainClassName = 'gdx.liftoff.Main'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_1_8
-kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
-
-def appName = "gdx-liftoff"
-def jarName = "$appName-${version}.jar"
-
-jar {
-  manifest {
-    attributes 'Main-Class': mainClassName
-  }
-  archiveFileName.set(jarName)
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-  from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-  exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/freebsd/**')
-  dependencies {
-    exclude('META-INF/INDEX.LIST', 'META-INF/maven/**', 'META-INF/freebsd/**')
-  }
-  doLast {
-    file(archiveFile).setExecutable(true, false)
-  }
-}
-
-repositories {
-  mavenCentral()
-  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url "https://s01.oss.sonatype.org" }
-  maven { url 'https://jitpack.io' }
-}
-
-dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-  implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-  implementation "org.apache.commons:commons-exec:$commonsExecVersion"
-  implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
-  implementation("com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"){ exclude group: "com.kotcrab.vis", module: "vis-ui" }
-  implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
-  implementation "com.kotcrab.vis:vis-ui:$visUiVersion" // for stable releases
-//  implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion" // for JitPack commits
-  implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
-  implementation "com.github.raeleus.stripe:stripe:2.0.0"
-  implementation "com.rafaskoberg.gdx:typing-label:1.4.0"
-
-
-  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
-    exclude group: "org.jcraft", module: "jorbis"
-    exclude group: "org.lwjgl", module: "lwjgl-openal"
-
-//    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
-//    exclude group: 'org.lwjgl', module: 'lwjgl'
-//    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
-  }
-
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version"
-//// Linux //
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux-arm64"
-//
-//  // MacOS //
-//
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-macos-arm64"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-macos-arm64"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-macos-arm64"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-macos-arm64"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-macos-arm64"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-macos"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-macos-arm64"
-//
-//
-//  // Windows //
-//
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows"
-//  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
-//
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
-//  implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
-
-
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-
-
-  // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
-  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
-  // for some network requests, such as checking the versions of dependencies
-  implementation "com.github.kittinunf.fuel:fuel:2.3.1"
-
-  implementation "org.slf4j:slf4j-nop:2.0.5"
-}
-
-construo {
-  // name of the executable
-  name.set(appName)
-  // human-readable name, used for example in the `.app` name for macOS
-  humanName.set(appName)
-  // Optional, defaults to project version
-  version.set("$project.version")
-
-  jlink {
-    includeDefaultCryptoModules.set(false) // we don't need any encryption in Liftoff itself.
-  }
-  targets.configure {
-    create("linuxX64", Target.Linux) {
-      architecture.set(Target.Architecture.X86_64)
-      jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_linux_hotspot_17.0.15_6.tar.gz")
-    }
-    create("macM1", Target.MacOs) {
-      architecture.set(Target.Architecture.AARCH64)
-      jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.15_6.tar.gz")
-      // macOS needs an identifier
-      identifier.set("com.libgdx.liftoff." + appName)
-      // Optional: icon for macOS
-      macIcon.set(file("icons/logo.icns"))
-    }
-    create("macX64", Target.MacOs) {
-      architecture.set(Target.Architecture.X86_64)
-      jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_mac_hotspot_17.0.15_6.tar.gz")
-      // macOS needs an identifier
-      identifier.set("com.libgdx.liftoff." + appName)
-      // Optional: icon for macOS
-      macIcon.set(file("icons/logo.icns"))
-    }
-    create("winX64", Target.Windows) {
-      architecture.set(Target.Architecture.X86_64)
-      icon.set(file("icons/gdx-liftoff.png"))
-      jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_windows_hotspot_17.0.15_6.zip")
+  // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
+  idea {
+    module {
+      outputDir file('build/classes/java/main')
+      testOutputDir file('build/classes/java/test')
     }
   }
 }
 
-distributions {
-  main {
-    contents {
-      into('lib') {
-        project.configurations.runtimeClasspath.files.findAll { file ->
-          file.getName() != project.tasks.jar.outputs.files.singleFile.name
-        }.each { file ->
-          exclude file.name
-        }
-      }
+configure(subprojects) {
+  apply plugin: 'java-library'
+  sourceCompatibility = 21.0.3
+
+  // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
+  // The article can be helpful when using assets.txt in your project.
+  tasks.register('generateAssetList') {
+    inputs.dir("${project.rootDir}/assets/")
+    // projectFolder/assets
+    File assetsFolder = new File("${project.rootDir}/assets/")
+    // projectFolder/assets/assets.txt
+    File assetsFile = new File(assetsFolder, "assets.txt")
+    // delete that file in case we've already created it
+    assetsFile.delete()
+
+    // iterate through all files inside that folder
+    // convert it to a relative path
+    // and append it to the file assets.txt
+    fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.sort().each {
+      assetsFile.append(it + "\n")
     }
+  }
+  processResources.dependsOn 'generateAssetList'
+
+  compileJava {
+    options.incremental = true
   }
 }
 
-startScripts.dependsOn('jar')
-startScripts.classpath = project.tasks.jar.outputs.files
-
-tasks.register('sample', JavaExec) {
-  dependsOn classes
-  setDescription("Generates a sample libGDX project into build/dist/sample")
-  mainClass.set("gdx.liftoff.Sample")
-  setClasspath(sourceSets.main.runtimeClasspath)
+subprojects {
+  version = "$projectVersion"
+  ext.appName = 'JFallingSand'
+  repositories {
+    mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org' }
+    // You may want to remove the following line if you have errors downloading dependencies.
+    mavenLocal()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }
+  }
 }
 
-jar.dependsOn('ktlintFormat')
+eclipse.project.name = 'JFallingSand' + '-parent'

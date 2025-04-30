@@ -1,4 +1,0 @@
-<:macro alias="logo" replace="" pad="4">
-    <label padLeft="{pad}">lib</label>
-    <label padRight="@titlePad" color="vis-blue">GDX</label>
-</:macro>

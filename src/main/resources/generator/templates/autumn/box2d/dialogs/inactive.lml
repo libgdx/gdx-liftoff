@@ -1,4 +1,0 @@
-<dialog id="dialog" title="@error" style="dialog">
-  <label style="small" color="vis-blue">@notEnoughPlayersPrompt</label>
-  <textButton onResult="close">@back</textButton>
-</dialog>

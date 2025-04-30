@@ -1,6 +1,0 @@
-<isolate>
-    <toast id="notLatestVersion" oneColumn="true">
-        @notUpToDate
-        <linkLabel url="https://github.com/libgdx/gdx-liftoff/releases">@downloadLatest</linkLabel>
-    </toast>
-</isolate>

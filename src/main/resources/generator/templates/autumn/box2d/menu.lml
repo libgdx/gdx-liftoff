@@ -1,9 +1,0 @@
-<window title="@menu" oneColumn="true" defaultPad="2" defaultFillX="true" tablePadBottom="8">
-  <textButton onChange="startGame">@play</textButton>
-    <!-- "show:settings" will automatically show the settings.lml dialog when button is clicked. -->
-    <textButton onChange="show:settings">@settings</textButton>
-    <!-- "show:controls" will automatically show the controls.lml dialog when button is clicked. -->
-    <textButton onChange="show:controls">@controls</textButton>
-    <!-- "app:exit" will automatically try to exit the application when the button is clicked. -->
-    <textButton onChange="app:exit">@exit</textButton>
-</window>
