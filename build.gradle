@@ -198,7 +198,7 @@ construo {
       // macOS needs an identifier
       identifier.set("com.libgdx.liftoff." + appName)
       // Optional: icon for macOS
-      macIcon.set(project.file("icons/logo.icns"))
+      macIcon.set(file("icons/logo.icns"))
     }
     create("macX64", Target.MacOs) {
       architecture.set(Target.Architecture.X86_64)
@@ -206,7 +206,7 @@ construo {
       // macOS needs an identifier
       identifier.set("com.libgdx.liftoff." + appName)
       // Optional: icon for macOS
-      macIcon.set(project.file("icons/logo.icns"))
+      macIcon.set(file("icons/logo.icns"))
     }
     create("winX64", Target.Windows) {
       architecture.set(Target.Architecture.X86_64)
