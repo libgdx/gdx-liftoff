@@ -13,8 +13,8 @@ import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
-    public static final int GRID_WIDTH = 400;
-    public static final int GRID_HEIGHT = 300;
+    public static final int GRID_WIDTH = 800;
+    public static final int GRID_HEIGHT = 600;
     public static final int CELL_SIZE = 2;
 
     private SpriteBatch batch;
@@ -44,7 +44,7 @@ public class FallingSandGame extends ApplicationAdapter {
         for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
             for (int x = 0; x < GRID_WIDTH; x++) {
                 if (grid[x][y] != null) {
-                    grid[x][y].update(0.8f, grid);
+                    grid[x][y].update(0.1f, grid);
                 }
             }
         }
