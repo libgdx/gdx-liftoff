@@ -5,3 +5,5 @@ echo "Cleaning build..."
 
 echo "Running game..."
 ./gradlew lwjgl3:run
+
+# ./gradlew clean && ./gradlew lwjgl3:run

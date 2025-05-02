@@ -1,7 +1,5 @@
 package com.denireaux.fallingsand.particletypes;
 
-import com.denireaux.fallingsand.utils.utils;
-
 public class SandParticle extends Particle {
     public SandParticle(int x, int y) {
         super(x, y);
@@ -9,75 +7,52 @@ public class SandParticle extends Particle {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        // velocity += gravity;
-        int nextY = y - 1;
+        velocity += gravity;
 
-        int leftSpace = x - 1;
-        int rightSpace = x + 1;
+        if (y <= 0) return;
 
-        Particle[] surroundingParticles = this.getSurroundingParticles(grid);
-        Particle particleLeft = surroundingParticles[0];
-        Particle particleRight = surroundingParticles[1];
-        Particle particleAbove = surroundingParticles[2];
-        Particle particleBelow = surroundingParticles[3];
+        Particle[] particles = getSurroundingParticles(grid);
+        Particle particleLeft = particles[0];
+        Particle particleRight = particles[1];
+        Particle particleBelow = particles[3];
 
-        boolean bool = utils.getRandomBoolean();
-        System.out.println(bool);
-
-        if (nextY < 0 || nextY >= grid[0].length) return;
-
-        if (particleBelow == null) { moveDown(grid, x, nextY); }
-
-        if (particleBelow != null) { 
-            if (bool == true) { moveRight(grid, x + 1, y); }
-            moveLeft(grid, x -1, y);
+        // Down
+        if (y > 0 && grid[x][y - 1] == null) {
+            moveDown(grid, x, y - 1);
+            return;
         }
 
-        if (grid[x][nextY] == null) {
-            grid[x][nextY] = this;
-            grid[x][y] = null;
-            y = nextY;
+        // Down-right
+        if (x + 1 < grid.length && y - 1 >= 0 && particleRight == null && grid[x + 1][y - 1] == null) {
+            moveDownRight(grid);
+            return;
         }
 
-        return;
-    }
-
-    public void moveDown(Particle[][] grid, int newX, int newY) {
-        int gridHeight = grid[0].length;
-        if (newY >= gridHeight || newY <= 0) return;
-    
-        if (grid[x][y + 1] == null) {
-            grid[x][y + 1] = this;
-            grid[x][y] = null;
-            y++;
-        }
-    }
-
-    public void moveRight(Particle[][] grid, int newX, int newY) {
-        int gridHeight = grid[0].length;
-
-        if (newY >= gridHeight) return;
-
-        if (grid[x + 1][y] == null) {
-            grid[x + 1][y] = this;
-            grid[x][y] = null;
-            y++;
-        } else {
+        // Down-left
+        if (x - 1 >= 0 && y - 1 >= 0 && particleLeft == null && grid[x - 1][y - 1] == null) {
+            moveDownLeft(grid);
             return;
         }
     }
 
-    public void moveLeft(Particle[][] grid, int newX, int newY) {
-        int gridHeight = grid[0].length;
+    private void moveDown(Particle[][] grid, int newX, int newY) {
+        grid[newX][newY] = this;
+        grid[x][y] = null;
+        x = newX;
+        y = newY;
+    }
 
-        if (newY >= gridHeight) return;
+    private void moveDownRight(Particle[][] grid) {
+        grid[x][y] = null;
+        grid[x + 1][y - 1] = this;
+        x++;
+        y--;
+    }
 
-        if (grid[x - 1][y] == null) {
-            grid[x - 1][y] = this;
-            grid[x][y] = null;
-            y++;
-        } else {
-            return;
-        }
+    private void moveDownLeft(Particle[][] grid) {
+        grid[x][y] = null;
+        grid[x - 1][y - 1] = this;
+        x--;
+        y--;
     }
 }

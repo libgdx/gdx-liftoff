@@ -13,8 +13,8 @@ import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
-    public static final int GRID_WIDTH = 800;
-    public static final int GRID_HEIGHT = 600;
+    public static final int GRID_WIDTH = 1200;
+    public static final int GRID_HEIGHT = 800;
     public static final int CELL_SIZE = 2;
 
     private SpriteBatch batch;
@@ -23,6 +23,7 @@ public class FallingSandGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+        Gdx.graphics.setForegroundFPS(60);
         batch = new SpriteBatch();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -66,12 +67,23 @@ public class FallingSandGame extends ApplicationAdapter {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             int mouseX = Gdx.input.getX() / CELL_SIZE;
             int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) / CELL_SIZE;
-
-            if (mouseX >= 0 && mouseX < GRID_WIDTH && mouseY >= 0 && mouseY < GRID_HEIGHT) {
-                grid[mouseX][mouseY] = new SandParticle(mouseX, mouseY);
+    
+            int brushRadius = 6;
+    
+            for (int dx = -brushRadius; dx <= brushRadius; dx++) {
+                for (int dy = -brushRadius; dy <= brushRadius; dy++) {
+                    if (dx * dx + dy * dy <= brushRadius * brushRadius) {
+                        int x = mouseX + dx;
+                        int y = mouseY + dy;
+    
+                        if (x >= 0 && x < GRID_WIDTH && y >= 0 && y < GRID_HEIGHT && grid[x][y] == null) {
+                            grid[x][y] = new SandParticle(x, y);
+                        }
+                    }
+                }
             }
         }
-    }
+    }   
 
     @Override
     public void dispose() {
