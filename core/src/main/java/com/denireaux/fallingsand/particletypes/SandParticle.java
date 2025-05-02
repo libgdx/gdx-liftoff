@@ -38,6 +38,8 @@ public class SandParticle extends Particle {
     //     }
     // }
 
+    // TODO: Fix invisible sand
+    // For whatever reason the sand when spawned, is completely invisible
     @Override
     public void update(float gravity, Particle[][] grid) {
         velocity += gravity;
