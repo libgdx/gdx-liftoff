@@ -1,5 +1,11 @@
 package com.denireaux.fallingsand.particletypes;
 
+/**
+ * Abstract base class for all particles in the falling sand simulation.
+ *
+ * Each particle has an (x, y) position on the grid and a velocity used for simulating motion.
+ * Subclasses must implement the {@code update} method to define how the particle behaves over time.
+ */
 public abstract class Particle {
     public int x, y;
     public float velocity = 0f;

@@ -3,7 +3,6 @@ package com.denireaux.fallingsand.particletypes;
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
-
 /**
  * Represents a sand particle in the falling sand simulation.
  * 
@@ -11,7 +10,6 @@ import com.denireaux.fallingsand.utils.utils;
  * When blocked, they attempt to move diagonally left or right.
  * 
  * This class handles basic gravity application and movement logic.
- * @author D'Angelo L. DeNiro
  */
 public class SandParticle extends Particle {
     public SandParticle(int x, int y) {
