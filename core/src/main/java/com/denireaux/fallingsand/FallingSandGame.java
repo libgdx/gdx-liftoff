@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
+import com.denireaux.fallingsand.particletypes.WaterParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
     public static final int GRID_WIDTH = 1200;
@@ -20,6 +21,13 @@ public class FallingSandGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture pixel;
     private Particle[][] grid;
+
+    private enum ParticleType {
+        SAND,
+        WATER
+    }
+
+    private ParticleType currentParticle = ParticleType.SAND;
 
     @Override
     public void create() {
@@ -57,6 +65,9 @@ public class FallingSandGame extends ApplicationAdapter {
                 if (grid[x][y] instanceof SandParticle) {
                     batch.setColor(Color.YELLOW);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof WaterParticle) {
+                    batch.setColor(Color.BLUE);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
@@ -64,26 +75,43 @@ public class FallingSandGame extends ApplicationAdapter {
     }
 
     private void handleInput() {
+        // Particle type selection
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            currentParticle = ParticleType.SAND;
+            System.out.println("Switched to Sand");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            currentParticle = ParticleType.WATER;
+            System.out.println("Switched to Water");
+        }
+
+        // Spawn selected particle type
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             int mouseX = Gdx.input.getX() / CELL_SIZE;
             int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) / CELL_SIZE;
-    
+
             int brushRadius = 6;
-    
+
             for (int dx = -brushRadius; dx <= brushRadius; dx++) {
                 for (int dy = -brushRadius; dy <= brushRadius; dy++) {
                     if (dx * dx + dy * dy <= brushRadius * brushRadius) {
                         int x = mouseX + dx;
                         int y = mouseY + dy;
-    
+
                         if (x >= 0 && x < GRID_WIDTH && y >= 0 && y < GRID_HEIGHT && grid[x][y] == null) {
-                            grid[x][y] = new SandParticle(x, y);
+                            switch (currentParticle) {
+                                case SAND:
+                                    grid[x][y] = new SandParticle(x, y);
+                                    break;
+                                case WATER:
+                                    grid[x][y] = new WaterParticle(x, y);
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
-    }   
+    }
 
     @Override
     public void dispose() {
