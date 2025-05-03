@@ -15,7 +15,7 @@ import com.denireaux.fallingsand.particletypes.SandParticle;
 public class FallingSandGame extends ApplicationAdapter {
     public static final int GRID_WIDTH = 1200;
     public static final int GRID_HEIGHT = 800;
-    public static final int CELL_SIZE = 2;
+    public static final int CELL_SIZE = 1;
 
     private SpriteBatch batch;
     private Texture pixel;
@@ -23,7 +23,7 @@ public class FallingSandGame extends ApplicationAdapter {
 
     @Override
     public void create() {
-        Gdx.graphics.setForegroundFPS(60);
+        Gdx.graphics.setForegroundFPS(90);
         batch = new SpriteBatch();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
