@@ -20,7 +20,6 @@ data class AdvancedProjectData(
   val version: String,
   val gdxVersion: String,
   val javaVersion: String,
-  val robovmVersion: String,
   val gwtPluginVersion: String,
   val serverJavaVersion: String,
   val desktopJavaVersion: String,
@@ -47,6 +46,11 @@ data class AdvancedProjectData(
    * with the currently-used Android Plugin Version (above).
    */
   val androidDesugaringLibraryVersion: String = "2.1.5"
+
+  /**
+   * Should match the recommended/tested by the libGDX version, but it's usually safe to upgrade to latest versions to keep up with iOS changes.
+   */
+  val robovmVersion: String = "2.3.23"
 
   /**
    * Will be set to 2.11.0 if using a Java version of at least 8; otherwise adapts to what the libGDX version uses.

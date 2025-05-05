@@ -16,8 +16,6 @@
         @desktopJavaVersion
         <floatSpinner id="desktopJavaVersion" min="7" max="99" value="11" step="1" precision="1"
                       tooltip="@desktopJavaVersionTip"/>
-        @robovmVersion
-        <textField id="robovmVersion" tooltip="@robovmVersionTip" row="true">$roboVMVersion</textField>
         @gwtPlugin
         <textField id="gwtPlugin" tooltip="@gwtPluginTip" growX="true">$gwtPluginVersion</textField>
     </table>
