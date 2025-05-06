@@ -98,9 +98,6 @@ class GlobalActionContainer : ActionContainer {
     )
   }
 
-  @LmlAction("roboVMVersion")
-  fun getDefaultRoboVMVersion(): String = "2.3.23"
-
   @LmlAction("gwtPluginVersion")
   fun getDefaultGwtPluginVersion(): String = "1.1.29"
 

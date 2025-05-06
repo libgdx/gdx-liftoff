@@ -60,13 +60,6 @@ public class SettingsPanel extends Table implements Panel {
             prop.getProperty("versionTip"), UserData.appVersion, table);
         onChange(applicationTextField, () -> UserData.appVersion = applicationTextField.getText());
 
-        //robovm version
-        if (UserData.platforms.contains("ios")) {
-            TextField robovmTextField = addField(prop.getProperty("robovmVersion"),
-                prop.getProperty("robovmVersionTip"), UserData.robovmVersion, table);
-            onChange(robovmTextField, () -> UserData.robovmVersion = robovmTextField.getText());
-        }
-
         //add gui assets
         table.defaults().spaceTop(SPACE_MEDIUM);
         ImageButton guiImageButton = addCheck(prop.getProperty("generateSkin"), prop.getProperty("generateSkinTip"), UserData.addGuiAssets, table);

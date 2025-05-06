@@ -25,9 +25,6 @@ class AdvancedProjectDataView {
   @LmlActor("sdkVersion")
   private val sdkVersionField: Spinner = inject()
 
-  @LmlActor("robovmVersion")
-  private val robovmVersionField: VisTextField = inject()
-
   @LmlActor("gwtPlugin")
   private val gwtPluginVersionField: VisTextField = inject()
 
@@ -79,7 +76,6 @@ class AdvancedProjectDataView {
       version = versionField.text,
       gdxVersion = gdxVersionField.text,
       javaVersion = javaVersionField.model.text.toJavaVersion(),
-      robovmVersion = robovmVersionField.text,
       gwtPluginVersion = gwtPluginVersionField.text,
       serverJavaVersion = serverJavaVersionField.model.text.toJavaVersion(),
       desktopJavaVersion = desktopJavaVersion,
