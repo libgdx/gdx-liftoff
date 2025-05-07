@@ -73,7 +73,7 @@ data class AdvancedProjectData(
   val gdxTeaVMVersion: String
     get() =
       Repository.MavenCentral.getLatestVersion(group = "com.github.xpenatan.gdx-teavm", name = "backend-teavm")
-        ?: "1.1.0"
+        ?: "1.2.0"
 
   /**
    * Version of the main TeaVM project.
@@ -81,7 +81,7 @@ data class AdvancedProjectData(
   val teaVMVersion: String
     get() =
       Repository.MavenCentral.getLatestVersion(group = "org.teavm", name = "teavm-core")
-        ?: "0.11.0"
+        ?: "0.12.0"
 
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
