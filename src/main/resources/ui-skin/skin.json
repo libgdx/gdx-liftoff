@@ -1,5 +1,5 @@
 {
-"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+"BitmapFont": {
 	"font-button-big": {
 		"file": "font-button-big.fnt",
 		"scaledSize": -1,
@@ -49,13 +49,13 @@
 		"flip": false
 	},
 	"font-labelMarkup": {
-		"file": "font-labelMarkup.fnt",
+		"file": "font-label.fnt",
 		"scaledSize": -1,
 		"markupEnabled": true,
 		"flip": false
 	}
 },
-"com.badlogic.gdx.graphics.Color": {
+"Color": {
 	"black": {
 		"r": 0,
 		"g": 0,
@@ -99,7 +99,7 @@
 		"a": 1
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable": {
+"TintedDrawable": {
 	"white": {
 		"name": "white-pixel",
 		"color": "white"
@@ -1019,7 +1019,7 @@
 		"crushMode": 0
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+"ButtonStyle": {
 	"default": {
 		"up": "button-small-up-10",
 		"down": "button-small-down-10",
@@ -1092,7 +1092,7 @@
 		"over": "icon-reload-over"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+"CheckBoxStyle": {
 	"default": {
 		"checkboxOn": "check-box-checked-up",
 		"checkboxOff": "check-box-unchecked-up",
@@ -1116,7 +1116,7 @@
 		"down": "checkbox-bg-down-10"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+"ImageButtonStyle": {
 	"default": {
 		"imageUp": "button-outline-up-10"
 	},
@@ -1129,7 +1129,7 @@
 		"imageCheckedOver": "check-box-checked-over"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+"LabelStyle": {
 	"default": {
 		"font": "font-label"
 	},
@@ -1162,7 +1162,7 @@
 		"font": "font-label-tooltipMarkup"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
+"ScrollPaneStyle": {
 	"default": {
 		"hScrollKnob": "scroll-horizontal-10",
 		"vScrollKnob": "scroll-vertical-10"
@@ -1172,7 +1172,7 @@
 		"vScrollKnob": "scroll-vertical-fullscreen-10"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+"TextButtonStyle": {
 	"default": {
 		"font": "font-button-small",
 		"fontColor": "black",
@@ -1244,7 +1244,7 @@
 		"over": "field-over"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+"TextFieldStyle": {
 	"default": {
 		"font": "font-label",
 		"fontColor": "white",
@@ -1260,7 +1260,7 @@
 		"selection": "selection"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+"TextTooltipStyle": {
 	"default": {
 		"label": "default",
 		"background": "pop-dialog-10"
@@ -1282,7 +1282,7 @@
 		"background": "pop-arrow-left-10"
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+"WindowStyle": {
 	"default": {
 		"background": "pop-dialog-10",
 		"titleFont": "font-label"

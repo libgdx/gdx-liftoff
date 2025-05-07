@@ -319,13 +319,6 @@ font-label
   orig: 506, 72
   offset: 0, 0
   index: -1
-font-labelMarkup
-  rotate: false
-  xy: 1000, 671
-  size: 506, 72
-  orig: 506, 72
-  offset: 0, 0
-  index: -1
 font-label-field
   rotate: false
   xy: 1, 65
