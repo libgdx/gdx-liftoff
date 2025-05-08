@@ -11,6 +11,7 @@ public class WaterParticle extends Particle {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
+        gravity *= 6;
         velocity += gravity;
 
         // Cap velocity
@@ -75,4 +76,21 @@ public class WaterParticle extends Particle {
     private boolean isInBounds(int x, int y, Particle[][] grid) {
         return x >= 0 && x < grid.length && y >= 0 && y < grid[0].length;
     }
+
+    @Override 
+    public void moveDown(Particle[][] grid) {
+        System.out.println("Not implimented");
+    }
+
+    @Override 
+    public void moveRight(Particle[][] grid) {
+        System.out.println("Not implimented");
+    }
+
+    @Override 
+    public void moveLeft(Particle[][] grid) {
+        System.out.println("Not implimented");
+    }
+
+
 }

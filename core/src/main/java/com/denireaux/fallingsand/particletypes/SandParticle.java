@@ -10,6 +10,8 @@ import com.denireaux.fallingsand.utils.utils;
  * When blocked, they attempt to move diagonally left or right.
  * 
  * This class handles basic gravity application and movement logic.
+ * 
+ * @@author D'Angelo L. DeNiro
  */
 public class SandParticle extends Particle {
     public SandParticle(int x, int y) {
@@ -25,11 +27,11 @@ public class SandParticle extends Particle {
      */
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 6;
+        gravity *= 8;
         velocity += gravity;
     
         // Prevent sand from falling too fast
-        float maxVelocity = 1.0f;
+        float maxVelocity = 1.2f;
         if (velocity > maxVelocity) {
             velocity = maxVelocity;
         }
@@ -44,7 +46,7 @@ public class SandParticle extends Particle {
             if (y <= 0) return;
     
             if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveDown(grid, x, y - 1);
+                moveDown(grid);
                 continue;
             }
     
@@ -82,11 +84,11 @@ public class SandParticle extends Particle {
      * @param newX the X-coordinate to move to
      * @param newY the Y-coordinate to move to
      */
-    private void moveDown(Particle[][] grid, int newX, int newY) {
-        grid[newX][newY] = this;
+    @Override
+    public void moveDown(Particle[][] grid) {
         grid[x][y] = null;
-        x = newX;
-        y = newY;
+        grid[x][y - 1] = this;
+        y--;
     }
 
     /**
@@ -118,7 +120,7 @@ public class SandParticle extends Particle {
      *
      * @param grid the 2D particle array
      */
-    private void moveLeft(Particle[][] grid) {
+    public void moveLeft(Particle[][] grid) {
         grid[x][y] = null;
         grid[x - 1][y] = this;
         x--;
@@ -129,7 +131,7 @@ public class SandParticle extends Particle {
      *
      * @param grid the 2D particle array
      */
-    private void moveRight(Particle[][] grid) {
+    public void moveRight(Particle[][] grid) {
         grid[x][y] = null;
         grid[x + 1][y] = this;
         x++;

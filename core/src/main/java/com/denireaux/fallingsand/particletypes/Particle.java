@@ -24,5 +24,9 @@ public abstract class Particle {
         Particle below = (y > 0) ? grid[x][y - 1] : null;
     
         return new Particle[]{ left, right, above, below };
-    }    
+    }
+    
+    public abstract void moveDown(Particle[][] grid);
+    public abstract void moveLeft(Particle[][] grid);
+    public abstract void moveRight(Particle[][] grid);
 }
