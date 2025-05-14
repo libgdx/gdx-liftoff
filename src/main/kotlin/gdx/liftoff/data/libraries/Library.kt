@@ -1,5 +1,6 @@
 package gdx.liftoff.data.libraries
 
+import gdx.liftoff.NaturalTextComparator
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.AndroidGradleFile
 import gdx.liftoff.data.platforms.GWT
@@ -32,9 +33,20 @@ interface Library {
   /** Fallback version of the library if unable to fetch the latest one. */
   val defaultVersion: String
 
-  /** Latest version of the library fetched from the Maven repository or [defaultVersion]. */
+  /** Latest version of the library fetched from the Maven repository or [defaultVersion].
+   * If the "latest" version has been successfully obtained, it is still compared with [NaturalTextComparator]
+   * to try to */
   val version: String
-    get() = repository.getLatestVersion(group, name) ?: defaultVersion
+    get() {
+      val retrieved = repository.getLatestVersion(group, name)
+      return if (retrieved == null) {
+        defaultVersion
+      } else if (NaturalTextComparator.CASE_INSENSITIVE.compare(retrieved, defaultVersion) >= 0) {
+        retrieved
+      } else {
+        defaultVersion
+      }
+    }
 
   /**
    * @param project is currently generated and should have this library included.

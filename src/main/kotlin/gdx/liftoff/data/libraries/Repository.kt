@@ -29,13 +29,27 @@ interface Repository {
       group: String,
       name: String,
     ): String? {
-      var res: String? = null
-      try {
-        res = fetchVersionFromMavenCentral(group, name)
-      } catch (_: Exception) {
-      }
+      val res: String? =
+        try {
+//        fetchVersionFromMvnRepository(group, name)
+          fetchVersionFromMavenCentral(group, name)
+        } catch (_: Exception) {
+          null
+        }
       return res
     }
+
+//    private fun fetchVersionFromMvnRepository(group: String, name: String): String {
+//      // MvnRepository is much faster than Maven Central search, but it does not report
+//      // beta versions and release candidates. It is currently non-functional.
+//      val versions = MvnRepositoryApi.create().getArtifactVersions(group, name)
+//      if (versions.isNotEmpty()) {
+//        println("MvnRepository yielded ${versions.first()} when asked for $name")
+//        return versions.first()
+//      }
+//      println("MvnRepository yielded nothing for $name")
+//      throw GdxRuntimeException("Unable to fetch $group:$name version from MVNrepository.")
+//    }
 
     private fun fetchVersionFromMavenCentral(
       group: String,
@@ -43,7 +57,7 @@ interface Repository {
     ): String {
       val response =
         get(
-          // https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"jdkgdxds"&rows=1&wt=json
+          // https://search.maven.org/solrsearch/select?q=g:"com.github.tommyettinger"%20AND%20a:"textratypist"&rows=1&wt=json
           "https://search.maven.org/solrsearch/select",
           listOf(
             // yes, we actually do need the spaces in here.

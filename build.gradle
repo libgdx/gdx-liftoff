@@ -174,6 +174,10 @@ dependencies {
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
 
   implementation "org.slf4j:slf4j-nop:2.0.5"
+
+  // This is the same as the "official" mvnrepository-client version 2.0.2, but with dependencies updated to avoid vulnerabilities.
+  // It is here in a comment in case MvnRepository's search starts working again...
+//  implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
 }
 
 construo {
