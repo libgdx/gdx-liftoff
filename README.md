@@ -79,7 +79,7 @@ Gdx-Liftoff is a relatively straightforward GUI application.
  - Click Generate, and let the magic happen.
 
 After that you can open the project in the path you specified, or open it more quickly in IDEA if it's installed how
-Liftoff can see it (using [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/), most likely, though a manually installed IDEA can also be used).
+Liftoff can see it (using [JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/), ideally, though a manually installed IDEA can sometimes work).
 
 If you want to use Kotlin, a Kotlin template is recommended (such as `Kotlin Logo`); these mention that they use "Kotlin
 launchers" in their descriptions. The KTX libraries are all available as third-party extensions; these aren't required
@@ -125,15 +125,20 @@ which was adapted to be the default skin added to new projects (if the _"Generat
 font that the skin uses (under SIL OFL license). Oh yeah, and he did some other stuff starting in version 1.12.1.10,
 such as *almost the entire release*. Huge thanks to raeleus for the complete overhaul of the user experience!
 
+[@Berstanio](https://github.com/Berstanio) has provided help in a number of ways to this project, such as by maintaining
+MOE Community Edition and PRing updates to it here, as well as handling the Graal Native Image helper, and probably even
+more things over the years. [@obigu](https://github.com/obigu) has also contributed a lot of valuable, clean code to the
+project, helping a variety of places.
+
 Other project contributors include [@Mr00Anderson](https://github.com/Mr00Anderson), [@lyze237](https://github.com/lyze237),
 [@metaphore](https://github.com/metaphore) (again!), and [@payne911](https://github.com/payne911).
 People who haven't directly contributed code have still helped a lot by spending their time to test on platforms
 like macOS and iOS; [@JojoIce](https://github.com/JojoIce) is one of several people who made a difference regarding iOS. And of course,
 many thanks go to all the early adopters for putting up with any partially-working releases early on!
 
-The randomized icons chopped up and used for Android projects come from the [OpenMoji](https://openmoji.org) project.
-If you want to use these icons in a less-mangled format, there's
-[openmoji-atlas](https://github.com/tommyettinger/openmoji-atlas) to access these emoji from libGDX conveniently.
+The "Space Shuttle" icon was drawn by [Delapouite](https://delapouite.com/) for the large 
+[game-icons.net](https://game-icons.net) collection. These icons are also available in a libGDX atlas format
+[in this repo](https://github.com/tommyettinger/game-icons-net-atlas), if you want to use the whole collection yourself.
 
 Thanks also to everyone who has made the various libraries and tools Liftoff depends upon. From the huge team
 responsible for Graal Native Image, to [Construo](https://github.com/fourlastor-alexandria/construo) by pretty much a

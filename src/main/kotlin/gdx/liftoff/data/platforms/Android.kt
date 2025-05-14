@@ -174,11 +174,10 @@ android {
   }
   defaultConfig {
     applicationId '${project.basic.rootPackage}'
-    minSdkVersion 19
+    minSdkVersion 21
     targetSdkVersion ${project.advanced.androidSdkVersion}
     versionCode 1
     versionName "1.0"
-    multiDexEnabled true
   }
   compileOptions {
     sourceCompatibility "${project.advanced.javaVersion}"
