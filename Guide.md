@@ -7,16 +7,15 @@ projects and projects that want to use jpackage or Graal Native Image to distrib
 This project provides another alternative setup tool based on
 [SquidSetup](https://github.com/tommyettinger/SquidSetup), but removing the close ties to the SquidLib libraries to make it more general-use. Using SquidSetup's
 code, which is built on [czyzby's code](https://github.com/czyzby/gdx-setup), gives us working projects that use Gradle
-8.5, ahead of the official setup and farther ahead of 4.0.2 for czyzby's gdx-setup. The current Gradle version is 8.5 at the time of writing.
-This allows new projects to "just work" on machines where Java 8 through 21 could be the default, and the moderate amount of configuration
+8.5, ahead of the official setup and farther ahead of 4.0.2 for czyzby's gdx-setup. The current Gradle version is 8.14 at the time of writing.
+This allows new projects to "just work" on machines where Java 8 through 24 could be the default, and the moderate amount of configuration
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.13.1 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.13.1, and it doesn't seem to have any of the problems that 1.13.0 introduced.
-Using 1.13.0 was attempted earlier, but there are frequent antivirus software complaints about the version of LWJGL it
-uses (3.3.4). You should either use 1.13.1 or 1.12.1 for most purposes, though porting older code might need other versions.
-You can choose any released version of libGDX (or a nightly version) in the Advanced tab of the program window; it will
-be downloaded if needed when you import
+Currently, gdx-liftoff projects depend on libGDX 1.13.5 by default, and allow using earlier versions or snapshots as well.
+The current version of libGDX is 1.13.5, and 1.13.1 is the (working) version before it. Don't use 1.13.0, or any of the
+partial releases 1.13.2, 1.13.3, or 1.13.4; the releases 1.12.1, 1.13.1 and 1.13.5 are good and should be used depending
+on which breaking changes may affect you. You can choose any released version of libGDX (or a nightly version) in the
+Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
 
@@ -41,14 +40,14 @@ vulnerability exploited starting in December 2021). We don't need the mitigation
 used to avoid vulnerable log4j versions, now that Gradle has updated and considers this automatically.
 
 LWJGL 3.3.4 and 3.3.5 were problematic for a variety of reasons, and if you choose to update LWJGL to a different version
-than what Liftoff generates (currently LWJGL 3.3.3 for any project using libGDX 1.12.1 or 1.13.1), you should use 3.3.6
-and be aware that it has some problems with heavy audio over-logging on macOS. Disabling audio in Lwjgl3Launcher should
-prevent the logging issue, if you have no audio to begin with. Otherwise, you can set an environment variable,
-`ALSOFT_LOGLEVEL=0`, to disable audio logging entirely while keeping sounds and music in your game. This only would need
-to be set on macOS, and might be possible to do by editing StartupHelper, but that isn't exactly supported. Using LWJGL3
-3.3.3 is generally a good option. Some other LWJGL3 modules have issues in a variety of versions, such as NFD (which
-Liftoff uses) for native file dialogs. That module needs to be downgraded to 3.3.1 to work at all; you can see how that
-can be done in Liftoff's Gradle files and sources.
+than what Liftoff generates (currently LWJGL 3.3.3 for any project using libGDX 1.12.1, 1.13.1, or 1.13.5), you should
+use 3.3.6 and be aware that it has some problems with heavy audio over-logging on macOS. Disabling audio in
+Lwjgl3Launcher should prevent the logging issue, if you have no audio to begin with. Otherwise, you can set an
+environment variable, `ALSOFT_LOGLEVEL=0`, to disable audio logging entirely while keeping sounds and music in your
+game. This only would need to be set on macOS, and might be possible to do by editing StartupHelper, but that isn't
+exactly supported. Using LWJGL3 3.3.3 is generally a good option. Some other LWJGL3 modules have issues in a variety of
+versions, such as NFD (which Liftoff uses) for native file dialogs. That module needs to be downgraded to 3.3.1 to work
+at all; you can see how that can be done in Liftoff's Gradle files and sources.
 
 ## Usage
 
@@ -158,7 +157,7 @@ can be done in Liftoff's Gradle files and sources.
       project. Classic will show a white screen with a pixel-style face when you run, so it can be good to verify that
       a project works, while ApplicationAdapter is probably the easiest to bring an existing game into. The super-koalio
       demo is from libGDX's tests, and may act as a good way to test input and basic graphics in a new project.
-    - In Advanced, you can set the libGDX version (it defaults to 1.13.1, but can be set lower or higher) and
+    - In Advanced, you can set the libGDX version (it defaults to 1.13.5, but can be set lower or higher) and
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and
