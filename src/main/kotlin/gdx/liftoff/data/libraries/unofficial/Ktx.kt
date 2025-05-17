@@ -17,7 +17,7 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
 private const val DEFAULT_GROUP = "io.github.libktx"
-private const val FALLBACK_VERSION = "1.12.1-rc1"
+private const val FALLBACK_VERSION = "1.13.1-rc1"
 
 /**
  * Modular Kotlin utilities.

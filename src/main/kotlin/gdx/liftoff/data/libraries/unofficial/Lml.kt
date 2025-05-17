@@ -17,7 +17,7 @@ import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
 private const val DEFAULT_GROUP = "com.crashinvaders.lml"
-private const val FALLBACK_VERSION = "1.10.1.12.0"
+private const val FALLBACK_VERSION = "1.10.1.12.1"
 
 /**
  * Various utilities for libGDX APIs including GUI building and dependency injection.
