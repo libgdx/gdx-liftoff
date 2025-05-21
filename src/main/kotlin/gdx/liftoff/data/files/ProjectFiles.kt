@@ -126,11 +126,11 @@ open class CopiedFile private constructor(override val path: String, val origina
 /**
  * Saves gradle.properties file.
  */
-class PropertiesFile(val properties: Map<String, String>) : ProjectFile {
+class PropertiesFile(val properties: Map<String, String>, val prepend: String) : ProjectFile {
   override val path = "gradle.properties"
 
   override fun save(destination: FileHandle) {
-    val content = properties.map { it.key + "=" + it.value }.joinToString(separator = "\n", postfix = "\n")
+    val content = prepend + properties.map { it.key + "=" + it.value }.joinToString(separator = "\n", postfix = "\n")
     destination.child(path).writeString(content, false, "UTF-8")
   }
 }
