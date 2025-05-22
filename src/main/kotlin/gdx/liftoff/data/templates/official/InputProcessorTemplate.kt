@@ -45,7 +45,12 @@ public class ${project.basic.mainClass} extends InputAdapter implements Applicat
     }
 
     @Override
-    public void resize(final int width, final int height) {
+    public void resize(int width, int height) {
+        // If the window is minimized on a desktop (LWJGL3) platform, width and height are 0, which causes problems.
+        // In that case, we don't resize anything, and wait for the window to be a normal size before updating.
+        if(width <= 0 || height <= 0) return;
+
+        // Resize your screen here. The parameters represent the new window size.
     }
 
     @Override
