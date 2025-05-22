@@ -25,6 +25,8 @@ class Android : Platform {
     project.rootGradle.buildDependencies.add("\"com.android.tools.build:gradle:${project.advanced.androidPluginVersion}\"")
     project.properties["android.useAndroidX"] = "true"
     project.properties["android.enableR8.fullMode"] = "false"
+    if(project.advanced.gdxVersion == "1.13.5")
+      project.properties["systemProp.com.android.tools.r8.disableHorizontalClassMerging"] = "true"
     addGradleTaskDescription(project, "lint", "performs Android project validation.")
 
     addCopiedFile(project, "proguard-rules.pro")

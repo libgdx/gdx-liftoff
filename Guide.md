@@ -257,8 +257,8 @@ other projects or older versions.
       gdx-liftoff will pre-fill the Android SDK path with `ANDROID_SDK_ROOT` if it hasn't been set yet, but will use the
       last used path if there's a historical path. You can change any and all settings history by either editing
       `~/.prefs/gdx-liftoff-prefs` or just deleting that file and having gdx-liftoff remake it.
-    - The Android SDK version is now set at exactly 34, but this should change in future versions of Liftoff as
-      new versions of the Android OS require updates. Currently, Google play requires a target SDK of 34 for newly
+    - The Android SDK version is now set at exactly 35, but this should change in future versions of Liftoff as
+      new versions of the Android OS require updates. Currently, Google play requires a target SDK of 35 for newly
       submitted projects.
 
 ## Contributions
