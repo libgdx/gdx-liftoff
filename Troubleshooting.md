@@ -181,7 +181,7 @@ you're trying to find looks like this:
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
 |    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
 |    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
-|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.13.5 (*)
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.13.1 (*)
 |         \--- com.google.gwt:gwt-user:2.8.2
 |              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
 |              +--- javax.validation:validation-api:1.0.0.GA

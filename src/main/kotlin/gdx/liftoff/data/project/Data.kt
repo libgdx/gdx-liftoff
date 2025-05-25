@@ -71,9 +71,7 @@ data class AdvancedProjectData(
    * Version of xpenatan's TeaVM backend.
    */
   val gdxTeaVMVersion: String
-    get() =
-      Repository.MavenCentral.getLatestVersion(group = "com.github.xpenatan.gdx-teavm", name = "backend-teavm")
-        ?: "1.2.1"
+    get() = if (gdxVersion == "1.13.5") "1.2.1" else "1.2.0" // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1
 
   /**
    * Version of the main TeaVM project.
