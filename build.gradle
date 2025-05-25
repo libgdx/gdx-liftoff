@@ -192,11 +192,11 @@ construo {
     includeDefaultCryptoModules.set(false) // we don't need any encryption in Liftoff itself.
   }
   targets.configure {
-    create("linuxX64", Target.Linux) {
+    register("linuxX64", Target.Linux) {
       architecture.set(Target.Architecture.X86_64)
       jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_linux_hotspot_17.0.15_6.tar.gz")
     }
-    create("macM1", Target.MacOs) {
+    register("macM1", Target.MacOs) {
       architecture.set(Target.Architecture.AARCH64)
       jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.15_6.tar.gz")
       // macOS needs an identifier
@@ -204,7 +204,7 @@ construo {
       // Optional: icon for macOS
       macIcon.set(file("icons/logo.icns"))
     }
-    create("macX64", Target.MacOs) {
+    register("macX64", Target.MacOs) {
       architecture.set(Target.Architecture.X86_64)
       jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_mac_hotspot_17.0.15_6.tar.gz")
       // macOS needs an identifier
@@ -212,7 +212,7 @@ construo {
       // Optional: icon for macOS
       macIcon.set(file("icons/logo.icns"))
     }
-    create("winX64", Target.Windows) {
+    register("winX64", Target.Windows) {
       architecture.set(Target.Architecture.X86_64)
       icon.set(file("icons/gdx-liftoff.png"))
       jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_windows_hotspot_17.0.15_6.zip")
