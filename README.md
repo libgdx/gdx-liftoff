@@ -12,11 +12,8 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
     📥
 </h1>
 
-To generate a project *that does not include Android*, [download](https://github.com/libgdx/gdx-liftoff/releases) the
-latest application `jar`. If you do want to target Android, you should currently use
-[version 1.13.1.4](https://github.com/libgdx/gdx-liftoff/releases/tag/v1.13.1.4) instead of the more recent version
-1.13.5.0 . Version 1.13.5 of libGDX has some serious known issues with `Pools` on Android, and though so far no other
-platforms are affected, `Pools` sees use inside libGDX, where there are no workarounds. Once you have the right JAR, 
+To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application `jar`. Note
+that the latest releases target 1.13.1 by default even though they have 1.13.5 in the name. Once you have the right JAR, 
 run it (usually double-clicking will do), or run the following command manually (replacing the `VERSION` appropriately):
 
 ```shell

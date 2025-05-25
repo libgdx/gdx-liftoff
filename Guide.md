@@ -11,11 +11,11 @@ code, which is built on [czyzby's code](https://github.com/czyzby/gdx-setup), gi
 This allows new projects to "just work" on machines where Java 8 through 24 could be the default, and the moderate amount of configuration
 changes needed for Gradle 8.x are all handled by gdx-liftoff. Thanks to the Gretty plugin's latest release, Gradle 8.x
 now works well with the HTML platform, without additional quirky configuration (earlier versions of Liftoff needed that).
-Currently, gdx-liftoff projects depend on libGDX 1.13.5 by default, and allow using earlier versions or snapshots as well.
-The current version of libGDX is 1.13.5, and 1.13.1 is the (working) version before it. Don't use 1.13.0, or any of the
-partial releases 1.13.2, 1.13.3, or 1.13.4; the releases 1.12.1, 1.13.1 and 1.13.5 are good and should be used depending
-on which breaking changes may affect you. You can choose any released version of libGDX (or a nightly version) in the
-Advanced tab of the program window; it will be downloaded if needed when you import
+Currently, gdx-liftoff projects depend on libGDX 1.13.1 by default, and allow using earlier versions or snapshots as well.
+The current version of libGDX is 1.13.5 (which has some significant issues), and 1.13.1 is the (working) version before
+it. Don't use 1.13.0, or any of the partial releases 1.13.2, 1.13.3, or 1.13.4; the releases 1.12.1 and 1.13.1 are good
+and should be used depending on which breaking changes may affect you. You can choose any released version of libGDX (or
+a nightly version) in the Advanced tab of the program window; it will be downloaded if needed when you import
 the Gradle project into your IDE or run one of most Gradle tasks. If you're updating from an older libGDX version, see
 [the official migration guide](https://libgdx.com/news/2021/04/the-ultimate-migration-guide).
 
@@ -157,7 +157,7 @@ at all; you can see how that can be done in Liftoff's Gradle files and sources.
       project. Classic will show a white screen with a pixel-style face when you run, so it can be good to verify that
       a project works, while ApplicationAdapter is probably the easiest to bring an existing game into. The super-koalio
       demo is from libGDX's tests, and may act as a good way to test input and basic graphics in a new project.
-    - In Advanced, you can set the libGDX version (it defaults to 1.13.5, but can be set lower or higher) and
+    - In Advanced, you can set the libGDX version (it defaults to 1.13.1, but can be set lower or higher) and
       various other versions, including the default Java compatibility. Typically, `Java version` is the minimum across
       all platforms, and should be 7 or more (8 is generally safe). You can set `Desktop Java version` to any version at
       least equal to `Java version`, and similarly for `Server Java version`; these only affect the LWJGL2/LWJGL3 and
