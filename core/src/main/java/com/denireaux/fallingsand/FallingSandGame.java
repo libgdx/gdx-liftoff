@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
 import com.denireaux.fallingsand.particletypes.WaterParticle;
+import com.denireaux.fallingsand.particletypes.WetSandParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
     public static final int GRID_WIDTH = 1200;
@@ -24,7 +25,8 @@ public class FallingSandGame extends ApplicationAdapter {
 
     private enum ParticleType {
         SAND,
-        WATER
+        WATER,
+        WETSAND
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -68,6 +70,9 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof WaterParticle) {
                     batch.setColor(Color.BLUE);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof WetSandParticle) {
+                    batch.setColor(Color.BROWN);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
@@ -82,6 +87,9 @@ public class FallingSandGame extends ApplicationAdapter {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             currentParticle = ParticleType.WATER;
             System.out.println("Switched to Water");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            currentParticle = ParticleType.WETSAND;
+            System.out.println("Switched to Wet Sand");
         }
 
         // Spawn selected particle type
@@ -89,7 +97,7 @@ public class FallingSandGame extends ApplicationAdapter {
             int mouseX = Gdx.input.getX() / CELL_SIZE;
             int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) / CELL_SIZE;
 
-            int brushRadius = 6;
+            int brushRadius = 8;
 
             for (int dx = -brushRadius; dx <= brushRadius; dx++) {
                 for (int dy = -brushRadius; dy <= brushRadius; dy++) {
@@ -104,6 +112,9 @@ public class FallingSandGame extends ApplicationAdapter {
                                     break;
                                 case WATER:
                                     grid[x][y] = new WaterParticle(x, y);
+                                    break;
+                                case WETSAND:
+                                    grid[x][y] = new WetSandParticle(x, y);
                                     break;
                             }
                         }

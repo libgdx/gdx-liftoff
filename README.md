@@ -1,5 +1,5 @@
 # Running this application...
 
 ## With Bash installed whether it be locally or in WSL, in the top-level directory...
-    - bash run.sh
+    - bash run.sh / ./run.sh
     - This can also be ran via command line by running: ./gradlew clean && ./gradlew lwjgl3:run

@@ -18,6 +18,10 @@ public class SandParticle extends Particle {
         super(x, y);
     }
 
+    private int sinkCounter = 0;
+    private static final float SINK_DELAY = 0.75f; // Adjust this to control sink speed
+
+
     /**
      * Updates the sand particle's position based on gravity and surrounding particles.
      * This simulates falling behavior and diagonal sliding if the path directly below is blocked.
@@ -31,7 +35,7 @@ public class SandParticle extends Particle {
         velocity += gravity;
     
         // Prevent sand from falling too fast
-        float maxVelocity = 1.2f;
+        float maxVelocity = 1.3f;
         if (velocity > maxVelocity) {
             velocity = maxVelocity;
         }
@@ -48,10 +52,21 @@ public class SandParticle extends Particle {
             if (MovementHelper.canMoveDown(grid, x, y)) {
                 moveDown(grid);
                 continue;
+            } else if (grid[x][y - 1] instanceof WaterParticle) {
+                if (sinkCounter >= SINK_DELAY) {
+                    swapWith(grid, x, y - 1);
+                    sinkCounter = 0;
+                    continue;
+                } else {
+                    sinkCounter++;
+                }
             }
-    
+
             boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
             boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
+            boolean canLeft = MovementHelper.canLeft(grid, x, y);
+            boolean canRight = MovementHelper.canRight(grid, x, y);
+            
             boolean movingDownLeft = utils.getRandomBoolean();
     
             if (canDownLeft && canDownRight) {
@@ -136,4 +151,17 @@ public class SandParticle extends Particle {
         grid[x + 1][y] = this;
         x++;
     }
+
+    private void swapWith(Particle[][] grid, int newX, int newY) {
+        Particle temp = grid[newX][newY];
+        grid[newX][newY] = this;
+        grid[x][y] = temp;
+        if (temp != null) {
+            temp.x = x;
+            temp.y = y;
+        }
+        x = newX;
+        y = newY;
+    }
+
 }

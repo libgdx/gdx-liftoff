@@ -2,6 +2,9 @@ package com.denireaux.fallingsand.particletypes;
 
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class WaterParticle extends Particle {
 
@@ -11,11 +14,11 @@ public class WaterParticle extends Particle {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 6;
+        gravity *= 8;
         velocity += gravity;
 
-        // Cap velocity
-        float maxVelocity = 1.0f;
+        // Cap velocity to prevent excessive speed
+        float maxVelocity = 1.3f;
         velocity = Math.min(velocity, maxVelocity);
 
         int moveSteps = (int) velocity;
@@ -26,27 +29,32 @@ public class WaterParticle extends Particle {
 
             // Try to move straight down
             if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveTo(grid, x, y - 1);
+                moveDown(grid);
                 continue;
             }
 
-            // Diagonal down-left or down-right
+            // Try diagonals
             boolean left = MovementHelper.canMoveDownLeft(grid, x, y);
             boolean right = MovementHelper.canMoveDownRight(grid, x, y);
-            boolean favorLeft = utils.getRandomBoolean();
+
+            boolean movingLeft = utils.getRandomBoolean();
 
             if (left && right) {
-                moveTo(grid, favorLeft ? x - 1 : x + 1, y - 1);
+                if (movingLeft) {
+                    moveLeft(grid);
+                } else {
+                    moveRight(grid);
+                }
                 continue;
             } else if (left) {
-                moveTo(grid, x - 1, y - 1);
+                moveLeft(grid);
                 continue;
             } else if (right) {
-                moveTo(grid, x + 1, y - 1);
+                moveRight(grid);
                 continue;
             }
 
-            // Slide horizontally if stuck
+            // Slide left or right if completely blocked
             boolean slid = trySlideHorizontally(grid);
             if (!slid) velocity = 0; // Stop if blocked
         }
@@ -55,7 +63,9 @@ public class WaterParticle extends Particle {
     }
 
     private boolean trySlideHorizontally(Particle[][] grid) {
-        int[] offsets = utils.getShuffledArray(new int[]{1, 2, -1, -2});
+        List<Integer> offsets = Arrays.asList(1, 2, -1, -2);
+        Collections.shuffle(offsets);
+
         for (int dx : offsets) {
             int targetX = x + dx;
             if (isInBounds(targetX, y, grid) && grid[targetX][y] == null) {
@@ -77,20 +87,32 @@ public class WaterParticle extends Particle {
         return x >= 0 && x < grid.length && y >= 0 && y < grid[0].length;
     }
 
-    @Override 
+    @Override
     public void moveDown(Particle[][] grid) {
-        System.out.println("Not implimented");
+        grid[x][y] = null;
+        grid[x][y - 1] = this;
+        y--;
     }
 
-    @Override 
-    public void moveRight(Particle[][] grid) {
-        System.out.println("Not implimented");
-    }
-
-    @Override 
+    /**
+     * Moves the particle one cell to the left.
+     *
+     * @param grid the 2D particle array
+     */
     public void moveLeft(Particle[][] grid) {
-        System.out.println("Not implimented");
+        grid[x][y] = null;
+        grid[x - 1][y] = this;
+        x--;
     }
 
-
+    /**
+     * Moves the particle one cell to the right.
+     *
+     * @param grid the 2D particle array
+     */
+    public void moveRight(Particle[][] grid) {
+        grid[x][y] = null;
+        grid[x + 1][y] = this;
+        x++;
+    }
 }
