@@ -38,7 +38,7 @@ import java.lang.NumberFormatException
 @Suppress("unused") // Fields accessed via reflection.
 class Configuration {
   companion object {
-    const val VERSION = "1.13.5.1"
+    const val VERSION = "1.13.5.2-SNAPSHOT"
     const val WIDTH = 600
     const val HEIGHT = 700
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"
@@ -46,7 +46,7 @@ class Configuration {
     fun parseJavaVersion(version: String): Double {
       val d =
         try {
-          version.removeSurrounding("1.", ".0").toDouble()
+          version.removePrefix("1.").removeSuffix(".0").toDouble()
         } catch (nfe: NumberFormatException) {
           8.0
         }
