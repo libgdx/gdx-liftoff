@@ -206,7 +206,7 @@ public class PathsPanel extends Table implements Panel {
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.projectPath);
-        if (UIUtils.isWindows && tempFileHandle.path().matches("(?i).*([\\\\/]|^)OneDrive([\\\\/]|$).*")) {
+        if (UIUtils.isWindows && tempFileHandle.path().matches("(?i).*([\\\\/]|^)OneDrive[^\\\\/]*([\\\\/]|$).*")) {
             errorLabel.restart(prop.getProperty("noOneDrivePaths"));
             errorLabel.skipToTheEnd();
             return;
