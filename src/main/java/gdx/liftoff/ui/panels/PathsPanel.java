@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
@@ -20,7 +21,7 @@ import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import static gdx.liftoff.Main.*;
 
 /**
- * Table that displays the project path and the android sdk path if android is selected as a platform
+ * Table that displays the project path, and the Android SDK path if Android is selected as a platform.
  */
 public class PathsPanel extends Table implements Panel {
     private TypingLabel errorLabel;
@@ -205,6 +206,12 @@ public class PathsPanel extends Table implements Panel {
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.projectPath);
+        if (UIUtils.isWindows && tempFileHandle.path().matches("(?i).*([\\\\/]|^)OneDrive([\\\\/]|$).*")) {
+            errorLabel.restart(prop.getProperty("noOneDrivePaths"));
+            errorLabel.skipToTheEnd();
+            return;
+        }
+
         if (tempFileHandle.list().length != 0) {
             errorLabel.restart(prop.getProperty("notEmptyDirectory"));
             errorLabel.skipToTheEnd();
