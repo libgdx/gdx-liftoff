@@ -263,6 +263,7 @@ public final class Listing {
         new KotlinClassicTemplate(),
         new Scene2DTemplate(),
         new SuperKoalioTemplate(),
+        new IsometricVoxelTemplate(),
 
         new AutumnMvcBasicTemplate(),
         new AutumnMvcBox2dTemplate(),

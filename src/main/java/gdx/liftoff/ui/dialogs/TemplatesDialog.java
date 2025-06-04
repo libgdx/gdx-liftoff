@@ -100,6 +100,7 @@ public class TemplatesDialog extends PopTable {
         addTemplate(table, buttonGroup, ("kotlinTemplate"), prop.getProperty("kotlinTemplateTip"));
         addTemplate(table, buttonGroup, ("scene2dTemplate"), prop.getProperty("scene2dTemplateTip"), true);
         addTemplate(table, buttonGroup, ("superKoalio"), prop.getProperty("superKoalioTip"));
+        addTemplate(table, buttonGroup, ("isometricVoxel"), prop.getProperty("isometricVoxelTip"));
 
         //third-party templates title
         table.row();
