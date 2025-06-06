@@ -43,7 +43,6 @@ class Android : Platform {
     addCopiedFile(project, "ic_launcher-web.png")
     addCopiedFile(project, "res", "values", "color.xml")
     addCopiedFile(project, "res", "values", "styles.xml")
-    addCopiedFile(project, "res", "values-v21", "styles.xml")
 
     project.files.add(
       SourceFile(
