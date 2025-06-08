@@ -23,7 +23,9 @@ public class FallingSandGame extends ApplicationAdapter {
         SAND,
         WATER,
         WETSAND,
-        VAPOR
+        VAPOR,
+        LAVA,
+        STONE
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -73,6 +75,12 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof VaporParticle) {
                     batch.setColor(Color.LIGHT_GRAY);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof LavaParticle) {
+                    batch.setColor(Color.RED);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof StoneParticle) {
+                    batch.setColor(Color.DARK_GRAY);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
@@ -93,6 +101,12 @@ public class FallingSandGame extends ApplicationAdapter {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
             currentParticle = ParticleType.VAPOR;
             System.out.println("Switched to Vapor");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) {
+            currentParticle = ParticleType.LAVA;
+            System.out.println("Switched to Lava");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)) {
+            currentParticle = ParticleType.STONE;
+            System.out.println("Switched to Stone");
         }
 
         // Spawn selected particle type
@@ -121,6 +135,9 @@ public class FallingSandGame extends ApplicationAdapter {
                                     break;
                                 case VAPOR:
                                     grid[x][y] = new VaporParticle(x, y);
+                                    break;
+                                case LAVA:
+                                    grid[x][y] = new LavaParticle(x, y);
                                     break;
                             }
                         }
