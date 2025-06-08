@@ -8,11 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import com.denireaux.fallingsand.particletypes.Particle;
-import com.denireaux.fallingsand.particletypes.SandParticle;
-import com.denireaux.fallingsand.particletypes.WaterParticle;
-import com.denireaux.fallingsand.particletypes.WetSandParticle;
+import com.denireaux.fallingsand.particletypes.*;
 
 public class FallingSandGame extends ApplicationAdapter {
     public static final int GRID_WIDTH = 1200;
@@ -26,7 +22,8 @@ public class FallingSandGame extends ApplicationAdapter {
     private enum ParticleType {
         SAND,
         WATER,
-        WETSAND
+        WETSAND,
+        VAPOR
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -73,6 +70,9 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof WetSandParticle) {
                     batch.setColor(Color.BROWN);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof VaporParticle) {
+                    batch.setColor(Color.LIGHT_GRAY);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
@@ -90,6 +90,9 @@ public class FallingSandGame extends ApplicationAdapter {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
             currentParticle = ParticleType.WETSAND;
             System.out.println("Switched to Wet Sand");
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+            currentParticle = ParticleType.VAPOR;
+            System.out.println("Switched to Vapor");
         }
 
         // Spawn selected particle type
@@ -115,6 +118,9 @@ public class FallingSandGame extends ApplicationAdapter {
                                     break;
                                 case WETSAND:
                                     grid[x][y] = new WetSandParticle(x, y);
+                                    break;
+                                case VAPOR:
+                                    grid[x][y] = new VaporParticle(x, y);
                                     break;
                             }
                         }
