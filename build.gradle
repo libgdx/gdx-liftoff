@@ -179,6 +179,50 @@ dependencies {
   // It is here in a comment in case MvnRepository's search starts working again...
 //  implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
 }
+// Builds a JAR that only includes the files needed to run on macOS, not Windows or Linux.
+// The file size for a Mac-only JAR is about 7MB smaller than a cross-platform JAR.
+tasks.register("jarMac") {
+  dependsOn("jar")
+  group("build")
+  jar.archiveFileName.set("${appName}-${version}-mac.jar")
+  jar.exclude("windows/x86/**", "windows/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**", "**/*.dll", "**/*.so",
+    'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+  dependencies {
+    jar.exclude("windows/x86/**", "windows/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**",
+      'META-INF/INDEX.LIST', 'META-INF/maven/**')
+  }
+}
+
+// Builds a JAR that only includes the files needed to run on Linux, not Windows or macOS.
+// The file size for a Linux-only JAR is about 5MB smaller than a cross-platform JAR.
+tasks.register("jarLinux") {
+  dependsOn("jar")
+  group("build")
+  jar.archiveFileName.set("${appName}-${version}-linux.jar")
+  jar.exclude("windows/x86/**", "windows/x64/**", "macos/arm64/**", "macos/x64/**", "**/*.dll", "**/*.dylib",
+    'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
+  dependencies {
+    jar.exclude("windows/x86/**", "windows/x64/**", "macos/arm64/**", "macos/x64/**",
+      'META-INF/INDEX.LIST', 'META-INF/maven/**')
+  }
+}
+
+// Builds a JAR that only includes the files needed to run on x64 Windows, not Linux or macOS.
+// The file size for a Windows-only JAR is about 4MB smaller than a cross-platform JAR.
+tasks.register("jarWin") {
+  dependsOn("jar")
+  group("build")
+  jar.archiveFileName.set("${appName}-${version}-win.jar")
+  jar.exclude("macos/arm64/**", "macos/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**", "**/*.dylib", "**/*.so",
+    'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA',
+    "windows/x86/**", "gdx.dll"
+  )
+  dependencies {
+    jar.exclude("macos/arm64/**", "macos/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**",
+      'META-INF/INDEX.LIST', 'META-INF/maven/**',
+      "windows/x86/**", "gdx.dll")
+  }
+}
 
 construo {
   // name of the executable
