@@ -164,5 +164,4 @@ public class SandParticle extends Particle {
         x = newX;
         y = newY;
     }
-
 }
