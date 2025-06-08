@@ -53,13 +53,8 @@ public class SandParticle extends Particle {
                 moveDown(grid);
                 continue;
             } else if (grid[x][y - 1] instanceof WaterParticle) {
-                if (sinkCounter >= SINK_DELAY) {
-                    swapWith(grid, x, y - 1);
-                    sinkCounter = 0;
-                    continue;
-                } else {
-                    sinkCounter++;
-                }
+                grid[x][y] = new WetSandParticle(x, y);
+                return;
             }
 
             boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
