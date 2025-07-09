@@ -478,7 +478,7 @@ class SquidSquadFreezeText : SquidSquadExtension() {
 }
 
 /**
- * SquidSquad's Fury compatibility code for SquidCore.
+ * SquidSquad's Fory compatibility code for SquidCore.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
@@ -490,7 +490,7 @@ class SquidSquadWrathCore : SquidSquadExtension() {
     addDependency(project, Core.ID, "$group:$name")
 
     SquidSquadCore().initiate(project)
-    Fury().initiate(project)
+    Fory().initiate(project)
     TantrumRegExodus().initiate(project)
     TantrumDigital().initiate(project)
     TantrumJdkgdxds().initiate(project)
@@ -498,7 +498,7 @@ class SquidSquadWrathCore : SquidSquadExtension() {
 }
 
 /**
- * SquidSquad's Fury compatibility code for SquidGrid.
+ * SquidSquad's Fory compatibility code for SquidGrid.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
@@ -515,7 +515,7 @@ class SquidSquadWrathGrid : SquidSquadExtension() {
 }
 
 /**
- * SquidSquad's Fury compatibility code for SquidOld.
+ * SquidSquad's Fory compatibility code for SquidOld.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
@@ -532,7 +532,7 @@ class SquidSquadWrathOld : SquidSquadExtension() {
 }
 
 /**
- * SquidSquad's Fury compatibility code for SquidPath.
+ * SquidSquad's Fory compatibility code for SquidPath.
  * @author Eben Howard
  * @author Tommy Ettinger
  */
@@ -550,7 +550,7 @@ class SquidSquadWrathPath : SquidSquadExtension() {
 }
 
 /**
- * SquidSquad's Fury compatibility code for SquidText.
+ * SquidSquad's Fory compatibility code for SquidText.
  * @author Eben Howard
  * @author Tommy Ettinger
  */

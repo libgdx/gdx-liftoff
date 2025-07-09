@@ -118,7 +118,7 @@ public final class Listing {
             new PieMenu(),
             new JBump(),
             new CommonsCollections(),
-            new Fury(),
+            new Fory(),
             new Kryo(),
             new KryoNet(),
             new Guacamole(),

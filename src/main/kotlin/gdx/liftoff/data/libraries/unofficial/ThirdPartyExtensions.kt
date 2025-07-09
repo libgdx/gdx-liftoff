@@ -571,7 +571,7 @@ class Stripe : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
   override val id = "gdxGltf"
-  override val defaultVersion = "4220b1020b"
+  override val defaultVersion = "32e345c15d"
   override val repository = Repository.JitPack
   override val url = "https://github.com/mgsx-dev/gdx-gltf"
   override val group = "com.github.mgsx-dev"
@@ -876,15 +876,17 @@ class CommonsCollections : ThirdPartyExtension() {
  * @author Apache Software Foundation
  */
 @Extension
-class Fury : ThirdPartyExtension() {
-  override val id = "fury"
-  override val defaultVersion = "0.10.3"
-  override val url = "https://fury.apache.org/"
-  override val group = "org.apache.fury" // was org.furyio before 0.5.0
-  override val name = "fury-core"
+class Fory : ThirdPartyExtension() {
+  override val id = "fory"
+  override val defaultVersion = "0.11.1"
+  override val url = "https://fory.apache.org/"
+  // was org.furyio before 0.5.0
+  // was org.apache.fury before 0.11.0
+  override val group = "org.apache.fory"
+  override val name = "fory-core"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "org.apache.fury:fury-core")
+    addDependency(project, Core.ID, "org.apache.fory:fory-core")
   }
 }
 
@@ -1141,7 +1143,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
 @Extension
 class Lombok : ThirdPartyExtension() {
   override val id = "lombok"
-  override val defaultVersion = "1.18.34"
+  override val defaultVersion = "1.18.38"
   override val url = "https://projectlombok.org/"
   override val group = "org.projectlombok"
   override val name = "lombok"
@@ -1149,7 +1151,7 @@ class Lombok : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addSpecialDependency(project, Core.ID, "compileOnly \"org.projectlombok:lombok:\$${id}Version\"")
     addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
-    project.rootGradle.buildDependencies.add("\"io.freefair.gradle:lombok-plugin:8.3\"")
+    project.rootGradle.buildDependencies.add("\"io.freefair.gradle:lombok-plugin:8.14\"")
     project.rootGradle.plugins.add("io.freefair.lombok")
   }
 }
@@ -1389,7 +1391,7 @@ class Cringe : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.6.2"
+  override val defaultVersion = "0.7.0"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1517,7 +1519,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.6.2.1"
+  override val defaultVersion = "0.7.0.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1558,7 +1560,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "1.10.0.1"
+  override val defaultVersion = "1.10.1.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
@@ -1619,7 +1621,7 @@ class KryoGand : ThirdPartyExtension() {
 @Extension
 class TantrumLibgdx : ThirdPartyExtension() {
   override val id = "tantrumLibgdx"
-  override val defaultVersion = "1.13.1.9"
+  override val defaultVersion = "1.13.1.11"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-libgdx"
@@ -1627,7 +1629,7 @@ class TantrumLibgdx : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-libgdx")
 
-    Fury().initiate(project)
+    Fory().initiate(project)
   }
 }
 
@@ -1638,7 +1640,7 @@ class TantrumLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumRegExodus : ThirdPartyExtension() {
   override val id = "tantrumRegExodus"
-  override val defaultVersion = "0.1.19.9"
+  override val defaultVersion = "0.1.19.11"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-regexodus"
@@ -1646,7 +1648,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-regexodus")
 
-    Fury().initiate(project)
+    Fory().initiate(project)
     RegExodus().initiate(project)
   }
 }
@@ -1658,7 +1660,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.6.2.9"
+  override val defaultVersion = "0.7.0.11"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-digital"
@@ -1666,7 +1668,7 @@ class TantrumDigital : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-digital")
 
-    Fury().initiate(project)
+    Fory().initiate(project)
     Digital().initiate(project)
   }
 }
@@ -1678,7 +1680,7 @@ class TantrumDigital : ThirdPartyExtension() {
 @Extension
 class TantrumJdkgdxds : ThirdPartyExtension() {
   override val id = "tantrumJdkgdxds"
-  override val defaultVersion = "1.10.0.9"
+  override val defaultVersion = "1.10.1.11"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-jdkgdxds"
@@ -1686,7 +1688,7 @@ class TantrumJdkgdxds : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-jdkgdxds")
 
-    Fury().initiate(project)
+    Fory().initiate(project)
     Jdkgdxds().initiate(project)
     TantrumDigital().initiate(project)
   }

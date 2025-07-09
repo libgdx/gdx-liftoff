@@ -39,7 +39,7 @@ data class AdvancedProjectData(
   /**
    * Should match the recommended/tested by the libGDX version.
    */
-  val androidPluginVersion: String = "8.7.3"
+  val androidPluginVersion: String = "8.9.3"
 
   /**
    * Should be updated as Android's latest desugaring library updates, but must always be a version that works
