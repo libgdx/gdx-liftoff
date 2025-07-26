@@ -39,7 +39,10 @@ def jarName = "$appName-${version}.jar"
 
 jar {
   manifest {
-    attributes 'Main-Class': mainClassName
+    attributes (
+      // Enabling native access is good for JARs run by Java 24 or later.
+      'Main-Class' : mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
+    )
   }
   archiveFileName.set(jarName)
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)

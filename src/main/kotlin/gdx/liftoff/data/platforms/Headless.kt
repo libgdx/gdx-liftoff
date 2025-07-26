@@ -74,8 +74,10 @@ jar {
   duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
   dependsOn configurations.runtimeClasspath
   from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+// setting the manifest makes the JAR runnable.
+// enabling native access helps avoid a warning when Java 24 or later runs the JAR.
   manifest {
-    attributes 'Main-Class': project.mainClassName
+    attributes 'Main-Class': project.mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
   }
   doLast {
     file(archiveFile).setExecutable(true, false)

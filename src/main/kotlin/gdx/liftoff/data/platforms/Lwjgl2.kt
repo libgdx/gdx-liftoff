@@ -88,8 +88,9 @@ jar {
     exclude('META-INF/INDEX.LIST', 'META-INF/maven/**')
   }
 // setting the manifest makes the JAR runnable.
+// enabling native access helps avoid a warning when Java 24 or later runs the JAR.
   manifest {
-    attributes 'Main-Class': project.mainClassName
+    attributes 'Main-Class': project.mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
   }
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
   doLast {
