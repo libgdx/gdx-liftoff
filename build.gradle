@@ -4,8 +4,8 @@ buildscript {
   repositories {
     mavenCentral()
     gradlePluginPortal()
-    maven { url 'https://s01.oss.sonatype.org' }
-    mavenLocal()
+//    maven { url 'https://s01.oss.sonatype.org' }
+//    mavenLocal()
     google()
   }
   dependencies {
@@ -59,8 +59,8 @@ jar {
 repositories {
   mavenCentral()
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url "https://s01.oss.sonatype.org" }
+//  maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+//  maven { url "https://s01.oss.sonatype.org" }
   maven { url 'https://jitpack.io' }
 }
 
