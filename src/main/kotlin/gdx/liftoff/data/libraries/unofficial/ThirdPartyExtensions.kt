@@ -787,7 +787,7 @@ class RegExodus : ThirdPartyExtension() {
 /**
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
- * with which libGDX versions; vis-ui 1.5.5 is the default and is
+ * with which libGDX versions; vis-ui 1.5.6 is the default and is
  * compatible with libGDX 1.13.1.
  * @author Kotcrab
  */
@@ -796,7 +796,7 @@ class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
 
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1.5.5"
+  override val defaultVersion = "1.5.6"
   override val url = "https://github.com/kotcrab/vis-ui"
   override val group = "com.kotcrab.vis"
   override val name = "vis-ui"

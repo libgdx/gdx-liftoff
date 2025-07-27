@@ -277,16 +277,18 @@ newer JDK to build the project, though not necessarily to run the resulting game
 `jdeps` to determine which parts of the JDK to use, and `jlink` to create a JRE without any parts the game doesn't use.
 The jdeps/jlink step can go wrong if certain deprecated parts of the JDK are used, which is the case with the
 commonly-used dependency VisUI up to its version 1.5.3 . VisUI recently released a new stable version, and Liftoff
-updated to it; so can your project. That release is version 1.5.5, and uses this dependency:
+updated to it; so can your project. That release is version 1.5.6, and uses this dependency:
 
-`implementation "com.kotcrab.vis:vis-ui:1.5.5"`
+`implementation "com.kotcrab.vis:vis-ui:1.5.6"`
 
 You could instead change your dependency on VisUI to a known-working commit on JitPack if you encounter any issues:
 
 `implementation "com.github.kotcrab.vis-ui:vis-ui:1aef382077"`
 
 Which gets a sort-of-recent commit built by JitPack, and that code has a fix for 1.5.3 that makes it compatible with
-Construo (and with jlink in general). Using 1.5.5 is probably a better idea unless some new issue surfaces.
+Construo (and with jlink in general). Using 1.5.6 is probably a better idea unless some new issue surfaces. There is a
+newer 1.5.7 version that is not currently recommended for use because it depends on libGDX 1.13.5, which has serious
+issues on Android for release builds, among other reasons to avoid it like breaking API changes.
 
 Other dependencies may also have issues, but no one has found them yet.
 
