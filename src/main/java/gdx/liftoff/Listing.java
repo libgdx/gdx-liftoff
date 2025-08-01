@@ -97,6 +97,7 @@ public final class Listing {
             new MakeSomeNoise(),
             new TypingLabel(),
             new TextraTypist(),
+            new FreeTypist(),
             new ShapeDrawer(),
             new SimpleGraphs(),
             new Formic(),

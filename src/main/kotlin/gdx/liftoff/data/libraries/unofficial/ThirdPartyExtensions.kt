@@ -402,7 +402,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "2.0.3"
+  override val defaultVersion = "2.1.1"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -413,6 +413,26 @@ class TextraTypist : ThirdPartyExtension() {
     addDependency(project, GWT.ID, "com.github.tommyettinger:textratypist:sources")
     addGwtInherit(project, "com.github.tommyettinger.textratypist")
     RegExodus().initiate(project)
+  }
+}
+
+/**
+ * Combines FreeType with TextraTypist; allows a skin JSON to configure FreeType.
+ * @author Tommy Ettinger
+ * @author Raymond Buckley (wrote Stripe's FreeType code, which this incorporates)
+ */
+@Extension
+class FreeTypist : ThirdPartyExtension() {
+  override val id = "freetypist"
+  override val defaultVersion = "2.1.1.0"
+  override val url = "https://github.com/tommyettinger/freetypist"
+  override val group = "com.github.tommyettinger"
+  override val name = "freetypist"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.tommyettinger:freetypist")
+    Freetype().initiate(project)
+    TextraTypist().initiate(project)
   }
 }
 
