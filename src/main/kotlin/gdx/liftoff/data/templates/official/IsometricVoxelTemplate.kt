@@ -4710,6 +4710,13 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
     public long animationStart = -1000000L;
 
     /**
+     * For browser-based targets, audio isn't allowed to play until the user has "interacted" with the application.
+     * On any other platform, this is set to true in create(), but GWT and TeaVM set it to true once any touch/click
+     * input has happened.
+     */
+    public boolean playMusic = false;
+
+    /**
      * A temporary Vector3 used to store either pixel or world positions being projected or unprojected in 3D.
      */
     private static final Vector3 projectionTempVector = new Vector3();
@@ -4765,11 +4772,15 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 //        Gdx.app.setLogLevel(Application.LOG_INFO);
         Gdx.app.setLogLevel(Application.LOG_ERROR);
 
+        // We can't start playing music immediately on GWT or TeaVM backends.
+        if(Gdx.app.getType() != Application.ApplicationType.WebGL)
+            playMusic = true;
         // Create and play looping background music.
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Komiku - Road 4 Fight.ogg"));
         backgroundMusic.setVolume(0.5f);
         backgroundMusic.setLooping(true);
-        backgroundMusic.play();
+        if(playMusic)
+            backgroundMusic.play();
 
         // We draw everything as 2D graphics with a carefully determined sort order.
         batch = new SpriteBatch();
@@ -5050,6 +5061,13 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         }
         // Because the arrow keys, as well as I and O, can change the camera, we update it here.
         camera.update();
+
+        // If playMusic is false, we must be on a browser target (GWT or TeaVM), and we are delaying the music startup
+        // until the user has "interacted" with the game. Once they click or touch, we can start playing a song.
+        if(!playMusic && Gdx.input.justTouched()) {
+            playMusic = true;
+            backgroundMusic.play();
+        }
 
         /*
         // These are sort-of present (in a block comment) for debugging.
