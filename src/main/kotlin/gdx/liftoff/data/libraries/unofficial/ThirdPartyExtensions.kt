@@ -981,7 +981,7 @@ class Guacamole : ThirdPartyExtension() {
 }
 
 /**
- * Access the Oboe libraries for audio in Android 16+.
+ * Access the Oboe libraries for audio in Android.
  * @author barsoosayque
  */
 @Extension
