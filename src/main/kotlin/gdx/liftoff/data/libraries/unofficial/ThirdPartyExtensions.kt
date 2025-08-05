@@ -987,7 +987,7 @@ class Guacamole : ThirdPartyExtension() {
 @Extension
 class LibgdxOboe : ThirdPartyExtension() {
   override val id = "libgdxOboe"
-  override val defaultVersion = "0.3.0.3"
+  override val defaultVersion = "0.3.2.1"
   override val url = "https://github.com/tommyettinger/libgdx-oboe"
   override val group = "com.github.tommyettinger"
   override val name = "libgdxoboe"
