@@ -13,12 +13,13 @@ class RootGradleFile(val project: Project) : GradleFile("") {
 
   init {
     buildRepositories.add("mavenCentral()")
-    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
+//    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
     buildRepositories.add("gradlePluginPortal()")
     buildRepositories.add("mavenLocal()")
     buildRepositories.add("google()")
-    buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
-    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
+    buildRepositories.add("maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }")
+//    buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
+//    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
   }
 
   override fun getContent(): String =
@@ -99,11 +100,12 @@ subprojects {
   ext.appName = '${project.basic.name}'
   repositories {
     mavenCentral()
-    maven { url 'https://s01.oss.sonatype.org' }
+//    maven { url 'https://s01.oss.sonatype.org' }
     // You may want to remove the following line if you have errors downloading dependencies.
     mavenLocal()
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+//    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
     maven { url 'https://jitpack.io' }${
       if (project.hasPlatform(TeaVM.ID)) {
         "\n    maven { url 'https://teavm.org/maven/repository/' }"

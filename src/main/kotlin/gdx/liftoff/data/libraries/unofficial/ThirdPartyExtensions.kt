@@ -1412,7 +1412,7 @@ class Cringe : ThirdPartyExtension() {
 @Extension
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
-  override val defaultVersion = "0.7.0"
+  override val defaultVersion = "0.8.2"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1452,7 +1452,7 @@ class Funderby : ThirdPartyExtension() {
 @Extension
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
-  override val defaultVersion = "0.6.9"
+  override val defaultVersion = "0.7.0"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1540,7 +1540,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 @Extension
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
-  override val defaultVersion = "0.7.0.1"
+  override val defaultVersion = "0.8.2.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1560,7 +1560,7 @@ class KryoDigital : ThirdPartyExtension() {
 @Extension
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
-  override val defaultVersion = "0.6.9.1"
+  override val defaultVersion = "0.7.0.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1681,7 +1681,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.7.0.12"
+  override val defaultVersion = "0.8.2.12"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-digital"
