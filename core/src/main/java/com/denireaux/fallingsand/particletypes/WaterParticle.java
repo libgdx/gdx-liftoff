@@ -1,10 +1,11 @@
 package com.denireaux.fallingsand.particletypes;
 
-import com.denireaux.fallingsand.helpers.MovementHelper;
-import com.denireaux.fallingsand.utils.utils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import com.denireaux.fallingsand.helpers.MovementHelper;
+import com.denireaux.fallingsand.utils.utils;
 
 public class WaterParticle extends Particle {
 
@@ -26,6 +27,8 @@ public class WaterParticle extends Particle {
 
         for (int i = 0; i < moveSteps; i++) {
             if (y <= 0) return;
+
+            if (grid[x][y - 1] instanceof VaporParticle) swapWith(grid, x, y);
 
             // Try to move straight down
             if (MovementHelper.canMoveDown(grid, x, y)) {
@@ -114,5 +117,17 @@ public class WaterParticle extends Particle {
         grid[x][y] = null;
         grid[x + 1][y] = this;
         x++;
+    }
+
+    private void swapWith(Particle[][] grid, int newX, int newY) {
+        Particle temp = grid[newX][newY];
+        grid[newX][newY] = this;
+        grid[x][y] = temp;
+        if (temp != null) {
+            temp.x = x;
+            temp.y = y;
+        }
+        x = newX;
+        y = newY;
     }
 }

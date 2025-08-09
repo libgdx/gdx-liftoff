@@ -8,7 +8,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.denireaux.fallingsand.particletypes.*;
+import com.denireaux.fallingsand.particletypes.LavaParticle;
+import com.denireaux.fallingsand.particletypes.Particle;
+import com.denireaux.fallingsand.particletypes.SandParticle;
+import com.denireaux.fallingsand.particletypes.StoneParticle;
+import com.denireaux.fallingsand.particletypes.VaporParticle;
+import com.denireaux.fallingsand.particletypes.WaterParticle;
+import com.denireaux.fallingsand.particletypes.WetSandParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
     public static final int GRID_WIDTH = 1200;
@@ -138,6 +144,9 @@ public class FallingSandGame extends ApplicationAdapter {
                                     break;
                                 case LAVA:
                                     grid[x][y] = new LavaParticle(x, y);
+                                    break;
+                                case STONE:
+                                    grid[x][y] = new StoneParticle(x, y);
                                     break;
                             }
                         }
