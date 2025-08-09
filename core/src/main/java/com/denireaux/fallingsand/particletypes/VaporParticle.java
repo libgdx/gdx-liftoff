@@ -34,6 +34,8 @@ public class VaporParticle extends Particle {
                 continue;
             }
 
+            condense(grid);
+
             // Try to slide sideways near ceiling
             boolean canLeft = MovementHelper.canLeft(grid, x, y);
             boolean canRight = MovementHelper.canRight(grid, x, y);
@@ -83,4 +85,30 @@ public class VaporParticle extends Particle {
 
     @Override
     public void moveDown(Particle[][] grid) {}
+
+    public boolean canCondense(Particle[][] grid) {
+        int currentHeight = this.y;
+        boolean meetsCondensationThreshold = false;
+        boolean rand = utils.getRandomBoolean();
+
+        if (currentHeight >= 600) meetsCondensationThreshold = true;
+        return meetsCondensationThreshold && rand;
+    }
+
+    public void condense(Particle[][] grid) {
+        boolean canCondense = canCondense(grid);
+        if (canCondense) grid[x][y] = new WaterParticle(x, y);
+    }
+
+    private void swapWith(Particle[][] grid, int newX, int newY) {
+        Particle temp = grid[newX][newY];
+        grid[newX][newY] = this;
+        grid[x][y] = temp;
+        if (temp != null) {
+            temp.x = x;
+            temp.y = y;
+        }
+        x = newX;
+        y = newY;
+    }
 }
