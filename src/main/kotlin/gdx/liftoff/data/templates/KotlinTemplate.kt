@@ -2,7 +2,6 @@ package gdx.liftoff.data.templates
 
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
-import gdx.liftoff.data.platforms.IOSMOE
 import gdx.liftoff.data.project.Project
 
 /**
@@ -84,14 +83,15 @@ fun main() {
 """
 
   override fun getIOSMOELauncherContent(project: Project): String =
-    """@file:JvmName("IOSLauncher")
-
-package ${project.basic.rootPackage}
+    """package ${project.basic.rootPackage}
 
 import apple.uikit.c.UIKit
 import com.badlogic.gdx.backends.iosmoe.IOSApplication
 import com.badlogic.gdx.backends.iosmoe.IOSApplicationConfiguration
 import org.moe.natj.general.Pointer
+import org.moe.natj.general.ptr.BytePtr
+import org.moe.natj.general.ptr.Ptr
+import org.moe.natj.general.ptr.impl.PtrFactory
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the iOS (Multi-Os Engine) application. */
@@ -104,8 +104,13 @@ class IOSLauncher(peer: Pointer) : IOSApplication.Delegate(peer) {
 }
 
 fun main() {
-    // I have no idea what the second parameter should be! It is marked as non-null, but Java passes null.
-    UIKit.UIApplicationMain(0, null, null, IOSLauncher::class.java.name)
+    // This is an ugly call into native code because UIKit isn't a typical Java API.
+    // It only is uglier because it needs PtrFactory to create an empty pointer to some bytes...
+    // And that is only needed because Kotlin won't tolerate null there, even if it isn't used.
+    @Suppress("UNCHECKED_CAST")
+    UIKit.UIApplicationMain(0,
+        PtrFactory.newPointerPtr(Byte::class.java, 2, 0, true, true) as Ptr<BytePtr>,
+        null, IOSLauncher::class.java.name)
 }"""
 
   override fun getLwjgl3LauncherContent(project: Project): String =
