@@ -2,6 +2,7 @@ package gdx.liftoff.data.templates
 
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
+import gdx.liftoff.data.platforms.IOSMOE
 import gdx.liftoff.data.project.Project
 
 /**
@@ -81,6 +82,31 @@ fun main() {
     })
 }
 """
+
+  override fun getIOSMOELauncherContent(project: Project): String =
+    """@file:JvmName("IOSLauncher")
+
+package ${project.basic.rootPackage}
+
+import apple.uikit.c.UIKit
+import com.badlogic.gdx.backends.iosmoe.IOSApplication
+import com.badlogic.gdx.backends.iosmoe.IOSApplicationConfiguration
+import org.moe.natj.general.Pointer
+import ${project.basic.rootPackage}.${project.basic.mainClass}
+
+/** Launches the iOS (Multi-Os Engine) application. */
+class IOSLauncher(peer: Pointer) : IOSApplication.Delegate(peer) {
+    override fun createApplication(): IOSApplication {
+        return IOSApplication(${project.basic.mainClass}(), IOSApplicationConfiguration().apply {
+            // Configure your application here.
+        })
+    }
+}
+
+fun main() {
+    // I have no idea what the second parameter should be! It is marked as non-null, but Java passes null.
+    UIKit.UIApplicationMain(0, null, null, IOSLauncher::class.java.name)
+}"""
 
   override fun getLwjgl3LauncherContent(project: Project): String =
     """@file:JvmName("Lwjgl3Launcher")
