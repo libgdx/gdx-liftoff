@@ -9,6 +9,7 @@ package com.denireaux.fallingsand.particletypes;
 public abstract class Particle {
     public int x, y;
     public float velocity = 0f;
+    public boolean isHot;
 
     public Particle(int x, int y) {
         this.x = x;

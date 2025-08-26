@@ -28,32 +28,37 @@ public class WaterParticle extends Particle {
         for (int i = 0; i < moveSteps; i++) {
             if (y <= 0) return;
 
-            if (grid[x][y - 1] instanceof VaporParticle) swapWith(grid, x, y);
+            // swap with vapor above first (if that’s a behavior you want)
+            if (y > 0 && grid[x][y - 1] instanceof VaporParticle) {
+                swapWith(grid, (x + 0), (y - 1));   // note: pass the target cell explicitly
+            }
 
-            // Try to move straight down
+            // evaporate and STOP
+            if (tryEvaporate(grid)) return;
+
+            // Try straight down
             if (MovementHelper.canMoveDown(grid, x, y)) {
                 moveDown(grid);
                 continue;
             }
 
-            // Try diagonals
-            boolean left = MovementHelper.canMoveDownLeft(grid, x, y);
-            boolean right = MovementHelper.canMoveDownRight(grid, x, y);
+            // Try diagonals (down-left / down-right)
+            boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
+            boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
+            boolean randomBoolean = utils.getRandomBoolean();
 
-            boolean movingLeft = utils.getRandomBoolean();
-
-            if (left && right) {
-                if (movingLeft) {
-                    moveLeft(grid);
+            if (canDownLeft && canDownRight) {
+                if (randomBoolean) {
+                    moveTo(grid, x - 1, y + 1);     // down-left
                 } else {
-                    moveRight(grid);
+                    moveTo(grid, x + 1, y + 1);     // down-right (fixed)
                 }
                 continue;
-            } else if (left) {
-                moveLeft(grid);
+            } else if (canDownLeft) {
+                moveTo(grid, x - 1, y + 1);         // down-left
                 continue;
-            } else if (right) {
-                moveRight(grid);
+            } else if (canDownRight) {
+                moveTo(grid, x + 1, y + 1);         // down-right (fixed)
                 continue;
             }
 
@@ -129,5 +134,21 @@ public class WaterParticle extends Particle {
         }
         x = newX;
         y = newY;
+    }
+
+    private boolean canEvaporate(Particle[][] grid) {
+        Particle[] surroundingParticles = getSurroundingParticles(grid);
+        for (Particle particle : surroundingParticles) {
+            if (particle != null && particle.isHot) return true;
+        }
+        return false;
+    }
+
+    private boolean tryEvaporate(Particle[][] grid) {
+        if (canEvaporate(grid)) {
+            grid[x][y] = new VaporParticle(x, y);
+            return true;
+        }
+        return false;
     }
 }

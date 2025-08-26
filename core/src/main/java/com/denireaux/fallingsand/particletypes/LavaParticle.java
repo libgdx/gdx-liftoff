@@ -8,6 +8,7 @@ public class LavaParticle extends Particle {
     private int heatLevel = 100; // cools over time
     private int waterTouchCounter = 0;
     private static final int SOLIDIFY_THRESHOLD = 3;
+    public static boolean isHot = true;
 
     public LavaParticle(int x, int y) {
         super(x, y);
@@ -26,18 +27,18 @@ public class LavaParticle extends Particle {
         for (int i = 0; i < steps; i++) {
             if (y <= 0) return;
 
-            Particle below = grid[x][y - 1];
+            // Particle below = grid[x][y - 1];
 
             // Turn water into vapor and sink
-            if (below instanceof WaterParticle) {
-                grid[x][y - 1] = new VaporParticle(x, y - 1);
-                moveDown(grid);
-                waterTouchCounter++;
-                // if (waterTouchCounter >= SOLIDIFY_THRESHOLD) {
-                //     grid[x][y] = new StoneParticle(x, y);
-                // }
-                return;
-            }
+            // if (below instanceof WaterParticle) {
+            //     grid[x][y - 1] = new VaporParticle(x, y - 1);
+            //     moveDown(grid);
+            //     waterTouchCounter++;
+            //     // if (waterTouchCounter >= SOLIDIFY_THRESHOLD) {
+            //     //     grid[x][y] = new StoneParticle(x, y);
+            //     // }
+            //     return;
+            // }
 
             // Sink if space is available
             if (MovementHelper.canMoveDown(grid, x, y)) {

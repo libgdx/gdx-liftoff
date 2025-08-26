@@ -7,7 +7,7 @@ clear
 echo "Cleaning build..."
 ./gradlew clean
 
-echo "Gradle build cleaned..."
+echo "Running build..."
 ./gradlew lwjgl3:run
 
 # ./gradlew clean && ./gradlew lwjgl3:run

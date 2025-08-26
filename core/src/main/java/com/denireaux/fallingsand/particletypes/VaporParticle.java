@@ -86,7 +86,7 @@ public class VaporParticle extends Particle {
     @Override
     public void moveDown(Particle[][] grid) {}
 
-    public boolean canCondense(Particle[][] grid) {
+    private boolean canCondense(Particle[][] grid) {
         int currentHeight = this.y;
         boolean meetsCondensationThreshold = false;
         boolean rand = utils.getRandomBoolean();
@@ -95,7 +95,7 @@ public class VaporParticle extends Particle {
         return meetsCondensationThreshold && rand;
     }
 
-    public void condense(Particle[][] grid) {
+    private void condense(Particle[][] grid) {
         boolean canCondense = canCondense(grid);
         if (canCondense) grid[x][y] = new WaterParticle(x, y);
     }
