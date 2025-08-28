@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.0-beta2"
+  override val defaultVersion = "4.0.0"
   override val group = "com.squidpony"
   override val name: String
     get() = id.lowercase()
@@ -149,6 +149,26 @@ class SquidSquadPath : SquidSquadExtension() {
     addGwtInherit(project, "com.github.yellowstonegames.squidpath")
 
     SquidSquadGrid().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's code for pathfinding, mostly delegating to Gand.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadSeek : SquidSquadExtension() {
+  override val id = "squidSeek"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidseek")
+
+    SquidSquadGrid().initiate(project)
+    Gand().initiate(project)
   }
 }
 
@@ -388,6 +408,27 @@ class SquidSquadStoreText : SquidSquadExtension() {
 }
 
 /**
+ * SquidSquad's JSON compatibility code for SquidWorld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadStoreWorld : SquidSquadExtension() {
+  override val id = "squidStoreWorld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addGwtInherit(project, "com.github.yellowstonegames.squidstoreworld")
+
+    SquidSquadStoreCore().initiate(project)
+    SquidSquadStoreGrid().initiate(project)
+    SquidSquadWorld().initiate(project)
+  }
+}
+
+/**
  * SquidSquad's Kryo compatibility code for SquidCore.
  * @author Eben Howard
  * @author Tommy Ettinger
@@ -478,6 +519,24 @@ class SquidSquadFreezeText : SquidSquadExtension() {
 }
 
 /**
+ * SquidSquad's Kryo compatibility code for SquidWorld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadFreezeWorld : SquidSquadExtension() {
+  override val id = "squidFreezeWorld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadWorld().initiate(project)
+    SquidSquadFreezeCore().initiate(project)
+    SquidSquadFreezeGrid().initiate(project)
+  }
+}
+
+/**
  * SquidSquad's Fory compatibility code for SquidCore.
  * @author Eben Howard
  * @author Tommy Ettinger
@@ -563,5 +622,23 @@ class SquidSquadWrathText : SquidSquadExtension() {
 
     SquidSquadText().initiate(project)
     SquidSquadWrathCore().initiate(project)
+  }
+}
+
+/**
+ * SquidSquad's Fory compatibility code for SquidWorld.
+ * @author Eben Howard
+ * @author Tommy Ettinger
+ */
+@Extension
+class SquidSquadWrathWorld : SquidSquadExtension() {
+  override val id = "squidWrathWorld"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    SquidSquadWorld().initiate(project)
+    SquidSquadWrathCore().initiate(project)
+    SquidSquadWrathGrid().initiate(project)
   }
 }

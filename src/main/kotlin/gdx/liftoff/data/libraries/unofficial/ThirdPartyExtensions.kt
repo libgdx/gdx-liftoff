@@ -1640,8 +1640,8 @@ class KryoGand : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 @Extension
-class KryoLibGdx : ThirdPartyExtension() {
-  override val id = "kryoLibGdx"
+class KryoLibgdx : ThirdPartyExtension() {
+  override val id = "kryoLibgdx"
   override val defaultVersion = "1.13.1.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
