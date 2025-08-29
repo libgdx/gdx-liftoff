@@ -269,6 +269,15 @@ construo {
   }
 }
 
+// I can't figure this out for now...
+// We only need the platform-specific JAR when making a platform-specific Construo build.
+// But, Construo currently can't figure out the modules for jlink when given any other jarTask.
+
+//tasks.register("construoWin") {
+//  construo.jarTask.set("jarWin")
+//  dependsOn("packageWinX64")
+//}
+
 distributions {
   main {
     contents {
