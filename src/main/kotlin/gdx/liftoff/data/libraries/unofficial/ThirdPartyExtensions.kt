@@ -1368,7 +1368,7 @@ class Gdcrux : ThirdPartyExtension() {
 @Extension
 class Gand : ThirdPartyExtension() {
   override val id = "gand"
-  override val defaultVersion = "0.3.3"
+  override val defaultVersion = "0.3.4"
   override val url = "https://github.com/tommyettinger/gand"
   override val group = "com.github.tommyettinger"
   override val name = "gand"
