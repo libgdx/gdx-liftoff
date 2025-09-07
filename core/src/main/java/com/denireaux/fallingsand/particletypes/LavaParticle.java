@@ -1,12 +1,12 @@
 package com.denireaux.fallingsand.particletypes;
 
-import com.denireaux.fallingsand.helpers.MovementHelper;
-import com.denireaux.fallingsand.utils.utils;
-
 public class LavaParticle extends Particle {
-    public static boolean isHot = true;
+    private int sinkCounter = 0;
+    private static final float SINK_DELAY = 0.75f;
+
     public LavaParticle(int x, int y, String id) {
         super(x, y, id);
+        this.isHot = true;
     }
 
     @Override
@@ -20,27 +20,23 @@ public class LavaParticle extends Particle {
 
         for (int i = 0; i < steps; i++) {
             if (y <= 0) return;
-            if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveDown(grid);
-                return;
-            }
-
-            boolean canLeft = MovementHelper.canLeft(grid, x, y);
-            boolean canRight = MovementHelper.canRight(grid, x, y);
-            if (canLeft && canRight) {
-                if (utils.getRandomBoolean()) moveLeft(grid);
-                else moveRight(grid);
-            } else if (canLeft) {
-                moveLeft(grid);
-            } else if (canRight) {
-                moveRight(grid);
-            } else {
-                velocity = 0;
-                break;
-            }
+            checkInbounds(grid, x, y);
+            tryNormalMovement(grid);
+            trySinking(grid, x, y);
         }
 
         velocity -= steps;
+    }
+
+    public void trySinking(Particle[][] grid, int x, int y) {
+        Particle particleBelow = getSurroundingParticles(grid)[3];
+        if (particleBelow == null) return;
+
+        if (sinkCounter >= SINK_DELAY) {
+            if ("water".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
+            sinkCounter = 0;
+        } else sinkCounter++;
+        
     }
 
 }

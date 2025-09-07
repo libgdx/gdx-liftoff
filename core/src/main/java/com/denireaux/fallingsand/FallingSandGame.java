@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
@@ -40,13 +41,14 @@ public class FallingSandGame extends ApplicationAdapter {
         VAPOR,
         LAVA,
         STONE,
+        ASH,
         VOID
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
 
     // Palette buttons
-    private Rectangle sandButton, waterButton, wetSandButton, vaporButton, lavaButton, stoneButton, voidButton;
+    private Rectangle sandButton, waterButton, wetSandButton, vaporButton, lavaButton, stoneButton, voidButton, ashButton;
 
     // Button colors
     private final Color SANDCOLOR = Color.YELLOW;
@@ -55,6 +57,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color VAPORCOLOR = Color.LIGHT_GRAY;
     private final Color LAVACOLOR = Color.RED;
     private final Color STONECOLOR = Color.DARK_GRAY;
+    private final Color ASHCOLOR = Color.SLATE;
     private final Color VOIDCOLOR = Color.WHITE;
 
     @Override
@@ -70,8 +73,8 @@ public class FallingSandGame extends ApplicationAdapter {
         font = new BitmapFont(); // Default font
         grid = new Particle[GRID_WIDTH][GRID_HEIGHT];
 
-        int buttonWidth = 80;
-        int buttonHeight = 40;
+        int buttonWidth = 40;
+        int buttonHeight = 20;
         int y = 10; // padding from bottom
 
         sandButton = new Rectangle(10, y, buttonWidth, buttonHeight);
@@ -80,7 +83,8 @@ public class FallingSandGame extends ApplicationAdapter {
         vaporButton = new Rectangle(280, y, buttonWidth, buttonHeight);
         lavaButton = new Rectangle(370, y, buttonWidth, buttonHeight);
         stoneButton = new Rectangle(460, y, buttonWidth, buttonHeight);
-        voidButton = new Rectangle(550, y, buttonWidth, buttonHeight);
+        ashButton = new Rectangle(550, y, buttonWidth, buttonHeight);
+        voidButton = new Rectangle(640, y, buttonWidth, buttonHeight);
     }
 
     @Override
@@ -121,7 +125,10 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof StoneParticle) {
                     batch.setColor(Color.DARK_GRAY);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof VoidParticle) {
+                } else if (grid[x][y] instanceof AshParticle) {
+                    batch.setColor(Color.SLATE);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                }else if (grid[x][y] instanceof VoidParticle) {
                     batch.setColor(Color.WHITE);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
@@ -135,6 +142,7 @@ public class FallingSandGame extends ApplicationAdapter {
         drawButton(vaporButton, VAPORCOLOR, "Vapor", ParticleType.VAPOR);
         drawButton(lavaButton, LAVACOLOR, "Lava", ParticleType.LAVA);
         drawButton(stoneButton, STONECOLOR, "Stone", ParticleType.STONE);
+        drawButton(ashButton, ASHCOLOR, "Ash", ParticleType.ASH);
         drawButton(voidButton, VOIDCOLOR, "VOID", ParticleType.VOID);
 
         batch.end();
@@ -193,6 +201,9 @@ public class FallingSandGame extends ApplicationAdapter {
                 currentParticle = ParticleType.STONE;
                 log.info("Switched to Stone");
                 return;
+            } else if (ashButton.contains(mouseX, mouseY)) {
+                currentParticle = ParticleType.ASH;
+                log.info("Switched to void");
             } else if (voidButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.VOID;
                 log.info("Switched to void");
@@ -220,6 +231,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case VAPOR -> grid[x][y] = new VaporParticle(x, y, "vapor");
                                 case LAVA -> grid[x][y] = new LavaParticle(x, y, "lava");
                                 case STONE -> grid[x][y] = new StoneParticle(x, y, "stone");
+                                case ASH -> grid[x][y] = new AshParticle(x, y, "ash");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                             }
                         }

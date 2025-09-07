@@ -29,12 +29,6 @@ public class VaporParticle extends Particle {
             tryNormalMovementUpwards(grid);
             checkForCondense(grid, x, y);
             condense(grid, x, y);
-
-
-            // We need logic that make the VaporParticle condense and "rain" at a certain altitude
-                // condense()
-                    // checkCondensation()
-
         }
 
         velocity += moveSteps;
@@ -47,11 +41,8 @@ public class VaporParticle extends Particle {
         boolean leftFactor = utils.getRandomBoolean();
 
         Particle[] surroundingParticles = getSurroundingParticles(grid);
-        if (surroundingParticles[2] != null) {
-            String aboveParticle = surroundingParticles[2].getId();
-            if ("water".equals(aboveParticle)) {
-                swapWith(grid, x, y - 1);
-            }
+        if (surroundingParticles[2] != null && !"stone".equals(surroundingParticles[2].getId())) {
+            swapWith(grid, x, y + 1);
         }
 
         if (canMoveUp) {
@@ -80,17 +71,8 @@ public class VaporParticle extends Particle {
 
             // If Heads...
             if (canCondense && willCondense) {
-                grid[x][y] = null;
-                grid[x][y] = new WaterParticle(x, y, "water");
+                convertParticle(grid, x, y, "water");
             }
-            
         }
     }
-
-
-
-
-
-
-
 }

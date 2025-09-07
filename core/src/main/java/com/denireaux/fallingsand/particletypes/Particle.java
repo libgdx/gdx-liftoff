@@ -1,5 +1,8 @@
 package com.denireaux.fallingsand.particletypes;
 
+import java.util.HashMap;
+import java.util.function.BiFunction;
+
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
@@ -7,6 +10,7 @@ public abstract class Particle {
     public int x, y;
     public float velocity = 0f;
     public boolean isHot;
+    public boolean willSink;
     protected final String id;
 
     public Particle(int x, int y, String id) {
@@ -130,4 +134,25 @@ public abstract class Particle {
         x = newX;
         y = newY;
     }
+
+    public void convertParticle(Particle[][] grid, int x, int y, String idOfDesiredParticle) {
+        HashMap<String, BiFunction<Integer, Integer, Particle>> particleTypes = new HashMap<>();
+        particleTypes.put("lava", (i, j) -> new LavaParticle(i, j, "lava"));
+        particleTypes.put("water", (i, j) -> new WaterParticle(i, j, "water"));
+        particleTypes.put("sand", (i, j) -> new SandParticle(i, j, "sand"));
+        particleTypes.put("vapor", (i, j) -> new VaporParticle(i, j, "vapor"));
+        particleTypes.put("void", (i, j) -> new VoidParticle(i, j, "void"));
+        particleTypes.put("wetsand", (i, j) -> new WetSandParticle(i, j, "wetsand"));
+
+        grid[x][y] = null;
+
+        BiFunction<Integer, Integer, Particle> factory = particleTypes.get(idOfDesiredParticle);
+
+        if (factory != null) {
+            grid[x][y] = factory.apply(x, y);
+        } else {
+            System.out.println("Unknown particle type: " + idOfDesiredParticle);
+        }
+    }
+    
 }

@@ -159,23 +159,28 @@ public class WaterParticle extends Particle {
         Particle[] surroundings = getSurroundingParticles(grid);
 
         for (int i = 0; i < surroundings.length; i++) {
-            Particle particle = surroundings[i];
-            if (particle != null && particle.isHot) return new BoolInt(true, i);
+            if (surroundings[i] != null && surroundings[i].isHot) {
+                return new BoolInt(true, i);
+            }
         }
-        return new BoolInt(false, -1);
+
+        return new BoolInt(false, 1);
     }
 
     private void evaporate(Particle[][] grid, int x, int y) {
-        boolean canEvaporate = utils.getRandomBoolean();
         BoolInt result = checkForHotNeighbors(grid);
 
-        if (result.canEvaporate() && canEvaporate) {
-            boolean willEvaporate = utils.getUnfairBoolean(20);
+        Particle[] surroundings = getSurroundingParticles(grid);
+        Particle particle = surroundings[result.indexOfHotParticle];
 
-            if (willEvaporate) {
-                grid[x][y] = null;
-                grid[x][y] = new VaporParticle(x, y, "vapor");
-            }
+        if (particle == null) return;
+
+        int particleX = particle.x;
+        int particleY = particle.y;
+
+        if (result.canEvaporate()) {
+            convertParticle(grid,particleX, particleY, "vapor");
+            grid[x][y] = new AshParticle(x, y, "ash");
         }
     }
 

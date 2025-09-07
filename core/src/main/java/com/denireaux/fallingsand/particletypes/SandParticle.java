@@ -1,5 +1,7 @@
 package com.denireaux.fallingsand.particletypes;
 
+import java.util.HashMap;
+import java.util.function.BiFunction;
 
 public class SandParticle extends Particle {
     public SandParticle(int x, int y, String id) {
@@ -35,8 +37,8 @@ public class SandParticle extends Particle {
         if (surroundingParticles[3] == null) return;
         String belowParticleId = surroundingParticles[3].getId();
         if ("water".equals(belowParticleId)) {
-            grid[x][y] = null;
-            grid[x][y] = new WetSandParticle(x, y, "wetsand");
+            convertParticle(grid, x, y, "wetsand");
         }
     }
+
 }
