@@ -1,24 +1,20 @@
 package com.denireaux.fallingsand.particletypes;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
 public class WaterParticle extends Particle {
 
-    public WaterParticle(int x, int y) {
-        super(x, y);
+    public WaterParticle(int x, int y, String id) {
+        super(x, y, id);
     }
+
+    protected final String id = "water";
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 8;
+        gravity *= 9;
         velocity += gravity;
-
-        // Cap velocity to prevent excessive speed
         float maxVelocity = 1.3f;
         velocity = Math.min(velocity, maxVelocity);
 
@@ -26,129 +22,161 @@ public class WaterParticle extends Particle {
         if (moveSteps == 0) return;
 
         for (int i = 0; i < moveSteps; i++) {
-            if (y <= 0) return;
+            checkInbounds(grid, x, y);
+            evaporate(grid, x, y);
+            tryNormalMovement(grid);
 
-            // swap with vapor above first (if that’s a behavior you want)
-            if (y > 0 && grid[x][y - 1] instanceof VaporParticle) {
-                swapWith(grid, (x + 0), (y - 1));   // note: pass the target cell explicitly
-            }
-
-            // evaporate and STOP
-            if (tryEvaporate(grid)) return;
-
-            // Try straight down
-            if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveDown(grid);
-                continue;
-            }
-
-            // Try diagonals (down-left / down-right)
-            boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
-            boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
-            boolean randomBoolean = utils.getRandomBoolean();
-
-            if (canDownLeft && canDownRight) {
-                if (randomBoolean) {
-                    moveTo(grid, x - 1, y + 1);     // down-left
-                } else {
-                    moveTo(grid, x + 1, y + 1);     // down-right (fixed)
-                }
-                continue;
-            } else if (canDownLeft) {
-                moveTo(grid, x - 1, y + 1);         // down-left
-                continue;
-            } else if (canDownRight) {
-                moveTo(grid, x + 1, y + 1);         // down-right (fixed)
-                continue;
-            }
-
-            // Slide left or right if completely blocked
-            boolean slid = trySlideHorizontally(grid);
-            if (!slid) velocity = 0; // Stop if blocked
         }
 
         velocity -= moveSteps;
     }
 
-    private boolean trySlideHorizontally(Particle[][] grid) {
-        List<Integer> offsets = Arrays.asList(1, 2, -1, -2);
-        Collections.shuffle(offsets);
-
-        for (int dx : offsets) {
-            int targetX = x + dx;
-            if (isInBounds(targetX, y, grid) && grid[targetX][y] == null) {
-                moveTo(grid, targetX, y);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void moveTo(Particle[][] grid, int newX, int newY) {
+    private void moveTo(Particle[][] grid, int destinationsX, int destinatinsY) {
         grid[x][y] = null;
-        x = newX;
-        y = newY;
+        x = destinationsX;
+        y = destinatinsY;
         grid[x][y] = this;
     }
 
-    private boolean isInBounds(int x, int y, Particle[][] grid) {
-        return x >= 0 && x < grid.length && y >= 0 && y < grid[0].length;
-    }
-
     @Override
-    public void moveDown(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x][y - 1] = this;
-        y--;
-    }
+    public void tryNormalMovement(Particle[][] grid) {
+        boolean canDown = MovementHelper.canMoveDown(grid, x, y);
+        boolean canLeft = MovementHelper.canLeft(grid, x, y);
+        boolean canRight = MovementHelper.canRight(grid, x, y);
+        boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
+        boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
+        boolean leftFactor = utils.getRandomBoolean();
 
-    /**
-     * Moves the particle one cell to the left.
-     *
-     * @param grid the 2D particle array
-     */
-    public void moveLeft(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x - 1][y] = this;
-        x--;
-    }
-
-    /**
-     * Moves the particle one cell to the right.
-     *
-     * @param grid the 2D particle array
-     */
-    public void moveRight(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x + 1][y] = this;
-        x++;
-    }
-
-    private void swapWith(Particle[][] grid, int newX, int newY) {
-        Particle temp = grid[newX][newY];
-        grid[newX][newY] = this;
-        grid[x][y] = temp;
-        if (temp != null) {
-            temp.x = x;
-            temp.y = y;
+        if (canDown) {
+            moveDown(grid);
+            return;
         }
-        x = newX;
-        y = newY;
+
+        if (canDownLeft && canDownRight) {
+            if (leftFactor) {
+                moveDownLeft(grid);
+            } else {
+                moveDownRight(grid);
+            }
+            return;
+        }
+        
+        if (canDownLeft) {
+            moveDownLeft(grid);
+            return;
+        }
+
+        if (canDownRight) {
+            moveDownRight(grid);
+            return;
+        }
+
+        if (canLeft && canRight) {
+            if (leftFactor) {
+                moveLeft(grid);
+                flattenOut(grid, -1);
+                tryKeepMoving(grid);
+                flattenOut(grid, -1);
+            } else {
+                moveRight(grid);
+                flattenOut(grid, 1);
+                tryKeepMoving(grid);
+                flattenOut(grid, 1);
+            }
+            return;
+        }
+
+        if (canLeft) {
+            moveLeft(grid);
+            flattenOut(grid, -1);
+            tryKeepMoving(grid);
+            flattenOut(grid, -1);
+            return;
+        }
+
+        if (canRight) {
+            moveRight(grid);
+            flattenOut(grid, 1);
+            tryKeepMoving(grid);
+            flattenOut(grid, 1);
+            return;
+        }
     }
 
-    private boolean canEvaporate(Particle[][] grid) {
-        Particle[] surroundingParticles = getSurroundingParticles(grid);
-        for (Particle particle : surroundingParticles) {
-            if (particle != null && particle.isHot) return true;
-        }
-        return false;
+    public void tryMoveRight(Particle[][] grid) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+        if (surroundings[1] == null) return;
+        moveRight(grid);
     }
 
-    private boolean tryEvaporate(Particle[][] grid) {
-        if (canEvaporate(grid)) {
-            grid[x][y] = new VaporParticle(x, y);
-            return true;
-        }
-        return false;
+    public void tryMoveLeft(Particle[][] grid) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+        if (surroundings[0] == null) return;
+        moveLeft(grid);
     }
+
+    private void tryKeepMoving(Particle[][] grid) {
+        while (utils.getRandomBoolean()) {
+            boolean canLeft = MovementHelper.canLeft(grid, x, y);
+            boolean canRight = MovementHelper.canRight(grid, x, y);
+
+            if (canLeft && !canRight) {
+                moveLeft(grid);
+            } else if (canRight && !canLeft) {
+                moveRight(grid);
+            } else if (canLeft && canRight) {
+                if (utils.getRandomBoolean()) {
+                    moveLeft(grid);
+                } else {
+                    moveRight(grid);
+                }
+            } else {
+                break;
+            }
+            if (Math.random() < 0.3) break;
+        }
+    }
+
+    private void flattenOut(Particle[][] grid, int dir) {
+        int steps = 0;
+        while (steps < 3) {
+            int newX = x + dir;
+            if (dir < 0 && MovementHelper.canLeft(grid, x, y)) {
+                moveLeft(grid);
+            } else if (dir > 0 && MovementHelper.canRight(grid, x, y)) {
+                moveRight(grid);
+            } else {
+                break;
+            }
+            steps++;
+            if (Math.random() < 0.3) break;
+        }
+    }
+
+    public static record BoolInt(boolean canEvaporate, int indexOfHotParticle) {}
+
+    public BoolInt checkForHotNeighbors(Particle[][] grid) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+
+        for (int i = 0; i < surroundings.length; i++) {
+            Particle particle = surroundings[i];
+            if (particle != null && particle.isHot) return new BoolInt(true, i);
+        }
+        return new BoolInt(false, -1);
+    }
+
+    private void evaporate(Particle[][] grid, int x, int y) {
+        boolean canEvaporate = utils.getRandomBoolean();
+        BoolInt result = checkForHotNeighbors(grid);
+
+        if (result.canEvaporate() && canEvaporate) {
+            boolean willEvaporate = utils.getUnfairBoolean(20);
+
+            if (willEvaporate) {
+                grid[x][y] = null;
+                grid[x][y] = new VaporParticle(x, y, "vapor");
+            }
+        }
+    }
+
 }

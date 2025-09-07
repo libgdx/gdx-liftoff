@@ -1,21 +1,23 @@
 package com.denireaux.fallingsand.particletypes;
 
+import java.util.logging.Logger;
+
+import com.denireaux.fallingsand.FallingSandGame;
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
 public class VaporParticle extends Particle {
 
-    public VaporParticle(int x, int y) {
-        super(x, y);
+    private static final Logger log = Logger.getLogger(String.valueOf(FallingSandGame.class));
+
+    public VaporParticle(int x, int y, String id) {
+        super(x, y, id);
     }
 
     @Override
     public void update(float gravity, Particle[][] grid) {
         gravity *= 8;
-        // Invert gravity: vapor rises
         velocity -= gravity;
-
-        // Cap velocity so it doesn't fly too fast
         float maxVelocity = 1.5f;
         velocity = Math.max(velocity, -maxVelocity);
 
@@ -23,92 +25,72 @@ public class VaporParticle extends Particle {
         if (moveSteps == 0) return;
 
         for (int i = 0; i < moveSteps; i++) {
-            if (y >= grid[0].length - 1) {
-                velocity = 0;
-                return; // Hit top of screen
+            checkInbounds(grid, x, y);
+            tryNormalMovementUpwards(grid);
+            checkForCondense(grid, x, y);
+            condense(grid, x, y);
+
+
+            // We need logic that make the VaporParticle condense and "rain" at a certain altitude
+                // condense()
+                    // checkCondensation()
+
+        }
+
+        velocity += moveSteps;
+    }
+
+    private void tryNormalMovementUpwards(Particle[][] grid) {
+        boolean canMoveUp = MovementHelper.canMoveUp(grid, x, y);
+        boolean canLeft = MovementHelper.canLeft(grid, x, y);
+        boolean canRight = MovementHelper.canRight(grid, x, y);
+        boolean leftFactor = utils.getRandomBoolean();
+
+        Particle[] surroundingParticles = getSurroundingParticles(grid);
+        if (surroundingParticles[2] != null) {
+            String aboveParticle = surroundingParticles[2].getId();
+            if ("water".equals(aboveParticle)) {
+                swapWith(grid, x, y - 1);
             }
+        }
 
-            // Try to float up
-            if (MovementHelper.canMoveUp(grid, x, y)) {
-                moveUp(grid);
-                continue;
-            }
+        if (canMoveUp) {
+            moveUp(grid);
+            return;
+        }
 
-            condense(grid);
-
-            // Try to slide sideways near ceiling
-            boolean canLeft = MovementHelper.canLeft(grid, x, y);
-            boolean canRight = MovementHelper.canRight(grid, x, y);
-            boolean moveLeft = utils.getRandomBoolean();
-
-            if (canLeft && canRight) {
-                if (moveLeft) {
-                    moveLeft(grid);
-                } else {
-                    moveRight(grid);
-                }
-                continue;
-            } else if (canLeft) {
+        if (canLeft && canRight) {
+            if (leftFactor) {
                 moveLeft(grid);
-                continue;
-            } else if (canRight) {
-                moveRight(grid);
-                continue;
-            } else {
-                velocity = 0;
-                break;
+                return;
             }
+            moveRight(grid);
         }
-
-        velocity += moveSteps; // smooth deceleration
     }
 
-    private void moveUp(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x][y + 1] = this;
-        y++;
-    }
+    // TODO: Check this if you ever change the window height/weidth
+    private boolean checkForCondense(Particle[][] grid, int x, int y) { return y >= 600; }
 
-    @Override
-    public void moveLeft(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x - 1][y] = this;
-        x--;
-    }
+    private void condense(Particle[][] grid, int x, int y) {
+        boolean canCondense = utils.getRandomBoolean();
+        if (checkForCondense(grid, x, y)) {
 
-    @Override
-    public void moveRight(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x + 1][y] = this;
-        x++;
-    }
+            // Flip a coin
+            boolean willCondense = utils.getUnfairBoolean(20);
 
-    @Override
-    public void moveDown(Particle[][] grid) {}
-
-    private boolean canCondense(Particle[][] grid) {
-        int currentHeight = this.y;
-        boolean meetsCondensationThreshold = false;
-        boolean rand = utils.getRandomBoolean();
-
-        if (currentHeight >= 600) meetsCondensationThreshold = true;
-        return meetsCondensationThreshold && rand;
-    }
-
-    private void condense(Particle[][] grid) {
-        boolean canCondense = canCondense(grid);
-        if (canCondense) grid[x][y] = new WaterParticle(x, y);
-    }
-
-    private void swapWith(Particle[][] grid, int newX, int newY) {
-        Particle temp = grid[newX][newY];
-        grid[newX][newY] = this;
-        grid[x][y] = temp;
-        if (temp != null) {
-            temp.x = x;
-            temp.y = y;
+            // If Heads...
+            if (canCondense && willCondense) {
+                grid[x][y] = null;
+                grid[x][y] = new WaterParticle(x, y, "water");
+            }
+            
         }
-        x = newX;
-        y = newY;
     }
+
+
+
+
+
+
+
 }

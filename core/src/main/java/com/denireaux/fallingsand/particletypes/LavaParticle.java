@@ -4,15 +4,9 @@ import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
 public class LavaParticle extends Particle {
-
-    private int heatLevel = 100; // cools over time
-    private int waterTouchCounter = 0;
-    private static final int SOLIDIFY_THRESHOLD = 3;
     public static boolean isHot = true;
-
-    public LavaParticle(int x, int y) {
-        super(x, y);
-        // this.isHot = true; // You can use this to ignite other particles
+    public LavaParticle(int x, int y, String id) {
+        super(x, y, id);
     }
 
     @Override
@@ -26,27 +20,11 @@ public class LavaParticle extends Particle {
 
         for (int i = 0; i < steps; i++) {
             if (y <= 0) return;
-
-            // Particle below = grid[x][y - 1];
-
-            // Turn water into vapor and sink
-            // if (below instanceof WaterParticle) {
-            //     grid[x][y - 1] = new VaporParticle(x, y - 1);
-            //     moveDown(grid);
-            //     waterTouchCounter++;
-            //     // if (waterTouchCounter >= SOLIDIFY_THRESHOLD) {
-            //     //     grid[x][y] = new StoneParticle(x, y);
-            //     // }
-            //     return;
-            // }
-
-            // Sink if space is available
             if (MovementHelper.canMoveDown(grid, x, y)) {
                 moveDown(grid);
                 return;
             }
 
-            // Sideways movement (thick liquid)
             boolean canLeft = MovementHelper.canLeft(grid, x, y);
             boolean canRight = MovementHelper.canRight(grid, x, y);
             if (canLeft && canRight) {
@@ -65,24 +43,4 @@ public class LavaParticle extends Particle {
         velocity -= steps;
     }
 
-    @Override
-    public void moveDown(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x][y - 1] = this;
-        y--;
-    }
-
-    @Override
-    public void moveLeft(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x - 1][y] = this;
-        x--;
-    }
-
-    @Override
-    public void moveRight(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x + 1][y] = this;
-        x++;
-    }
 }

@@ -13,7 +13,7 @@ public class MovementHelper {
     }
 
     public static boolean canRight(Particle [][] grid, int x, int y) {
-        return x < grid.length && grid[x + 1][y] == null;
+        return x + 1 < grid.length && grid[x + 1][y] == null;
     }
 
     public static boolean canMoveDownLeft(Particle[][] grid, int x, int y) {
