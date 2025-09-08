@@ -15,7 +15,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
+import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
+import com.denireaux.fallingsand.particletypes.SmokeParticle;
 import com.denireaux.fallingsand.particletypes.StoneParticle;
 import com.denireaux.fallingsand.particletypes.VaporParticle;
 import com.denireaux.fallingsand.particletypes.VoidParticle;
@@ -42,13 +44,26 @@ public class FallingSandGame extends ApplicationAdapter {
         LAVA,
         STONE,
         ASH,
+        POWDER,
+        SMOKE,
         VOID
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
 
     // Palette buttons
-    private Rectangle sandButton, waterButton, wetSandButton, vaporButton, lavaButton, stoneButton, voidButton, ashButton;
+    private Rectangle 
+        sandButton, 
+        waterButton, 
+        wetSandButton, 
+        vaporButton, 
+        lavaButton, 
+        stoneButton, 
+        ashButton,
+        powderButton,
+        smokeButton,
+        voidButton;
+        
 
     // Button colors
     private final Color SANDCOLOR = Color.YELLOW;
@@ -58,6 +73,8 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color LAVACOLOR = Color.RED;
     private final Color STONECOLOR = Color.DARK_GRAY;
     private final Color ASHCOLOR = Color.SLATE;
+    private final Color POWDERCOLOR = Color.TAN;
+    private final Color SMOKECOLOR = Color.BLACK;
     private final Color VOIDCOLOR = Color.WHITE;
 
     @Override
@@ -77,13 +94,15 @@ public class FallingSandGame extends ApplicationAdapter {
         int buttonHeight = 20;
         int y = 10; // padding from bottom
 
-        sandButton = new Rectangle(10, y, buttonWidth, buttonHeight);
-        waterButton = new Rectangle(100, y, buttonWidth, buttonHeight);
-        wetSandButton = new Rectangle(190, y, buttonWidth, buttonHeight);
-        vaporButton = new Rectangle(280, y, buttonWidth, buttonHeight);
-        lavaButton = new Rectangle(370, y, buttonWidth, buttonHeight);
-        stoneButton = new Rectangle(460, y, buttonWidth, buttonHeight);
-        ashButton = new Rectangle(550, y, buttonWidth, buttonHeight);
+        sandButton = new Rectangle(60, y, buttonWidth, buttonHeight);
+        waterButton = new Rectangle(120, y, buttonWidth, buttonHeight);
+        wetSandButton = new Rectangle(180, y, buttonWidth, buttonHeight);
+        vaporButton = new Rectangle(240, y, buttonWidth, buttonHeight);
+        lavaButton = new Rectangle(300, y, buttonWidth, buttonHeight);
+        stoneButton = new Rectangle(360, y, buttonWidth, buttonHeight);
+        ashButton = new Rectangle(420, y, buttonWidth, buttonHeight);
+        powderButton = new Rectangle(480, y, buttonWidth, buttonHeight);
+        smokeButton = new Rectangle(540, y, buttonWidth, buttonHeight);
         voidButton = new Rectangle(640, y, buttonWidth, buttonHeight);
     }
 
@@ -91,7 +110,11 @@ public class FallingSandGame extends ApplicationAdapter {
     public void render() {
         handleInput();
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        float r = 29f / 255f;
+        float g = 31f / 255f;
+        float b = 33f / 255f;
+
+        Gdx.gl.glClearColor(r, g, b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Update particles
@@ -103,7 +126,7 @@ public class FallingSandGame extends ApplicationAdapter {
             }
         }
 
-        // Draw particles
+
         batch.begin();
         for (int x = 0; x < GRID_WIDTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
@@ -128,10 +151,16 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof AshParticle) {
                     batch.setColor(Color.SLATE);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                }else if (grid[x][y] instanceof VoidParticle) {
+                } else if (grid[x][y] instanceof PowderParticle) {
+                    batch.setColor(Color.TAN);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof SmokeParticle) {
+                    batch.setColor(Color.BLACK);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof VoidParticle) {
                     batch.setColor(Color.WHITE);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                }
+                } 
             }
         }
 
@@ -143,6 +172,8 @@ public class FallingSandGame extends ApplicationAdapter {
         drawButton(lavaButton, LAVACOLOR, "Lava", ParticleType.LAVA);
         drawButton(stoneButton, STONECOLOR, "Stone", ParticleType.STONE);
         drawButton(ashButton, ASHCOLOR, "Ash", ParticleType.ASH);
+        drawButton(powderButton, POWDERCOLOR, "Powder", ParticleType.POWDER);
+        drawButton(smokeButton, SMOKECOLOR, "Smoke", ParticleType.SMOKE);
         drawButton(voidButton, VOIDCOLOR, "VOID", ParticleType.VOID);
 
         batch.end();
@@ -156,13 +187,9 @@ public class FallingSandGame extends ApplicationAdapter {
         // Highlight border if selected
         if (currentParticle == type) {
             batch.setColor(Color.WHITE);
-            // Top
             batch.draw(pixel, rect.x - 2, rect.y + rect.height, rect.width + 4, 2);
-            // Bottom
             batch.draw(pixel, rect.x - 2, rect.y - 2, rect.width + 4, 2);
-            // Left
             batch.draw(pixel, rect.x - 2, rect.y - 2, 2, rect.height + 4);
-            // Right
             batch.draw(pixel, rect.x + rect.width, rect.y - 2, 2, rect.height + 4);
         }
 
@@ -172,7 +199,6 @@ public class FallingSandGame extends ApplicationAdapter {
     }
 
     private void handleInput() {
-        // Check button clicks
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             int mouseX = Gdx.input.getX();
             int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
@@ -203,14 +229,23 @@ public class FallingSandGame extends ApplicationAdapter {
                 return;
             } else if (ashButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.ASH;
-                log.info("Switched to void");
+                log.info("Switched to ash");
+                return;
+            } else if (powderButton.contains(mouseX, mouseY)) {
+                currentParticle = ParticleType.POWDER;
+                log.info("Switched to powder");
+                return;
+            } else if (smokeButton.contains(mouseX, mouseY)) {
+                currentParticle = ParticleType.SMOKE;
+                log.info("Switched to Smoke");
+                return;
             } else if (voidButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.VOID;
-                log.info("Switched to void");
+                log.info("Switched to Void");
+                return;
             }
         }
 
-        // Spawn selected particle type
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             int mouseX = Gdx.input.getX() / CELL_SIZE;
             int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) / CELL_SIZE;
@@ -232,6 +267,8 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case LAVA -> grid[x][y] = new LavaParticle(x, y, "lava");
                                 case STONE -> grid[x][y] = new StoneParticle(x, y, "stone");
                                 case ASH -> grid[x][y] = new AshParticle(x, y, "ash");
+                                case POWDER -> grid[x][y] = new PowderParticle(x, y, "powder");
+                                case SMOKE -> grid[x][y] = new SmokeParticle(x, y, "smoke");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                             }
                         }

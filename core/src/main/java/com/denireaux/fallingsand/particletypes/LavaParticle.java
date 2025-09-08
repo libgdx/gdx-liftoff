@@ -7,11 +7,12 @@ public class LavaParticle extends Particle {
     public LavaParticle(int x, int y, String id) {
         super(x, y, id);
         this.isHot = true;
+        this.willSink = true;
     }
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 6; // Lava is heavy
+        gravity *= 6;
         velocity += gravity;
         velocity = Math.min(velocity, 1.5f);
 

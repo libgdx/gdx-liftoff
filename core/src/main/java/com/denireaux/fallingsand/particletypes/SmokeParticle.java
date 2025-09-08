@@ -1,18 +1,14 @@
 package com.denireaux.fallingsand.particletypes;
 
-import java.util.logging.Logger;
-
-import com.denireaux.fallingsand.FallingSandGame;
+import com.denireaux.fallingsand.behaviors.IGas;
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
-public class VaporParticle extends Particle {
+public class SmokeParticle extends Particle implements IGas{
 
-    private static final Logger log = Logger.getLogger(String.valueOf(FallingSandGame.class));
-
-    public VaporParticle(int x, int y, String id) {
+    public SmokeParticle(int x, int y, String id) {
         super(x, y, id);
-        this.isHot = false;
+        this.isHot = true;
     }
 
     @Override
@@ -26,12 +22,9 @@ public class VaporParticle extends Particle {
         if (moveSteps == 0) return;
 
         for (int i = 0; i < moveSteps; i++) {
-            checkInbounds(grid, x, y);
-            tryNormalMovementUpwards(grid);
-            checkForCondense(grid, x, y);
-            condense(grid, x, y);
+            moveAsGas(grid, x, y);
         }
-        velocity += moveSteps;
+        velocity -= moveSteps;
     }
 
     private void tryNormalMovementUpwards(Particle[][] grid) {
@@ -60,19 +53,15 @@ public class VaporParticle extends Particle {
         }
     }
 
-    private boolean checkForCondense(Particle[][] grid, int x, int y) { return y >= 600; }
-
-    private void condense(Particle[][] grid, int x, int y) {
-        boolean canCondense = utils.getRandomBoolean();
-        if (checkForCondense(grid, x, y)) {
-            boolean willCondense = utils.getUnfairBoolean(20);
-            if (canCondense && willCondense) convertParticle(grid, x, y, "water");
-        }
-    }
-
     private void tryContinueFloating(Particle[][] grid, int x, int y) {
         Particle particleAbove = getAboveParticle(grid, x, y);
         if (particleAbove == null) return;
         swapWith(grid, x, y + 1);
+    }
+
+    @Override
+    public void moveAsGas(Particle[][] grid, int x, int y) {
+        checkInbounds(grid, x, y);
+        tryNormalMovementUpwards(grid);
     }
 }
