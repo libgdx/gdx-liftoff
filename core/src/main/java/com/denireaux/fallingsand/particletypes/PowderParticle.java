@@ -26,15 +26,10 @@ public class PowderParticle extends Particle {
         if (moveSteps == 0) return;
         for (int i = 0; i < moveSteps; i++) {
             checkInbounds(grid, x, y);
-            tryNormalMovement(grid);
-        }
-        velocity -= moveSteps;
-
-        for (int i = 0; i < moveSteps; i++) {
-            checkInbounds(grid, x, y);
             tryExplode(grid);
             tryNormalMovement(grid);
         }
+        velocity -= moveSteps;
     }
 
     private void tryExplode(Particle[][] grid) {
@@ -55,6 +50,7 @@ public class PowderParticle extends Particle {
     private void tryMakeAsh(Particle[][] grid) {
         boolean ashFactor = utils.getUnfairBoolean(50);
         if (ashFactor) convertParticle(grid, x, y, "ash");
+        grid[x][y] = new AshParticle(x, y, "ash");
     }
 }
     

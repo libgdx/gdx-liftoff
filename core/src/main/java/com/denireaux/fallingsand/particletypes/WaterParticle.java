@@ -142,6 +142,17 @@ public class WaterParticle extends Particle implements ILiquid {
         }
     }
 
+    private void checkBelowForLessDenseParticle(Particle[][] grid, int x, int y) {
+        Particle particleBelow = getBelowParticle(grid, x, y);
+        if (particleBelow == null || "stone".equals(particleBelow.getId())) return;
+        if ("water".equals(particleBelow.getId())) return;
+        boolean willSinkInWater = particleBelow.willSink;
+        if (!willSinkInWater) {
+            particleBelow.sinkCounter --;
+            swapWith(grid, x, y - 1);
+        }
+    }
+
     private void leftMovement(Particle[][] grid, int x, int y) {
         tryMoveLeft(grid);
         flattenOut(grid, -1);
@@ -162,6 +173,7 @@ public class WaterParticle extends Particle implements ILiquid {
         evaporate(grid, x, y);
         tryNormalMovement(grid);
         checkAboveForLessDenseParticle(grid, x, y);
+        checkBelowForLessDenseParticle(grid, x, y);
     }
 
 }

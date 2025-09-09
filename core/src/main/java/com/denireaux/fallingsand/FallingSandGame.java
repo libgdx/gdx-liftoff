@@ -18,6 +18,7 @@ import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
 import com.denireaux.fallingsand.particletypes.SmokeParticle;
+import com.denireaux.fallingsand.particletypes.SnowParticle;
 import com.denireaux.fallingsand.particletypes.StoneParticle;
 import com.denireaux.fallingsand.particletypes.VaporParticle;
 import com.denireaux.fallingsand.particletypes.VoidParticle;
@@ -46,6 +47,7 @@ public class FallingSandGame extends ApplicationAdapter {
         ASH,
         POWDER,
         SMOKE,
+        SNOW,
         VOID
     }
 
@@ -62,6 +64,7 @@ public class FallingSandGame extends ApplicationAdapter {
         ashButton,
         powderButton,
         smokeButton,
+        snowButton,
         voidButton;
         
 
@@ -75,7 +78,8 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color ASHCOLOR = Color.SLATE;
     private final Color POWDERCOLOR = Color.TAN;
     private final Color SMOKECOLOR = Color.BLACK;
-    private final Color VOIDCOLOR = Color.WHITE;
+    private final Color SNOWCOLOR = Color.WHITE;
+    private final Color VOIDCOLOR = Color.FOREST;
 
     @Override
     public void create() {
@@ -103,7 +107,8 @@ public class FallingSandGame extends ApplicationAdapter {
         ashButton = new Rectangle(420, y, buttonWidth, buttonHeight);
         powderButton = new Rectangle(480, y, buttonWidth, buttonHeight);
         smokeButton = new Rectangle(540, y, buttonWidth, buttonHeight);
-        voidButton = new Rectangle(640, y, buttonWidth, buttonHeight);
+        snowButton = new Rectangle(600, y, buttonWidth, buttonHeight);
+        voidButton = new Rectangle(660, y, buttonWidth, buttonHeight);
     }
 
     @Override
@@ -157,10 +162,13 @@ public class FallingSandGame extends ApplicationAdapter {
                 } else if (grid[x][y] instanceof SmokeParticle) {
                     batch.setColor(Color.BLACK);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                } else if (grid[x][y] instanceof SnowParticle) {
+                    batch.setColor(Color.WHITE);
+                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof VoidParticle) {
                     batch.setColor(Color.WHITE);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } 
+                }
             }
         }
 
@@ -174,6 +182,7 @@ public class FallingSandGame extends ApplicationAdapter {
         drawButton(ashButton, ASHCOLOR, "Ash", ParticleType.ASH);
         drawButton(powderButton, POWDERCOLOR, "Powder", ParticleType.POWDER);
         drawButton(smokeButton, SMOKECOLOR, "Smoke", ParticleType.SMOKE);
+        drawButton(snowButton, SNOWCOLOR, "Snow", ParticleType.SNOW);
         drawButton(voidButton, VOIDCOLOR, "VOID", ParticleType.VOID);
 
         batch.end();
@@ -229,15 +238,19 @@ public class FallingSandGame extends ApplicationAdapter {
                 return;
             } else if (ashButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.ASH;
-                log.info("Switched to ash");
+                log.info("Switched to Ash");
                 return;
             } else if (powderButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.POWDER;
-                log.info("Switched to powder");
+                log.info("Switched to Powder");
                 return;
             } else if (smokeButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.SMOKE;
                 log.info("Switched to Smoke");
+                return;
+            } else if (snowButton.contains(mouseX, mouseY)) {
+                currentParticle = ParticleType.SNOW;
+                log.info("Switched to Snow");
                 return;
             } else if (voidButton.contains(mouseX, mouseY)) {
                 currentParticle = ParticleType.VOID;
@@ -269,6 +282,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case ASH -> grid[x][y] = new AshParticle(x, y, "ash");
                                 case POWDER -> grid[x][y] = new PowderParticle(x, y, "powder");
                                 case SMOKE -> grid[x][y] = new SmokeParticle(x, y, "smoke");
+                                case SNOW -> grid[x][y] = new SnowParticle(x, y, "snow");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                             }
                         }

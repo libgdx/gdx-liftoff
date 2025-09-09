@@ -6,7 +6,7 @@ public class AshParticle extends Particle {
 
     public AshParticle(int x, int y, String id) {
         super(x, y, id);
-        this.willSink = true;
+        this.willSink = false;
     }
 
     @Override
@@ -19,15 +19,12 @@ public class AshParticle extends Particle {
         }
         float dy = velocity;
         int moveSteps = (int) dy;
-    
         if (moveSteps == 0) return;
-    
         for (int i = 0; i < moveSteps; i++) {
             checkInbounds(grid, x, y);
             tryNormalMovement(grid);
         }
         velocity -= moveSteps;
     }
-
 
 }

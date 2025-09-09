@@ -25,16 +25,17 @@ public class LavaParticle extends Particle {
             tryNormalMovement(grid);
             trySinking(grid, x, y);
         }
-
         velocity -= steps;
     }
 
+    @Override
     public void trySinking(Particle[][] grid, int x, int y) {
         Particle particleBelow = getSurroundingParticles(grid)[3];
         if (particleBelow == null) return;
 
         if (sinkCounter >= SINK_DELAY) {
             if ("water".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
+            if ("ash".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
             sinkCounter = 0;
         } else sinkCounter++;
         
