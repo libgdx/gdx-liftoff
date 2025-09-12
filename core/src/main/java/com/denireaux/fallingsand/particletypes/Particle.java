@@ -12,11 +12,14 @@ public abstract class Particle {
     public boolean isHot;
     public boolean willSink;
     public int sinkCounter = 0;
-    private static final float SINK_DELAY = 0.75f;
+    protected static final int SINK_DELAY = 120;
+    protected boolean isStatic;
     protected boolean isGas;
     protected boolean isCombustable;
     protected boolean hasCombusted;
     protected String id;
+    public boolean isWet;
+
 
     public Particle(int x, int y, String id) {
         this.x = x;
@@ -31,7 +34,6 @@ public abstract class Particle {
         Particle right = (x < grid.length - 1) ? grid[x + 1][y] : null;
         Particle above = (y < grid[0].length - 1) ? grid[x][y + 1] : null;
         Particle below = (y > 0) ? grid[x][y - 1] : null;
-
         return new Particle[]{ left, right, above, below };
     }
 
@@ -55,6 +57,7 @@ public abstract class Particle {
         grid[x][y] = null;
         grid[x - 1][y] = this;
         x--;
+        return;
 
     }
 
@@ -64,6 +67,7 @@ public abstract class Particle {
             grid[x + 1][y] = this;
             x++;
         }
+        return;
     }
 
     public void moveDownRight(Particle[][] grid) {
@@ -145,6 +149,16 @@ public abstract class Particle {
         return surroundings[2];
     }
 
+    public Particle getRightParticle(Particle[][] grid, int x, int y) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+        return surroundings[1];
+    }
+
+    public Particle getLeftParticle(Particle[][] grid, int x, int y) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+        return surroundings[0];
+    }
+
     public void swapWith(Particle[][] grid, int newX, int newY) {
         if (newX >= grid.length || newX <= 0) return;
         if (newY >= grid[0].length - 1) return;
@@ -169,6 +183,8 @@ public abstract class Particle {
         particleTypes.put("wetsand", (i, j) -> new WetSandParticle(i, j, "wetsand"));
         particleTypes.put("smoke", (i, j) -> new SmokeParticle(i, j, "smoke"));
         particleTypes.put("powder", (i, j) -> new PowderParticle(i, j, "powder"));
+        particleTypes.put("carbon", (i, j) -> new CarbonParticle(i, j, "carbon"));
+        particleTypes.put("snow", (i, j) -> new SnowParticle(i, j, "snow"));
         grid[x][y] = null;
         BiFunction<Integer, Integer, Particle> factory = particleTypes.get(idOfDesiredParticle);
         if (factory != null) grid[x][y] = factory.apply(x, y);
@@ -177,9 +193,32 @@ public abstract class Particle {
     public void trySinking(Particle[][] grid, int x, int y) {
         Particle particleBelow = getSurroundingParticles(grid)[3];
         if (particleBelow == null) return;
-        if (sinkCounter >= SINK_DELAY) {
-            if ("water".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
+        if ("water".equals(particleBelow.getId())) {
+            if (sinkCounter >= SINK_DELAY) {
+                swapWith(grid, x, y - 1);
+                sinkCounter = 0;
+            } else {
+                sinkCounter++;
+            }
+        } else {
             sinkCounter = 0;
-        } else sinkCounter++;
+        }
     }
+
+    public void trySwappingWithRight(Particle[][] grid, int x, int y) {
+        Particle particleRight = getRightParticle(grid, x, y);
+        if (particleRight == null || particleRight.isStatic) return;
+        swapWith(grid, particleRight.x, y);
+    }
+
+    public void trySwappingWithLeft(Particle[][] grid, int x, int y) {
+        Particle particleLeft = getLeftParticle(grid, x, y);
+        if (particleLeft == null || particleLeft.isStatic) return;
+        swapWith(grid, particleLeft.x, y);
+    }
+
+    public void deleteSelf(Particle[][] grid, int x, int y) {
+        grid[x][y] = null;
+    }
+
 }

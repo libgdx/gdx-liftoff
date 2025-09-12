@@ -1,68 +1,77 @@
 package com.denireaux.fallingsand.particletypes;
 
-import com.denireaux.fallingsand.helpers.MovementHelper;
-import com.denireaux.fallingsand.utils.utils;
-;
+import java.util.logging.Logger;
 
-public class WetSandParticle extends Particle {
-    private int sinkCounter = 0;
-    private static final float SINK_DELAY = 0.75f;
+import com.denireaux.fallingsand.behaviors.ISolid;
+import com.denireaux.fallingsand.utils.utils;
+
+public class WetSandParticle extends Particle implements ISolid {
+
+    private static final Logger log = Logger.getLogger(String.valueOf(WetSandParticle.class));
+    private boolean isWet;
+    private int wetStep = 0;
 
     public WetSandParticle(int x, int y, String id) {
         super(x, y, id);
+        this.willSink = true;
+        this.isWet = false;
     }
 
     @Override
     public void update(float gravity, Particle[][] grid) {
         gravity *= 8;
         velocity += gravity;
-
-        // Only move when velocity accumulates at least 1 full tile
+        float maxVelocity = 1.3f;
+        if (velocity > maxVelocity) velocity = maxVelocity;
         float dy = velocity;
         int moveSteps = (int) dy;
-    
         if (moveSteps == 0) return;
-    
         for (int i = 0; i < moveSteps; i++) {
-            if (y <= 0) return;
-    
-            if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveDown(grid);
-                continue;
-            } else if (grid[x][y - 1] instanceof WaterParticle) {
-                if (sinkCounter >= SINK_DELAY) {
-                    swapWith(grid, x, y - 1);
-                    sinkCounter = 0;
-                    continue;
-                } else {
-                    sinkCounter++;
-                }
-            }
+            moveAsSolid(grid, x, y);
+        }
+    }
 
-            boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
-            boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
-            boolean canLeft = MovementHelper.canLeft(grid, x, y);
-            boolean canRight = MovementHelper.canRight(grid, x, y);
-            
-            boolean movingDownLeft = utils.getRandomBoolean();
-    
-            if (canDownLeft && canDownRight) {
-                if (movingDownLeft) {
-                    moveDownLeft(grid);
-                    continue;
-                } else {
-                    moveDownRight(grid);
-                    continue;
-                }
-            } else if (canDownRight) {
-                moveDownRight(grid);
-                continue;
-            } else if (canDownLeft) {
-                moveDownLeft(grid);
-                continue;
+    @Override
+    public void moveAsSolid(Particle[][] grid, int x, int y) {
+        checkInbounds(grid, x, y);
+        handleDrySandNeighbors(grid, x, y);
+        tryNormalMovement(grid);
+        tryContinueToSink(grid, x, y);
+        trySinking(grid, x, y);
+    }
+
+    private void tryContinueToSink(Particle[][] grid, int x, int y) {
+        Particle particleLeft = getLeftParticle(grid, x, y);
+        Particle particleRight = getRightParticle(grid, x, y);
+        if (particleLeft == null || particleRight == null) return;
+        String particleLeftId = particleLeft.getId();
+        String particleRightId = particleRight.getId();
+        if ("water".equals(particleLeftId) && "water".equals(particleRightId)) {
+            this.isWet = true;
+            if (Math.random() < 0.5) {
+                trySwappingWithRight(grid, x, y);
+                deleteSelf(grid, x, y);
             } else {
-                velocity = 0;
-                break;
+                trySwappingWithLeft(grid, x, y);
+                deleteSelf(grid, x, y);
+            }
+            return;
+        }
+            trySwappingWithLeft(grid, x, y);
+    }
+
+    private void handleDrySandNeighbors(Particle[][] grid, int x, int y) {
+        Particle[] surroundings = getSurroundingParticles(grid);
+        for (Particle particle : surroundings) {
+            if (particle == null) return;
+            if (!particle.isWet && "sand".equals(particle.getId())) {
+                boolean wetSandFactor = utils.getRandomBoolean();
+                boolean canKeepWetting = wetStep >= 10;
+                if (wetSandFactor && canKeepWetting) {    
+                    int sandParticleX = particle.x; 
+                    int sandParticleY = particle.y;    
+                    convertParticle(grid, sandParticleX, sandParticleY, "wetsand");
+                }
             }
         }
     }

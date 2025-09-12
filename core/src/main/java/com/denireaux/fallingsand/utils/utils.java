@@ -12,6 +12,12 @@ public class utils {
         return randomBool;
     }
 
+    public static int getRandomInt(int bound) {
+        Random rand = new Random();
+        int randomInt = rand.nextInt(bound);
+        return randomInt;
+    }
+
     public static int[] getShuffledArray(int[] array) {
         List<Integer> list = new ArrayList<>();
         for (int i : array) list.add(i);

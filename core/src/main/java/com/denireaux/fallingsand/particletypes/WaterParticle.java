@@ -9,6 +9,7 @@ public class WaterParticle extends Particle implements ILiquid {
     public WaterParticle(int x, int y, String id) {
         super(x, y, id);
         this.id = "water";
+        this.isWet = true;
     }
 
     @Override

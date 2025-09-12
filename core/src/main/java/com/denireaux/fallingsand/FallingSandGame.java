@@ -1,18 +1,25 @@
 package com.denireaux.fallingsand;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.denireaux.fallingsand.particletypes.AshParticle;
+import com.denireaux.fallingsand.particletypes.CarbonParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.PowderParticle;
@@ -28,8 +35,13 @@ import com.denireaux.fallingsand.particletypes.WetSandParticle;
 public class FallingSandGame extends ApplicationAdapter {
     private static final Logger log = Logger.getLogger(String.valueOf(FallingSandGame.class));
 
-    public static final int GRID_WIDTH = 1200;
-    public static final int GRID_HEIGHT = 800;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+    private final Vector3 worldCoordinates = new Vector3();
+
+    // Increased resolution
+    public static final int GRID_WIDTH = 2400;
+    public static final int GRID_HEIGHT = 1600;
     public static final int CELL_SIZE = 1;
 
     private SpriteBatch batch;
@@ -37,36 +49,23 @@ public class FallingSandGame extends ApplicationAdapter {
     private BitmapFont font;
     private static Particle[][] grid;
 
+    // Render modes
+    private enum RenderStyle { PIXEL, TEXTURE }
+    private RenderStyle currentStyle = RenderStyle.PIXEL;
+
+    // Particle types
     private enum ParticleType {
-        SAND,
-        WATER,
-        WETSAND,
-        VAPOR,
-        LAVA,
-        STONE,
-        ASH,
-        POWDER,
-        SMOKE,
-        SNOW,
-        VOID
+        SAND, WATER, WETSAND, VAPOR, LAVA,
+        STONE, ASH, POWDER, SMOKE, SNOW,
+        CARBON, VOID
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
+    private int particleIndex = 0;
+    private final ParticleType[] particleTypes = ParticleType.values();
 
-    // Palette buttons
-    private Rectangle 
-        sandButton, 
-        waterButton, 
-        wetSandButton, 
-        vaporButton, 
-        lavaButton, 
-        stoneButton, 
-        ashButton,
-        powderButton,
-        smokeButton,
-        snowButton,
-        voidButton;
-        
+    // Palette buttons (sidebar)
+    private Rectangle[] paletteButtons;
 
     // Button colors
     private final Color SANDCOLOR = Color.YELLOW;
@@ -79,11 +78,20 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color POWDERCOLOR = Color.TAN;
     private final Color SMOKECOLOR = Color.BLACK;
     private final Color SNOWCOLOR = Color.WHITE;
+    private final Color CARBONCOLOR = Color.BLACK;
     private final Color VOIDCOLOR = Color.FOREST;
+
+    private Texture sandTex, waterTex, lavaTex, stoneTex, snowTex;
 
     @Override
     public void create() {
-        Gdx.graphics.setForegroundFPS(120);
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(GRID_WIDTH, GRID_HEIGHT, camera);
+        viewport.apply();
+        camera.position.set(GRID_WIDTH / 2f, GRID_HEIGHT / 2f, 0);
+        camera.update();
+
+        Gdx.graphics.setForegroundFPS(240);
         batch = new SpriteBatch();
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -91,34 +99,61 @@ public class FallingSandGame extends ApplicationAdapter {
         pixel = new Texture(pixmap);
         pixmap.dispose();
 
-        font = new BitmapFont(); // Default font
+        font = new BitmapFont();
         grid = new Particle[GRID_WIDTH][GRID_HEIGHT];
 
-        int buttonWidth = 40;
-        int buttonHeight = 20;
-        int y = 10; // padding from bottom
+        sandTex = safeLoad("sand.png");
+        waterTex = safeLoad("water.png");
+        lavaTex = safeLoad("lava.png");
+        stoneTex = safeLoad("stone.png");
+        snowTex = safeLoad("snow.png");
 
-        sandButton = new Rectangle(60, y, buttonWidth, buttonHeight);
-        waterButton = new Rectangle(120, y, buttonWidth, buttonHeight);
-        wetSandButton = new Rectangle(180, y, buttonWidth, buttonHeight);
-        vaporButton = new Rectangle(240, y, buttonWidth, buttonHeight);
-        lavaButton = new Rectangle(300, y, buttonWidth, buttonHeight);
-        stoneButton = new Rectangle(360, y, buttonWidth, buttonHeight);
-        ashButton = new Rectangle(420, y, buttonWidth, buttonHeight);
-        powderButton = new Rectangle(480, y, buttonWidth, buttonHeight);
-        smokeButton = new Rectangle(540, y, buttonWidth, buttonHeight);
-        snowButton = new Rectangle(600, y, buttonWidth, buttonHeight);
-        voidButton = new Rectangle(660, y, buttonWidth, buttonHeight);
+        // Build vertical palette on the right side
+        int buttonWidth = 100;
+        int buttonHeight = 30;
+        int padding = 10;
+        int startY = GRID_HEIGHT - buttonHeight - padding;
+
+        paletteButtons = new Rectangle[particleTypes.length];
+        for (int i = 0; i < particleTypes.length; i++) {
+            paletteButtons[i] = new Rectangle(
+                GRID_WIDTH - buttonWidth - padding,
+                startY - i * (buttonHeight + padding),
+                buttonWidth,
+                buttonHeight
+            );
+        }
+
+        // Setup scroll wheel handler
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean scrolled(float amountX, float amountY) {
+                if (amountY > 0) { // scroll down
+                    particleIndex = (particleIndex + 1) % particleTypes.length;
+                } else if (amountY < 0) { // scroll up
+                    particleIndex = (particleIndex - 1 + particleTypes.length) % particleTypes.length;
+                }
+                currentParticle = particleTypes[particleIndex];
+                log.info("Selected particle: " + currentParticle);
+                return true;
+            }
+        });
+    }
+
+    private Texture safeLoad(String fileName) {
+        try {
+            return new Texture(Gdx.files.internal(fileName));
+        } catch (Exception e) {
+            log.log(Level.WARNING, "Missing texture: {0}", fileName);
+            return null;
+        }
     }
 
     @Override
     public void render() {
         handleInput();
 
-        float r = 29f / 255f;
-        float g = 31f / 255f;
-        float b = 33f / 255f;
-
+        float r = 29f / 255f, g = 31f / 255f, b = 33f / 255f;
         Gdx.gl.glClearColor(r, g, b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -131,69 +166,80 @@ public class FallingSandGame extends ApplicationAdapter {
             }
         }
 
-
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
+        // Render particles
         for (int x = 0; x < GRID_WIDTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
                 if (grid[x][y] instanceof SandParticle) {
-                    batch.setColor(Color.YELLOW);
+                    batch.setColor(SANDCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof WaterParticle) {
-                    batch.setColor(Color.BLUE);
+                    batch.setColor(WATERCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof WetSandParticle) {
-                    batch.setColor(Color.BROWN);
+                    batch.setColor(WETSANDCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof VaporParticle) {
-                    batch.setColor(Color.LIGHT_GRAY);
+                    batch.setColor(VAPORCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof LavaParticle) {
-                    batch.setColor(Color.RED);
+                    batch.setColor(LAVACOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof StoneParticle) {
-                    batch.setColor(Color.DARK_GRAY);
+                    batch.setColor(STONECOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof AshParticle) {
-                    batch.setColor(Color.SLATE);
+                    batch.setColor(ASHCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof PowderParticle) {
-                    batch.setColor(Color.TAN);
+                    batch.setColor(POWDERCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof SmokeParticle) {
-                    batch.setColor(Color.BLACK);
+                    batch.setColor(SMOKECOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof SnowParticle) {
-                    batch.setColor(Color.WHITE);
+                    batch.setColor(SNOWCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 } else if (grid[x][y] instanceof VoidParticle) {
-                    batch.setColor(Color.WHITE);
+                    batch.setColor(VOIDCOLOR);
                     batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
         }
 
-        // Draw palette buttons
-        drawButton(sandButton, SANDCOLOR, "Sand", ParticleType.SAND);
-        drawButton(waterButton, WATERCOLOR, "Water", ParticleType.WATER);
-        drawButton(wetSandButton, WETSANDCOLOR, "Wet Sand", ParticleType.WETSAND);
-        drawButton(vaporButton, VAPORCOLOR, "Vapor", ParticleType.VAPOR);
-        drawButton(lavaButton, LAVACOLOR, "Lava", ParticleType.LAVA);
-        drawButton(stoneButton, STONECOLOR, "Stone", ParticleType.STONE);
-        drawButton(ashButton, ASHCOLOR, "Ash", ParticleType.ASH);
-        drawButton(powderButton, POWDERCOLOR, "Powder", ParticleType.POWDER);
-        drawButton(smokeButton, SMOKECOLOR, "Smoke", ParticleType.SMOKE);
-        drawButton(snowButton, SNOWCOLOR, "Snow", ParticleType.SNOW);
-        drawButton(voidButton, VOIDCOLOR, "VOID", ParticleType.VOID);
+        // Render palette sidebar
+        for (int i = 0; i < particleTypes.length; i++) {
+            ParticleType type = particleTypes[i];
+            Color color = getColorForType(type);
+            drawButton(paletteButtons[i], color, type.name(), type);
+        }
 
         batch.end();
     }
 
+    private Color getColorForType(ParticleType type) {
+        return switch (type) {
+            case SAND -> SANDCOLOR;
+            case WATER -> WATERCOLOR;
+            case WETSAND -> WETSANDCOLOR;
+            case VAPOR -> VAPORCOLOR;
+            case LAVA -> LAVACOLOR;
+            case STONE -> STONECOLOR;
+            case ASH -> ASHCOLOR;
+            case POWDER -> POWDERCOLOR;
+            case SMOKE -> SMOKECOLOR;
+            case SNOW -> SNOWCOLOR;
+            case CARBON -> CARBONCOLOR;
+            case VOID -> VOIDCOLOR;
+        };
+    }
+
     private void drawButton(Rectangle rect, Color color, String label, ParticleType type) {
-        // Button background
         batch.setColor(color);
         batch.draw(pixel, rect.x, rect.y, rect.width, rect.height);
 
-        // Highlight border if selected
         if (currentParticle == type) {
             batch.setColor(Color.WHITE);
             batch.draw(pixel, rect.x - 2, rect.y + rect.height, rect.width + 4, 2);
@@ -202,69 +248,24 @@ public class FallingSandGame extends ApplicationAdapter {
             batch.draw(pixel, rect.x + rect.width, rect.y - 2, 2, rect.height + 4);
         }
 
-        // Label
         font.setColor(Color.WHITE);
-        font.draw(batch, label, rect.x, rect.y + rect.height + 15);
+        font.draw(batch, label, rect.x + 5, rect.y + rect.height / 1.5f);
     }
 
     private void handleInput() {
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            int mouseX = Gdx.input.getX();
-            int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-
-            if (sandButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.SAND;
-                log.info("Switched to Sand");
-                return;
-            } else if (waterButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.WATER;
-                log.info("Switched to Water");
-                return;
-            } else if (wetSandButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.WETSAND;
-                log.info("Switched to Wet Sand");
-                return;
-            } else if (vaporButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.VAPOR;
-                log.info("Switched to Vapor");
-                return;
-            } else if (lavaButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.LAVA;
-                log.info("Switched to Lava");
-                return;
-            } else if (stoneButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.STONE;
-                log.info("Switched to Stone");
-                return;
-            } else if (ashButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.ASH;
-                log.info("Switched to Ash");
-                return;
-            } else if (powderButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.POWDER;
-                log.info("Switched to Powder");
-                return;
-            } else if (smokeButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.SMOKE;
-                log.info("Switched to Smoke");
-                return;
-            } else if (snowButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.SNOW;
-                log.info("Switched to Snow");
-                return;
-            } else if (voidButton.contains(mouseX, mouseY)) {
-                currentParticle = ParticleType.VOID;
-                log.info("Switched to Void");
-                return;
-            }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
+            currentStyle = (currentStyle == RenderStyle.PIXEL) ? RenderStyle.TEXTURE : RenderStyle.PIXEL;
+            log.info("Switched render style to " + currentStyle);
         }
 
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            int mouseX = Gdx.input.getX() / CELL_SIZE;
-            int mouseY = (Gdx.graphics.getHeight() - Gdx.input.getY()) / CELL_SIZE;
+            worldCoordinates.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            viewport.unproject(worldCoordinates);
+
+            int mouseX = (int)(worldCoordinates.x / CELL_SIZE);
+            int mouseY = (int)(worldCoordinates.y / CELL_SIZE);
 
             int brushRadius = 8;
-
             for (int dx = -brushRadius; dx <= brushRadius; dx++) {
                 for (int dy = -brushRadius; dy <= brushRadius; dy++) {
                     if (dx * dx + dy * dy <= brushRadius * brushRadius) {
@@ -283,6 +284,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case POWDER -> grid[x][y] = new PowderParticle(x, y, "powder");
                                 case SMOKE -> grid[x][y] = new SmokeParticle(x, y, "smoke");
                                 case SNOW -> grid[x][y] = new SnowParticle(x, y, "snow");
+                                case CARBON -> grid[x][y] = new CarbonParticle(x, y, "carbon");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                             }
                         }
@@ -297,5 +299,17 @@ public class FallingSandGame extends ApplicationAdapter {
         batch.dispose();
         pixel.dispose();
         font.dispose();
+        if (sandTex != null) sandTex.dispose();
+        if (waterTex != null) waterTex.dispose();
+        if (lavaTex != null) lavaTex.dispose();
+        if (stoneTex != null) stoneTex.dispose();
+        if (snowTex != null) snowTex.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        camera.position.set(GRID_WIDTH / 2f, GRID_HEIGHT / 2f, 0);
+        camera.update();
     }
 }

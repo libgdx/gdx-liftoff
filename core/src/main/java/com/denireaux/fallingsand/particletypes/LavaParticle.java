@@ -37,6 +37,7 @@ public class LavaParticle extends Particle {
             if ("water".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
             if ("ash".equals(particleBelow.getId())) swapWith(grid, x, y - 1);
             sinkCounter = 0;
+            
         } else sinkCounter++;
         
     }
