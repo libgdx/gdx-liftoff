@@ -127,6 +127,15 @@ public class WaterParticle extends Particle implements ILiquid {
         int particleX = particle.x;
         int particleY = particle.y;
         if (result.canEvaporate()) {
+
+            boolean carbonFactor = utils.getRandomBoolean();
+
+            if (carbonFactor) {
+                convertParticle(grid, particleX, particleY, "smoke");
+                convertParticle(grid, x, y, "carbon");
+                return;
+            }
+            
             convertParticle(grid, particleX, particleY, "vapor");
             grid[x][y] = new AshParticle(x, y, "ash");
         }

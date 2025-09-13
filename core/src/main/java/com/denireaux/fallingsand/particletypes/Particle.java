@@ -18,6 +18,7 @@ public abstract class Particle {
     protected boolean isCombustable;
     protected boolean hasCombusted;
     protected String id;
+    protected int size = 1;
     public boolean isWet;
 
 
@@ -28,6 +29,13 @@ public abstract class Particle {
     }
 
     public abstract void update(float gravity, Particle[][] grid);
+
+    public void update(float gravity, Particle[][] current, Particle[][] next) {
+        // default: just call old update on current grid,
+        // then copy into next
+        update(gravity, current);
+        next[x][y] = this;
+    }
 
     public Particle[] getSurroundingParticles(Particle[][] grid) {
         Particle left = (x > 0) ? grid[x - 1][y] : null;

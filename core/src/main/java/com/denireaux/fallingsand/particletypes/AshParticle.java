@@ -6,6 +6,7 @@ public class AshParticle extends Particle implements ISolid {
     public AshParticle(int x, int y, String id) {
         super(x, y, id);
         this.willSink = true;
+        this.isHot = true;
     }
 
     @Override

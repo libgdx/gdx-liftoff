@@ -15,6 +15,7 @@ public class SnowParticle extends Particle implements ISolid {
         super(x, y, id);
         this.willSink = false;
         this.meltStep = 0;
+        this.size = 2;
     }
 
     @Override

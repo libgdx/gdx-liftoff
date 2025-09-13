@@ -8,8 +8,8 @@ import com.denireaux.fallingsand.utils.utils;
 public class WetSandParticle extends Particle implements ISolid {
 
     private static final Logger log = Logger.getLogger(String.valueOf(WetSandParticle.class));
-    private boolean isWet;
     private int wetStep = 0;
+    private boolean hasDried = false;
 
     public WetSandParticle(int x, int y, String id) {
         super(x, y, id);
@@ -35,9 +35,10 @@ public class WetSandParticle extends Particle implements ISolid {
     public void moveAsSolid(Particle[][] grid, int x, int y) {
         checkInbounds(grid, x, y);
         handleDrySandNeighbors(grid, x, y);
-        tryNormalMovement(grid);
-        tryContinueToSink(grid, x, y);
         trySinking(grid, x, y);
+        tryNormalMovement(grid);
+        // tryContinueToSink(grid, x, y);
+        tryDrySelf(grid, x, y);
     }
 
     private void tryContinueToSink(Particle[][] grid, int x, int y) {
@@ -47,7 +48,6 @@ public class WetSandParticle extends Particle implements ISolid {
         String particleLeftId = particleLeft.getId();
         String particleRightId = particleRight.getId();
         if ("water".equals(particleLeftId) && "water".equals(particleRightId)) {
-            this.isWet = true;
             if (Math.random() < 0.5) {
                 trySwappingWithRight(grid, x, y);
                 deleteSelf(grid, x, y);
@@ -74,5 +74,13 @@ public class WetSandParticle extends Particle implements ISolid {
                 }
             }
         }
+    }
+
+    private void tryDrySelf(Particle[][] grid, int x, int y) {
+        if (!hasDried) {
+            wetStep += 1;
+            if (wetStep < 500) return;
+        }
+        convertParticle(grid, x, y, "sand");
     }
 }

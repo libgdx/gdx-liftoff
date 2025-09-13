@@ -8,7 +8,7 @@ public class SmokeParticle extends Particle implements IGas{
 
     public SmokeParticle(int x, int y, String id) {
         super(x, y, id);
-        this.isHot = true;
+        this.isHot = false;
     }
 
     @Override
@@ -22,9 +22,10 @@ public class SmokeParticle extends Particle implements IGas{
         if (moveSteps == 0) return;
 
         for (int i = 0; i < moveSteps; i++) {
-            moveAsGas(grid, x, y);
+            checkInbounds(grid, x, y);
+            tryNormalMovementUpwards(grid);
         }
-        velocity -= moveSteps;
+        velocity += moveSteps;
     }
 
     private void tryNormalMovementUpwards(Particle[][] grid) {
@@ -34,7 +35,7 @@ public class SmokeParticle extends Particle implements IGas{
         boolean leftFactor = utils.getRandomBoolean();
         Particle[] surroundingParticles = getSurroundingParticles(grid);
         if (surroundingParticles[2] != null && !"stone".equals(surroundingParticles[2].getId())) {
-            if ("vapor".equals(surroundingParticles[2].getId())) return;
+            if ("smoke".equals(surroundingParticles[2].getId())) return;
             swapWith(grid, x, y + 1);
         }
         if (canMoveUp) {
@@ -45,11 +46,11 @@ public class SmokeParticle extends Particle implements IGas{
         if (canLeft && canRight) {
             if (leftFactor) {
                 moveLeft(grid);
-                tryContinueFloating(grid, x, y);
+                // tryContinueFloating(grid, x, y);
                 return;
             }
             moveRight(grid);
-            tryContinueFloating(grid, x, y);
+            // tryContinueFloating(grid, x, y);
         }
     }
 

@@ -42,6 +42,7 @@ public class PowderParticle extends Particle {
                 if (surroundings[index].isCombustable || surroundings[index].hasCombusted) convertParticle(grid, x, y, "smoke");
                 convertParticle(grid, x, y, "smoke");
                 this.hasCombusted = true;
+                grid[x][y].isHot = true;
                 // tryMakeAsh(grid);
             }
         }
