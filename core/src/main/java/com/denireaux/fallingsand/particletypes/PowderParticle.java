@@ -14,9 +14,9 @@ public class PowderParticle extends Particle {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 8;
+        gravity *= 9;
         velocity += gravity;
-        float maxVelocity = 1.3f;
+        float maxVelocity = 1.5f;
         if (velocity > maxVelocity) {
             velocity = maxVelocity;
         }
@@ -46,6 +46,19 @@ public class PowderParticle extends Particle {
                 // tryMakeAsh(grid);
             }
         }
+
+        // Particle[] surroundings = getSurroundingParticles(grid);
+
+        // for (Particle particle : surroundings) {
+        //     if (particle == null) return;
+        //     String particleInQuestionid = particle.getId();
+        //     if ("powder".equals(particleInQuestionid) && particle.hasCombusted == true) {
+        //         int particleInQuestionX = particle.x;
+        //         int particleInQuestionY = particle.y;
+        //         convertParticle(grid, particleInQuestionX, particleInQuestionY, "smoke");
+        //         grid[x][y].hasCombusted = true;
+        //     }
+        // }
     }
 
     private void tryMakeAsh(Particle[][] grid) {
@@ -54,4 +67,3 @@ public class PowderParticle extends Particle {
         grid[x][y] = new AshParticle(x, y, "ash");
     }
 }
-    

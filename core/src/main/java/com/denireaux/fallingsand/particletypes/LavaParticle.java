@@ -12,7 +12,7 @@ public class LavaParticle extends Particle {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 6;
+        gravity *= 9;
         velocity += gravity;
         velocity = Math.min(velocity, 1.5f);
 

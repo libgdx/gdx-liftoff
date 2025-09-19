@@ -64,22 +64,42 @@ public class FallingSandGame extends ApplicationAdapter {
     private int particleIndex = 0;
     private final ParticleType[] particleTypes = ParticleType.values();
 
+    private boolean glowEnabled = true;
+
     // Palette buttons (sidebar)
     private Rectangle[] paletteButtons;
 
     // Button colors
-    private final Color SANDCOLOR = Color.YELLOW;
-    private final Color WATERCOLOR = Color.BLUE;
-    private final Color WETSANDCOLOR = Color.BROWN;
-    private final Color VAPORCOLOR = Color.LIGHT_GRAY;
-    private final Color LAVACOLOR = Color.RED;
-    private final Color STONECOLOR = Color.DARK_GRAY;
-    private final Color ASHCOLOR = Color.SLATE;
-    private final Color POWDERCOLOR = Color.TAN;
-    private final Color SMOKECOLOR = Color.BLACK;
-    private final Color SNOWCOLOR = Color.WHITE;
-    private final Color CARBONCOLOR = Color.BLACK;
-    private final Color VOIDCOLOR = Color.FOREST;
+
+    // // Pastel & vibrant particle colors
+    // private final Color SANDCOLOR     = new Color(0.96f, 0.87f, 0.70f, 1f); // #F5DEB3 wheat pastel
+    // private final Color WATERCOLOR    = new Color(0.43f, 0.78f, 1.00f, 1f); // #6EC6FF sky blue pastel
+    // private final Color WETSANDCOLOR  = new Color(0.76f, 0.64f, 0.43f, 1f); // #C1A36E muted sandy beige
+    // private final Color VAPORCOLOR    = new Color(0.88f, 0.97f, 0.98f, 1f); // #E0F7FA pale aqua
+    // private final Color LAVACOLOR     = new Color(1.00f, 0.44f, 0.38f, 1f); // #FF6F61 coral red pastel
+    // private final Color STONECOLOR    = new Color(0.66f, 0.66f, 0.68f, 1f); // #A8A9AD cool gray
+    // private final Color ASHCOLOR      = new Color(0.84f, 0.84f, 0.84f, 1f); // #D6D6D6 light silver gray
+    // private final Color POWDERCOLOR   = new Color(0.82f, 0.71f, 0.55f, 1f); // #D2B48C tan pastel
+    // private final Color SMOKECOLOR    = new Color(0.69f, 0.75f, 0.77f, 1f); // #B0BEC5 blue-gray pastel
+    // private final Color SNOWCOLOR     = new Color(1.00f, 1.00f, 1.00f, 1f); // #FFFFFF white
+    // private final Color CARBONCOLOR   = new Color(0.30f, 0.30f, 0.30f, 1f); // #4D4D4D charcoal pastel
+    // private final Color VOIDCOLOR     = new Color(0.13f, 0.55f, 0.13f, 1f); // #228B22 forest pastel
+
+
+    // Neon particle colors (black bg optimized)
+    private final Color SANDCOLOR     = new Color(1.00f, 0.96f, 0.47f, 1f); // Neon yellow (#FFF478)
+    private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f); // Electric cyan (#00E6FF)
+    private final Color WETSANDCOLOR  = new Color(1.00f, 0.64f, 0.00f, 1f); // Neon orange (#FFA500)
+    private final Color VAPORCOLOR    = new Color(0.00f, 1.00f, 0.75f, 1f); // Neon aqua-teal (#00FFBF)
+    private final Color LAVACOLOR     = new Color(1.00f, 0.00f, 0.00f, 1f); // Hot neon red (#FF0000)
+    private final Color STONECOLOR    = new Color(0.60f, 0.60f, 0.60f, 1f); // Bright silver (#999999)
+    private final Color ASHCOLOR      = new Color(0.80f, 0.80f, 0.80f, 1f); // Light gray (#CCCCCC)
+    private final Color POWDERCOLOR   = new Color(0.12f, 0.56f, 1.00f, 1f); // Neon blue (#1E90FF)
+    private final Color SMOKECOLOR    = new Color(0.40f, 0.40f, 0.40f, 1f); // Charcoal gray (#666666)
+    private final Color SNOWCOLOR     = new Color(1.00f, 1.00f, 1.00f, 1f); // White (#FFFFFF)
+    private final Color CARBONCOLOR   = new Color(0.20f, 0.20f, 0.20f, 1f); // Deep charcoal (#333333)
+    private final Color VOIDCOLOR     = new Color(0.00f, 1.00f, 0.50f, 1f); // Neon green (#00FF80)
+
 
     private Texture sandTex, waterTex, lavaTex, stoneTex, snowTex;
 
@@ -115,6 +135,8 @@ public class FallingSandGame extends ApplicationAdapter {
         int startY = GRID_HEIGHT - buttonHeight - padding;
 
         paletteButtons = new Rectangle[particleTypes.length];
+
+        // "You're really hadnsome and kewl" -- Susan S. Bai -> September 12th, 2025
         for (int i = 0; i < particleTypes.length; i++) {
             paletteButtons[i] = new Rectangle(
                 GRID_WIDTH - buttonWidth - padding,
@@ -134,7 +156,6 @@ public class FallingSandGame extends ApplicationAdapter {
                     particleIndex = (particleIndex - 1 + particleTypes.length) % particleTypes.length;
                 }
                 currentParticle = particleTypes[particleIndex];
-                log.info("Selected particle: " + currentParticle);
                 return true;
             }
         });
@@ -154,7 +175,8 @@ public class FallingSandGame extends ApplicationAdapter {
         handleInput();
 
         float r = 29f / 255f, g = 31f / 255f, b = 33f / 255f;
-        Gdx.gl.glClearColor(r, g, b, 1);
+
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Update particles
@@ -166,51 +188,77 @@ public class FallingSandGame extends ApplicationAdapter {
             }
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            glowEnabled = !glowEnabled;
+            System.out.println("Glow mode: " + (glowEnabled ? "ON" : "OFF"));
+        }
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         // Render particles
+        // Render particles
         for (int x = 0; x < GRID_WIDTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
-                if (grid[x][y] instanceof SandParticle) {
-                    batch.setColor(SANDCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof WaterParticle) {
-                    batch.setColor(WATERCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof WetSandParticle) {
-                    batch.setColor(WETSANDCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof VaporParticle) {
-                    batch.setColor(VAPORCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof LavaParticle) {
-                    batch.setColor(LAVACOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof StoneParticle) {
-                    batch.setColor(STONECOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof AshParticle) {
-                    batch.setColor(ASHCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof PowderParticle) {
-                    batch.setColor(POWDERCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof SmokeParticle) {
-                    batch.setColor(SMOKECOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof SnowParticle) {
-                    batch.setColor(SNOWCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof CarbonParticle) {
-                    batch.setColor(CARBONCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-                } else if (grid[x][y] instanceof VoidParticle) {
-                    batch.setColor(VOIDCOLOR);
-                    batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                Particle p = grid[x][y];
+                if (p == null) continue;
+
+                Color baseColor = null;
+
+                if (p instanceof SandParticle) {
+                    baseColor = SANDCOLOR;
+                } else if (p instanceof WaterParticle) {
+                    baseColor = WATERCOLOR;
+                } else if (p instanceof WetSandParticle) {
+                    baseColor = WETSANDCOLOR;
+                } else if (p instanceof VaporParticle) {
+                    baseColor = VAPORCOLOR;
+                } else if (p instanceof LavaParticle) {
+                    baseColor = LAVACOLOR;
+                } else if (p instanceof StoneParticle) {
+                    baseColor = STONECOLOR;
+                } else if (p instanceof AshParticle) {
+                    baseColor = ASHCOLOR;
+                } else if (p instanceof PowderParticle) {
+                    baseColor = POWDERCOLOR;
+                } else if (p instanceof SmokeParticle) {
+                    baseColor = SMOKECOLOR;
+                } else if (p instanceof SnowParticle) {
+                    baseColor = SNOWCOLOR;
+                } else if (p instanceof CarbonParticle) {
+                    baseColor = CARBONCOLOR;
+                } else if (p instanceof VoidParticle) {
+                    baseColor = VOIDCOLOR;
                 }
+
+                if (baseColor == null) continue;
+
+                // Decide if this particle should glow
+                boolean shouldGlow = glowEnabled && (
+                    p instanceof LavaParticle ||
+                    p instanceof VaporParticle ||
+                    p instanceof SmokeParticle
+                    // add more here if you want glow on other types
+                );
+
+                if (shouldGlow) {
+                    // Glow layer (slightly bigger + transparent)
+                    batch.setColor(baseColor.r, baseColor.g, baseColor.b, 0.3f);
+                    batch.draw(
+                        pixel,
+                        x * CELL_SIZE - 1,
+                        y * CELL_SIZE - 1,
+                        CELL_SIZE + 2,
+                        CELL_SIZE + 2
+                    );
+                }
+
+                // Core pixel (always drawn)
+                batch.setColor(baseColor);
+                batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
+
 
         // Render palette sidebar
         for (int i = 0; i < particleTypes.length; i++) {

@@ -6,9 +6,12 @@ import com.denireaux.fallingsand.utils.utils;
 
 public class SmokeParticle extends Particle implements IGas{
 
+    public static boolean hasCombusted = false;
+
     public SmokeParticle(int x, int y, String id) {
         super(x, y, id);
         this.isHot = false;
+        this.id = "smoke";
     }
 
     @Override

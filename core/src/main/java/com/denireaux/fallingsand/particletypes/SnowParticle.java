@@ -20,9 +20,9 @@ public class SnowParticle extends Particle implements ISolid {
 
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 8;
+        gravity *= 9;
         velocity += gravity;
-        float maxVelocity = 1.3f;
+        float maxVelocity = 1.5f;
         if (velocity > maxVelocity) velocity = maxVelocity;
         float dy = velocity;
         int moveSteps = (int) dy;
