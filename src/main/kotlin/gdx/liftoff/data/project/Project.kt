@@ -158,6 +158,8 @@ class Project(
       # files are fully future-proof (which they never are, because Gradle constantly deprecates working APIs).
       # You can change 'quiet' below to 'lifecycle' to use Gradle's default behavior, which shows some confusing messages.
       # You could instead change 'quiet' below to 'info' to see info that's important mainly while debugging build files.
+      # Note that if you want to use Gradle Build Scans, you should set the below logging level to 'lifecycle', otherwise
+      # the link to the scan won't get shown at all.
       # Documented at: https://docs.gradle.org/current/userguide/command_line_interface.html#sec:command_line_logging
       org.gradle.logging.level=quiet
 
