@@ -139,7 +139,7 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath "io.github.fourlastor:construo:1.7.1"
+    classpath "io.github.fourlastor:construo:2.0.0"
     if(enableGraalNative == 'true') {
       classpath "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.28"
     }
@@ -259,8 +259,6 @@ construo {
     name.set(appName)
     // human-readable name, used for example in the `.app` name for macOS
     humanName.set(appName)
-    // Optional, defaults to project version property
-    version.set("${'$'}projectVersion")
 
     targets.configure {
       register("linuxX64", Target.Linux) {

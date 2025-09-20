@@ -10,7 +10,7 @@ buildscript {
     google()
   }
   dependencies {
-    classpath "io.github.fourlastor:construo:1.7.1"
+    classpath "io.github.fourlastor:construo:2.0.0"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
   }
@@ -236,8 +236,6 @@ construo {
   name.set(appName)
   // human-readable name, used for example in the `.app` name for macOS
   humanName.set(appName)
-  // Optional, defaults to project version
-  version.set("$project.version")
 
   jlink {
     includeDefaultCryptoModules.set(false) // we don't need any encryption in Liftoff itself.
