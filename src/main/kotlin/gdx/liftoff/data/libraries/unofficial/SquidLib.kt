@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.0"
+  override val defaultVersion = "4.0.1"
   override val group = "com.squidpony"
   override val name: String
     get() = id.lowercase()
