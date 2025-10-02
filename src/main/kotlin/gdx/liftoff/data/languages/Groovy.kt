@@ -23,6 +23,6 @@ class Groovy : Language {
       val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
       gradleFile.srcFolders.add("'src/main/groovy'")
     }
-    addDependency(project, $$"org.apache.groovy:groovy-all:$groovyVersion")
+    addDependency(project, "org.apache.groovy:groovy-all:\$groovyVersion")
   }
 }
