@@ -35,7 +35,7 @@ interface Library {
 
   /** Latest version of the library fetched from the Maven repository or [defaultVersion].
    * If the "latest" version has been successfully obtained, it is still compared with [NaturalTextComparator]
-   * to try to */
+   * to try to retrieve the newer version. */
   val version: String
     get() {
       val retrieved = repository.getLatestVersion(group, name)
