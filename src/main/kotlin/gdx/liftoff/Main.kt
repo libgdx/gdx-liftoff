@@ -136,6 +136,7 @@ fun main() {
   config.setForegroundFPS(16)
   config.setIdleFPS(8)
   config.setAutoIconify(true)
+  config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0)
   config.setWindowIcon(*arrayOf(128, 64, 32, 16).map { "icons/libgdx$it.png" }.toTypedArray())
   val windowListener: Lwjgl3WindowListener =
     object : Lwjgl3WindowListener {

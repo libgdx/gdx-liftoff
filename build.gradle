@@ -87,6 +87,7 @@ dependencies {
 
   //noinspection GDXOutdatedVersionGradleGroovy
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
   implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
     exclude group: "org.jcraft", module: "jorbis"
     exclude group: "org.lwjgl", module: "lwjgl-openal"
