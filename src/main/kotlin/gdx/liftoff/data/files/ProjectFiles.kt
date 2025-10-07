@@ -157,4 +157,3 @@ include """,
     destination.child(path).writeString(content, false, "UTF-8")
   }
 }
-

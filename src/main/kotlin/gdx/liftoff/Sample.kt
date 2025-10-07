@@ -112,10 +112,11 @@ enum class Preset {
       get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
-        return Listing.unofficialLibraries.filter { library -> !library.official && library.repository === KtxRepository &&
-              !library.id.endsWith("Async") &&
-              listOf("artemis", "script").all { it !in library.id.lowercase() }
-          }
+        return Listing.unofficialLibraries.filter { library ->
+          !library.official && library.repository === KtxRepository &&
+            !library.id.endsWith("Async") &&
+            listOf("artemis", "script").all { it !in library.id.lowercase() }
+        }
       }
     override val template: Template
       get() = KtxTemplate()
