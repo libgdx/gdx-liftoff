@@ -91,7 +91,7 @@ when you select Kotlin as an option. The 2.x series of releases claims a number 
 libraries appear to be either very close to compatible, or are compatible already. Liftoff itself is built using Kotlin
 2.x , as well as substantial Java code (compatible with Java 8).
 
-Some things are structured differently in Liftoff projects, compared to gdx-setup projects. Where gdx-setup puts almost
+Some things are structured differently in Liftoff projects, compared to gdx-setup projects. Where gdx-setup put almost
 all configuration in `/build.gradle` (in the project root), including for subprojects like `android` or `html`, Liftoff
 puts only shared configuration in the root `build.gradle`, keeps all user-configurable version information in
 `/gradle.properties`, and moves per-project configuration to `/core/build.gradle`, `/android/build.gradle`,
@@ -106,8 +106,6 @@ the block inside `dependencies { }`, but **not** inside `buildscript { }`. There
 you generally want the last one. Templates selected in Liftoff handle this automatically.
 
 For more details on how to use the application and how it works, see the [usage guide](Guide.md).
-If you would like to contribute to the project, you might find the [architecture document](Architecture.md)
-helpful.
 
 When submitting a pull request, please format the application with the `ktlintFormat` Gradle task.
 
