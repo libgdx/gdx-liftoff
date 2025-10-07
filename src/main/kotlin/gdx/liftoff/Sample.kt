@@ -7,7 +7,6 @@ import com.badlogic.gdx.Version
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.GdxNativesLoader
-import gdx.liftoff.actions.GlobalActionContainer
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Java
 import gdx.liftoff.data.languages.Kotlin
@@ -216,13 +215,13 @@ fun main(arguments: Array<String>) {
       androidSdk = FileHandle(File(".")),
     )
   val defaultJavaVersion = Java().version
-  val defaults = GlobalActionContainer()
+  val defaultGwtVersion = "1.1.29"
   val advancedData =
     AdvancedProjectData(
       version = Configuration.VERSION,
       gdxVersion = Version.VERSION,
       javaVersion = defaultJavaVersion,
-      gwtPluginVersion = defaults.getDefaultGwtPluginVersion(),
+      gwtPluginVersion = defaultGwtVersion,
       serverJavaVersion = defaultJavaVersion,
       desktopJavaVersion = defaultJavaVersion,
       generateSkin = preset.addSkin,

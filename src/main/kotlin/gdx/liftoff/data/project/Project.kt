@@ -1,8 +1,8 @@
 package gdx.liftoff.data.project
 
 import com.badlogic.gdx.Files
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils
 import com.badlogic.gdx.utils.GdxRuntimeException
-import com.kotcrab.vis.ui.util.OsUtils
 import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.ProjectFile
 import gdx.liftoff.data.files.PropertiesFile
@@ -355,7 +355,7 @@ trim_trailing_whitespace = false
   }
 
   private fun determineGradleCommand(): Array<String> {
-    return if (OsUtils.isWindows()) {
+    return if (UIUtils.isWindows) {
       arrayOf("cmd", "/c", "gradlew")
     } else {
       arrayOf("./gradlew")

@@ -1,8 +1,6 @@
 package gdx.liftoff.data.platforms
 
-import com.badlogic.gdx.graphics.Pixmap
 import gdx.liftoff.data.files.CopiedFile
-import gdx.liftoff.data.files.GeneratedImageFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
@@ -50,14 +48,6 @@ interface Platform {
   ) {
     val originalFile = arrayOf("generator", id) + file
     project.files.add(CopiedFile(projectName = id, original = path(*originalFile), path = path(*file)))
-  }
-
-  fun addGeneratedImageFile(
-    project: Project,
-    content: Pixmap,
-    vararg file: String,
-  ) {
-    project.files.add(GeneratedImageFile(projectName = id, content = content, path = path(*file)))
   }
 
   fun addGradleTaskDescription(
