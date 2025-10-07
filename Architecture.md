@@ -1,5 +1,29 @@
 # `gdx-liftoff` architecture
 
+# THIS IS ALL OUT OF DATE
+Large parts of GDX-Liftoff were rewritten in Java in order to use less "behind-the-scenes magic", which seemed
+impossible to avoid in the existing Autumn+LML-based Kotlin codebase. Avoiding LML allowed more advanced scene2d.ui
+techniques to be used without hacking up the LML codebase or *attempting* to make sense of its limited documentation.
+Parts of this app still use Kotlin, but for the data handling and sample generation primarily, with no code currently
+using Autumn, Autumn MVC, or LML. Kotlin's actually quite nice for these purposes, and if gdx-liftoff were rewritten in
+Kotlin today, more tools could be used that weren't available when this project started (like the many KTX libraries).
+A big part of why the Java rewrite made sense was simply familiarity with Java and a lack of it with Kotlin -- learning
+how to write basic Kotlin is easy, but learning how to write high-quality, maintainable Kotlin is as hard as it is in
+any other language, and many of the skills are simply not easily transferred from developing Java to Kotlin.
+
+Also, if you happen to be writing a library for wide usage, and you think a custom language is a great idea, it isn't.
+If you have millions of dollars to spend on getting documentation authors to document your language, it still isn't.
+This world has many existing formats, some of which are very extensible, that don't need a Herculean effort to document
+their various pitfalls and snares to catch the unwary.
+
+Gdx-Liftoff already contains quite a few languages by necessity: Kotlin, Java, Gradle (Groovy), "properties," XML, JSON,
+shell, batch script, AngelCode BMFont, libGDX .atlas (both new and old formats), MarkDown, ProGuard/R8 configuration,
+and probably more. Oh yeah, .editorconfig uses TOML.
+
+We don't need more. We don't *want* more.
+
+# OLD ARCHITECTURE DOCS
+
 `gdx-liftoff` is a copy of [czyzby/gdx-setup](https://github.com/czyzby/gdx-setup) application, sharing the code
 general structure and technology stack. The main frameworks used throughout the application include:
 

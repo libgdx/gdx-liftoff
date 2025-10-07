@@ -69,11 +69,11 @@ dependencies {
   implementation "org.apache.commons:commons-exec:$commonsExecVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation "com.crashinvaders.lml:gdx-kiwi:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
-  implementation("com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"){ exclude group: "com.kotcrab.vis", module: "vis-ui" }
-  implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
-  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
+//  implementation "com.crashinvaders.lml:gdx-lml:$lmlVersion"
+//  implementation("com.crashinvaders.lml:gdx-lml-vis:$lmlVersion"){ exclude group: "com.kotcrab.vis", module: "vis-ui" }
+//  implementation "com.crashinvaders.lml:gdx-autumn:$lmlVersion"
+//  implementation "com.crashinvaders.lml:gdx-autumn-mvc:$lmlVersion"
+//  implementation "com.crashinvaders.lml:gdx-autumn-desktop-fcs:$lmlVersion"
   //noinspection GDXOutdatedVersionGradleGroovy
   implementation "com.kotcrab.vis:vis-ui:$visUiVersion" // for stable releases
 //  implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion" // for JitPack commits
@@ -177,7 +177,7 @@ dependencies {
 
 
   // necessary because the current gdx-autumn-desktop-fcs has an implementation dep on this, and we need it here.
-  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
+//  implementation "io.github.lukehutch:fast-classpath-scanner:2.21"
   // for some network requests, such as checking the versions of dependencies
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
 
