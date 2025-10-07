@@ -7,7 +7,6 @@ import com.badlogic.gdx.Version
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.GdxNativesLoader
-import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner
 import gdx.liftoff.actions.GlobalActionContainer
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Java
@@ -17,7 +16,6 @@ import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.official.Box2D
 import gdx.liftoff.data.libraries.official.Box2DLights
 import gdx.liftoff.data.libraries.official.Freetype
-import gdx.liftoff.data.libraries.official.OfficialExtension
 import gdx.liftoff.data.libraries.unofficial.Formic
 import gdx.liftoff.data.libraries.unofficial.KtxRepository
 import gdx.liftoff.data.libraries.unofficial.RegExodus
@@ -41,12 +39,9 @@ import gdx.liftoff.data.templates.Template
 import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.data.templates.official.KotlinClassicTemplate
 import gdx.liftoff.data.templates.unofficial.KtxTemplate
-import gdx.liftoff.views.Extension
 import java.io.File
 import java.util.Optional
 import kotlin.system.exitProcess
-import com.badlogic.gdx.utils.Array as GdxArray
-import gdx.liftoff.views.Extension as GdxExtension
 
 /** Determines which platforms, extensions, templates, etc. are used by the project generator. */
 enum class Preset {
@@ -97,10 +92,7 @@ enum class Preset {
       get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
-        return DesktopClassScanner().find<Extension>()
-          .filter { !isOfficial(it) }
-          .initiate<Library>()
-          .filter { it.repository === KtxRepository }
+        return Listing.unofficialLibraries.filter { library -> !library.official && library.repository === KtxRepository }
       }
     override val template: Template
       get() = KtxTemplate()
@@ -121,11 +113,7 @@ enum class Preset {
       get() = Optional.empty()
     override val thirdPartyExtensions: List<Library>
       get() {
-        return DesktopClassScanner().find<Extension>()
-          .filter { !isOfficial(it) }
-          .initiate<Library>()
-          .filter { library ->
-            library.repository === KtxRepository &&
+        return Listing.unofficialLibraries.filter { library -> !library.official && library.repository === KtxRepository &&
               !library.id.endsWith("Async") &&
               listOf("artemis", "script").all { it !in library.id.lowercase() }
           }
@@ -207,7 +195,7 @@ fun getPreset(arguments: Array<String>): Preset =
       val name = arguments.first()
       try {
         Preset.valueOf(name.uppercase())
-      } catch (exception: IllegalArgumentException) {
+      } catch (_: IllegalArgumentException) {
         Preset.DEFAULT
       }
     }
@@ -218,7 +206,7 @@ fun main(arguments: Array<String>) {
   Gdx.files = Lwjgl3Files()
 
   val preset = getPreset(arguments)
-  val officialExtensions = DesktopClassScanner().find<GdxExtension>().filter(::isOfficial).initiate<OfficialExtension>()
+  val officialExtensions = Listing.officialLibraries
   val basicData =
     BasicProjectData(
       name = preset.projectName,
@@ -267,9 +255,3 @@ object NullLogger : ProjectLogger {
 
   override fun logNls(bundleLine: String) {}
 }
-
-inline fun <reified T : Annotation> DesktopClassScanner.find(): GdxArray<Class<*>> = findClassesAnnotatedWith(Root::class.java, listOf(T::class.java))
-
-fun isOfficial(extensionClass: Class<*>): Boolean = extensionClass.getAnnotation(GdxExtension::class.java).official
-
-inline fun <reified T : Any> Iterable<Class<*>>.initiate(): List<T> = map { it.getDeclaredConstructor().newInstance() as T }

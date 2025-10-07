@@ -5,7 +5,6 @@ buildscript {
     mavenCentral()
     gradlePluginPortal()
     maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
-//    maven { url 'https://s01.oss.sonatype.org' }
 //    mavenLocal()
     google()
   }
@@ -61,8 +60,6 @@ repositories {
   mavenCentral()
   maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-//  maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-//  maven { url "https://s01.oss.sonatype.org" }
   maven { url 'https://jitpack.io' }
 }
 
@@ -87,7 +84,10 @@ dependencies {
 
   //noinspection GDXOutdatedVersionGradleGroovy
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+  // Increases downloaded executable size, but may allow it to run in more places.
   implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
+
   implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
     exclude group: "org.jcraft", module: "jorbis"
     exclude group: "org.lwjgl", module: "lwjgl-openal"
