@@ -27,7 +27,9 @@ public class WetSandParticle extends Particle implements ISolid {
         if (moveSteps == 0) return;
         for (int i = 0; i < moveSteps; i++) {
             moveAsSolid(grid, x, y);
+            gravity += 1;
         }
+        velocity -= moveSteps;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class WetSandParticle extends Particle implements ISolid {
         handleDrySandNeighbors(grid, x, y);
         trySinking(grid, x, y);
         tryNormalMovement(grid);
-        // tryContinueToSink(grid, x, y);
+        tryContinueToSink(grid, x, y);
         tryDrySelf(grid, x, y);
     }
 
@@ -56,7 +58,7 @@ public class WetSandParticle extends Particle implements ISolid {
             }
             return;
         }
-            trySwappingWithLeft(grid, x, y);
+        trySwappingWithLeft(grid, x, y);
     }
 
     private void handleDrySandNeighbors(Particle[][] grid, int x, int y) {
@@ -65,10 +67,10 @@ public class WetSandParticle extends Particle implements ISolid {
             if (particle == null) continue;
             if (!particle.isWet && "sand".equals(particle.getId())) {
                 boolean wetSandFactor = utils.getRandomBoolean();
-                boolean canKeepWetting = wetStep >= 10;
-                if (wetSandFactor && canKeepWetting) {    
-                    int sandParticleX = particle.x; 
-                    int sandParticleY = particle.y;    
+                boolean canKeepWetting = wetStep <= 10;
+                if (wetSandFactor && canKeepWetting) {
+                    int sandParticleX = particle.x;
+                    int sandParticleY = particle.y;
                     convertParticle(grid, sandParticleX, sandParticleY, "wetsand");
                 }
             }
@@ -78,7 +80,7 @@ public class WetSandParticle extends Particle implements ISolid {
     private void tryDrySelf(Particle[][] grid, int x, int y) {
         if (!hasDried) {
             wetStep += 1;
-            if (wetStep < 500) return;
+            if (wetStep < 1000) return;
         }
         convertParticle(grid, x, y, "sand");
     }

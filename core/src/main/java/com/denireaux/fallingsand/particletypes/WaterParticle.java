@@ -96,7 +96,6 @@ public class WaterParticle extends Particle implements ILiquid {
     private void flattenOut(Particle[][] grid, int dir) {
         int steps = 0;
         while (steps < 3) {
-            int newX = x + dir;
             if (dir < 0 && MovementHelper.canLeft(grid, x, y)) {
                 moveLeft(grid);
             } else if (dir > 0 && MovementHelper.canRight(grid, x, y)) {
