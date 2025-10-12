@@ -11,14 +11,14 @@ jobs:
 
     steps:
       - name: Repository checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: JDK setup
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
       - name: Gradle setup
-        uses: gradle/gradle-build-action@3b1b3b9a2104c2b47fbae53f3938079c00c9bb87
+        uses: gradle/actions/setup-gradle@v5
       - name: Generate sample
         run: ./gradlew sample --args="default"
       - name: Save gdx-liftoff version
