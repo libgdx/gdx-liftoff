@@ -1,6 +1,5 @@
 package gdx.liftoff.data.libraries
 
-import gdx.liftoff.NaturalTextComparator
 import gdx.liftoff.data.platforms.Android
 import gdx.liftoff.data.platforms.AndroidGradleFile
 import gdx.liftoff.data.platforms.GWT
@@ -30,23 +29,35 @@ interface Library {
   /** Name of the main dependency used to determine the version. */
   val name: String
 
-  /** Fallback version of the library if unable to fetch the latest one. */
+  /** Version of the library to use. */
   val defaultVersion: String
 
-  /** Latest version of the library fetched from the Maven repository or [defaultVersion].
-   * If the "latest" version has been successfully obtained, it is still compared with [NaturalTextComparator]
-   * to try to retrieve the newer version. */
+  /**
+   * Gets the [defaultVersion]. Doesn't try to fetch new versions of libraries!
+   * Fetching multiple libraries can take a while with the default timeout of 30 seconds per library.
+   * Updating Liftoff should ensure that all libraries available via checkboxes use compatible versions.
+   * Using an older Liftoff should still download working versions even if newer (potentially incompatible)
+   * dependencies are available, and manually updating dependencies is as simple as editing gradle.properties .
+   */
   val version: String
     get() {
-      val retrieved = repository.getLatestVersion(group, name)
-      return if (retrieved == null) {
-        defaultVersion
-      } else if (NaturalTextComparator.CASE_INSENSITIVE.compare(retrieved, defaultVersion) >= 0) {
-        retrieved
-      } else {
-        defaultVersion
-      }
+      return defaultVersion
     }
+
+//  /* Latest version of the library fetched from the Maven repository or [defaultVersion].
+//   * If the "latest" version has been successfully obtained, it is still compared with [NaturalTextComparator]
+//   * to try to retrieve the newer version. */
+//  val version: String
+//    get() {
+//      val retrieved = repository.getLatestVersion(group, name)
+//      return if (retrieved == null) {
+//        defaultVersion
+//      } else if (NaturalTextComparator.CASE_INSENSITIVE.compare(retrieved, defaultVersion) >= 0) {
+//        retrieved
+//      } else {
+//        defaultVersion
+//      }
+//    }
 
   /**
    * @param project is currently generated and should have this library included.

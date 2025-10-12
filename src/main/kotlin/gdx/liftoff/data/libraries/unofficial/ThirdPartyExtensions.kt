@@ -591,7 +591,7 @@ class Stripe : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
   override val id = "gdxGltf"
-  override val defaultVersion = "b758554955"
+  override val defaultVersion = "0436377df4"
   override val repository = Repository.JitPack
   override val url = "https://github.com/mgsx-dev/gdx-gltf"
   override val group = "com.github.mgsx-dev"
