@@ -1,137 +1,39 @@
 package com.denireaux.fallingsand.particletypes;
 
-import com.denireaux.fallingsand.helpers.MovementHelper;
-import com.denireaux.fallingsand.utils.utils;
-
-/**
- * Represents a sand particle in the falling sand simulation.
- * 
- * Sand particles are affected by gravity and fall straight down if possible.
- * When blocked, they attempt to move diagonally left or right.
- * 
- * This class handles basic gravity application and movement logic.
- */
 public class SandParticle extends Particle {
-    public SandParticle(int x, int y) {
-        super(x, y);
+    public SandParticle(int x, int y, String id) {
+        super(x, y, id);
+        this.willSink = true;
     }
 
-    /**
-     * Updates the sand particle's position based on gravity and surrounding particles.
-     * This simulates falling behavior and diagonal sliding if the path directly below is blocked.
-     *
-     * @param gravity the amount of gravity to apply to the particle's vertical velocity
-     * @param grid the 2D array representing the current particle grid
-     */
     @Override
     public void update(float gravity, Particle[][] grid) {
-        gravity *= 6;
+        gravity *= 9;
         velocity += gravity;
-    
-        // Prevent sand from falling too fast
-        float maxVelocity = 1.0f;
-        if (velocity > maxVelocity) {
-            velocity = maxVelocity;
-        }
-    
-        // Only move when velocity accumulates at least 1 full tile
+        float maxVelocity = 1.5f;
+        if (velocity > maxVelocity) velocity = maxVelocity;
         float dy = velocity;
         int moveSteps = (int) dy;
-    
         if (moveSteps == 0) return;
-    
         for (int i = 0; i < moveSteps; i++) {
-            if (y <= 0) return;
-    
-            if (MovementHelper.canMoveDown(grid, x, y)) {
-                moveDown(grid, x, y - 1);
-                continue;
-            }
-    
-            boolean canDownLeft = MovementHelper.canMoveDownLeft(grid, x, y);
-            boolean canDownRight = MovementHelper.canMoveDownRight(grid, x, y);
-            boolean movingDownLeft = utils.getRandomBoolean();
-    
-            if (canDownLeft && canDownRight) {
-                if (movingDownLeft) {
-                    moveDownLeft(grid);
-                    continue;
-                } else {
-                    moveDownRight(grid);
-                    continue;
-                }
-            } else if (canDownRight) {
-                moveDownRight(grid);
-                continue;
-            } else if (canDownLeft) {
-                moveDownLeft(grid);
-                continue;
-            } else {
-                velocity = 0;
+            checkInbounds(grid, x, y);
+            tryMakeWetSand(grid, x, y);
+            tryNormalMovement(grid);
+            gravity += 1;
+        }
+        velocity -= moveSteps;
+    }
+
+    private void tryMakeWetSand(Particle[][] grid, int x, int y) {
+        Particle[] surroundingParticles = getSurroundingParticles(grid);
+        for (Particle particle : surroundingParticles) {
+            if (particle == null) continue;
+            String particleId = particle.getId();
+            if ("water".equals(particleId)) {
+                velocity *= 0.25f;
+                convertParticle(grid, x, y, "wetsand");
                 break;
             }
         }
-    
-        velocity -= moveSteps;
-    }
-    
-    /**
-     * Moves the particle straight down in the grid.
-     *
-     * @param grid the 2D particle array
-     * @param newX the X-coordinate to move to
-     * @param newY the Y-coordinate to move to
-     */
-    private void moveDown(Particle[][] grid, int newX, int newY) {
-        grid[newX][newY] = this;
-        grid[x][y] = null;
-        x = newX;
-        y = newY;
-    }
-
-    /**
-     * Moves the particle down and to the right in the grid.
-     *
-     * @param grid the 2D particle array
-     */
-    private void moveDownRight(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x + 1][y - 1] = this;
-        x++;
-        y--;
-    }
-
-    /**
-     * Moves the particle down and to the left in the grid.
-     *
-     * @param grid the 2D particle array
-     */
-    private void moveDownLeft(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x - 1][y - 1] = this;
-        x--;
-        y--;
-    }
-
-    /**
-     * Moves the particle one cell to the left.
-     *
-     * @param grid the 2D particle array
-     */
-    private void moveLeft(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x - 1][y] = this;
-        x--;
-    }
-
-    /**
-     * Moves the particle one cell to the right.
-     *
-     * @param grid the 2D particle array
-     */
-    private void moveRight(Particle[][] grid) {
-        grid[x][y] = null;
-        grid[x + 1][y] = this;
-        x++;
     }
 }

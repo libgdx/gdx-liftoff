@@ -9,8 +9,7 @@ buildscript {
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
   }
   dependencies {
-
-
+    // add buildscript dependencies here if needed
   }
 }
 
@@ -18,52 +17,50 @@ allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
 
-  // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
   idea {
     module {
-      outputDir file('build/classes/java/main')
-      testOutputDir file('build/classes/java/test')
+      outputDir = file('build/classes/java/main')
+      testOutputDir = file('build/classes/java/test')
     }
   }
 }
 
 configure(subprojects) {
   apply plugin: 'java-library'
-  sourceCompatibility = JavaVersion.VERSION_21
-  targetCompatibility = JavaVersion.VERSION_21
 
-  // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
-  // The article can be helpful when using assets.txt in your project.
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(21)
+    }
+  }
+
+  // Generate assets.txt from assets folder
   tasks.register('generateAssetList') {
-    inputs.dir("${project.rootDir}/assets/")
-    // projectFolder/assets
-    File assetsFolder = new File("${project.rootDir}/assets/")
-    // projectFolder/assets/assets.txt
-    File assetsFile = new File(assetsFolder, "assets.txt")
-    // delete that file in case we've already created it
-    assetsFile.delete()
+    def assetsFolder = file("${project.rootDir}/assets")
+    def assetsFile = file("${assetsFolder}/assets.txt")
 
-    // iterate through all files inside that folder
-    // convert it to a relative path
-    // and append it to the file assets.txt
-    fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }.sort().each {
-      assetsFile.append(it + "\n")
+    inputs.dir(assetsFolder)
+    doLast {
+      assetsFile.delete()
+      fileTree(assetsFolder).collect { assetsFolder.relativePath(it) }
+        .sort()
+        .each { assetsFile.append(it + "\n") }
     }
   }
   processResources.dependsOn 'generateAssetList'
 
-  compileJava {
+  tasks.withType(JavaCompile).configureEach {
     options.incremental = true
   }
 }
 
 subprojects {
-  version = "$projectVersion"
+  version = project.findProperty("projectVersion") ?: "1.0.0"
   ext.appName = 'JFallingSand'
+
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
-    // You may want to remove the following line if you have errors downloading dependencies.
     mavenLocal()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
@@ -71,4 +68,4 @@ subprojects {
   }
 }
 
-eclipse.project.name = 'JFallingSand' + '-parent'
+eclipse.project.name = 'JFallingSand-parent'
