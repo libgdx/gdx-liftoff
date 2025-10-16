@@ -49,14 +49,14 @@ public class SmokeParticle extends Particle implements IGas{
         if (canLeft && canRight) {
             if (leftFactor) {
                 moveLeft(grid);
-                // tryContinueFloating(grid, x, y);
                 return;
             }
             moveRight(grid);
-            // tryContinueFloating(grid, x, y);
         }
     }
 
+    // TODO: Fix the below class method. 
+    // TODO: Note - Vapor, same thing.
     private void tryContinueFloating(Particle[][] grid, int x, int y) {
         Particle particleAbove = getAboveParticle(grid, x, y);
         if (particleAbove == null) return;
