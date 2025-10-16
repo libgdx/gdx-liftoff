@@ -193,6 +193,7 @@ public abstract class Particle {
         particleTypes.put("powder", (i, j) -> new PowderParticle(i, j, "powder"));
         particleTypes.put("carbon", (i, j) -> new CarbonParticle(i, j, "carbon"));
         particleTypes.put("snow", (i, j) -> new SnowParticle(i, j, "snow"));
+        particleTypes.put("oil", (i, j) -> new OilParticle(i, j, "oil"));
         grid[x][y] = null;
         BiFunction<Integer, Integer, Particle> factory = particleTypes.get(idOfDesiredParticle);
         if (factory != null) grid[x][y] = factory.apply(x, y);

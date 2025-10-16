@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.CarbonParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
+import com.denireaux.fallingsand.particletypes.OilParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
@@ -53,7 +54,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private enum ParticleType {
         SAND, WATER, WETSAND, VAPOR, LAVA,
         STONE, ASH, POWDER, SMOKE, SNOW,
-        CARBON, VOID
+        CARBON, VOID, OIL
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -76,6 +77,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color SNOWCOLOR     = new Color(1.00f, 1.00f, 1.00f, 1f);
     private final Color CARBONCOLOR   = new Color(0.20f, 0.20f, 0.20f, 1f);
     private final Color VOIDCOLOR     = new Color(0.00f, 1.00f, 0.50f, 1f);
+    private final Color OILCOLOR      = new Color(0.20f, 0.12f, 0.05f, 1f);
 
     @Override
     public void create() {
@@ -195,6 +197,7 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof SnowParticle || type == ParticleType.SNOW) return SNOWCOLOR;
         if (type instanceof CarbonParticle || type == ParticleType.CARBON) return CARBONCOLOR;
         if (type instanceof VoidParticle || type == ParticleType.VOID) return VOIDCOLOR;
+        if (type instanceof OilParticle || type == ParticleType.OIL) return OILCOLOR;
         return null;
     }
 
@@ -238,6 +241,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case SNOW -> grid[x][y] = new SnowParticle(x, y, "snow");
                                 case CARBON -> grid[x][y] = new CarbonParticle(x, y, "carbon");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
+                                case OIL -> grid[x][y] = new OilParticle(x, y, "oil");
                             }
                         }
                     }

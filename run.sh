@@ -8,5 +8,4 @@ echo "Cleaning build..."
 echo "Running build..."
 ./gradlew lwjgl3:run
 
-echo HELLO THIS IS A CHANGE
 # ./gradlew clean && ./gradlew lwjgl3:run

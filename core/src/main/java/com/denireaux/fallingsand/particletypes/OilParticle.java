@@ -1,15 +1,18 @@
 package com.denireaux.fallingsand.particletypes;
 
+import java.util.logging.Logger;
+
 import com.denireaux.fallingsand.behaviors.ILiquid;
 import com.denireaux.fallingsand.helpers.MovementHelper;
 import com.denireaux.fallingsand.utils.utils;
 
-public class WaterParticle extends Particle implements ILiquid {
+public class OilParticle extends Particle implements ILiquid {
 
-    public WaterParticle(int x, int y, String id) {
+    private static final Logger log = Logger.getLogger(String.valueOf(OilParticle.class));
+
+    public OilParticle(int x, int y, String id) {
         super(x, y, id);
-        this.id = "water";
-        this.isWet = true;
+        this.willSink = false;
     }
 
     @Override
@@ -17,14 +20,13 @@ public class WaterParticle extends Particle implements ILiquid {
         gravity *= 9;
         velocity += gravity;
         float maxVelocity = 1.5f;
-        velocity = Math.min(velocity, maxVelocity);
-        int moveSteps = (int) velocity;
+        if (velocity > maxVelocity) velocity = maxVelocity;
+        float dy = velocity;
+        int moveSteps = (int) dy;
         if (moveSteps == 0) return;
-
         for (int i = 0; i < moveSteps; i++) {
             moveAsLiquid(grid, x, y);
         }
-
         velocity -= moveSteps;
     }
 
@@ -58,6 +60,27 @@ public class WaterParticle extends Particle implements ILiquid {
         }
         if (canLeft) leftMovement(grid, x, y);
         if (canRight) rightMovement(grid, x, y);
+    }
+
+    private void leftMovement(Particle[][] grid, int x, int y) {
+        tryMoveLeft(grid);
+        flattenOut(grid, -1);
+        tryKeepMoving(grid);
+        flattenOut(grid, -1);
+    }
+
+    private void rightMovement(Particle[][]grid, int x, int y) {
+        tryMoveRight(grid);
+        flattenOut(grid, 1);
+        tryKeepMoving(grid);
+        flattenOut(grid, 1);
+    }
+
+    @Override
+    public void moveAsLiquid(Particle[][] grid, int x, int y) {
+        checkInbounds(grid, x, y);
+        tryIgniteSelf(grid, x, y);
+        tryNormalMovement(grid);
     }
 
     private void tryMoveRight(Particle[][] grid) {
@@ -106,80 +129,19 @@ public class WaterParticle extends Particle implements ILiquid {
         }
     }
 
-    public static record BoolInt(boolean canEvaporate, int indexOfHotParticle) {}
-
-    private BoolInt checkForHotNeighbors(Particle[][] grid) {
+    private void tryIgniteSelf(Particle[][] grid, int x, int y) {
         Particle[] surroundings = getSurroundingParticles(grid);
-        for (int i = 0; i < surroundings.length; i++) {
-            if (surroundings[i] != null && surroundings[i].isHot) {
-                return new BoolInt(true, i);
+        for (Particle particle : surroundings) {
+            if (particle == null) return;
+            if (particle.isHot) {
+                boolean carbonFactor = utils.getRandomBoolean();
+                boolean fastFactor = utils.getRandomBoolean();
+                if (carbonFactor && fastFactor) {
+                    grid[x][y].isHot = true;
+                    convertParticle(grid, particle.x, particle.y, "smoke");
+                    grid[particle.x][particle.y].isHot = true;
+                }
             }
         }
-        return new BoolInt(false, 1);
     }
-
-    private void evaporate(Particle[][] grid, int x, int y) {
-        BoolInt result = checkForHotNeighbors(grid);
-        Particle[] surroundings = getSurroundingParticles(grid);
-        Particle particle = surroundings[result.indexOfHotParticle];
-        if (particle == null) return;
-        int particleX = particle.x;
-        int particleY = particle.y;
-        if (result.canEvaporate()) {
-            boolean carbonFactor = utils.getRandomBoolean();
-            if (carbonFactor) {
-                convertParticle(grid, particleX, particleY, "smoke");
-                convertParticle(grid, x, y, "carbon");
-                return;
-            }
-            convertParticle(grid, particleX, particleY, "vapor");
-            grid[x][y] = new AshParticle(x, y, "ash");
-        }
-    }
-
-    private void checkAboveForLessDenseParticle(Particle[][] grid, int x, int y) {
-        Particle particleAbove = getAboveParticle(grid, x, y);
-        if (particleAbove == null || "stone".equals(particleAbove.getId())) return;
-        if ("water".equals(particleAbove.getId())) return;
-        boolean willSinkInWater = particleAbove.willSink;
-        if (willSinkInWater) {
-            particleAbove.sinkCounter++;
-            swapWith(grid, x, y + 1);
-        }
-    }
-
-    private void checkBelowForLessDenseParticle(Particle[][] grid, int x, int y) {
-        Particle particleBelow = getBelowParticle(grid, x, y);
-        if (particleBelow == null || "stone".equals(particleBelow.getId())) return;
-        if ("water".equals(particleBelow.getId())) return;
-        boolean willSinkInWater = particleBelow.willSink;
-        if (!willSinkInWater) {
-            particleBelow.sinkCounter --;
-            swapWith(grid, x, y - 1);
-        }
-    }
-
-    private void leftMovement(Particle[][] grid, int x, int y) {
-        tryMoveLeft(grid);
-        flattenOut(grid, -1);
-        tryKeepMoving(grid);
-        flattenOut(grid, -1);
-    }
-
-    private void rightMovement(Particle[][]grid, int x, int y) {
-        tryMoveRight(grid);
-        flattenOut(grid, 1);
-        tryKeepMoving(grid);
-        flattenOut(grid, 1);
-    }
-
-    @Override
-    public void moveAsLiquid(Particle[][] grid, int x, int y) {
-        checkInbounds(grid, x, y);
-        evaporate(grid, x, y);
-        tryNormalMovement(grid);
-        checkAboveForLessDenseParticle(grid, x, y);
-        checkBelowForLessDenseParticle(grid, x, y);
-    }
-
 }
