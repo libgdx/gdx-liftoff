@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
@@ -466,6 +467,7 @@ public class Main extends ApplicationAdapter {
                     "since that can cause this error."
             );
             Gdx.app.error("NFD", e.toString());
+            VisUI.load();
             FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
             fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);
             fileChooser.setDirectory(initialPath);
