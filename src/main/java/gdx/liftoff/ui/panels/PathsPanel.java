@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.github.tommyettinger.textra.TypingLabel;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
-import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
 import gdx.liftoff.ui.UserData;
@@ -145,7 +145,7 @@ public class PathsPanel extends Table implements Panel {
         errorLabel.skipToTheEnd();
         errorLabel.setAlignment(Align.center);
         errorLabel.setWrap(true);
-        add(errorLabel).minSize(0, errorLabel.getStyle().font.getLineHeight() * 2).colspan(4).growX();
+        add(errorLabel).minSize(0, errorLabel.getFont().cellHeight * 2).colspan(4).growX();
         updateError();
     }
 
@@ -223,7 +223,7 @@ public class PathsPanel extends Table implements Panel {
     }
 
     public boolean hasError() {
-        return errorLabel.getText().notEmpty();
+        return errorLabel.layout.countGlyphs() != 0;
     }
 
     /**

@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.github.tommyettinger.textra.FWSkin;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
@@ -58,7 +59,7 @@ import static org.lwjgl.system.MemoryUtil.memFree;
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program.
  */
 public class Main extends ApplicationAdapter {
-    public static Skin skin;
+    public static FWSkin skin;
     public static Stage stage;
     public static ScreenViewport screenViewport;
     public static FitViewport fitViewport;
@@ -223,7 +224,7 @@ public class Main extends ApplicationAdapter {
 
         setDefaultUserData();
 
-        skin = new Skin(Gdx.files.internal("ui-skin/skin.json"));
+        skin = new FWSkin(Gdx.files.internal("ui-skin/skin.json"));
 
         skin.getFont("font-label-tooltip").getData().breakChars = new char[]{'-'};
 

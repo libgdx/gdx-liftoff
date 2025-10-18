@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import com.github.tommyettinger.textra.TypingLabel;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
