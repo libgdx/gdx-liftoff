@@ -3,7 +3,6 @@ package gdx.liftoff.data.files
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
-import com.github.czyzby.kiwi.util.common.Strings
 import gdx.liftoff.data.platforms.Platform
 import java.io.File
 
@@ -85,14 +84,14 @@ fun toRelativePath(
   if (projectName.isEmpty() && sourceFolderPath.isEmpty() && packageName.isEmpty()) {
     return fileName
   }
-  return "${if (Strings.isNotBlank(projectName)) {
+  return "${if (projectName.isNotBlank()) {
     projectName + File.separator
   } else {
-    Strings.EMPTY_STRING
-  }}$sourceFolderPath${File.separator}${if (Strings.isNotBlank(packageName)) {
+    ""
+  }}$sourceFolderPath${File.separator}${if (packageName.isNotBlank()) {
     packageName.replace('.', File.separatorChar) + File.separator
   } else {
-    Strings.EMPTY_STRING
+    ""
   }}$fileName"
 }
 
