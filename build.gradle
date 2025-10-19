@@ -80,7 +80,7 @@ dependencies {
   implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
   implementation "com.github.raeleus.stripe:stripe:2.0.0"
   implementation "com.github.tommyettinger:textratypist:2.1.5"
-//  implementation "com.rafaskoberg.gdx:typing-label:1.4.0"
+//  implementation "com.rafaskoberg.gdx:typing-label:1.4.0" // not used because at least not currently compatible
   implementation "com.github.tommyettinger:regexodus:0.1.19" // updates version used by Stripe and typing-label
 
 

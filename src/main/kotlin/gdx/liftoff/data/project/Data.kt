@@ -71,7 +71,19 @@ data class AdvancedProjectData(
    * Version of xpenatan's TeaVM backend.
    */
   val gdxTeaVMVersion: String
-    get() = if (gdxVersion == "1.13.5") "1.2.1" else "1.2.0" // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1
+    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.3.1 should be compatible with newer.
+    get() =
+      when (gdxVersion) {
+        "1.13.5" -> {
+          "1.2.1"
+        }
+        "1.13.1" -> {
+          "1.2.0"
+        }
+        else -> {
+          "1.3.1"
+        }
+      }
 
   /**
    * Version of the main TeaVM project.
@@ -79,7 +91,7 @@ data class AdvancedProjectData(
   val teaVMVersion: String
     get() =
       Repository.MavenCentral.getLatestVersion(group = "org.teavm", name = "teavm-core")
-        ?: "0.12.0"
+        ?: "0.12.3"
 
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
