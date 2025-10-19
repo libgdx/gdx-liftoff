@@ -668,11 +668,8 @@ public class TeaVMLauncher {
         //config.width = $width;
         //config.height = $height;
         //// If width and height are both 0, then the app will use all available space.
-        //config.width = 0;
-        //config.height = 0;
-        //// If width and height are both -1, then the app will fill the canvas size.
-        config.width = -1;
-        config.height = -1;
+        config.width = 0;
+        config.height = 0;
         new TeaApplication(new ${project.basic.mainClass}(), config);
     }
 }
@@ -716,7 +713,12 @@ public class TeaVMBuilder {
         // Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project)}
 
-        TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
+        // Used by older TeaVM versions.
+//        TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
+
+        // The next two lines are used by gdx-teavm 1.3.1 and newer (and libGDX 1.14.0 and newer).
+        TeaBuilder.config(teaBuildConfiguration);
+        TeaVMTool tool = new TeaVMTool();
 
         // JavaScript is the default target type for TeaVM, and it works better during debugging.
         tool.setTargetType(TeaVMTargetType.JAVASCRIPT);
