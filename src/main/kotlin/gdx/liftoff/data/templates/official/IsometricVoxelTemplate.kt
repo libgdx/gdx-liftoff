@@ -305,8 +305,8 @@ public class LocalMap {
 
     /**
      * When point.w is 0, this selects terrain; when it is ENTITY_W, it selects an entity.
-     * @param point
-     * @return
+     * @param point the Vector4 to retrieve; w should be either 0, {@link Mover#PLAYER_W}, or {@link Mover#FISH_W}
+     * @return whatever IsoSprite was known at the given point, if there was one, or null otherwise
      */
     public IsoSprite getIsoSprite(Vector4 point) {
         return everything.get(point);
@@ -4792,11 +4792,12 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // Extract animations from the atlas.
         // This step will be different for every game's assets.
         animations = new Array<>(4);
-        // Apologies for the duplicated lines; these use libGDX 1.13.5's preferred way of initializing an Array.
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation.class));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation.class));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation.class));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation.class));
+        // Apologies for the duplicated lines; these use libGDX 1.14.0's preferred way of initializing an Array.
+        // If you are using libGDX 1.13.1 or earlier, change `Animation[]::new` to `Animation.class` .
+        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
+        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
+        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
+        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
         // Entities are stored in an odd order because of the tile sheet originally used for the atlas.
         // The original tile sheet is stored in the development repo for this demo:
         // https://github.com/tommyettinger/IsometricVoxelDemo/blob/a9c31f3891567958c3a4b581772defa2e902a5af/raw-assets/isometric-trpg-originals/IsometricTRPGAssetPack_Entities.png?raw=true
