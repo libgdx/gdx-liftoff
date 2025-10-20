@@ -12,21 +12,40 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
     📥
 </h1>
 
-To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application `jar`. Note
-that the latest releases target 1.13.1 by default even though they have 1.13.5 in the name. Once you have the right JAR, 
+To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application `jar`.
+The latest release targets 1.14.0 by default. Once you have the right JAR, 
 run it (usually double-clicking will do), or run the following command manually (replacing the `VERSION` appropriately):
 
 ```shell
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-**You must build with Java 17 or newer!** Gradle's current version, as well as current Android tools, now require your
-installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
+**You must build with Java 17** (or newer, up to 24)! Gradle's current version, as well as current Android tools, now
+require your installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. All stable target releases of Java from 8 to 24 work here now. **If you use a JDK version 18
-or newer** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
+the JDK versions 17 and up. Stable target releases of Java from 8 to 24 work here now. **If you use a JDK version 18
+to 24** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
 downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using 17 exactly is recommended
 for this reason.
+
+When you enter the JDK version you use for a project, it is **always one integer**, such as `8` or `21`. Entering any
+bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
+never include bugfix versions, and when you enter one here it should always be a single int, with no `.` .
+
+**JAVA 25 INSTALLATIONS ARE NOT YET SUPPORTED. IF YOU HAVE ANY DOUBTS ABOUT WHAT VERSION YOU HAVE, INSTALL JAVA 17.**
+Android's tools have not yet been updated to be compatible with Gradle 9.x, and Java 25 is only supported by Gradle 9.1
+and later. If you bundle Java 25 (or 24) with a released app, users will see alarming (but harmless) warnings when they
+run your app, so there isn't much user-experience benefit to using them anyway.
+
+If you don't know what JDK you have installed, or don't have one, then either of the JDK 17 installers from OpenJDK
+vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-17-lts) or
+[Azul Zulu](https://www.azul.com/downloads/?version=java-17-lts&package=jdk#zulu) are recommended because they have good
+default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary JDK) are *not*
+recommended, partly because their installers have confusing default options, and partly because their licensing is not
+as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license, and Oracle can change (and
+has changed) licensing without much warning. On Linux, use your package manager to install OpenJDK 17. On macOS,
+you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX (any tools that still
+use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). Do not install a JRE.
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 

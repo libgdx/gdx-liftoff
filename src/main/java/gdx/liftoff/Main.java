@@ -468,6 +468,7 @@ public class Main extends ApplicationAdapter {
                     "since that can cause this error."
             );
             Gdx.app.error("NFD", e.toString());
+            VisUI.setSkipGdxVersionCheck(true);
             VisUI.load();
             FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
             fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);

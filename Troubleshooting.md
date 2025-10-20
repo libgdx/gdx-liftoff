@@ -181,7 +181,7 @@ you're trying to find looks like this:
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
 |    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
 |    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
-|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.13.1 (*)
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.14.0 (*)
 |         \--- com.google.gwt:gwt-user:2.8.2
 |              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
 |              +--- javax.validation:validation-api:1.0.0.GA
@@ -287,8 +287,10 @@ You could instead change your dependency on VisUI to a known-working commit on J
 
 Which gets a sort-of-recent commit built by JitPack, and that code has a fix for 1.5.3 that makes it compatible with
 Construo (and with jlink in general). Using 1.5.6 is probably a better idea unless some new issue surfaces. There is a
-newer 1.5.7 version that is not currently recommended for use because it depends on libGDX 1.13.5, which has serious
-issues on Android for release builds, among other reasons to avoid it like breaking API changes.
+newer 1.5.7 version that is currently used by Liftoff when 1.14.0 is used, because VisUI 1.5.7 uses libGDX 1.13.5 or
+newer. Actually using libGDX 1.13.5 exactly would be a bad idea because of issues it has on Android, but because 1.14.0
+will take priority, it should work reasonably well with the newer VisUI. You may need to call
+`VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
 
 Other dependencies may also have issues, but no one has found them yet.
 
@@ -348,11 +350,11 @@ version of Liftoff also includes one of the recommended workarounds for that Gra
 service. It is entirely likely that the way the daemon is disabled might not work, because Gradle really likes to try to
 use the daemon even when it is broken. Disabling the daemon doesn't appear to have much performance impact, especially
 since Gradle 8.10.1 is mostly meant to fix a performance regression in Gradle 8.10, and so could be faster either with
-or without the daemon. If you are encountering this, you should upgrade Gradle to 8.10.2 or (better) 8.11.1, either of which fixes the bug:
+or without the daemon. If you are encountering this, you should upgrade Gradle to 8.10.2 or (better) 8.14.3, either of which fixes the bug:
 
 - Open the file `gradle/wrapper/gradle-wrapper.properties` in your project.
 - Find where it has the version string `8.10.1` ; this is on a line that starts with `distributionUrl` .
-- Change `8.10.1` to `8.11.1` .
+- Change `8.10.1` to `8.14.3` .
 - Save and reload your Gradle project.
   - If you don't know how to reload your Gradle project, it is done automatically by Android Studio, so you don't need
     to do anything but save there. Otherwise, in IDEA:
