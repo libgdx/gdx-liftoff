@@ -8,7 +8,7 @@ import java.lang.NumberFormatException
 @Suppress("unused") // Fields accessed via reflection.
 class Configuration {
   companion object {
-    const val VERSION = "1.14.0.0-SNAPSHOT"
+    const val VERSION = "1.14.0.0"
     const val WIDTH = 600
     const val HEIGHT = 700
     const val PREFERENCES_PATH = "gdx-liftoff-prefs"
