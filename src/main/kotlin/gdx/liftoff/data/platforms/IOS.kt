@@ -197,7 +197,19 @@ class IOSGradleFile(val project: Project) : GradleFile(IOS.ID) {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.mobidevelop.robovm:robovm-rt:\$robovmVersion")
     addDependency("com.mobidevelop.robovm:robovm-cocoatouch:\$robovmVersion")
-    addDependency("com.badlogicgames.gdx:gdx-backend-robovm:\$gdxVersion")
+    // The check for greater than 1.14.0 assumes https://github.com/libgdx/libgdx/issues/7422 gets merged.
+    addDependency(
+      "com.badlogicgames.gdx:gdx-backend-robovm${if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null &&
+        (
+          GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 12, 0) ||
+            GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! > GdxVersion(1, 14, 0)
+        )
+      ) {
+        ""
+      } else {
+        "-metalangle"
+      }}:\$gdxVersion",
+    )
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios")
   }
 
