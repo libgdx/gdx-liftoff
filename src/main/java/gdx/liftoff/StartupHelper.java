@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static org.lwjgl.system.JNI.invokePPP;
 import static org.lwjgl.system.JNI.invokePPZ;
@@ -74,7 +75,7 @@ public class StartupHelper {
      * in this one
      */
     public static boolean startNewJvmIfRequired(boolean redirectOutput) {
-        String osName = System.getProperty("os.name").toLowerCase();
+        String osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         if (!osName.contains("mac")) {
             if (osName.contains("windows")) {
 // Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.
