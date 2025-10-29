@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.CarbonParticle;
+import com.denireaux.fallingsand.particletypes.GrassParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.OilParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
@@ -26,6 +27,7 @@ import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
 import com.denireaux.fallingsand.particletypes.SmokeParticle;
 import com.denireaux.fallingsand.particletypes.SnowParticle;
+import com.denireaux.fallingsand.particletypes.StoneHotParticle;
 import com.denireaux.fallingsand.particletypes.StoneParticle;
 import com.denireaux.fallingsand.particletypes.VaporParticle;
 import com.denireaux.fallingsand.particletypes.VoidParticle;
@@ -53,8 +55,8 @@ public class FallingSandGame extends ApplicationAdapter {
 
     private enum ParticleType {
         SAND, WATER, WETSAND, VAPOR, LAVA,
-        STONE, ASH, POWDER, SMOKE, SNOW,
-        CARBON, VOID, OIL
+        STONE, STONEHOT, ASH, POWDER, SMOKE, SNOW,
+        CARBON, VOID, OIL, GRASS
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -66,11 +68,13 @@ public class FallingSandGame extends ApplicationAdapter {
 
     // Neon particle colors (optimized for black background)
     private final Color SANDCOLOR     = new Color(1.00f, 0.96f, 0.47f, 1f);
-    private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
+    // private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
+    private final Color WATERCOLOR = new Color(0.00f, 0.90f, 1.00f, 0.5f);
     private final Color WETSANDCOLOR  = new Color(1.00f, 0.64f, 0.00f, 1f);
     private final Color VAPORCOLOR    = new Color(0.80f, 0.85f, 0.90f, 1f);
     private final Color LAVACOLOR     = new Color(1.00f, 0.00f, 0.00f, 1f);
     private final Color STONECOLOR    = new Color(0.60f, 0.60f, 0.60f, 1f);
+    private final Color STONEHOTCOLOR = new Color(0.60f, 0.60f, 0.60f, 1f);
     private final Color ASHCOLOR      = new Color(0.80f, 0.80f, 0.80f, 1f);
     private final Color POWDERCOLOR   = new Color(0.87f, 0.84f, 0.78f, 1f);
     private final Color SMOKECOLOR    = new Color(0.40f, 0.40f, 0.40f, 1f);
@@ -78,6 +82,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color CARBONCOLOR   = new Color(0.20f, 0.20f, 0.20f, 1f);
     private final Color VOIDCOLOR     = new Color(0.00f, 1.00f, 0.50f, 1f);
     private final Color OILCOLOR      = new Color(0.20f, 0.12f, 0.05f, 1f);
+    private final Color GRASSCOLOR    = new Color(0.0f, 1.0f, 0.0f, 1f);
 
     @Override
     public void create() {
@@ -186,11 +191,16 @@ public class FallingSandGame extends ApplicationAdapter {
 
     private Color getColorForType(Object type) {
         if (type instanceof SandParticle || type == ParticleType.SAND) return SANDCOLOR;
-        if (type instanceof WaterParticle || type == ParticleType.WATER) return WATERCOLOR;
+        
+        // if (type instanceof WaterParticle || type == ParticleType.WATER) return WATERCOLOR;
+        if (type instanceof WaterParticle || type == ParticleType.WATER)
+            return new Color(WATERCOLOR.r, WATERCOLOR.g, WATERCOLOR.b, 0.6f);
+
         if (type instanceof WetSandParticle || type == ParticleType.WETSAND) return WETSANDCOLOR;
         if (type instanceof VaporParticle || type == ParticleType.VAPOR) return VAPORCOLOR;
         if (type instanceof LavaParticle || type == ParticleType.LAVA) return LAVACOLOR;
         if (type instanceof StoneParticle || type == ParticleType.STONE) return STONECOLOR;
+        if (type instanceof StoneHotParticle || type == ParticleType.STONEHOT) return STONEHOTCOLOR;
         if (type instanceof AshParticle || type == ParticleType.ASH) return ASHCOLOR;
         if (type instanceof PowderParticle || type == ParticleType.POWDER) return POWDERCOLOR;
         if (type instanceof SmokeParticle || type == ParticleType.SMOKE) return SMOKECOLOR;
@@ -198,6 +208,7 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof CarbonParticle || type == ParticleType.CARBON) return CARBONCOLOR;
         if (type instanceof VoidParticle || type == ParticleType.VOID) return VOIDCOLOR;
         if (type instanceof OilParticle || type == ParticleType.OIL) return OILCOLOR;
+        if (type instanceof GrassParticle || type == ParticleType.GRASS) return GRASSCOLOR;
         return null;
     }
 
@@ -235,6 +246,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case VAPOR -> grid[x][y] = new VaporParticle(x, y, "vapor");
                                 case LAVA -> grid[x][y] = new LavaParticle(x, y, "lava");
                                 case STONE -> grid[x][y] = new StoneParticle(x, y, "stone");
+                                case STONEHOT -> grid[x][y] = new StoneHotParticle(x, y, "stone-hot");
                                 case ASH -> grid[x][y] = new AshParticle(x, y, "ash");
                                 case POWDER -> grid[x][y] = new PowderParticle(x, y, "powder");
                                 case SMOKE -> grid[x][y] = new SmokeParticle(x, y, "smoke");
@@ -242,6 +254,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case CARBON -> grid[x][y] = new CarbonParticle(x, y, "carbon");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                                 case OIL -> grid[x][y] = new OilParticle(x, y, "oil");
+                                case GRASS -> grid[x][y] = new GrassParticle(x, y, "grass");
                             }
                         }
                     }

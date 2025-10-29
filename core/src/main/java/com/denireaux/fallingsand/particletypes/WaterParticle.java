@@ -137,9 +137,14 @@ public class WaterParticle extends Particle implements ILiquid {
         }
     }
 
+    // Note -> TODO: Interaction with hot stone needs to be fixed
     private void checkAboveForLessDenseParticle(Particle[][] grid, int x, int y) {
         Particle particleAbove = getAboveParticle(grid, x, y);
         if (particleAbove == null || "stone".equals(particleAbove.getId())) return;
+        if ("stone-hot".equals(particleAbove.getId())) {
+            evaporate(grid, x, y);
+            return;
+        }
         if ("water".equals(particleAbove.getId())) return;
         boolean willSinkInWater = particleAbove.willSink;
         if (willSinkInWater) {
@@ -148,10 +153,15 @@ public class WaterParticle extends Particle implements ILiquid {
         }
     }
 
+    // Note -> TODO: Interaction with hot stone needs to be fixewd
     private void checkBelowForLessDenseParticle(Particle[][] grid, int x, int y) {
         Particle particleBelow = getBelowParticle(grid, x, y);
         if (particleBelow == null || "stone".equals(particleBelow.getId())) return;
         if ("water".equals(particleBelow.getId())) return;
+        if ("stone-hot".equals(particleBelow.getId())) {
+            evaporate(grid, x, y);
+            return;
+        }
         boolean willSinkInWater = particleBelow.willSink;
         if (!willSinkInWater) {
             particleBelow.sinkCounter --;
