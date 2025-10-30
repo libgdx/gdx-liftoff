@@ -6,7 +6,7 @@ public class GrassParticle extends Particle {
 
     public GrassParticle(int x, int y, String id) {
         super(x, y, id);
-        this.id = "plant";
+        this.id = "grass";
     }
 
     @Override

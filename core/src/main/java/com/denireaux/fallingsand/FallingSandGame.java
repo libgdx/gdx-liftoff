@@ -25,14 +25,17 @@ import com.denireaux.fallingsand.particletypes.OilParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
+import com.denireaux.fallingsand.particletypes.SeedParticle;
 import com.denireaux.fallingsand.particletypes.SmokeParticle;
 import com.denireaux.fallingsand.particletypes.SnowParticle;
+import com.denireaux.fallingsand.particletypes.SoilParticle;
 import com.denireaux.fallingsand.particletypes.StoneHotParticle;
 import com.denireaux.fallingsand.particletypes.StoneParticle;
 import com.denireaux.fallingsand.particletypes.VaporParticle;
 import com.denireaux.fallingsand.particletypes.VoidParticle;
 import com.denireaux.fallingsand.particletypes.WaterParticle;
 import com.denireaux.fallingsand.particletypes.WetSandParticle;
+import com.denireaux.fallingsand.particletypes.WetSoilParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
     private static final Logger log = Logger.getLogger(String.valueOf(FallingSandGame.class));
@@ -56,7 +59,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private enum ParticleType {
         SAND, WATER, WETSAND, VAPOR, LAVA,
         STONE, STONEHOT, ASH, POWDER, SMOKE, SNOW,
-        CARBON, VOID, OIL, GRASS
+        CARBON, VOID, OIL, GRASS, SEED, SOIL, WETSOIL
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -69,7 +72,7 @@ public class FallingSandGame extends ApplicationAdapter {
     // Neon particle colors (optimized for black background)
     private final Color SANDCOLOR     = new Color(1.00f, 0.96f, 0.47f, 1f);
     // private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
-    private final Color WATERCOLOR = new Color(0.00f, 0.90f, 1.00f, 0.5f);
+    private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 0.5f);
     private final Color WETSANDCOLOR  = new Color(1.00f, 0.64f, 0.00f, 1f);
     private final Color VAPORCOLOR    = new Color(0.80f, 0.85f, 0.90f, 1f);
     private final Color LAVACOLOR     = new Color(1.00f, 0.00f, 0.00f, 1f);
@@ -83,6 +86,9 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color VOIDCOLOR     = new Color(0.00f, 1.00f, 0.50f, 1f);
     private final Color OILCOLOR      = new Color(0.20f, 0.12f, 0.05f, 1f);
     private final Color GRASSCOLOR    = new Color(0.0f, 1.0f, 0.0f, 1f);
+    private final Color SEEDCOLOR     = new Color(0.82f, 0.71f, 0.55f, 1f);
+    private final Color SOILCOLOR     = new Color(0.55f, 0.43f, 0.32f, 1f);
+    private final Color WETSOILCOLOR     = new Color(0.65f, 0.45f, 0.4f, 1f);
 
     @Override
     public void create() {
@@ -209,6 +215,9 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof VoidParticle || type == ParticleType.VOID) return VOIDCOLOR;
         if (type instanceof OilParticle || type == ParticleType.OIL) return OILCOLOR;
         if (type instanceof GrassParticle || type == ParticleType.GRASS) return GRASSCOLOR;
+        if (type instanceof SeedParticle || type == ParticleType.SEED) return SEEDCOLOR;
+        if (type instanceof SoilParticle || type == ParticleType.SOIL) return SOILCOLOR;
+        if (type instanceof WetSoilParticle || type == ParticleType.WETSOIL) return WETSOILCOLOR;
         return null;
     }
 
@@ -255,6 +264,9 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                                 case OIL -> grid[x][y] = new OilParticle(x, y, "oil");
                                 case GRASS -> grid[x][y] = new GrassParticle(x, y, "grass");
+                                case SEED -> grid[x][y] = new SeedParticle(x, y, "seed");
+                                case SOIL -> grid[x][y] = new SoilParticle(x, y, "soil");
+                                case WETSOIL -> grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
                             }
                         }
                     }
