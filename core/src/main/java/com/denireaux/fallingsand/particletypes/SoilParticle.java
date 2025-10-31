@@ -57,7 +57,10 @@ public class SoilParticle extends Particle implements ISolid {
         Particle[] surroundingParticles = getSurroundingParticles(grid);
         for (Particle particle : surroundingParticles) {
             if (particle == null) continue;
-            if ("water".equals(particle.getId())) this.isWet = true;
+            if ("water".equals(particle.getId())) {
+                grid[particle.x][particle.y] = null;
+                grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
+            }
         }
     }
 }

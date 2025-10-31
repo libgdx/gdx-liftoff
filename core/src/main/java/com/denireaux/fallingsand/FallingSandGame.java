@@ -88,7 +88,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color GRASSCOLOR    = new Color(0.0f, 1.0f, 0.0f, 1f);
     private final Color SEEDCOLOR     = new Color(0.82f, 0.71f, 0.55f, 1f);
     private final Color SOILCOLOR     = new Color(0.55f, 0.43f, 0.32f, 1f);
-    private final Color WETSOILCOLOR     = new Color(0.65f, 0.45f, 0.4f, 1f);
+    private final Color WETSOILCOLOR  = new Color(0.65f, 0.45f, 0.4f, 1f);
 
     @Override
     public void create() {

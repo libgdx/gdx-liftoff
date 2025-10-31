@@ -39,7 +39,16 @@ public class GrassParticle extends Particle {
 
         if (aboveParticle == null) {
             boolean growFactor = utils.getUnfairBoolean(20);
-            if (growFactor) grid[x][y - 1] = new GrassParticle(x, y + 1, id);
+            if (growFactor) grid[x][y + 1] = new GrassParticle(x, y + 1, id);
+            return;
+        }
+
+        if ("wetsoil".equals(aboveParticle.getId())) {
+                boolean transformFactor = utils.getUnfairBoolean(20);
+                if (transformFactor) {
+                    grid[x][y + 1] = null; 
+                    grid[x][y + 1] = new GrassParticle(x, y + 1, "grass");
+                }
         }
 
         boolean spreadFactor = utils.getUnfairBoolean(20);
