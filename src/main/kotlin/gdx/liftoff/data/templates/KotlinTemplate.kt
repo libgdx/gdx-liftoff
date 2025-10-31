@@ -433,6 +433,7 @@ import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder
 import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier
 import org.teavm.tooling.TeaVMSourceFilePolicy
 import org.teavm.tooling.TeaVMTargetType
+import org.teavm.tooling.TeaVMTool
 import org.teavm.tooling.sources.DirectorySourceFileProvider
 import org.teavm.vm.TeaVMOptimizationLevel
 
