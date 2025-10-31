@@ -416,11 +416,8 @@ fun main() {
         //width = $width
         //height = $height
         //// If width and height are both 0, then the app will use all available space.
-        //width = 0
-        //height = 0
-        //// If width and height are both -1, then the app will fill the canvas size.
-        width = -1
-        height = -1
+        width = 0
+        height = 0
     }
     TeaApplication(${project.basic.mainClass}(), config)
 }
@@ -462,7 +459,8 @@ object TeaVMBuilder {
         // Register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemicolon = false)}
 
-        val tool = TeaBuilder.config(teaBuildConfiguration)
+        TeaBuilder.config(teaBuildConfiguration)
+        val tool = TeaVMTool()
 
         // JavaScript is the default target type for TeaVM, and it works better during debugging.
         tool.targetType = TeaVMTargetType.JAVASCRIPT
