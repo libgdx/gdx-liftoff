@@ -485,7 +485,7 @@ public class StartupHelper {
      *         in this one
      */
     public static boolean startNewJvmIfRequired(boolean redirectOutput) {
-        String osName = System.getProperty("os.name").toLowerCase();
+        String osName = System.getProperty("os.name").toLowerCase(java.util.Locale.ROOT);
         if (!osName.contains("mac")) {
             if (osName.contains("windows")) {
 // Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.

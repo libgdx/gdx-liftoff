@@ -228,7 +228,7 @@ class StartupHelper private constructor() {
          */
         @JvmOverloads
         fun startNewJvmIfRequired(redirectOutput: Boolean = true): Boolean {
-            val osName = System.getProperty("os.name").lowercase(Locale.getDefault())
+            val osName = System.getProperty("os.name").lowercase(Locale.ROOT)
             if (!osName.contains("mac")) {
                 if (osName.contains("windows")) {
                   // Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.

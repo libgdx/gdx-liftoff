@@ -177,7 +177,7 @@ ${joinDependencies(dependencies)}
     }
 }
 
-def os = System.properties['os.name'].toLowerCase()
+def os = System.properties['os.name'].toLowerCase(Locale.ROOT)
 
 run {
   workingDir = rootProject.file('assets').path
