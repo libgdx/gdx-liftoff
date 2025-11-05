@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.libraries.Library
-import gdx.liftoff.data.libraries.Repository
 
 /** Stores data represented by the main view over the settings section. */
 data class BasicProjectData(
@@ -71,7 +70,7 @@ data class AdvancedProjectData(
    * Version of xpenatan's TeaVM backend.
    */
   val gdxTeaVMVersion: String
-    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.3.1 should be compatible with newer.
+    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.4.0 should be compatible with newer.
     get() =
       when (gdxVersion) {
         "1.13.5" -> {
@@ -88,10 +87,7 @@ data class AdvancedProjectData(
   /**
    * Version of the main TeaVM project.
    */
-  val teaVMVersion: String
-    get() =
-      Repository.MavenCentral.getLatestVersion(group = "org.teavm", name = "teavm-core")
-        ?: "0.13.0"
+  val teaVMVersion: String = "0.13.0"
 
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.

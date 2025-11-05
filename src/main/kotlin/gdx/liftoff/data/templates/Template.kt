@@ -711,7 +711,6 @@ public class TeaVMBuilder {
         // Register any extra classpath assets here:
         // teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");
 
-
         // If you need to match specific classes based on the package and class name,
         // you can use the reflectionListener to do fine-grained matching on the String fullClassName.
 //        teaBuildConfiguration.reflectionListener = fullClassName -> {
@@ -740,7 +739,7 @@ ${generateTeaVMReflectionIncludes(project)}
         tool.setMainClass(TeaVMLauncher.class.getName());
         // For many (or most) applications, using a high optimization won't add much to build time.
         // If your builds take too long, and runtime performance doesn't matter, you can change ADVANCED to SIMPLE .
-        // Using SIMPLE makes debugging easier, also, so it is used when DEBUG is enabled
+        // Using SIMPLE makes debugging easier, also, so it is used when DEBUG is enabled.
         tool.setOptimizationLevel(DEBUG ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED);
         // The line below will make the generated code hard to read (and smaller) in releases and easier to follow
         // when DEBUG is true. Setting DEBUG to false should always be done before a release, anyway.
