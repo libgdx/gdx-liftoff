@@ -684,6 +684,7 @@ import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder;
 import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier;
 import java.io.File;
 import java.io.IOException;
+import org.teavm.backend.wasm.WasmDebugInfoLevel;
 import org.teavm.tooling.TeaVMSourceFilePolicy;
 import org.teavm.tooling.TeaVMTargetType;
 import org.teavm.tooling.TeaVMTool;
@@ -710,7 +711,16 @@ public class TeaVMBuilder {
         // Register any extra classpath assets here:
         // teaBuildConfiguration.additionalAssetsClasspathFiles.add("${project.basic.rootPackage.replace('.', '/')}/asset.extension");
 
-        // Register any classes or packages that require reflection here:
+
+        // If you need to match specific classes based on the package and class name,
+        // you can use the reflectionListener to do fine-grained matching on the String fullClassName.
+//        teaBuildConfiguration.reflectionListener = fullClassName -> {
+//            if(fullClassName.startsWith("where.your.reflective.code.is") && fullClassName.endsWith("YourSuffix"))
+//                return true;
+//            return false;
+//        };
+
+        // You can also register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project)}
 
         // Used by older TeaVM versions.
@@ -730,17 +740,19 @@ ${generateTeaVMReflectionIncludes(project)}
         tool.setMainClass(TeaVMLauncher.class.getName());
         // For many (or most) applications, using a high optimization won't add much to build time.
         // If your builds take too long, and runtime performance doesn't matter, you can change ADVANCED to SIMPLE .
-        tool.setOptimizationLevel(TeaVMOptimizationLevel.ADVANCED);
-        // The line below should use tool.setObfuscated(false) if you want clear debugging info.
-        // You can change it to tool.setObfuscated(true) when you are preparing to release, to try to hide your original code.
+        // Using SIMPLE makes debugging easier, also, so it is used when DEBUG is enabled
+        tool.setOptimizationLevel(DEBUG ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED);
+        // The line below will make the generated code hard to read (and smaller) in releases and easier to follow
+        // when DEBUG is true. Setting DEBUG to false should always be done before a release, anyway.
         tool.setObfuscated(!DEBUG);
 
-        // If targetType is set to JAVASCRIPT, you can use the following lines to debug JVM languages from the browser,
-        // setting breakpoints in Java code and stopping in the appropriate place in generated JavaScript code.
-        // These settings don't quite work currently if generating WebAssembly. They may in a future release.
-        if(DEBUG && tool.getTargetType() == TeaVMTargetType.JAVASCRIPT) {
+        // If DEBUG is set to true, these lines allow step-debugging JVM languages from the browser,
+        // setting breakpoints in Java code and stopping in the appropriate place in generated browser code.
+        // This may work reasonably well when targeting WEBASSEMBLY_GC, but it usually works better with JAVASCRIPT .
+        if(DEBUG) {
             tool.setDebugInformationGenerated(true);
             tool.setSourceMapsFileGenerated(true);
+            tool.setWasmDebugInfoLevel(WasmDebugInfoLevel.FULL);
             tool.setSourceFilePolicy(TeaVMSourceFilePolicy.COPY);
             tool.addSourceFileProvider(new DirectorySourceFileProvider(new File("../core/src/main/java/")));
         }
