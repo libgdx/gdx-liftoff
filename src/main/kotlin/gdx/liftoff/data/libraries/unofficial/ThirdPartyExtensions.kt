@@ -402,7 +402,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "2.2.1"
+  override val defaultVersion = "2.2.3"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -424,7 +424,7 @@ class TextraTypist : ThirdPartyExtension() {
 @Extension
 class FreeTypist : ThirdPartyExtension() {
   override val id = "freetypist"
-  override val defaultVersion = "2.2.1.0"
+  override val defaultVersion = "2.2.3.0"
   override val url = "https://github.com/tommyettinger/freetypist"
   override val group = "com.github.tommyettinger"
   override val name = "freetypist"
@@ -591,7 +591,7 @@ class Stripe : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
   override val id = "gdxGltf"
-  override val defaultVersion = "0436377df4"
+  override val defaultVersion = "172fe4b380"
   override val repository = Repository.JitPack
   override val url = "https://github.com/mgsx-dev/gdx-gltf"
   override val group = "com.github.mgsx-dev"
@@ -955,7 +955,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
   override val id = "guacamole"
-  override val defaultVersion = "0.3.5"
+  override val defaultVersion = "0.3.6"
   override val url = "https://github.com/crykn/guacamole"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
@@ -1004,7 +1004,7 @@ class LibgdxOboe : ThirdPartyExtension() {
 @Extension
 class LibgdxScreenManager : ThirdPartyExtension() {
   override val id = "screenManager"
-  override val defaultVersion = "0.7.0"
+  override val defaultVersion = "0.7.1"
   override val url = "https://github.com/crykn/libgdx-screenmanager"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
@@ -1025,7 +1025,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 @Extension
 class TuningFork : ThirdPartyExtension() {
   override val id = "tuningFork"
-  override val defaultVersion = "4.3.0"
+  override val defaultVersion = "4.4.0"
   override val url = "https://github.com/Hangman/TuningFork"
   override val repository = Repository.JitPack
   override val group = "com.github.Hangman"
@@ -1043,7 +1043,7 @@ class TuningFork : ThirdPartyExtension() {
 @Extension
 class TinyVG : ThirdPartyExtension() {
   override val id = "tinyVG"
-  override val defaultVersion = "4b57eece48"
+  override val defaultVersion = "41f408420c"
   override val url = "https://github.com/lyze237/gdx-TinyVG"
   override val repository = Repository.JitPack
   override val group = "com.github.lyze237"
@@ -1083,7 +1083,7 @@ class GdxPsx : ThirdPartyExtension() {
 @Extension
 class GdxFlexBox : ThirdPartyExtension() {
   override val id = "flexBox"
-  override val defaultVersion = "ed13b3c7ca"
+  override val defaultVersion = "818ccf2764"
   override val url = "https://github.com/lyze237/gdx-FlexBox"
   override val repository = Repository.JitPack
   override val group = "com.github.lyze327"
@@ -1103,7 +1103,7 @@ class GdxFlexBox : ThirdPartyExtension() {
 @Extension
 class GdxUnBox2D : ThirdPartyExtension() {
   override val id = "unbox2d"
-  override val defaultVersion = "da1ce30edb"
+  override val defaultVersion = "730eebd116"
   override val url = "https://github.com/lyze237/gdx-UnBox2D"
   override val repository = Repository.JitPack
   override val group = "com.github.lyze327"
@@ -1761,7 +1761,7 @@ class GameJoltApi : ThirdPartyExtension() {
 @Extension
 class TexturePackerOnly : ThirdPartyExtension() {
   override val id = "texturePackerOnly"
-  override val defaultVersion = "1.12.1.0"
+  override val defaultVersion = "1.14.0.0"
   override val url = "https://github.com/tommyettinger/libgdx-texturepacker"
   override val group = "com.github.tommyettinger"
   override val name = "libgdx-texturepacker"
@@ -1778,7 +1778,7 @@ class TexturePackerOnly : ThirdPartyExtension() {
 @Extension
 class TextureUnpackerOnly : ThirdPartyExtension() {
   override val id = "textureUnpackerOnly"
-  override val defaultVersion = "1.12.1.0"
+  override val defaultVersion = "1.14.0.0"
   override val url = "https://github.com/tommyettinger/libgdx-texturepacker"
   override val group = "com.github.tommyettinger"
   override val name = "libgdx-textureunpacker"
