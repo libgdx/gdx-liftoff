@@ -85,11 +85,6 @@ data class AdvancedProjectData(
       }
 
   /**
-   * Version of the main TeaVM project.
-   */
-  val teaVMVersion: String = "0.13.0"
-
-  /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
    */
   val grettyVersion: String = "3.1.5"

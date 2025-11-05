@@ -498,7 +498,7 @@ ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemic
             tool.isSourceMapsFileGenerated = true
             tool.setWasmDebugInfoLevel(WasmDebugInfoLevel.FULL)
             tool.setSourceFilePolicy(TeaVMSourceFilePolicy.COPY)
-            tool.addSourceFileProvider(DirectorySourceFileProvider(File("../core/src/main/java/")))
+            tool.addSourceFileProvider(DirectorySourceFileProvider(File("../core/src/main/kotlin/")))
         }
 
         TeaBuilder.build(tool)

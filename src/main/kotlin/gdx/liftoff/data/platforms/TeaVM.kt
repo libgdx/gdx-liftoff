@@ -23,7 +23,6 @@ class TeaVM : Platform {
 
   override fun initiate(project: Project) {
     project.properties["gdxTeaVMVersion"] = project.advanced.gdxTeaVMVersion
-    project.properties["teaVMVersion"] = project.advanced.teaVMVersion
     addGradleTaskDescription(
       project,
       "run",
@@ -42,12 +41,6 @@ class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
     dependencies.add("project(':${Core.ID}')")
 
     addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
-    addDependency("org.teavm:teavm-tooling:\$teaVMVersion")
-    addDependency("org.teavm:teavm-core:\$teaVMVersion")
-    addDependency("org.teavm:teavm-classlib:\$teaVMVersion")
-    addDependency("org.teavm:teavm-jso:\$teaVMVersion")
-    addDependency("org.teavm:teavm-jso-apis:\$teaVMVersion")
-    addDependency("org.teavm:teavm-jso-impl:\$teaVMVersion")
   }
 
   override fun getContent() =
