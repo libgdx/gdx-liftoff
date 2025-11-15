@@ -17,8 +17,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.denireaux.fallingsand.fauna.WormSegment;
 import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.CarbonParticle;
+import com.denireaux.fallingsand.particletypes.FuseParticle;
 import com.denireaux.fallingsand.particletypes.GrassParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.OilParticle;
@@ -59,7 +61,7 @@ public class FallingSandGame extends ApplicationAdapter {
     private enum ParticleType {
         SAND, WATER, WETSAND, VAPOR, LAVA,
         STONE, STONEHOT, ASH, POWDER, SMOKE, SNOW,
-        CARBON, VOID, OIL, GRASS, SEED, SOIL, WETSOIL
+        CARBON, VOID, OIL, GRASS, SEED, SOIL, WETSOIL, FUSE
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -89,6 +91,9 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color SEEDCOLOR     = new Color(0.82f, 0.71f, 0.55f, 1f);
     private final Color SOILCOLOR     = new Color(0.55f, 0.43f, 0.32f, 1f);
     private final Color WETSOILCOLOR  = new Color(0.65f, 0.45f, 0.4f, 1f);
+    private final Color FUSECOLOR     = new Color(1.2f, 1.25f, 122f, 1f);
+
+    private final Color WORMCOLOR = new Color(0.8f, 0.1f, 0.8f, 1f);
 
     @Override
     public void create() {
@@ -218,6 +223,9 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof SeedParticle || type == ParticleType.SEED) return SEEDCOLOR;
         if (type instanceof SoilParticle || type == ParticleType.SOIL) return SOILCOLOR;
         if (type instanceof WetSoilParticle || type == ParticleType.WETSOIL) return WETSOILCOLOR;
+        if (type instanceof FuseParticle || type == ParticleType.FUSE) return FUSECOLOR;
+
+        if (type instanceof WormSegment) return WORMCOLOR;
         return null;
     }
 
@@ -267,6 +275,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case SEED -> grid[x][y] = new SeedParticle(x, y, "seed");
                                 case SOIL -> grid[x][y] = new SoilParticle(x, y, "soil");
                                 case WETSOIL -> grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
+                                case FUSE -> grid[x][y] = new FuseParticle(x, y, "fuse");
                             }
                         }
                     }

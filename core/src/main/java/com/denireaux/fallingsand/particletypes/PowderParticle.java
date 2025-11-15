@@ -29,8 +29,10 @@ public class PowderParticle extends Particle {
 
     private void tryExplode(Particle[][] grid) {
         Particle[] surroundings = getSurroundingParticles(grid);
+
         for (Particle surroundingParticle : surroundings) {
             if (surroundingParticle == null) return;
+            
             if (surroundingParticle.isHot) {
                 if (surroundingParticle.isCombustable || surroundingParticle.hasCombusted) convertParticle(grid, x, y, "smoke");
                 this.hasCombusted = true;
