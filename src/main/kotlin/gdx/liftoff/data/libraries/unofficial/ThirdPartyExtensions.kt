@@ -937,7 +937,7 @@ class Kryo : ThirdPartyExtension() {
 @Extension
 class KryoNet : ThirdPartyExtension() {
   override val id = "kryoNet"
-  override val defaultVersion = "2.22.7"
+  override val defaultVersion = "2.22.9"
   override val url = "https://github.com/crykn/kryonet"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
@@ -955,7 +955,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class Guacamole : ThirdPartyExtension() {
   override val id = "guacamole"
-  override val defaultVersion = "0.3.6"
+  override val defaultVersion = "v0.3.6"
   override val url = "https://github.com/crykn/guacamole"
   override val repository = Repository.JitPack
   override val group = "com.github.crykn"
