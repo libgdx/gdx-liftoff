@@ -14,8 +14,6 @@ public class FuseParticle extends Particle {
     }
 
     private void handleImmolation(Particle[][] grid, int x, int y) {
-
-
         Particle[] surroundingParticles = getSurroundingParticles(grid);
 
         for (Particle particle : surroundingParticles) {
@@ -26,9 +24,7 @@ public class FuseParticle extends Particle {
                 this.hasCombusted = true;
                 grid[x][y].isHot = true;
             }
-
-
+            continue;
         }
     }
-    
 }
