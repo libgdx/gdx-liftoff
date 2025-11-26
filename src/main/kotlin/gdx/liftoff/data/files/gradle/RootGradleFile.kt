@@ -13,13 +13,10 @@ class RootGradleFile(val project: Project) : GradleFile("") {
 
   init {
     buildRepositories.add("mavenCentral()")
-//    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org' }")
     buildRepositories.add("gradlePluginPortal()")
     buildRepositories.add("mavenLocal()")
     buildRepositories.add("google()")
-    buildRepositories.add("maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }")
-//    buildRepositories.add("maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }")
-//    buildRepositories.add("maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }")
+    buildRepositories.add("maven { url = 'https://central.sonatype.com/repository/maven-snapshots/' }")
   }
 
   override fun getContent(): String =
@@ -39,8 +36,8 @@ allprojects {
   // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
   idea {
     module {
-      outputDir file('build/classes/java/main')
-      testOutputDir file('build/classes/java/test')
+      outputDir = file('build/classes/java/main')
+      testOutputDir = file('build/classes/java/test')
     }
   }
 }
@@ -51,7 +48,7 @@ configure(subprojects${if (project.hasPlatform(Android.ID)) {
       ""
     }}) {
 ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
-  sourceCompatibility = ${project.advanced.javaVersion}
+  java.sourceCompatibility = ${project.advanced.javaVersion}
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
@@ -100,15 +97,12 @@ subprojects {
   ext.appName = '${project.basic.name}'
   repositories {
     mavenCentral()
-//    maven { url 'https://s01.oss.sonatype.org' }
     // You may want to remove the following line if you have errors downloading dependencies.
     mavenLocal()
-//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-//    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
-    maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
-    maven { url 'https://jitpack.io' }${
+    maven { url = 'https://central.sonatype.com/repository/maven-snapshots/' }
+    maven { url = 'https://jitpack.io' }${
       if (project.hasPlatform(TeaVM.ID)) {
-        "\n    maven { url 'https://teavm.org/maven/repository/' }"
+        "\n    maven { url = 'https://teavm.org/maven/repository/' }"
       } else {
         ""
       }}

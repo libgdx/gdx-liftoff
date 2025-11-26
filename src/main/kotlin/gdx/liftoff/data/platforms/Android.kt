@@ -153,8 +153,8 @@ ${plugins.joinToString(separator = "\n") { "apply plugin: '$it'" }}
 ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
-  namespace "${project.basic.rootPackage}"
-  compileSdk ${project.advanced.androidSdkVersion}
+  namespace = "${project.basic.rootPackage}"
+  compileSdk = ${project.advanced.androidSdkVersion}
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -184,7 +184,7 @@ android {
   compileOptions {
     sourceCompatibility "${project.advanced.javaVersion}"
     targetCompatibility "${project.advanced.javaVersion}"
-    ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaringEnabled true" else ""}
+    ${if (project.advanced.javaVersion != "1.6" && project.advanced.javaVersion != "1.7")"coreLibraryDesugaringEnabled = true" else ""}
   }
   buildTypes {
     release {

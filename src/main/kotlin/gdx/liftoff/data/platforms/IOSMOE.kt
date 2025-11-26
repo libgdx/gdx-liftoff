@@ -168,7 +168,7 @@ test { exclude '**' }
 
 // Copy all xcframeworks to xcode/native/ios
 // They need to be picked up from there for linking in XCode
-task copyNatives  {
+tasks.register('copyNatives') {
   doLast {
     file("xcode/native/ios/").mkdirs();
     def subDir = "META-INF/robovm/ios/libs/"
@@ -206,9 +206,9 @@ ${joinDependencies(dependencies)}
 // Setup Multi-OS Engine
 moe {
   xcode {
-    project 'xcode/ios-moe.xcodeproj'
-    mainTarget 'ios-moe'
-    testTarget 'ios-moe-Test'
+    project = 'xcode/ios-moe.xcodeproj'
+    mainTarget = 'ios-moe'
+    testTarget = 'ios-moe-Test'
   }
   nativeImage {
     options = ["--features=${project.basic.rootPackage}.SVMRegistrationFeature"]

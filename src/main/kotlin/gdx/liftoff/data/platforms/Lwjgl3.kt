@@ -155,8 +155,7 @@ ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrai
 import io.github.fourlastor.construo.Target
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-mainClassName = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
-application.setMainClass(mainClassName)
+application.mainClass = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
 eclipse.project.name = appName + '-lwjgl3'
 java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}
@@ -191,7 +190,7 @@ jar {
 // sets the name of the .jar file this produces to the name of the game or app, with the version after.
   archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}.jar")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   dependsOn configurations.runtimeClasspath
   from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 // these "exclude" lines remove some unnecessary duplicate files in the output JAR.
@@ -205,7 +204,7 @@ jar {
 // setting the manifest makes the JAR runnable.
 // enabling native access helps avoid a warning when Java 24 or later runs the JAR.
   manifest {
-    attributes 'Main-Class': project.mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
+    attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED'
   }
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
   doLast {

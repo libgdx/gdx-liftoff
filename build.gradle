@@ -11,7 +11,7 @@ buildscript {
   dependencies {
     classpath "io.github.fourlastor:construo:2.1.0"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "org.jlleitschuh.gradle:ktlint-gradle:12.1.1"
+    classpath "org.jlleitschuh.gradle:ktlint-gradle:14.0.1"
   }
 }
 
@@ -29,7 +29,7 @@ apply plugin: 'org.jlleitschuh.gradle.ktlint'
 import io.github.fourlastor.construo.Target
 
 version = "$liftoffVersion"
-mainClassName = 'gdx.liftoff.Main'
+application.mainClass = 'gdx.liftoff.Main'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 java.targetCompatibility = JavaVersion.VERSION_1_8
 kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
@@ -41,7 +41,7 @@ jar {
   manifest {
     attributes (
       // Enabling native access is good for JARs run by Java 24 or later.
-      'Main-Class' : mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
+      'Main-Class' : application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED'
     )
   }
   archiveFileName.set(jarName)
@@ -301,7 +301,7 @@ startScripts.classpath = project.tasks.jar.outputs.files
 tasks.register('sample', JavaExec) {
   dependsOn classes
   setDescription("Generates a sample libGDX project into build/dist/sample")
-  mainClass.set("gdx.liftoff.Sample")
+  application.mainClass.set("gdx.liftoff.Sample")
   setClasspath(sourceSets.main.runtimeClasspath)
 }
 
