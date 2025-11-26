@@ -355,8 +355,8 @@ public class IOSLauncher extends IOSApplication.Delegate {
     )
   }
 
-  fun getIOSMOESVMRegistrationContent(project: Project): String  =
-  """package ${project.basic.rootPackage};
+  fun getIOSMOESVMRegistrationContent(project: Project): String =
+    """package ${project.basic.rootPackage};
 
 import org.graalvm.nativeimage.hosted.Feature;
 import org.graalvm.nativeimage.hosted.RuntimeJNIAccess;
