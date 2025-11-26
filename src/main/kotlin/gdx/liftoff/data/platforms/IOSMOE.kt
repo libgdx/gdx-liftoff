@@ -29,8 +29,9 @@ class IOSMOE : Platform {
   override fun createGradleFile(project: Project): GradleFile = IOSMOEGradleFile(project)
 
   override fun initiate(project: Project) {
-    project.properties["gdxMoeVersion"] = "1.13.1"
-    project.properties["multiOsEngineVersion"] = "1.10.1"
+    project.properties["moeVersion"] = "2.0.0-beta1"
+    project.properties["moeGdxVersion"] = "1.14.0"
+    project.properties["moeGraalvmVersion"] = "25.0.1"
     // Best would be to just copy the "xcode" directory
     arrayOf(
       "app-store-icon-1024@1x.png",
@@ -144,9 +145,10 @@ class ReplacedContentFile(projectName: String = "", path: String, original: Stri
 class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
-    addDependency("io.github.berstanio:gdx-backend-moe:\$gdxMoeVersion")
+    addDependency("io.github.berstanio:gdx-backend-moe:\$moeGdxVersion")
     addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-ios\"")
     addSpecialDependency("natives \"com.badlogicgames.gdx:gdx-backend-robovm-metalangle:\$gdxVersion\"")
+    addSpecialDependency("compileOnly \"org.graalvm.sdk:graal-sdk:\$moeGraalvmVersion\"")
   }
 
   override fun getContent() =
@@ -155,7 +157,7 @@ class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
     mavenCentral()
   }
   dependencies {
-    classpath "org.multi-os-engine:moe-gradle:${'$'}multiOsEngineVersion"
+    classpath "org.multi-os-engine:moe-gradle:${'$'}moeVersion"
   }
 }
 
@@ -207,6 +209,9 @@ moe {
     project 'xcode/ios-moe.xcodeproj'
     mainTarget 'ios-moe'
     testTarget 'ios-moe-Test'
+  }
+  nativeImage {
+    options = ["--features=${project.basic.rootPackage}.SVMRegistrationFeature"]
   }
 }
 
