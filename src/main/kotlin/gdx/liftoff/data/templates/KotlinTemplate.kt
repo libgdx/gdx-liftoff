@@ -112,6 +112,30 @@ fun main() {
         PtrFactory.newPointerPtr(Byte::class.java, 2, 0, true, true) as Ptr<BytePtr>,
         null, IOSLauncher::class.java.name)
 }"""
+  override fun getIOSMOESVMRegistrationContent(project: Project): String =
+    """package ${project.basic.rootPackage}
+
+import org.graalvm.nativeimage.hosted.Feature
+import org.graalvm.nativeimage.hosted.RuntimeJNIAccess
+
+import java.nio.Buffer
+import java.nio.ByteBuffer
+import java.nio.CharBuffer
+import java.nio.DoubleBuffer
+import java.nio.FloatBuffer
+import java.nio.IntBuffer
+import java.nio.LongBuffer
+import java.nio.ShortBuffer
+
+class SVMRegistrationFeature : Feature {
+
+    override fun beforeAnalysis(access : Feature.BeforeAnalysisAccess) {
+        RuntimeJNIAccess.register(String::class.java)
+        RuntimeJNIAccess.register(DoubleBuffer::class.java, IntBuffer::class.java,
+            FloatBuffer::class.java, Buffer::class.java, LongBuffer::class.java,
+            CharBuffer::class.java, ByteBuffer::class.java, ShortBuffer::class.java)
+    }
+}"""
 
   override fun getLwjgl3LauncherContent(project: Project): String =
     """@file:JvmName("Lwjgl3Launcher")
