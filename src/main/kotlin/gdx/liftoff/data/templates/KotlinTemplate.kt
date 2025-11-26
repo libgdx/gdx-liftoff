@@ -127,7 +127,13 @@ import java.nio.FloatBuffer
 import java.nio.IntBuffer
 import java.nio.LongBuffer
 import java.nio.ShortBuffer
-
+/**
+ * Registers the reflection and JNI access done by libGDX by default.
+ * The relevant documentation is here:
+ * for [Feature](https://www.graalvm.org/sdk/javadoc/org/graalvm/nativeimage/hosted/Feature.html),
+ * and for [metadata in general](https://www.graalvm.org/latest/reference-manual/native-image/metadata).
+ * This class may need to be modified if you use additional JNI or reflective access.
+ */
 class SVMRegistrationFeature : Feature {
 
     override fun beforeAnalysis(access : Feature.BeforeAnalysisAccess) {
