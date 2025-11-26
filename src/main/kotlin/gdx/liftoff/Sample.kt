@@ -113,7 +113,8 @@ enum class Preset {
     override val thirdPartyExtensions: List<Library>
       get() {
         return Listing.unofficialLibraries.filter { library ->
-          !library.official && library.repository === KtxRepository &&
+          !library.official &&
+            library.repository === KtxRepository &&
             !library.id.endsWith("Async") &&
             listOf("artemis", "script").all { it !in library.id.lowercase() }
         }

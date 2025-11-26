@@ -5,4 +5,6 @@ package gdx.liftoff.views
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ProjectTemplate(val official: Boolean = false)
+annotation class ProjectTemplate(
+  val official: Boolean = false,
+)

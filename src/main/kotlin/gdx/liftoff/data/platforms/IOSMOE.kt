@@ -129,12 +129,18 @@ class IOSMOE : Platform {
   }
 }
 
-class ReplacedContentFile(projectName: String = "", path: String, original: String, fileType: Files.FileType = Files.FileType.Internal, private val replaceMap: Map<String, String>) : CopiedFile(
-  projectName,
-  path,
-  original,
-  fileType,
-) {
+class ReplacedContentFile(
+  projectName: String = "",
+  path: String,
+  original: String,
+  fileType: Files.FileType = Files.FileType.Internal,
+  private val replaceMap: Map<String, String>,
+) : CopiedFile(
+    projectName,
+    path,
+    original,
+    fileType,
+  ) {
   override fun save(destination: FileHandle) {
     var input = Gdx.files.getFileHandle(original, fileType).readString("UTF-8")
     replaceMap.forEach { (t, u) -> input = input.replace(t, u) }
@@ -142,7 +148,9 @@ class ReplacedContentFile(projectName: String = "", path: String, original: Stri
   }
 }
 
-class IOSMOEGradleFile(val project: Project) : GradleFile(IOSMOE.ID) {
+class IOSMOEGradleFile(
+  val project: Project,
+) : GradleFile(IOSMOE.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("io.github.berstanio:gdx-backend-moe:\$moeGdxVersion")

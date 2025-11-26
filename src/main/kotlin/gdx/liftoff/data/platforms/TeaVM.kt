@@ -36,7 +36,9 @@ class TeaVM : Platform {
   }
 }
 
-class TeaVMGradleFile(val project: Project) : GradleFile(TeaVM.ID) {
+class TeaVMGradleFile(
+  val project: Project,
+) : GradleFile(TeaVM.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
 

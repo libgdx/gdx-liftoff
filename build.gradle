@@ -4,7 +4,7 @@ buildscript {
   repositories {
     mavenCentral()
     gradlePluginPortal()
-    maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
+    maven { url = 'https://central.sonatype.com/repository/maven-snapshots/' }
 //    mavenLocal()
     google()
   }
@@ -45,7 +45,7 @@ jar {
     )
   }
   archiveFileName.set(jarName)
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
   exclude('META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/freebsd/**')
   dependencies {
@@ -58,9 +58,9 @@ jar {
 
 repositories {
   mavenCentral()
-  maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
-  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-  maven { url 'https://jitpack.io' }
+  maven { url = "https://central.sonatype.com/repository/maven-snapshots/" }
+  maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+  maven { url = "https://jitpack.io" }
 }
 
 dependencies {
@@ -301,7 +301,7 @@ startScripts.classpath = project.tasks.jar.outputs.files
 tasks.register('sample', JavaExec) {
   dependsOn classes
   setDescription("Generates a sample libGDX project into build/dist/sample")
-  application.mainClass.set("gdx.liftoff.Sample")
+  mainClass.set("gdx.liftoff.Sample")
   setClasspath(sourceSets.main.runtimeClasspath)
 }
 

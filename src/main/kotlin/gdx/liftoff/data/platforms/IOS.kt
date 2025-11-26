@@ -94,7 +94,15 @@ ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) 
   </libs>
   <frameworks>
     <framework>UIKit</framework>
-${if (GdxVersion.parseGdxVersion(project.advanced.gdxVersion) != null && GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 12, 0)) "    <framework>OpenGLES</framework>" else ""}
+${if (GdxVersion.parseGdxVersion(
+            project.advanced.gdxVersion,
+          ) != null &&
+          GdxVersion.parseGdxVersion(project.advanced.gdxVersion)!! < GdxVersion(1, 12, 0)
+        ) {
+          "    <framework>OpenGLES</framework>"
+        } else {
+          ""
+        }}
     <framework>QuartzCore</framework>
     <framework>CoreGraphics</framework>
     <framework>OpenAL</framework>
@@ -192,7 +200,9 @@ ${project.reflectedClasses.joinToString(separator = "\n") { "    <pattern>$it</p
   }
 }
 
-class IOSGradleFile(val project: Project) : GradleFile(IOS.ID) {
+class IOSGradleFile(
+  val project: Project,
+) : GradleFile(IOS.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.mobidevelop.robovm:robovm-rt:\$robovmVersion")

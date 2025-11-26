@@ -38,7 +38,9 @@ class Headless : Platform {
  * Represents the Gradle file of the headless project. Allows to set up a different Java version and launch the application
  * with "run" task.
  */
-class HeadlessGradleFile(val project: Project) : GradleFile(Headless.ID) {
+class HeadlessGradleFile(
+  val project: Project,
+) : GradleFile(Headless.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.badlogicgames.gdx:gdx-backend-headless:\$gdxVersion")

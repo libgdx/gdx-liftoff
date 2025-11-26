@@ -82,8 +82,8 @@ interface Repository {
     override fun fetchLatestVersion(
       group: String,
       name: String,
-    ): String? {
-      return try {
+    ): String? =
+      try {
         val response =
           get("https://jitpack.io/api/builds/$group/$name/latest")
             .timeout(REQUEST_TIMEOUT)
@@ -93,7 +93,6 @@ interface Repository {
         Gdx.app.error("gdx-liftoff", "Unable to perform a HTTP request to JitPack.", exception)
         null
       }
-    }
   }
 }
 
@@ -133,7 +132,9 @@ abstract class CachedRepository : Repository {
  * Abstract implementation of [Repository] that fetches a single version once and always returns the value by
  * [Repository.getLatestVersion]. For modular libraries that share a single version.
  */
-abstract class SingleVersionRepository(private val fallbackVersion: String) : Repository {
+abstract class SingleVersionRepository(
+  private val fallbackVersion: String,
+) : Repository {
   val version by lazy { fetchLatestVersion() ?: fallbackVersion }
 
   override fun getLatestVersion(

@@ -330,8 +330,14 @@ trim_trailing_whitespace = false
     ).forEach {
       CopiedFile(path = it, original = path("generator", it)).save(basic.destination)
     }
-    basic.destination.child("gradlew").file().setExecutable(true)
-    basic.destination.child("gradlew.bat").file().setExecutable(true)
+    basic.destination
+      .child("gradlew")
+      .file()
+      .setExecutable(true)
+    basic.destination
+      .child("gradlew.bat")
+      .file()
+      .setExecutable(true)
     logger.logNls("copyGradle")
     val gradleTasks = advanced.gradleTasks
     if (executeGradleTasks && gradleTasks.isNotEmpty()) {
@@ -339,8 +345,10 @@ trim_trailing_whitespace = false
       val commands = determineGradleCommand() + gradleTasks
       logger.log(commands.joinToString(separator = " "))
       val process =
-        ProcessBuilder(*commands).directory(basic.destination.file())
-          .redirectErrorStream(true).start()
+        ProcessBuilder(*commands)
+          .directory(basic.destination.file())
+          .redirectErrorStream(true)
+          .start()
       val stream = BufferedReader(InputStreamReader(process.inputStream))
       var line = stream.readLine()
       while (line != null) {
@@ -354,13 +362,12 @@ trim_trailing_whitespace = false
     }
   }
 
-  private fun determineGradleCommand(): Array<String> {
-    return if (UIUtils.isWindows) {
+  private fun determineGradleCommand(): Array<String> =
+    if (UIUtils.isWindows) {
       arrayOf("cmd", "/c", "gradlew")
     } else {
       arrayOf("./gradlew")
     }
-  }
 }
 
 interface ProjectLogger {

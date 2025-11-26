@@ -124,7 +124,9 @@ project(":lwjgl3") {
 /**
  * Gradle file of the LWJGL3 project.
  */
-class Lwjgl3GradleFile(val project: Project) : GradleFile(Lwjgl3.ID) {
+class Lwjgl3GradleFile(
+  val project: Project,
+) : GradleFile(Lwjgl3.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl3:\$gdxVersion")
@@ -162,7 +164,14 @@ java.targetCompatibility = ${project.advanced.desktopJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
         compileJava.options.release.set(${project.advanced.desktopJavaVersion})
 }
-${if (project.rootGradle.plugins.contains("kotlin")) "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n" else ""}
+${if (project.rootGradle.plugins.contains(
+        "kotlin",
+      )
+    ) {
+      "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n"
+    } else {
+      ""
+    }}
 dependencies {
 ${joinDependencies(dependencies)}
   if(enableGraalNative == 'true') {

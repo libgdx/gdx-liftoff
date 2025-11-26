@@ -45,7 +45,9 @@ class Lwjgl2 : Platform {
 /**
  * Gradle file of the legacy desktop project.
  */
-class Lwjgl2GradleFile(val project: Project) : GradleFile(Lwjgl2.ID) {
+class Lwjgl2GradleFile(
+  val project: Project,
+) : GradleFile(Lwjgl2.ID) {
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl:\$gdxVersion")

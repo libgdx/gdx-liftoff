@@ -4,7 +4,9 @@ import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.data.files.ProjectFile
 import java.io.File
 
-abstract class GradleFile private constructor(override val path: String) : ProjectFile {
+abstract class GradleFile private constructor(
+  override val path: String,
+) : ProjectFile {
   val buildDependencies = mutableSetOf<String>()
   val dependencies = mutableSetOf<String>()
   val specialDependencies = mutableSetOf<String>()
@@ -21,8 +23,8 @@ abstract class GradleFile private constructor(override val path: String) : Proje
     dependencies: Collection<String>,
     type: String = "implementation",
     indent: String = "  ",
-  ): String {
-    return (
+  ): String =
+    (
       if (dependencies.isEmpty()) {
         "\n"
       } else {
@@ -35,7 +37,6 @@ abstract class GradleFile private constructor(override val path: String) : Proje
         specialDependencies.sorted().joinToString(prefix = indent, separator = "\n$indent", postfix = "\n")
       }
     )
-  }
 
   /**
    * @param dependency will be added as an "implementation" or "api" dependency, quoted.

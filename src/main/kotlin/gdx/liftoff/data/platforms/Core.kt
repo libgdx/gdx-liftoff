@@ -19,9 +19,7 @@ class Core : Platform {
   override val order = ORDER
   override val isStandard = false
 
-  override fun createGradleFile(project: Project): GradleFile {
-    return CoreGradleFile()
-  }
+  override fun createGradleFile(project: Project): GradleFile = CoreGradleFile()
 
   override fun initiate(project: Project) {
     project.properties["enableGraalNative"] = "false"
@@ -37,8 +35,8 @@ class CoreGradleFile : GradleFile(Core.ID) {
     addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion")
   }
 
-  override fun getContent(): String {
-    return """[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+  override fun getContent(): String =
+    """[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 
 dependencies {
@@ -48,5 +46,4 @@ ${joinDependencies(dependencies, "api")}
   }
 }
 """
-  }
 }

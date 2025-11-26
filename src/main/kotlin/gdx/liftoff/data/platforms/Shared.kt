@@ -37,7 +37,9 @@ class Shared : Platform {
  * Represents shared project Gradle file. Should include dependencies that should be available for both server and
  * client applications.
  */
-class SharedGradleFile(val project: Project) : GradleFile(Shared.ID) {
+class SharedGradleFile(
+  val project: Project,
+) : GradleFile(Shared.ID) {
   override fun getContent(): String =
     """eclipse.project.name = appName + '-shared'
 

@@ -25,7 +25,10 @@ interface ProjectFile {
 /**
  * Represents a directory with source files.
  */
-open class SourceDirectory(val projectName: String, sourcePath: String = path("src", "main", "java")) : ProjectFile {
+open class SourceDirectory(
+  val projectName: String,
+  sourcePath: String = path("src", "main", "java"),
+) : ProjectFile {
   override val path: String = projectName + File.separator + sourcePath
 
   override fun save(destination: FileHandle) {
@@ -38,7 +41,10 @@ fun path(vararg directories: String) = directories.joinToString(separator = File
 /**
  * Base class for source files.
  */
-open class SourceFile private constructor(val content: String, override val path: String) : ProjectFile {
+open class SourceFile private constructor(
+  val content: String,
+  override val path: String,
+) : ProjectFile {
   /**
    * @param content content of the source file.
    * @param projectName name of the project to which the file should be appended. Optional.
@@ -98,7 +104,11 @@ fun toRelativePath(
 /**
  * Base class for copied project resources.
  */
-open class CopiedFile private constructor(override val path: String, val original: String, val fileType: Files.FileType) : ProjectFile {
+open class CopiedFile private constructor(
+  override val path: String,
+  val original: String,
+  val fileType: Files.FileType,
+) : ProjectFile {
   /**
    * @param projectName name of the project which should contain the file.
    * @param path relative path inside the project with the exact file location.
@@ -123,7 +133,10 @@ open class CopiedFile private constructor(override val path: String, val origina
 /**
  * Saves gradle.properties file.
  */
-class PropertiesFile(val properties: Map<String, String>, val prepend: String) : ProjectFile {
+class PropertiesFile(
+  val properties: Map<String, String>,
+  val prepend: String,
+) : ProjectFile {
   override val path = "gradle.properties"
 
   override fun save(destination: FileHandle) {
@@ -135,7 +148,9 @@ class PropertiesFile(val properties: Map<String, String>, val prepend: String) :
 /**
  * Creates settings.gradle file.
  */
-class SettingsFile(val platforms: Iterable<Platform>) : ProjectFile {
+class SettingsFile(
+  val platforms: Iterable<Platform>,
+) : ProjectFile {
   override val path = "settings.gradle"
 
   override fun save(destination: FileHandle) {

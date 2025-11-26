@@ -187,7 +187,9 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
           sourceFolderPath = "webapp",
           packageName = "",
           content =
-            Gdx.files.internal(path("generator", id, "webapp", "index.html")).readString("UTF8")
+            Gdx.files
+              .internal(path("generator", id, "webapp", "index.html"))
+              .readString("UTF8")
               .replaceFirst("@@libGDX application@@", project.basic.name),
         ),
       )
@@ -222,7 +224,9 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
   }
 }
 
-class GWTGradleFile(val project: Project) : GradleFile(GWT.ID) {
+class GWTGradleFile(
+  val project: Project,
+) : GradleFile(GWT.ID) {
   init {
     buildDependencies.add("project(':${Core.ID}')")
     dependencies.add("project(':${Core.ID}')")

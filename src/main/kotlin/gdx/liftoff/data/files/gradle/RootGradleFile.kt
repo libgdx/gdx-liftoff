@@ -7,7 +7,9 @@ import gdx.liftoff.data.project.Project
 /**
  * Gradle file of the root project. Manages build script and global settings.
  */
-class RootGradleFile(val project: Project) : GradleFile("") {
+class RootGradleFile(
+  val project: Project,
+) : GradleFile("") {
   val plugins = mutableSetOf<String>()
   private val buildRepositories = mutableSetOf<String>()
 

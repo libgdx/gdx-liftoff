@@ -5,4 +5,6 @@ package gdx.liftoff.views
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Extension(val official: Boolean = false)
+annotation class Extension(
+  val official: Boolean = false,
+)

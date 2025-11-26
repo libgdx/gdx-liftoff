@@ -112,6 +112,7 @@ fun main() {
         PtrFactory.newPointerPtr(Byte::class.java, 2, 0, true, true) as Ptr<BytePtr>,
         null, IOSLauncher::class.java.name)
 }"""
+
   override fun getIOSMOESVMRegistrationContent(project: Project): String =
     """package ${project.basic.rootPackage}
 
@@ -180,8 +181,8 @@ fun main() {
 }
 """
 
-  override fun getLwjgl3StartupContent(project: Project): String {
-    return """
+  override fun getLwjgl3StartupContent(project: Project): String =
+    """
 /*
  * Copyright 2020 damios
  *
@@ -356,7 +357,6 @@ class StartupHelper private constructor() {
     }
 }
 """
-  }
 
   override fun getIOSLauncherContent(project: Project): String =
     """@file:JvmName("IOSLauncher")

@@ -110,7 +110,9 @@ ${project.androidPermissions.joinToString(separator = "\n") { "  <uses-permissio
 /**
  * Gradle file of the Android project.
  */
-class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
+class AndroidGradleFile(
+  val project: Project,
+) : GradleFile(Android.ID) {
   val plugins = mutableListOf<String>()
   val srcFolders = mutableListOf("'src/main/java'")
   val nativeDependencies = mutableSetOf<String>()
@@ -141,8 +143,8 @@ class AndroidGradleFile(val project: Project) : GradleFile(Android.ID) {
    */
   fun addNativeDependency(dependency: String) = nativeDependencies.add("\"$dependency\"")
 
-  override fun getContent(): String {
-    return """
+  override fun getContent(): String =
+    """
 buildscript {
   repositories {
     mavenCentral()
@@ -279,5 +281,4 @@ tasks.register('run', Exec) {
 
 eclipse.project.name = appName + "-android"
 """
-  }
 }

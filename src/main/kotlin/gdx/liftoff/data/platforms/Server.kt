@@ -32,7 +32,9 @@ class Server : Platform {
  * Represents the Gradle file of server project. Allows to set up a different Java version and launch the application
  * with "run" task.
  */
-class ServerGradleFile(val project: Project) : GradleFile(Server.ID) {
+class ServerGradleFile(
+  val project: Project,
+) : GradleFile(Server.ID) {
   override fun getContent(): String =
     """apply plugin: 'application'
 ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}

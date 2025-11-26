@@ -63,15 +63,19 @@ abstract class KtxExtension : Library {
  * Fetches and caches the latest KTX version.
  */
 object KtxRepository : SingleVersionRepository(FALLBACK_VERSION) {
-  override fun fetchLatestVersion(): String? {
-    return try {
+  override fun fetchLatestVersion(): String? =
+    try {
       // Fetching and caching KTX version from the repo:
-      get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt").timeout(30000).responseString().third.get().trim()
+      get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt")
+        .timeout(30000)
+        .responseString()
+        .third
+        .get()
+        .trim()
     } catch (exception: Exception) {
       Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
       Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "ktx-app")
     }
-  }
 }
 
 /**

@@ -71,9 +71,7 @@ abstract class LmlExtension : Library {
  * Fetches and caches latest gdx-lml libraries version.
  */
 object LmlRepository : SingleVersionRepository(FALLBACK_VERSION) {
-  override fun fetchLatestVersion(): String? {
-    return Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "gdx-lml")
-  }
+  override fun fetchLatestVersion(): String? = Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "gdx-lml")
 }
 
 /**
