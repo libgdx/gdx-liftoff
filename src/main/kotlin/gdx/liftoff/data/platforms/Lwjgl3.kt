@@ -69,7 +69,7 @@ project(":lwjgl3") {
     binaries {
       main {
         imageName = appName
-        mainClass = project.mainClassName
+        mainClass = application.mainClass
         requiredVersion = '23.0'
         buildArgs.add("-march=compatibility")
         jvmArgs.addAll("-Dfile.encoding=UTF8")
