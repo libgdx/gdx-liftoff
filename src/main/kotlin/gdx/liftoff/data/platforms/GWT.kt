@@ -232,18 +232,9 @@ class GWTGradleFile(
     dependencies.add("project(':${Core.ID}')")
 
     addDependency("com.badlogicgames.gdx:gdx:\$gdxVersion:sources")
-    if (!project.advanced.gdxVersion.startsWith("1.13.") && project.advanced.gwtVersion == "2.11.0") {
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.1")
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.1:sources")
-      addDependency("com.google.jsinterop:jsinterop-annotations:2.0.2:sources")
-    } else if (!project.advanced.gdxVersion.startsWith("1.13.") && project.advanced.gwtVersion == "2.10.0") {
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.0")
-      addDependency("com.github.tommyettinger:gdx-backend-gwt:1.1210.0:sources")
-      addDependency("com.google.jsinterop:jsinterop-annotations:2.0.2:sources")
-    } else {
-      addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
-      addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
-    }
+    addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion")
+    addDependency("com.badlogicgames.gdx:gdx-backend-gwt:\$gdxVersion:sources")
+    addDependency("com.google.jsinterop:jsinterop-annotations:2.1.0:sources")
   }
 
   override fun getContent(): String =
