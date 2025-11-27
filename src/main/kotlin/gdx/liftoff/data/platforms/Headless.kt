@@ -64,8 +64,7 @@ ${if (project.rootGradle.plugins.contains(
     } else {
       ""
     }}
-mainClassName = "${project.basic.rootPackage}.headless.HeadlessLauncher"
-application.setMainClass(mainClassName)
+application.mainClass = "${project.basic.rootPackage}.headless.HeadlessLauncher"
 eclipse.project.name = appName + '-headless'
 
 dependencies {
@@ -73,13 +72,13 @@ ${joinDependencies(dependencies)}}
 
 jar {
   archiveBaseName.set(appName)
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   dependsOn configurations.runtimeClasspath
   from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 // setting the manifest makes the JAR runnable.
 // enabling native access helps avoid a warning when Java 24 or later runs the JAR.
   manifest {
-    attributes 'Main-Class': project.mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
+    attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED'
   }
   doLast {
     file(archiveFile).setExecutable(true, false)
