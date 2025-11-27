@@ -52,8 +52,7 @@ ${if (project.rootGradle.plugins.contains(
     } else {
       ""
     }}
-mainClassName = '${project.basic.rootPackage}.server.ServerLauncher'
-application.setMainClass(mainClassName)
+application.mainClass = '${project.basic.rootPackage}.server.ServerLauncher'
 eclipse.project.name = appName + '-server'
 
 dependencies {
@@ -62,7 +61,7 @@ ${joinDependencies(dependencies)}}
 jar {
   archiveBaseName.set(appName)
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
-  duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   dependsOn configurations.runtimeClasspath
   from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 // these "exclude" lines remove some unnecessary duplicate files in the output JAR.
@@ -73,7 +72,7 @@ jar {
 // setting the manifest makes the JAR runnable.
 // enabling native access helps avoid a warning when Java 24 or later runs the JAR.
   manifest {
-    attributes 'Main-Class': project.mainClassName, 'Enable-Native-Access': 'ALL-UNNAMED'
+    attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED'
   }
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
   doLast {
