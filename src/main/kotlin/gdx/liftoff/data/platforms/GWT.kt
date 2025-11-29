@@ -1,8 +1,6 @@
 package gdx.liftoff.data.platforms
 
 import com.badlogic.gdx.Gdx
-import gdx.liftoff.config.GdxVersion
-import gdx.liftoff.data.files.CopiedFile
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.gradle.GradleFile
 import gdx.liftoff.data.files.path
@@ -169,58 +167,22 @@ ${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\
 
     // Copying webapp files:
     addCopiedFile(project, "webapp", "refresh.png")
-    val version = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
-    if (version != null && version < GdxVersion(major = 1, minor = 9, revision = 12)) {
-      addCopiedFile(project, "webapp", "soundmanager2-setup.js")
-      project.files.add(
-        CopiedFile(
-          projectName = id,
-          original = path("generator", id, "webapp", "index_old.html"),
-          path = path("webapp", "index.html"),
-        ),
-      )
-    } else {
-      project.files.add(
-        SourceFile(
-          projectName = id,
-          fileName = "index.html",
-          sourceFolderPath = "webapp",
-          packageName = "",
-          content =
-            Gdx.files
-              .internal(path("generator", id, "webapp", "index.html"))
-              .readString("UTF8")
-              .replaceFirst("@@libGDX application@@", project.basic.name),
-        ),
-      )
-    }
-    addSoundManagerSource(project)
+    project.files.add(
+      SourceFile(
+        projectName = id,
+        fileName = "index.html",
+        sourceFolderPath = "webapp",
+        packageName = "",
+        content =
+          Gdx.files
+            .internal(path("generator", id, "webapp", "index.html"))
+            .readString("UTF8")
+            .replaceFirst("@@libGDX application@@", project.basic.name),
+      ),
+    )
+
     addCopiedFile(project, "webapp", "styles.css")
     addCopiedFile(project, "webapp", "WEB-INF", "web.xml")
-  }
-
-  private fun addSoundManagerSource(project: Project) {
-    val version = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
-    val soundManagerSource =
-      when {
-        // Invalid, user-entered libGDX version - defaulting to current lack of SoundManager:
-        version == null -> ""
-        // Pre-1.9.6: using old SoundManager sources:
-        version < GdxVersion(major = 1, minor = 9, revision = 6) -> "soundmanager2-jsmin_old.js"
-        // Recent libGDX version - using latest SoundManager:
-        version < GdxVersion(major = 1, minor = 9, revision = 12) -> "soundmanager2-jsmin.js"
-        // after 1.9.11, soundmanager is no longer used
-        else -> ""
-      }
-    if (soundManagerSource.isNotEmpty()) {
-      project.files.add(
-        CopiedFile(
-          projectName = id,
-          original = path("generator", id, "webapp", soundManagerSource),
-          path = path("webapp", "soundmanager2-jsmin.js"),
-        ),
-      )
-    }
   }
 }
 
