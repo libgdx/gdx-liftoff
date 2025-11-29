@@ -217,7 +217,7 @@ fun main(arguments: Array<String>) {
       androidSdk = FileHandle(File(".")),
     )
   val defaultJavaVersion = Java().version
-  val defaultGwtVersion = "1.1.29"
+  val defaultGwtVersion = "2.2.7"
   val advancedData =
     AdvancedProjectData(
       version = Configuration.VERSION,

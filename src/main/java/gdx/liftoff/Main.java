@@ -533,7 +533,7 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
+        gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         // This is set to empty because we don't currently have a way to remove tasks, only add them...
@@ -565,7 +565,7 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
+        gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         // This is set to empty because we don't currently have a way to remove tasks, only add them...
@@ -606,7 +606,7 @@ public class Main extends ApplicationAdapter {
         // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
         UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
-        gwtPluginVersion = prop.getProperty("gwtPluginDefaultVersion");
+        gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
         UserData.addReadme = Boolean.parseBoolean(prop.getProperty("addReadmeDefault"));
         // This is set to empty because we don't currently have a way to remove tasks, only add them...
