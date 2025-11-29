@@ -204,97 +204,71 @@ class GWTGradleFile(
 buildscript {
   repositories {
     mavenCentral()
+    gradlePluginPortal()
   }
   dependencies {
-    classpath 'org.gretty:gretty:${project.advanced.grettyVersion}'
-    classpath "org.docstr:gwt-gradle-plugin:${'$'}gwtPluginVersion"
+    classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:${'$'}gwtPluginVersion"
 
   }
 }
-apply plugin: "gwt"
+apply plugin: "org.docstr.gwt"
 apply plugin: "war"
-apply plugin: "org.gretty"
-
-gwt {
-  gwtVersion = "${'$'}gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
-  maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
-  minHeapSize = '1G'
-
-  // Needs to be in front of "modules" below.
-  src = files(file('src/main/java'), project(":core").file('src/main/java'))
-  modules += ["${project.basic.rootPackage}.GdxDefinition"]
-  devModules += ["${project.basic.rootPackage}.GdxDefinitionSuperdev"]
-  project.webAppDirName = "webapp"
-
-  compiler.strict = true
-  compiler.disableCastChecking = true
-  //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
-//  compiler.style = org.docstr.gradle.plugins.gwt.Style.DETAILED
-${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "\n  sourceLevel = 1.11\n" else ""}}
-
-dependencies {
-${joinDependencies(dependencies)}
-}
-
-import org.akhikhl.gretty.AppBeforeIntegrationTestTask
-import org.docstr.gradle.plugins.gwt.GwtSuperDev
-
-gretty.httpPort = 8080
-// The line below will need to be changed only if you change the build directory to something other than "build".
-gretty.resourceBase = "${'$'}{project.layout.buildDirectory.asFile.get().absolutePath}/gwt/draftOut"
-gretty.contextPath = "/"
-gretty.portPropertiesFileName = "TEMP_PORTS.properties"
-
-tasks.register('startHttpServer') {
-  dependsOn("draftCompileGwt")
-  doFirst {
-    copy {
-      from "webapp"
-      into gretty.resourceBase
-    }
-    copy {
-      from "war"
-      into gretty.resourceBase
-    }
-  }
-}
-
-tasks.register('beforeRun', AppBeforeIntegrationTestTask) {
-  dependsOn("startHttpServer")
-  gretty {
-    integrationTestTask("superDev")
-  }
-  // The next line allows ports to be reused instead of
-  // needing a process to be manually terminated.
-  file("build/TEMP_PORTS.properties").delete()
-  interactive = false
-}
-
-tasks.register('superDev', GwtSuperDev) {
-  group("gwt")
-  dependsOn("beforeRun")
-  doFirst {
-    gwt.modules = gwt.devModules
-  }
-}
-
-//// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.
-//// The war/ folder shouldn't be committed to version control.
-clean.delete += [file("war")]
 
 // This next line can be changed if you want to, for instance, always build into the
 // docs/ folder of a Git repo, which can be set to automatically publish on GitHub Pages.
 // This is relative to the html/ folder.
 var outputPath = "build/dist/"
 
+gwt {
+  gwtVersion = "${'$'}gwtFrameworkVersion" // Should match the version used for building the GWT backend. See gradle.properties.
+  maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
+  minHeapSize = '1G'
+
+  extraSourceDirs = files(
+    file('src/main/java'),
+    project(":core").file('src/main/java'),
+    files(project(':core').sourceSets.main.allJava.srcDirs),
+    files("../core/build/generated/sources/annotationProcessor/java/main"),
+    files(sourceSets.main.output.resourcesDir),
+${if (project.hasPlatform(Shared.ID)) "    files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
+  )
+  modules = ["${project.basic.rootPackage}.GdxDefinition"]
+
+  //// This affects where the final resulting build will be placed.
+  war = file(outputPath)
+  //// You
+  compiler.optimize = 9
+  compiler.strict = true
+  //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
+//  compiler.style = "DETAILED"
+${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "\n  sourceLevel = '1.11'\n" else ""}
+  devMode {
+    port = 8080
+    startupUrl = "http://127.0.0.1:8080/index.html"
+  }
+  superDev {
+    modules = ["${project.basic.rootPackage}.GdxDefinitionSuperdev"]
+  }
+}
+
+dependencies {
+${joinDependencies(dependencies)}
+}
+
+//// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.
+//// The war/ folder shouldn't be committed to version control.
+clean.delete += [file("war")]
+
 tasks.register('dist') {
-  dependsOn(["clean", "compileGwt"])
+  //// This can't depend on the "clean" task because that would remove things it needs.
+  //// You may want to run "gradlew html:clean" before builds if you encounter leftovers from previous runs.
+  dependsOn(["build"])
   doLast {
     // Uncomment the next line if you have changed outputPath and know that its contents
     // should be replaced by a new dist build. Some large JS files are not cleaned up by
     // default unless the outputPath is inside build/ (then the clean task removes them).
     // Do not uncomment the next line if you changed outputPath to a folder that has
-    // non-generated files that you want to keep!
+    // any files that you want to keep!
     //delete(file(outputPath))
 
     file(outputPath).mkdirs()
@@ -329,15 +303,6 @@ tasks.register('dist') {
   }
 }
 
-tasks.register('addSource') {
-  doLast {
-    sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
-    sourceSets.main.compileClasspath += files("../core/build/generated/sources/annotationProcessor/java/main")
-    sourceSets.main.compileClasspath += files(sourceSets.main.output.resourcesDir)
-${if (project.hasPlatform(Shared.ID)) "    sourceSets.main.compileClasspath += files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
-  }
-}
-
 tasks.register("distZip", Zip) {
   dependsOn("dist")
   //// This uses the output of the dist task, which removes the superdev button from index.html .
@@ -348,9 +313,12 @@ tasks.register("distZip", Zip) {
   destinationDirectory.set(file("build"))
 }
 
-tasks.compileGwt.dependsOn("addSource")
-tasks.draftCompileGwt.dependsOn("addSource")
-tasks.checkGwt.dependsOn("addSource")
+tasks.register('superDev') {
+  dependsOn("dist", "gwtDevMode")
+  group("gwt")
+}
+
+tasks.compileJava.dependsOn("processResources")
 
 java.sourceCompatibility = ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
 java.targetCompatibility = ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == "2.11.0") "JavaVersion.VERSION_11" else "JavaVersion.VERSION_1_8"}
