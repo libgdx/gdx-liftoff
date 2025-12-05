@@ -765,19 +765,19 @@ public class TeaVMBuilder {
         // You can also register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project)}
 
+        // JavaScript is the default target type for TeaVM, and it works better during debugging.
+        teaBuildConfiguration.targetType = TeaVMTargetType.JAVASCRIPT;
+        // You can choose to use the WebAssembly (WASM) GC target instead, which tends to perform better, but isn't
+        // as easy to debug. It might be a good idea to alternate target types during development if you plan on using
+        // WASM at release time.
+//        teaBuildConfiguration.targetType = TeaVMTargetType.WEBASSEMBLY_GC;
+
         // Used by older TeaVM versions.
 //        TeaVMTool tool = TeaBuilder.config(teaBuildConfiguration);
 
         // The next two lines are used by gdx-teavm 1.3.1 and newer (and libGDX 1.14.0 and newer).
         TeaBuilder.config(teaBuildConfiguration);
         TeaVMTool tool = new TeaVMTool();
-
-        // JavaScript is the default target type for TeaVM, and it works better during debugging.
-        tool.setTargetType(TeaVMTargetType.JAVASCRIPT);
-        // You can choose to use the WebAssembly (WASM) GC target instead, which tends to perform better, but isn't
-        // as easy to debug. It might be a good idea to alternate target types during development if you plan on using
-        // WASM at release time.
-//        tool.setTargetType(TeaVMTargetType.WEBASSEMBLY_GC);
 
         tool.setMainClass(TeaVMLauncher.class.getName());
         // For many (or most) applications, using a high optimization won't add much to build time.

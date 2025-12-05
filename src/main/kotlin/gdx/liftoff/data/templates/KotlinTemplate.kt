@@ -501,15 +501,15 @@ object TeaVMBuilder {
         // You can also register any classes or packages that require reflection here:
 ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemicolon = false)}
 
-        TeaBuilder.config(teaBuildConfiguration)
-        val tool = TeaVMTool()
-
         // JavaScript is the default target type for TeaVM, and it works better during debugging.
-        tool.targetType = TeaVMTargetType.JAVASCRIPT
+        teaBuildConfiguration.targetType = TeaVMTargetType.JAVASCRIPT
         // You can choose to use the WebAssembly (WASM) GC target instead, which tends to perform better, but isn't
         // as easy to debug. It might be a good idea to alternate target types during development if you plan on using
         // WASM at release time.
-//        tool.targetType = TeaVMTargetType.WEBASSEMBLY_GC
+//        teaBuildConfiguration.targetType = TeaVMTargetType.WEBASSEMBLY_GC
+
+        TeaBuilder.config(teaBuildConfiguration)
+        val tool = TeaVMTool()
 
         tool.mainClass = "${project.basic.rootPackage}.teavm.TeaVMLauncher"
         // For many (or most) applications, using a high optimization won't add much to build time.
