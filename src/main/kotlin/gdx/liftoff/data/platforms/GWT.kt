@@ -259,6 +259,11 @@ ${joinDependencies(dependencies)}
 //// The war/ folder shouldn't be committed to version control.
 clean.delete += [file("war")]
 
+//// The compileJava task is run at the start of any GWT build; we need to clean the output directory BEFORE
+//// anything can be built into that output directory, so the rest of the build can use it.
+tasks.named("compileJava").get().dependsOn("clean")
+
+//// You should always use the dist task (which could be folded into the "other" group), not the build task.
 tasks.register('dist') {
   //// This can't depend on the "clean" task because that would remove things it needs.
   //// You may want to run "gradlew html:clean" before builds if you encounter leftovers from previous runs.
@@ -313,6 +318,10 @@ tasks.register("distZip", Zip) {
   destinationDirectory.set(file("build"))
 }
 
+//// The superDev task, which may be grouped under "gwt", allows updating your sources in your editor and
+//// seeing your changes as soon as you refresh in the browser. In the current form of development mode,
+//// this depends on dist, which may change in the future, and also pops up a Swing form (by GWT itself)
+//// to handle serving the local files and updating when you save changes in your editor.
 tasks.register('superDev') {
   dependsOn("dist", "gwtDevMode")
   group("gwt")
