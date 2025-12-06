@@ -404,3 +404,21 @@ in another place.
 Once you've changed the link for each platform you want to support (probably Windows, maybe also Linux, and unlikely
 also macOS, AARCH64 and x64), you can run the Construo package task for that platform, such as `lwjgl3:packageWinX64` .
 Then you're done!
+
+### Why is GWT so different in recent versions?
+
+Liftoff 1.14.0.3 includes an update to Gradle 9.x, specifically 9.2.1 . This release has several breaking changes, but
+most of them seem to break older plugins more than user code. The GWT Gradle plugin we used was quite old (1.1.29 had
+been what we were using for quite a while), and its version 1.x isn't compatible with Gradle 9. So updating to the 2.x
+line of the GWT Gradle plugin (2.2.7) turned out to have some other advantages. Even though Gretty was not playing
+nicely with GWT at first, it turns out the 2.x plugin doesn't actually need Gretty anymore to serve webpages, which was
+a long-standing oddity of the GWT code.
+
+So, the new usage of GWT projects uses the same Gradle tasks as before, `dist`
+to build a standalone, deployable page (which is still grouped under "other" in task lists), and `superDev` to build
+while changing the source code, saving, and seeing the changes as soon as the page re-compiles (which is still grouped
+under "gwt"). The differences here are that `dist` runs a lot more quickly in the latest version, and that (for reasons
+I haven't fully figured out) `superDev` now depends on running `dist` when it first starts up. More importantly,
+`superDev` pops up a Swing window (using GWT itself to do so) that provides a link to your re-load-able page. It isn't
+hidden in the Gradle output text anymore, which is nice.
+
