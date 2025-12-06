@@ -422,3 +422,18 @@ I haven't fully figured out) `superDev` now depends on running `dist` when it fi
 `superDev` pops up a Swing window (using GWT itself to do so) that provides a link to your re-load-able page. It isn't
 hidden in the Gradle output text anymore, which is nice.
 
+### Why isn't TeaVM compiling to WASM?
+
+In versions 1.14.0.0 through 1.14.0.2, a change in how TeaVM uses its configuration led to WASM never getting generated
+by TeaVM, even if it appeared to be selected. This has been fixed in 1.14.0.3, and you can set existing
+TeaVMBuilder files to use WASM by adding:
+```
+teaBuildConfiguration.targetType = TeaVMTargetType.WEBASSEMBLY_GC;
+```
+before the line containing `TeaBuilder.config(teaBuildConfiguration)` . This works for both Java and Kotlin.
+
+You can get
+by fine without WASM, but the generated JavaScript by default isn't nearly as fast as the WASM on some kinds of code, in
+particular any math involving a JVM `long`. That also affects some libGDX data structures (maps and sets), which rely on
+long math to mix hash codes adequately, and so very large maps and sets are faster (in general) on WASM than JS.
+
