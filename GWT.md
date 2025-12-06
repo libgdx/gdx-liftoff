@@ -2,6 +2,11 @@
 
 **NOTE:** This guide has been mostly superseded by [this libGDX wiki page](https://libgdx.com/wiki/html5-backend-and-gwt-specifics).
 It is here as just another source that might help.
+There are various changes in the latest Gradle that may make a lot of this guide no longer accurate.
+The `dist` task is faster now, and should probably be used whenever you aren't doing iterative development with saving
+changes and recompiling as you go along. For iterative coding, `superDev` is still what to use, though it acts a little
+differently now. You should also strongly consider using TeaVM, which is being updated regularly, and fixes a lot of the
+pain points in GWT, while still producing browser-targeted builds of normal libGDX apps.
 
 Google Web Toolkit is nice to have because it gives libGDX applications the option to deploy to a web target.
 But, it's incredibly finicky. All sorts of parts of a program can act differently when GWT is the target.
@@ -76,7 +81,7 @@ way to work around GWT's oddities, though.
       - `Long.rotateRight(num, amt)` is equivalent to `(num << 64 - amt | num >>> amt)`.
       - `Integer.rotateLeft(num, amt)` is equivalent to `(num << amt | num >>> 32 - amt)`.
       - `Integer.rotateRight(num, amt)` is equivalent to `(num << 32 - amt | num >>> amt)`.
-      - These could in theory be changed in GWT itself, but they're considered a `wontfix` issue.
+      - These have been fixed in GWT itself, but only in a very recent version, and libGDX is using a much older one.
 
 GWT has had a few new releases since GDX-Liftoff's debut. For a very long time, libGDX used GWT 2.8.2, which was
 compatible up to Java 8. This is what's used by libGDX up to and including 1.12.1, unless you use the alternative backend that Liftoff
