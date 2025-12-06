@@ -20,11 +20,11 @@ run it (usually double-clicking will do), or run the following command manually 
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-**You must build with Java 17** (or newer, up to 24)! Gradle's current version, as well as current Android tools, now
+**You must build with Java 17** (or newer, up to 25)! Gradle's current version, as well as current Android tools, now
 require your installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. Stable target releases of Java from 8 to 24 work here now. **If you use a JDK version 18
-to 24** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
+the JDK versions 17 and up. Stable target releases of Java from 8 to 25 work here now. **If you use a JDK version 18
+to 25** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
 downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using 17 exactly is recommended
 for this reason.
 
@@ -32,10 +32,9 @@ When you enter the JDK version you use for a project, it is **always one integer
 bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
 never include bugfix versions, and when you enter one here it should always be a single int, with no `.` .
 
-**JAVA 25 INSTALLATIONS ARE NOT YET SUPPORTED. IF YOU HAVE ANY DOUBTS ABOUT WHAT VERSION YOU HAVE, INSTALL JAVA 17.**
-Android's tools have not yet been updated to be compatible with Gradle 9.x, and Java 25 is only supported by Gradle 9.1
-and later. If you bundle Java 25 (or 24) with a released app, users will see alarming (but harmless) warnings when they
-run your app, so there isn't much user-experience benefit to using them anyway.
+Java 25 is now somewhat supported to build your projects, in recent Liftoff versions.
+If you bundle Java 25 (or 24) with a released app, users will see alarming (but harmless) warnings when they
+run your app, so there isn't much user-experience benefit to using 24 or newer for releases.
 
 If you don't know what JDK you have installed, or don't have one, then either of the JDK 17 installers from OpenJDK
 vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-17-lts) or
