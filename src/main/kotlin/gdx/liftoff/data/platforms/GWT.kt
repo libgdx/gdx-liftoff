@@ -253,6 +253,9 @@ ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == 
 
 dependencies {
 ${joinDependencies(dependencies)}
+  constraints {
+    implementation "jakarta.servlet:jakarta.servlet-api:6.1.0"
+  }
 }
 
 //// We delete the (temporary) war/ folder because if any extra files get into it, problems occur.
