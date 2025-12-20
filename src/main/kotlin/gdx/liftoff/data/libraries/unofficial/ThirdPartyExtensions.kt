@@ -402,7 +402,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "2.2.7"
+  override val defaultVersion = "2.2.8"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -424,7 +424,7 @@ class TextraTypist : ThirdPartyExtension() {
 @Extension
 class FreeTypist : ThirdPartyExtension() {
   override val id = "freetypist"
-  override val defaultVersion = "2.2.7.0"
+  override val defaultVersion = "2.2.8.0"
   override val url = "https://github.com/tommyettinger/freetypist"
   override val group = "com.github.tommyettinger"
   override val name = "freetypist"
@@ -791,7 +791,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension
 class RegExodus : ThirdPartyExtension() {
   override val id = "regExodus"
-  override val defaultVersion = "0.1.19"
+  override val defaultVersion = "0.1.20"
   override val url = "https://github.com/tommyettinger/RegExodus"
   override val group = "com.github.tommyettinger"
   override val name = "regexodus"
@@ -898,7 +898,7 @@ class CommonsCollections : ThirdPartyExtension() {
 @Extension
 class Fory : ThirdPartyExtension() {
   override val id = "fory"
-  override val defaultVersion = "0.13.0"
+  override val defaultVersion = "0.14.0"
   override val url = "https://fory.apache.org/"
 
   // was org.furyio before 0.5.0
@@ -1242,13 +1242,13 @@ class HyperLap2DTinyVGExtension : ThirdPartyExtension() {
 }
 
 /**
- * Add support for HyperLap2D Typing Label extension for libGDX runtime.
+ * Add support for HyperLap2D TextraTypist (not the original Typing-Label) extension.
  * @author fgnm
  */
 @Extension
 class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
   override val id = "h2dTypingLabelExtension"
-  override val defaultVersion = "0.1.4"
+  override val defaultVersion = "0.1.6"
   override val url = "https://github.com/rednblackgames/h2d-libgdx-typinglabel-extension"
   override val group = "games.rednblack.hyperlap2d"
   override val name = "libgdx-typinglabel-extension"
@@ -1257,7 +1257,7 @@ class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
     addDependency(project, Core.ID, "games.rednblack.hyperlap2d:libgdx-typinglabel-extension")
     addDependency(project, GWT.ID, "games.rednblack.hyperlap2d:libgdx-typinglabel-extension:sources")
 
-    TypingLabel().initiate(project)
+    TextraTypist().initiate(project)
   }
 }
 
@@ -1268,7 +1268,7 @@ class HyperLap2DTypingLabelExtension : ThirdPartyExtension() {
 @Extension
 class GdxMiniAudio : ThirdPartyExtension() {
   override val id = "miniaudio"
-  override val defaultVersion = "0.6"
+  override val defaultVersion = "0.7"
   override val url = "https://github.com/rednblackgames/gdx-miniaudio"
   override val group = "games.rednblack.miniaudio"
   override val name = "miniaudio"
@@ -1520,7 +1520,7 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 @Extension
 class KryoRegExodus : ThirdPartyExtension() {
   override val id = "kryoRegExodus"
-  override val defaultVersion = "0.1.19.1"
+  override val defaultVersion = "0.1.20.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-regexodus"
@@ -1661,7 +1661,7 @@ class KryoLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumLibgdx : ThirdPartyExtension() {
   override val id = "tantrumLibgdx"
-  override val defaultVersion = "1.14.0.18"
+  override val defaultVersion = "1.14.0.19"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-libgdx"
@@ -1680,7 +1680,7 @@ class TantrumLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumRegExodus : ThirdPartyExtension() {
   override val id = "tantrumRegExodus"
-  override val defaultVersion = "0.1.19.18"
+  override val defaultVersion = "0.1.20.19"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-regexodus"
@@ -1700,7 +1700,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.9.7.18"
+  override val defaultVersion = "0.9.7.19"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-digital"
@@ -1720,7 +1720,7 @@ class TantrumDigital : ThirdPartyExtension() {
 @Extension
 class TantrumJdkgdxds : ThirdPartyExtension() {
   override val id = "tantrumJdkgdxds"
-  override val defaultVersion = "1.13.1.18"
+  override val defaultVersion = "1.13.1.19"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-jdkgdxds"
