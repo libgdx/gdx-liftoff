@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.github.tommyettinger.textra.TypingLabel;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
@@ -18,13 +18,16 @@ import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static gdx.liftoff.Main.*;
 
 /**
  * Table that displays the project path, and the Android SDK path if Android is selected as a platform.
  */
 public class PathsPanel extends Table implements Panel {
-    private TypingLabel errorLabel;
+    private TextraLabel errorLabel;
     private Button deleteProjectPathButton;
 
     public PathsPanel(boolean fullscreen) {
@@ -141,9 +144,8 @@ public class PathsPanel extends Table implements Panel {
         }
 
         row();
-        errorLabel = new TypingLabel("", skin, "error");
-        errorLabel.skipToTheEnd();
-        errorLabel.setAlignment(Align.center);
+        errorLabel = new TextraLabel("", skin, "error");
+        errorLabel.setAlignment(Align.left);
         errorLabel.setWrap(true);
         add(errorLabel).minSize(0, errorLabel.getFont().cellHeight * 2).colspan(4).growX();
         updateError();
@@ -155,78 +157,63 @@ public class PathsPanel extends Table implements Panel {
 
     public void updateError() {
 
+        List<String> errors = new ArrayList<>();
+
         if (UserData.platforms.contains("html") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) > 11) {
-            errorLabel.restart(prop.getProperty("htmlWrongJavaVersion"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("htmlWrongJavaVersion"));
         }
 
         if (UserData.platforms.contains("ios") && UserData.platforms.contains("teavm")) {
-            errorLabel.restart(prop.getProperty("iosTeavmIncompatible"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("iosTeavmIncompatible"));
         }
 
         if (UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion) && !"8".equals(UserData.javaVersion)) {
-            errorLabel.restart(prop.getProperty("iosWrongJavaVersion"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("iosWrongJavaVersion"));
         }
 
         if (UserData.platforms.contains("teavm") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) < 11.0) {
-            errorLabel.restart(prop.getProperty("teavmWrongJavaVersion"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("teavmWrongJavaVersion"));
         }
 
         if (UserData.projectPath == null || UserData.projectPath.isEmpty()) {
-            errorLabel.restart(prop.getProperty("nullDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("nullDirectory"));
         }
 
         FileHandle tempFileHandle = Gdx.files.absolute(UserData.projectPath);
         if (!tempFileHandle.exists() || !tempFileHandle.isDirectory()) {
-            errorLabel.restart(prop.getProperty("notDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("notDirectory"));
         }
 
         boolean android = UserData.platforms.contains("android");
         if (android && (UserData.androidPath == null || UserData.androidPath.isEmpty())) {
-            errorLabel.restart(prop.getProperty("sdkNullDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("sdkNullDirectory"));
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.androidPath);
         if (android && (!tempFileHandle.exists() || !tempFileHandle.isDirectory())) {
-            errorLabel.restart(prop.getProperty("sdkNotDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("sdkNotDirectory"));
         }
 
         if (android && !Main.isAndroidSdkDirectory(UserData.androidPath)) {
-            errorLabel.restart(prop.getProperty("invalidSdkDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("invalidSdkDirectory"));
         }
 
         tempFileHandle = Gdx.files.absolute(UserData.projectPath);
         if (UIUtils.isWindows && tempFileHandle.path().matches("(?i).*([\\\\/]|^)OneDrive[^\\\\/]*([\\\\/]|$).*")) {
-            errorLabel.restart(prop.getProperty("noOneDrivePaths"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("noOneDrivePaths"));
         }
 
         if (tempFileHandle.list().length != 0) {
-            errorLabel.restart(prop.getProperty("notEmptyDirectory"));
-            errorLabel.skipToTheEnd();
-            return;
+            errors.add(prop.getProperty("notEmptyDirectory"));
         }
 
-        errorLabel.restart("");
-        errorLabel.skipToTheEnd();
+        if (errors.isEmpty()) {
+            errorLabel.setText("");
+        } else if (errors.size() == 1) {
+            errorLabel.setText("[red]Warning: " + errors.get(0));
+        } else {
+            errorLabel.setText("[red]Warnings:\n- " + String.join("\n- ", errors));
+        }
     }
 
     public boolean hasError() {
