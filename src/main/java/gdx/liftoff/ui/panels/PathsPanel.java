@@ -154,6 +154,13 @@ public class PathsPanel extends Table implements Panel {
     }
 
     public void updateError() {
+
+        if (UserData.platforms.contains("html") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) > 11) {
+            errorLabel.restart(prop.getProperty("htmlWrongJavaVersion"));
+            errorLabel.skipToTheEnd();
+            return;
+        }
+
         if (UserData.platforms.contains("ios") && UserData.platforms.contains("teavm")) {
             errorLabel.restart(prop.getProperty("iosTeavmIncompatible"));
             errorLabel.skipToTheEnd();
