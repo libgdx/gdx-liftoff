@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.github.tommyettinger.textra.TextraLabel;
+import com.github.tommyettinger.textra.TypingLabel;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
@@ -27,7 +27,7 @@ import static gdx.liftoff.Main.*;
  * Table that displays the project path, and the Android SDK path if Android is selected as a platform.
  */
 public class PathsPanel extends Table implements Panel {
-    private TextraLabel errorLabel;
+    private TypingLabel errorLabel;
     private Button deleteProjectPathButton;
 
     public PathsPanel(boolean fullscreen) {
@@ -144,10 +144,10 @@ public class PathsPanel extends Table implements Panel {
         }
 
         row();
-        errorLabel = new TextraLabel("", skin, "error");
+        errorLabel = new TypingLabel("", skin, "error");
         errorLabel.setAlignment(Align.left);
         errorLabel.setWrap(true);
-        add(errorLabel).minSize(0, errorLabel.getFont().cellHeight * 2).colspan(4).growX();
+        add(errorLabel).minSize(0, errorLabel.getFont().cellHeight * 2).align(Align.bottomLeft).colspan(4).growX();
         updateError();
     }
 
@@ -208,12 +208,13 @@ public class PathsPanel extends Table implements Panel {
         }
 
         if (errors.isEmpty()) {
-            errorLabel.setText("");
+            errorLabel.restart("");
         } else if (errors.size() == 1) {
-            errorLabel.setText("[red]Warning: " + errors.get(0));
+            errorLabel.restart(errors.get(0));
         } else {
-            errorLabel.setText("[red]Warnings:\n- " + String.join("\n- ", errors));
+            errorLabel.restart(String.join("\n", errors));
         }
+        errorLabel.skipToTheEnd();
     }
 
     public boolean hasError() {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.github.tommyettinger.textra.TextraLabel;
+import com.github.tommyettinger.textra.TypingLabel;
 import gdx.liftoff.Main;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -22,7 +22,7 @@ import static gdx.liftoff.Main.*;
  */
 public class ProjectPanel extends Table implements Panel {
     private TextField keyboardActor;
-    private TextraLabel errorLabel;
+    private TypingLabel errorLabel;
 
     public ProjectPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -94,10 +94,10 @@ public class ProjectPanel extends Table implements Panel {
 
         //error label
         row();
-        errorLabel = new TextraLabel("", skin, "error");
+        errorLabel = new TypingLabel("", skin, "error");
         errorLabel.setWrap(true);
         errorLabel.setAlignment(Align.left);
-        add(errorLabel).growX().spaceTop(SPACE_MEDIUM).minHeight(40);
+        add(errorLabel).growX().align(Align.bottomLeft).spaceTop(SPACE_MEDIUM).minHeight(40);
 
         updateError();
 
@@ -136,12 +136,13 @@ public class ProjectPanel extends Table implements Panel {
         }
 
         if (errors.isEmpty()) {
-            errorLabel.setText("");
+            errorLabel.restart("");
         } else if (errors.size() == 1) {
-            errorLabel.setText("[red]Error: " + errors.get(0));
+            errorLabel.restart(errors.get(0));
         } else {
-            errorLabel.setText("[red]Errors:\n- " + String.join("\n- ", errors));
+            errorLabel.restart(String.join("\n", errors));
         }
+        errorLabel.skipToTheEnd();
     }
 
     public void captureKeyboardFocus() {
