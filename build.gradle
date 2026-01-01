@@ -71,7 +71,7 @@ dependencies {
 //  implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion" // for JitPack commits
   implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
   implementation "com.github.raeleus.stripe:stripe:2.0.0"
-  implementation "com.github.tommyettinger:textratypist:2.2.8"
+  implementation "com.github.tommyettinger:textratypist:2.2.9"
 //  implementation "com.rafaskoberg.gdx:typing-label:1.4.0" // not used because at least not currently compatible
   implementation "com.github.tommyettinger:regexodus:0.1.20" // updates version used by Stripe
 
@@ -79,7 +79,8 @@ dependencies {
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 
   // Increases downloaded executable size, but may allow it to run in more places.
-  implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
+  // This seems to cause more trouble than it's worth at this point...
+//  implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
 
   implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
     exclude group: "org.jcraft", module: "jorbis"

@@ -130,7 +130,7 @@ class Lwjgl3GradleFile(
   init {
     dependencies.add("project(':${Core.ID}')")
     addDependency("com.badlogicgames.gdx:gdx-backend-lwjgl3:\$gdxVersion")
-    addDependency("com.badlogicgames.gdx:gdx-lwjgl3-angle:\$gdxVersion")
+//    addDependency("com.badlogicgames.gdx:gdx-lwjgl3-angle:\$gdxVersion")
     addDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-desktop")
   }
 

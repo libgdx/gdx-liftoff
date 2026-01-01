@@ -117,7 +117,7 @@ public class Main extends ApplicationAdapter {
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate+1);
         config.setIdleFPS(8);
-        config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0);
+//        config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0); // problematic...
 
         DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
         int monitorWidth = primaryDesktopMode.width;
