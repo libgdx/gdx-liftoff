@@ -53,6 +53,14 @@ public class StartupHelper {
     }
 
     /**
+     * Must only be called on Linux. Check OS first!
+     * @return true if NVIDIA drivers are in use on Linux, false otherwise
+     */
+    private static boolean isLinuxNvidia() {
+        String[] drivers = new File("/proc/driver").list((dir, path) -> path.toUpperCase(Locale.ROOT).contains("NVIDIA"));
+        return drivers != null && drivers.length > 0;
+    }
+    /**
      * Starts a new JVM if the application was started on macOS without the
      * {@code -XstartOnFirstThread} argument. This also includes some code for
      * Windows, for the case where the user's home directory includes certain
@@ -96,8 +104,7 @@ public class StartupHelper {
                 System.setProperty("user.name", prevUser);
             } else {
                 // not Mac or Windows, assuming Linux
-                String vendor = GL11.glGetString(GL11.GL_VENDOR);
-                if(vendor != null && vendor.contains("NVIDIA")) {
+                if(isLinuxNvidia()) {
                     // check whether -XstartOnFirstThread is enabled
                     if (!"0".equals(System.getenv("__GL_THREADED_OPTIMIZATIONS"))) {
                         return false;
