@@ -275,7 +275,7 @@ object StartupHelper {
 			// By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
 			// We also temporarily change the "user.name" property to one without any chars that would be invalid.
 			// We revert our changes immediately after loading LWJGL3 natives.
-			val programData: String = System.getenv("ProgramData") ?: "C:\\Temp\\"
+			val programData: String = System.getenv("ProgramData") ?: "C:\\Temp"
 			val prevTmpDir: String = System.getProperty("java.io.tmpdir", programData)
 			val prevUser: String = System.getProperty("user.name", "libGDX_User")
 			System.setProperty("java.io.tmpdir", "$programData\\libGDX-temp")

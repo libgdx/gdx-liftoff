@@ -570,7 +570,7 @@ public class StartupHelper {
 			// We also temporarily change the "user.name" property to one without any chars that would be invalid.
 			// We revert our changes immediately after loading LWJGL3 natives.
 			String programData = System.getenv("ProgramData");
-			if (programData == null) programData = "C:\\Temp\\"; // if ProgramData isn't set, try some fallback.
+			if (programData == null) programData = "C:\\Temp"; // if ProgramData isn't set, try some fallback.
 			String prevTmpDir = System.getProperty("java.io.tmpdir", programData);
 			String prevUser = System.getProperty("user.name", "libGDX_User");
 			System.setProperty("java.io.tmpdir", programData + "\\libGDX-temp");
