@@ -5,22 +5,13 @@ import java.lang.NumberFormatException
 /**
  * Configures Autumn MVC application.
  */
-@Suppress("unused") // Fields accessed via reflection.
-class Configuration {
-  companion object {
-    const val VERSION = "1.14.0.4-SNAPSHOT"
-    const val WIDTH = 600
-    const val HEIGHT = 700
-    const val PREFERENCES_PATH = "gdx-liftoff-prefs"
+object Configuration {
+  const val VERSION = "1.14.0.4-SNAPSHOT"
 
-    fun parseJavaVersion(version: String): Double {
-      val d =
-        try {
-          version.removePrefix("1.").removeSuffix(".0").toDouble()
-        } catch (nfe: NumberFormatException) {
-          8.0
-        }
-      return d
+  fun parseJavaVersion(version: String): Double =
+    try {
+      version.removePrefix("1.").removeSuffix(".0").toDouble()
+    } catch (_: NumberFormatException) {
+      8.0
     }
-  }
 }

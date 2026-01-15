@@ -159,7 +159,7 @@ public class PathsPanel extends Table implements Panel {
 
         List<String> errors = new ArrayList<>();
 
-        if (UserData.platforms.contains("html") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) > 11) {
+        if (UserData.platforms.contains("html") && Configuration.INSTANCE.parseJavaVersion(UserData.javaVersion) > 11) {
             errors.add(prop.getProperty("htmlWrongJavaVersion"));
         }
 
@@ -171,7 +171,7 @@ public class PathsPanel extends Table implements Panel {
             errors.add(prop.getProperty("iosWrongJavaVersion"));
         }
 
-        if (UserData.platforms.contains("teavm") && Configuration.Companion.parseJavaVersion(UserData.javaVersion) < 11.0) {
+        if (UserData.platforms.contains("teavm") && Configuration.INSTANCE.parseJavaVersion(UserData.javaVersion) < 11.0) {
             errors.add(prop.getProperty("teavmWrongJavaVersion"));
         }
 
