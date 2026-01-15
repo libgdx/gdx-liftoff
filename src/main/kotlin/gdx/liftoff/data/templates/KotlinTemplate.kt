@@ -221,7 +221,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.lang.management.ManagementFactory
-import java.util.*
 
 /**
  * Adds some utilities to ensure that the JVM was started with the
@@ -269,165 +268,104 @@ object StartupHelper {
 	@JvmOverloads
 	fun startNewJvmIfRequired(redirectOutput: Boolean = true): Boolean {
 		val osName: String = System.getProperty("os.name").lowercase()
-		if (!osName.contains("mac")) {
-			if (osName.contains("windows")) {
-				// Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.
-				// By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
-				// If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
-				// By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
-				// We also temporarily change the "user.name" property to one without any chars that would be invalid.
-				// We revert our changes immediately after loading LWJGL3 natives.
-				val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
-				val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
-				val prevUser = System.getProperty("user.name", "libGDX_User")
-				System.setProperty("java.io.tmpdir", "$programData/libGDX-temp")
-				System.setProperty(
-					"user.name",
-					"User_${prevUser.hashCode()}_GDX${Version.VERSION}".replace('.', '_')
-				)
-				Lwjgl3NativesLoader.load()
-				System.setProperty("java.io.tmpdir", prevTmpDir)
-				System.setProperty("user.name", prevUser)
-			} else {
-				// not Mac or Windows, assuming Linux
-				if (isLinuxNvidia()) {
-					// check whether __GL_THREADED_OPTIMIZATIONS is already disabled
-					if (System.getenv("__GL_THREADED_OPTIMIZATIONS") == "0") return false
-
-					// check whether the JVM was previously restarted
-					// avoids looping, but most certainly leads to a crash
-					if (System.getProperty(JVM_RESTARTED_ARG) == "true") {
-						System.err.println(
-							"There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled."
-						)
-						return false
-					}
-
-					// Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
-					val jvmArgs: MutableList<String> = mutableListOf()
-					val separator: String = System.getProperty("file.separator", "/")
-					// The following line is used assuming you target Java 8, the minimum for LWJGL3.
-					val javaExecPath: String = arrayOf(
-						System.getProperty("java.home"), "bin", "java"
-					).joinToString(separator = separator)
-					// If targeting Java 9 or higher, you could use the following instead of the above line:
-					//val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
-					if (!File(javaExecPath).exists()) {
-						System.err.println(
-							"A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0"
-						)
-						return false
-					}
-
-					jvmArgs += javaExecPath
-					jvmArgs += "-D$JVM_RESTARTED_ARG=true"
-					jvmArgs += ManagementFactory.getRuntimeMXBean().inputArguments
-					jvmArgs += "-cp"
-					jvmArgs += System.getProperty("java.class.path")
-					jvmArgs += System.getenv("JAVA_MAIN_CLASS_${UNISTD.getpid()}") ?: run {
-						val trace = Thread.currentThread().stackTrace
-						if (trace.isNotEmpty()) trace[trace.lastIndex].className
-						else {
-							System.err.println("The main class could not be determined.")
-							return false
-						}
-					}
-
-					try {
-						if (!redirectOutput) {
-							val processBuilder = ProcessBuilder(jvmArgs)
-							processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
-							processBuilder.start()
-						} else {
-							val processBuilder = ProcessBuilder(jvmArgs)
-							processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
-							val process = processBuilder.redirectErrorStream(true).start()
-							val processOutput = BufferedReader(
-								InputStreamReader(process.inputStream)
-							)
-							var line: String? = null
-							while (processOutput.readLine().also { line = it } != null) {
-								println(line)
-							}
-							process.waitFor()
-						}
-					} catch (e: Exception) {
-						System.err.println("There was a problem restarting the JVM")
-						e.printStackTrace()
-					}
-
-					return true
-				}
-			}
+		if ("mac" in osName) return startNewJvm0(isMac = true, redirectOutput)
+		if ("windows" in osName) {
+			// Here, we are trying to work around an issue with how LWJGL3 loads its extracted .dll files.
+			// By default, LWJGL3 extracts to the directory specified by "java.io.tmpdir", which is usually the user's home.
+			// If the user's name has non-ASCII (or some non-alphanumeric) characters in it, that would fail.
+			// By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
+			// We also temporarily change the "user.name" property to one without any chars that would be invalid.
+			// We revert our changes immediately after loading LWJGL3 natives.
+			val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
+			val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
+			val prevUser = System.getProperty("user.name", "libGDX_User")
+			System.setProperty("java.io.tmpdir", "$programData\\libGDX-temp")
+			System.setProperty(
+				"user.name",
+				"User_${prevUser.hashCode()}_GDX${Version.VERSION}".replace('.', '_')
+			)
+			Lwjgl3NativesLoader.load()
+			System.setProperty("java.io.tmpdir", prevTmpDir)
+			System.setProperty("user.name", prevUser)
 			return false
 		}
+		return startNewJvm0(false, redirectOutput)
+	}
 
-		// There is no need for -XstartOnFirstThread on Graal native image
-		if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isNotEmpty()) {
-			return false
-		}
+	private const val MAC_ERR_MSG = "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument."
+	private const val LINUX_ERR_MSG = "There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled."
+	private const val MAC_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!"
+	private const val LINUX_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0"
 
-		// Checks if we are already on the main thread, such as from running via Construo.
-		val objcMsgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
-		val nsThread = ObjCRuntime.objc_getClass("NSThread")
-		val currentThread = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
-		val isMainThread = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
-		if (isMainThread) return false
+	fun startNewJvm0(isMac: Boolean, redirectOutput: Boolean): Boolean {
+		val processID: Long = if (isMac) LibC.getpid() else UNISTD.getpid().toLong()
+		if (!isMac) {
+			if (!isLinuxNvidia()) return false
+			// check whether __GL_THREADED_OPTIMIZATIONS is already disabled
+			if (System.getenv("__GL_THREADED_OPTIMIZATIONS") == "0") return false
+		} else {
+			// There is no need for -XstartOnFirstThread on Graal native image
+			if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isNotEmpty()) return false
 
-		val pid = LibC.getpid()
+			// Checks if we are already on the main thread, such as from running via Construo.
+			val objcMsgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
+			val nsThread = ObjCRuntime.objc_getClass("NSThread")
+			val currentThread = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
+			val isMainThread = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
+			if (isMainThread) return false
 
-		// check whether -XstartOnFirstThread is enabled
-		if ("1" == System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$pid")) {
-			return false
+			if (System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$processID") == "1") return false
 		}
 
 		// check whether the JVM was previously restarted
 		// avoids looping, but most certainly leads to a crash
-		if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
-			System.err.println(
-				"There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument."
-			)
+		if (System.getProperty(JVM_RESTARTED_ARG) == "true") {
+			System.err.println(if (isMac) MAC_ERR_MSG else LINUX_ERR_MSG)
 			return false
 		}
 
-		// Restart the JVM with -XstartOnFirstThread
-		val jvmArgs = ArrayList<String?>()
-		val separator = System.getProperty("file.separator", "/")
+		// Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
+		val jvmArgs: MutableList<String> = mutableListOf()
+		val separator: String = System.getProperty("file.separator", "/")
 		// The following line is used assuming you target Java 8, the minimum for LWJGL3.
-		val javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java"
+		val javaExecPath: String = arrayOf(
+			System.getProperty("java.home"), "bin", "java"
+		).joinToString(separator = separator)
 		// If targeting Java 9 or higher, you could use the following instead of the above line:
 		//val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
 		if (!File(javaExecPath).exists()) {
-			System.err.println(
-				"A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!"
-			)
+			System.err.println(if (isMac) MAC_ERR_MSG_2 else LINUX_ERR_MSG_2)
 			return false
 		}
-		jvmArgs.add(javaExecPath)
-		jvmArgs.add("-XstartOnFirstThread")
-		jvmArgs.add("-D$JVM_RESTARTED_ARG=true")
-		jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().inputArguments)
-		jvmArgs.add("-cp")
-		jvmArgs.add(System.getProperty("java.class.path"))
-		val mainClass = System.getenv("JAVA_MAIN_CLASS_$pid") ?: run {
+
+		jvmArgs += javaExecPath
+		if (isMac) jvmArgs += "-XstartOnFirstThread"
+		jvmArgs += "-D$JVM_RESTARTED_ARG=true"
+		jvmArgs += ManagementFactory.getRuntimeMXBean().inputArguments
+		jvmArgs += "-cp"
+		jvmArgs += System.getProperty("java.class.path")
+		jvmArgs += System.getenv("JAVA_MAIN_CLASS_$processID") ?: run {
 			val trace = Thread.currentThread().stackTrace
 			if (trace.isNotEmpty()) trace[trace.lastIndex].className
 			else {
-				System.err.println("The main class could not be determined.")
+				System.err.println("The main class could not be determined through stacktrace.")
 				return false
 			}
 		}
-		jvmArgs.add(mainClass)
+
 		try {
 			if (!redirectOutput) {
 				val processBuilder = ProcessBuilder(jvmArgs)
+				if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
 				processBuilder.start()
 			} else {
-				val process = ProcessBuilder(jvmArgs)
-					.redirectErrorStream(true).start()
-				val processOutput = BufferedReader(
-					InputStreamReader(process.inputStream)
-				)
+				// TODO: This code can be replaced with `.inheritIO()`.
+				//		Java (1.)8 is the minimum, so a 1.7 function is fine.
+				//		Plus the `.waitFor()` call _should_ mean this works fine.
+				val processBuilder = ProcessBuilder(jvmArgs)
+				if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
+				val process: Process = processBuilder.redirectErrorStream(true).start()
+				val processOutput = BufferedReader(InputStreamReader(process.inputStream))
 				var line: String? = null
 				while (processOutput.readLine().also { line = it } != null) {
 					println(line)
@@ -438,6 +376,7 @@ object StartupHelper {
 			System.err.println("There was a problem restarting the JVM")
 			e.printStackTrace()
 		}
+
 		return true
 	}
 
