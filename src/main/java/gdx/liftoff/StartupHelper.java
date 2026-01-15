@@ -18,6 +18,7 @@ package gdx.liftoff;
 
 import com.badlogic.gdx.Version;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.macosx.LibC;
 import org.lwjgl.system.macosx.ObjCRuntime;
 
@@ -93,6 +94,80 @@ public class StartupHelper {
                 Lwjgl3NativesLoader.load();
                 System.setProperty("java.io.tmpdir", prevTmpDir);
                 System.setProperty("user.name", prevUser);
+            } else {
+                // not Mac or Windows, assuming Linux
+                String vendor = GL11.glGetString(GL11.GL_VENDOR);
+                if(vendor != null && vendor.contains("NVIDIA")) {
+                    // check whether -XstartOnFirstThread is enabled
+                    if (!"0".equals(System.getenv("__GL_THREADED_OPTIMIZATIONS"))) {
+                        return false;
+                    }
+
+                    // check whether the JVM was previously restarted
+                    // avoids looping, but most certainly leads to a crash
+                    if ("true".equals(System.getProperty(JVM_RESTARTED_ARG))) {
+                        System.err.println(
+                            "There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled.");
+                        return false;
+                    }
+
+                    // Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
+                    ArrayList<String> jvmArgs = new ArrayList<>();
+                    String separator = System.getProperty("file.separator", "/");
+                    // The following line is used assuming you target Java 8, the minimum for LWJGL3.
+                    String javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java";
+                    // If targeting Java 9 or higher, you could use the following instead of the above line:
+                    //String javaExecPath = ProcessHandle.current().info().command().orElseThrow();
+
+                    if (!(new File(javaExecPath)).exists()) {
+                        System.err.println(
+                            "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0");
+                        return false;
+                    }
+
+                    jvmArgs.add(javaExecPath);
+                    jvmArgs.add("-D" + JVM_RESTARTED_ARG + "=true");
+                    jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+                    jvmArgs.add("-cp");
+                    jvmArgs.add(System.getProperty("java.class.path"));
+                    String mainClass = System.getenv("JAVA_MAIN_CLASS_" + org.lwjgl.system.linux.UNISTD.getpid());
+                    if (mainClass == null) {
+                        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+                        if (trace.length > 0) {
+                            mainClass = trace[trace.length - 1].getClassName();
+                        } else {
+                            System.err.println("The main class could not be determined.");
+                            return false;
+                        }
+                    }
+                    jvmArgs.add(mainClass);
+
+                    try {
+                        if (!redirectOutput) {
+                            ProcessBuilder processBuilder = new ProcessBuilder(jvmArgs);
+                            processBuilder.environment().put("__GL_THREADED_OPTIMIZATIONS", "0");
+                            processBuilder.start();
+                        } else {
+                            ProcessBuilder processBuilder = new ProcessBuilder(jvmArgs);
+                            processBuilder.environment().put("__GL_THREADED_OPTIMIZATIONS", "0");
+                            Process process = processBuilder.redirectErrorStream(true).start();
+                            BufferedReader processOutput = new BufferedReader(
+                                new InputStreamReader(process.getInputStream()));
+                            String line;
+
+                            while ((line = processOutput.readLine()) != null) {
+                                System.out.println(line);
+                            }
+
+                            process.waitFor();
+                        }
+                    } catch (Exception e) {
+                        System.err.println("There was a problem restarting the JVM");
+                        e.printStackTrace();
+                    }
+
+                    return true;
+                }
             }
             return false;
         }
