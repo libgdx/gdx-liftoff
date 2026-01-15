@@ -18,7 +18,6 @@ package gdx.liftoff;
 
 import com.badlogic.gdx.Version;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3NativesLoader;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.macosx.LibC;
 import org.lwjgl.system.macosx.ObjCRuntime;
 
@@ -60,6 +59,7 @@ public class StartupHelper {
         String[] drivers = new File("/proc/driver").list((dir, path) -> path.toUpperCase(Locale.ROOT).contains("NVIDIA"));
         return drivers != null && drivers.length > 0;
     }
+
     /**
      * Starts a new JVM if the application was started on macOS without the
      * {@code -XstartOnFirstThread} argument. This also includes some code for
@@ -105,8 +105,8 @@ public class StartupHelper {
             } else {
                 // not Mac or Windows, assuming Linux
                 if(isLinuxNvidia()) {
-                    // check whether -XstartOnFirstThread is enabled
-                    if (!"0".equals(System.getenv("__GL_THREADED_OPTIMIZATIONS"))) {
+                    // check whether __GL_THREADED_OPTIMIZATIONS is already disabled
+                    if ("0".equals(System.getenv("__GL_THREADED_OPTIMIZATIONS"))) {
                         return false;
                     }
 

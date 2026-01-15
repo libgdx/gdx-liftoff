@@ -236,6 +236,15 @@ class StartupHelper private constructor() {
 
     companion object {
         private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
+
+
+        /**
+         * Must only be called on Linux. Check OS first!
+         * @return true if NVIDIA drivers are in use on Linux, false otherwise
+         */
+        fun isLinuxNvidia() = !File("/proc/driver").list { _, path: String -> "NVIDIA" in path.uppercase() }.isNullOrEmpty()
+
+
         /**
          * Starts a new JVM if the application was started on macOS without the
          * `-XstartOnFirstThread` argument. This also includes some code for
@@ -279,6 +288,78 @@ class StartupHelper private constructor() {
                   Lwjgl3NativesLoader.load()
                   System.setProperty("java.io.tmpdir", prevTmpDir)
                   System.setProperty("user.name", prevUser)
+                } else {
+                    // not Mac or Windows, assuming Linux
+                    if(isLinuxNvidia()) {
+                        // check whether __GL_THREADED_OPTIMIZATIONS is already disabled
+                        if ("0" == System.getenv("__GL_THREADED_OPTIMIZATIONS")) {
+                            return false
+                        }
+
+                        // check whether the JVM was previously restarted
+                        // avoids looping, but most certainly leads to a crash
+                        if ("true" == System.getProperty(JVM_RESTARTED_ARG)) {
+                            System.err.println(
+                                "There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled.")
+                            return false
+                        }
+
+                        // Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
+                        val jvmArgs = ArrayList<String?>()
+                        val separator = System.getProperty("file.separator", "/")
+                        // The following line is used assuming you target Java 8, the minimum for LWJGL3.
+                        val javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java"
+                        // If targeting Java 9 or higher, you could use the following instead of the above line:
+                        //val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
+                        if (!File(javaExecPath).exists()) {
+                            System.err.println(
+                                "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0"
+                            )
+                            return false
+                        }
+
+                        jvmArgs.add(javaExecPath)
+                        jvmArgs.add("-D${"$"}JVM_RESTARTED_ARG=true")
+                        jvmArgs.addAll(ManagementFactory.getRuntimeMXBean().inputArguments)
+                        jvmArgs.add("-cp")
+                        jvmArgs.add(System.getProperty("java.class.path"))
+                        var mainClass = System.getenv("JAVA_MAIN_CLASS_${"$"}{org.lwjgl.system.linux.UNISTD.getpid()}")
+                        if (mainClass == null) {
+                            val trace = Thread.currentThread().stackTrace
+                            mainClass = if (trace.isNotEmpty()) {
+                                trace[trace.size - 1].className
+                            } else {
+                                System.err.println("The main class could not be determined.")
+                                return false
+                            }
+                        }
+                        jvmArgs.add(mainClass)
+
+                        try {
+                            if (!redirectOutput) {
+                                val processBuilder = ProcessBuilder(jvmArgs)
+                                processBuilder.environment()["__GL_THREADED_OPTIMIZATIONS"] = "0"
+                                processBuilder.start()
+                            } else {
+                                val processBuilder = ProcessBuilder(jvmArgs)
+                                processBuilder.environment()["__GL_THREADED_OPTIMIZATIONS"] = "0"
+                                val process = processBuilder.redirectErrorStream(true).start()
+                                val processOutput = BufferedReader(
+                                    InputStreamReader(process.inputStream)
+                                )
+                                var line: String?
+                                while (processOutput.readLine().also { line = it } != null) {
+                                    println(line)
+                                }
+                                process.waitFor()
+                            }
+                        } catch (e: Exception) {
+                            System.err.println("There was a problem restarting the JVM")
+                            e.printStackTrace()
+                        }
+
+                        return true
+                    }
                 }
                 return false
             }
@@ -317,7 +398,7 @@ class StartupHelper private constructor() {
             // The following line is used assuming you target Java 8, the minimum for LWJGL3.
             val javaExecPath = System.getProperty("java.home") + separator + "bin" + separator + "java"
             // If targeting Java 9 or higher, you could use the following instead of the above line:
-            //String javaExecPath = ProcessHandle.current().info().command().orElseThrow();
+            //val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
             if (!File(javaExecPath).exists()) {
                 System.err.println(
                     "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!"
