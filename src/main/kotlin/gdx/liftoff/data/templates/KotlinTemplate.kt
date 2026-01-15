@@ -217,9 +217,7 @@ import org.lwjgl.system.linux.UNISTD
 import org.lwjgl.system.macosx.LibC
 import org.lwjgl.system.macosx.ObjCRuntime
 
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
 import java.lang.management.ManagementFactory
 
 /**
@@ -300,6 +298,7 @@ object StartupHelper {
 	fun startNewJvm0(isMac: Boolean, redirectOutput: Boolean): Boolean {
 		val processID: Long = if (isMac) LibC.getpid() else UNISTD.getpid().toLong()
 		if (!isMac) {
+			// No need to restart non-NVIDIA Linux
 			if (!isLinuxNvidia()) return false
 			// check whether __GL_THREADED_OPTIMIZATIONS is already disabled
 			if (System.getenv("__GL_THREADED_OPTIMIZATIONS") == "0") return false
@@ -308,10 +307,10 @@ object StartupHelper {
 			if (System.getProperty("org.graalvm.nativeimage.imagecode", "").isNotEmpty()) return false
 
 			// Checks if we are already on the main thread, such as from running via Construo.
-			val objcMsgSend = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
-			val nsThread = ObjCRuntime.objc_getClass("NSThread")
-			val currentThread = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
-			val isMainThread = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
+			val objcMsgSend: Long = ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend")
+			val nsThread: Long = ObjCRuntime.objc_getClass("NSThread")
+			val currentThread: Long = JNI.invokePPP(nsThread, ObjCRuntime.sel_getUid("currentThread"), objcMsgSend)
+			val isMainThread: Boolean = JNI.invokePPZ(currentThread, ObjCRuntime.sel_getUid("isMainThread"), objcMsgSend)
 			if (isMainThread) return false
 
 			if (System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$processID") == "1") return false
@@ -320,21 +319,19 @@ object StartupHelper {
 		// check whether the JVM was previously restarted
 		// avoids looping, but most certainly leads to a crash
 		if (System.getProperty(JVM_RESTARTED_ARG) == "true") {
-			System.err.println(if (isMac) MAC_ERR_MSG else LINUX_ERR_MSG)
+			System.err.println(/*x =*/ if (isMac) MAC_ERR_MSG else LINUX_ERR_MSG)
 			return false
 		}
 
 		// Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
 		val jvmArgs: MutableList<String> = mutableListOf()
-		val separator: String = System.getProperty("file.separator", "/")
 		// The following line is used assuming you target Java 8, the minimum for LWJGL3.
-		val javaExecPath: String = arrayOf(
-			System.getProperty("java.home"), "bin", "java"
-		).joinToString(separator = separator)
+
+		val javaExecPath = "${System.getProperty("java.home")}/bin/java"
 		// If targeting Java 9 or higher, you could use the following instead of the above line:
 		//val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
 		if (!File(javaExecPath).exists()) {
-			System.err.println(if (isMac) MAC_ERR_MSG_2 else LINUX_ERR_MSG_2)
+			System.err.println(/*x =*/ if (isMac) MAC_ERR_MSG_2 else LINUX_ERR_MSG_2)
 			return false
 		}
 
@@ -354,24 +351,11 @@ object StartupHelper {
 		}
 
 		try {
-			if (!redirectOutput) {
-				val processBuilder = ProcessBuilder(jvmArgs)
-				if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
-				processBuilder.start()
-			} else {
-				// TODO: This code can be replaced with `.inheritIO()`.
-				//		Java (1.)8 is the minimum, so a 1.7 function is fine.
-				//		Plus the `.waitFor()` call _should_ mean this works fine.
-				val processBuilder = ProcessBuilder(jvmArgs)
-				if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
-				val process: Process = processBuilder.redirectErrorStream(true).start()
-				val processOutput = BufferedReader(InputStreamReader(process.inputStream))
-				var line: String? = null
-				while (processOutput.readLine().also { line = it } != null) {
-					println(line)
-				}
-				process.waitFor()
-			}
+			val processBuilder = ProcessBuilder(jvmArgs)
+			if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
+
+			if (!redirectOutput) processBuilder.start()
+			else processBuilder.inheritIO().start().waitFor()
 		} catch (e: Exception) {
 			System.err.println("There was a problem restarting the JVM")
 			e.printStackTrace()
