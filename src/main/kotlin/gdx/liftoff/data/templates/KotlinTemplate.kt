@@ -233,11 +233,12 @@ object StartupHelper {
 
 	private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
 
+  // Don't switch out the `.not()` postfix for a `!` prefix.  Can (and has) cause(d) confusion since the `!` is easy to miss.
 	/**
 	 * Must only be called on Linux. Check OS first!
 	 * @return true if NVIDIA drivers are in use on Linux, false otherwise
 	 */
-	fun isLinuxNvidia(): Boolean = !File("/proc/driver").list { _, path: String -> "NVIDIA" in path.uppercase() }.isNullOrEmpty()
+	fun isLinuxNvidia(): Boolean = File("/proc/driver").list { _, path: String -> "NVIDIA" in path.uppercase() }.isNullOrEmpty().not()
 
 	/**
 	 * Starts a new JVM if the application was started on macOS without the
@@ -274,9 +275,9 @@ object StartupHelper {
 			// By extracting to the relevant "ProgramData" folder, which is usually "C:\ProgramData", we avoid this.
 			// We also temporarily change the "user.name" property to one without any chars that would be invalid.
 			// We revert our changes immediately after loading LWJGL3 natives.
-			val programData = System.getenv("ProgramData") ?: "C:\\Temp\\"
-			val prevTmpDir = System.getProperty("java.io.tmpdir", programData)
-			val prevUser = System.getProperty("user.name", "libGDX_User")
+			val programData: String = System.getenv("ProgramData") ?: "C:\\Temp\\"
+			val prevTmpDir: String = System.getProperty("java.io.tmpdir", programData)
+			val prevUser: String = System.getProperty("user.name", "libGDX_User")
 			System.setProperty("java.io.tmpdir", "$programData\\libGDX-temp")
 			System.setProperty(
 				"user.name",
@@ -287,7 +288,7 @@ object StartupHelper {
 			System.setProperty("user.name", prevUser)
 			return false
 		}
-		return startNewJvm0(false, redirectOutput)
+		return startNewJvm0(isMac = false, redirectOutput)
 	}
 
 	private const val MAC_ERR_MSG = "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument."
@@ -323,10 +324,9 @@ object StartupHelper {
 			return false
 		}
 
-		// Restart the JVM with __GL_THREADED_OPTIMIZATIONS disabled
+		// Restart the JVM with updated (env || jvmArgs)
 		val jvmArgs: MutableList<String> = mutableListOf()
 		// The following line is used assuming you target Java 8, the minimum for LWJGL3.
-
 		val javaExecPath = "${System.getProperty("java.home")}/bin/java"
 		// If targeting Java 9 or higher, you could use the following instead of the above line:
 		//val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
