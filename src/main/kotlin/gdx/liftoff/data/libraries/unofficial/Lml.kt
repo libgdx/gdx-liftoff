@@ -1,5 +1,3 @@
-@file:Suppress("unused") // Extension classes accessed via reflection.
-
 package gdx.liftoff.data.libraries.unofficial
 
 import gdx.liftoff.data.libraries.Library
