@@ -508,7 +508,8 @@ public class StartupHelper {
 	 * @return true if NVIDIA drivers are in use on Linux, false otherwise
 	 */
 	public static boolean isLinuxNvidia() {
-		String[] drivers = new File("/proc/driver").list((_, path) -> path.toUpperCase(Locale.ROOT).contains("NVIDIA"));
+    // The 'dir' param can't be '_' because it's not supported in older Java versions.
+		String[] drivers = new File("/proc/driver").list((dir, path) -> path.toUpperCase(Locale.ROOT).contains("NVIDIA"));
 		if (drivers == null) return false;
 		return drivers.length > 0;
 	}
