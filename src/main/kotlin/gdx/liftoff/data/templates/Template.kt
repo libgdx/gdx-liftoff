@@ -470,7 +470,7 @@ public class Lwjgl3Launcher {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//Note, the above license and copyright applies to this file only.
+// Note, the above license and copyright applies to this file only.
 package ${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.Version;
@@ -497,7 +497,6 @@ import java.util.Locale;
  *  <li> Linux (NVIDIA GPUs only): Spawns a child JVM process with the {@code __GL_THREADED_OPTIMIZATIONS} {@link System#getenv(String) Environment Variable} set to {@code 0} (if it was not already).  This is required for LWJGL3 to work on Linux with NVIDIA GPUs.</li>
  * </ul>
  * <a href="https://jvm-gaming.org/t/starting-jvm-on-mac-with-xstartonfirstthread-programmatically/57547">Based on this java-gaming.org post by kappa</a>
- *
  * @author damios
  */
 public class StartupHelper {
@@ -509,7 +508,6 @@ public class StartupHelper {
 
 	/**
 	 * Must only be called on Linux.  Check OS first (or use short-circuit evaluation)!
-	 *
 	 * @return whether NVIDIA drivers are present on Linux.
 	 */
 	public static boolean isLinuxNvidia() {
@@ -532,7 +530,6 @@ public class StartupHelper {
 	 * 	// ...
 	 * }
 	 * </code></pre>
-	 *
 	 * @return whether a child JVM process was spawned or not.
 	 */
 	public static boolean startNewJvmIfRequired() {
@@ -551,7 +548,6 @@ public class StartupHelper {
 	 * 	// ...
 	 * }
 	 * </code></pre>
-	 *
 	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
 	 * @return whether a child JVM process was spawned or not.
 	 */
@@ -589,7 +585,6 @@ public class StartupHelper {
 	 * Spawns a child JVM process if on macOS or NVIDIA Linux.
 	 * <p>
 	 * All {@link System#getenv() Environment Variables} are copied to the child JVM process (if it is spawned), as specified by {@link ProcessBuilder#environment()};  The same applies for {@link System#getProperties() System Properties}.
-	 *
 	 * @param isMac whether the current OS is macOS.  If this is `false` then the current OS is assumed to be Linux (and an immediate check for NVIDIA drivers is performed).
 	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
 	 * @return whether a child JVM process was spawned or not.
