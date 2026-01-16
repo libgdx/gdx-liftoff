@@ -13,12 +13,12 @@ data class GdxVersion(
   companion object {
     fun parseGdxVersion(version: String): GdxVersion? {
       val trimmed: String = version.trim().removeSuffix("-SNAPSHOT")
-      val parts: List<String> = trimmed.split('.')
+      val parts: List<Int?> = trimmed.split('.').map(String::toIntOrNull)
       // mumble mumble klint
-      return if (parts.size < 3 || parts.any { it.toIntOrNull() == null })
+      return if (parts.size < 3 || parts.any { it == null })
         null
       else
-        GdxVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt())
+        GdxVersion(parts[0]!!, parts[1]!!, parts[2]!!)
     }
   }
 }

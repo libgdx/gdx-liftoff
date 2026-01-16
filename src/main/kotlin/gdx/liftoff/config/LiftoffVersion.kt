@@ -15,12 +15,12 @@ data class LiftoffVersion(
     @JvmStatic
     fun parseLiftoffVersion(version: String): LiftoffVersion? {
       val trimmed: String = version.trim().removeSuffix("-SNAPSHOT")
-      val parts: List<String> = trimmed.split('.')
+      val parts: List<Int?> = trimmed.split('.').map(String::toIntOrNull)
       // mumble mumble klint
-      return if (parts.size < 4 || parts.any { it.toIntOrNull() == null })
+      return if (parts.size < 4 || parts.any { it == null })
         null
       else
-        LiftoffVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt())
+        LiftoffVersion(parts[0]!!, parts[1]!!, parts[2]!!, parts[3]!!)
     }
   }
 }

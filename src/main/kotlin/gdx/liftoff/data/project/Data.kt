@@ -101,7 +101,7 @@ data class ExtensionsData(
   val officialExtensions: List<Library>,
   val thirdPartyExtensions: List<Library>,
 ) {
-  private val ids = (officialExtensions + thirdPartyExtensions).map(Library::id).toSet()
+  private val ids: Set<String> = (officialExtensions + thirdPartyExtensions).map(Library::id).toSet()
 
   fun isSelected(id: String): Boolean = id in ids
 }
