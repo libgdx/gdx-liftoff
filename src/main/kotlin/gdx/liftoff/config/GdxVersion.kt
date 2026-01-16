@@ -8,17 +8,17 @@ data class GdxVersion(
   val minor: Int,
   val revision: Int,
 ) : Comparable<GdxVersion> {
-  override operator fun compareTo(other: GdxVersion) = compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision })
+  override operator fun compareTo(other: GdxVersion) = compareValuesBy(this, other, GdxVersion::major, GdxVersion::minor, GdxVersion::revision)
 
   companion object {
     fun parseGdxVersion(version: String): GdxVersion? {
-      val trimmed = version.trim().removeSuffix("-SNAPSHOT")
-      val parts = trimmed.split('.')
-      return if (parts.size < 3 || parts.any { it.toIntOrNull() == null }) {
+      val trimmed: String = version.trim().removeSuffix("-SNAPSHOT")
+      val parts: List<String> = trimmed.split('.')
+      // mumble mumble klint
+      return if (parts.size < 3 || parts.any { it.toIntOrNull() == null })
         null
-      } else {
+      else
         GdxVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt())
-      }
     }
   }
 }

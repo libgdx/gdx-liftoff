@@ -9,17 +9,18 @@ data class LiftoffVersion(
   val revision: Int,
   val liftoff: Int,
 ) : Comparable<LiftoffVersion> {
-  override operator fun compareTo(other: LiftoffVersion) = compareValuesBy(this, other, { it.major }, { it.minor }, { it.revision }, { it.liftoff })
+  override operator fun compareTo(other: LiftoffVersion) = compareValuesBy(this, other, LiftoffVersion::major, LiftoffVersion::minor, LiftoffVersion::revision, LiftoffVersion::liftoff)
 
   companion object {
+    @JvmStatic
     fun parseLiftoffVersion(version: String): LiftoffVersion? {
-      val trimmed = version.trim().removeSuffix("-SNAPSHOT")
-      val parts = trimmed.split('.')
-      return if (parts.size < 4 || parts.any { it.toIntOrNull() == null }) {
+      val trimmed: String = version.trim().removeSuffix("-SNAPSHOT")
+      val parts: List<String> = trimmed.split('.')
+      // mumble mumble klint
+      return if (parts.size < 4 || parts.any { it.toIntOrNull() == null })
         null
-      } else {
+      else
         LiftoffVersion(parts[0].toInt(), parts[1].toInt(), parts[2].toInt(), parts[3].toInt())
-      }
     }
   }
 }

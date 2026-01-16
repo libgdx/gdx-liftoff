@@ -17,7 +17,7 @@ class Kotlin : Language {
   override val version = "2.3.0"
 
   override fun initiate(project: Project) {
-    project.rootGradle.buildDependencies.add("\"org.jetbrains.kotlin:kotlin-gradle-plugin:\$kotlinVersion\"")
+    project.rootGradle.buildDependencies.add($$"\"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion\"")
     project.rootGradle.plugins.add(id)
     project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "kotlin"))) }
     if (project.hasPlatform(Android.ID)) {
@@ -25,6 +25,6 @@ class Kotlin : Language {
       gradleFile.insertLatePlugin()
       gradleFile.srcFolders.add("'src/main/kotlin'")
     }
-    addDependency(project, "org.jetbrains.kotlin:kotlin-stdlib:\$kotlinVersion")
+    addDependency(project, $$"org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
   }
 }

@@ -798,9 +798,9 @@ public class Main extends ApplicationAdapter {
             @Override
             public void handleHttpResponse(HttpResponse httpResponse) {
                 latestStableVersion = httpResponse.getResultAsString().trim();
-                LiftoffVersion mine = LiftoffVersion.Companion.parseLiftoffVersion(prop.getProperty("liftoffVersion"));
+                LiftoffVersion mine = LiftoffVersion.parseLiftoffVersion(prop.getProperty("liftoffVersion"));
                 if(mine == null) return;
-                LiftoffVersion latest = LiftoffVersion.Companion.parseLiftoffVersion(latestStableVersion);
+                LiftoffVersion latest = LiftoffVersion.parseLiftoffVersion(latestStableVersion);
                 if(latest == null) return;
                 if (mine.compareTo(latest) < 0) {
                     Gdx.app.postRunnable(() -> {

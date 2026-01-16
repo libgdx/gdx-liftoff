@@ -4,6 +4,7 @@ import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.libraries.Library
+import kotlin.reflect.full.primaryConstructor
 
 /** Stores data represented by the main view over the settings section. */
 data class BasicProjectData(
@@ -56,8 +57,9 @@ data class AdvancedProjectData(
    */
   val gwtVersion: String
     get() =
-      if (Configuration.parseJavaVersion(javaVersion).compareTo(8.0) >= 0 ||
-        (gdxVersion.startsWith("1.13."))
+      if (
+        Configuration.parseJavaVersion(javaVersion) >= 8.0 ||
+        gdxVersion.startsWith("1.13.")
       ) {
         "2.11.0"
       } else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
@@ -69,20 +71,11 @@ data class AdvancedProjectData(
   /**
    * Version of xpenatan's TeaVM backend.
    */
-  val gdxTeaVMVersion: String
-    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.4.0 should be compatible with newer.
-    get() =
-      when (gdxVersion) {
-        "1.13.5" -> {
-          "1.2.1"
-        }
-        "1.13.1" -> {
-          "1.2.0"
-        }
-        else -> {
-          "1.4.0"
-        }
-      }
+  val gdxTeaVMVersion: String = when (gdxVersion) { // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.4.0 should be compatible with newer.
+    "1.13.5" -> "1.2.1"
+    "1.13.1" -> "1.2.0"
+    else -> "1.4.0"
+  }
 
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
@@ -99,7 +92,7 @@ data class LanguagesData(
 
   inline fun <reified T : Language> selectLanguage() {
     if (list.any { it is T }) return
-    list.add(T::class.java.getDeclaredConstructor().newInstance())
+    list.add(T::class.primaryConstructor!!.call())
   }
 }
 
