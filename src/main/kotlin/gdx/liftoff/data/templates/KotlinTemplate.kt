@@ -206,7 +206,7 @@ fun main() {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//Note, the above license and copyright applies to this file only.
+// Note, the above license and copyright applies to this file only.
 package $${project.basic.rootPackage}.lwjgl3
 
 import com.badlogic.gdx.Version
@@ -221,10 +221,12 @@ import java.io.File
 import java.lang.management.ManagementFactory
 
 /**
- * Adds some utilities to ensure that the JVM was started with the
- * `-XstartOnFirstThread` argument, which is required on macOS for LWJGL 3
- * to function. Also helps on Windows when users have names with characters from
- * outside the Latin alphabet, a common cause of startup crashes.
+ * A helper object for game startup, featuring three utilities related to LWJGL3 on various operating systems.
+ *
+ * The utilities are as follows:
+ * - Windows: Prevents a common crash related to LWJGL3's extraction of shared library files.
+ * - macOS: Spawns a child JVM process with `-XstartOnFirstThread` in the JVM args (if it was not already).  This is required for LWJGL3 to work on macOS.
+ * - Linux (NVIDIA GPUs only): Spawns a child JVM process with the `__GL_THREADED_OPTIMIZATIONS` [Environment Variable][System.getenv] set to `0` (if it was not already).  This is required for LWJGL3 to work on Linux with NVIDIA GPUs.
  *
  * [Based on this java-gaming.org post by kappa](https://jvm-gaming.org/t/starting-jvm-on-mac-with-xstartonfirstthread-programmatically/57547)
  * @author damios
@@ -233,36 +235,29 @@ object StartupHelper {
 
 	private const val JVM_RESTARTED_ARG = "jvmIsRestarted"
 
-  // Don't switch out the `.not()` postfix for a `!` prefix.  Can (and has) cause(d) confusion since the `!` is easy to miss.
+	// Don't switch out the `.not()` postfix for a `!` prefix.  Can (and has) cause(d) confusion since the `!` is easy to miss.
 	/**
-	 * Must only be called on Linux. Check OS first!
-	 * @return true if NVIDIA drivers are in use on Linux, false otherwise
+	 * Must only be called on Linux.  Check OS first (or use short-circuit evaluation)!
+	 * @return whether NVIDIA drivers are present on Linux.
 	 */
 	fun isLinuxNvidia(): Boolean = File("/proc/driver").list { _, path: String -> "NVIDIA" in path.uppercase() }.isNullOrEmpty().not()
 
 	/**
-	 * Starts a new JVM if the application was started on macOS without the
-	 * `-XstartOnFirstThread` argument. This also includes some code for
-	 * Windows, for the case where the user's home directory includes certain
-	 * non-Latin-alphabet characters (without this code, most LWJGL3 apps fail
-	 * immediately for those users). Returns whether a new JVM was started and
-	 * thus no code should be executed.
+	 * Applies the utilities as described by [StartupHelper]'s KDoc.
+	 *
+	 * All [Environment Variables][System.getenv] are copied to the child JVM process (if it is spawned), as specified by [ProcessBuilder.environment];  The same applies for [System Properties][System.getProperties].
 	 *
 	 * **Usage:**
 	 *
 	 * ```
 	 * fun main() {
-	 *   if (StartupHelper.startNewJvmIfRequired(true)) return // This handles macOS support and helps on Windows.
-	 *   // after this is the actual main method code
+	 *   if (StartupHelper.startNewJvmIfRequired()) return
+	 *   // ...
 	 * }
 	 * ```
 	 *
-	 * @param redirectOutput
-	 * whether the output of the new JVM should be rerouted to the
-	 * old JVM, so it can be accessed in the same place; keeps the
-	 * old JVM running if enabled
-	 * @return whether a new JVM was started and thus no code should be executed
-	 * in this one
+	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
+	 * @return whether a child JVM process was spawned or not.
 	 */
 	@JvmOverloads
 	fun startNewJvmIfRequired(redirectOutput: Boolean = true): Boolean {
@@ -291,11 +286,18 @@ object StartupHelper {
 		return startNewJvm0(isMac = false, redirectOutput)
 	}
 
-	private const val MAC_ERR_MSG = "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument."
-	private const val LINUX_ERR_MSG = "There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled."
-	private const val MAC_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!"
-	private const val LINUX_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0"
+	private const val MAC_JRE_ERR_MSG: String = "A Java installation could not be found.  If you are distributing this app with a bundled JRE, be sure to set the '-XstartOnFirstThread' argument manually!"
+	private const val LINUX_JRE_ERR_MSG: String = "A Java installation could not be found.  If you are distributing this app with a bundled JRE, be sure to set the environment variable '__GL_THREADED_OPTIMIZATIONS' to '0'!"
 
+	/**
+	 * Spawns a child JVM process if on macOS or NVIDIA Linux.
+	 *
+	 * All [Environment Variables][System.getenv] are copied to the child JVM process (if it is spawned), as specified by [ProcessBuilder.environment];  The same applies for [System Properties][System.getProperties].
+	 *
+	 * @param isMac whether the current OS is macOS.  If this is `false` then the current OS is assumed to be Linux (and an immediate check for NVIDIA drivers is performed).
+	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
+	 * @return whether a child JVM process was spawned or not.
+	 */
 	fun startNewJvm0(isMac: Boolean, redirectOutput: Boolean): Boolean {
 		val processID: Long = if (isMac) LibC.getpid() else UNISTD.getpid().toLong()
 		if (!isMac) {
@@ -317,21 +319,21 @@ object StartupHelper {
 			if (System.getenv("JAVA_STARTED_ON_FIRST_THREAD_$processID") == "1") return false
 		}
 
-		// check whether the JVM was previously restarted
-		// avoids looping, but most certainly leads to a crash
+		// Check whether this JVM process is a child JVM process already.
+		// This state shouldn't (usually) be reachable, but this stops us from endlessly spawning new child JVM processes.
 		if (System.getProperty(JVM_RESTARTED_ARG) == "true") {
-			System.err.println(/*x =*/ if (isMac) MAC_ERR_MSG else LINUX_ERR_MSG)
+			System.err.println("The current JVM process is a spawned child JVM process, but StartupHelper has attempted to spawn another child JVM process!  This is a broken state, and should not normally happen!  Your game may crash or not function properly!")
 			return false
 		}
 
-		// Restart the JVM with updated (env || jvmArgs)
+		// Spawn the child JVM process with updated environment variables or JVM args
 		val jvmArgs: MutableList<String> = mutableListOf()
 		// The following line is used assuming you target Java 8, the minimum for LWJGL3.
 		val javaExecPath = "${System.getProperty("java.home")}/bin/java"
 		// If targeting Java 9 or higher, you could use the following instead of the above line:
 		//val javaExecPath = ProcessHandle.current().info().command().orElseThrow()
 		if (!File(javaExecPath).exists()) {
-			System.err.println(/*x =*/ if (isMac) MAC_ERR_MSG_2 else LINUX_ERR_MSG_2)
+			System.err.println(/*x =*/ if (isMac) MAC_JRE_ERR_MSG else LINUX_JRE_ERR_MSG)
 			return false
 		}
 
@@ -342,8 +344,8 @@ object StartupHelper {
 		jvmArgs += "-cp"
 		jvmArgs += System.getProperty("java.class.path")
 		jvmArgs += System.getenv("JAVA_MAIN_CLASS_$processID") ?: run {
-			val trace = Thread.currentThread().stackTrace
-			if (trace.isNotEmpty()) trace[trace.lastIndex].className
+			val trace: Array<StackTraceElement> = Thread.currentThread().stackTrace
+			if (trace.isNotEmpty()) return@run trace[trace.lastIndex].className
 			else {
 				System.err.println("The main class could not be determined through stacktrace.")
 				return false
@@ -352,7 +354,7 @@ object StartupHelper {
 
 		try {
 			val processBuilder = ProcessBuilder(jvmArgs)
-			if (!isMac) processBuilder.env("__GL_THREADED_OPTIMIZATIONS", "0")
+			if (!isMac) processBuilder.environment()["__GL_THREADED_OPTIMIZATIONS"] = "0"
 
 			if (!redirectOutput) processBuilder.start()
 			else processBuilder.inheritIO().start().waitFor()
@@ -363,8 +365,6 @@ object StartupHelper {
 
 		return true
 	}
-
-	private fun ProcessBuilder.env(name: String, value: String) = this.environment().set(name, value)
 }
 """
 
