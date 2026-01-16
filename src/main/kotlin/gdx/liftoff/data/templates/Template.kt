@@ -405,11 +405,11 @@ public class SVMRegistrationFeature implements Feature {
   }
 
   fun getLwjgl3LauncherContent(project: Project): String =
-    """package ${project.basic.rootPackage}.lwjgl3;
+    $$"""package $${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ${project.basic.rootPackage}.${project.basic.mainClass};
+import $${project.basic.rootPackage}.$${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
@@ -419,12 +419,12 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new ${project.basic.mainClass}(), getDefaultConfiguration());
+        return new Lwjgl3Application(new $${project.basic.mainClass}(), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
-        configuration.setTitle("${project.basic.name}");
+        configuration.setTitle("$${project.basic.name}");
         //// Vsync limits the frames per second to what your hardware can display, and helps eliminate
         //// screen tearing. This setting doesn't always work on Linux, so the line after is a safeguard.
         configuration.useVsync(true);
@@ -435,7 +435,7 @@ public class Lwjgl3Launcher {
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 
-        configuration.setWindowedMode($width, $height);
+        configuration.setWindowedMode($$width, $$height);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
@@ -444,7 +444,7 @@ public class Lwjgl3Launcher {
         //// with Apple Silicon that have to emulate compatibility with OpenGL anyway, and more.
         //// This uses the dependency `com.badlogicgames.gdx:gdx-lwjgl3-angle` to function.
         //// You would need to add this line to lwjgl3/build.gradle , below the dependency on `gdx-backend-lwjgl3`:
-        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:${'$'}gdxVersion"
+        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
         //// You can choose to add the following line and the mentioned dependency if you want; they
         //// are not intended for games that use GL30 (which is compatibility with OpenGL ES 3.0).
         //// Know that it might not work well in some cases.
