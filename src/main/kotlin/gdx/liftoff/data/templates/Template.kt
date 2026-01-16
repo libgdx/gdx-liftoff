@@ -488,12 +488,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Adds some utilities to ensure that the JVM was started with the
- * {@code -XstartOnFirstThread} argument, which is required on macOS for LWJGL 3
- * to function. Also helps on Windows when users have names with characters from
- * outside the Latin alphabet, a common cause of startup crashes.
- * <br>
+ * A helper object for game startup, featuring three utilities related to LWJGL3 on various operating systems.
+ * <p>
+ * The utilities are as follows:
+ * <ul>
+ *  <li> Windows: Prevents a common crash related to LWJGL3's extraction of shared library files.</li>
+ *  <li> macOS: Spawns a child JVM process with {@code -XstartOnFirstThread} in the JVM args (if it was not already).  This is required for LWJGL3 to work on macOS.</li>
+ *  <li> Linux (NVIDIA GPUs only): Spawns a child JVM process with the {@code __GL_THREADED_OPTIMIZATIONS} {@link System#getenv(String) Environment Variable} set to {@code 0} (if it was not already).  This is required for LWJGL3 to work on Linux with NVIDIA GPUs.</li>
+ * </ul>
  * <a href="https://jvm-gaming.org/t/starting-jvm-on-mac-with-xstartonfirstthread-programmatically/57547">Based on this java-gaming.org post by kappa</a>
+ *
  * @author damios
  */
 public class StartupHelper {
@@ -504,61 +508,52 @@ public class StartupHelper {
 	private static final String JVM_RESTARTED_ARG = "jvmIsRestarted";
 
 	/**
-	 * Must only be called on Linux. Check OS first!
-	 * @return true if NVIDIA drivers are in use on Linux, false otherwise
+	 * Must only be called on Linux.  Check OS first (or use short-circuit evaluation)!
+	 *
+	 * @return whether NVIDIA drivers are present on Linux.
 	 */
 	public static boolean isLinuxNvidia() {
-    // The 'dir' param can't be '_' because it's not supported in older Java versions.
+		// The 'dir' param can't be '_' because it's not supported in older Java versions.
+		// noinspection unused
 		String[] drivers = new File("/proc/driver").list((dir, path) -> path.toUpperCase(Locale.ROOT).contains("NVIDIA"));
 		if (drivers == null) return false;
 		return drivers.length > 0;
 	}
 
 	/**
-	 * Starts a new JVM if the application was started on macOS without the
-	 * {@code -XstartOnFirstThread} argument. Returns whether a new JVM was
-	 * started and thus no code should be executed. Redirects the output of the
-	 * new JVM to the old one.
+	 * Applies the utilities as described by {@link StartupHelper}'s Javadoc.
 	 * <p>
-	 * <u>Usage:</u>
-	 *
+	 * All {@link System#getenv() Environment Variables} are copied to the child JVM process (if it is spawned), as specified by {@link ProcessBuilder#environment()};  The same applies for {@link System#getProperties() System Properties}.
+	 * <p>
+	 * <b>Usage:</b>
 	 * <pre><code>
-	 * public static void main(String... args) {
-	 * 	if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-	 * 	// the actual main method code
+	 * public static void main(String[] args) {
+	 * 	if (StartupHelper.startNewJvmIfRequired(...)) return;
+	 * 	// ...
 	 * }
 	 * </code></pre>
 	 *
-	 * @return whether a new JVM was started and thus no code should be executed
-	 *         in this one
+	 * @return whether a child JVM process was spawned or not.
 	 */
 	public static boolean startNewJvmIfRequired() {
 		return startNewJvmIfRequired(true);
 	}
 
 	/**
-	 * Starts a new JVM if the application was started on macOS without the
-	 * {@code -XstartOnFirstThread} argument. This also includes some code for
-	 * Windows, for the case where the user's home directory includes certain
-	 * non-Latin-alphabet characters (without this code, most LWJGL3 apps fail
-	 * immediately for those users). Returns whether a new JVM was started and
-	 * thus no code should be executed.
+	 * Applies the utilities as described by {@link StartupHelper}'s Javadoc.
 	 * <p>
-	 * <u>Usage:</u>
-	 *
+	 * All {@link System#getenv() Environment Variables} are copied to the child JVM process (if it is spawned), as specified by {@link ProcessBuilder#environment()};  The same applies for {@link System#getProperties() System Properties}.
+	 * <p>
+	 * <b>Usage:</b>
 	 * <pre><code>
-	 * public static void main(String... args) {
-	 * 	if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
-	 * 	// after this is the actual main method code
+	 * public static void main(String[] args) {
+	 * 	if (StartupHelper.startNewJvmIfRequired(...)) return;
+	 * 	// ...
 	 * }
 	 * </code></pre>
 	 *
-	 * @param redirectOutput
-	 *            whether the output of the new JVM should be rerouted to the
-	 *            old JVM, so it can be accessed in the same place; keeps the
-	 *            old JVM running if enabled
-	 * @return whether a new JVM was started and thus no code should be executed
-	 *         in this one
+	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
+	 * @return whether a child JVM process was spawned or not.
 	 */
 	public static boolean startNewJvmIfRequired(boolean redirectOutput) {
 		String osName = System.getProperty("os.name").toLowerCase(Locale.ROOT);
@@ -587,11 +582,18 @@ public class StartupHelper {
 		return startNewJvm0(/*isMac =*/ false, redirectOutput);
 	}
 
-	private static final String MAC_ERR_MSG = "There was a problem evaluating whether the JVM was started with the -XstartOnFirstThread argument.";
-	private static final String LINUX_ERR_MSG = "There was a problem evaluating whether the JVM was restarted with __GL_THREADED_OPTIMIZATIONS disabled.";
-	private static final String MAC_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the -XstartOnFirstThread argument manually!";
-	private static final String LINUX_ERR_MSG_2 = "A Java installation could not be found. If you are distributing this app with a bundled JRE, be sure to set the environment variable __GL_THREADED_OPTIMIZATIONS=0";
+	private static final String MAC_JRE_ERR_MSG = "A Java installation could not be found.  If you are distributing this app with a bundled JRE, be sure to set the '-XstartOnFirstThread' argument manually!";
+	private static final String LINUX_JRE_ERR_MSG = "A Java installation could not be found.  If you are distributing this app with a bundled JRE, be sure to set the environment variable '__GL_THREADED_OPTIMIZATIONS' to '0'!";
 
+	/**
+	 * Spawns a child JVM process if on macOS or NVIDIA Linux.
+	 * <p>
+	 * All {@link System#getenv() Environment Variables} are copied to the child JVM process (if it is spawned), as specified by {@link ProcessBuilder#environment()};  The same applies for {@link System#getProperties() System Properties}.
+	 *
+	 * @param isMac whether the current OS is macOS.  If this is `false` then the current OS is assumed to be Linux (and an immediate check for NVIDIA drivers is performed).
+	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
+	 * @return whether a child JVM process was spawned or not.
+	 */
 	public static boolean startNewJvm0(boolean isMac, boolean redirectOutput) {
 		long processID = getProcessID(isMac);
 		if (!isMac) {
@@ -613,21 +615,21 @@ public class StartupHelper {
 			if ("1".equals(System.getenv("JAVA_STARTED_ON_FIRST_THREAD_" + processID))) return false;
 		}
 
-		// check whether the JVM was previously restarted
-		// avoids looping, but most certainly leads to a crash
+		// Check whether this JVM process is a child JVM process already.
+		// This state shouldn't (usually) be reachable, but this stops us from endlessly spawning new child JVM processes.
 		if ("true".equals(System.getProperty(JVM_RESTARTED_ARG))) {
-			System.err.println(/*x =*/ getErrMsg(isMac));
+			System.err.println("The current JVM process is a spawned child JVM process, but StartupHelper has attempted to spawn another child JVM process!  This is a broken state, and should not normally happen!  Your game may crash or not function properly!");
 			return false;
 		}
 
-		// Restart the JVM with updated (env || jvmArgs)
+		// Spawn the child JVM process with updated environment variables or JVM args
 		List<String> jvmArgs = new ArrayList<>();
 		// The following line is used assuming you target Java 8, the minimum for LWJGL3.
 		String javaExecPath = System.getProperty("java.home") + "/bin/java";
 		// If targeting Java 9 or higher, you could use the following instead of the above line:
 		//String javaExecPath = ProcessHandle.current().info().command().orElseThrow()
 		if (!(new File(javaExecPath).exists())) {
-			System.err.println(/*x =*/ getErrMsg2(isMac));
+			System.err.println(/*x =*/ getJreErrMsg(isMac));
 			return false;
 		}
 
@@ -663,14 +665,9 @@ public class StartupHelper {
 		return true;
 	}
 
-	private static String getErrMsg(boolean isMac) {
-		if (isMac) return MAC_ERR_MSG;
-		else return LINUX_ERR_MSG;
-	}
-
-	private static String getErrMsg2(boolean isMac) {
-		if (isMac) return MAC_ERR_MSG_2;
-		else return LINUX_ERR_MSG_2;
+	private static String getJreErrMsg(boolean isMac) {
+		if (isMac) return MAC_JRE_ERR_MSG;
+		else return LINUX_JRE_ERR_MSG;
 	}
 
 	private static long getProcessID(boolean isMac) {

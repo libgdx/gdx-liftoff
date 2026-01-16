@@ -251,11 +251,10 @@ object StartupHelper {
 	 *
 	 * ```
 	 * fun main() {
-	 *   if (StartupHelper.startNewJvmIfRequired()) return
+	 *   if (StartupHelper.startNewJvmIfRequired(...)) return
 	 *   // ...
 	 * }
 	 * ```
-	 *
 	 * @param redirectOutput whether I/O should be inherited in the child JVM process.  Please note that enabling this will block the thread until the child JVM process stops executing.
 	 * @return whether a child JVM process was spawned or not.
 	 */
