@@ -1,7 +1,7 @@
-@file:Suppress("unused") // Extension classes accessed via reflection.
-
 package gdx.liftoff.data.libraries.unofficial
 
+import gdx.liftoff.data.libraries.Library
+import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
@@ -26,12 +26,34 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Eben Howard
  * @author Tommy Ettinger
  */
-abstract class SquidSquadExtension : ThirdPartyExtension() {
-  override val defaultVersion = "4.0.4"
+abstract class SquidSquadExtension : Library {
+  override val defaultVersion = "4.0.5"
+  override val official = false
+  override val repository: Repository = Repository.MavenCentral
   override val group = "com.squidpony"
   override val name: String
     get() = id.lowercase()
   override val url = "https://github.com/yellowstonegames/SquidSquad"
+
+  override fun initiate(project: Project) {
+    project.properties["squidSquadVersion"] = defaultVersion
+    addDependency(project, Core.ID, "$group:$name")
+    initiateDependencies(project)
+  }
+
+  open fun initiateDependencies(project: Project) {}
+
+  override fun addDependency(
+    project: Project,
+    platform: String,
+    dependency: String,
+  ) {
+    if (dependency.count { it == ':' } > 1) {
+      super.addDependency(project, platform, dependency.substringBeforeLast(':') + ":\$squidSquadVersion:" + dependency.substringAfterLast(':'))
+    } else {
+      super.addDependency(project, platform, "$dependency:\$squidSquadVersion")
+    }
+  }
 }
 
 /**
