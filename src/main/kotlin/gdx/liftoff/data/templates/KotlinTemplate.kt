@@ -3,6 +3,7 @@ package gdx.liftoff.data.templates
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
 import gdx.liftoff.data.project.Project
+import org.intellij.lang.annotations.Language
 
 /**
  * Basic interface for Kotlin project templates. Adds a Kotlin launcher for each platform.
@@ -20,6 +21,7 @@ interface KotlinTemplate : Template {
     project.languages.selectLanguage<Kotlin>()
   }
 
+  @Language("kotlin")
   override fun getLwjgl2LauncherContent(project: Project): String =
     $$"""@file:JvmName("Lwjgl2Launcher")
 
@@ -40,8 +42,7 @@ fun main() {
             addIcon("libgdx$it.png", Files.FileType.Internal)
         }
     })
-}
-"""
+}"""
 
   override fun getAndroidLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.android
@@ -82,6 +83,7 @@ fun main() {
 }
 """
 
+  @Language("kotlin")
   override fun getIOSMOELauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}
 
@@ -113,6 +115,7 @@ fun main() {
         null, IOSLauncher::class.java.name)
 }"""
 
+  @Language("kotlin")
   override fun getIOSMOESVMRegistrationContent(project: Project): String =
     """package ${project.basic.rootPackage}
 
@@ -144,6 +147,7 @@ class SVMRegistrationFeature : Feature {
     }
 }"""
 
+  @Language("kotlin")
   override fun getLwjgl3LauncherContent(project: Project): String =
     $$"""@file:JvmName("Lwjgl3Launcher")
 
@@ -187,12 +191,11 @@ fun main() {
 //        setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0)
 
     })
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getLwjgl3StartupContent(project: Project): String =
-    $$"""
-/*
+    $$"""/*
  * Copyright 2020 damios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -364,9 +367,9 @@ object StartupHelper {
 
 		return true
 	}
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getIOSLauncherContent(project: Project): String =
     """@file:JvmName("IOSLauncher")
 
@@ -398,6 +401,7 @@ class IOSLauncher : IOSApplication.Delegate() {
     }
 }"""
 
+  @Language("kotlin")
   override fun getGwtLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.gwt;
 
@@ -422,6 +426,7 @@ public class GwtLauncher extends GwtApplication {
 }
 """
 
+  @Language("kotlin")
   override fun getServerLauncherContent(project: Project) =
     """@file:JvmName("ServerLauncher")
 
@@ -430,9 +435,9 @@ package ${project.basic.rootPackage}.server
 /** Launches the server application. */
 fun main() {
     TODO("Implement server application.")
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getTeaVMLauncherContent(project: Project): String =
     """@file:JvmName("TeaVMLauncher")
 
@@ -453,9 +458,9 @@ fun main() {
         height = 0
     }
     TeaApplication(${project.basic.mainClass}(), config)
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getTeaVMBuilderContent(project: Project) =
     """package ${project.basic.rootPackage}.teavm
 
@@ -536,6 +541,5 @@ ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemic
 
         TeaBuilder.build(tool)
     }
-}
-"""
+}"""
 }

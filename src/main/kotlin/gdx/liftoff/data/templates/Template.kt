@@ -15,6 +15,7 @@ import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
+import org.intellij.lang.annotations.Language
 
 /**
  * Interface shared by all project templates. Templates should be annotated with ProjectTemplate.
@@ -87,6 +88,7 @@ interface Template {
     )
   }
 
+  @Language("java")
   fun getLwjgl2LauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.lwjgl2;
 
@@ -132,6 +134,7 @@ public class Lwjgl2Launcher {
     )
   }
 
+  @Language("java")
   fun getGwtLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.gwt;
 
@@ -179,8 +182,7 @@ public class GwtLauncher extends GwtApplication {""" + (
         //            Gdx.graphics.setWindowedMode(width, height);
         //        }
         //    }
-        ////END OF CODE FOR RESIZABLE APPLICATION
-"""
+        ////END OF CODE FOR RESIZABLE APPLICATION"""
       } else {
         """
         @Override
@@ -193,8 +195,7 @@ public class GwtLauncher extends GwtApplication {""" + (
             // If you want a fixed size application, comment out the above resizable section,
             // and uncomment below:
             //return new GwtApplicationConfiguration($width, $height);
-        }
-"""
+        }"""
       }
     ) +
 """
@@ -202,8 +203,7 @@ public class GwtLauncher extends GwtApplication {""" + (
         public ApplicationListener createApplicationListener () {
             return new ${project.basic.mainClass}();
         }
-}
-"""
+}"""
 
   fun addAndroidLauncher(project: Project) {
     addSourceFile(
@@ -215,6 +215,7 @@ public class GwtLauncher extends GwtApplication {""" + (
     )
   }
 
+  @Language("java")
   fun getAndroidLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.android;
 
@@ -245,6 +246,7 @@ public class AndroidLauncher extends AndroidApplication {
     )
   }
 
+  @Language("java")
   fun getHeadlessLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.headless;
 
@@ -284,6 +286,7 @@ public class HeadlessLauncher {
     )
   }
 
+  @Language("java")
   fun getIOSLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -319,6 +322,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
     )
   }
 
+  @Language("java")
   fun getIOSMOELauncherContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -355,6 +359,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
     )
   }
 
+  @Language("java")
   fun getIOSMOESVMRegistrationContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -404,6 +409,7 @@ public class SVMRegistrationFeature implements Feature {
     )
   }
 
+  @Language("java")
   fun getLwjgl3LauncherContent(project: Project): String =
     $$"""package $${project.basic.rootPackage}.lwjgl3;
 
@@ -454,9 +460,9 @@ public class Lwjgl3Launcher {
     }
 }"""
 
+  @Language("java")
   fun getLwjgl3StartupContent(project: Project): String =
-    """
-/*
+    """/*
  * Copyright 2020 damios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -682,8 +688,7 @@ public class StartupHelper {
 		if (isMac) return LibC.getpid();
 		else return UNISTD.getpid();
 	}
-}
-"""
+}"""
 
   fun addServerLauncher(project: Project) {
     addSourceFile(
@@ -695,6 +700,7 @@ public class StartupHelper {
     )
   }
 
+  @Language("java")
   fun getServerLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.server;
 
@@ -722,6 +728,7 @@ public class ServerLauncher {
     )
   }
 
+  @Language("java")
   fun getTeaVMLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
@@ -743,9 +750,9 @@ public class TeaVMLauncher {
         config.height = 0;
         new TeaApplication(new ${project.basic.mainClass}(), config);
     }
-}
-"""
+}"""
 
+  @Language("java")
   fun getTeaVMBuilderContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
@@ -808,7 +815,7 @@ ${generateTeaVMReflectionIncludes(project)}
         TeaVMTool tool = new TeaVMTool();
 
         tool.setMainClass(TeaVMLauncher.class.getName());
-        // For many (or most) applications, using a high optimization won't add much to build time.
+        // For many (or most) applications, using a high optimisation won't add much to build time.
         // If your builds take too long, and runtime performance doesn't matter, you can change ADVANCED to SIMPLE .
         // Using SIMPLE makes debugging easier, also, so it is used when DEBUG is enabled.
         tool.setOptimizationLevel(DEBUG ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED);
@@ -819,7 +826,7 @@ ${generateTeaVMReflectionIncludes(project)}
         // If DEBUG is set to true, these lines allow step-debugging JVM languages from the browser,
         // setting breakpoints in Java code and stopping in the appropriate place in generated browser code.
         // This may work reasonably well when targeting WEBASSEMBLY_GC, but it usually works better with JAVASCRIPT .
-        if(DEBUG) {
+        if (DEBUG) {
             tool.setDebugInformationGenerated(true);
             tool.setSourceMapsFileGenerated(true);
             tool.setWasmDebugInfoLevel(WasmDebugInfoLevel.FULL);
@@ -829,8 +836,7 @@ ${generateTeaVMReflectionIncludes(project)}
 
         TeaBuilder.build(tool);
     }
-}
-"""
+}"""
 
   fun generateTeaVMReflectionIncludes(
     project: Project,
