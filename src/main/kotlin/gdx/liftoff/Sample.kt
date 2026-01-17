@@ -46,135 +46,91 @@ import kotlin.system.exitProcess
 enum class Preset {
   /** Includes the official recommended platforms and a basic template. */
   DEFAULT {
-    override val projectName: String
-      get() = "gdx-liftoff-demo"
-    override val rootPackage: String
-      get() = "gdx.liftoff"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), GWT())
+    override val projectName: String = "gdx-liftoff-demo"
+    override val rootPackage: String = "gdx.liftoff"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), GWT())
     override val languages: List<Language> = emptyList()
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.empty()
+    override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
-    override val template: Template
-      get() = ClassicTemplate()
+    override val template: Template = ClassicTemplate()
   },
 
   /** Includes the official platforms supporting Kotlin, as well as TeaVM. Uses a basic Kotlin template. */
   KOTLIN {
-    override val projectName: String
-      get() = "gdx-liftoff-demo-kotlin"
-    override val rootPackage: String
-      get() = "gdx.liftoff"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
-    override val languages: List<Language>
-      get() = listOf(Kotlin())
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.empty()
+    override val projectName: String = "gdx-liftoff-demo-kotlin"
+    override val rootPackage: String = "gdx.liftoff"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
+    override val languages: List<Language> = listOf(Kotlin)
+    override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
-    override val template: Template
-      get() = KotlinClassicTemplate()
+    override val template: Template = KotlinClassicTemplate()
   },
 
   /** Includes the official platforms supporting Kotlin. Uses a KTX template. */
   KTX {
-    override val projectName: String
-      get() = "ktx-demo"
-    override val rootPackage: String
-      get() = "ktx.demo"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), IOS())
-    override val languages: List<Language>
-      get() = listOf(Kotlin())
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.empty()
-    override val thirdPartyExtensions: List<Library>
-      get() {
-        return Listing.unofficialLibraries.filter { library -> !library.official && library.repository === KtxRepository }
-      }
-    override val template: Template
-      get() = KtxTemplate()
+    override val projectName: String = "ktx-demo"
+    override val rootPackage: String = "ktx.demo"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS())
+    override val languages: List<Language> = listOf(Kotlin)
+    override val officialExtensions: Optional<List<Library>> = Optional.empty()
+    override val thirdPartyExtensions: List<Library> = Listing.unofficialLibraries.filter { library -> !library.official && library.repository == KtxRepository }
+    override val template: Template = KtxTemplate()
     override val addSkin: Boolean = false
   },
 
   /** Includes the official platforms supporting Kotlin, as well as TeaVM. Omits unsupported KTX modules. */
   KTX_WEB {
-    override val projectName: String
-      get() = "ktx-demo-web"
-    override val rootPackage: String
-      get() = "ktx.demo"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
-    override val languages: List<Language>
-      get() = listOf(Kotlin())
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.empty()
-    override val thirdPartyExtensions: List<Library>
-      get() {
-        return Listing.unofficialLibraries.filter { library ->
-          !library.official &&
-            library.repository === KtxRepository &&
-            !library.id.endsWith("Async") &&
-            listOf("artemis", "script").all { it !in library.id.lowercase() }
-        }
-      }
-    override val template: Template
-      get() = KtxTemplate()
+    override val projectName: String = "ktx-demo-web"
+    override val rootPackage: String = "ktx.demo"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
+    override val languages: List<Language> = listOf(Kotlin)
+    override val officialExtensions: Optional<List<Library>> = Optional.empty()
+    override val thirdPartyExtensions: List<Library> = Listing.unofficialLibraries.filter { library: Library ->
+      !library.official &&
+        library.repository == KtxRepository &&
+        !library.id.endsWith("Async") &&
+        listOf("artemis", "script").all { it !in library.id.lowercase() }
+    }
+    override val template: Template = KtxTemplate()
     override val addSkin: Boolean = false
   },
 
   /** Includes Android and LWJGL3 projects, meant for users developing on Android devices.
    * Also includes Box2D, Box2D-Lights, GDX-Freetype, ShapeDrawer, TenPatch, and Stripe. */
   ANDROID_DEV {
-    override val projectName: String
-      get() = "gdx-android-dev-demo"
-    override val rootPackage: String
-      get() = "gdx.android"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), Android())
+    override val projectName: String = "gdx-android-dev-demo"
+    override val rootPackage: String = "gdx.android"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android())
     override val languages: List<Language> = emptyList()
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.of(listOf(Box2D(), Box2DLights(), Freetype()))
+    override val officialExtensions: Optional<List<Library>> = Optional.of(listOf(Box2D(), Box2DLights(), Freetype()))
     override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe())
-    override val template: Template
-      get() = ClassicTemplate()
+    override val template: Template = ClassicTemplate()
   },
 
   /** Includes GWT and LWJGL3 projects, meant for users developing an HTML game that can also be played offline.
    * Also includes Box2D, ShapeDrawer, TenPatch, Stripe, Formic, and RegExodus. */
   GWT_DEV {
-    override val projectName: String
-      get() = "gdx-gwt-dev-demo"
-    override val rootPackage: String
-      get() = "gdx.gwt"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), GWT())
+    override val projectName: String = "gdx-gwt-dev-demo"
+    override val rootPackage: String = "gdx.gwt"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), GWT())
     override val languages: List<Language> = emptyList()
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.of(listOf(Box2D()))
+    override val officialExtensions: Optional<List<Library>> = Optional.of(listOf(Box2D()))
     override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe(), Formic(), RegExodus())
-    override val template: Template
-      get() = ClassicTemplate()
+    override val template: Template = ClassicTemplate()
   },
 
   /** Includes TeaVM and LWJGL3 projects with the Kotlin language, meant for users developing an HTML game that can also
    * be played offline, in Kotlin. You may prefer KTX_WEB if you want to use KTX.
    * Also includes Box2D, ShapeDrawer, TenPatch and Stripe. */
   TEA_DEV {
-    override val projectName: String
-      get() = "gdx-gwt-dev-demo"
-    override val rootPackage: String
-      get() = "gdx.gwt"
-    override val platforms: List<Platform>
-      get() = listOf(Core(), Lwjgl3(), TeaVM())
-    override val languages: List<Language> = listOf(Kotlin())
-    override val officialExtensions: Optional<List<Library>>
-      get() = Optional.of(listOf(Box2D()))
+    override val projectName: String = "gdx-gwt-dev-demo"
+    override val rootPackage: String = "gdx.gwt"
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), TeaVM())
+    override val languages: List<Language> = listOf(Kotlin)
+    override val officialExtensions: Optional<List<Library>> = Optional.of(listOf(Box2D()))
     override val thirdPartyExtensions: List<Library> = listOf(ShapeDrawer(), TenPatch(), Stripe())
-    override val template: Template
-      get() = KotlinClassicTemplate()
-  }, ;
+    override val template: Template = KotlinClassicTemplate()
+  };
 
   abstract val projectName: String
   abstract val rootPackage: String
@@ -185,66 +141,57 @@ enum class Preset {
   abstract val template: Template
   open val addSkin: Boolean = true
 
-  val languagesData: LanguagesData
-    get() = LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
+  val languagesData: LanguagesData = LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
 }
 
-fun getPreset(arguments: Array<String>): Preset =
-  when {
-    arguments.isEmpty() -> Preset.DEFAULT
-    else -> {
-      val name = arguments.first()
-      try {
-        Preset.valueOf(name.uppercase())
-      } catch (_: IllegalArgumentException) {
-        Preset.DEFAULT
-      }
-    }
+fun getPreset(name: String?): Preset = when {
+  name == null -> Preset.DEFAULT
+  else -> try {
+    Preset.valueOf(name.uppercase())
+  } catch (_: IllegalArgumentException) {
+    Preset.DEFAULT
   }
+}
 
 fun main(arguments: Array<String>) {
   GdxNativesLoader.load()
   Gdx.files = Lwjgl3Files()
 
-  val preset = getPreset(arguments)
-  val officialExtensions = Listing.officialLibraries
-  val basicData =
-    BasicProjectData(
-      name = preset.projectName,
-      rootPackage = preset.rootPackage,
-      mainClass = "Main",
-      destination = FileHandle(File("build/dist/sample")),
-      androidSdk = FileHandle(File(".")),
-    )
-  val defaultJavaVersion = Java().version
+  val preset: Preset = getPreset(arguments.firstOrNull())
+  val officialExtensions: List<Library> = Listing.officialLibraries
+  val basicData = BasicProjectData(
+    name = preset.projectName,
+    rootPackage = preset.rootPackage,
+    mainClass = "Main",
+    destination = FileHandle(File("build/dist/sample")),
+    androidSdk = FileHandle(File("."))
+  )
+  val defaultJavaVersion: String = Java.version
   val defaultGwtVersion = "2.2.7"
-  val advancedData =
-    AdvancedProjectData(
-      version = Configuration.VERSION,
-      gdxVersion = Version.VERSION,
-      javaVersion = defaultJavaVersion,
-      gwtPluginVersion = defaultGwtVersion,
-      serverJavaVersion = defaultJavaVersion,
-      desktopJavaVersion = defaultJavaVersion,
-      generateSkin = preset.addSkin,
-      generateReadme = true,
-      gradleTasks = arrayListOf(),
-    )
-  val extensions =
-    ExtensionsData(
-      officialExtensions = preset.officialExtensions.orElse(officialExtensions),
-      thirdPartyExtensions = preset.thirdPartyExtensions,
-    )
+  val advancedData = AdvancedProjectData(
+    version = Configuration.VERSION,
+    gdxVersion = Version.VERSION,
+    javaVersion = defaultJavaVersion,
+    gwtPluginVersion = defaultGwtVersion,
+    serverJavaVersion = defaultJavaVersion,
+    desktopJavaVersion = defaultJavaVersion,
+    generateSkin = preset.addSkin,
+    generateReadme = true,
+    gradleTasks = mutableListOf()
+  )
+  val extensions = ExtensionsData(
+    officialExtensions = preset.officialExtensions.orElse(officialExtensions),
+    thirdPartyExtensions = preset.thirdPartyExtensions
+  )
 
-  val project =
-    Project(
-      basic = basicData,
-      advanced = advancedData,
-      platforms = preset.platforms.associateBy { it.id },
-      languages = preset.languagesData,
-      extensions = extensions,
-      template = preset.template,
-    )
+  val project = Project(
+    basic = basicData,
+    advanced = advancedData,
+    platforms = preset.platforms.associateBy(Platform::id),
+    languages = preset.languagesData,
+    extensions = extensions,
+    template = preset.template
+  )
   project.generate()
   project.includeGradleWrapper(NullLogger, executeGradleTasks = false)
   exitProcess(0)
@@ -252,7 +199,7 @@ fun main(arguments: Array<String>) {
 
 /** No-op logger for interfacing with the project generator. */
 object NullLogger : ProjectLogger {
-  override fun log(message: String) {}
+  override fun log(message: String) = Unit
 
-  override fun logNls(bundleLine: String) {}
+  override fun logNls(bundleLine: String) = Unit
 }

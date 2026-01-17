@@ -113,22 +113,22 @@ ${project.androidPermissions.joinToString(separator = "\n") { "  <uses-permissio
 class AndroidGradleFile(
   val project: Project,
 ) : GradleFile(Android.ID) {
-  val plugins = mutableListOf<String>()
-  val srcFolders = mutableListOf("'src/main/java'")
-  val nativeDependencies = mutableSetOf<String>()
-  var latePlugin = false
+  val plugins: MutableList<String> = mutableListOf()
+  val srcFolders: MutableList<String> = mutableListOf("'src/main/java'")
+  val nativeDependencies: MutableSet<String> = mutableSetOf()
+  var latePlugin: Boolean = false
 
   init {
     dependencies.add("project(':${Core.ID}')")
-    addDependency("com.badlogicgames.gdx:gdx-backend-android:\$gdxVersion")
-    addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-armeabi-v7a")
-    addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-arm64-v8a")
-    addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86")
-    addNativeDependency("com.badlogicgames.gdx:gdx-platform:\$gdxVersion:natives-x86_64")
+    addDependency($$"com.badlogicgames.gdx:gdx-backend-android:$gdxVersion")
+    addNativeDependency($$"com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a")
+    addNativeDependency($$"com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a")
+    addNativeDependency($$"com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86")
+    addNativeDependency($$"com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64")
     // TODO: This may be best if it can be removed in the version after libGDX 1.13.0, or established as a GDX dep.
     val ver: GdxVersion? = GdxVersion.parseGdxVersion(project.advanced.gdxVersion)
-    if (ver?.major == 1 && ver.minor == 13 && ver.revision == 0) {
-      addDependency("androidx.core:core:1.13.1")
+    ver?.apply {
+      if (major == 1 && minor == 13 && revision == 0) addDependency("androidx.core:core:1.13.1")
     }
 
     plugins.add("com.android.application")

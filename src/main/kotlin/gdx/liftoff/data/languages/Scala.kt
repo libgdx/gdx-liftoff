@@ -11,8 +11,7 @@ import gdx.liftoff.views.JvmLanguage
  * Adds Scala support to the project.
  */
 @JvmLanguage
-@Suppress("unused") // Class accessed via reflection.
-class Scala : Language {
+data object Scala : Language {
   override val id = "scala"
   override val version = "3.7.3"
 
@@ -20,9 +19,9 @@ class Scala : Language {
     project.rootGradle.plugins.add(id)
     project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "scala"))) }
     if (project.hasPlatform(Android.ID)) {
-      val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
+      val gradleFile: AndroidGradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
       gradleFile.srcFolders.add("'src/main/scala'")
     }
-    addDependency(project, "org.scala-lang:scala3-library_3:\$scalaVersion")
+    addDependency(project, $$"org.scala-lang:scala3-library_3:$scalaVersion")
   }
 }

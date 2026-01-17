@@ -11,8 +11,7 @@ import gdx.liftoff.views.JvmLanguage
  * Adds Groovy support to the project.
  */
 @JvmLanguage
-@Suppress("unused") // Class accessed via reflection.
-class Groovy : Language {
+data object Groovy : Language {
   override val id = "groovy"
   override val version = "5.0.1"
 
@@ -23,6 +22,6 @@ class Groovy : Language {
       val gradleFile = project.getGradleFile(Android.ID) as AndroidGradleFile
       gradleFile.srcFolders.add("'src/main/groovy'")
     }
-    addDependency(project, "org.apache.groovy:groovy-all:\$groovyVersion")
+    addDependency(project, $$"org.apache.groovy:groovy-all:$groovyVersion")
   }
 }

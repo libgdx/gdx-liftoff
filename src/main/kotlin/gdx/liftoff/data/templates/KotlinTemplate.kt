@@ -18,7 +18,7 @@ interface KotlinTemplate : Template {
 
   override fun apply(project: Project) {
     super.apply(project)
-    project.languages.selectLanguage<Kotlin>()
+    project.languages.addIfMissing<Kotlin>()
   }
 
   @Language("kotlin")

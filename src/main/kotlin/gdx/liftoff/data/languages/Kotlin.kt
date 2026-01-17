@@ -11,8 +11,7 @@ import gdx.liftoff.views.JvmLanguage
  * Adds Kotlin support to the project.
  */
 @JvmLanguage
-@Suppress("unused") // Class accessed via reflection.
-class Kotlin : Language {
+data object Kotlin : Language {
   override val id = "kotlin"
   override val version = "2.3.0"
 
