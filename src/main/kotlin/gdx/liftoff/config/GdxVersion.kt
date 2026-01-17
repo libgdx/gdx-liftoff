@@ -14,7 +14,6 @@ data class GdxVersion(
     fun parseGdxVersion(version: String): GdxVersion? {
       val trimmed: String = version.trim().removeSuffix("-SNAPSHOT")
       val parts: List<Int?> = trimmed.split('.').map(String::toIntOrNull)
-      // mumble mumble klint
       return if (parts.size < 3 || parts.any { it == null }) null
       else GdxVersion(parts[0]!!, parts[1]!!, parts[2]!!)
     }
