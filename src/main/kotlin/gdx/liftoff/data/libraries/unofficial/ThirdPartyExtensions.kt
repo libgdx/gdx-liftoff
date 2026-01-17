@@ -400,7 +400,7 @@ class TypingLabel : ThirdPartyExtension() {
 @Extension
 class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
-  override val defaultVersion = "2.2.10"
+  override val defaultVersion = "2.2.11"
   override val url = "https://github.com/tommyettinger/textratypist"
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
@@ -422,7 +422,7 @@ class TextraTypist : ThirdPartyExtension() {
 @Extension
 class FreeTypist : ThirdPartyExtension() {
   override val id = "freetypist"
-  override val defaultVersion = "2.2.10.0"
+  override val defaultVersion = "2.2.11.0"
   override val url = "https://github.com/tommyettinger/freetypist"
   override val group = "com.github.tommyettinger"
   override val name = "freetypist"
@@ -789,7 +789,7 @@ class GdxVfxStandardEffects : ThirdPartyExtension() {
 @Extension
 class RegExodus : ThirdPartyExtension() {
   override val id = "regExodus"
-  override val defaultVersion = "0.1.20"
+  override val defaultVersion = "0.1.21"
   override val url = "https://github.com/tommyettinger/RegExodus"
   override val group = "com.github.tommyettinger"
   override val name = "regexodus"
@@ -1041,18 +1041,17 @@ class TuningFork : ThirdPartyExtension() {
 @Extension
 class TinyVG : ThirdPartyExtension() {
   override val id = "tinyVG"
-  override val defaultVersion = "41f408420c"
+  override val defaultVersion = "83004a633e"
   override val url = "https://github.com/lyze237/gdx-TinyVG"
   override val repository = Repository.JitPack
-  override val group = "com.github.lyze237"
+  override val group = "com.github.tommyettinger"
   override val name = "gdx-TinyVG"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.lyze237:gdx-TinyVG")
-    addDependency(project, GWT.ID, "com.github.lyze237:gdx-TinyVG:sources")
+    addDependency(project, Core.ID, "com.github.tommyettinger:gdx-TinyVG")
+    addDependency(project, GWT.ID, "com.github.tommyettinger:gdx-TinyVG:sources")
     addGwtInherit(project, "dev.lyze.tinyvg")
     ShapeDrawer().initiate(project)
-    Lombok().initiate(project)
   }
 }
 
@@ -1473,7 +1472,7 @@ class Juniper : ThirdPartyExtension() {
 @Extension
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
-  override val defaultVersion = "2.0.0"
+  override val defaultVersion = "2.0.1"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1496,7 +1495,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 @Extension
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
-  override val defaultVersion = "2.0.0.0"
+  override val defaultVersion = "2.0.1.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1519,7 +1518,7 @@ class JdkgdxdsInterop : ThirdPartyExtension() {
 @Extension
 class KryoRegExodus : ThirdPartyExtension() {
   override val id = "kryoRegExodus"
-  override val defaultVersion = "0.1.20.1"
+  override val defaultVersion = "0.1.21.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-regexodus"
@@ -1580,7 +1579,7 @@ class KryoJuniper : ThirdPartyExtension() {
 @Extension
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
-  override val defaultVersion = "2.0.0.1"
+  override val defaultVersion = "2.0.1.1"
   override val url = "https://github.com/tommyettinger/kryo-more"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
@@ -1660,7 +1659,7 @@ class KryoLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumLibgdx : ThirdPartyExtension() {
   override val id = "tantrumLibgdx"
-  override val defaultVersion = "1.14.0.19"
+  override val defaultVersion = "1.14.0.20"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-libgdx"
@@ -1679,7 +1678,7 @@ class TantrumLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumRegExodus : ThirdPartyExtension() {
   override val id = "tantrumRegExodus"
-  override val defaultVersion = "0.1.20.19"
+  override val defaultVersion = "0.1.21.20"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-regexodus"
@@ -1699,7 +1698,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.9.9.19"
+  override val defaultVersion = "0.9.9.20"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-digital"
@@ -1719,7 +1718,7 @@ class TantrumDigital : ThirdPartyExtension() {
 @Extension
 class TantrumJdkgdxds : ThirdPartyExtension() {
   override val id = "tantrumJdkgdxds"
-  override val defaultVersion = "2.0.0.19"
+  override val defaultVersion = "2.0.1.20"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger"
   override val name = "tantrum-jdkgdxds"
