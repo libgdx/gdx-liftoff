@@ -20,8 +20,6 @@ import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Platform
 import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.templates.Template
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 /**
  * Contains data about the generated project.
@@ -34,23 +32,21 @@ class Project(
   val extensions: ExtensionsData,
   val template: Template,
 ) {
-  private val gradleFiles: Map<String, GradleFile>
-  val files = mutableListOf<ProjectFile>()
-  val rootGradle: RootGradleFile
-  val properties = mutableMapOf<String, String>()
-  val gwtInherits = mutableSetOf<String>()
-  val androidPermissions = mutableSetOf<String>()
+  private val gradleFiles: MutableMap<String, GradleFile> = mutableMapOf()
+  val files: MutableList<ProjectFile> = mutableListOf()
+  val rootGradle: RootGradleFile = RootGradleFile(this)
+  val properties: MutableMap<String, String> = mutableMapOf()
+  val gwtInherits: MutableSet<String> = mutableSetOf()
+  val androidPermissions: MutableSet<String> = mutableSetOf()
 
-  val reflectedClasses = mutableSetOf<String>()
-  val reflectedPackages = mutableSetOf<String>()
+  val reflectedClasses: MutableSet<String> = mutableSetOf()
+  val reflectedPackages: MutableSet<String> = mutableSetOf()
 
   // README.md:
-  var readmeDescription = ""
-  private val gradleTaskDescriptions = mutableMapOf<String, String>()
+  var readmeDescription: String = ""
+  private val gradleTaskDescriptions: MutableMap<String, String> = mutableMapOf()
 
   init {
-    gradleFiles = mutableMapOf()
-    rootGradle = RootGradleFile(this)
     platforms.forEach { gradleFiles[it.key] = it.value.createGradleFile(this) }
     addBasicGradleTasksDescriptions()
   }
@@ -110,7 +106,7 @@ class Project(
   }
 
   private fun addJvmLanguagesSupport() {
-    Java().initiate(this) // Java is supported by default.
+    Java.initiate(this) // Java is supported by default.
     languages.list.forEach {
       it.initiate(this)
       properties[it.id + "Version"] = languages.getVersion(it.id)
@@ -304,15 +300,13 @@ trim_trailing_whitespace = false
   }
 
   fun getAlertCodes(): List<String> {
-    val alerts = mutableListOf<String>()
-    if (GWT.ID in platforms && languages.list.any { it.id != Java().id }) {
+    val alerts: MutableList<String> = mutableListOf()
+    if (GWT.ID in platforms && languages.list.any { it.id != Java.id }) {
       alerts += "warningNonJavaGwt"
     }
     if (TeaVM.ID in platforms) {
-      val coreDependencies = gradleFiles[Core.ID]!!.dependencies
-      if (coreDependencies.any { "kotlinx-coroutines-core" in it }) {
-        alerts += "warningTeaVMCoroutines"
-      }
+      val coreDependencies: MutableSet<String> = gradleFiles[Core.ID]!!.dependencies
+      if (coreDependencies.any { "kotlinx-coroutines-core" in it }) alerts += "warningTeaVMCoroutines"
     }
     return alerts
   }
@@ -339,35 +333,22 @@ trim_trailing_whitespace = false
       .file()
       .setExecutable(true)
     logger.logNls("copyGradle")
-    val gradleTasks = advanced.gradleTasks
+    val gradleTasks: MutableList<String> = advanced.gradleTasks
     if (executeGradleTasks && gradleTasks.isNotEmpty()) {
       logger.logNls("runningGradleTasks")
-      val commands = determineGradleCommand() + gradleTasks
+      val commands: Array<String> = determineGradleCommand() + gradleTasks
       logger.log(commands.joinToString(separator = " "))
-      val process =
-        ProcessBuilder(*commands)
-          .directory(basic.destination.file())
-          .redirectErrorStream(true)
-          .start()
-      val stream = BufferedReader(InputStreamReader(process.inputStream))
-      var line = stream.readLine()
-      while (line != null) {
-        logger.log(line)
-        line = stream.readLine()
-      }
-      process.waitFor()
-      if (process.exitValue() != 0) {
-        throw GdxRuntimeException("Gradle process ended with non-zero value.")
-      }
+      val process = ProcessBuilder(*commands)
+        .directory(basic.destination.file())
+        .inheritIO()
+        .start()
+      if (process.waitFor() != 0) throw GdxRuntimeException("Gradle process ended with non-zero value.")
     }
   }
 
   private fun determineGradleCommand(): Array<String> =
-    if (UIUtils.isWindows) {
-      arrayOf("cmd", "/c", "gradlew")
-    } else {
-      arrayOf("./gradlew")
-    }
+    if (UIUtils.isWindows) arrayOf("cmd", "/c", "gradlew")
+    else arrayOf("./gradlew")
 }
 
 interface ProjectLogger {

@@ -3,6 +3,7 @@ package gdx.liftoff.data.templates
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
 import gdx.liftoff.data.project.Project
+import org.intellij.lang.annotations.Language
 
 /**
  * Basic interface for Kotlin project templates. Adds a Kotlin launcher for each platform.
@@ -17,31 +18,31 @@ interface KotlinTemplate : Template {
 
   override fun apply(project: Project) {
     super.apply(project)
-    project.languages.selectLanguage<Kotlin>()
+    project.languages.addIfMissing<Kotlin>()
   }
 
+  @Language("kotlin")
   override fun getLwjgl2LauncherContent(project: Project): String =
-    """@file:JvmName("Lwjgl2Launcher")
+    $$"""@file:JvmName("Lwjgl2Launcher")
 
-package ${project.basic.rootPackage}.lwjgl2
+package $${project.basic.rootPackage}.lwjgl2
 
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import ${project.basic.rootPackage}.${project.basic.mainClass}
+import $${project.basic.rootPackage}.$${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL) application. */
 fun main() {
-    LwjglApplication(${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
-        title = "${project.basic.name}"
-        width = $width
-        height = $height
+    LwjglApplication($${project.basic.mainClass}(), LwjglApplicationConfiguration().apply {
+        title = "$${project.basic.name}"
+        width = $$width
+        height = $$height
         intArrayOf(128, 64, 32, 16).forEach{
-            addIcon("libgdx${"$"}it.png", Files.FileType.Internal)
+            addIcon("libgdx$it.png", Files.FileType.Internal)
         }
     })
-}
-"""
+}"""
 
   override fun getAndroidLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.android
@@ -82,6 +83,7 @@ fun main() {
 }
 """
 
+  @Language("kotlin")
   override fun getIOSMOELauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}
 
@@ -113,6 +115,7 @@ fun main() {
         null, IOSLauncher::class.java.name)
 }"""
 
+  @Language("kotlin")
   override fun getIOSMOESVMRegistrationContent(project: Project): String =
     """package ${project.basic.rootPackage}
 
@@ -144,22 +147,23 @@ class SVMRegistrationFeature : Feature {
     }
 }"""
 
+  @Language("kotlin")
   override fun getLwjgl3LauncherContent(project: Project): String =
-    """@file:JvmName("Lwjgl3Launcher")
+    $$"""@file:JvmName("Lwjgl3Launcher")
 
-package ${project.basic.rootPackage}.lwjgl3
+package $${project.basic.rootPackage}.lwjgl3
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import ${project.basic.rootPackage}.${project.basic.mainClass}
+import $${project.basic.rootPackage}.$${project.basic.mainClass}
 
 /** Launches the desktop (LWJGL3) application. */
 fun main() {
     // This handles macOS support and helps on Windows.
     if (StartupHelper.startNewJvmIfRequired())
       return
-    Lwjgl3Application(${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
-        setTitle("${project.basic.name}")
+    Lwjgl3Application($${project.basic.mainClass}(), Lwjgl3ApplicationConfiguration().apply {
+        setTitle("$${project.basic.name}")
         //// Vsync limits the frames per second to what your hardware can display, and helps eliminate
         //// screen tearing. This setting doesn't always work on Linux, so the line after is a safeguard.
         useVsync(true)
@@ -171,28 +175,27 @@ fun main() {
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 
 
-        setWindowedMode($width, $height)
+        setWindowedMode($$width, $$height)
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
-        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx${"$"}it.png" }.toTypedArray()))
+        setWindowIcon(*(arrayOf(128, 64, 32, 16).map { "libgdx$it.png" }.toTypedArray()))
 
         //// This could improve compatibility with Windows machines with buggy OpenGL drivers, Macs
         //// with Apple Silicon that have to emulate compatibility with OpenGL anyway, and more.
         //// This uses the dependency `com.badlogicgames.gdx:gdx-lwjgl3-angle` to function.
         //// You would need to add this line to lwjgl3/build.gradle , below the dependency on `gdx-backend-lwjgl3`:
-        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:${'$'}gdxVersion"
+        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
         //// You can choose to add the following line and the mentioned dependency if you want; they
         //// are not intended for games that use GL30 (which is compatibility with OpenGL ES 3.0).
         //// Know that it might not work well in some cases.
 //        setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0)
 
     })
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getLwjgl3StartupContent(project: Project): String =
-    $$"""
-/*
+    $$"""/*
  * Copyright 2020 damios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -364,9 +367,9 @@ object StartupHelper {
 
 		return true
 	}
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getIOSLauncherContent(project: Project): String =
     """@file:JvmName("IOSLauncher")
 
@@ -398,6 +401,7 @@ class IOSLauncher : IOSApplication.Delegate() {
     }
 }"""
 
+  @Language("kotlin")
   override fun getGwtLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.gwt;
 
@@ -422,6 +426,7 @@ public class GwtLauncher extends GwtApplication {
 }
 """
 
+  @Language("kotlin")
   override fun getServerLauncherContent(project: Project) =
     """@file:JvmName("ServerLauncher")
 
@@ -430,9 +435,9 @@ package ${project.basic.rootPackage}.server
 /** Launches the server application. */
 fun main() {
     TODO("Implement server application.")
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getTeaVMLauncherContent(project: Project): String =
     """@file:JvmName("TeaVMLauncher")
 
@@ -453,9 +458,9 @@ fun main() {
         height = 0
     }
     TeaApplication(${project.basic.mainClass}(), config)
-}
-"""
+}"""
 
+  @Language("kotlin")
   override fun getTeaVMBuilderContent(project: Project) =
     """package ${project.basic.rootPackage}.teavm
 
@@ -536,6 +541,5 @@ ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(8), trailingSemic
 
         TeaBuilder.build(tool)
     }
-}
-"""
+}"""
 }

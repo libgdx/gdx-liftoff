@@ -4,6 +4,8 @@ import com.badlogic.gdx.files.FileHandle
 import gdx.liftoff.config.Configuration
 import gdx.liftoff.data.languages.Language
 import gdx.liftoff.data.libraries.Library
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 /** Stores data represented by the main view over the settings section. */
 data class BasicProjectData(
@@ -25,7 +27,7 @@ data class AdvancedProjectData(
   // Templates might force skin generation.
   var generateSkin: Boolean,
   val generateReadme: Boolean,
-  val gradleTasks: ArrayList<String>,
+  val gradleTasks: MutableList<String>,
   val generateEditorConfig: Boolean = true,
   val indentSize: Int = 4,
 ) {
@@ -54,35 +56,22 @@ data class AdvancedProjectData(
   /**
    * Will be set to 2.11.0 if using a Java version of at least 8; otherwise adapts to what the libGDX version uses.
    */
-  val gwtVersion: String
-    get() =
-      if (Configuration.parseJavaVersion(javaVersion).compareTo(8.0) >= 0 ||
-        (gdxVersion.startsWith("1.13."))
-      ) {
-        "2.11.0"
-      } else if (gdxVersion.length == 5 && gdxVersion[4] != '9') {
-        if (gdxVersion[4] < '5') "2.6.1" else "2.8.0"
-      } else {
-        "2.8.2"
-      }
+  val gwtVersion: String = when {
+    Configuration.parseJavaVersion(javaVersion) >= 8.0 || gdxVersion.startsWith("1.13.") -> "2.11.0"
+    gdxVersion.length == 5 && gdxVersion[4] != '9' -> {
+      if (gdxVersion[4] < '5') "2.6.1" else "2.8.0"
+    }
+    else -> "2.8.2"
+  }
 
   /**
    * Version of xpenatan's TeaVM backend.
    */
-  val gdxTeaVMVersion: String
-    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.4.0 should be compatible with newer.
-    get() =
-      when (gdxVersion) {
-        "1.13.5" -> {
-          "1.2.1"
-        }
-        "1.13.1" -> {
-          "1.2.0"
-        }
-        else -> {
-          "1.4.0"
-        }
-      }
+  val gdxTeaVMVersion: String = when (gdxVersion) { // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.4.0 should be compatible with newer.
+    "1.13.5" -> "1.2.1"
+    "1.13.1" -> "1.2.0"
+    else -> "1.4.0"
+  }
 
   /**
    * Version of the Gretty Gradle plugin used to serve compiled JavaScript applications.
@@ -97,9 +86,10 @@ data class LanguagesData(
 ) {
   fun getVersion(id: String): String = versions[id] ?: ""
 
-  inline fun <reified T : Language> selectLanguage() {
+  inline fun <reified T : Language> addIfMissing() {
     if (list.any { it is T }) return
-    list.add(T::class.java.getDeclaredConstructor().newInstance())
+    val `class`: KClass<T> = T::class
+    list.add(`class`.objectInstance ?: `class`.primaryConstructor!!.call())
   }
 }
 
@@ -108,7 +98,7 @@ data class ExtensionsData(
   val officialExtensions: List<Library>,
   val thirdPartyExtensions: List<Library>,
 ) {
-  private val ids = (officialExtensions + thirdPartyExtensions).map(Library::id).toSet()
+  private val ids: Set<String> = (officialExtensions + thirdPartyExtensions).map(Library::id).toSet()
 
   fun isSelected(id: String): Boolean = id in ids
 }

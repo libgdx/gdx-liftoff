@@ -15,6 +15,7 @@ import gdx.liftoff.data.platforms.Lwjgl3
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
+import org.intellij.lang.annotations.Language
 
 /**
  * Interface shared by all project templates. Templates should be annotated with ProjectTemplate.
@@ -87,6 +88,7 @@ interface Template {
     )
   }
 
+  @Language("java")
   fun getLwjgl2LauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.lwjgl2;
 
@@ -132,6 +134,7 @@ public class Lwjgl2Launcher {
     )
   }
 
+  @Language("java")
   fun getGwtLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.gwt;
 
@@ -179,8 +182,7 @@ public class GwtLauncher extends GwtApplication {""" + (
         //            Gdx.graphics.setWindowedMode(width, height);
         //        }
         //    }
-        ////END OF CODE FOR RESIZABLE APPLICATION
-"""
+        ////END OF CODE FOR RESIZABLE APPLICATION"""
       } else {
         """
         @Override
@@ -193,8 +195,7 @@ public class GwtLauncher extends GwtApplication {""" + (
             // If you want a fixed size application, comment out the above resizable section,
             // and uncomment below:
             //return new GwtApplicationConfiguration($width, $height);
-        }
-"""
+        }"""
       }
     ) +
 """
@@ -202,8 +203,7 @@ public class GwtLauncher extends GwtApplication {""" + (
         public ApplicationListener createApplicationListener () {
             return new ${project.basic.mainClass}();
         }
-}
-"""
+}"""
 
   fun addAndroidLauncher(project: Project) {
     addSourceFile(
@@ -215,6 +215,7 @@ public class GwtLauncher extends GwtApplication {""" + (
     )
   }
 
+  @Language("java")
   fun getAndroidLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.android;
 
@@ -245,6 +246,7 @@ public class AndroidLauncher extends AndroidApplication {
     )
   }
 
+  @Language("java")
   fun getHeadlessLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.headless;
 
@@ -284,6 +286,7 @@ public class HeadlessLauncher {
     )
   }
 
+  @Language("java")
   fun getIOSLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -319,6 +322,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
     )
   }
 
+  @Language("java")
   fun getIOSMOELauncherContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -355,6 +359,7 @@ public class IOSLauncher extends IOSApplication.Delegate {
     )
   }
 
+  @Language("java")
   fun getIOSMOESVMRegistrationContent(project: Project): String =
     """package ${project.basic.rootPackage};
 
@@ -404,12 +409,13 @@ public class SVMRegistrationFeature implements Feature {
     )
   }
 
+  @Language("java")
   fun getLwjgl3LauncherContent(project: Project): String =
-    """package ${project.basic.rootPackage}.lwjgl3;
+    $$"""package $${project.basic.rootPackage}.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ${project.basic.rootPackage}.${project.basic.mainClass};
+import $${project.basic.rootPackage}.$${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
@@ -419,12 +425,12 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new ${project.basic.mainClass}(), getDefaultConfiguration());
+        return new Lwjgl3Application(new $${project.basic.mainClass}(), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
-        configuration.setTitle("${project.basic.name}");
+        configuration.setTitle("$${project.basic.name}");
         //// Vsync limits the frames per second to what your hardware can display, and helps eliminate
         //// screen tearing. This setting doesn't always work on Linux, so the line after is a safeguard.
         configuration.useVsync(true);
@@ -435,7 +441,7 @@ public class Lwjgl3Launcher {
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 
-        configuration.setWindowedMode($width, $height);
+        configuration.setWindowedMode($$width, $$height);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
         configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
@@ -444,7 +450,7 @@ public class Lwjgl3Launcher {
         //// with Apple Silicon that have to emulate compatibility with OpenGL anyway, and more.
         //// This uses the dependency `com.badlogicgames.gdx:gdx-lwjgl3-angle` to function.
         //// You would need to add this line to lwjgl3/build.gradle , below the dependency on `gdx-backend-lwjgl3`:
-        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:${'$'}gdxVersion"
+        ////     implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
         //// You can choose to add the following line and the mentioned dependency if you want; they
         //// are not intended for games that use GL30 (which is compatibility with OpenGL ES 3.0).
         //// Know that it might not work well in some cases.
@@ -454,9 +460,9 @@ public class Lwjgl3Launcher {
     }
 }"""
 
+  @Language("java")
   fun getLwjgl3StartupContent(project: Project): String =
-    """
-/*
+    """/*
  * Copyright 2020 damios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -682,8 +688,7 @@ public class StartupHelper {
 		if (isMac) return LibC.getpid();
 		else return UNISTD.getpid();
 	}
-}
-"""
+}"""
 
   fun addServerLauncher(project: Project) {
     addSourceFile(
@@ -695,6 +700,7 @@ public class StartupHelper {
     )
   }
 
+  @Language("java")
   fun getServerLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.server;
 
@@ -722,6 +728,7 @@ public class ServerLauncher {
     )
   }
 
+  @Language("java")
   fun getTeaVMLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
@@ -743,9 +750,9 @@ public class TeaVMLauncher {
         config.height = 0;
         new TeaApplication(new ${project.basic.mainClass}(), config);
     }
-}
-"""
+}"""
 
+  @Language("java")
   fun getTeaVMBuilderContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
@@ -808,7 +815,7 @@ ${generateTeaVMReflectionIncludes(project)}
         TeaVMTool tool = new TeaVMTool();
 
         tool.setMainClass(TeaVMLauncher.class.getName());
-        // For many (or most) applications, using a high optimization won't add much to build time.
+        // For many (or most) applications, using a high optimisation won't add much to build time.
         // If your builds take too long, and runtime performance doesn't matter, you can change ADVANCED to SIMPLE .
         // Using SIMPLE makes debugging easier, also, so it is used when DEBUG is enabled.
         tool.setOptimizationLevel(DEBUG ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED);
@@ -819,7 +826,7 @@ ${generateTeaVMReflectionIncludes(project)}
         // If DEBUG is set to true, these lines allow step-debugging JVM languages from the browser,
         // setting breakpoints in Java code and stopping in the appropriate place in generated browser code.
         // This may work reasonably well when targeting WEBASSEMBLY_GC, but it usually works better with JAVASCRIPT .
-        if(DEBUG) {
+        if (DEBUG) {
             tool.setDebugInformationGenerated(true);
             tool.setSourceMapsFileGenerated(true);
             tool.setWasmDebugInfoLevel(WasmDebugInfoLevel.FULL);
@@ -829,8 +836,7 @@ ${generateTeaVMReflectionIncludes(project)}
 
         TeaBuilder.build(tool);
     }
-}
-"""
+}"""
 
   fun generateTeaVMReflectionIncludes(
     project: Project,

@@ -40,13 +40,11 @@ public final class Listing {
     public static final LinkedHashMap<String, Platform> platformsByName = new LinkedHashMap<>(platforms.size());
 
     static {
-        for (Platform p : platforms) {
-            platformsByName.put(p.getId(), p);
-        }
+        for (Platform p : platforms) platformsByName.put(p.getId(), p);
     }
 
     public static final ArrayList<Language> languages = makeList(
-        new Kotlin(), new Groovy(), new Scala()
+        Kotlin.INSTANCE, Groovy.INSTANCE, Scala.INSTANCE
     );
 
     public static final LinkedHashMap<String, String> languageVersions = new LinkedHashMap<>(languages.size());
@@ -60,8 +58,7 @@ public final class Listing {
     public static ArrayList<Language> chooseLanguages(Collection<String> names) {
         ArrayList<Language> cpy = new ArrayList<>(languages.size());
         for (Language l : languages) {
-            if (names.contains(l.getId()))
-                cpy.add(l);
+            if (names.contains(l.getId())) cpy.add(l);
         }
         return cpy;
     }

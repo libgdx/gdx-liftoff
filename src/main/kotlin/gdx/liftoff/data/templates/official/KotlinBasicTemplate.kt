@@ -6,18 +6,16 @@ import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.data.templates.KotlinTemplate
 import gdx.liftoff.views.ProjectTemplate
+import org.intellij.lang.annotations.Language
 
 /**
  * Written in Kotlin. Includes Kotlin launchers for each platform.
  * Extends ApplicationAdapter, overriding no methods. Application does nothing.
  */
 @ProjectTemplate(official = true)
-@Suppress("unused") // Referenced via reflection.
 class KotlinBasicTemplate : KotlinTemplate {
   override val id = "kotlinTemplate"
-  override val description =
-    "This project was generated with a template that includes Kotlin application " +
-      "launchers and an empty `ApplicationAdapter` implemented in Kotlin."
+  override val description = "This project was generated with a template that includes Kotlin application launchers and an empty `ApplicationAdapter` implemented in Kotlin."
 
   override fun apply(project: Project) {
     super.apply(project)
@@ -25,11 +23,12 @@ class KotlinBasicTemplate : KotlinTemplate {
       CopiedFile(
         projectName = Assets.ID,
         original = path("generator", "assets", ".gitkeep"),
-        path = ".gitkeep",
-      ),
+        path = ".gitkeep"
+      )
     )
   }
 
+  @Language("kotlin")
   override fun getApplicationListenerContent(project: Project): String =
     """package ${project.basic.rootPackage}
 

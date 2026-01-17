@@ -156,22 +156,21 @@ public class PathsPanel extends Table implements Panel {
     }
 
     public void updateError() {
+        final List<String> errors = new ArrayList<>();
 
-        List<String> errors = new ArrayList<>();
+        final String java = UserData.javaVersion;
+        final double javaInt = Configuration.parseJavaVersion(java);
 
-        if (UserData.platforms.contains("html") && Configuration.INSTANCE.parseJavaVersion(UserData.javaVersion) > 11) {
+        if (UserData.platforms.contains("html") && javaInt > 11) {
             errors.add(prop.getProperty("htmlWrongJavaVersion"));
         }
 
-        if (UserData.platforms.contains("ios") && UserData.platforms.contains("teavm")) {
-            errors.add(prop.getProperty("iosTeavmIncompatible"));
+        if (UserData.platforms.contains("ios")) {
+            if (UserData.platforms.contains("teavm")) errors.add(prop.getProperty("iosTeavmIncompatible"));
+            if (!"7".equals(java) && !"8".equals(java)) errors.add(prop.getProperty("iosWrongJavaVersion"));
         }
 
-        if (UserData.platforms.contains("ios") && !"7".equals(UserData.javaVersion) && !"8".equals(UserData.javaVersion)) {
-            errors.add(prop.getProperty("iosWrongJavaVersion"));
-        }
-
-        if (UserData.platforms.contains("teavm") && Configuration.INSTANCE.parseJavaVersion(UserData.javaVersion) < 11.0) {
+        if (UserData.platforms.contains("teavm") && javaInt < 11) {
             errors.add(prop.getProperty("teavmWrongJavaVersion"));
         }
 

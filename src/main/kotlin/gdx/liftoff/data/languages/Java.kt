@@ -7,7 +7,7 @@ import gdx.liftoff.data.project.Project
 /**
  * Adds Java support to the project.
  */
-class Java : Language {
+data object Java : Language {
   override val id = "java-library"
   override val version = "11"
 
