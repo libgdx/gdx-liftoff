@@ -141,7 +141,10 @@ enum class Preset {
   abstract val template: Template
   open val addSkin: Boolean = true
 
-  val languagesData: LanguagesData = LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
+  // FIXME: Why does this crash when not made lazy or deferred to `get()` ?
+  val languagesData: LanguagesData by lazy {
+    LanguagesData(languages.toMutableList(), languages.associate { it.id to it.version })
+  }
 }
 
 fun getPreset(name: String?): Preset = when {
