@@ -60,6 +60,7 @@ ${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrai
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 application.mainClass = '${project.basic.rootPackage}.lwjgl2.Lwjgl2Launcher'
+application.applicationName = appName
 eclipse.project.name = appName + '-lwjgl2'
 java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
 java.targetCompatibility = ${project.advanced.desktopJavaVersion}

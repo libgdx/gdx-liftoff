@@ -37,6 +37,8 @@ kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_1_8)
 def appName = "gdx-liftoff"
 def jarName = "$appName-${version}.jar"
 
+application.applicationName = appName
+
 jar {
   manifest {
     attributes (

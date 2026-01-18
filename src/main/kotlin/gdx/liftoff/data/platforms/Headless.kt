@@ -65,6 +65,7 @@ ${if (project.rootGradle.plugins.contains(
       ""
     }}
 application.mainClass = "${project.basic.rootPackage}.headless.HeadlessLauncher"
+application.applicationName = appName
 eclipse.project.name = appName + '-headless'
 
 dependencies {
