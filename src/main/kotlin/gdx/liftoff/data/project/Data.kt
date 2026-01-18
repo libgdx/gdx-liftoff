@@ -32,8 +32,7 @@ data class AdvancedProjectData(
   val indentSize: Int = 4,
 ) {
   /**
-   * Currently hard-coded to 35, since the Play Store requires that or will require that soon. This should be updated
-   * as the Play Store requirement changes.
+   * Currently hard-coded to 35, since AndroidX 1.16.0 requires that at minimum, and it is what libGDX uses.
    */
   val androidSdkVersion: String = "35"
 
