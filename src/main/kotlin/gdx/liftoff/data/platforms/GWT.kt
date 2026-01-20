@@ -348,13 +348,13 @@ dependencies {
   annotationProcessor configurations.lom.dependencies
 }
 
-draftCompileGwt {
+tasks.register('draftCompileGwt') {
   doFirst {
     jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
   }
 }
 
-compileGwt {
+tasks.register('compileGwt') {
   doFirst {
     jvmArgs "-javaagent:${'$'}{configurations.lom.asPath}=ECJ"
   }
