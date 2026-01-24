@@ -302,11 +302,12 @@ handle at all. It causes a crash in native code (which can't be caught with try/
 lock input to the rest of the Liftoff program as we were doing before, but permit the file dialog to do its thing, and
 re-enable input when the dialog closes.
 
-1.12.1.15 ~~and up~~ use a newer version of the file dialog library (we went from LWJGL 3.3.1's NFD binding to LWJGL
-3.3.4's NFDe binding). This had some bug fixes, but also had all kinds of new bugs, so the current releases are
-back to using 3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
+1.12.1.15 uses a newer version of the file dialog library (we went from LWJGL 3.3.1's NFD binding to LWJGL
+3.3.4's NFDe binding). This had some bug fixes, but also had all kinds of new bugs, so many releases were back to using
+3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
 encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
-This might eventually let NFDe become useful for us here, but for now we need to use the older NFD.
+Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed most of the
+critical bugs. It's used by gdx-liftoff 1.14.0.4 . We'll just have to see if it works on macOS and Linux, though...
 
 ### The native distributions for macOS won't run how they should!
 
@@ -383,8 +384,8 @@ you want to bundle a different JDK version with your application, you have some 
 
 First, make sure Gradle itself uses the JDK version you want to bundle. In IDEA and AS, navigate to:
 `File | Settings | Build, Execution, Deployment | Build Tools | Gradle` and select the version you want in the bottom
-drop-down menu. If I want to build with and bundle Java 24, for example, I would select a Java 24 version from there,
-like "Eclipse Temurin 24" or "BellSoft Liberica 24". If you don't have any Java installation of the version you want,
+drop-down menu. If I want to build with and bundle Java 25, for example, I would select a Java 25 version from there,
+like "Eclipse Temurin 25" or "BellSoft Liberica 25". If you don't have any Java installation of the version you want,
 Navigate to `File | Project Structure | SDKs`, Click the `+` at top, and `Download JDK` to get the version you want.
 If you just downloaded a JDK, you can do the first step again and actually select your wanted version this time.
 Click Apply or OK once you have selected your wanted version in the drop-down.
@@ -392,13 +393,13 @@ Click Apply or OK once you have selected your wanted version in the drop-down.
 Second, you'll need to make the links in `lwjgl3/build.gradle` match the JDK you selected, with the same major version
 and hopefully the most recent minor version you can manage. The links currently used by default in Construo are taken
 from https://github.com/adoptium/temurin17-binaries/releases , on the only section with blue links listed inside it.
-If you want the recent Java 24, you'll want to look in https://github.com/adoptium/temurin24-binaries/releases instead
-(note, the only change is from "17" to "24"). Other versions are similar; 17 is just about the first version of JDK that
+If you want the recent Java 25, you'll want to look in https://github.com/adoptium/temurin25-binaries/releases instead
+(note, the only change is from "17" to "25"). Other versions are similar; 17 is just about the first version of JDK that
 Construo should work with, and is definitely the only one still receiving support from any OpenJDK vendor. The actual
 links probably don't matter too much, but you may want to copy the link matching a description like
-`OpenJDK24U-jdk_x64_windows_hotspot_24.0.1_9.zip` to make sure everything matches. The reason the link doesn't matter is
-that you can usually just change the version from `17.0.15` to `24.0.1` (in this case) and then change the last number
-where it appears to match as well (`6` to `9`), which is after an `_` underscore in one place and after the escape `%2B`
+`OpenJDK25U-jdk_x64_windows_hotspot_25.0.1_8.zip` to make sure everything matches. The reason the link doesn't matter is
+that you can usually just change the version from `17.0.15` to `25.0.1` (in this case) and then change the last number
+where it appears to match as well (`6` to `8`), which is after an `_` underscore in one place and after the escape `%2B`
 in another place.
 
 Once you've changed the link for each platform you want to support (probably Windows, maybe also Linux, and unlikely
@@ -420,7 +421,8 @@ while changing the source code, saving, and seeing the changes as soon as the pa
 under "gwt"). The differences here are that `dist` runs a lot more quickly in the latest version, and that (for reasons
 I haven't fully figured out) `superDev` now depends on running `dist` when it first starts up. More importantly,
 `superDev` pops up a Swing window (using GWT itself to do so) that provides a link to your re-load-able page. It isn't
-hidden in the Gradle output text anymore, which is nice.
+hidden in the Gradle output text anymore, which is nice. You may need to wait a few seconds for the link to appear near
+the top of the Gradle window, and you can also copy the URL into a browser of your choice.
 
 ### Why isn't TeaVM compiling to WASM?
 
