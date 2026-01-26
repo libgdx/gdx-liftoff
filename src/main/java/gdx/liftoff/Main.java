@@ -441,6 +441,10 @@ public class Main extends ApplicationAdapter {
         PointerBuffer pathPointer = memAllocPointer(1);
 
         try {
+            // I hate using an exception for control flow, but this avoids repeating code.
+            if(UIUtils.isLinux)
+                throw new Throwable("Not an error! On Linux, using VisUI file chooser...");
+
             int status = NativeFileDialog.NFD_PickFolder(pathPointer, initialPath);
 
             if (status == NativeFileDialog.NFD_CANCEL) {
@@ -461,21 +465,25 @@ public class Main extends ApplicationAdapter {
 
             callback.selected(array);
         } catch (Throwable e) {
-            Gdx.app.error(
-                "NFD",
-                "The Native File Dialog library could not be loaded.\n" +
-                    "Check if you have multiple LWJGL3 applications open simultaneously,\n" +
-                    "since that can cause this error."
-            );
-            Gdx.app.error("NFD", e.toString());
+            if(!UIUtils.isLinux) {
+                Gdx.app.error(
+                    "NFD",
+                    "The Native File Dialog library could not be loaded.\n" +
+                        "Check if you have multiple LWJGL3 applications open simultaneously,\n" +
+                        "since that can cause this error."
+                );
+                Gdx.app.error("NFD", e.toString());
+            }
             VisUI.setSkipGdxVersionCheck(true);
-            VisUI.load();
+            if(!VisUI.isLoaded())
+                VisUI.load();
             FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
             fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);
             fileChooser.setDirectory(initialPath);
             fileChooser.setListener(callback);
 
             stage.addActor(fileChooser.fadeIn());
+            Gdx.input.setInputProcessor(stage); // needed because NFDe may have set input to null.
         } finally {
             memFree(pathPointer);
         }
