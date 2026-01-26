@@ -432,12 +432,6 @@ public class Main extends ApplicationAdapter {
      * @param callback      Adapter that will be called if the user clicks okay or cancels the dialog
      */
     public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
-        String initialPath = initialFolder.path();
-
-        if (UIUtils.isWindows) {
-            initialPath = initialPath.replace("/", "\\");
-        }
-
         PointerBuffer pathPointer = memAllocPointer(1);
 
         try {
@@ -445,7 +439,10 @@ public class Main extends ApplicationAdapter {
             if(UIUtils.isLinux)
                 throw new Throwable("Not an error! On Linux, using VisUI file chooser...");
 
-            int status = NativeFileDialog.NFD_PickFolder(pathPointer, initialPath);
+            String initialPath = initialFolder.path();
+            int status = NativeFileDialog.NFD_PickFolder(pathPointer, UIUtils.isWindows
+                ? initialPath.replace("/", "\\")
+                : initialPath);
 
             if (status == NativeFileDialog.NFD_CANCEL) {
                 callback.canceled();
@@ -479,7 +476,7 @@ public class Main extends ApplicationAdapter {
                 VisUI.load();
             FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
             fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);
-            fileChooser.setDirectory(initialPath);
+            fileChooser.setDirectory(initialFolder);
             fileChooser.setListener(callback);
 
             stage.addActor(fileChooser.fadeIn());
