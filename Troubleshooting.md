@@ -14,6 +14,11 @@ then download a JDK, such as `Version: 17`, `Vendor: Eclipse Temurin`, which is 
 GraalVM JDK if you want in this way, which enables using LWJGL3's native-image configuration much later on. You can have
 many JDKs installed if you want, of various versions.
 
+You can go as new as Java 25, which is the latest at the time of writing, but the newest JDK released tends to take a
+few months for Gradle to support. Newer JDK versions have been making it harder to use some long-standing Java features,
+unfortunately, and will often emit warnings for things that have worked for decades until now. If you are experiencing
+issues with warnings that just became errors, consider downgrading your JDK to 17 or 21.
+
 ### Some older docs mention Gradle tasks using a "desktop" module.
 
 This would include docs telling you to run a Gradle task like `desktop:run` or `desktop:dist`.
@@ -236,7 +241,7 @@ back almost to 8.3. I'm not exactly clear on the nature of the incompatibility, 
 fixed in an upcoming Gradle release. Because that hadn't happened yet, MOE was temporarily
 removed from Liftoff 1.12.1.7; it won't work in earlier versions unless you go back to 1.12.0.4 or downgrade Gradle
 yourself to 8.3. Gradle 8.10 appears to work with MOE again, and the latest Liftoff releases (starting with 1.12.1.16)
-should have it.
+should have it. See also "Where is MOE? What is MOE?" several issues below.
 
 ### In 1.12.1.8 through 1.13.1.2, the default icons for Android projects look terrible!
 
@@ -277,24 +282,24 @@ newer JDK to build the project, though not necessarily to run the resulting game
 `jdeps` to determine which parts of the JDK to use, and `jlink` to create a JRE without any parts the game doesn't use.
 The jdeps/jlink step can go wrong if certain deprecated parts of the JDK are used, which is the case with the
 commonly-used dependency VisUI up to its version 1.5.3 . VisUI recently released a new stable version, and Liftoff
-updated to it; so can your project. That release is version 1.5.6, and uses this dependency:
+updated to it; so can your project. That release is version 1.5.7, and uses this dependency:
 
-`implementation "com.kotcrab.vis:vis-ui:1.5.6"`
+`implementation "com.kotcrab.vis:vis-ui:1.5.7"`
 
 You could instead change your dependency on VisUI to a known-working commit on JitPack if you encounter any issues:
 
 `implementation "com.github.kotcrab.vis-ui:vis-ui:1aef382077"`
 
 Which gets a sort-of-recent commit built by JitPack, and that code has a fix for 1.5.3 that makes it compatible with
-Construo (and with jlink in general). Using 1.5.6 is probably a better idea unless some new issue surfaces. There is a
-newer 1.5.7 version that is currently used by Liftoff when 1.14.0 is used, because VisUI 1.5.7 uses libGDX 1.13.5 or
+Construo (and with jlink in general). Using 1.5.7 is probably a better idea unless some new issue surfaces. The
+VisUI 1.5.7 version is currently used by Liftoff when 1.14.0 is used, because VisUI 1.5.7 uses libGDX 1.13.5 or
 newer. Actually using libGDX 1.13.5 exactly would be a bad idea because of issues it has on Android, but because 1.14.0
 will take priority, it should work reasonably well with the newer VisUI. You may need to call
 `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
 
 Other dependencies may also have issues, but no one has found them yet.
 
-### Opening a folder picker crashes on macOS!
+### Opening a folder picker crashes on macOS or Linux!
 
 This was a bug in 1.12.1.13 and possibly some earlier versions, and it has been fixed in 1.12.1.14 (probably).
 It was caused by opening the file picker dialog on its own thread, which other OSes don't mind at all, but macOS can't
@@ -306,8 +311,10 @@ re-enable input when the dialog closes.
 3.3.4's NFDe binding). This had some bug fixes, but also had all kinds of new bugs, so many releases were back to using
 3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
 encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
-Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed most of the
-critical bugs. It's used by gdx-liftoff 1.14.0.4 . We'll just have to see if it works on macOS and Linux, though...
+Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed some bugs.
+It's used by gdx-liftoff 1.14.0.5, except on Linux, where the VisUI fallback is now used instead. NFDe seems to still
+have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
+optimal either, but it at least doesn't crash, and doesn't freeze anymore.
 
 ### The native distributions for macOS won't run how they should!
 
