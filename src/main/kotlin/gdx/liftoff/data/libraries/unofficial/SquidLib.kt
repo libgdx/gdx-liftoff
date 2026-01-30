@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : Library {
-  override val defaultVersion = "4.0.6"
+  override val defaultVersion = "4.0.7"
   override val official = false
   override val repository: Repository = Repository.MavenCentral
   override val group = "com.squidpony"
