@@ -1278,12 +1278,12 @@ class GdxMiniAudio : ThirdPartyExtension() {
 
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "games.rednblack.miniaudio:miniaudio")
-    addDependency(project, Lwjgl3.ID, "games.rednblack.miniaudio:miniaudio-platform:natives-desktop")
-    addDependency(project, IOS.ID, "games.rednblack.miniaudio:miniaudio-platform:natives-ios")
-    addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio-platform:natives-armeabi-v7a")
-    addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio-platform:natives-arm64-v8a")
-    addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio-platform:natives-x86")
-    addNativeAndroidDependency(project, "games.rednblack.miniaudio:miniaudio-platform:natives-x86_64")
+    addDependency(project, Lwjgl3.ID, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-desktop")
+    addDependency(project, IOS.ID, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-ios")
+    addNativeAndroidDependency(project, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-armeabi-v7a")
+    addNativeAndroidDependency(project, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-arm64-v8a")
+    addNativeAndroidDependency(project, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-x86")
+    addNativeAndroidDependency(project, "games.rednblack.miniaudio:gdx-miniaudio-platform:natives-x86_64")
   }
 
   override fun addNativeAndroidDependency(
