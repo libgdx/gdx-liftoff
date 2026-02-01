@@ -69,13 +69,13 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
   implementation "org.apache.commons:commons-exec:$commonsExecVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-  implementation "com.kotcrab.vis:vis-ui:$visUiVersion" // for stable releases
-//  implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion" // for JitPack commits
+//  implementation "com.kotcrab.vis:vis-ui:$visUiVersion" // for stable releases
+  implementation "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion" // for JitPack commits
   implementation "com.github.raeleus.TenPatch:tenpatch:5.2.3"
   implementation "com.github.raeleus.stripe:stripe:2.0.0"
-  implementation "com.github.tommyettinger:textratypist:2.2.9"
+  implementation "com.github.tommyettinger:textratypist:2.2.11"
 //  implementation "com.rafaskoberg.gdx:typing-label:1.4.0" // not used because at least not currently compatible
-  implementation "com.github.tommyettinger:regexodus:0.1.20" // updates version used by Stripe
+  implementation "com.github.tommyettinger:regexodus:0.1.21" // updates version used by Stripe
 
 
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"

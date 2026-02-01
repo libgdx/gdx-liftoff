@@ -814,15 +814,16 @@ class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
 
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1.5.7"
+  override val defaultVersion = "1f8b37a24b"
+  override val repository = Repository.JitPack
   override val url = "https://github.com/kotcrab/vis-ui"
-  override val group = "com.kotcrab.vis"
+  override val group = "com.github.kotcrab.vis-ui"
   override val name = "vis-ui"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.kotcrab.vis:vis-ui")
+    addDependency(project, Core.ID, "com.github.kotcrab.vis-ui:vis-ui")
 
-    addDependency(project, GWT.ID, "com.kotcrab.vis:vis-ui:sources")
+    addDependency(project, GWT.ID, "com.github.kotcrab.vis-ui:vis-ui:sources")
     addGwtInherit(project, "com.kotcrab.vis.vis-ui")
   }
 }
