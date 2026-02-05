@@ -312,9 +312,10 @@ re-enable input when the dialog closes.
 3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
 encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
 Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed some bugs.
-It's used by gdx-liftoff 1.14.0.5, except on Linux, where the VisUI fallback is now used instead. NFDe seems to still
+It's used by gdx-liftoff 1.14.0.6, except on Linux, where the VisUI fallback is now used instead. NFDe seems to still
 have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
-optimal either, but it at least doesn't crash, and doesn't freeze anymore.
+optimal either, but it at least doesn't crash, and doesn't freeze anymore. 1.14.0.5 used a broken VisUI release, but
+1.14.0.6 uses the (working) latest commit, because there still hasn't been a VisUI release yet.
 
 ### The native distributions for macOS won't run how they should!
 
