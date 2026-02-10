@@ -61,6 +61,10 @@ public class WetSandParticle extends Particle implements ISolid {
         trySwappingWithLeft(grid, x, y);
     }
 
+    private String returnSomeString() {
+        return "This is some string";
+    }
+
     private void handleDrySandNeighbors(Particle[][] grid, int x, int y) {
         Particle[] surroundings = getSurroundingParticles(grid);
         for (Particle particle : surroundings) {
@@ -77,6 +81,7 @@ public class WetSandParticle extends Particle implements ISolid {
         }
     }
 
+    // TODO: the wetStep here might need to be revisited...
     private void tryDrySelf(Particle[][] grid, int x, int y) {
         if (!hasDried) {
             wetStep += 1;
