@@ -43,7 +43,8 @@ jar {
   manifest {
     attributes (
       // Enabling native access is good for JARs run by Java 24 or later.
-      'Main-Class' : application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED'
+      // Setting Multi-Release to true allows LWJGL3 to use different classes on recent Java versions.
+      'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED', 'Multi-Release': 'true'
     )
   }
   archiveFileName.set(jarName)
