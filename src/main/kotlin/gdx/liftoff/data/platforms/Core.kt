@@ -45,5 +45,9 @@ ${joinDependencies(dependencies, "api")}
     implementation "io.github.berstanio:gdx-svmhelper-annotations:${'$'}graalHelperVersion"
   }
 }
+
+jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
 """
 }
