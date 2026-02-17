@@ -32,7 +32,7 @@ public class SoilParticle extends Particle implements ISolid {
         checkForWetness(grid, x, y);
         trySinking(grid, x, y);
         tryNormalMovement(grid);
-        // tryContinueToSink(grid, x, y);
+        handleDispersionUnderWater(grid, x, y);
     }
 
     private void tryContinueToSink(Particle[][] grid, int x, int y) {
@@ -59,8 +59,8 @@ public class SoilParticle extends Particle implements ISolid {
         for (Particle particle : surroundingParticles) {
             if (particle == null) continue;
             if ("water".equals(particle.getId())) {
-                // grid[particle.x][particle.y] = null;
                 grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
+                break;
             }
         }
     }
@@ -71,16 +71,17 @@ public class SoilParticle extends Particle implements ISolid {
 
         Particle particleAbove = surroundingParticles[2];
         Particle particleLeft = surroundingParticles[0];
-        Particle particleRight = surroundingParticles[1];
 
+        if (particleAbove == null) return;
         if (!"water".equals(particleAbove.getId())) return;
         boolean leftFactor = utils.getRandomBoolean();
 
-        if (leftFactor && "water".equals(particleLeft.getId())) {
-            swapWith(grid, x - 1, y);
-            return;
+        if (leftFactor && particleLeft != null) {
+            if ("water".equals(particleLeft.getId())) {
+                swapWith(grid, x - 1, y);
+                return;
+            }
         }
-
         swapWith(grid, x + 1, y);
     }
 }
