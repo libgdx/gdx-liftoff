@@ -21,7 +21,6 @@ public abstract class Particle {
     protected int size = 1;
     public boolean isWet;
 
-
     public Particle(int x, int y, String id) {
         this.x = x;
         this.y = y;

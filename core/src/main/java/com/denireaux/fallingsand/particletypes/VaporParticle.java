@@ -52,11 +52,10 @@ public class VaporParticle extends Particle {
         if (canLeft && canRight) {
             if (leftFactor) {
                 moveLeft(grid);
-                // tryContinueFloating(grid, x, y);
                 return;
             }
             moveRight(grid);
-            // tryContinueFloating(grid, x, y);
+            tryContinueRight(grid, x, y);
         }
     }
 
@@ -74,5 +73,11 @@ public class VaporParticle extends Particle {
         Particle particleAbove = getAboveParticle(grid, x, y);
         if (particleAbove == null) return;
         swapWith(grid, x, y + 1);
+    }
+
+    private void tryContinueRight(Particle[][] grid, int x, int y) {
+        Particle particleRight = getRightParticle(grid, x, y);
+        if (particleRight == null) return;
+        swapWith(grid, x + 1, y);
     }
 }

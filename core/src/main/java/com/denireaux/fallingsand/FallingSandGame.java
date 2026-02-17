@@ -17,20 +17,27 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.denireaux.fallingsand.fauna.WormSegment;
 import com.denireaux.fallingsand.particletypes.AshParticle;
 import com.denireaux.fallingsand.particletypes.CarbonParticle;
+import com.denireaux.fallingsand.particletypes.FuseParticle;
+import com.denireaux.fallingsand.particletypes.GrassParticle;
 import com.denireaux.fallingsand.particletypes.LavaParticle;
 import com.denireaux.fallingsand.particletypes.OilParticle;
 import com.denireaux.fallingsand.particletypes.Particle;
 import com.denireaux.fallingsand.particletypes.PowderParticle;
 import com.denireaux.fallingsand.particletypes.SandParticle;
+import com.denireaux.fallingsand.particletypes.SeedParticle;
 import com.denireaux.fallingsand.particletypes.SmokeParticle;
 import com.denireaux.fallingsand.particletypes.SnowParticle;
+import com.denireaux.fallingsand.particletypes.SoilParticle;
+import com.denireaux.fallingsand.particletypes.StoneHotParticle;
 import com.denireaux.fallingsand.particletypes.StoneParticle;
 import com.denireaux.fallingsand.particletypes.VaporParticle;
 import com.denireaux.fallingsand.particletypes.VoidParticle;
 import com.denireaux.fallingsand.particletypes.WaterParticle;
 import com.denireaux.fallingsand.particletypes.WetSandParticle;
+import com.denireaux.fallingsand.particletypes.WetSoilParticle;
 
 public class FallingSandGame extends ApplicationAdapter {
     private static final Logger log = Logger.getLogger(String.valueOf(FallingSandGame.class));
@@ -53,8 +60,8 @@ public class FallingSandGame extends ApplicationAdapter {
 
     private enum ParticleType {
         SAND, WATER, WETSAND, VAPOR, LAVA,
-        STONE, ASH, POWDER, SMOKE, SNOW,
-        CARBON, VOID, OIL
+        STONE, STONEHOT, ASH, POWDER, SMOKE, SNOW,
+        CARBON, VOID, OIL, GRASS, SEED, SOIL, WETSOIL, FUSE
     }
 
     private ParticleType currentParticle = ParticleType.SAND;
@@ -64,13 +71,17 @@ public class FallingSandGame extends ApplicationAdapter {
     private boolean glowEnabled = true;
     private Rectangle[] paletteButtons;
 
+    private boolean updateLeftToRight = true;
+
     // Neon particle colors (optimized for black background)
     private final Color SANDCOLOR     = new Color(1.00f, 0.96f, 0.47f, 1f);
-    private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
+    // private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
+    private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 0.5f);
     private final Color WETSANDCOLOR  = new Color(1.00f, 0.64f, 0.00f, 1f);
     private final Color VAPORCOLOR    = new Color(0.80f, 0.85f, 0.90f, 1f);
     private final Color LAVACOLOR     = new Color(1.00f, 0.00f, 0.00f, 1f);
     private final Color STONECOLOR    = new Color(0.60f, 0.60f, 0.60f, 1f);
+    private final Color STONEHOTCOLOR = new Color(0.60f, 0.60f, 0.60f, 1f);
     private final Color ASHCOLOR      = new Color(0.80f, 0.80f, 0.80f, 1f);
     private final Color POWDERCOLOR   = new Color(0.87f, 0.84f, 0.78f, 1f);
     private final Color SMOKECOLOR    = new Color(0.40f, 0.40f, 0.40f, 1f);
@@ -78,6 +89,13 @@ public class FallingSandGame extends ApplicationAdapter {
     private final Color CARBONCOLOR   = new Color(0.20f, 0.20f, 0.20f, 1f);
     private final Color VOIDCOLOR     = new Color(0.00f, 1.00f, 0.50f, 1f);
     private final Color OILCOLOR      = new Color(0.20f, 0.12f, 0.05f, 1f);
+    private final Color GRASSCOLOR    = new Color(0.0f, 1.0f, 0.0f, 1f);
+    private final Color SEEDCOLOR     = new Color(0.82f, 0.71f, 0.55f, 1f);
+    private final Color SOILCOLOR     = new Color(0.55f, 0.43f, 0.32f, 1f);
+    private final Color WETSOILCOLOR  = new Color(0.65f, 0.45f, 0.4f, 1f);
+    private final Color FUSECOLOR     = new Color(1.2f, 1.25f, 122f, 1f);
+
+    private final Color WORMCOLOR = new Color(0.8f, 0.1f, 0.8f, 1f);
 
     @Override
     public void create() {
@@ -129,6 +147,61 @@ public class FallingSandGame extends ApplicationAdapter {
         });
     }
 
+    // @Override
+    // public void render() {
+    //     handleInput();
+
+    //     Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+    //     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+    //     for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
+    //         for (int x = 0; x < GRID_WIDTH; x++) {
+    //             if (grid[x][y] != null)
+    //                 grid[x][y].update(0.1f, grid);
+    //         }
+    //     }
+
+    //     if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+    //         glowEnabled = !glowEnabled;
+    //         System.out.println("Glow mode: " + (glowEnabled ? "ON" : "OFF"));
+    //     }
+
+    //     batch.setProjectionMatrix(camera.combined);
+    //     batch.begin();
+
+    //     for (int x = 0; x < GRID_WIDTH; x++) {
+    //         for (int y = 0; y < GRID_HEIGHT; y++) {
+    //             Particle p = grid[x][y];
+    //             if (p == null) continue;
+
+    //             Color baseColor = getColorForType(p);
+    //             if (baseColor == null) continue;
+
+    //             boolean shouldGlow = glowEnabled && (
+    //                     p instanceof LavaParticle ||
+    //                     p instanceof VaporParticle ||
+    //                     p instanceof SmokeParticle
+    //             );
+
+    //             if (shouldGlow) {
+    //                 batch.setColor(baseColor.r, baseColor.g, baseColor.b, 0.3f);
+    //                 batch.draw(pixel, x * CELL_SIZE - 1, y * CELL_SIZE - 1, CELL_SIZE + 2, CELL_SIZE + 2);
+    //             }
+
+    //             batch.setColor(baseColor);
+    //             batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    //         }
+    //     }
+
+    //     // Sidebar
+    //     for (int i = 0; i < particleTypes.length; i++) {
+    //         Color color = getColorForType(particleTypes[i]);
+    //         drawButton(paletteButtons[i], color, particleTypes[i].name(), particleTypes[i]);
+    //     }
+
+    //     batch.end();
+    // }
+
     @Override
     public void render() {
         handleInput();
@@ -136,12 +209,8 @@ public class FallingSandGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
-            for (int x = 0; x < GRID_WIDTH; x++) {
-                if (grid[x][y] != null)
-                    grid[x][y].update(0.1f, grid);
-            }
-        }
+        // 🔹 use helper instead of hard-coded left→right loop
+        updateParticles();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
             glowEnabled = !glowEnabled;
@@ -151,6 +220,7 @@ public class FallingSandGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        // 🔹 drawing loop stays exactly the same
         for (int x = 0; x < GRID_WIDTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
                 Particle p = grid[x][y];
@@ -175,7 +245,7 @@ public class FallingSandGame extends ApplicationAdapter {
             }
         }
 
-        // Sidebar
+        // sidebar drawing unchanged...
         for (int i = 0; i < particleTypes.length; i++) {
             Color color = getColorForType(particleTypes[i]);
             drawButton(paletteButtons[i], color, particleTypes[i].name(), particleTypes[i]);
@@ -184,13 +254,46 @@ public class FallingSandGame extends ApplicationAdapter {
         batch.end();
     }
 
+    private void updateParticles() {
+        // flip direction each frame
+        updateLeftToRight = !updateLeftToRight;
+
+        if (updateLeftToRight) {
+            // original order: x = 0 → GRID_WIDTH-1
+            for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
+                for (int x = 0; x < GRID_WIDTH; x++) {
+                    Particle p = grid[x][y];
+                    if (p != null) {
+                        p.update(0.1f, grid);
+                    }
+                }
+            }
+        } else {
+            // mirrored: x = GRID_WIDTH-1 → 0
+            for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
+                for (int x = GRID_WIDTH - 1; x >= 0; x--) {
+                    Particle p = grid[x][y];
+                    if (p != null) {
+                        p.update(0.1f, grid);
+                    }
+                }
+            }
+        }
+    }
+
+
     private Color getColorForType(Object type) {
         if (type instanceof SandParticle || type == ParticleType.SAND) return SANDCOLOR;
-        if (type instanceof WaterParticle || type == ParticleType.WATER) return WATERCOLOR;
+        
+        // if (type instanceof WaterParticle || type == ParticleType.WATER) return WATERCOLOR;
+        if (type instanceof WaterParticle || type == ParticleType.WATER)
+            return new Color(WATERCOLOR.r, WATERCOLOR.g, WATERCOLOR.b, 0.6f);
+
         if (type instanceof WetSandParticle || type == ParticleType.WETSAND) return WETSANDCOLOR;
         if (type instanceof VaporParticle || type == ParticleType.VAPOR) return VAPORCOLOR;
         if (type instanceof LavaParticle || type == ParticleType.LAVA) return LAVACOLOR;
         if (type instanceof StoneParticle || type == ParticleType.STONE) return STONECOLOR;
+        if (type instanceof StoneHotParticle || type == ParticleType.STONEHOT) return STONEHOTCOLOR;
         if (type instanceof AshParticle || type == ParticleType.ASH) return ASHCOLOR;
         if (type instanceof PowderParticle || type == ParticleType.POWDER) return POWDERCOLOR;
         if (type instanceof SmokeParticle || type == ParticleType.SMOKE) return SMOKECOLOR;
@@ -198,6 +301,13 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof CarbonParticle || type == ParticleType.CARBON) return CARBONCOLOR;
         if (type instanceof VoidParticle || type == ParticleType.VOID) return VOIDCOLOR;
         if (type instanceof OilParticle || type == ParticleType.OIL) return OILCOLOR;
+        if (type instanceof GrassParticle || type == ParticleType.GRASS) return GRASSCOLOR;
+        if (type instanceof SeedParticle || type == ParticleType.SEED) return SEEDCOLOR;
+        if (type instanceof SoilParticle || type == ParticleType.SOIL) return SOILCOLOR;
+        if (type instanceof WetSoilParticle || type == ParticleType.WETSOIL) return WETSOILCOLOR;
+        if (type instanceof FuseParticle || type == ParticleType.FUSE) return FUSECOLOR;
+
+        if (type instanceof WormSegment) return WORMCOLOR;
         return null;
     }
 
@@ -235,6 +345,7 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case VAPOR -> grid[x][y] = new VaporParticle(x, y, "vapor");
                                 case LAVA -> grid[x][y] = new LavaParticle(x, y, "lava");
                                 case STONE -> grid[x][y] = new StoneParticle(x, y, "stone");
+                                case STONEHOT -> grid[x][y] = new StoneHotParticle(x, y, "stone-hot");
                                 case ASH -> grid[x][y] = new AshParticle(x, y, "ash");
                                 case POWDER -> grid[x][y] = new PowderParticle(x, y, "powder");
                                 case SMOKE -> grid[x][y] = new SmokeParticle(x, y, "smoke");
@@ -242,6 +353,11 @@ public class FallingSandGame extends ApplicationAdapter {
                                 case CARBON -> grid[x][y] = new CarbonParticle(x, y, "carbon");
                                 case VOID -> grid[x][y] = new VoidParticle(x, y, "void");
                                 case OIL -> grid[x][y] = new OilParticle(x, y, "oil");
+                                case GRASS -> grid[x][y] = new GrassParticle(x, y, "grass");
+                                case SEED -> grid[x][y] = new SeedParticle(x, y, "seed");
+                                case SOIL -> grid[x][y] = new SoilParticle(x, y, "soil");
+                                case WETSOIL -> grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
+                                case FUSE -> grid[x][y] = new FuseParticle(x, y, "fuse");
                             }
                         }
                     }
