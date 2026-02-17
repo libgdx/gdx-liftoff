@@ -47,18 +47,15 @@ public class VaporParticle extends Particle {
         if (canMoveUp) {
             moveUp(grid);
             tryContinueFloating(grid, x, y);
-            
             return;
         }
         if (canLeft && canRight) {
             if (leftFactor) {
                 moveLeft(grid);
-                // tryContinueFloating(grid, x, y);
                 return;
             }
             moveRight(grid);
             tryContinueRight(grid, x, y);
-            // tryContinueFloating(grid, x, y);
         }
     }
 
