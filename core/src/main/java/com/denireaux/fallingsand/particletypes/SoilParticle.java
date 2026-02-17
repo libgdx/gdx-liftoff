@@ -1,6 +1,7 @@
 package com.denireaux.fallingsand.particletypes;
 
 import com.denireaux.fallingsand.behaviors.ISolid;
+import com.denireaux.fallingsand.utils.utils;
 
 public class SoilParticle extends Particle implements ISolid {
     public SoilParticle(int x, int y, String id) {
@@ -58,9 +59,28 @@ public class SoilParticle extends Particle implements ISolid {
         for (Particle particle : surroundingParticles) {
             if (particle == null) continue;
             if ("water".equals(particle.getId())) {
-                grid[particle.x][particle.y] = null;
+                // grid[particle.x][particle.y] = null;
                 grid[x][y] = new WetSoilParticle(x, y, "wetsoil");
             }
         }
+    }
+
+    // TODO: Validate this because I'm 99% sure this wasn't done properly
+    private void handleDispersionUnderWater(Particle[][] grid, int x, int y) {
+        Particle[] surroundingParticles = getSurroundingParticles(grid);
+
+        Particle particleAbove = surroundingParticles[2];
+        Particle particleLeft = surroundingParticles[0];
+        Particle particleRight = surroundingParticles[1];
+
+        if (!"water".equals(particleAbove.getId())) return;
+        boolean leftFactor = utils.getRandomBoolean();
+
+        if (leftFactor && "water".equals(particleLeft.getId())) {
+            swapWith(grid, x - 1, y);
+            return;
+        }
+
+        swapWith(grid, x + 1, y);
     }
 }
