@@ -38,31 +38,7 @@ public class WetSandParticle extends Particle implements ISolid {
         handleDrySandNeighbors(grid, x, y);
         trySinking(grid, x, y);
         tryNormalMovement(grid);
-        tryContinueToSink(grid, x, y);
         tryDrySelf(grid, x, y);
-    }
-
-    private void tryContinueToSink(Particle[][] grid, int x, int y) {
-        Particle particleLeft = getLeftParticle(grid, x, y);
-        Particle particleRight = getRightParticle(grid, x, y);
-        if (particleLeft == null || particleRight == null) return;
-        String particleLeftId = particleLeft.getId();
-        String particleRightId = particleRight.getId();
-        if ("water".equals(particleLeftId) && "water".equals(particleRightId)) {
-            if (Math.random() < 0.5) {
-                trySwappingWithRight(grid, x, y);
-                deleteSelf(grid, x, y);
-            } else {
-                trySwappingWithLeft(grid, x, y);
-                deleteSelf(grid, x, y);
-            }
-            return;
-        }
-        trySwappingWithLeft(grid, x, y);
-    }
-
-    private String returnSomeString() {
-        return "This is some string";
     }
 
     private void handleDrySandNeighbors(Particle[][] grid, int x, int y) {
