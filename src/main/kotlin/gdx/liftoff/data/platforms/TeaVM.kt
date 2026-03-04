@@ -99,6 +99,10 @@ tasks.register("buildDebug", JavaExec) {
   args += ["debug"]
 }
 
+// For backwards compatibility with the earlier run and build tasks.
+tasks.register("run"){
+  dependsOn runRelease
+}
 build.dependsOn buildRelease
 """
 }
