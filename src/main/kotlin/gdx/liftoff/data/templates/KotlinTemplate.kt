@@ -444,13 +444,13 @@ fun main() {
 
 package ${project.basic.rootPackage}.teavm
 
-import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration
-import com.github.xpenatan.gdx.backends.teavm.TeaApplication
+import com.github.xpenatan.gdx.teavm.backends.web.WebApplicationConfiguration
+import com.github.xpenatan.gdx.teavm.backends.web.WebApplication
 import ${project.basic.rootPackage}.${project.basic.mainClass}
 
 /** Launches the TeaVM/HTML application. */
 fun main() {
-    val config = TeaApplicationConfiguration("canvas").apply {
+    val config = WebApplicationConfiguration("canvas").apply {
         //// If width and height are each greater than 0, then the app will use a fixed size.
         //width = $width
         //height = $height
@@ -458,31 +458,26 @@ fun main() {
         width = 0
         height = 0
     }
-    TeaApplication(${project.basic.mainClass}(), config)
+    WebApplication(${project.basic.mainClass}(), config)
 }"""
 
   @Language("kotlin")
   override fun getTeaVMBuilderContent(project: Project) =
     """package ${project.basic.rootPackage}.teavm
 
-import java.io.File
-import com.github.xpenatan.gdx.backends.teavm.config.AssetFileHandle
-import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildConfiguration
-import com.github.xpenatan.gdx.backends.teavm.config.TeaBuildReflectionListener
-import com.github.xpenatan.gdx.backends.teavm.config.TeaBuilder
-import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier
-import org.teavm.backend.wasm.WasmDebugInfoLevel
+import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle
+import com.github.xpenatan.gdx.teavm.backends.shared.config.compiler.TeaCompiler
+import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend
 import org.teavm.tooling.TeaVMSourceFilePolicy
-import org.teavm.tooling.TeaVMTargetType
-import org.teavm.tooling.TeaVMTool
 import org.teavm.tooling.sources.DirectorySourceFileProvider
 import org.teavm.vm.TeaVMOptimizationLevel
+import java.io.File
 
 /** Builds the TeaVM/HTML application. */
 object TeaVMBuilder {
     @JvmStatic fun main(arguments: Array<String>) {
-        val debug = "debug" in args
-        val startJetty = "run" in args
+        val debug = "debug" in arguments
+        val startJetty = "run" in arguments
 
         val webBackend = WebBackend()
             .setHtmlTitle("${project.basic.name}")

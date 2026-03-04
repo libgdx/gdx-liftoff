@@ -732,8 +732,8 @@ public class ServerLauncher {
   fun getTeaVMLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
-import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration;
-import com.github.xpenatan.gdx.backends.teavm.TeaApplication;
+import com.github.xpenatan.gdx.teavm.backends.web.WebApplicationConfiguration;
+import com.github.xpenatan.gdx.teavm.backends.web.WebApplication;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /**
@@ -741,14 +741,14 @@ import ${project.basic.rootPackage}.${project.basic.mainClass};
  */
 public class TeaVMLauncher {
     public static void main(String[] args) {
-        TeaApplicationConfiguration config = new TeaApplicationConfiguration("canvas");
+        WebApplicationConfiguration config = new WebApplicationConfiguration("canvas");
         //// If width and height are each greater than 0, then the app will use a fixed size.
         //config.width = $width;
         //config.height = $height;
         //// If width and height are both 0, then the app will use all available space.
         config.width = 0;
         config.height = 0;
-        new TeaApplication(new ${project.basic.mainClass}(), config);
+        new WebApplication(new ${project.basic.mainClass}(), config);
     }
 }"""
 
@@ -760,12 +760,9 @@ import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle;
 import com.github.xpenatan.gdx.teavm.backends.shared.config.compiler.TeaCompiler;
 import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend;
 import java.io.File;
-import java.io.IOException;
 import org.teavm.tooling.TeaVMSourceFilePolicy;
 import org.teavm.tooling.sources.DirectorySourceFileProvider;
 import org.teavm.vm.TeaVMOptimizationLevel;
-
-import com.github.xpenatan.gdx.backends.teavm.config.plugins.TeaReflectionSupplier;
 
 /** Builds the TeaVM/HTML application. */
 public class TeaVMBuilder {
@@ -804,13 +801,11 @@ ${generateTeaVMReflectionIncludes(project)}
   fun generateTeaVMReflectionIncludes(
     project: Project,
     indent: String = " ".repeat(12),
-  ): String {
-    return if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
-      "$indent//.addReflectionClass(\"${project.basic.rootPackage}.reflect\")"
-    } else {
-      (project.reflectedPackages + project.reflectedClasses).joinToString(separator = "\n") {
-        "${indent}.addReflectionClass(\"$it\")"
-      }
+  ): String = if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
+    "$indent//.addReflectionClass(\"${project.basic.rootPackage}.reflect\")"
+  } else {
+    (project.reflectedPackages + project.reflectedClasses).joinToString(separator = "\n") {
+      "$indent.addReflectionClass(\"$it\")"
     }
   }
 
