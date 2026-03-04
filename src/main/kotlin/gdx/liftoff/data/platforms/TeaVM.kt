@@ -42,18 +42,12 @@ class TeaVMGradleFile(
   init {
     dependencies.add("project(':${Core.ID}')")
 
-    addDependency("com.github.xpenatan.gdx-teavm:backend-teavm:\$gdxTeaVMVersion")
+    addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
   }
 
   override fun getContent() =
     """plugins {
   id 'java'
-  id 'org.gretty' version "${project.advanced.grettyVersion}"
-}
-
-gretty {
-  contextPath = '/'
-  extraResourceBase 'build/dist/webapp'
 }
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
@@ -70,17 +64,37 @@ dependencies {
 ${joinDependencies(dependencies)}
 }
 
-tasks.register("buildJavaScript", JavaExec) {
-  dependsOn classes
-  setDescription("Transpile bytecode to JavaScript via TeaVM")
+tasks.register("runRelease", JavaExec) {
+  description = "Run the TeaVM application  hosted via a local Jetty server at http://localhost:8080/"
+  dependsOn(classes)
+  mainClass.set(project.mainClassName)
+  setClasspath(sourceSets.main.runtimeClasspath)
+  args += ["run"]
+}
+
+tasks.register("runDebug", JavaExec) {
+  description = "Run the TeaVM application with debug enabled hosted via a local Jetty server at http://localhost:8080/"
+  dependsOn(classes)
+  mainClass.set(project.mainClassName)
+  setClasspath(sourceSets.main.runtimeClasspath)
+  args += ["debug", "run"]
+}
+
+tasks.register("buildRelease", JavaExec) {
+  description = "Run the TeaVM application  hosted via a local Jetty server at http://localhost:8080/"
+  dependsOn(classes)
   mainClass.set(project.mainClassName)
   setClasspath(sourceSets.main.runtimeClasspath)
 }
-build.dependsOn buildJavaScript
 
-tasks.register("run") {
-  description = "Run the JavaScript application hosted via a local Jetty server at http://localhost:8080/"
-  dependsOn(buildJavaScript, tasks.named("jettyRun"))
+tasks.register("buildDebug", JavaExec) {
+  description = "Run the TeaVM application with debug enabled hosted via a local Jetty server at http://localhost:8080/"
+  dependsOn(classes)
+  mainClass.set(project.mainClassName)
+  setClasspath(sourceSets.main.runtimeClasspath)
+  args += ["debug"]
 }
+
+build.dependsOn buildRelease
 """
 }
