@@ -65,7 +65,8 @@ ${joinDependencies(dependencies)}
 }
 
 tasks.register("runRelease", JavaExec) {
-  description = "Run the TeaVM application  hosted via a local Jetty server at http://localhost:8080/"
+  description = "Run the TeaVM application hosted via a local Jetty server at http://localhost:8080/"
+  group("application")
   dependsOn(classes)
   mainClass.set(project.mainClassName)
   setClasspath(sourceSets.main.runtimeClasspath)
@@ -74,6 +75,7 @@ tasks.register("runRelease", JavaExec) {
 
 tasks.register("runDebug", JavaExec) {
   description = "Run the TeaVM application with debug enabled hosted via a local Jetty server at http://localhost:8080/"
+  group("application")
   dependsOn(classes)
   mainClass.set(project.mainClassName)
   setClasspath(sourceSets.main.runtimeClasspath)
@@ -81,14 +83,16 @@ tasks.register("runDebug", JavaExec) {
 }
 
 tasks.register("buildRelease", JavaExec) {
-  description = "Run the TeaVM application  hosted via a local Jetty server at http://localhost:8080/"
+  description = "Build the TeaVM application; doesn't run directly"
+  group("build")
   dependsOn(classes)
   mainClass.set(project.mainClassName)
   setClasspath(sourceSets.main.runtimeClasspath)
 }
 
 tasks.register("buildDebug", JavaExec) {
-  description = "Run the TeaVM application with debug enabled hosted via a local Jetty server at http://localhost:8080/"
+  description = "Build the TeaVM application with debug enabled; doesn't run directly"
+  group("build")
   dependsOn(classes)
   mainClass.set(project.mainClassName)
   setClasspath(sourceSets.main.runtimeClasspath)
