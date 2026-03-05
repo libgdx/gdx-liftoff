@@ -13,7 +13,7 @@ import gdx.liftoff.views.JvmLanguage
 @JvmLanguage
 data object Groovy : Language {
   override val id = "groovy"
-  override val version = "5.0.1"
+  override val version = "5.0.4"
 
   override fun initiate(project: Project) {
     project.rootGradle.plugins.add(id)

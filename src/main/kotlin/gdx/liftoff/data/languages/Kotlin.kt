@@ -13,7 +13,7 @@ import gdx.liftoff.views.JvmLanguage
 @JvmLanguage
 data object Kotlin : Language {
   override val id = "kotlin"
-  override val version = "2.3.0"
+  override val version = "2.3.10"
 
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add($$"\"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion\"")
