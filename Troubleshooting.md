@@ -311,10 +311,10 @@ re-enable input when the dialog closes.
 3.3.1. If anyone is using an older Liftoff version that uses NFDe from LWJGL 3.3.4 or 3.3.5, and
 encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
 Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed some bugs.
-It's used by gdx-liftoff 1.14.0.6, except on Linux, where the VisUI fallback is now used instead. NFDe seems to still
-have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
+It's used by gdx-liftoff 1.14.0.6 and up, except on Linux, where the VisUI fallback is now used instead. NFDe seems to
+stil have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
 optimal either, but it at least doesn't crash, and doesn't freeze anymore. 1.14.0.5 used a broken VisUI release, but
-1.14.0.6 uses the (working) latest commit, because there still hasn't been a VisUI release yet.
+1.14.0.6 and up use the (working) latest commit, because there still hasn't been a VisUI release yet.
 
 ### The native distributions for macOS won't run how they should!
 
@@ -434,8 +434,15 @@ the top of the Gradle window, and you can also copy the URL into a browser of yo
 ### Why isn't TeaVM compiling to WASM?
 
 In versions 1.14.0.0 through 1.14.0.2, a change in how TeaVM uses its configuration led to WASM never getting generated
-by TeaVM, even if it appeared to be selected. This has been fixed in 1.14.0.3, and you can set existing
-TeaVMBuilder files to use WASM by adding:
+by TeaVM, even if it appeared to be selected. This has been fixed in 1.14.0.3, and the syntax changed for TeaVM config
+in 1.14.0.7. In the current version of Liftoff, which uses TeaVM 1.5.2 or newer, there should be a commented line in
+TeaVMBuilder.java or TeaVMBuilder.kt :
+```
+//                .setWebAssembly(true) // Uncomment this line to use WASM output instead of JavaScript output.
+```
+As you would expect, uncomment that line to enable WASM generation.
+
+In earlier versions of Liftoff projects, use:
 ```
 teaBuildConfiguration.targetType = TeaVMTargetType.WEBASSEMBLY_GC;
 ```
@@ -445,4 +452,6 @@ You can get
 by fine without WASM, but the generated JavaScript by default isn't nearly as fast as the WASM on some kinds of code, in
 particular any math involving a JVM `long`. That also affects some libGDX data structures (maps and sets), which rely on
 long math to mix hash codes adequately, and so very large maps and sets are faster (in general) on WASM than JS.
-
+However, WASM also doesn't run, or at least doesn't run as well, on mobile browsers. It can be worthwhile to build both
+TeaVM builds with and without WASM. If graphical effects are your game's performance bottleneck, the choice between JS
+and WASM is nearly irrelevant for speed, and JS can be preferred because it works better on mobile browsers. 
