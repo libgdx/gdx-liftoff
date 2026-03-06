@@ -78,6 +78,7 @@ dependencies {
 //  implementation "com.rafaskoberg.gdx:typing-label:1.4.0" // not used because at least not currently compatible
   implementation "com.github.tommyettinger:regexodus:0.1.21" // updates version used by Stripe
 
+  api "org.jspecify:jspecify:1.0.0"
 
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 
@@ -96,12 +97,12 @@ dependencies {
     exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
   }
 
+  implementation "org.lwjgl:lwjgl:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version"
   implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version"
 // Linux //
   implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux"
   implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux-arm32"
@@ -234,6 +235,8 @@ construo {
 
   jlink {
     includeDefaultCryptoModules.set(false) // we don't need any encryption in Liftoff itself.
+    guessModulesFromJar.set(false)
+    modules.addAll("java.base", "java.management", "java.desktop", "jdk.unsupported")
   }
   targets.configure {
     register("linuxX64", Target.Linux) {
