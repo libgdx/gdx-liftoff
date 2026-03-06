@@ -20,29 +20,32 @@ run it (usually double-clicking will do), or run the following command manually 
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-**You must build with Java 17** (or newer, up to 25)! Gradle's current version, as well as current Android tools, now
+**You must build with Java 17** or newer (up to 26)! Gradle's current version, as well as current Android tools, now
 require your installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
 a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. Stable target releases of Java from 8 to 25 work here now. **If you use a JDK version 18
-to 25** for Gradle, then the automatic desktop release packaging with Construo will need its URLs changed so it
-downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using 17 exactly is recommended
-for this reason.
+the JDK versions 17 and up. Stable target releases of Java from 8 to 26 work here now. **If you use a JDK version that
+isn't 21** for Gradle, then the automatic desktop release packaging with Construo will need some configuration changes
+so it downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using **21 exactly** is
+recommended for this reason. See our
+[Troubleshooting](https://github.com/libgdx/gdx-liftoff/blob/master/Troubleshooting.md#how-do-i-change-the-construo-jdk-download-links-so-i-can-bundle-a-jdk-other-than-jdk-21)
+document for more details.
 
 When you enter the JDK version you use for a project, it is **always one integer**, such as `8` or `21`. Entering any
 bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
-never include bugfix versions, and when you enter one here it should always be a single int, with no `.` .
+never include bugfix versions, and when you enter one here it should always be a single int, with no `.` or `_` .
 
-Java 25 is now somewhat supported to build your projects, in recent Liftoff versions.
-If you bundle Java 25 (or 24) with a released app, users will see alarming (but harmless) warnings when they
-run your app, so there isn't much user-experience benefit to using 24 or newer for releases.
+Java 25 and 26 are now somewhat supported to build your projects, in recent Liftoff versions.
+If you bundle Java 24, 25, or 26 with a released app, users will see alarming (but harmless) warnings when they
+run your app, so there isn't much user-experience benefit to using 24 or newer for releases. Java 25 does include some
+useful features for reducing memory usage, if you enable them.
 
-If you don't know what JDK you have installed, or don't have one, then either of the JDK 17 installers from OpenJDK
-vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-17-lts) or
-[Azul Zulu](https://www.azul.com/downloads/?version=java-17-lts&package=jdk#zulu) are recommended because they have good
+If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
+vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
+[Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended because they have good
 default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary JDK) are *not*
 recommended, partly because their installers have confusing default options, and partly because their licensing is not
 as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license, and Oracle can change (and
-has changed) licensing without much warning. On Linux, use your package manager to install OpenJDK 17. On macOS,
+has changed) licensing without much warning. On Linux, use your package manager to install OpenJDK 21. On macOS,
 you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX (any tools that still
 use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). Do not install a JRE.
 

@@ -10,7 +10,7 @@ This guide is a little new, and will be added to as new solutions are found for 
 Seriously. Do this first. Many parts of a Gradle project will fail now if you are using too old of a JDK.
 You can check this version in IntelliJ IDEA under File -> Project Structure. If you don't have any
 JDKs that are version 17 or newer, go into SDKs in the sidebar, and click the `+` at the very top of the window. You can
-then download a JDK, such as `Version: 17`, `Vendor: Eclipse Temurin`, which is a solid choice. You can also download a
+then download a JDK, such as `Version: 21`, `Vendor: Eclipse Temurin`, which is a solid choice. You can also download a
 GraalVM JDK if you want in this way, which enables using LWJGL3's native-image configuration much later on. You can have
 many JDKs installed if you want, of various versions.
 
@@ -18,6 +18,9 @@ You can go as new as Java 25, which is the latest at the time of writing, but th
 few months for Gradle to support. Newer JDK versions have been making it harder to use some long-standing Java features,
 unfortunately, and will often emit warnings for things that have worked for decades until now. If you are experiencing
 issues with warnings that just became errors, consider downgrading your JDK to 17 or 21.
+
+**Installing Java 21 is currently recommended.** Java 17 works well still, and was recommended for a long time as well.
+If you are planning on using Construo to distribute builds to users, you will have an easier time if you use JDK 21.
 
 ### Some older docs mention Gradle tasks using a "desktop" module.
 
@@ -80,7 +83,7 @@ I feel like I covered this one already...
 This should be fixed in 1.12.0.1 by using toolchains, or in 1.12.1.7 using Kotlin's `jvmTarget` option; if that doesn't
 work for you, here are other options.
 
-The simplest solution here is to set your JDK to a Java 17 one and to change `java.sourceCompatibility` and 
+The simplest solution here is to set your JDK to a Java 21 JDK and to change `java.sourceCompatibility` and 
 `java.targetCompatibility` to 11 each. You may need to set this for both Java and Kotlin, and they must use the same
 versions across the board. You can also set the `release` option to the same version as `targetCompatibility` to help
 with some incompatibilities between versions; this is only available if you are using Java 9 or later.
@@ -98,7 +101,7 @@ Another solution is to use toolchains. In your root build.gradle, you can try ad
 
 ```gradle
 kotlin {
-  jvmToolchain(17)
+  jvmToolchain(21)
 }
 ```
 
@@ -135,7 +138,7 @@ build your project but doesn't necessarily start with the right JVM version -- t
 
 A good option for cross-platform building is to keep the language level on 11 (supported by everything except RoboVM).
 This works even on Android; even with its requirements for Java 17 in other places, using a toolchain JDK 11 seems to
-keep away from those requirements. A JDK 17 may still be needed for other parts of an Android build.
+keep away from those requirements. A JDK 17 or higher may still be needed for other parts of an Android build.
 
 Version 1.12.1.7 does not use toolchains because some simpler ways to accomplish the same things became feasible.
 
@@ -288,14 +291,10 @@ updated to it; so can your project. That release is version 1.5.7, and uses this
 
 You could instead change your dependency on VisUI to a known-working commit on JitPack if you encounter any issues:
 
-`implementation "com.github.kotcrab.vis-ui:vis-ui:1aef382077"`
+`implementation "com.github.kotcrab.vis-ui:vis-ui:1f8b37a24b"`
 
-Which gets a sort-of-recent commit built by JitPack, and that code has a fix for 1.5.3 that makes it compatible with
-Construo (and with jlink in general). Using 1.5.7 is probably a better idea unless some new issue surfaces. The
-VisUI 1.5.7 version is currently used by Liftoff when 1.14.0 is used, because VisUI 1.5.7 uses libGDX 1.13.5 or
-newer. Actually using libGDX 1.13.5 exactly would be a bad idea because of issues it has on Android, but because 1.14.0
-will take priority, it should work reasonably well with the newer VisUI. You may need to call
-`VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
+Which gets a recent commit built by JitPack, and that code has fixes from after 1.5.7 that make it compatible with
+libGDX 1.14.0 and Construo. You may need to call `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
 
 Other dependencies may also have issues, but no one has found them yet.
 
@@ -384,10 +383,10 @@ to a (possibly remote) macOS machine to build it.
 [The latest MOE release posting is here](https://discuss.multi-os-engine.org/t/moe-1-10-0-released/3000), and that forum
 is also where to go for MOE-specific questions.
 
-### How do I change the Construo JDK download links, so I can bundle a JDK other than JDK 17?
+### How do I change the Construo JDK download links, so I can bundle a JDK other than JDK 21?
 
-The links in `lwjgl3/build.gradle` and its `construo` configuration block all point to Adoptium OpenJDK links to JDK 17,
-at the time of writing, `17.0.15_6`, which should only include small bug-fixes to the original JDK 17 release. But, if
+The links in `lwjgl3/build.gradle` and its `construo` configuration block all point to Adoptium OpenJDK links to JDK 21,
+at the time of writing, `21.0.10_7`, which should only include small bug-fixes to the original JDK 21 release. But, if
 you want to bundle a different JDK version with your application, you have some important steps to take.
 
 First, make sure Gradle itself uses the JDK version you want to bundle. In IDEA and AS, navigate to:
@@ -400,15 +399,15 @@ Click Apply or OK once you have selected your wanted version in the drop-down.
 
 Second, you'll need to make the links in `lwjgl3/build.gradle` match the JDK you selected, with the same major version
 and hopefully the most recent minor version you can manage. The links currently used by default in Construo are taken
-from https://github.com/adoptium/temurin17-binaries/releases , on the only section with blue links listed inside it.
+from https://github.com/adoptium/temurin21-binaries/releases , on the only section with blue links listed inside it.
 If you want the recent Java 25, you'll want to look in https://github.com/adoptium/temurin25-binaries/releases instead
-(note, the only change is from "17" to "25"). Other versions are similar; 17 is just about the first version of JDK that
-Construo should work with, and is definitely the only one still receiving support from any OpenJDK vendor. The actual
-links probably don't matter too much, but you may want to copy the link matching a description like
-`OpenJDK25U-jdk_x64_windows_hotspot_25.0.1_8.zip` to make sure everything matches. The reason the link doesn't matter is
-that you can usually just change the version from `17.0.15` to `25.0.1` (in this case) and then change the last number
-where it appears to match as well (`6` to `8`), which is after an `_` underscore in one place and after the escape `%2B`
-in another place.
+(note, the only change is from "21" to "25"). Other versions are similar; 17 is just about the first version of JDK that
+Construo should work with, and is definitely the earliest one still receiving support from any OpenJDK vendor. The
+actual links probably don't matter too much, but you may want to copy the link matching a description like
+`OpenJDK25U-jdk_x64_windows_hotspot_25.0.2_10.zip` to make sure everything matches. The reason the link doesn't matter
+is that you can usually just change the version from `21.0.10` to `25.0.2` (in this case). Then, change the last
+number where it appears to match as well (`7` to `10`), which is after an `_` underscore in one place and after the
+escape `%2B` in another place. You should probably try clicking the link to make sure it's valid.
 
 Once you've changed the link for each platform you want to support (probably Windows, maybe also Linux, and unlikely
 also macOS, AARCH64 and x64), you can run the Construo package task for that platform, such as `lwjgl3:packageWinX64` .

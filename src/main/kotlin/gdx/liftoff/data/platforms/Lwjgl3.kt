@@ -266,42 +266,42 @@ tasks.register("jarWin") {
 }
 
 construo {
-    // name of the executable
-    name.set(appName)
-    // human-readable name, used for example in the `.app` name for macOS
-    humanName.set(appName)
+  // name of the executable
+  name.set(appName)
+  // human-readable name, used for example in the `.app` name for macOS
+  humanName.set(appName)
 
-    targets.configure {
-      register("linuxX64", Target.Linux) {
-        architecture.set(Target.Architecture.X86_64)
-        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_linux_hotspot_17.0.15_6.tar.gz")
-        // Linux does not currently have a way to set the icon on the executable
-      }
-      register("macM1", Target.MacOs) {
-        architecture.set(Target.Architecture.AARCH64)
-        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.15_6.tar.gz")
-        // macOS needs an identifier
-        identifier.set("${project.basic.rootPackage}." + appName)
-        // Optional: icon for macOS, as an ICNS file
-        macIcon.set(project.file("icons/logo.icns"))
-      }
-      register("macX64", Target.MacOs) {
-        architecture.set(Target.Architecture.X86_64)
-        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_mac_hotspot_17.0.15_6.tar.gz")
-        // macOS needs an identifier
-        identifier.set("${project.basic.rootPackage}." + appName)
-        // Optional: icon for macOS, as an ICNS file
-        macIcon.set(project.file("icons/logo.icns"))
-      }
-      register("winX64", Target.Windows) {
-        architecture.set(Target.Architecture.X86_64)
-        // Optional: icon for Windows, as a PNG
-        icon.set(project.file("icons/logo.png"))
-        jdkUrl.set("https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.15%2B6/OpenJDK17U-jdk_x64_windows_hotspot_17.0.15_6.zip")
-        // Uncomment the next line to show a console when the game runs, to print messages.
-        //useConsole.set(true)
-      }
+  targets.configure {
+    register("linuxX64", Target.Linux) {
+      architecture.set(Target.Architecture.X86_64)
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.10_7.tar.gz")
+      // Linux does not currently have a way to set the icon on the executable
     }
+    register("macM1", Target.MacOs) {
+      architecture.set(Target.Architecture.AARCH64)
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.10_7.tar.gz")
+      // macOS needs an identifier
+      identifier.set("${project.basic.rootPackage}." + appName)
+      // Optional: icon for macOS, as an ICNS file
+      macIcon.set(project.file("icons/logo.icns"))
+    }
+    register("macX64", Target.MacOs) {
+      architecture.set(Target.Architecture.X86_64)
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.10_7.tar.gz")
+      // macOS needs an identifier
+      identifier.set("${project.basic.rootPackage}." + appName)
+      // Optional: icon for macOS, as an ICNS file
+      macIcon.set(project.file("icons/logo.icns"))
+    }
+    register("winX64", Target.Windows) {
+      architecture.set(Target.Architecture.X86_64)
+      // Optional: icon for Windows, as a PNG
+      icon.set(project.file("icons/logo.png"))
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_windows_hotspot_21.0.10_7.zip")
+      // Uncomment the next line to show a console when the game runs, to print messages.
+      //useConsole.set(true)
+    }
+  }
 }
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.
