@@ -126,7 +126,6 @@ dependencies {
     implementation("org.lwjgl:lwjgl-opengl:$lwjgl3Version")
     implementation("org.lwjgl:lwjgl-stb:$lwjgl3Version")
   }
-
 }
 // Builds a JAR that only includes the files needed to run on macOS, not Windows or Linux.
 // The file size for a Mac-only JAR is about 7MB smaller than a cross-platform JAR.

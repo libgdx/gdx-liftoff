@@ -54,6 +54,7 @@ class Lwjgl3 : Platform {
       "jar",
       "builds application's runnable jar, which can be found at `$id/build/libs`.",
     )
+    project.properties["lwjgl3Version"] = "3.4.1"
     project.properties["graalHelperVersion"] = "2.0.1"
 
     project.files.add(
@@ -136,7 +137,7 @@ class Lwjgl3GradleFile(
 
   // language=groovy
   override fun getContent(): String =
-    """
+    $$"""
 buildscript {
   repositories {
     gradlePluginPortal()
@@ -152,38 +153,49 @@ plugins {
   id "application"
 }
 apply plugin: 'io.github.fourlastor.construo'
-${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
+$${if (project.rootGradle.plugins.contains("kotlin")) "apply plugin: 'org.jetbrains.kotlin.jvm'\n" else ""}
 
 import io.github.fourlastor.construo.Target
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-application.mainClass = '${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
+application.mainClass = '$${project.basic.rootPackage}.lwjgl3.Lwjgl3Launcher'
 application.applicationName = appName
 eclipse.project.name = appName + '-lwjgl3'
-java.sourceCompatibility = ${project.advanced.desktopJavaVersion}
-java.targetCompatibility = ${project.advanced.desktopJavaVersion}
+java.sourceCompatibility = $${project.advanced.desktopJavaVersion}
+java.targetCompatibility = $${project.advanced.desktopJavaVersion}
 if (JavaVersion.current().isJava9Compatible()) {
-        compileJava.options.release.set(${project.advanced.desktopJavaVersion})
+        compileJava.options.release.set($${project.advanced.desktopJavaVersion})
 }
-${if (project.rootGradle.plugins.contains(
-        "kotlin",
-      )
-    ) {
-      "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n"
-    } else {
-      ""
-    }}
+$${
+      if (project.rootGradle.plugins.contains(
+          "kotlin",
+        )
+      ) {
+        "kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_" + (if (project.advanced.desktopJavaVersion == "8") "1_8" else project.advanced.desktopJavaVersion) + ")\n"
+      } else {
+        ""
+      }
+    }
 dependencies {
-${joinDependencies(dependencies)}
+$${joinDependencies(dependencies)}
   if(enableGraalNative == 'true') {
-    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:${'$'}graalHelperVersion"
+    implementation "io.github.berstanio:gdx-svmhelper-backend-lwjgl3:$graalHelperVersion"
 """ +
       (if (project.extensions.isSelected("gdx-box2d")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-box2d:\$graalHelperVersion\"\n" else "") +
       (if (project.extensions.isSelected("gdx-bullet")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-bullet:\$graalHelperVersion\"\n" else "") +
       (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
       (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
-      """
-    }
+      $$"""
+  }
+  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid problems on Java 25 and up.
+  constraints{
+    implementation("org.lwjgl:lwjgl:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-glfw:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-jemalloc:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-openal:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-opengl:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-stb:$lwjgl3Version")
+  }
 }
 
 def os = System.properties['os.name'].toLowerCase(Locale.ROOT)
@@ -198,7 +210,7 @@ run {
 
 jar {
 // sets the name of the .jar file this produces to the name of the game or app, with the version after.
-  archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}.jar")
+  archiveFileName.set("${appName}-${projectVersion}.jar")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
   dependsOn configurations.runtimeClasspath
@@ -208,7 +220,7 @@ jar {
   dependencies {
     exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'""" +
       (if (project.advanced.gdxVersion == "1.13.0") " 'windows/x86/**'" else "") +
-"""
+$$"""
 )
   }
 // setting the manifest makes the JAR runnable.
@@ -228,7 +240,7 @@ jar {
 tasks.register("jarMac") {
   dependsOn("jar")
   group("build")
-  jar.archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}-mac.jar")
+  jar.archiveFileName.set("${appName}-${projectVersion}-mac.jar")
   jar.exclude("windows/x86/**", "windows/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**", "**/*.dll", "**/*.so",
     'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
@@ -242,7 +254,7 @@ tasks.register("jarMac") {
 tasks.register("jarLinux") {
   dependsOn("jar")
   group("build")
-  jar.archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}-linux.jar")
+  jar.archiveFileName.set("${appName}-${projectVersion}-linux.jar")
   jar.exclude("windows/x86/**", "windows/x64/**", "macos/arm64/**", "macos/x64/**", "**/*.dll", "**/*.dylib",
     'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
@@ -256,7 +268,7 @@ tasks.register("jarLinux") {
 tasks.register("jarWin") {
   dependsOn("jar")
   group("build")
-  jar.archiveFileName.set("${'$'}{appName}-${'$'}{projectVersion}-win.jar")
+  jar.archiveFileName.set("${appName}-${projectVersion}-win.jar")
   jar.exclude("macos/arm64/**", "macos/x64/**", "linux/arm32/**", "linux/arm64/**", "linux/x64/**", "**/*.dylib", "**/*.so",
     'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
   dependencies {
@@ -286,7 +298,7 @@ construo {
       architecture.set(Target.Architecture.AARCH64)
       jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.10_7.tar.gz")
       // macOS needs an identifier
-      identifier.set("${project.basic.rootPackage}." + appName)
+      identifier.set("$${project.basic.rootPackage}." + appName)
       // Optional: icon for macOS, as an ICNS file
       macIcon.set(project.file("icons/logo.icns"))
     }
@@ -294,7 +306,7 @@ construo {
       architecture.set(Target.Architecture.X86_64)
       jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.10_7.tar.gz")
       // macOS needs an identifier
-      identifier.set("${project.basic.rootPackage}." + appName)
+      identifier.set("$${project.basic.rootPackage}." + appName)
       // Optional: icon for macOS, as an ICNS file
       macIcon.set(project.file("icons/logo.icns"))
     }
