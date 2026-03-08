@@ -78,6 +78,7 @@ dependencies {
 //  implementation "com.rafaskoberg.gdx:typing-label:1.4.0" // not used because at least not currently compatible
   implementation "com.github.tommyettinger:regexodus:0.1.21" // updates version used by Stripe
 
+  // "Needed" by Construo when LWJGL 3.4.x is used, because jspecify otherwise is used by LWJGL3, but unavailable.
   api "org.jspecify:jspecify:1.0.0"
 
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -86,73 +87,7 @@ dependencies {
   // This seems to cause more trouble than it's worth at this point...
 //  implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
 
-  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
-    exclude group: "org.jcraft", module: "jorbis"
-    exclude group: "org.lwjgl", module: "lwjgl-openal"
-
-    exclude group: 'org.lwjgl', module: 'lwjgl-glfw'
-    exclude group: 'org.lwjgl', module: 'lwjgl-opengl'
-    exclude group: 'org.lwjgl', module: 'lwjgl-stb'
-    exclude group: 'org.lwjgl', module: 'lwjgl'
-    exclude group: 'org.lwjgl', module: 'lwjgl-jemalloc'
-  }
-
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version"
-// Linux //
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-linux-arm64"
-
-  // MacOS //
-
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-macos-arm64"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-macos-arm64"
-
-
-  // Windows //
-
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-jemalloc:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-glfw:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-openal:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-opengl:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-stb:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl:$lwjgl3Version:natives-windows-x86"
+  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
@@ -163,7 +98,7 @@ dependencies {
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"
 
-
+  // Older; only used when we needed $nfdVersion to be less than $lwjgl3Version .
 //  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
 //  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
 //  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
@@ -181,6 +116,17 @@ dependencies {
   // This is the same as the "official" mvnrepository-client version 2.0.2, but with dependencies updated to avoid vulnerabilities.
   // It is here in a comment in case MvnRepository's search starts working again...
 //  implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
+
+  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid problems on Java 25 and up.
+  constraints{
+    implementation("org.lwjgl:lwjgl:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-glfw:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-jemalloc:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-openal:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-opengl:$lwjgl3Version")
+    implementation("org.lwjgl:lwjgl-stb:$lwjgl3Version")
+  }
+
 }
 // Builds a JAR that only includes the files needed to run on macOS, not Windows or Linux.
 // The file size for a Mac-only JAR is about 7MB smaller than a cross-platform JAR.
