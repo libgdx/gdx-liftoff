@@ -15,6 +15,8 @@ import gdx.liftoff.data.platforms.Headless
 import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
+import gdx.liftoff.data.platforms.Server
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -944,6 +946,27 @@ class KryoNet : ThirdPartyExtension() {
 
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "com.github.crykn:kryonet")
+  }
+}
+
+/**
+ * WebRTC library for libGDX and beyond; supports LWJGL3/TeaVM/Server.
+ * @author Michael Whitlock
+ */
+@Extension
+class GdxWebRtc : ThirdPartyExtension() {
+  override val id = "gdxWebRtc"
+  override val defaultVersion = "0.4.1"
+  override val url = "https://github.com/satori87/gdx-webrtc"
+  override val repository = Repository.JitPack
+  override val group = "com.github.satori87"
+  override val name = "gdx-webrtc"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.satori87.gdx-webrtc:core")
+    addDependency(project, Lwjgl3.ID, "com.github.satori87.gdx-webrtc:lwjgl3")
+    addDependency(project, TeaVM.ID, "com.github.satori87.gdx-webrtc:teavm")
+    addDependency(project, Server.ID, "com.github.satori87.gdx-webrtc:server")
   }
 }
 

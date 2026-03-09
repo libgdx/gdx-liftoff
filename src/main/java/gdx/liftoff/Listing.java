@@ -119,6 +119,7 @@ public final class Listing {
             new Fory(),
             new Kryo(),
             new KryoNet(),
+            new GdxWebRtc(),
             new Guacamole(),
             new LibgdxOboe(),
             new LibgdxScreenManager(),
