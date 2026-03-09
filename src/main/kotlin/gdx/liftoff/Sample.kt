@@ -163,7 +163,7 @@ fun main(arguments: Array<String>) {
   Gdx.files = Lwjgl3Files()
 
   val preset: Preset = getPreset(arguments.firstOrNull())
-  val officialExtensions: List<Library> = Listing.officialLibraries
+  val officialExtensions: Optional<List<Library>> = Optional.empty()
   val basicData = BasicProjectData(
     name = preset.projectName,
     rootPackage = preset.rootPackage,
@@ -185,7 +185,7 @@ fun main(arguments: Array<String>) {
     gradleTasks = mutableListOf()
   )
   val extensions = ExtensionsData(
-    officialExtensions = preset.officialExtensions.orElse(officialExtensions),
+    officialExtensions = preset.officialExtensions.orElse(emptyList()),
     thirdPartyExtensions = preset.thirdPartyExtensions
   )
 
