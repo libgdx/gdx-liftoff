@@ -220,7 +220,7 @@ jar {
   dependencies {
     exclude('META-INF/INDEX.LIST', 'META-INF/maven/**'""" +
       (if (project.advanced.gdxVersion == "1.13.0") " 'windows/x86/**'" else "") +
-$$"""
+      $$"""
 )
   }
 // setting the manifest makes the JAR runnable.
@@ -346,6 +346,5 @@ startScripts.classpath = project.tasks.jar.outputs.files
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
-
-""".trimIndent()
+      """.trimIndent()
 }

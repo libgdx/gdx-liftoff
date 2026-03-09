@@ -44,26 +44,28 @@ import kotlin.system.exitProcess
 
 /** Determines which platforms, extensions, templates, etc. are used by the project generator. */
 enum class Preset {
-  /** Includes the official recommended platforms and a basic template. */
+  /** Includes the LWJGL3, Android, and TeaVM platforms, using Java, with the Classic template. */
   DEFAULT {
     override val projectName: String = "gdx-liftoff-demo"
     override val rootPackage: String = "gdx.liftoff"
-    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), GWT())
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), TeaVM())
     override val languages: List<Language> = emptyList()
     override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template = ClassicTemplate()
+    override val addSkin: Boolean = false
   },
 
-  /** Includes the official platforms supporting Kotlin, as well as TeaVM. Uses a basic Kotlin template. */
+  /** Includes the LWJGL3, Android, and TeaVM platforms, using Kotlin. Uses the Kotlin Classic template. */
   KOTLIN {
     override val projectName: String = "gdx-liftoff-demo-kotlin"
     override val rootPackage: String = "gdx.liftoff"
-    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), TeaVM())
     override val languages: List<Language> = listOf(Kotlin)
     override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
     override val template: Template = KotlinClassicTemplate()
+    override val addSkin: Boolean = false
   },
 
   /** Includes the official platforms supporting Kotlin. Uses a KTX template. */
@@ -82,7 +84,7 @@ enum class Preset {
   KTX_WEB {
     override val projectName: String = "ktx-demo-web"
     override val rootPackage: String = "ktx.demo"
-    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), TeaVM())
     override val languages: List<Language> = listOf(Kotlin)
     override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = Listing.unofficialLibraries.filter { library: Library ->
@@ -97,8 +99,8 @@ enum class Preset {
 
   /** Includes Android and LWJGL3 projects, meant for users developing on Android devices.
    * Also includes Box2D, Box2D-Lights, GDX-Freetype, ShapeDrawer, TenPatch, and Stripe. */
-  ANDROID_DEV {
-    override val projectName: String = "gdx-android-dev-demo"
+  ANDROID_DEVICE {
+    override val projectName: String = "gdx-android-device-demo"
     override val rootPackage: String = "gdx.android"
     override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android())
     override val languages: List<Language> = emptyList()
@@ -109,8 +111,8 @@ enum class Preset {
 
   /** Includes GWT and LWJGL3 projects, meant for users developing an HTML game that can also be played offline.
    * Also includes Box2D, ShapeDrawer, TenPatch, Stripe, Formic, and RegExodus. */
-  GWT_DEV {
-    override val projectName: String = "gdx-gwt-dev-demo"
+  GWT {
+    override val projectName: String = "gdx-gwt-demo"
     override val rootPackage: String = "gdx.gwt"
     override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), GWT())
     override val languages: List<Language> = emptyList()
@@ -122,9 +124,9 @@ enum class Preset {
   /** Includes TeaVM and LWJGL3 projects with the Kotlin language, meant for users developing an HTML game that can also
    * be played offline, in Kotlin. You may prefer KTX_WEB if you want to use KTX.
    * Also includes Box2D, ShapeDrawer, TenPatch and Stripe. */
-  TEA_DEV {
-    override val projectName: String = "gdx-gwt-dev-demo"
-    override val rootPackage: String = "gdx.gwt"
+  TEA_KOTLIN {
+    override val projectName: String = "gdx-tea-demo-kotlin"
+    override val rootPackage: String = "gdx.tea"
     override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), TeaVM())
     override val languages: List<Language> = listOf(Kotlin)
     override val officialExtensions: Optional<List<Library>> = Optional.of(listOf(Box2D()))
