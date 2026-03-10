@@ -4,6 +4,7 @@ import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
 import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
+import gdx.liftoff.ui.UserData
 import org.intellij.lang.annotations.Language
 
 /**
@@ -20,6 +21,8 @@ interface KotlinTemplate : Template {
   override fun apply(project: Project) {
     super.apply(project)
     project.languages.addIfMissing<Kotlin>()
+    UserData.languages.add(Kotlin.id)
+    UserData.languageVersions[Kotlin.id] = Kotlin.version
   }
 
   @Language("kotlin")
