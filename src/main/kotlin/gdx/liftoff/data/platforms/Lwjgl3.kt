@@ -204,7 +204,7 @@ run {
   workingDir = rootProject.file('assets').path
 // You can uncomment the next line if your IDE claims a build failure even when the app closed properly.
   //setIgnoreExitValue(true)
-
+  jvmArgs += "--enable-native-access=ALL-UNNAMED"
   if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
 }
 
