@@ -38,6 +38,7 @@ import gdx.liftoff.data.templates.Template
 import gdx.liftoff.data.templates.official.ClassicTemplate
 import gdx.liftoff.data.templates.official.KotlinClassicTemplate
 import gdx.liftoff.data.templates.unofficial.KtxTemplate
+import gdx.liftoff.ui.UserData
 import java.io.File
 import java.util.Optional
 import kotlin.system.exitProcess
@@ -161,7 +162,8 @@ fun getPreset(name: String?): Preset = when {
 fun main(arguments: Array<String>) {
   GdxNativesLoader.load()
   Gdx.files = Lwjgl3Files()
-
+  UserData.languages = LinkedHashSet<String>()
+  UserData.languageVersions = LinkedHashMap<String, String>()
   val preset: Preset = getPreset(arguments.firstOrNull())
   val officialExtensions: Optional<List<Library>> = Optional.empty()
   val basicData = BasicProjectData(
