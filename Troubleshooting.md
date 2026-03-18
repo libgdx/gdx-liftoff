@@ -435,7 +435,7 @@ the top of the Gradle window, and you can also copy the URL into a browser of yo
 
 In versions 1.14.0.0 through 1.14.0.2, a change in how TeaVM uses its configuration led to WASM never getting generated
 by TeaVM, even if it appeared to be selected. This has been fixed in 1.14.0.3, and the syntax changed for TeaVM config
-in 1.14.0.7. In the current version of Liftoff, which uses TeaVM 1.5.2 or newer, there should be a commented line in
+in 1.14.0.7. In the current version of Liftoff, which uses TeaVM 1.5.3 or newer, there should be a commented line in
 TeaVMBuilder.java or TeaVMBuilder.kt :
 ```
 //                .setWebAssembly(true) // Uncomment this line to use WASM output instead of JavaScript output.

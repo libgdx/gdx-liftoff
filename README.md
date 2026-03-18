@@ -35,19 +35,28 @@ bugfix or point releases after that will confuse Gradle and lead to bizarre bugs
 never include bugfix versions, and when you enter one here it should always be a single int, with no `.` or `_` .
 
 Java 25 and 26 are now somewhat supported to build your projects, in recent Liftoff versions.
-If you bundle Java 24, 25, or 26 with a released app, users will see alarming (but harmless) warnings when they
-run your app, so there isn't much user-experience benefit to using 24 or newer for releases. Java 25 does include some
-useful features for reducing memory usage, if you enable them.
+Java 25 does include some useful features for reducing memory usage, if you enable them. Java 26 came out on March 17,
+2026, and surprisingly is already supported by Gradle. It doesn't add any (complete) language features, but does have
+several preview features and new APIs. In order to run with Java 25 or newer, LWJGL3 must use version 3.4.0 or later;
+this is automatically handled by the current Liftoff version using Gradle constraints. If you find you need an older
+LWJGL3, you can now simply change `lwjgl3Version` in `gradle.properties`, which will make the constraints require a
+version of your choosing. One reason you might need this is to better support Wayland on Linux, which changed how it
+worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.0 uses LWJGL 3.3.3 unless some Gradle config changes that
+version. The constraints on the LWJGL version default to LWJGL 3.4.1 instead now, allowing Java 25 and up to work.
+Typically, you either leave `lwjgl3Version=3.4.1` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
 
 If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
 vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
-[Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended because they have good
-default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary JDK) are *not*
-recommended, partly because their installers have confusing default options, and partly because their licensing is not
-as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license, and Oracle can change (and
-has changed) licensing without much warning. On Linux, use your package manager to install OpenJDK 21. On macOS,
-you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX (any tools that still
-use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). Do not install a JRE.
+[Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended for Windows users.
+They have good default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary JDK)
+are *not* recommended. This is partly because their installers have confusing default options. The other part is that
+their licensing is not as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license.
+Oracle can change (and has changed) licensing without much warning. On Linux, use your package manager to install
+OpenJDK 21. On macOS, you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX
+(any tools that still use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). The links given for Windows
+should also have working macOS installers.
+
+Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default. 
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
