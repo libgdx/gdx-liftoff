@@ -87,7 +87,10 @@ dependencies {
   // This seems to cause more trouble than it's worth at this point...
 //  implementation "com.badlogicgames.gdx:gdx-lwjgl3-angle:$gdxVersion"
 
-  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
+    exclude group: "org.lwjgl", module: "lwjgl-openal"
+    exclude group: "org.jcraft", module: "jorbis"
+  }
 
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion"
   implementation "org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"
