@@ -343,6 +343,18 @@ distributions {
 startScripts.dependsOn(':lwjgl3:jar')
 startScripts.classpath = project.tasks.jar.outputs.files
 
+// Helps if debugging on Linux with an Nvidia GPU.
+// This means StartupHelper won't try to restart the JVM, which can prevent debugging.
+// This only applies to Gradle tasks, not main methods debugged when launching a main() method directly.
+// As a more general solution, set the environment variable __GL_THREADED_OPTIMIZATIONS to 0 globally, on Linux
+// machines with Nvidia GPUs where you need to debug LWJGL3 apps and games.
+// You can also set __GL_THREADED_OPTIMIZATIONS to 0 in run configurations, which you would need per main() method.
+// StartupHelper will still restart the JVM to set this environment variable when run as a distributable JAR, which is
+// a good thing for end users. They won't need to ever set the debug-specific environment variable.
+tasks.withType(JavaExec.class).configureEach {
+  environment("__GL_THREADED_OPTIMIZATIONS", 0)
+}
+
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
