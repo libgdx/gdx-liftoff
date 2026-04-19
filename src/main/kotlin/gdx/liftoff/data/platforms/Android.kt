@@ -76,6 +76,7 @@ class Android : Platform {
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
   <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+  <uses-feature android:name="android.hardware.type.pc" android:required="false" />
   <application
       android:allowBackup="true"
       android:fullBackupContent="true"
