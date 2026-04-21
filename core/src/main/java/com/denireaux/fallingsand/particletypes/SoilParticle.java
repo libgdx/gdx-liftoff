@@ -74,6 +74,7 @@ public class SoilParticle extends Particle implements ISolid {
 
         if (particleAbove == null) return;
         if (!"water".equals(particleAbove.getId())) return;
+        
         boolean leftFactor = utils.getRandomBoolean();
 
         if (leftFactor && particleLeft != null) {
