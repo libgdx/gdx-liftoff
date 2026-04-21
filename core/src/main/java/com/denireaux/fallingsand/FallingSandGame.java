@@ -73,7 +73,6 @@ public class FallingSandGame extends ApplicationAdapter {
 
     private boolean updateLeftToRight = true;
 
-    // Neon particle colors (optimized for black background)
     private final Color SANDCOLOR     = new Color(1.00f, 0.96f, 0.47f, 1f);
     // private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 1f);
     private final Color WATERCOLOR    = new Color(0.00f, 0.90f, 1.00f, 0.5f);
@@ -147,61 +146,6 @@ public class FallingSandGame extends ApplicationAdapter {
         });
     }
 
-    // @Override
-    // public void render() {
-    //     handleInput();
-
-    //     Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-    //     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    //     for (int y = GRID_HEIGHT - 1; y >= 0; y--) {
-    //         for (int x = 0; x < GRID_WIDTH; x++) {
-    //             if (grid[x][y] != null)
-    //                 grid[x][y].update(0.1f, grid);
-    //         }
-    //     }
-
-    //     if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-    //         glowEnabled = !glowEnabled;
-    //         System.out.println("Glow mode: " + (glowEnabled ? "ON" : "OFF"));
-    //     }
-
-    //     batch.setProjectionMatrix(camera.combined);
-    //     batch.begin();
-
-    //     for (int x = 0; x < GRID_WIDTH; x++) {
-    //         for (int y = 0; y < GRID_HEIGHT; y++) {
-    //             Particle p = grid[x][y];
-    //             if (p == null) continue;
-
-    //             Color baseColor = getColorForType(p);
-    //             if (baseColor == null) continue;
-
-    //             boolean shouldGlow = glowEnabled && (
-    //                     p instanceof LavaParticle ||
-    //                     p instanceof VaporParticle ||
-    //                     p instanceof SmokeParticle
-    //             );
-
-    //             if (shouldGlow) {
-    //                 batch.setColor(baseColor.r, baseColor.g, baseColor.b, 0.3f);
-    //                 batch.draw(pixel, x * CELL_SIZE - 1, y * CELL_SIZE - 1, CELL_SIZE + 2, CELL_SIZE + 2);
-    //             }
-
-    //             batch.setColor(baseColor);
-    //             batch.draw(pixel, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    //         }
-    //     }
-
-    //     // Sidebar
-    //     for (int i = 0; i < particleTypes.length; i++) {
-    //         Color color = getColorForType(particleTypes[i]);
-    //         drawButton(paletteButtons[i], color, particleTypes[i].name(), particleTypes[i]);
-    //     }
-
-    //     batch.end();
-    // }
-
     @Override
     public void render() {
         handleInput();
@@ -209,7 +153,6 @@ public class FallingSandGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // 🔹 use helper instead of hard-coded left→right loop
         updateParticles();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
@@ -220,7 +163,6 @@ public class FallingSandGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        // 🔹 drawing loop stays exactly the same
         for (int x = 0; x < GRID_WIDTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
                 Particle p = grid[x][y];
@@ -285,7 +227,6 @@ public class FallingSandGame extends ApplicationAdapter {
     private Color getColorForType(Object type) {
         if (type instanceof SandParticle || type == ParticleType.SAND) return SANDCOLOR;
         
-        // if (type instanceof WaterParticle || type == ParticleType.WATER) return WATERCOLOR;
         if (type instanceof WaterParticle || type == ParticleType.WATER)
             return new Color(WATERCOLOR.r, WATERCOLOR.g, WATERCOLOR.b, 0.6f);
 
@@ -308,6 +249,7 @@ public class FallingSandGame extends ApplicationAdapter {
         if (type instanceof FuseParticle || type == ParticleType.FUSE) return FUSECOLOR;
 
         if (type instanceof WormSegment) return WORMCOLOR;
+        
         return null;
     }
 

@@ -38,7 +38,7 @@ public class WetSandParticle extends Particle implements ISolid {
         handleDrySandNeighbors(grid, x, y);
         trySinking(grid, x, y);
         tryNormalMovement(grid);
-        // tryDrySelf(grid, x, y);
+//         tryDrySelf(grid, x, y);
     }
 
     private void handleDrySandNeighbors(Particle[][] grid, int x, int y) {
