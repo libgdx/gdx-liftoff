@@ -772,7 +772,7 @@ public class Main extends ApplicationAdapter {
         }
         boolean containsForbiddenName = input.matches("(?i)" + FORBIDDEN_NAMES);
 
-        return !containsForbiddenName && !BLOCKED_TYPES.contains(input.toLowerCase());
+        return !containsForbiddenName && !BLOCKED_TYPES.contains(input.toLowerCase(Locale.ROOT));
     }
 
     public static boolean isAndroidSdkDirectory(String path) {

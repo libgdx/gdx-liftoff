@@ -472,7 +472,7 @@ public class TestListView extends VisWindow {
             setItemsSorter(new Comparator<Model>() {
                 @Override
                 public int compare (Model o1, Model o2) {
-                    return o1.name.toLowerCase().compareTo(o2.name.toLowerCase());
+                    return o1.name.toLowerCase(Locale.ROOT).compareTo(o2.name.toLowerCase(Locale.ROOT));
                 }
             });
         }
