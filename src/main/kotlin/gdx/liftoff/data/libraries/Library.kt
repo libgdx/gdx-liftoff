@@ -5,6 +5,7 @@ import gdx.liftoff.data.platforms.AndroidGradleFile
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Lwjgl2
 import gdx.liftoff.data.platforms.Lwjgl3
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
 
 /**
@@ -108,6 +109,15 @@ interface Library {
   ) {
     if (project.hasPlatform(GWT.ID)) {
       project.gwtInherits.add(inherit)
+    }
+  }
+
+  fun addTeaConfig(
+    project: Project,
+    line: String,
+  ) {
+    if (project.hasPlatform(TeaVM.ID)) {
+      project.teaBuilderLines.add(line)
     }
   }
 

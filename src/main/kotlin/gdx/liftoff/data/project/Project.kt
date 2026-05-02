@@ -38,6 +38,7 @@ class Project(
   val properties: MutableMap<String, String> = mutableMapOf()
   val gwtInherits: MutableSet<String> = mutableSetOf()
   val androidPermissions: MutableSet<String> = mutableSetOf()
+  val teaBuilderLines: MutableSet<String> = mutableSetOf()
 
   val reflectedClasses: MutableSet<String> = mutableSetOf()
   val reflectedPackages: MutableSet<String> = mutableSetOf()

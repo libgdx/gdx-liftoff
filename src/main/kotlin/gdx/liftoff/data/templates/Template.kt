@@ -756,6 +756,7 @@ public class TeaVMLauncher {
   fun getTeaVMBuilderContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
 
+import com.badlogic.gdx.Files.FileType;
 import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle;
 import com.github.xpenatan.gdx.teavm.backends.shared.config.compiler.TeaCompiler;
 import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend;
@@ -785,6 +786,7 @@ public class TeaVMBuilder {
                 .setJettyPort(8080)
         )
             .addAssets(new AssetFileHandle("../${Assets.ID}"))
+            ${project.teaBuilderLines.joinToString("\n            ")}
             .setOptimizationLevel(debug ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED)
             .setMainClass(TeaVMLauncher.class.getName())
             .setObfuscated(!debug)

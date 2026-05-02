@@ -492,6 +492,7 @@ object TeaVMBuilder {
 
         TeaCompiler(webBackend)
             .addAssets(AssetFileHandle("../${Assets.ID}"))
+            ${project.teaBuilderLines.joinToString("\n            ")}
             .setOptimizationLevel(if (debug) TeaVMOptimizationLevel.SIMPLE else TeaVMOptimizationLevel.ADVANCED)
             .setMainClass("${project.basic.rootPackage}.teavm.TeaVMLauncher")
             .setObfuscated(!debug)

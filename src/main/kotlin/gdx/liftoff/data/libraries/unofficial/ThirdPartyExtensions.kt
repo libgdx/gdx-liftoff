@@ -827,6 +827,11 @@ class VisUI : ThirdPartyExtension() {
 
     addDependency(project, GWT.ID, "com.github.kotcrab.vis-ui:vis-ui:sources")
     addGwtInherit(project, "com.kotcrab.vis.vis-ui")
+    addTeaConfig(project, ".addAssets(new AssetFileHandle(\"com/kotcrab/vis/ui/skin/x1\", FileType.Classpath))")
+    addTeaConfig(project, ".addAssets(new AssetFileHandle(\"com/kotcrab/vis/ui/widget/color/internal\", FileType.Classpath))")
+    addTeaConfig(project, ".addAssets(new AssetFileHandle(\"com/kotcrab/vis/ui/i18n/ColorPicker\", FileType.Classpath))")
+    project.reflectedClasses.add("com.kotcrab.vis.ui.**Style")
+    project.reflectedClasses.add("com.kotcrab.vis.ui.Sizes")
   }
 }
 
