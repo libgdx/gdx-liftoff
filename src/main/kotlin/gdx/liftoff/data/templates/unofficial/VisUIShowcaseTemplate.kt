@@ -41,6 +41,7 @@ import com.kotcrab.vis.ui.VisUI.SkinScale;
 import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuBar;
 import com.kotcrab.vis.ui.widget.MenuItem;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class ${project.basic.mainClass} extends ApplicationAdapter {
@@ -392,6 +393,7 @@ import com.kotcrab.vis.ui.widget.ListView.ItemClickListener;
 import com.kotcrab.vis.ui.widget.ListView.UpdatePolicy;
 
 import java.util.Comparator;
+import java.util.Locale;
 
 public class TestListView extends VisWindow {
     public TestListView () {
