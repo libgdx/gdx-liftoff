@@ -136,6 +136,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 """
 
   override fun apply(project: Project) {
+    VisUI().initiate(project)
     super.apply(project)
     project.files.add(
       CopiedFile(
@@ -144,7 +145,6 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         path = ".gitkeep",
       ),
     )
-    VisUI().initiate(project)
 
     addSourceFile(
       project = project,

@@ -22,6 +22,7 @@ class VisUIBasicTemplate : Template {
         "using the [VisUI](https://github.com/kotcrab/vis-ui) library."
 
   override fun apply(project: Project) {
+    VisUI().initiate(project)
     super.apply(project)
     project.files.add(
       CopiedFile(
@@ -30,7 +31,6 @@ class VisUIBasicTemplate : Template {
         path = ".gitkeep",
       ),
     )
-    VisUI().initiate(project)
   }
 
   override fun getApplicationListenerContent(project: Project): String =

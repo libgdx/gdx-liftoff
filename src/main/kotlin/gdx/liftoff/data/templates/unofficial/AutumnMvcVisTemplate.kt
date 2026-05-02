@@ -41,11 +41,10 @@ public class ${project.basic.mainClass} {
 }"""
 
   override fun apply(project: Project) {
+    LMLVis().initiate(project)
     super.apply(project)
     addResources(project)
     addSources(project)
-    // Adding VisUI support:
-    LMLVis().initiate(project)
   }
 
   protected open fun addResources(project: Project) {
