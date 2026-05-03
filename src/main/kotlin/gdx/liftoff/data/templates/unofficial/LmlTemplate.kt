@@ -26,9 +26,11 @@ class LmlTemplate : Template {
 
   override fun apply(project: Project) {
     mainClass = project.basic.mainClass
-    LML().initiate(project)
     super.apply(project)
     project.advanced.generateSkin = true
+
+    // Adding LML dependency:
+    LML().initiate(project)
 
     // Adding example LML template file:
     project.files.add(
