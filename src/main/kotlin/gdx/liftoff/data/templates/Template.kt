@@ -777,10 +777,10 @@ public class TeaVMBuilder {
         }
         new TeaCompiler(
             new WebBackend()
-                .setHtmlWidth(800) // Change this to fit your game's requirements.
-                .setHtmlHeight(600) // Change this to fit your game's requirements.
+                .setHtmlWidth(800) /* Change this to fit your game's requirements. */
+                .setHtmlHeight(600) /* Change this to fit your game's requirements. */
                 .setHtmlTitle("${project.basic.name}")
-//                .setWebAssembly(true) // Uncomment this line to use WASM output instead of JavaScript output.
+                .setWebAssembly(true) /* Comment this line to use JavaScript output instead of WASM output. */
                 .setStartJettyAfterBuild(startJetty)
                 .setJettyPort(8080)
         )
