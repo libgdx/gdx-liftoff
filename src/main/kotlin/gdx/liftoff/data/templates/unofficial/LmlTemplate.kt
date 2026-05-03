@@ -30,7 +30,6 @@ class LmlTemplate : Template {
     super.apply(project)
     project.advanced.generateSkin = true
 
-
     // Adding example LML template file:
     project.files.add(
       SourceFile(
