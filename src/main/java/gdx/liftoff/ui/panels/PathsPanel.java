@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.textra.TypingLabel;
-import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
+import gdx.liftoff.ui.FileChooserListener;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -53,7 +53,7 @@ public class PathsPanel extends Table implements Panel {
             if (UserData.projectPath != null && !UserData.projectPath.isEmpty())
                 initialFolder = Gdx.files.absolute(UserData.projectPath);
 
-            Main.pickDirectory(initialFolder, new FileChooserAdapter() {
+            Main.pickDirectory(initialFolder, new FileChooserListener() {
                 @Override
                 public void canceled() {
                     Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));
@@ -112,7 +112,7 @@ public class PathsPanel extends Table implements Panel {
                 if (UserData.androidPath != null && !UserData.androidPath.isEmpty())
                     initialFolder = Gdx.files.absolute(UserData.androidPath);
 
-                Main.pickDirectory(initialFolder, new FileChooserAdapter() {
+                Main.pickDirectory(initialFolder, new FileChooserListener() {
                     @Override
                     public void canceled() {
                         Gdx.app.postRunnable(() -> Gdx.input.setInputProcessor(stage));

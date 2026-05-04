@@ -28,22 +28,18 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.textra.FWSkin;
-import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.file.FileChooser;
-import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
-import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
 import gdx.liftoff.config.LiftoffVersion;
 import gdx.liftoff.data.platforms.Platform;
 import gdx.liftoff.data.project.*;
+import gdx.liftoff.ui.FileChooserListener;
 import gdx.liftoff.ui.OverlayTable;
 import gdx.liftoff.ui.RootTable;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.PointerBuffer;
-import org.lwjgl.util.nfd.NativeFileDialog;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.IOException;
 import java.lang.StringBuilder;
@@ -52,8 +48,6 @@ import java.util.*;
 import static gdx.liftoff.ui.UserData.*;
 import static gdx.liftoff.ui.dialogs.FullscreenCompleteDialog.*;
 import static gdx.liftoff.ui.dialogs.FullscreenDialog.fullscreenDialog;
-import static org.lwjgl.system.MemoryUtil.memAllocPointer;
-import static org.lwjgl.system.MemoryUtil.memFree;
 
 /**
  * Main launcher of the app. Contains utility methods and object instances for use throughout the program.
@@ -431,59 +425,21 @@ public class Main extends ApplicationAdapter {
      * @param initialFolder The initial folder that the picker will start in
      * @param callback      Adapter that will be called if the user clicks okay or cancels the dialog
      */
-    public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
-        PointerBuffer pathPointer = memAllocPointer(1);
+    public static void pickDirectory(FileHandle initialFolder, FileChooserListener callback) {
+        String initialPath = initialFolder.path();
+        String folder = TinyFileDialogs.tinyfd_selectFolderDialog("Select Folder", UIUtils.isWindows
+            ? initialPath.replace("/", "\\")
+            : initialPath);
 
-        try {
-            // I hate using an exception for control flow, but this avoids repeating code.
-            if(UIUtils.isLinux)
-                throw new Throwable("Not an error! On Linux, using VisUI file chooser...");
-
-            String initialPath = initialFolder.path();
-            int status = NativeFileDialog.NFD_PickFolder(pathPointer, UIUtils.isWindows
-                ? initialPath.replace("/", "\\")
-                : initialPath);
-
-            if (status == NativeFileDialog.NFD_CANCEL) {
-                callback.canceled();
-                return;
-            }
-
-            // Unexpected error - show VisUI dialog.
-            if (status != NativeFileDialog.NFD_OKAY) {
-                throw new Throwable("Native file dialog error");
-            }
-
-            String folder = pathPointer.getStringUTF8(0);
-            NativeFileDialog.nNFD_FreePath(pathPointer.get(0));
-
-            Array<FileHandle> array = new Array<>();
-            array.add(Gdx.files.absolute(folder));
-
-            callback.selected(array);
-        } catch (Throwable e) {
-            if(!UIUtils.isLinux) {
-                Gdx.app.error(
-                    "NFD",
-                    "The Native File Dialog library could not be loaded.\n" +
-                        "Check if you have multiple LWJGL3 applications open simultaneously,\n" +
-                        "since that can cause this error."
-                );
-                Gdx.app.error("NFD", e.toString());
-            }
-            VisUI.setSkipGdxVersionCheck(true);
-            if(!VisUI.isLoaded())
-                VisUI.load();
-            FileChooser fileChooser = new FileChooser(FileChooser.Mode.OPEN);
-            fileChooser.setSelectionMode(SelectionMode.DIRECTORIES);
-            fileChooser.setDirectory(initialFolder);
-            fileChooser.setListener(callback);
-
-            stage.addActor(fileChooser.fadeIn());
-            Gdx.input.setInputProcessor(stage); // needed because NFDe may have set input to null.
-        } finally {
-            memFree(pathPointer);
+        if (folder == null) {
+            callback.canceled();
+            return;
         }
+
+        Array<FileHandle> array = new Array<>();
+        array.add(Gdx.files.absolute(folder));
+
+        callback.selected(array);
     }
 
     public static void maximizeWindow() {
