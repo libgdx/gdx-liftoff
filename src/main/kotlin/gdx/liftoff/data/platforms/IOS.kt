@@ -236,6 +236,9 @@ apply plugin: 'robovm'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+java.targetCompatibility = 8
+java.sourceCompatibility = 8
+
 ext {
   mainClassName = "${project.basic.rootPackage}.IOSLauncher"
 }
