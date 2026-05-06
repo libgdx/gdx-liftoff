@@ -20,22 +20,36 @@ run it (usually double-clicking will do), or run the following command manually 
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-**You must build with Java 17** or newer (up to 26)! Gradle's current version, as well as current Android tools, now
-require your installed JDK to be version 17 or higher. Regardless of what platforms you target, Gradle 8.10 and up need 
-a JDK with a version at least 17! You can still target other releases, as low as 8 typically, while building with any of
-the JDK versions 17 and up. Stable target releases of Java from 8 to 26 work here now. **If you use a JDK version that
-isn't 21** for Gradle, then the automatic desktop release packaging with Construo will need some configuration changes
-so it downloads the same version of JDK that Gradle uses. This isn't hard, but is tedious, so using **21 exactly** is
-recommended for this reason. See our
+**You must build with Java 17** or newer (up to 26)! If you are downloading Java for the first time, read this paragraph
+and the next two carefully; links are provided to recommended OpenJDK versions. Gradle's current version, as well as
+current Android tools, now require your installed JDK to be version 17 or higher. Regardless of what platforms you
+target, Gradle 8.10 and up need a JDK with a version at least 17! You can still target other releases, as low as 8
+typically, while building with any of the JDK versions 17 and up. Stable target releases of Java from 8 to 26 work here
+now. **If you use a JDK version that isn't 21** for Gradle, then the automatic desktop release packaging with Construo
+will need some configuration changes so it downloads the same version of JDK that Gradle uses. This isn't hard, but is
+tedious, so using **21 exactly** is recommended for this reason. See our
 [Troubleshooting](https://github.com/libgdx/gdx-liftoff/blob/master/Troubleshooting.md#how-do-i-change-the-construo-jdk-download-links-so-i-can-bundle-a-jdk-other-than-jdk-21)
 document for more details.
 
 When you enter the JDK version you use for a project, it is **always one integer**, such as `8` or `21`. Entering any
 bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
 never include bugfix versions, and when you enter one here it should always be a single int, with no `.` or `_` .
+If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
+vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
+[Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended for Windows and macOS
+users. They have good default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary
+JDK) are *not* recommended. This is partly because their installers have confusing default options. The other part is
+that their licensing is not as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license.
+Oracle can change (and has changed) licensing without much warning. On Linux, use your package manager to install
+OpenJDK 21. On macOS, you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX
+(any tools that still use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). The links given for Windows
+should also have working macOS installers.
+
+Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default. 
 
 Java 25 and 26 are now somewhat supported to build your projects, in recent Liftoff versions.
-Java 25 does include some useful features for reducing memory usage, if you enable them. Java 26 came out on March 17,
+Java 25 does include some useful features for reducing memory usage, [if you enable them](https://openjdk.org/jeps/534),
+using `java -XX:+UseCompactObjectHeaders ...` to launch. Java 26 came out on March 17,
 2026, and surprisingly is already supported by Gradle. It doesn't add any (complete) language features, but does have
 several preview features and new APIs. In order to run with Java 25 or newer, LWJGL3 must use version 3.4.0 or later;
 this is automatically handled by the current Liftoff version using Gradle constraints. If you find you need an older
@@ -44,19 +58,27 @@ version of your choosing. One reason you might need this is to better support Wa
 worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.0 uses LWJGL 3.3.3 unless some Gradle config changes that
 version. The constraints on the LWJGL version default to LWJGL 3.4.1 instead now, allowing Java 25 and up to work.
 Typically, you either leave `lwjgl3Version=3.4.1` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
+Note that if you are running on Java 25 or newer, LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of
+the older and scheduled-to-be-removed `sun.misc.Unsafe` class. This may have
+[unexpected performance problems](https://github.com/LWJGL/lwjgl3/issues/1111#issuecomment-4147955320) due to
+complexities of the JVM and how FFM currently works, so you could get better framerates with Java 21. There's also the
+possibility of using LWJGL3's `:unsafe` dependencies instead of the usual ones, which still needs exploration.
 
-If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
-vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
-[Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended for Windows users.
-They have good default settings in their MSI Windows installers. Oracle's OpenJDK (and especially its proprietary JDK)
-are *not* recommended. This is partly because their installers have confusing default options. The other part is that
-their licensing is not as clear as OpenJDK vendors that must use GPL v2 with Classpath Exception as their license.
-Oracle can change (and has changed) licensing without much warning. On Linux, use your package manager to install
-OpenJDK 21. On macOS, you might need to get both an AARCH64 OpenJDK and an x86_64 OpenJDK to use certain parts of libGDX
-(any tools that still use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). The links given for Windows
-should also have working macOS installers.
-
-Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default. 
+Advanced users may want to try using GraalVM to either run their project or to build a "native-image" distributable.
+Native-image, also called Substrate VM, allows you to avoid distributing a JDK at all by compiling a fairly-small
+executable to native code. This starts up quickly, but can't reach as high of a peak speed as a JDK can normally, and
+may stutter when the garbage collector runs, so using native-image isn't always a great option for games. Games that
+already perform very well and don't produce much garbage may have uses for it, since it is harder to decompile at this
+point in time than a JAR (which is effortless to take apart). Liftoff includes some very out-of-date native-image
+configuration that is disabled by default; you can enable it in gradle.properties by setting `enableGraalNative=true` .
+You might prefer using Construo to build native launchers for a minimized JDK, though, which works without any changes
+in a new Liftoff project. To do that, just make sure Gradle is using OpenJDK 21 to run; if it doesn't work right away,
+see [this Troubleshooting section](https://github.com/libgdx/gdx-liftoff/blob/master/Troubleshooting.md#how-do-i-change-the-construo-jdk-download-links-so-i-can-bundle-a-jdk-other-than-jdk-21).
+Note that Construo can build releases for any target platform (but can't notarize Mac builds), from any desktop OS, but
+GraalVM native image can only target the same OS it is run from. If you do use GraalVM, take note of its license; there
+is a community edition that is GPL v2 with CE, and another edition that has changed branding and license a few times.
+Running a JAR with GraalVM *without* using native-image also works, and can sometimes yield significantly better
+performance on long-running apps relative to a typical OpenJDK installation, but it takes longer to get to full speed.
 
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 

@@ -21,6 +21,9 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Used to get events from file selection dialogs.
+ * <br>
+ * This interface was copied from vis-ui to avoid depending on the whole library.
+ * 
  * @author Kotcrab
  */
 public interface FileChooserListener {
