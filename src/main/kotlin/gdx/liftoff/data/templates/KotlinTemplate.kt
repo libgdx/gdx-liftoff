@@ -484,11 +484,11 @@ object TeaVMBuilder {
 
         val webBackend = WebBackend()
             .setHtmlTitle("${project.basic.name}")
-            .setHtmlWidth(800) // Change this to fit your game's requirements.
-            .setHtmlHeight(600) // Change this to fit your game's requirements.
+            .setHtmlWidth(800) /* Change this to fit your game's requirements. */
+            .setHtmlHeight(600) /* Change this to fit your game's requirements. */
             .setStartJettyAfterBuild(startJetty)
             .setJettyPort(8080)
-            .setWebAssembly(true) // Comment this line to use JavaScript output instead of WASM output.
+//            .setWebAssembly(true) /* Uncomment this line to use WASM output instead of JavaScript output. */
 
         TeaCompiler(webBackend)
             .addAssets(AssetFileHandle("../${Assets.ID}"))
