@@ -34,6 +34,14 @@ document for more details.
 When you enter the JDK version you use for a project, it is **always one integer**, such as `8` or `21`. Entering any
 bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
 never include bugfix versions, and when you enter one here it should always be a single int, with no `.` or `_` .
+If you target iOS using RoboVM, note that you will be required to use at most Java features language level 8, but won't
+have access to any APIs added in Java 8 (at most, APIs from 7 are available). Liftoff forces language level 8 for RoboVM
+even if other projects use a higher language level; you need to make sure you only use features that are compatible with
+RoboVM if you target it. If you target the browser via GWT, you need to use language level 8 or 11, with 11 recommended
+(any recent JDK installation can still target 8 or 11; it can't actually be a JDK 8 or 11 installation and still run
+Gradle). If you target the browser via TeaVM, you need to use language level 11 or *higher*, which is yet another reason
+to use the recommended JDK 21 (recent JDKs like 21 can still target older language levels, as low as 8).
+
 If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
 vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
 [Azul Zulu](https://www.azul.com/downloads/?version=java-21-lts&package=jdk#zulu) are recommended for Windows and macOS
