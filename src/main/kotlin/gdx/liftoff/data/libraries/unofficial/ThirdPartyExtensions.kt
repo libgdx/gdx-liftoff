@@ -585,6 +585,27 @@ class Stripe : ThirdPartyExtension() {
 }
 
 /**
+ * Supports FreeType configuration in Skin JSON files.
+ * @author Raymond Buckley
+ */
+@Extension
+class FreetypeSkin : ThirdPartyExtension() {
+  override val id = "freetypeSkin"
+  override val defaultVersion = "2.0.0"
+  override val url = "https://github.com/raeleus/stripe"
+  override val group = "com.github.raeleus.stripe"
+  override val name = "FreetypeSkin"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "com.github.raeleus.stripe:freetype")
+
+    addDependency(project, GWT.ID, "com.github.raeleus.stripe:freetype:sources")
+    addGwtInherit(project, "com.ray3k.stripe")
+    Freetype().initiate(project)
+  }
+}
+
+/**
  * Support for the GLTF format for 3D models and physically-based rendering; a huge time-saver for 3D handling.
  * @author mgsx
  */
