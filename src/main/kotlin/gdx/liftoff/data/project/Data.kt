@@ -66,10 +66,11 @@ data class AdvancedProjectData(
   /**
    * Version of xpenatan's TeaVM backend.
    */
-  val gdxTeaVMVersion: String = when (gdxVersion) { // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.5.5 should be compatible with newer.
+  val gdxTeaVMVersion: String = when (gdxVersion) {
+    // 1.2.1 depends on libGDX 1.13.5, 1.2.0 keeps dep at 1.13.1, and 1.5.6 should be compatible with newer.
     "1.13.5" -> "1.2.1"
     "1.13.1" -> "1.2.0"
-    else -> "1.5.5"
+    else -> "1.5.6"
   }
 }
 
