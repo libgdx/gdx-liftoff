@@ -224,14 +224,6 @@ gwt {
   maxHeapSize = '1G' // Default 256m is not enough for the GWT compiler. GWT is HUNGRY.
   minHeapSize = '1G'
 
-  extraSourceDirs = files(
-    file('src/main/java'),
-    project(":core").file('src/main/java'),
-    files(project(':core').sourceSets.main.allJava.srcDirs),
-    files("../core/build/generated/sources/annotationProcessor/java/main"),
-    files(sourceSets.main.output.resourcesDir),
-${if (project.hasPlatform(Shared.ID)) "    files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
-  )
   modules = ["${project.basic.rootPackage}.GdxDefinition"]
 
   //// This affects where the final resulting build will be placed.
@@ -251,6 +243,21 @@ ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == 
   }
 }
 
+${if (project.extensions.isSelected("lombok")) """gwt.extraSourceDirs.from(
+  file('src/main/java'),
+  files("../core/build/generated/sources/delombok/java/main"),
+  files(sourceSets.main.output.resourcesDir)
+${if (project.hasPlatform(Shared.ID)) "    files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
+)""" else """gwt.extraSourceDirs.from(
+  file('src/main/java'),
+  files(project(":core").file('src/main/java')),
+  files(project(':core').sourceSets.main.allJava.srcDirs),
+  files("../core/build/generated/sources/annotationProcessor/java/main"),
+  files(sourceSets.main.output.resourcesDir)
+${if (project.hasPlatform(Shared.ID)) "    files(project(':shared').sourceSets.main.allJava.srcDirs)" else ""}
+)"""}
+
+
 dependencies {
 ${joinDependencies(dependencies)}
   constraints {
@@ -265,6 +272,7 @@ clean.delete += [file("war")]
 //// The compileJava task is run at the start of any GWT build; we need to clean the output directory BEFORE
 //// anything can be built into that output directory, so the rest of the build can use it.
 tasks.named("compileJava").get().dependsOn("clean")
+${if (project.extensions.isSelected("lombok")) """tasks.named("compileJava").get().dependsOn(":core:delombok")""" else ""}
 
 //// You should always use the dist task (which could be folded into the "other" group), not the build task.
 tasks.register('dist') {
