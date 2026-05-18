@@ -1231,7 +1231,7 @@ class GdxBasisUniversal : ThirdPartyExtension() {
 @Extension
 class Lombok : ThirdPartyExtension() {
   override val id = "lombok"
-  override val defaultVersion = "1.18.42"
+  override val defaultVersion = "1.18.46"
   override val url = "https://projectlombok.org/"
   override val group = "org.projectlombok"
   override val name = "lombok"
@@ -1239,7 +1239,7 @@ class Lombok : ThirdPartyExtension() {
   override fun initiateDependencies(project: Project) {
     addSpecialDependency(project, Core.ID, "compileOnly \"org.projectlombok:lombok:\$${id}Version\"")
     addSpecialDependency(project, Core.ID, "annotationProcessor \"org.projectlombok:lombok:\$${id}Version\"")
-    project.rootGradle.buildDependencies.add("\"io.freefair.gradle:lombok-plugin:9.2.0\"")
+    project.rootGradle.buildDependencies.add("\"io.freefair.gradle:lombok-plugin:9.5.0\"")
     project.rootGradle.plugins.add("io.freefair.lombok")
   }
 }
