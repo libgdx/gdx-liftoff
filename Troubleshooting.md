@@ -189,7 +189,7 @@ you're trying to find looks like this:
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
 |    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
 |    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
-|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.14.0 (*)
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.14.1 (*)
 |         \--- com.google.gwt:gwt-user:2.8.2
 |              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
 |              +--- javax.validation:validation-api:1.0.0.GA
@@ -294,7 +294,7 @@ You could instead change your dependency on VisUI to a known-working commit on J
 `implementation "com.github.kotcrab.vis-ui:vis-ui:1f8b37a24b"`
 
 Which gets a recent commit built by JitPack, and that code has fixes from after 1.5.7 that make it compatible with
-libGDX 1.14.0 and Construo. You may need to call `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
+libGDX 1.14.1 and Construo. You may need to call `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
 
 Other dependencies may also have issues, but no one has found them yet.
 
@@ -312,7 +312,7 @@ re-enable input when the dialog closes.
 encounters issues with that (maintained) code, you can send [bug reports to NFDe](https://github.com/btzy/nativefiledialog-extended/issues).
 Thankfully, LWJGL 3.4.0 came out in mid-January 2026, and with it an updated NFDe that seems to have fixed some bugs.
 It's used by gdx-liftoff 1.14.0.6 and up, except on Linux, where the VisUI fallback is now used instead. NFDe seems to
-stil have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
+still have native-code crashing bugs on (at least some GNOME-using) Linux systems. The VisUI fallback file picker isn't
 optimal either, but it at least doesn't crash, and doesn't freeze anymore. 1.14.0.5 used a broken VisUI release, but
 1.14.0.6 and up use the (working) latest commit, because there still hasn't been a VisUI release yet.
 

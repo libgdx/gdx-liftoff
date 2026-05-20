@@ -13,7 +13,7 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 </h1>
 
 To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application `jar`.
-The latest release targets 1.14.0 by default. Once you have the right JAR, 
+The latest release targets 1.14.1 by default. Once you have the right JAR, 
 run it (usually double-clicking will do), or run the following command manually (replacing the `VERSION` appropriately):
 
 ```shell
@@ -63,7 +63,7 @@ several preview features and new APIs. In order to run with Java 25 or newer, LW
 this is automatically handled by the current Liftoff version using Gradle constraints. If you find you need an older
 LWJGL3, you can now simply change `lwjgl3Version` in `gradle.properties`, which will make the constraints require a
 version of your choosing. One reason you might need this is to better support Wayland on Linux, which changed how it
-worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.0 uses LWJGL 3.3.3 unless some Gradle config changes that
+worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.1 uses LWJGL 3.3.3 unless some Gradle config changes that
 version. The constraints on the LWJGL version default to LWJGL 3.4.1 instead now, allowing Java 25 and up to work.
 Typically, you either leave `lwjgl3Version=3.4.1` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
 Note that if you are running on Java 25 or newer, LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of

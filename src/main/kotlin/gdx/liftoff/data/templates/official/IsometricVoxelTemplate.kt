@@ -4792,7 +4792,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // Extract animations from the atlas.
         // This step will be different for every game's assets.
         animations = new Array<>(4);
-        // Apologies for the duplicated lines; these use libGDX 1.14.0's preferred way of initializing an Array.
+        // Apologies for the duplicated lines; these use libGDX 1.14.1's preferred way of initializing an Array.
         // If you are using libGDX 1.13.1 or earlier, change `Animation[]::new` to `Animation.class` .
         animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
         animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
