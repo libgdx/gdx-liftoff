@@ -439,11 +439,10 @@ public class Main extends ApplicationAdapter {
             if(UIUtils.isLinux)
                 throw new Throwable("Not an error! On Linux, using VisUI file chooser...");
 
-        String initialPath = initialFolder.path();
-            int status = NativeFileDialog.NFD_PickFolder(UIUtils.isWindows
-                        ? initialPath.replace("/", "\\")
-                        : initialPath, pathPointer);
-
+            String initialPath = initialFolder.path();
+            int status = NativeFileDialog.NFD_PickFolder(pathPointer, UIUtils.isWindows
+                ? initialPath.replace("/", "\\")
+                : initialPath);
             if (status == NativeFileDialog.NFD_CANCEL) {
             callback.canceled();
             return;
@@ -455,7 +454,7 @@ public class Main extends ApplicationAdapter {
             }
 
             String folder = pathPointer.getStringUTF8(0);
-            NativeFileDialog.nNFD_Free(pathPointer.get(0));
+            NativeFileDialog.nNFD_FreePath(pathPointer.get(0));
 
         Array<FileHandle> array = new Array<>();
         array.add(Gdx.files.absolute(folder));
