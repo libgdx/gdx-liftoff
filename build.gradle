@@ -92,6 +92,17 @@ dependencies {
     exclude group: "org.jcraft", module: "jorbis"
   }
 
+  // For when NFD uses the same version as LWJGL3:
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm32"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm64"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
+  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
+
+  // In case we switch back to TinyFD...
 //  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion"
 //  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-windows"
 //  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-windows-x86"
@@ -102,14 +113,14 @@ dependencies {
 //  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-macos-arm64"
 
   // Older; only used when we needed $nfdVersion to be less than $lwjgl3Version .
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
-  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-windows-x86"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm32"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-linux-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
+//  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion:natives-macos-arm64"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
 
   // for some network requests, such as checking the versions of dependencies
   implementation "com.github.kittinunf.fuel:fuel:2.3.1"
