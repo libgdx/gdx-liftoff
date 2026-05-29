@@ -6,7 +6,7 @@ import java.lang.NumberFormatException
  * Configures Autumn MVC application.
  */
 object Configuration {
-  const val VERSION = "1.14.1.0"
+  const val VERSION = "1.14.1.1-SNAPSHOT"
 
   @JvmStatic
   fun parseJavaVersion(version: String): Double = try {

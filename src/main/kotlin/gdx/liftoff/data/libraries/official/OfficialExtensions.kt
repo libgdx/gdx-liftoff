@@ -145,7 +145,8 @@ class Bullet : OfficialExtension() {
 
     addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-bullet-platform:\$gdxVersion:natives-ios")
 
-    addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-bullet-teavm:1.0.0-b6")
+    // This dependency is old and incompatible with recent TeaVM releases.
+//    addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-bullet-teavm:1.0.0-b6")
 
     // Other platforms are not officially supported (GWT).
   }
