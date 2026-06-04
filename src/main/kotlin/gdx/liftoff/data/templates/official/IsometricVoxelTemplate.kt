@@ -18,6 +18,10 @@ import gdx.liftoff.views.ProjectTemplate
 @Suppress("unused") // Referenced via reflection.
 class IsometricVoxelTemplate : Template {
   override val id = "isometricVoxel"
+  override val width: String
+    get() = "720"
+  override val height: String
+    get() = "630"
   override val description: String
     get() =
       "A sample project implementing an isometric pixel-art game with procedural terrain. " +
@@ -640,6 +644,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.NumberUtils;
 import ${project.basic.rootPackage}.game.AssetData;
 
+import static ${project.basic.rootPackage}.Main.OFFSET_Y;
+
 /**
  * Wraps a {@link Sprite} so its position can be set using isometric coordinates.
  * There are many possible isometric coordinate systems, so the one used here intentionally avoids calling the isometric
@@ -734,7 +740,7 @@ public class IsoSprite implements Comparable<IsoSprite> {
         this.g = g;
         this.h = h;
         float worldX = (f - g) * (2 * UNIT);
-        float worldY = (f + g) * UNIT + h * (2 * UNIT);
+        float worldY = (f + g) * UNIT + h * (2 * UNIT) + OFFSET_Y;
         sprite.setPosition(worldX, worldY);
     }
 
@@ -766,7 +772,7 @@ public class IsoSprite implements Comparable<IsoSprite> {
         this.g = g;
         this.h = h;
         float worldX = (f - g) * (2 * UNIT);
-        float worldY = (f + g) * UNIT + h * (2 * UNIT);
+        float worldY = (f + g) * UNIT + h * (2 * UNIT) + OFFSET_Y;
         sprite.setOriginBasedPosition(worldX, worldY);
     }
 
@@ -809,7 +815,7 @@ public class IsoSprite implements Comparable<IsoSprite> {
      */
     public void setSprite(Sprite sprite) {
         float worldX = (f - g) * (2 * UNIT);
-        float worldY = (f + g) * UNIT + h * (2 * UNIT);
+        float worldY = (f + g) * UNIT + h * (2 * UNIT) + OFFSET_Y;
         sprite.setPosition(worldX, worldY);
         sprite.setPackedColor(this.sprite.getPackedColor());
         sprite.setOrigin(this.sprite.getOriginX(), this.sprite.getOriginY());
@@ -894,7 +900,7 @@ public class IsoSprite implements Comparable<IsoSprite> {
         float rf = cosRotation * af - sinRotation * ag + originF;
         float rg = cosRotation * ag + sinRotation * af + originG;
         float worldX = (rf - rg) * (2 * UNIT);
-        float worldY = (rf + rg) * UNIT + h * (2 * UNIT);
+        float worldY = (rf + rg) * UNIT + h * (2 * UNIT) + OFFSET_Y;
         sprite.setPosition(worldX, worldY);
         sprite.draw(batch);
     }
@@ -905,7 +911,7 @@ public class IsoSprite implements Comparable<IsoSprite> {
         float rf = cosRotation * af - sinRotation * ag + originF;
         float rg = cosRotation * ag + sinRotation * af + originG;
         float worldX = (rf - rg) * (2 * UNIT);
-        float worldY = (rf + rg) * UNIT + h * (2 * UNIT);
+        float worldY = (rf + rg) * UNIT + h * (2 * UNIT) + OFFSET_Y;
         sprite.setPosition(worldX, worldY);
         sprite.draw(batch, alphaModulation);
     }
@@ -4514,16 +4520,24 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Vector4;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -4584,7 +4598,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
     /**
      * This is the actual TextureAtlas of 2D assets used in the game. It uses
      * <a href="https://gvituri.itch.io/isometric-trpg">these free-to-use assets by Gustavo Vituri</a> and
-     * <a href="https://ray3k.wordpress.com/clean-crispy-ui-skin-for-libgdx/">a mangled, pixelated skin originally by Raymond Buckley</a>.
+     * <a href="https://ray3k.wordpress.com/clean-crispy-ui-skin-for-libgdx/">a skin by Raymond Buckley</a> with the
+     * font changed to <a href="https://github.com/the-moonwitch/Cozette">Cozette</a>.
      * <br>
      * CUSTOM TO YOUR GAME. This is closely related to {@link AssetData}, and if one changes, both should.
      */
@@ -4601,6 +4616,23 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      * CUSTOM TO YOUR GAME.
      */
     private Array<Array<Animation<TextureAtlas.AtlasSprite>>> animations;
+
+    /**
+     * This is drawn separately from the gameplay, at 100% pixel-perfect size.
+     */
+    private Stage stage;
+    /**
+     * Used so mobile users can actually play the game! This is an on-screen knob that can be dragged in any direction,
+     * to move the player around.
+     */
+    private Touchpad touchpad;
+    /**
+     * A mapping of keys (the ones a desktop would use to play the game) to TextButtons that can be used on mobile
+     * devices. Only a few (or maybe just one) TextButton is actually accessed via this Map.
+     * This can be extended in your game to include any buttons that can be held down and act like holding down a key.
+     */
+    private IntMap<TextButton> keyButtons;
+
     /**
      * Can be changed to make the game harder with more fish to save, or easier with fewer.
      */
@@ -4631,6 +4663,14 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      * This is the player, which has {@code npc = false;} and so won't move on their own.
      */
     private Mover player;
+    /**
+     * A "crosshair-like" indicator of where the player character is on the x-axis, for when they can't be seen.
+     */
+    private Sprite playerAxisX;
+    /**
+     * A "crosshair-like" indicator of where the player character is on the y-axis, for when they can't be seen.
+     */
+    private Sprite playerAxisY;
     /**
      * The enemies are stored in a simple Array. There aren't ever so many of them that the data structure could matter.
      * There's currently no logic for an enemy receiving damage; the player just tries to avoid the orc enemies.
@@ -4690,6 +4730,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      * The computed height in pixels of a full map at its largest possible {@link #MAP_SIZE} and {@link #MAP_PEAK}.
      */
     public static final int SCREEN_VERTICAL = (MAP_SIZE+3) * 2 * AssetData.TILE_HEIGHT + MAP_PEAK * AssetData.TILE_DEPTH;
+    /**
+     * Added to the screen y-position of sprites to account for the buttons and touchpad below.
+     */
+    public static float OFFSET_Y = 64f;
     /**
      * The position in fractional tiles of the very center of the map, measured from bottom center.
      */
@@ -4787,12 +4831,115 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
         // Loads the atlas from an internal path, in "assets/".
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
+
+        stage = new Stage(new ScreenViewport());
+
+        // Uses the same assets and a libGDX Skin JSON file to tell scene2d.ui widgets how to draw themselves.
+        // See <a href="https://github.com/raeleus/skin-composer/wiki/From-the-Ground-Up:-Scene2D.UI-Tutorials">some scene2d.ui docs</a>
+        // for more information on how to use a Skin.
+        Skin skin = new Skin(Gdx.files.internal("isometric-trpg.json"), atlas);
+        // scene2d.ui uses a Table-based layout system. Here, root is our outermost table, and others are nested.
+        Table root = new Table(skin);
+        // The touchpad allows movement on mobile devices without a keyboard.
+        touchpad = new Touchpad(8f, skin);
+        // This stores the TextButtons by the keyboard keys that they are mapped to on desktop.
+        keyButtons = new IntMap<>(16);
+
+        // These three Labels show at the top, and provide info about your progress in the game and health.
+        goalLabel = new Label("", skin);
+        healthLabel = new Label("[SCARLET]♥ ♥ ♥ ", skin);
+        fpsLabel = new Label("0 FPS", skin);
+
+        root.add(healthLabel);
+        root.add(goalLabel);
+        root.add(fpsLabel).row();
+        // This makes a large gap between the Labels on top and the thicker widget row below.
+        root.add(new Table(skin)).growY().row();
+        // This starts the widget row with the touchpad on the left.
+        root.add(touchpad);
+        // This adds as much space as possible between the touchpad and the buttons.
+        root.add(new Table(skin)).growX();
+        // We use another Table for the buttons, because the touchpad is taller than any one button.
+        Table buttonTable = new Table(skin);
+        buttonTable.pad(2f);
+        TextButton reset = new TextButton("RESET", skin);
+        // The ClickListeners define what happens when you click each TextButton.
+        reset.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                reset();
+            }
+        });
+        TextButton exit = new TextButton("EXIT", skin);
+        exit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+        TextButton zoomIn = new TextButton("Zoom In", skin);
+        zoomIn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                camera.zoom *= .5f;
+            }
+        });
+        TextButton zoomOut = new TextButton("Zoom Out", skin);
+        zoomOut.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                camera.zoom *= 2f;
+            }
+        });
+        TextButton rotateLeft = new TextButton("<-Rotate", skin);
+        rotateLeft.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                rotateCamera(1);
+            }
+        });
+        TextButton rotateRight = new TextButton("Rotate->", skin);
+        rotateRight.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                rotateCamera(-1);
+            }
+        });
+        // The Jump button can be held down to bounce continually, and it's handled like the keys that can be held.
+        TextButton jump = new TextButton("Jump", skin);
+        keyButtons.put(Input.Keys.Z, reset);
+        keyButtons.put(Input.Keys.ESCAPE, exit);
+        keyButtons.put(Input.Keys.I, zoomIn);
+        keyButtons.put(Input.Keys.O, zoomOut);
+        keyButtons.put(Input.Keys.LEFT_BRACKET, rotateLeft);
+        keyButtons.put(Input.Keys.RIGHT_BRACKET, rotateRight);
+        keyButtons.put(Input.Keys.SPACE, jump);
+        buttonTable.add(reset).width(90f);
+        buttonTable.add(exit).width(90f).row();
+        buttonTable.add(zoomIn).width(90);
+        buttonTable.add(zoomOut).width(90).row();
+        buttonTable.add(rotateLeft).width(90);
+        buttonTable.add(rotateRight).width(90).row();
+        // The jump key is bigger, since players need it often.
+        // It spans the two columns, making it extra-wide.
+        buttonTable.add(jump).width(190).colspan(2);
+        // The rightmost part of the thicker widget row holds the buttons.
+        root.add(buttonTable).width(200);
+        // The root Table should resize as the window does.
+        root.setFillParent(true);
+        // The root Table should be laid out by doing this.
+        root.pack();
+        // The stage needs to have the root Table added so it can render it.
+        stage.addActor(root);
+        // This allows the stage to actually respond to button clicks and drags on the touchpad.
+        Gdx.input.setInputProcessor(stage);
+
         // All regions in the atlas for creatures start with "entity" and have an index.
         Array<TextureAtlas.AtlasRegion> entities = atlas.findRegions("entity");
         // Extract animations from the atlas.
         // This step will be different for every game's assets.
         animations = new Array<>(4);
-        // Apologies for the duplicated lines; these use libGDX 1.14.1's preferred way of initializing an Array.
+        // Apologies for the duplicated lines; these use libGDX 1.14.0 and later's way of initializing an Array.
         // If you are using libGDX 1.13.1 or earlier, change `Animation[]::new` to `Animation.class` .
         animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
         animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
@@ -4830,23 +4977,11 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             /* The seed will change after just over one hour, and will stay the same for over an hour. */
             TimeUtils.millis() >>> 22);
 
-        // Not currently used, but present in the assets.
-        // See <a href="https://github.com/raeleus/skin-composer/wiki/From-the-Ground-Up:-Scene2D.UI-Tutorials">some scene2d.ui docs</a>
-        // for more information on how to use a Skin.
-        Skin skin = new Skin(Gdx.files.internal("isometric-trpg.json"), atlas);
         // The goal label text changes when updateFish() or updateHealth() is called.
-        goalLabel = new Label("", skin);
-        goalLabel.setPosition(0, SCREEN_VERTICAL - 30, Align.center);
         updateFish();
         // The health label shows red hearts (using BitmapFont markup to make them red) for your current health.
         // It shows " :( " if the player reaches 0 health, using darker red.
-        healthLabel = new Label("[SCARLET]♥ ♥ ♥ ", skin);
-        healthLabel.setPosition(-300, SCREEN_VERTICAL - 30, Align.left);
         updateHealth();
-
-        // The FPS label can be removed if you want in production.
-        fpsLabel = new Label("0 FPS", skin);
-        fpsLabel.setPosition(0, SCREEN_VERTICAL - 50, Align.center);
 
         // These enforce the FPS cap and VSync settings from the first frame rendered.
         // Pressing 'C' will toggle the frame rate cap on or off.
@@ -4860,7 +4995,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      */
     public void regenerate(long seed) {
 
-        // Needed so the PC Mover always has id 1
+        // Needed so the PC Mover always has id 1.
         Mover.ID_COUNTER = 1;
         startTime = TimeUtils.millis();
         map = LocalMap.generateTestMap(
@@ -4881,6 +5016,15 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         int id = MathUtils.random(3);
         player = new Mover(map, animations, id, rf, rg, MAP_PEAK - 1);
         map.addMover(player, Mover.PLAYER_W);
+
+        // The player axis sprites show a crosshair-like indicator of where the player character is on the x and y axes.
+        playerAxisX = new Sprite(player.visual.sprite);
+        playerAxisY = new Sprite(player.visual.sprite);
+        // We try to place the x-axis indicator on the horizontal line just above the buttons.
+        playerAxisX.setY(OFFSET_Y - 16);
+        // We try to place the y-axis indicator on the very edge of the left of the screen.
+        playerAxisY.setX(SCREEN_HORIZONTAL * -0.5f + 8f);
+
         enemies = new Array<>(ENEMY_COUNT);
         for (int i = 0; i < ENEMY_COUNT; i++) {
             // enemies can be anywhere except the very edges of the map.
@@ -4888,6 +5032,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             rg = MathUtils.random(1, MAP_SIZE - 2);
             // id 4-7 will always be a green-skinned, brawny orc.
             id = MathUtils.random(4, 7);
+            // Here we drop the orcs from just below the highest elevation on the map to ensure they land on ground,
+            // rather than potentially starting "buried" in the ground itself.
             Mover enemy = new Mover(map, animations, id, rf, rg, MAP_PEAK - 1.6f);
             // We track enemies here as well as tracking them as general Movers in the map so that we can handle the
             // semi-random movement of enemies when we update them in ${project.basic.mainClass}, without semi-randomly moving the player.
@@ -4962,15 +5108,24 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             map.everything.remove(tempVector4);
             ((${project.basic.mainClass})Gdx.app.getApplicationListener()).updateFish();
         }
+        playerAxisX.setX(player.visual.getSprite().getX());
+        playerAxisY.setY(player.visual.getSprite().getY());
+        playerAxisX.draw(batch);
+        playerAxisY.draw(batch);
+
+        batch.end();
 
         fpsLabel.getText().clear();
         fpsLabel.getText().append(Gdx.graphics.getFramesPerSecond()).append(" FPS");
         // Allows the FPS label to be drawn with the correct width.
         fpsLabel.invalidate();
-        goalLabel.draw(batch, 1f);
-        fpsLabel.draw(batch, 1f);
-        healthLabel.draw(batch, 1f);
-        batch.end();
+
+        // Without apply(true) on the Stage's Viewport, the Stage won't resize correctly when the window resizes.
+        stage.getViewport().apply(true);
+        // This is important to allow widgets to respond to input.
+        stage.act(delta);
+        // This draws the Stage and its contents completely separately from the rest of the gameplay sprites.
+        stage.draw();
     }
 
     /**
@@ -4980,20 +5135,28 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
     private void handleInputPlayer() {
         // Our difference (delta) on the f and g isometric axes.
         float df = 0, dg = 0;
-        // We allow f,g,t,r to move on one isometric axis, or the numpad to move in all 8 directions.
-        // You can also hold a pair of f,g,t,r (adjacent on a QWERTY keyboard) to move north, south, east, or west.
-             if (Gdx.input.isKeyPressed(Input.Keys.F) && Gdx.input.isKeyPressed(Input.Keys.G)) { df = -INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.F) && Gdx.input.isKeyPressed(Input.Keys.R)) { df = -INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.G) && Gdx.input.isKeyPressed(Input.Keys.T)) { df = INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.R)) { df = INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.F) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_1)) df = -1;
-        else if (Gdx.input.isKeyPressed(Input.Keys.G) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_3)) dg = -1;
-        else if (Gdx.input.isKeyPressed(Input.Keys.T) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_9)) df = 1;
-        else if (Gdx.input.isKeyPressed(Input.Keys.R) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_7)) dg = 1;
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_2)) { df = -INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_4)) { df = -INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_6)) { df = INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_8)) { df = INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
+        // If the touchpad is being touched, ignore keyboard input and use its knob to get the direction change.
+        if(touchpad.isTouched()){
+            // We need to rotate the knob percents, which are orthogonal, by -45 degrees to get diagonal directions.
+            screenTempVector.set(touchpad.getKnobPercentX(), touchpad.getKnobPercentY()).rotateDeg(-45);
+            df = screenTempVector.x;
+            dg = screenTempVector.y;
+        } else {
+            // We allow f,g,t,r to move on one isometric axis, or the numpad to move in all 8 directions.
+            // You can also hold a pair of f,g,t,r (adjacent on a QWERTY keyboard) to move north, south, east, or west.
+                 if (Gdx.input.isKeyPressed(Input.Keys.F) && Gdx.input.isKeyPressed(Input.Keys.G)) { df = -INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.F) && Gdx.input.isKeyPressed(Input.Keys.R)) { df = -INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.G) && Gdx.input.isKeyPressed(Input.Keys.T)) { df = INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.R)) { df = INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.F) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_1)) df = -1;
+            else if (Gdx.input.isKeyPressed(Input.Keys.G) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_3)) dg = -1;
+            else if (Gdx.input.isKeyPressed(Input.Keys.T) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_9)) df = 1;
+            else if (Gdx.input.isKeyPressed(Input.Keys.R) || Gdx.input.isKeyPressed(Input.Keys.NUMPAD_7)) dg = 1;
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_2)) { df = -INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_4)) { df = -INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_6)) { df = INVERSE_ROOT_2; dg = -INVERSE_ROOT_2; }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUMPAD_8)) { df = INVERSE_ROOT_2; dg = INVERSE_ROOT_2; }
+        }
 
         // We account for the map's rotation so the visual rotation of the map (for the player) also affects the
         // direction in tiles for their chosen direction as they perceive it.
@@ -5004,8 +5167,9 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
         player.move(rf, rg, Mover.PC_MOVE_SPEED);
 
-        // Whee! Space or Numpad 0 or 5 make the player character jump really high.
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
+        // Whee! Clicking "Jump" or pressing Space/Numpad 0/Numpad 5 make the player character jump really high.
+        if (keyButtons.get(Input.Keys.SPACE).isPressed()
+         || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
          || Gdx.input.isKeyJustPressed(Input.Keys.NUMPAD_0)
          || Gdx.input.isKeyJustPressed(Input.Keys.NUMPAD_5)) {
             player.jump();
@@ -5051,14 +5215,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
         // The square bracket keys handle rotation, which can be important to spot goldfish behind terrain.
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
-            map.previousRotation = map.rotationDegrees;
-            map.targetRotation = (MathUtils.round(map.rotationDegrees * (1f/90f)) + 1 & 3) * 90;
-            animationStart = TimeUtils.millis();
+            rotateCamera(1);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-            map.previousRotation = map.rotationDegrees;
-            map.targetRotation = (MathUtils.round(map.rotationDegrees * (1f/90f)) - 1 & 3) * 90;
-            animationStart = TimeUtils.millis();
+            rotateCamera(-1);
         }
         // Because the arrow keys, as well as I and O, can change the camera, we update it here.
         camera.update();
@@ -5093,6 +5253,20 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             }
         }
         */
+    }
+
+    /**
+     * Rotates the view as if the camera moved around the map by 90 degrees, over several frames.
+     * This actually rotates the map itself, not the camera, which is still fully 2D.
+     * Individual voxels don't get moved; here, the map rotation is what determines where voxels are placed and how
+     * they get sorted, but the rotation is just one float to change.
+     *
+     * @param amount Almost always either 1 for a left rotation or -1 for a right rotation.
+     */
+    public void rotateCamera(int amount) {
+        map.previousRotation = map.rotationDegrees;
+        map.targetRotation = (MathUtils.round(map.rotationDegrees * (1f/90f)) + amount & 3) * 90;
+        animationStart = TimeUtils.millis();
     }
 
     /**
@@ -5182,6 +5356,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             width  / ((MAP_SIZE+1f) * (AssetData.TILE_WIDTH * 2f)),
             height / ((MAP_SIZE+1f) * (AssetData.TILE_HEIGHT * 2f) + AssetData.TILE_DEPTH * MAP_PEAK))));
         viewport.update(width, height);
+        // The Stage is drawn separately, and has its own viewport that needs updating.
+        stage.getViewport().update(width, height);
     }
 
     /**
@@ -5198,7 +5374,6 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
                     ((map.totalFish - map.fishSaved) == 1 ? "needs" : "need") + " your help!");
         }
         goalLabel.setAlignment(Align.center);
-        goalLabel.setPosition(goalLabel.getX(), goalLabel.getY(), Align.center);
     }
 
     /**
@@ -5209,7 +5384,6 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         {
             goalLabel.setText("YOU FAILED.. BY DYING...");
             goalLabel.setAlignment(Align.center);
-            goalLabel.setPosition(goalLabel.getX(), goalLabel.getY(), Align.center);
             healthLabel.setText("[FIREBRICK]:(");
         }
         else {
