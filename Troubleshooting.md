@@ -189,7 +189,7 @@ you're trying to find looks like this:
 +--- com.crashinvaders.basisu:basisu-gdx-gwt:1.0.0
 |    +--- com.crashinvaders.basisu:basisu-gdx:1.0.0 (*)
 |    \--- com.badlogicgames.gdx:gdx-backend-gwt:1.12.0
-|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.14.1 (*)
+|         +--- com.badlogicgames.gdx:gdx:1.12.0 -> 1.14.2 (*)
 |         \--- com.google.gwt:gwt-user:2.8.2
 |              +--- com.google.jsinterop:jsinterop-annotations:1.0.2 -> 2.0.2
 |              +--- javax.validation:validation-api:1.0.0.GA
@@ -294,7 +294,7 @@ You could instead change your dependency on VisUI to a known-working commit on J
 `implementation "com.github.kotcrab.vis-ui:vis-ui:1f8b37a24b"`
 
 Which gets a recent commit built by JitPack, and that code has fixes from after 1.5.7 that make it compatible with
-libGDX 1.14.1 and Construo. You may need to call `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
+libGDX 1.14.2 and Construo. You may need to call `VisUI.setSkipGdxVersionCheck(true);` before calling `VisUI.load()`.
 
 Other dependencies may also have issues, but no one has found them yet.
 
