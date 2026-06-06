@@ -829,7 +829,7 @@ class RegExodus : ThirdPartyExtension() {
  * UI toolkit with extra widgets and a different theme style.
  * Check the vis-ui changelog for what vis-ui versions are compatible
  * with which libGDX versions; vis-ui 1.5.6 is compatible with libGDX
- * 1.13.1, and vis-ui 1.5.7 is compatible with libGDX 1.13.5 .
+ * 1.13.1, while vis-ui 1.5.9 is compatible with libGDX 1.14.1 and 1.14.2 .
  * @author Kotcrab
  */
 @Extension
@@ -837,16 +837,16 @@ class VisUI : ThirdPartyExtension() {
   override val id = "visUi"
 
   // You may need to skip a check: VisUI.setSkipGdxVersionCheck(true);
-  override val defaultVersion = "1f8b37a24b"
+  override val defaultVersion = "1.5.9"
   override val repository = Repository.JitPack
   override val url = "https://github.com/kotcrab/vis-ui"
-  override val group = "com.github.kotcrab.vis-ui"
+  override val group = "com.kotcrab.vis"
   override val name = "vis-ui"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.kotcrab.vis-ui:vis-ui")
+    addDependency(project, Core.ID, "com.kotcrab.vis:vis-ui")
 
-    addDependency(project, GWT.ID, "com.github.kotcrab.vis-ui:vis-ui:sources")
+    addDependency(project, GWT.ID, "com.kotcrab.vis:vis-ui:sources")
     addGwtInherit(project, "com.kotcrab.vis.vis-ui")
     addTeaConfig(project, ".addAssets(new AssetFileHandle(\"com/kotcrab/vis/ui/skin/x1\", com.badlogic.gdx.Files.FileType.Classpath))")
     addTeaConfig(project, ".addAssets(new AssetFileHandle(\"com/kotcrab/vis/ui/skin/x2\", com.badlogic.gdx.Files.FileType.Classpath))")
