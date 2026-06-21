@@ -51,6 +51,7 @@ configure(subprojects${if (project.hasPlatform(Android.ID)) {
     }}) {
 ${plugins.joinToString(separator = "\n") { "  apply plugin: '$it'" }}
   java.sourceCompatibility = ${project.advanced.javaVersion}
+  java.targetCompatibility = ${project.advanced.javaVersion}
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
