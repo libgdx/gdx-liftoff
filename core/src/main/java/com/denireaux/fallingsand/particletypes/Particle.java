@@ -30,8 +30,6 @@ public abstract class Particle {
     public abstract void update(float gravity, Particle[][] grid);
 
     public void update(float gravity, Particle[][] current, Particle[][] next) {
-        // default: just call old update on current grid,
-        // then copy into next
         update(gravity, current);
         next[x][y] = this;
     }
@@ -139,7 +137,6 @@ public abstract class Particle {
 
     }
 
-    @SuppressWarnings("UnnecessaryReturnStatement")
     public void checkInbounds(Particle[][] grid, int x, int y) {
         if (y <= 0) return;
         if (x >= grid.length) return;

@@ -66,7 +66,6 @@ public class WormFactory {
             }
         }
 
-        // Done! Worm now exists in grid.
     }
 
 }

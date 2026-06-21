@@ -14,7 +14,7 @@ public class AshParticle extends Particle implements ISolid {
         gravity *= 9;
         velocity += gravity;
         float maxVelocity = 1.5f;
-        
+
         if (velocity > maxVelocity) {
             velocity = maxVelocity;
         }

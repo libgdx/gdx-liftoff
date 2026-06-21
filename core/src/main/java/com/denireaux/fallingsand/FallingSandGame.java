@@ -187,7 +187,7 @@ public class FallingSandGame extends ApplicationAdapter {
             }
         }
 
-        // sidebar drawing unchanged...
+        // sidebar drawing
         for (int i = 0; i < particleTypes.length; i++) {
             Color color = getColorForType(particleTypes[i]);
             drawButton(paletteButtons[i], color, particleTypes[i].name(), particleTypes[i]);
