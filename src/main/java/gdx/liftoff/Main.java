@@ -534,8 +534,8 @@ public class Main extends ApplicationAdapter {
         UserData.thirdPartyLibs = splitCSVSet(pref.getString("ThirdParty", prop.getProperty("thirdPartyDefaultNames")));
         thirdPartyLibs.retainAll(Listing.unofficialNames);
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        // This is set to 11 always in order to avoid some badly invalid version from getting saved in preferences.
-        UserData.javaVersion = "11";//prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
@@ -566,8 +566,8 @@ public class Main extends ApplicationAdapter {
         UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("thirdPartyDefaultNames"));
         thirdPartyLibs.retainAll(Listing.unofficialNames);
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        // This is set to 11 always in order to avoid some badly invalid version from getting saved in preferences.
-        UserData.javaVersion = "11";//prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
@@ -607,8 +607,8 @@ public class Main extends ApplicationAdapter {
         UserData.template = prop.getProperty("templateDefaultName");
         UserData.thirdPartyLibs = splitCSVSet(prop.getProperty("platformsDefaultNames"));
         UserData.libgdxVersion = prop.getProperty("libgdxDefaultVersion");
-        // This is set to 11 always in order to avoid some badly invalid version from getting saved in preferences.
-        UserData.javaVersion = "11";//prop.getProperty("javaDefaultVersion");
+        // This is set to 8 always in order to avoid some badly invalid version from getting saved in preferences.
+        UserData.javaVersion = "8";//prop.getProperty("javaDefaultVersion");
         appVersion = prop.getProperty("appDefaultVersion");
         gwtPluginVersion = "2.2.7";
         UserData.addGuiAssets = Boolean.parseBoolean(prop.getProperty("addGuiAssetsDefault"));
