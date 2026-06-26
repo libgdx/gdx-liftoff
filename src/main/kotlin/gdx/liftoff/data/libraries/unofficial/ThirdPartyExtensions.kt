@@ -205,7 +205,7 @@ class Dialogs : ThirdPartyExtension() {
 @Extension
 class Fleks : ThirdPartyExtension() {
   override val id = "fleks"
-  override val defaultVersion = "2.12"
+  override val defaultVersion = "2.14"
   override val url = "https://github.com/Quillraven/Fleks"
   override val group = "io.github.quillraven.fleks"
   override val name = "Fleks"
@@ -531,7 +531,7 @@ class Colorful : ThirdPartyExtension() {
 @Extension
 class Anim8 : ThirdPartyExtension() {
   override val id = "anim8"
-  override val defaultVersion = "0.6.1"
+  override val defaultVersion = "0.7.0"
   override val url = "https://github.com/tommyettinger/anim8-gdx"
   override val group = "com.github.tommyettinger"
   override val name = "anim8-gdx"
@@ -939,7 +939,7 @@ class CommonsCollections : ThirdPartyExtension() {
 @Extension
 class Fory : ThirdPartyExtension() {
   override val id = "fory"
-  override val defaultVersion = "1.1.0"
+  override val defaultVersion = "1.3.0"
   override val url = "https://fory.apache.org/"
 
   // was org.furyio before 0.5.0
@@ -1763,13 +1763,14 @@ class KryoLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumLibgdx : ThirdPartyExtension() {
   override val id = "tantrumLibgdx"
-  override val defaultVersion = "1.14.2.27"
+  override val repository = Repository.JitPack
+  override val defaultVersion = "1.3.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
-  override val group = "com.github.tommyettinger"
+  override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-libgdx"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-libgdx")
+    addDependency(project, Core.ID, "com.github.tommyettinger.tantrum:tantrum-libgdx")
 
     Fory().initiate(project)
   }
@@ -1782,13 +1783,14 @@ class TantrumLibgdx : ThirdPartyExtension() {
 @Extension
 class TantrumRegExodus : ThirdPartyExtension() {
   override val id = "tantrumRegExodus"
-  override val defaultVersion = "0.1.21.27"
+  override val repository = Repository.JitPack
+  override val defaultVersion = "1.3.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
-  override val group = "com.github.tommyettinger"
+  override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-regexodus"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-regexodus")
+    addDependency(project, Core.ID, "com.github.tommyettinger.tantrum:tantrum-regexodus")
 
     Fory().initiate(project)
     RegExodus().initiate(project)
@@ -1802,13 +1804,14 @@ class TantrumRegExodus : ThirdPartyExtension() {
 @Extension
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
-  override val defaultVersion = "0.10.1.27"
+  override val repository = Repository.JitPack
+  override val defaultVersion = "1.3.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
-  override val group = "com.github.tommyettinger"
+  override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-digital"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-digital")
+    addDependency(project, Core.ID, "com.github.tommyettinger.tantrum:tantrum-digital")
 
     Fory().initiate(project)
     Digital().initiate(project)
@@ -1822,13 +1825,14 @@ class TantrumDigital : ThirdPartyExtension() {
 @Extension
 class TantrumJdkgdxds : ThirdPartyExtension() {
   override val id = "tantrumJdkgdxds"
-  override val defaultVersion = "2.1.4.27"
+  override val repository = Repository.JitPack
+  override val defaultVersion = "1.3.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
-  override val group = "com.github.tommyettinger"
+  override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-jdkgdxds"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.github.tommyettinger:tantrum-jdkgdxds")
+    addDependency(project, Core.ID, "com.github.tommyettinger.tantrum:tantrum-jdkgdxds")
 
     Fory().initiate(project)
     Jdkgdxds().initiate(project)

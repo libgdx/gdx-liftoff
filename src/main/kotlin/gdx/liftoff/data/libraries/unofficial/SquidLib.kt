@@ -27,10 +27,10 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : Library {
-  override val defaultVersion = "4.0.11"
+  override val defaultVersion = "4.0.12"
   override val official = false
-  override val repository: Repository = Repository.MavenCentral
-  override val group = "com.squidpony"
+  override val repository: Repository = Repository.JitPack
+  override val group = "com.github.yellowstonegames.squidsquad"
   override val name: String
     get() = id.lowercase()
   override val url = "https://github.com/yellowstonegames/SquidSquad"
