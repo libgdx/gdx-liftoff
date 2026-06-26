@@ -152,6 +152,7 @@ public final class Listing {
             new KryoJdkgdxds(),
             new KryoCringe(),
             new KryoGand(),
+            new KryoGdcrux(),
             new KryoLibgdx(),
             new TantrumLibgdx(),
             new TantrumRegExodus(),
