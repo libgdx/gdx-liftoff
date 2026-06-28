@@ -157,7 +157,7 @@ ${if (latePlugin)"apply plugin: \'kotlin-android\'" else ""}
 
 android {
   namespace = "${project.basic.rootPackage}"
-  compileSdk = ${project.advanced.androidSdkVersion}
+  compileSdk ${project.advanced.androidSdkVersion}
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'

@@ -32,14 +32,14 @@ data class AdvancedProjectData(
   val indentSize: Int = 4,
 ) {
   /**
-   * Currently hard-coded to 35, since AndroidX 1.16.0 requires that at minimum, and it is what libGDX uses.
+   * Currently hard-coded to 36, since AndroidX 1.17.0 requires that at minimum, and that seems to be used automatically now.
    */
-  val androidSdkVersion: String = "35"
+  val androidSdkVersion: String = "36"
 
   /**
-   * Should match the recommended/tested by the libGDX version.
+   * Currently higher than the version recommended/tested by libGDX.
    */
-  val androidPluginVersion: String = "8.9.3"
+  val androidPluginVersion: String = "9.2.1"
 
   /**
    * Should be updated as Android's latest desugaring library updates, but must always be a version that works
