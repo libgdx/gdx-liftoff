@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.github.tommyettinger.textra.Layout;
+import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -21,7 +24,7 @@ import static gdx.liftoff.Main.*;
  * The extensions dialog displayed when the user clicks the extensions list in the add-ons panel.
  */
 public class ExtensionsDialog extends PopTable {
-    private static final GlyphLayout layout = new GlyphLayout();
+    private static final Layout layout = new Layout();
 
     public ExtensionsDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -57,7 +60,7 @@ public class ExtensionsDialog extends PopTable {
         contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title label
-        Label label = new Label(prop.getProperty("extensions"), skin, "header");
+        TextraLabel label = new TextraLabel(prop.getProperty("extensions"), skin, "header");
         contentTable.add(label);
 
         //scrollable area including list of extensions and links
@@ -94,7 +97,7 @@ public class ExtensionsDialog extends PopTable {
         scrollTable.add(table).spaceTop(SPACE_HUGE).growX();
 
         table.defaults().space(SPACE_SMALL);
-        label = new Label(prop.getProperty("links"), skin, "field");
+        label = new TextraLabel(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //gdx-pay link
@@ -103,8 +106,8 @@ public class ExtensionsDialog extends PopTable {
         CollapsibleGroup collapsibleGroup = new CollapsibleGroup(CollapseType.HORIZONTAL);
         table.add(collapsibleGroup);
 
-        TextButton textButton = new TextButton(prop.getProperty("gdxPayLink"), skin, "link");
-        textButton.getLabel().setAlignment(Align.left);
+        TextraButton textButton = new TextraButton(prop.getProperty("gdxPayLink"), skin, "link");
+        textButton.getTextraLabel().setAlignment(Align.left);
         collapsibleGroup.addActor(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
@@ -113,15 +116,15 @@ public class ExtensionsDialog extends PopTable {
         container.left();
         collapsibleGroup.addActor(container);
 
-        textButton = new TextButton(prop.getProperty("gdxPayLinkSmall"), skin, "link");
-        textButton.getLabel().setAlignment(Align.left);
+        textButton = new TextraButton(prop.getProperty("gdxPayLinkSmall"), skin, "link");
+        textButton.getTextraLabel().setAlignment(Align.left);
         container.setActor(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("gdxPayUrl")));
 
         //OK button to close the dialog
         contentTable.row();
-        textButton = new TextButton("OK", skin);
+        textButton = new TextraButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
@@ -159,10 +162,10 @@ public class ExtensionsDialog extends PopTable {
 
         //description
         subTable.defaults().space(SPACE_MEDIUM);
-        Label label = new Label(description, skin, "description");
+        TextraLabel label = new TextraLabel(description, skin, "description");
         label.setEllipsis("...");
-        layout.setText(label.getStyle().font, description);
-        subTable.add(label).prefWidth(layout.width).minWidth(0);
+        label.getFont().markup(description, layout);
+        subTable.add(label).prefWidth(layout.getWidth()).minWidth(0);
         addLabelHighlight(checkBox, label);
 
         //link

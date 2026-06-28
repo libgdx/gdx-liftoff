@@ -3,10 +3,17 @@ package gdx.liftoff.ui.dialogs;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraField;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -53,7 +60,7 @@ public class LanguagesDialog extends PopTable {
         contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
-        Label label = new Label(prop.getProperty("languages"), skin, "header");
+        TextraLabel label = new TextraLabel(prop.getProperty("languages"), skin, "header");
         contentTable.add(label);
 
         //scrollable area includes languages and links
@@ -75,11 +82,11 @@ public class LanguagesDialog extends PopTable {
 
         //language label
         table.defaults().space(SPACE_MEDIUM);
-        label = new Label(prop.getProperty("language"), skin, "field");
+        label = new TextraLabel(prop.getProperty("language"), skin, "field");
         table.add(label);
 
         //version label
-        label = new Label(prop.getProperty("languageVersion"), skin, "field");
+        label = new TextraLabel(prop.getProperty("languageVersion"), skin, "field");
         table.add(label);
 
         table.columnDefaults(0).left();
@@ -92,7 +99,7 @@ public class LanguagesDialog extends PopTable {
 
         //languages description
         scrollTable.row();
-        label = new Label(prop.getProperty("languagesPrompt"), skin, "description");
+        label = new TextraLabel(prop.getProperty("languagesPrompt"), skin, "description");
         label.setWrap(true);
         label.setAlignment(Align.left);
         scrollTable.add(label).spaceTop(SPACE_HUGE).growX();
@@ -103,28 +110,28 @@ public class LanguagesDialog extends PopTable {
         scrollTable.add(table).spaceTop(SPACE_LARGE).growX();
 
         table.defaults().space(SPACE_SMALL);
-        label = new Label(prop.getProperty("links"), skin, "field");
+        label = new TextraLabel(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //clojure
         table.defaults().left().padLeft(SPACE_MEDIUM);
         table.row();
-        TextButton textButton = new TextButton(prop.getProperty("clojureLink"), skin, "link");
-        textButton.getLabel().setAlignment(Align.left);
+        TextraButton textButton = new TextraButton(prop.getProperty("clojureLink"), skin, "link");
+        textButton.getTextraLabel().setAlignment(Align.left);
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("clojureUrl")));
 
         //other jvm's
         table.row();
-        textButton = new TextButton(prop.getProperty("otherLanguagesPrompt"), skin, "link");
+        textButton = new TextraButton(prop.getProperty("otherLanguagesPrompt"), skin, "link");
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("otherJvmUrl")));
 
         //ok button
         contentTable.row();
-        textButton = new TextButton("OK", skin);
+        textButton = new TextraButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
@@ -146,7 +153,7 @@ public class LanguagesDialog extends PopTable {
         table.add(checkBox);
         addHandListener(checkBox);
 
-        TextField textField = new TextField(defaultVersion, skin);
+        TextraField textField = new TextraField(defaultVersion, skin);
         if (UserData.languageVersions.containsKey(languageName)) {
             textField.setText(UserData.languageVersions.get(languageName));
         }

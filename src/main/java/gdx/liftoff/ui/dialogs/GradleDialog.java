@@ -1,9 +1,13 @@
 package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
+import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraField;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -50,19 +54,19 @@ public class GradleDialog extends PopTable {
         contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
-        Label label = new Label(prop.getProperty("gradleTasksPrompt"), skin, "field");
+        TextraLabel label = new TextraLabel(prop.getProperty("gradleTasksPrompt"), skin, "field");
         label.setWrap(true);
         contentTable.add(label).growX();
 
         //explanation
         contentTable.row();
-        label = new Label(prop.getProperty("gradleTasksTip"), skin, "description");
+        label = new TextraLabel(prop.getProperty("gradleTasksTip"), skin, "description");
         label.setWrap(true);
         contentTable.add(label).growX().spaceTop(SPACE_LARGE);
 
         //gradle commands textfield
         contentTable.row();
-        TextField textField = new TextField("", skin);
+        TextraField textField = new TextraField("", skin);
         contentTable.add(textField).width(350);
         addIbeamListener(textField);
         stage.setKeyboardFocus(textField);
@@ -74,7 +78,7 @@ public class GradleDialog extends PopTable {
 
         //ok button
         contentTable.row();
-        TextButton textButton = new TextButton("OK", skin);
+        TextraButton textButton = new TextraButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);

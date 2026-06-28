@@ -1,56 +1,44 @@
 {
 "BitmapFont": {
 	"font-button-big": {
-		"file": "font-button-big.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-button-mid": {
-		"file": "font-button-mid.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-button-small": {
-		"file": "font-button-small.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-label": {
-		"file": "font-label.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-label-field": {
-		"file": "font-label-field.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-label-header": {
-		"file": "font-label-header.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-label-tooltip": {
-		"file": "font-label-tooltip.fnt",
-		"scaledSize": -1,
-		"markupEnabled": false,
-		"flip": false
-	},
-	"font-label-tooltipMarkup": {
-		"file": "font-label-tooltip.fnt",
-		"scaledSize": -1,
+		"file": "DINish-Expanded-Heavy-sdf.json.lzma",
+		"scaledSize": 41,
 		"markupEnabled": true,
 		"flip": false
 	},
-	"font-labelMarkup": {
-		"file": "font-label.fnt",
-		"scaledSize": -1,
+	"font-button-mid": {
+		"file": "DINish-Expanded-Heavy-sdf.json.lzma",
+		"scaledSize": 32,
+		"markupEnabled": true,
+		"flip": false
+	},
+	"font-button-small": {
+		"file": "DINish-Expanded-sdf.json.lzma",
+		"scaledSize": 26,
+		"markupEnabled": true,
+		"flip": false
+	},
+	"font-label": {
+        "file": "DINish-Expanded-sdf.json.lzma",
+		"scaledSize": 18,
+		"markupEnabled": true,
+		"flip": false
+	},
+	"font-label-field": {
+        "file": "DINish-Expanded-sdf.json.lzma",
+		"scaledSize": 18,
+		"markupEnabled": true,
+		"flip": false
+	},
+	"font-label-header": {
+        "file": "DINish-Expanded-sdf.json.lzma",
+		"scaledSize": 30,
+		"markupEnabled": true,
+		"flip": false
+	},
+	"font-label-tooltip": {
+        "file": "DINish-Expanded-sdf.json.lzma",
+		"scaledSize": 14,
 		"markupEnabled": true,
 		"flip": false
 	}
@@ -1149,7 +1137,7 @@
 		"font": "font-label-field"
 	},
 	"error": {
-		"font": "font-labelMarkup"
+		"font": "font-label"
 	},
 	"tooltip": {
 		"font": "font-label-tooltip",
@@ -1159,7 +1147,7 @@
 		"font": "font-label-tooltip"
 	},
 	"descriptionWithMarkup": {
-		"font": "font-label-tooltipMarkup"
+		"font": "font-label-tooltip"
 	}
 },
 "ScrollPaneStyle": {

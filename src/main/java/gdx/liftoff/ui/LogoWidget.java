@@ -3,10 +3,10 @@ package gdx.liftoff.ui;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
@@ -44,7 +44,7 @@ public class LogoWidget extends Table {
 
         if (showVersion) {
             //version
-            Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
+            TextraLabel label = new TextraLabel("v" + prop.getProperty("liftoffVersion"), skin);
             label.setEllipsis("...");
             container.setActor(label);
 

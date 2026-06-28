@@ -1,10 +1,10 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.github.tommyettinger.textra.TextraLabel;
 import gdx.liftoff.ui.LogoWidget;
 import gdx.liftoff.ui.UserData;
 
@@ -28,7 +28,7 @@ public class CompletePanel extends Table implements Panel {
 
         //title
         row();
-        Label label = new Label(prop.getProperty("complete"), skin, "header");
+        TextraLabel label = new TextraLabel(prop.getProperty("complete"), skin, "header");
         add(label);
 
         //scrollable area includes the output label only
@@ -43,9 +43,9 @@ public class CompletePanel extends Table implements Panel {
         addScrollFocusListener(scrollPane);
 
         //output label
-        Label outputLabel = new Label(UserData.log, skin, "descriptionWithMarkup");
+        TextraLabel outputLabel = new TextraLabel(UserData.log, skin, "descriptionWithMarkup");
         outputLabel.setWrap(true);
-        outputLabel.setAlignment(Align.center, Align.center);
+        outputLabel.setAlignment(Align.center);
         scrollTable.add(outputLabel).grow();
 
         //scroll to the bottom

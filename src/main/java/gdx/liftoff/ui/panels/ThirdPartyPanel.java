@@ -2,9 +2,15 @@ package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraCheckBox;
+import com.github.tommyettinger.textra.TextraField;
+import com.github.tommyettinger.textra.TextraLabel;
 import gdx.liftoff.Listing;
 import gdx.liftoff.NaturalTextComparator;
 import gdx.liftoff.data.libraries.Library;
@@ -21,7 +27,7 @@ public class ThirdPartyPanel extends Table implements Panel {
     private Actor keyboardFocus;
     private final Array<SearchEntry> searchEntries = new Array<>();
     private Table scrollTable;
-    private CheckBox filterCheckBox;
+    private TextraCheckBox filterCheckBox;
 
     public ThirdPartyPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -30,18 +36,18 @@ public class ThirdPartyPanel extends Table implements Panel {
     public void populate(boolean fullscreen) {
         clearChildren();
         //title
-        Label label = new Label(prop.getProperty("thirdParty"), skin, "header");
+        TextraLabel label = new TextraLabel(prop.getProperty("thirdParty"), skin, "header");
         add(label).space(10);
 
         //subtitle
         row();
-        label = new Label(prop.getProperty("thirdPartyWarn"), skin, "description");
+        label = new TextraLabel(prop.getProperty("thirdPartyWarn"), skin, "description");
         label.setEllipsis("...");
         add(label).minWidth(0);
 
         //search field
         row();
-        TextField textField = new TextField("", skin, "search");
+        TextraField textField = new TextraField("", skin, "search");
         add(textField).growX().spaceTop(30);
         addIbeamListener(textField);
         keyboardFocus = textField;
@@ -71,7 +77,7 @@ public class ThirdPartyPanel extends Table implements Panel {
 
         //selected filter checkbox
         row();
-        filterCheckBox = new CheckBox("", skin);
+        filterCheckBox = new TextraCheckBox("", skin);
         add(filterCheckBox).left().spaceTop(SPACE_SMALL);
         addHandListener(filterCheckBox);
         updateFilterCheckBox();
@@ -85,15 +91,15 @@ public class ThirdPartyPanel extends Table implements Panel {
 
         //links title
         table.defaults().space(5).expandX();
-        label = new Label(prop.getProperty("links"), skin, "field");
+        label = new TextraLabel(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         table.defaults().left().padLeft(10);
         table.row();
 
         //submit an extension
-        TextButton textButton = new TextButton(prop.getProperty("thirdPartyLink"), skin, "link");
-        textButton.getLabel().setAlignment(Align.left);
+        TextraButton textButton = new TextraButton(prop.getProperty("thirdPartyLink"), skin, "link");
+        textButton.getTextraLabel().setAlignment(Align.left);
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
@@ -139,10 +145,10 @@ public class ThirdPartyPanel extends Table implements Panel {
 
             //entry checkbox
             scrollTable.row();
-            CheckBox checkBox = new CheckBox(searchEntry.name, skin);
+            TextraCheckBox checkBox = new TextraCheckBox(searchEntry.name, skin);
             checkBox.setChecked(UserData.thirdPartyLibs.contains(searchEntry.id));
-            checkBox.getLabel().setWrap(true);
-            checkBox.getLabelCell().growX().maxWidth(200);
+            checkBox.getTextraLabel().setWrap(true);
+            checkBox.getTextraLabelCell().growX().maxWidth(200);
             scrollTable.add(checkBox).left().growX();
             onChange(checkBox, () -> {
                 if (checkBox.isChecked() && !UserData.thirdPartyLibs.contains(searchEntry.id))
@@ -155,7 +161,7 @@ public class ThirdPartyPanel extends Table implements Panel {
             addHandListener(checkBox);
 
             //entry label
-            Label label = new Label(searchEntry.description, skin, "description");
+            TextraLabel label = new TextraLabel(searchEntry.description, skin, "description");
             label.setWrap(true);
             scrollTable.add(label).growX().align(Align.left);
             addLabelHighlight(checkBox, label);

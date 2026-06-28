@@ -2,8 +2,12 @@ package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.github.tommyettinger.textra.TextraButton;
+import com.github.tommyettinger.textra.TextraField;
+import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.PopTable.TableShowHideListener;
 import gdx.liftoff.ui.UserData;
@@ -16,7 +20,7 @@ import static gdx.liftoff.Main.*;
  * A table to display the project settings
  */
 public class SettingsPanel extends Table implements Panel {
-    private TextField keyboardFocus;
+    private TextraField keyboardFocus;
 
     public SettingsPanel(boolean fullscreen) {
         populate(fullscreen);
@@ -24,7 +28,7 @@ public class SettingsPanel extends Table implements Panel {
 
     public void populate(boolean fullscreen) {
         //title
-        Label label = new Label(prop.getProperty("advanced"), skin, "header");
+        TextraLabel label = new TextraLabel(prop.getProperty("advanced"), skin, "header");
         add(label).space(SPACE_HUGE);
 
         row();
@@ -35,13 +39,13 @@ public class SettingsPanel extends Table implements Panel {
         table.columnDefaults(0).right().expandX();
         table.columnDefaults(1).expandX().left().prefWidth(100).minWidth(50);
         table.defaults().spaceTop(SPACE_SMALL).spaceLeft(SPACE_MEDIUM);
-        TextField libgdxTextField = addField(prop.getProperty("gdxVersion"),
+        TextraField libgdxTextField = addField(prop.getProperty("gdxVersion"),
             String.format(prop.getProperty("gdxVersionTip"), prop.getProperty("libgdxDefaultVersion")),
             UserData.libgdxVersion, table, true);
         onChange(libgdxTextField, () -> UserData.libgdxVersion = libgdxTextField.getText());
 
         //java version
-        TextField javaTextField = addField(prop.getProperty("javaVersion"),
+        TextraField javaTextField = addField(prop.getProperty("javaVersion"),
             prop.getProperty("javaVersionTip"), UserData.javaVersion, table);
         onChange(javaTextField, () -> {
             UserData.javaVersion = javaTextField.getText();
@@ -56,7 +60,7 @@ public class SettingsPanel extends Table implements Panel {
         });
 
         //application version
-        TextField applicationTextField = addField(prop.getProperty("version"),
+        TextraField applicationTextField = addField(prop.getProperty("version"),
             prop.getProperty("versionTip"), UserData.appVersion, table);
         onChange(applicationTextField, () -> UserData.appVersion = applicationTextField.getText());
 
@@ -71,7 +75,7 @@ public class SettingsPanel extends Table implements Panel {
 
         //add gradle tasks
         row();
-        TextButton textButton = new TextButton(prop.getProperty("gradleTasksButton"), skin);
+        TextraButton textButton = new TextraButton(prop.getProperty("gradleTasksButton"), skin);
         add(textButton).spaceTop(SPACE_HUGE);
         addHandListener(textButton);
         addTooltip(textButton, Align.top, prop.getProperty("gradleTasksTipShort"));
@@ -91,7 +95,7 @@ public class SettingsPanel extends Table implements Panel {
         });
     }
 
-    private TextField addField(String text, String tip, String version, Table table) {
+    private TextraField addField(String text, String tip, String version, Table table) {
         return addField(text, tip, version, table, false);
     }
 
@@ -103,14 +107,14 @@ public class SettingsPanel extends Table implements Panel {
      * @param table            The table to add this setting to
      * @param setKeyboardFocus True indicates that this textfield should take keyboard focus when the screen is switched
      */
-    private TextField addField(String text, String tip, String version, Table table, boolean setKeyboardFocus) {
+    private TextraField addField(String text, String tip, String version, Table table, boolean setKeyboardFocus) {
         table.row();
-        Label label = new Label(text, skin, "field");
+        TextraLabel label = new TextraLabel(text, skin, "field");
         label.setTouchable(Touchable.enabled);
         label.setEllipsis("...");
         table.add(label).minWidth(0);
 
-        TextField textField = new TextField("", skin);
+        TextraField textField = new TextraField("", skin);
         textField.setText(version);
         table.add(textField);
         addTooltip(textField, label, Align.top, TOOLTIP_WIDTH, tip);
@@ -129,7 +133,7 @@ public class SettingsPanel extends Table implements Panel {
      */
     private ImageButton addCheck(String text, String tip, Boolean checked, Table table) {
         table.row();
-        Label label = new Label(text, skin, "field");
+        TextraLabel label = new TextraLabel(text, skin, "field");
         label.setTouchable(Touchable.enabled);
         label.setEllipsis("...");
         table.add(label).minWidth(0);
