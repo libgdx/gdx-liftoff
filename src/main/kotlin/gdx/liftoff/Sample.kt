@@ -49,7 +49,7 @@ enum class Preset {
   DEFAULT {
     override val projectName: String = "gdx-liftoff-demo"
     override val rootPackage: String = "gdx.liftoff"
-    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), TeaVM())
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language> = emptyList()
     override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
@@ -61,7 +61,7 @@ enum class Preset {
   KOTLIN {
     override val projectName: String = "gdx-liftoff-demo-kotlin"
     override val rootPackage: String = "gdx.liftoff"
-    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), TeaVM())
+    override val platforms: List<Platform> = listOf(Core(), Lwjgl3(), Android(), IOS(), TeaVM())
     override val languages: List<Language> = listOf(Kotlin)
     override val officialExtensions: Optional<List<Library>> = Optional.empty()
     override val thirdPartyExtensions: List<Library> = emptyList()
