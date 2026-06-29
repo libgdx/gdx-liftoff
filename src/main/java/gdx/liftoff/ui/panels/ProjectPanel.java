@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.github.tommyettinger.textra.TextraField;
 import com.github.tommyettinger.textra.TextraLabel;
 import com.github.tommyettinger.textra.TypingLabel;
 import gdx.liftoff.Main;
@@ -21,7 +21,7 @@ import static gdx.liftoff.Main.*;
  * shown below.
  */
 public class ProjectPanel extends Table implements Panel {
-    private TextField keyboardActor;
+    private TextraField keyboardActor;
     private TypingLabel errorLabel;
 
     public ProjectPanel(boolean fullscreen) {
@@ -44,7 +44,7 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("nameTip"));
 
         //project field
-        final TextField projectTextField = new TextField("", skin);
+        final TextraField projectTextField = new TextraField("", skin);
         projectTextField.setText(UserData.projectName);
         keyboardActor = projectTextField;
         table.add(projectTextField);
@@ -63,7 +63,7 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("packageTip"));
 
         //package field
-        final TextField packageTextField = new TextField("", skin);
+        final TextraField packageTextField = new TextraField("", skin);
         packageTextField.setText(UserData.packageName);
         table.add(packageTextField);
         addIbeamListener(packageTextField);
@@ -81,7 +81,7 @@ public class ProjectPanel extends Table implements Panel {
         addTooltip(label, Align.top, TOOLTIP_WIDTH_LARGE, prop.getProperty("classTip"));
 
         //main class field
-        final TextField mainTextField = new TextField("", skin);
+        final TextraField mainTextField = new TextraField("", skin);
         mainTextField.setText(UserData.mainClassName);
         table.add(mainTextField);
         addIbeamListener(mainTextField);

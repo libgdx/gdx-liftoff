@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Scaling;
 import com.github.tommyettinger.textra.TextraButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.github.tommyettinger.textra.TextraField;
 import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -66,7 +66,7 @@ public class GradleDialog extends PopTable {
 
         //gradle commands textfield
         contentTable.row();
-        TextField textField = new TextField("", skin);
+        TextraField textField = new TextraField("", skin);
         contentTable.add(textField).width(350);
         addIbeamListener(textField);
         stage.setKeyboardFocus(textField);

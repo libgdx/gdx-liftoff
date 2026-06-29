@@ -1,13 +1,13 @@
 {
 "BitmapFont": {
 	"font-button-big": {
-		"file": "DINish-Expanded-sdf.json.lzma",
+		"file": "DINish-Expanded-Heavy-sdf.json.lzma",
 		"scaledSize": 41,
 		"markupEnabled": true,
 		"flip": false
 	},
 	"font-button-mid": {
-		"file": "DINish-Expanded-sdf.json.lzma",
+		"file": "DINish-Expanded-Heavy-sdf.json.lzma",
 		"scaledSize": 32,
 		"markupEnabled": true,
 		"flip": false
@@ -25,9 +25,9 @@
 		"flip": false
 	},
 	"font-label-field": {
-        "file": "DINish-standard.json.lzma",
+        "file": "DINish-Expanded-sdf.json.lzma",
 		"scaledSize": 18,
-		"markupEnabled": false,
+		"markupEnabled": true,
 		"flip": false
 	},
 	"font-label-header": {
@@ -1234,14 +1234,14 @@
 },
 "TextFieldStyle": {
 	"default": {
-		"font": "font-label-field",
+		"font": "font-label",
 		"fontColor": "white",
 		"background": "underline-up-10",
 		"cursor": "white",
 		"selection": "selection"
 	},
 	"search": {
-		"font": "font-label-field",
+		"font": "font-label",
 		"fontColor": "white",
 		"background": "search-10",
 		"cursor": "white",

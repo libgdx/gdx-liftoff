@@ -5,11 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.textra.TextraButton;
 import com.github.tommyettinger.textra.TextraCheckBox;
+import com.github.tommyettinger.textra.TextraField;
 import com.github.tommyettinger.textra.TextraLabel;
 import gdx.liftoff.Listing;
 import gdx.liftoff.NaturalTextComparator;
@@ -47,7 +47,7 @@ public class ThirdPartyPanel extends Table implements Panel {
 
         //search field
         row();
-        TextField textField = new TextField("", skin, "search");
+        TextraField textField = new TextraField("", skin, "search");
         add(textField).growX().spaceTop(30);
         addIbeamListener(textField);
         keyboardFocus = textField;
