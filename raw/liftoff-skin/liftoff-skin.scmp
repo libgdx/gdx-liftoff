@@ -4551,7 +4551,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -4626,7 +4626,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -4703,7 +4703,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle
 						name: label
 						optional: false
-						value: default
+						value: tooltip
 					}
 					background: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -4840,25 +4840,25 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColorSelected: {
 						type: com.badlogic.gdx.graphics.Color
 						name: fontColorSelected
 						optional: false
-						value: null
+						value: red
 					}
 					fontColorUnselected: {
 						type: com.badlogic.gdx.graphics.Color
 						name: fontColorUnselected
 						optional: false
-						value: null
+						value: white
 					}
 					selection: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: selection
 						optional: false
-						value: null
+						value: selection
 					}
 					down: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -4899,7 +4899,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-button-mid
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -4932,7 +4932,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-label-tooltip
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -4965,7 +4965,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-label-tooltip
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -4998,7 +4998,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-label-tooltip
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5031,7 +5031,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-label-tooltip
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5064,7 +5064,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-button-mid
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5097,7 +5097,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: titleFont
 						optional: false
-						value: null
+						value: font-button-big
 					}
 					titleFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5179,7 +5179,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-big
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5338,7 +5338,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-mid
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5497,7 +5497,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-big
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5656,7 +5656,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-small
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5815,7 +5815,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -5974,7 +5974,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -6133,7 +6133,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -6292,7 +6292,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -6453,13 +6453,13 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-small
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
 						name: fontColor
 						optional: false
-						value: null
+						value: white
 					}
 					overFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -8177,7 +8177,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -8372,7 +8372,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -9186,7 +9186,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: null
+						value: font-button-small
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -9341,6 +9341,10 @@ jsonData: {
 	customClasses: []
 }
 preferences: {
+	simple-names: {
+		class: java.lang.Boolean
+		value: true
+	}
 	id: {
 		class: java.lang.Integer
 		value: 542535787
@@ -9351,6 +9355,10 @@ preferences: {
 		g: 0.25882354
 		b: 0.25882354
 		a: 1
+	}
+	last-import-export-path: {
+		class: java.lang.String
+		value: C:/d/GitHub/gdx-liftoff/raw/liftoff-skin/export/skin.json
 	}
 	resources-relative: {
 		class: java.lang.Boolean
