@@ -10,9 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.tommyettinger.textra.Layout;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -25,7 +22,7 @@ import static gdx.liftoff.Main.*;
  * The dialog shown when the user clicks the template button in the add-ons panel
  */
 public class TemplatesDialog extends PopTable {
-    private static final Layout layout = new Layout();
+    private static final GlyphLayout layout = new GlyphLayout();
 
     public TemplatesDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -62,7 +59,7 @@ public class TemplatesDialog extends PopTable {
         contentTable.pad(SPACE_LARGE).padTop(SPACE_MEDIUM).padBottom(SPACE_MEDIUM);
 
         //title
-        TextraLabel label = new TextraLabel(prop.getProperty("templates"), skin, "header");
+        Label label = new Label(prop.getProperty("templates"), skin, "header");
         contentTable.add(label);
 
         //scrollable area includes basic templates, third-party templates, and links
@@ -87,7 +84,7 @@ public class TemplatesDialog extends PopTable {
 
         //basic templates title
         table.row();
-        label = new TextraLabel(prop.getProperty("officialTemplates"), skin, "field");
+        label = new Label(prop.getProperty("officialTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
         table.add(label).minWidth(0).spaceBottom(SPACE_MEDIUM).colspan(2).growX();
         addTooltip(label, Align.top, prop.getProperty("officialTemplatesTip"));
@@ -107,7 +104,7 @@ public class TemplatesDialog extends PopTable {
 
         //third-party templates title
         table.row();
-        label = new TextraLabel(prop.getProperty("thirdPartyTemplates"), skin, "field");
+        label = new Label(prop.getProperty("thirdPartyTemplates"), skin, "field");
         label.setTouchable(Touchable.enabled);
         label.setEllipsis("...");
         table.add(label).minWidth(0).spaceTop(SPACE_LARGE).spaceBottom(SPACE_MEDIUM).colspan(2).growX();
@@ -126,7 +123,7 @@ public class TemplatesDialog extends PopTable {
         addTemplate(table, buttonGroup, ("visUiShowcaseTemplate"), prop.getProperty("visUiShowcaseTemplateTip"), false, "visUi");
 
         scrollTable.row();
-        label = new TextraLabel(prop.getProperty("templatesStar"), skin);
+        label = new Label(prop.getProperty("templatesStar"), skin);
         scrollTable.add(label).spaceTop(SPACE_MEDIUM);
 
         //links
@@ -135,22 +132,22 @@ public class TemplatesDialog extends PopTable {
         scrollTable.add(table).spaceTop(SPACE_HUGE).growX();
 
         table.defaults().space(SPACE_SMALL).expandX();
-        label = new TextraLabel(prop.getProperty("links"), skin, "field");
+        label = new Label(prop.getProperty("links"), skin, "field");
         table.add(label).left();
 
         //propose a template
         table.defaults().left().padLeft(SPACE_MEDIUM);
         table.row();
 
-        TextraButton textButton = new TextraButton(prop.getProperty("templatesLink"), skin, "link");
-        textButton.getTextraLabel().setAlignment(Align.left);
+        TextButton textButton = new TextButton(prop.getProperty("templatesLink"), skin, "link");
+        textButton.getLabel().setAlignment(Align.left);
         table.add(textButton);
         addHandListener(textButton);
         onChange(textButton, () -> Gdx.net.openURI(prop.getProperty("issues")));
 
         //ok button
         contentTable.row();
-        textButton = new TextraButton("OK", skin);
+        textButton = new TextButton("OK", skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
@@ -192,11 +189,11 @@ public class TemplatesDialog extends PopTable {
             }
         });
 
-        TextraLabel label = new TextraLabel(description, skin, "description");
+        Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
         label.setTouchable(Touchable.enabled);
-        label.getFont().markup(description, layout);
-        table.add(label).prefWidth(layout.getWidth()).minWidth(0).growX();
+        layout.setText(label.getStyle().font, description);
+        table.add(label).prefWidth(layout.width).minWidth(0).growX();
         label.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

@@ -4,14 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.SmashGroup;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.*;
@@ -30,7 +24,7 @@ public class AddOnsPanel extends Table implements Panel {
 
     public void populate(boolean fullscreen) {
         clearChildren();
-        TextraLabel label = new TextraLabel(prop.getProperty("add-ons"), skin, "header");
+        Label label = new Label(prop.getProperty("add-ons"), skin, "header");
         add(label).space(SPACE_HUGE);
 
         row();
@@ -51,7 +45,7 @@ public class AddOnsPanel extends Table implements Panel {
         }));
 
         //platforms title
-        label = new TextraLabel(prop.getProperty("platforms"), skin, "field");
+        label = new Label(prop.getProperty("platforms"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
@@ -78,7 +72,7 @@ public class AddOnsPanel extends Table implements Panel {
         }));
 
         //languages title
-        label = new TextraLabel(prop.getProperty("languages"), skin, "field");
+        label = new Label(prop.getProperty("languages"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
@@ -105,7 +99,7 @@ public class AddOnsPanel extends Table implements Panel {
         }));
 
         //extensions title
-        label = new TextraLabel(prop.getProperty("extensions"), skin, "field");
+        label = new Label(prop.getProperty("extensions"), skin, "field");
         label.setEllipsis("...");
         button.add(label).minWidth(0);
 
@@ -125,7 +119,7 @@ public class AddOnsPanel extends Table implements Panel {
         add(table).growX().spaceTop(SPACE_LARGE);
 
         //template title
-        label = new TextraLabel(prop.getProperty("template"), skin, "field");
+        label = new Label(prop.getProperty("template"), skin, "field");
         table.add(label).space(SPACE_LARGE);
         addTooltip(label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
@@ -140,14 +134,14 @@ public class AddOnsPanel extends Table implements Panel {
         stack.add(smashGroup);
 
         //template button
-        TextraButton chooseFieldButton = new TextraButton(prop.getProperty(UserData.template), skin, "select");
-        chooseFieldButton.getTextraLabel().setAlignment(Align.left);
+        TextButton chooseFieldButton = new TextButton(prop.getProperty(UserData.template), skin, "select");
+        chooseFieldButton.getLabel().setAlignment(Align.left);
         smashGroup.setFirstActor(chooseFieldButton);
         smashGroup.getFirstContainer().minWidth(150);
         addTooltip(chooseFieldButton, label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
         //template choose button
-        TextraButton chooseButton = new TextraButton(prop.getProperty("choose"), skin);
+        TextButton chooseButton = new TextButton(prop.getProperty("choose"), skin);
         smashGroup.setSecondActor(chooseButton);
         addTooltip(chooseButton, label, Align.top, TOOLTIP_WIDTH, prop.getProperty("templateTip"));
 
@@ -184,7 +178,7 @@ public class AddOnsPanel extends Table implements Panel {
         table.defaults().growX().space(SPACE_SMALL);
         for (String name : names) {
             name = localize ? prop.getProperty(name, name) : name;
-            TextraLabel label = new TextraLabel(name, skin);
+            Label label = new Label(name, skin);
             label.setEllipsis("...");
             table.add(label).minWidth(0).prefWidth(0).growX();
             table.row();

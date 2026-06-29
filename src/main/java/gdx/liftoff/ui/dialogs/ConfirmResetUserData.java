@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.PopTable;
 import gdx.liftoff.Main;
 
@@ -26,7 +24,7 @@ public class ConfirmResetUserData extends PopTable {
         pad(SPACE_LARGE);
 
         defaults().space(SPACE_LARGE);
-        TextraLabel label = new TextraLabel(prop.getProperty("resetConfirmation"), skin);
+        Label label = new Label(prop.getProperty("resetConfirmation"), skin);
         label.setWrap(true);
         add(label).growX();
 
@@ -35,13 +33,13 @@ public class ConfirmResetUserData extends PopTable {
         add(table);
 
         table.defaults().space(SPACE_HUGE);
-        TextraButton resetButton = new TextraButton(prop.getProperty("resetButton"), skin);
+        TextButton resetButton = new TextButton(prop.getProperty("resetButton"), skin);
         table.add(resetButton).uniformX().fillX();
         addHandListener(resetButton);
         onChange(resetButton, this::resetConfirmed);
         key(Keys.ENTER, this::resetConfirmed);
 
-        TextraButton cancelButton = new TextraButton(prop.getProperty("quickCancel"), skin);
+        TextButton cancelButton = new TextButton(prop.getProperty("quickCancel"), skin);
         table.add(cancelButton).uniformX().fillX();
         addHandListener(cancelButton);
         onChange(cancelButton, this::cancel);

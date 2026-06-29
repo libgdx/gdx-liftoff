@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.Main;
@@ -56,7 +55,7 @@ public class OverlayTable extends Table {
 
         //version
         table.row();
-        TextraLabel label = new TextraLabel("v" + prop.getProperty("liftoffVersion"), skin);
+        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         table.add(label).expand().bottom().right();
 
         return table;
@@ -64,7 +63,7 @@ public class OverlayTable extends Table {
 
     private Table createMinimalistTable() {
         Table table = new Table();
-
+        
         Button button = new Button(skin, "reload");
         table.add(button).expand().top().right();
         addTooltip(button, Align.left, prop.getProperty("reset"));

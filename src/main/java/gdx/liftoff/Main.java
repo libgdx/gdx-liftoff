@@ -28,8 +28,6 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.textra.FWSkin;
-import com.github.tommyettinger.textra.Layout;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
@@ -78,7 +76,7 @@ public class Main extends ApplicationAdapter {
     public static String latestStableVersion;
     public static Properties prop;
     public static Preferences pref;
-    private static final Layout layout = new Layout();
+    private static final GlyphLayout layout = new GlyphLayout();
     public static final int MIN_WINDOW_WIDTH = 400;
     public static final int MIN_WINDOW_HEIGHT = 410;
     public static final int WINDOW_BORDER = 50;
@@ -285,7 +283,6 @@ public class Main extends ApplicationAdapter {
 
         stage.getViewport().update(width, height, true);
         resizingWindow = true;
-        skin.resizeDistanceFields(width, height, stage.getViewport());
     }
 
     public static void addHandListener(Actor actor) {
@@ -349,7 +346,7 @@ public class Main extends ApplicationAdapter {
      * @param attachedActor The actor that the position of the PopTable will be relative to. This can differ from the
      *                      actor
      * @param align         The alignment of the PopTable
-     * @param wrapWidth     Set to 0 to not enable wrapping of the TextraLabel
+     * @param wrapWidth     Set to 0 to not enable wrapping of the Label
      * @param text          The text to be added inside the PopTable
      * @return The generated PopTable that is shown when the user clicks the actor
      */
@@ -363,19 +360,19 @@ public class Main extends ApplicationAdapter {
         actor.addListener(listener);
         PopTable pop = listener.getPopTable();
 
-        TextraLabel label = new TextraLabel(text, skin, "tooltip");
-        Cell<TextraLabel> cell = pop.add(label);
+        Label label = new Label(text, skin, "tooltip");
+        Cell<Label> cell = pop.add(label);
         if (wrapWidth != 0) {
             cell.width(wrapWidth);
         } else {
-            label.getFont().markup(text, layout);
-            cell.minWidth(0).prefWidth(layout.getWidth());
+            layout.setText(label.getStyle().font, text);
+            cell.minWidth(0).prefWidth(layout.width);
         }
 
         return pop;
     }
 
-    public static void addLabelHighlight(Actor actor, TextraLabel label) {
+    public static void addLabelHighlight(Actor actor, Label label) {
         addLabelHighlight(actor, label, true);
     }
 
@@ -387,7 +384,7 @@ public class Main extends ApplicationAdapter {
      * @param label       The label to be highlighted
      * @param changeColor The color of the highlight
      */
-    public static void addLabelHighlight(Actor actor, TextraLabel label, boolean changeColor) {
+    public static void addLabelHighlight(Actor actor, Label label, boolean changeColor) {
         label.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

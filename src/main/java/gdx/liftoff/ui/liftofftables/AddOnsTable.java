@@ -1,8 +1,8 @@
 package gdx.liftoff.ui.liftofftables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.github.tommyettinger.textra.TextraButton;
 import gdx.liftoff.ui.panels.AddOnsPanel;
 
 import static gdx.liftoff.Main.*;
@@ -31,7 +31,7 @@ public class AddOnsTable extends LiftoffTable {
         add(table).bottom().growX();
 
         //previous button
-        TextraButton textButton = new TextraButton(prop.getProperty("previous"), skin);
+        TextButton textButton = new TextButton(prop.getProperty("previous"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
         addTooltip(textButton, Align.top, prop.getProperty("previousTip"));
@@ -41,7 +41,7 @@ public class AddOnsTable extends LiftoffTable {
         table.add().growX().space(SPACE_SMALL);
 
         //next button
-        textButton = new TextraButton(prop.getProperty("next"), skin);
+        textButton = new TextButton(prop.getProperty("next"), skin);
         table.add(textButton).uniformX().fillX();
         addHandListener(textButton);
         addTooltip(textButton, Align.top, prop.getProperty("nextTip"));

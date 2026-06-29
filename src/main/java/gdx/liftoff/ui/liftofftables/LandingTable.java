@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import gdx.liftoff.ui.panels.ProjectPanel;
@@ -26,8 +25,8 @@ import static gdx.liftoff.Main.*;
  */
 public class LandingTable extends LiftoffTable {
     private Image logoImage;
-    private TextraLabel subtitleLabel;
-    private TextraLabel versionLabel;
+    private Label subtitleLabel;
+    private Label versionLabel;
     private Container<Actor> updateContainer;
     private TextButton updateButton;
     private ProjectPanel projectPanel;
@@ -69,14 +68,14 @@ public class LandingTable extends LiftoffTable {
         table.add(stack).minWidth(0);
 
         //subtitle
-        subtitleLabel = new TextraLabel(prop.getProperty("subtitle"), skin);
+        subtitleLabel = new Label(prop.getProperty("subtitle"), skin);
         subtitleLabel.setEllipsis("...");
         subtitleLabel.setAlignment(Align.center);
         subtitleLabel.setVisible(false);
         stack.add(subtitleLabel);
 
         //version
-        versionLabel = new TextraLabel("v" + prop.getProperty("liftoffVersion"), skin);
+        versionLabel = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         versionLabel.setEllipsis("...");
         versionLabel.setAlignment(Align.center);
         stack.add(versionLabel);

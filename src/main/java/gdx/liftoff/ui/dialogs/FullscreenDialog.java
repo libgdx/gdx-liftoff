@@ -2,15 +2,11 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -30,10 +26,10 @@ import static gdx.liftoff.Main.*;
  */
 public class FullscreenDialog extends PopTable {
     public static FullscreenDialog fullscreenDialog;
-    private final ArrayList<TextraButton> generateButtons = new ArrayList<>();
+    private final ArrayList<TextButton> generateButtons = new ArrayList<>();
     private final ArrayList<Table> versionTables = new ArrayList<>();
     private final ArrayList<PathsPanel> pathsPanel = new ArrayList<>();
-
+  
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
         fullscreenDialog = this;
@@ -98,7 +94,7 @@ public class FullscreenDialog extends PopTable {
 
         //new project title
         table.defaults().space(SPACE_MEDIUM);
-        TextraLabel label = new TextraLabel(prop.getProperty("options"), skin, "header");
+        Label label = new Label(prop.getProperty("options"), skin, "header");
         table.add(label);
 
         //project panel
@@ -143,7 +139,7 @@ public class FullscreenDialog extends PopTable {
         table.add().expandX().uniformX();
 
         //generate button
-        TextraButton generateButton = new TextraButton(prop.getProperty("generate"), skin, "big");
+        TextButton generateButton = new TextButton(prop.getProperty("generate"), skin, "big");
         generateButtons.add(generateButton);
         updateGenerateButtons();
         table.add(generateButton);
@@ -174,12 +170,12 @@ public class FullscreenDialog extends PopTable {
         versionTables.forEach(versionTable -> {
             versionTable.clearChildren();
 
-            TextraLabel label = new TextraLabel("v" + prop.getProperty("liftoffVersion"), skin);
+            Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
             versionTable.add(label);
 
             if (latestStableVersion != null && !prop.getProperty("liftoffVersion").equals(latestStableVersion)) {
                 versionTable.row();
-                TextraButton updateButton = new TextraButton(prop.getProperty("updateAvailable"), skin, "link");
+                TextButton updateButton = new TextButton(prop.getProperty("updateAvailable"), skin, "link");
                 versionTable.add(updateButton);
                 addHandListener(updateButton);
                 addTooltip(updateButton, Align.top, prop.getProperty("updateTip"));

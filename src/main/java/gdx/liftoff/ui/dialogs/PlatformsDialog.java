@@ -7,9 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.tommyettinger.textra.Layout;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -22,7 +19,7 @@ import static gdx.liftoff.Main.*;
  * The dialog shown when the user clicks the platforms list in the add-ons panel
  */
 public class PlatformsDialog extends PopTable {
-    private static final Layout layout = new Layout();
+    private static final GlyphLayout layout = new GlyphLayout();
 
     public PlatformsDialog(boolean fullscreen) {
         setStyle(skin.get("dialog", WindowStyle.class));
@@ -59,7 +56,7 @@ public class PlatformsDialog extends PopTable {
         contentTable.pad(SPACE_LARGE).padTop(SPACE_HUGE).padBottom(SPACE_HUGE);
 
         //title
-        TextraLabel label = new TextraLabel(prop.getProperty("platforms"), skin, "header");
+        Label label = new Label(prop.getProperty("platforms"), skin, "header");
         contentTable.add(label);
 
         //scrollable area includes primary and secondary platforms
@@ -76,7 +73,7 @@ public class PlatformsDialog extends PopTable {
 
         //primary platforms title
         scrollTable.defaults().left();
-        label = new TextraLabel(prop.getProperty("primaryPlatforms"), skin, "field");
+        label = new Label(prop.getProperty("primaryPlatforms"), skin, "field");
         scrollTable.add(label).spaceTop(SPACE_HUGE);
 
         scrollTable.row();
@@ -100,7 +97,7 @@ public class PlatformsDialog extends PopTable {
 
         //secondary platforms title
         scrollTable.row();
-        label = new TextraLabel(prop.getProperty("secondaryPlatforms"), skin, "field");
+        label = new Label(prop.getProperty("secondaryPlatforms"), skin, "field");
         scrollTable.add(label).spaceTop(SPACE_HUGE);
 
         scrollTable.row();
@@ -118,7 +115,7 @@ public class PlatformsDialog extends PopTable {
 
         //ok button
         contentTable.row();
-        TextraButton textButton = new TextraButton(prop.getProperty("ok"), skin);
+        TextButton textButton = new TextButton(prop.getProperty("ok"), skin);
         contentTable.add(textButton).prefWidth(140).spaceTop(SPACE_LARGE);
         addHandListener(textButton);
         onChange(textButton, this::hide);
@@ -155,11 +152,11 @@ public class PlatformsDialog extends PopTable {
             }
         });
 
-        TextraLabel label = new TextraLabel(description, skin, "description");
+        Label label = new Label(description, skin, "description");
         label.setEllipsis("...");
         label.setAlignment(Align.left);
-        label.getFont().markup(description, layout);
-        table.add(label).growX().minWidth(0).prefWidth(layout.getWidth() + 5);
+        layout.setText(label.getStyle().font, description);
+        table.add(label).growX().minWidth(0).prefWidth(layout.width + 5);
         addLabelHighlight(checkBox, label);
         return checkBox;
     }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
@@ -112,7 +111,7 @@ public class FullscreenCompleteDialog extends PopTable {
         }
 
         contentTable.row();
-        TextraLabel label = new TextraLabel("v" + prop.getProperty("liftoffVersion"), skin);
+        Label label = new Label("v" + prop.getProperty("liftoffVersion"), skin);
         contentTable.add(label).expandX().right();
     }
 

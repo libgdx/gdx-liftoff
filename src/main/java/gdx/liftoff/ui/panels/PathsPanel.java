@@ -4,16 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.github.tommyettinger.textra.TypingLabel;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
+import gdx.liftoff.ui.FileChooserListener;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
@@ -37,13 +38,13 @@ public class PathsPanel extends Table implements Panel {
     public void populate(boolean fullscreen) {
         //project label
         defaults().space(SPACE_MEDIUM);
-        TextraLabel label = new TextraLabel(prop.getProperty("destinationPrompt"), skin, "field");
+        Label label = new Label(prop.getProperty("destinationPrompt"), skin, "field");
         label.setEllipsis("...");
         add(label).minWidth(0);
         addTooltip(label, Align.top, 0, prop.getProperty("destinationTip"));
 
         //project field
-        TextraButton projectFieldButton = addField(UserData.projectPath);
+        TextButton projectFieldButton = addField(UserData.projectPath);
         addTooltip(projectFieldButton, label, Align.top, 0, prop.getProperty("destinationTip"));
         onChange(projectFieldButton, () -> {
             Gdx.input.setInputProcessor(null);
@@ -96,13 +97,13 @@ public class PathsPanel extends Table implements Panel {
         if (UserData.platforms.contains("android")) {
             //android label
             row();
-            label = new TextraLabel(prop.getProperty("androidSdkPrompt"), skin, "field");
+            label = new Label(prop.getProperty("androidSdkPrompt"), skin, "field");
             label.setEllipsis("...");
             add(label).minWidth(0);
             addTooltip(label, Align.top, 0, prop.getProperty("sdkTip"));
 
             //android field
-            TextraButton androidFieldButton = addField(UserData.androidPath);
+            TextButton androidFieldButton = addField(UserData.androidPath);
             addTooltip(androidFieldButton, label, Align.top, 0, prop.getProperty("sdkTip"));
             onChange(androidFieldButton, () -> {
                 Gdx.input.setInputProcessor(null);
@@ -216,11 +217,11 @@ public class PathsPanel extends Table implements Panel {
      *
      * @param text The name of the field
      */
-    private TextraButton addField(String text) {
-        TextraButton browseFieldButton = new TextraButton(text, skin, "path");
-        browseFieldButton.getTextraLabel().setAlignment(Align.left);
-        browseFieldButton.getTextraLabel().setWrap(true);
-        browseFieldButton.getTextraLabelCell().minWidth(0);
+    private TextButton addField(String text) {
+        TextButton browseFieldButton = new TextButton(text, skin, "path");
+        browseFieldButton.getLabel().setAlignment(Align.left);
+        browseFieldButton.getLabel().setWrap(true);
+        browseFieldButton.getLabelCell().minWidth(0);
         add(browseFieldButton).growX().minWidth(100).maxWidth(300);
         addHandListener(browseFieldButton);
 

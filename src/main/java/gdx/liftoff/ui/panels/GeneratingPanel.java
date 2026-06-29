@@ -1,9 +1,9 @@
 package gdx.liftoff.ui.panels;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 
@@ -28,12 +28,12 @@ public class GeneratingPanel extends Table implements Panel {
         add(collapsibleGroup).growX().spaceTop(SPACE_HUGE);
 
         //generating text big
-        TextraLabel label = new TextraLabel(prop.getProperty("generating"), skin, "button-big");
+        Label label = new Label(prop.getProperty("generating"), skin, "button-big");
         label.setAlignment(Align.center);
         collapsibleGroup.addActor(label);
 
         //generating text small
-        label = new TextraLabel(prop.getProperty("generating"), skin, "button-mid");
+        label = new Label(prop.getProperty("generating"), skin, "button-mid");
         label.setAlignment(Align.center);
         collapsibleGroup.addActor(label);
     }
