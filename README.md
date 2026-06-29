@@ -199,6 +199,10 @@ The "Space Shuttle" icon was drawn by [Delapouite](https://delapouite.com/) for 
 [game-icons.net](https://game-icons.net) collection. These icons are also available in a libGDX atlas format
 [in this repo](https://github.com/tommyettinger/game-icons-net-atlas), if you want to use the whole collection yourself.
 
+The font used by the Liftoff GUI in 1.14.2.1 and later is [DINish](https://github.com/playbeing/dinish), which is licensed under the
+permissive SIL OFL 1.1 . It replaces another, similar-looking font that the licensing (and even the name of the font) was unclear on,
+though it was freely available.
+
 Thanks also to everyone who has made the various libraries and tools Liftoff depends upon. From the huge team
 responsible for Graal Native Image, to [Construo](https://github.com/fourlastor-alexandria/construo) by pretty much a
 [team of one](https://github.com/fourlastor), some of the best features of Liftoff aren't in Liftoff code at all.
