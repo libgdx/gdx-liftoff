@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.github.tommyettinger.textra.TextraButton;
-import com.github.tommyettinger.textra.TextraField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.github.tommyettinger.textra.TextraLabel;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
@@ -153,7 +153,7 @@ public class LanguagesDialog extends PopTable {
         table.add(checkBox);
         addHandListener(checkBox);
 
-        TextraField textField = new TextraField(defaultVersion, skin);
+        TextField textField = new TextField(defaultVersion, skin);
         if (UserData.languageVersions.containsKey(languageName)) {
             textField.setText(UserData.languageVersions.get(languageName));
         }
