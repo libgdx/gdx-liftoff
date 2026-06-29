@@ -23,26 +23,6 @@ atlasData: {
 			hidden: false
 		}
 		{
-			file: C:/d/GitHub/liftoff-skin/liftoff-skin_data/bg.png
-			bgColor: {
-				r: 1
-				g: 1
-				b: 1
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: bg
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-			tvgData: null
-			type: TEXTURE
-			hidden: false
-		}
-		{
 			file: C:/d/GitHub/liftoff-skin/liftoff-skin_data/button-big-disabled.png
 			bgColor: {
 				r: 1
@@ -4174,10 +4154,8 @@ atlasData: {
 			type: TENPATCH
 			hidden: false
 		}
-	]
-	fontDrawables: [
 		{
-			file: C:/d/GitHub/liftoff-skin/liftoff-skin_data/font-button-big.png
+			file: C:/d/GitHub/gdx-liftoff/raw/bg.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -4186,17 +4164,18 @@ atlasData: {
 			}
 			tint: null
 			tintName: null
-			name: font-button-big
+			name: bg
 			tiled: false
 			minWidth: -1
 			minHeight: -1
 			customized: false
 			tenPatchData: null
 			tvgData: null
-			type: FONT
+			type: TEXTURE
 			hidden: false
 		}
 	]
+	fontDrawables: []
 }
 jsonData: {
 	colors: [
