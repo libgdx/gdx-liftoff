@@ -37,9 +37,11 @@ data class AdvancedProjectData(
   val androidSdkVersion: String = "36"
 
   /**
-   * Currently higher than the version recommended/tested by libGDX.
+   * Cannot be updated to newer 8.x releases due to AGP using internal Gradle APIs removed in Gradle 9.6.0.
+   * Cannot be updated to 9.x releases until JetBrains makes IDEA compatible. 9.0.1 might work, but is untested.
+   * Keep this on 8.9.3 for now!
    */
-  val androidPluginVersion: String = "9.2.1"
+  val androidPluginVersion: String = "8.9.3"
 
   /**
    * Should be updated as Android's latest desugaring library updates, but must always be a version that works
