@@ -173,28 +173,32 @@ class Facebook : ThirdPartyExtension() {
 
 /**
  * Native dialogs support.
- * @author Tom Grill
+ * @author Tom Grill (original library)
+ * @author MRZ07 (all updates after 1.3.0)
  */
 @Extension
 class Dialogs : ThirdPartyExtension() {
   override val id = "dialogs"
-  override val defaultVersion = "1.3.0"
-  override val url = "https://github.com/TomGrill/gdx-dialogs"
-  override val group = "de.tomgrill.gdxdialogs"
+  override val repository = Repository.JitPack
+  override val defaultVersion = "9541251bd3"
+  override val url = "https://github.com/MRZ07/gdx-dialogs"
+  override val group = "com.github.MRZ07.gdx-dialogs"
   override val name = "gdx-dialogs-core"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core")
+    addDependency(project, Core.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-core")
 
-    addDependency(project, Android.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-android")
+    addDependency(project, Android.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-android")
 
-    addDesktopDependency(project, "de.tomgrill.gdxdialogs:gdx-dialogs-desktop")
+    addDesktopDependency(project, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-desktop")
 
-    addDependency(project, IOS.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-ios")
+    addDependency(project, IOS.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-ios")
 
-    addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-core:sources")
-    addDependency(project, GWT.ID, "de.tomgrill.gdxdialogs:gdx-dialogs-html:sources")
-    addGwtInherit(project, "de.tomgrill.gdxdialogs.html.gdx_dialogs_html")
+    addDependency(project, GWT.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-html")
+    addDependency(project, GWT.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-core:sources")
+    addDependency(project, GWT.ID, "com.github.MRZ07.gdx-dialogs:gdx-dialogs-html:sources")
+    addGwtInherit(project, "com.mrz07.gdxdialogs.html.gdx_dialogs_html")
+    addGwtInherit(project, "com.mrz07.gdxdialogs.core.gdx_dialogs_core")
   }
 }
 

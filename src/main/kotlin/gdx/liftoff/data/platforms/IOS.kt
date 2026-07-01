@@ -88,6 +88,7 @@ app.name=${project.basic.name}""",
     <pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
     <pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
 ${if (project.extensions.officialExtensions.any { it.id == "gdx-controllers" }) "    <pattern>com.badlogic.gdx.controllers.IosControllerManager</pattern>" else ""}
+${if (project.extensions.officialExtensions.any { it.id == "gdx-dialogs" }) "    <pattern>com.mrz07.gdxdialogs.ios.IOSGDXDialogs</pattern>" else ""}
   </forceLinkClasses>
   <libs>
       <lib>z</lib>
