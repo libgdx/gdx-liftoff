@@ -1085,7 +1085,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 }
 
 /**
- * Advanced audio features for LWJGL3. JDK 8+.
+ * Advanced audio features for LWJGL3-only projects.
  * @author Hangman
  */
 @Extension
@@ -1098,7 +1098,7 @@ class TuningFork : ThirdPartyExtension() {
   override val name = "TuningFork"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Lwjgl3.ID, "com.github.Hangman:TuningFork")
+    addDependency(project, Core.ID, "com.github.Hangman:TuningFork")
   }
 }
 
