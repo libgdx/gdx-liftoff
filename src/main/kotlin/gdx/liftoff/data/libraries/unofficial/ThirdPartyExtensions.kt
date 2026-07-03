@@ -1000,7 +1000,7 @@ class KryoNet : ThirdPartyExtension() {
 @Extension
 class GdxWebRtc : ThirdPartyExtension() {
   override val id = "gdxWebRtc"
-  override val defaultVersion = "0.4.1"
+  override val defaultVersion = "0.4.6"
   override val url = "https://github.com/satori87/gdx-webrtc"
   override val repository = Repository.JitPack
   override val group = "com.github.satori87"
@@ -1091,7 +1091,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 @Extension
 class TuningFork : ThirdPartyExtension() {
   override val id = "tuningFork"
-  override val defaultVersion = "4.4.0"
+  override val defaultVersion = "4.4.3"
   override val url = "https://github.com/Hangman/TuningFork"
   override val repository = Repository.JitPack
   override val group = "com.github.Hangman"
