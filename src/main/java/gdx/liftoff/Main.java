@@ -65,7 +65,6 @@ public class Main extends ApplicationAdapter {
     public static FreeTypistSkin skin;
     public static Stage stage;
     public static ScreenViewport screenViewport;
-    public static FitViewport fitViewport;
     public static SpriteBatch batch;
     public static RootTable root;
     public static OverlayTable overlayTable;
@@ -120,7 +119,6 @@ public class Main extends ApplicationAdapter {
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate+1);
         config.setIdleFPS(8);
-//        config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0); // problematic...
 
         DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
         int monitorWidth = primaryDesktopMode.width;
@@ -228,10 +226,9 @@ public class Main extends ApplicationAdapter {
 
         setDefaultUserData();
 
-        fitViewport = new FitViewport(1920, 1080);
         screenViewport = new ScreenViewport();
-        if(Gdx.graphics.getBackBufferScale() >= 1.125f) {
-            float scale = Gdx.graphics.getBackBufferScale();
+        float scale = Gdx.graphics.getBackBufferScale();
+        if(scale >= 1.125f) {
             float inverse = 1f / scale;
             if(scale >= 2.375f)
                 skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x2-5.json"),
@@ -259,7 +256,6 @@ public class Main extends ApplicationAdapter {
             skin.getFont("font-label-header").getData().setScale(inverse);
             skin.getFont("font-label-tooltip").getData().setScale(inverse);
             skin.get("font-label", Font.class).scale(inverse);
-            screenViewport.setUnitsPerPixel(scale);
         }
         else {
             skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin.json"));
