@@ -11,6 +11,7 @@ import gdx.liftoff.data.platforms.Headless
 import gdx.liftoff.data.platforms.IOS
 import gdx.liftoff.data.platforms.Server
 import gdx.liftoff.data.platforms.Shared
+import gdx.liftoff.data.platforms.TeaVM
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
@@ -155,11 +156,11 @@ class AutumnMVC : LmlExtension() {
  * Base class for MrStahlfelge's fork of gdx-lml websocket libraries.
  */
 abstract class WebSocketExtension : ThirdPartyExtension() {
-  override val defaultVersion = "1.9.10.3"
-  override val group = "com.github.MrStahlfelge" // Matches JitPack root group.
+  override val defaultVersion = "2.0.1"
+  override val group = "com.github.deedywu" // Matches JitPack root group.
   override val name = "gdx-websockets" // Matches JitPack root name.
   override val repository = Repository.JitPack
-  override val url = "https://github.com/MrStahlfelge/gdx-websockets"
+  override val url = "https://github.com/deedywu/gdx-websockets"
 }
 
 /**
@@ -186,6 +187,8 @@ class WebSocket : WebSocketExtension() {
 
     addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
     addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
+
+    addDependency(project, TeaVM.ID, "$group.gdx-websockets:teavm")
   }
 }
 
@@ -195,7 +198,8 @@ class WebSocket : WebSocketExtension() {
 @Extension
 class WebSocketSerialization : WebSocketExtension() {
   override val id = "websocketSerialization"
-  override val url = "https://github.com/MrStahlfelge/gdx-websockets/tree/master/serialization"
+  override val url = "https://github.com/deedywu/gdx-websockets/tree/master/serialization"
+  override val name = "gdx-websockets-serialization" // doesn't match anything.
 
   override fun initiateDependencies(project: Project) {
     addDependency(project, Core.ID, "$group.gdx-websockets:serialization")
