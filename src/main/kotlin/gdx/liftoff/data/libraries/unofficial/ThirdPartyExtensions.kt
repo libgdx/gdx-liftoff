@@ -1091,7 +1091,7 @@ class LibgdxScreenManager : ThirdPartyExtension() {
 @Extension
 class TuningFork : ThirdPartyExtension() {
   override val id = "tuningFork"
-  override val defaultVersion = "4.4.3"
+  override val defaultVersion = "4.4.4"
   override val url = "https://github.com/Hangman/TuningFork"
   override val repository = Repository.JitPack
   override val group = "com.github.Hangman"
