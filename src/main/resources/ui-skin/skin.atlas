@@ -1,6 +1,6 @@
 skin.png
 size:2048,512
-filter:Linear,Linear
+filter:MipMapLinearLinear,MipMapLinearLinear
 bg
 bounds:495,39,480,270
 button-big-disabled

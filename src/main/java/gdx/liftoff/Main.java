@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.HdpiMode;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -28,6 +30,7 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.freetypist.FreeTypistSkin;
+import com.github.tommyettinger.textra.Font;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.file.FileChooser;
 import com.kotcrab.vis.ui.widget.file.FileChooser.SelectionMode;
@@ -62,7 +65,6 @@ public class Main extends ApplicationAdapter {
     public static FreeTypistSkin skin;
     public static Stage stage;
     public static ScreenViewport screenViewport;
-    public static FitViewport fitViewport;
     public static SpriteBatch batch;
     public static RootTable root;
     public static OverlayTable overlayTable;
@@ -117,7 +119,6 @@ public class Main extends ApplicationAdapter {
         config.useVsync(true);
         config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate+1);
         config.setIdleFPS(8);
-//        config.setOpenGLEmulation(Lwjgl3ApplicationConfiguration.GLEmulation.ANGLE_GLES20, 0, 0); // problematic...
 
         DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
         int monitorWidth = primaryDesktopMode.width;
@@ -129,6 +130,7 @@ public class Main extends ApplicationAdapter {
         config.setWindowSizeLimits(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT, -1, -1);
         config.setWindowIcon("icons/libgdx128.png", "icons/libgdx64.png", "icons/libgdx32.png", "icons/libgdx16.png");
         config.setAutoIconify(true);
+        config.setHdpiMode(HdpiMode.Logical);
         final Lwjgl3WindowListener windowListener = new Lwjgl3WindowListener() {
             @Override
             public void created(Lwjgl3Window lwjgl3Window) {
@@ -224,12 +226,43 @@ public class Main extends ApplicationAdapter {
 
         setDefaultUserData();
 
-        skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin.json"));
+        screenViewport = new ScreenViewport();
+        float scale = Gdx.graphics.getBackBufferScale();
+        if(scale >= 1.125f) {
+            float inverse = 1f / scale;
+            if(scale >= 2.375f)
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x2-5.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+            else if(scale >= 2.125f)
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x2-25.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+            else if(scale >= 1.875f)
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x2.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+            else if(scale >= 1.625f)
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x1-75.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+            else if(scale >= 1.375f)
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x1-5.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+            else
+                skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin-x1-25.json"),
+                    new TextureAtlas(Gdx.files.internal("ui-skin/skin.atlas")));
+
+            skin.getFont("font-button-big").getData().setScale(inverse);
+            skin.getFont("font-button-mid").getData().setScale(inverse);
+            skin.getFont("font-button-small").getData().setScale(inverse);
+            skin.getFont("font-label").getData().setScale(inverse);
+            skin.getFont("font-label-header").getData().setScale(inverse);
+            skin.getFont("font-label-tooltip").getData().setScale(inverse);
+            skin.get("font-label", Font.class).scale(inverse);
+        }
+        else {
+            skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin.json"));
+        }
 
         skin.getFont("font-label-tooltip").getData().breakChars = new char[]{'-'};
 
-        fitViewport = new FitViewport(1920, 1080);
-        screenViewport = new ScreenViewport();
         batch = new SpriteBatch();
         stage = new Stage(screenViewport, batch);
 
