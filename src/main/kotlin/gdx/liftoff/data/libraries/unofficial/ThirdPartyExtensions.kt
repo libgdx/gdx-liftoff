@@ -616,7 +616,7 @@ class FreetypeSkin : ThirdPartyExtension() {
 @Extension
 class GdxGltf : ThirdPartyExtension() {
   override val id = "gdxGltf"
-  override val defaultVersion = "d1f0074d7e"
+  override val defaultVersion = "2.3.0"
   override val repository = Repository.JitPack
   override val url = "https://github.com/mgsx-dev/gdx-gltf"
   override val group = "com.github.mgsx-dev"
