@@ -188,7 +188,7 @@ class WebSocket : WebSocketExtension() {
     addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocket")
     addGwtInherit(project, "com.github.czyzby.websocket.GdxWebSocketGwt")
 
-    addDependency(project, TeaVM.ID, "$group.gdx-websockets:teavm")
+    addDependency(project, TeaVM.ID, "$group.gdx-websockets:teavm-web")
   }
 }
 
