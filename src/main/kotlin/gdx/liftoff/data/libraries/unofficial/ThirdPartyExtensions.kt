@@ -180,7 +180,7 @@ class Facebook : ThirdPartyExtension() {
 class Dialogs : ThirdPartyExtension() {
   override val id = "dialogs"
   override val repository = Repository.JitPack
-  override val defaultVersion = "2.0.0"
+  override val defaultVersion = "2.0.2"
   override val url = "https://github.com/MRZ07/gdx-dialogs"
   override val group = "com.github.MRZ07.gdx-dialogs"
   override val name = "gdx-dialogs-core"
