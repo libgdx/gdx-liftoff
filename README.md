@@ -20,6 +20,9 @@ run it (usually double-clicking will do), or run the following command manually 
 java -jar gdx-liftoff-VERSION.jar
 ```
 
+While other downloads are provided in recent releases, the one without an OS type in the name will work on all
+platforms, and that one is recommended.
+
 **You must build with Java 17** or newer (up to 26)! If you are downloading Java for the first time, read this paragraph
 and the next two carefully; links are provided to recommended OpenJDK versions. Gradle's current version, as well as
 current Android tools, now require your installed JDK to be version 17 or higher. Regardless of what platforms you
