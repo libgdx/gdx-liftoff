@@ -133,7 +133,7 @@ dependencies {
   // It is here in a comment in case MvnRepository's search starts working again...
 //  implementation 'com.github.tommyettinger:mvnrepository-client:v2.0.2.4'
 
-  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid problems on Java 25 and up.
+  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid warnings on Java 25 and up.
   constraints{
     implementation("org.lwjgl:lwjgl:$lwjgl3Version")
     implementation("org.lwjgl:lwjgl-glfw:$lwjgl3Version")

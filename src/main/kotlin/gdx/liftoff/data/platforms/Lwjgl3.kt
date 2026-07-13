@@ -187,7 +187,7 @@ $${joinDependencies(dependencies)}
       (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
       $$"""
   }
-  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid problems on Java 25 and up.
+  // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.1, to avoid warnings on Java 25 and up.
   constraints{
     implementation("org.lwjgl:lwjgl:$lwjgl3Version")
     implementation("org.lwjgl:lwjgl-glfw:$lwjgl3Version")
