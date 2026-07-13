@@ -156,7 +156,7 @@ class AutumnMVC : LmlExtension() {
  * Base class for MrStahlfelge's fork of gdx-lml websocket libraries.
  */
 abstract class WebSocketExtension : ThirdPartyExtension() {
-  override val defaultVersion = "2.0.2"
+  override val defaultVersion = "2.0.3"
   override val group = "com.github.deedywu" // Matches JitPack root group.
   override val name = "gdx-websockets" // Matches JitPack root name.
   override val repository = Repository.JitPack
