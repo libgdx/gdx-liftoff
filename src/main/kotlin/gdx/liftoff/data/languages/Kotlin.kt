@@ -17,6 +17,7 @@ data object Kotlin : Language {
 
   override fun initiate(project: Project) {
     project.rootGradle.buildDependencies.add($$"\"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion\"")
+    project.properties["kotlin.jvm.target.validation.mode"] = "IGNORE"
     project.rootGradle.plugins.add(id)
     project.platforms.values.forEach { project.files.add(SourceDirectory(it.id, path("src", "main", "kotlin"))) }
     if (project.hasPlatform(Android.ID)) {
