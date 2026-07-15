@@ -54,10 +54,10 @@ sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 project.ext.mainClassName = "${project.basic.rootPackage}.teavm.TeaVMBuilder"
 eclipse.project.name = appName + "-teavm"
 
-// This must be at least 11, and no higher than the JDK version this project is built with.
-java.targetCompatibility = "${11.coerceAtLeast(project.advanced.javaVersion.toInt())}"
+// This must be at least 17, and no higher than the JDK version this project is built with.
+java.targetCompatibility = "${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
 // This should probably be equal to targetCompatibility, above. This only affects the TeaVM module.
-java.sourceCompatibility = "${11.coerceAtLeast(project.advanced.javaVersion.toInt())}"
+java.sourceCompatibility = "${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
 
 
 dependencies {
