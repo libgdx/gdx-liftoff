@@ -469,7 +469,7 @@ fun main() {
     """package ${project.basic.rootPackage}.teavm
 
 import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle
-import com.github.xpenatan.gdx.teavm.backends.shared.config.compiler.TeaCompiler
+import com.github.xpenatan.gdx.teavm.backends.shared.config.builder.TeaBuilder
 import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend
 import org.teavm.tooling.TeaVMSourceFilePolicy
 import org.teavm.tooling.sources.DirectorySourceFileProvider
@@ -490,7 +490,7 @@ object TeaVMBuilder {
             .setJettyPort(8080)
 //            .setWebAssembly(true) /* Uncomment this line to use WASM output instead of JavaScript output. */
 
-        TeaCompiler(webBackend)
+        TeaBuilder(webBackend)
             .addAssets(AssetFileHandle("../${Assets.ID}"))
             ${project.teaBuilderLines.joinToString("\n            ").replace("new ", "")}
             .setOptimizationLevel(if (debug) TeaVMOptimizationLevel.SIMPLE else TeaVMOptimizationLevel.ADVANCED)
@@ -502,7 +502,7 @@ object TeaVMBuilder {
             .addSourceFileProvider(DirectorySourceFileProvider(File("../core/src/main/kotlin")))
             // Register any classes or packages that require reflection here.
 ${generateTeaVMReflectionIncludes(project, indent = " ".repeat(12))}
-            .build(File("build/dist"))
+            .build(File("build/dist/" + (if(webBackend.isWebAssembly) "wasm" else "js")))
     }
 }"""
 }
