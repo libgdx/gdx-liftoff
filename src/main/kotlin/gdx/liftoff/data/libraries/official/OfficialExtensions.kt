@@ -22,7 +22,7 @@ import gdx.liftoff.views.Extension
 abstract class OfficialExtension : Library {
   override val defaultVersion = Version.VERSION
   override val official = true
-  override val repository = Repository.MavenCentral
+  override val repository: Repository = Repository.MavenCentral
   override val group = "com.badlogicgames.gdx"
   override val name: String
     get() = id
@@ -109,15 +109,16 @@ class Box2D : OfficialExtension() {
 class Box2DLights : OfficialExtension() {
   override val id = "box2dlights"
   override val url = "https://github.com/libgdx/box2dlights"
-  override val group = "com.badlogicgames.box2dlights"
-  override val defaultVersion = "1.5"
+  override val group = "com.github.libgdx:box2dlights"
+  override val repository: Repository = Repository.JitPack
+  override val defaultVersion = "76536bb895"
 
   override fun initiate(project: Project) {
     project.properties[id + "Version"] = version
 
-    addDependency(project, Core.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion")
+    addDependency(project, Core.ID, "com.github.libgdx:box2dlights:\$box2dlightsVersion")
 
-    addDependency(project, GWT.ID, "com.badlogicgames.box2dlights:box2dlights:\$box2dlightsVersion:sources")
+    addDependency(project, GWT.ID, "com.github.libgdx:box2dlights:\$box2dlightsVersion:sources")
     addGwtInherit(project, "Box2DLights")
 
     // Making sure Box2D is included as well:
