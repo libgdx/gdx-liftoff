@@ -384,15 +384,16 @@ class MakeSomeNoise : ThirdPartyExtension() {
 @Extension
 class TypingLabel : ThirdPartyExtension() {
   override val id = "typingLabel"
-  override val defaultVersion = "1.4.0"
+  override val defaultVersion = "6f1198f7cc"
   override val url = "https://github.com/rafaskb/typing-label"
-  override val group = "com.rafaskoberg.gdx"
+  override val repository = Repository.JitPack
+  override val group = "com.github.tommyettinger"
   override val name = "typing-label"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "com.rafaskoberg.gdx:typing-label")
+    addDependency(project, Core.ID, "com.github.tommyettinger:typing-label")
 
-    addDependency(project, GWT.ID, "com.rafaskoberg.gdx:typing-label:sources")
+    addDependency(project, GWT.ID, "com.github.tommyettinger:typing-label:sources")
     addGwtInherit(project, "com.rafaskoberg.gdx.typinglabel.typinglabel")
     RegExodus().initiate(project)
   }
@@ -408,6 +409,7 @@ class TextraTypist : ThirdPartyExtension() {
   override val id = "textratypist"
   override val defaultVersion = "2.4.2"
   override val url = "https://github.com/tommyettinger/textratypist"
+  override val repository = Repository.JitPack
   override val group = "com.github.tommyettinger"
   override val name = "textratypist"
 
@@ -430,6 +432,7 @@ class FreeTypist : ThirdPartyExtension() {
   override val id = "freetypist"
   override val defaultVersion = "2.4.2.0"
   override val url = "https://github.com/tommyettinger/freetypist"
+  override val repository = Repository.JitPack
   override val group = "com.github.tommyettinger"
   override val name = "freetypist"
 
