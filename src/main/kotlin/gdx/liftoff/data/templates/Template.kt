@@ -223,6 +223,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.getkeepsafe.relinker.ReLinker;
 import ${project.basic.rootPackage}.${project.basic.mainClass};
 
 /** Launches the Android application. */
@@ -231,6 +232,7 @@ public class AndroidLauncher extends AndroidApplication {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
+        configuration.nativeLoader = () -> ReLinker.loadLibrary(this, "gdx");
         configuration.useImmersiveMode = true; // Recommended, but not required.
         initialize(new ${project.basic.mainClass}(), configuration);
     }
