@@ -210,7 +210,7 @@ class Freetype : OfficialExtension() {
 
     addDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-freetype-platform:\$gdxVersion:natives-ios")
 
-    addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-freetype-teavm:\$gdxTeaVMVersion")
+    addDependency(project, TeaVM.ID, "com.github.xpenatan.gdx-teavm:gdx-freetype-web:\$gdxTeaVMVersion")
 
     // Other platforms are not officially supported (GWT).
   }
