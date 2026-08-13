@@ -1,9 +1,7 @@
 package gdx.liftoff.data.libraries.unofficial
 
-import com.badlogic.gdx.Gdx
 import com.github.kittinunf.fuel.Fuel.get
 import gdx.liftoff.data.libraries.Library
-import gdx.liftoff.data.libraries.Repository
 import gdx.liftoff.data.libraries.SingleVersionRepository
 import gdx.liftoff.data.libraries.camelCaseToKebabCase
 import gdx.liftoff.data.libraries.official.AI
@@ -14,8 +12,8 @@ import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.Extension
 
-private const val DEFAULT_GROUP = "io.github.libktx"
-private const val FALLBACK_VERSION = "1.13.1-rc1"
+private const val DEFAULT_GROUP = "io.github.quillraven.libktx"
+private const val FALLBACK_VERSION = "1.14.2-rc1"
 
 /**
  * Modular Kotlin utilities.
@@ -58,21 +56,10 @@ abstract class KtxExtension : Library {
 }
 
 /**
- * Fetches and caches the latest KTX version.
+ * Just uses the fallback version always, so we know we're compatible.
  */
 data object KtxRepository : SingleVersionRepository(FALLBACK_VERSION) {
-  override fun fetchLatestVersion(): String? = try {
-    // Fetching and caching KTX version from the repo:
-    get("https://raw.githubusercontent.com/libktx/ktx/master/version.txt")
-      .timeout(30000)
-      .responseString()
-      .third
-      .get()
-      .trim()
-  } catch (exception: Exception) {
-    Gdx.app.error("gdx-liftoff", "Unable to fetch KTX version from the repository.", exception)
-    Repository.MavenCentral.getLatestVersion(DEFAULT_GROUP, "ktx-app")
-  }
+  override fun fetchLatestVersion(): String = FALLBACK_VERSION
 }
 
 /**
