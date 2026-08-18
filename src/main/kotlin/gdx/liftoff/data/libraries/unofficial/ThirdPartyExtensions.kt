@@ -97,6 +97,51 @@ class ArtemisOdb : ThirdPartyExtension() {
 }
 
 /**
+ * Runtime for Pixscape, a visual 2D and 2.5D game engine built on libGDX.
+ */
+@Extension
+class PixscapeRuntime : ThirdPartyExtension() {
+  override val id = "pixscapeRuntime"
+  override val defaultVersion = "0.1.9"
+  override val url = "https://pixscape.games/"
+  override val group = "games.pixscape"
+  override val name = "pixscape-runtime"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+
+    // Pixscape exposes Box2D transitively, but platform-specific native artifacts still have to be selected.
+    addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-armeabi-v7a")
+    addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-arm64-v8a")
+    addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86")
+    addNativeAndroidDependency(project, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-x86_64")
+    addExternalDependency(project, Lwjgl2.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
+    addExternalDependency(project, Lwjgl3.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
+    addExternalDependency(project, Headless.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-desktop")
+    addExternalDependency(project, IOS.ID, "com.badlogicgames.gdx:gdx-box2d-platform:\$gdxVersion:natives-ios")
+
+    addDependency(project, GWT.ID, "$group:$name:sources")
+    addExternalDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion")
+    addExternalDependency(project, GWT.ID, "com.badlogicgames.gdx:gdx-box2d-gwt:\$gdxVersion:sources")
+
+    if (project.hasPlatform(GWT.ID)) {
+      val artemisOdbVersion = ArtemisOdb().defaultVersion
+      project.properties.putIfAbsent("artemisOdbVersion", artemisOdbVersion)
+      addSpecialDependency(
+        project,
+        GWT.ID,
+        "implementation(\"net.onedaybeard.artemis:artemis-odb-gwt:\$artemisOdbVersion\") {exclude group: \"com.google.gwt\", module: \"gwt-user\"}",
+      )
+      addExternalDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb:\$artemisOdbVersion:sources")
+      addExternalDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-gwt:\$artemisOdbVersion:sources")
+      addExternalDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-serializer:\$artemisOdbVersion:sources")
+      addExternalDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx:\$artemisOdbVersion:sources")
+      addGwtInherit(project, "games.pixscape.runtime.PixscapeRuntime")
+    }
+  }
+}
+
+/**
  * General libGDX utilities.
  * @author Dermetfan
  * @author Maintained by Tommy Ettinger

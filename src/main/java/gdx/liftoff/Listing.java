@@ -79,6 +79,7 @@ public final class Listing {
     static {
         unofficialLibraries.addAll(makeList(
             new ArtemisOdb(),
+            new PixscapeRuntime(),
             new LibgdxUtils(),
             new LibgdxUtilsBox2D(),
             new Facebook(),
