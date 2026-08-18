@@ -1,6 +1,7 @@
 package gdx.liftoff.data.libraries.unofficial
 
 import gdx.liftoff.data.files.CopiedFile
+import gdx.liftoff.data.files.SourceDirectory
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.libraries.Library
 import gdx.liftoff.data.libraries.Repository
@@ -108,6 +109,15 @@ class PixscapeRuntime : ThirdPartyExtension() {
   override val name = "pixscape-runtime"
 
   override fun initiateDependencies(project: Project) {
+    val systemPackage = "${project.basic.rootPackage}.system"
+    project.files.add(
+      SourceDirectory(
+        Core.ID,
+        path("src", "main", "java", *systemPackage.split('.').toTypedArray()),
+      ),
+    )
+    project.artemisReflectedPackages.add(systemPackage)
+
     addDependency(project, Core.ID, "$group:$name")
 
     // Pixscape exposes Box2D transitively, but platform-specific native artifacts still have to be selected.

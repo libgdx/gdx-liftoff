@@ -42,6 +42,7 @@ class Project(
 
   val reflectedClasses: MutableSet<String> = mutableSetOf()
   val reflectedPackages: MutableSet<String> = mutableSetOf()
+  val artemisReflectedPackages: MutableSet<String> = mutableSetOf()
 
   // README.md:
   var readmeDescription: String = ""

@@ -7,6 +7,24 @@ import gdx.liftoff.data.files.path
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.views.GdxPlatform
 
+private fun getArtemisReflectionConfiguration(project: Project): String {
+  if (project.artemisReflectedPackages.isEmpty()) return ""
+  return project.artemisReflectedPackages.sorted().joinToString(
+    separator = "\n",
+    prefix =
+      """
+
+  <!-- Required for custom Artemis systems on GWT.
+       If this reflection configuration is changed, clean the GWT CodeServer module:
+       http://127.0.0.1:9876/clean/html -->
+""",
+  ) {
+    """  <extend-configuration-property
+      name="artemis.reflect.include"
+      value="$it"/>"""
+  }
+}
+
 /**
  * Represents GWT backend.
  */
@@ -119,7 +137,7 @@ ${(project.reflectedClasses + project.reflectedPackages).joinToString(
   <public path="public_html" />
 
   <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
-${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}
+${project.gwtInherits.sortedWith(INHERIT_COMPARATOR).joinToString(separator = "\n") { "  <inherits name=\"$it\" />" }}${getArtemisReflectionConfiguration(project)}
 
   <!-- You must change this if you rename packages later, or rename GwtLauncher. -->
   <entry-point class="${project.basic.rootPackage}.gwt.GwtLauncher" />
