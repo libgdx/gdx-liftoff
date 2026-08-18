@@ -237,6 +237,7 @@ ${if (project.advanced.gwtVersion == "2.10.0" || project.advanced.gwtVersion == 
   devMode {
     port = 8080
     startupUrl = "http://127.0.0.1:8080/index.html"
+    modules = ["${project.basic.rootPackage}.GdxDefinitionSuperdev"]
   }
   superDev {
     modules = ["${project.basic.rootPackage}.GdxDefinitionSuperdev"]
