@@ -228,7 +228,6 @@ gwt {
 
   //// This affects where the final resulting build will be placed.
   war = file(outputPath)
-  //// You
   compiler.optimize = 9
   compiler.strict = true
   //// The next line can be useful to uncomment if you want output that hasn't been obfuscated.
