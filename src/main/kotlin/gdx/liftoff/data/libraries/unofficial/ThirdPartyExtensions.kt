@@ -135,7 +135,7 @@ class LibgdxUtilsBox2D : ThirdPartyExtension() {
 
     addDependency(project, GWT.ID, "com.github.tommyettinger:libgdx-utils-box2d:sources")
     addGwtInherit(project, "libgdx-utils-box2d")
-
+    Box2D().initiate(project)
     LibgdxUtils().initiate(project)
   }
 }
