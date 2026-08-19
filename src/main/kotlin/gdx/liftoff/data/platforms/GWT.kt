@@ -26,9 +26,9 @@ class GWT : Platform {
           1
         } else {
           // If there's an Artemis-ODB inherit, it needs to go first or second.
-          if(a == ARTEMIS_INHERIT){
+          if (a == ARTEMIS_INHERIT) {
             -1
-          } else if(b == ARTEMIS_INHERIT){
+          } else if (b == ARTEMIS_INHERIT) {
             1
           } else {
             a.compareTo(b)
