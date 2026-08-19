@@ -80,6 +80,7 @@ public final class Listing {
         unofficialLibraries.addAll(makeList(
             new ArtemisOdb(),
             new ArtemisOdbSerializerJsonGdx(),
+            new PixscapeRuntime(),
             new LibgdxUtils(),
             new LibgdxUtilsBox2D(),
             new Facebook(),
