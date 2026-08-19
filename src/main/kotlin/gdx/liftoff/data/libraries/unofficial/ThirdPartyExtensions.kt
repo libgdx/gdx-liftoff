@@ -97,6 +97,29 @@ class ArtemisOdb : ThirdPartyExtension() {
 }
 
 /**
+ * Serializer component for Artemis-ODB using libGDX Json.
+ * @author junkdog
+ */
+@Extension
+class ArtemisOdbSerializerJsonGdx : ThirdPartyExtension() {
+  override val id = "artemisOdbSerializerJsonGdx"
+  override val defaultVersion = "2.3.0"
+  override val url = "https://github.com/junkdog/artemis-odb"
+  override val group = "net.onedaybeard.artemis"
+  override val name = "artemis-odb-serializer-json-libgdx"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb-serializer")
+    addDependency(project, Core.ID, "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx")
+
+    addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-serializer:sources")
+    addDependency(project, GWT.ID, "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx:sources")
+    ArtemisOdb().initiate(project)
+    addGwtInherit(project, "com.artemis-json-libgdx")
+  }
+}
+
+/**
  * General libGDX utilities.
  * @author Dermetfan
  * @author Maintained by Tommy Ettinger
