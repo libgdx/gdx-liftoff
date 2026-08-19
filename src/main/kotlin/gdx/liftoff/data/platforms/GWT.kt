@@ -16,6 +16,7 @@ class GWT : Platform {
     const val ID = "html"
     const val ORDER = IOS.ORDER + 1
     const val BASIC_INHERIT = "com.badlogic.gdx.backends.gdx_backends_gwt"
+    const val ARTEMIS_INHERIT = "com.artemis.backends.artemis_backends_gwt"
     val INHERIT_COMPARATOR =
       Comparator<String> { a, b ->
         // Basic GWT inherit has to be first:
@@ -24,7 +25,14 @@ class GWT : Platform {
         } else if (b == BASIC_INHERIT) {
           1
         } else {
-          a.compareTo(b)
+          // If there's an Artemis-ODB inherit, it needs to go first or second.
+          if(a == ARTEMIS_INHERIT){
+            -1
+          } else if(b == ARTEMIS_INHERIT){
+            1
+          } else {
+            a.compareTo(b)
+          }
         }
       }
   }
