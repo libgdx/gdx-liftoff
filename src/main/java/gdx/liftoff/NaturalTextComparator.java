@@ -28,9 +28,8 @@ import java.util.Comparator;
  * use {@link #CASE_SENSITIVE} or {@link #CASE_INSENSITIVE} to get a predefined immutable instance.
  */
 public class NaturalTextComparator implements Comparator<CharSequence> {
-	public static final NaturalTextComparator INSTANCE = new NaturalTextComparator(true);
 	public static final NaturalTextComparator CASE_INSENSITIVE = new NaturalTextComparator(false);
-	public static final NaturalTextComparator CASE_SENSITIVE = INSTANCE;
+	public static final NaturalTextComparator CASE_SENSITIVE = new NaturalTextComparator(true);
 
 	private final boolean caseSensitive;
 
@@ -111,11 +110,9 @@ public class NaturalTextComparator implements Comparator<CharSequence> {
 			if ((u1 != c1) && (u2 == c2)) {
 				return Integer.MAX_VALUE;
 			}
-			return u1 - u2;
-		} else {
-			return u1 - u2;
-		}
-	}
+        }
+        return u1 - u2;
+    }
 
 	private static int compareUnsigned (long num1, long num2) {
 		return Long.compare(num1 + Long.MIN_VALUE, num2 + Long.MIN_VALUE);

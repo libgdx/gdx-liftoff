@@ -16,6 +16,8 @@ import com.ray3k.stripe.PopTable;
 import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.ui.UserData;
 
+import java.util.Collections;
+
 import static gdx.liftoff.Main.*;
 
 /**
@@ -183,10 +185,7 @@ public class TemplatesDialog extends PopTable {
             if (!checkBox.isChecked()) return;
 
             UserData.template = templateName;
-            for (String requiredThirdPartyLib : requiredThirdPartyLibs) {
-                if (!UserData.thirdPartyLibs.contains(requiredThirdPartyLib))
-                    UserData.thirdPartyLibs.add(requiredThirdPartyLib);
-            }
+            Collections.addAll(UserData.thirdPartyLibs, requiredThirdPartyLibs);
         });
 
         Label label = new Label(description, skin, "description");

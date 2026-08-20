@@ -27,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.freetypist.FreeTypistSkin;
 import com.github.tommyettinger.textra.Font;
@@ -51,6 +50,7 @@ import org.lwjgl.util.nfd.NativeFileDialog;
 import java.io.IOException;
 import java.lang.StringBuilder;
 import java.util.*;
+import java.util.Collections;
 
 import static gdx.liftoff.ui.UserData.*;
 import static gdx.liftoff.ui.dialogs.FullscreenCompleteDialog.*;
@@ -716,15 +716,20 @@ public class Main extends ApplicationAdapter {
         generatingProject = true;
         Thread generateThread = new Thread(() -> {
             try {
+                ArrayList<String> tasks;
+                if(gradleTasks != null && !gradleTasks.isEmpty()){
+                    String[] split = gradleTasks.split("\\s+");
+                    tasks = new ArrayList<>(split.length);
+                    Collections.addAll(tasks, split);
+                }
+                else
+                    tasks = new ArrayList<>(0);
+
                 BasicProjectData basicData = new BasicProjectData(
                     UserData.projectName, UserData.packageName, UserData.mainClassName,
                     Gdx.files.absolute(UserData.projectPath), Gdx.files.absolute(UserData.androidPath));
                 AdvancedProjectData advancedData = new AdvancedProjectData(appVersion, libgdxVersion, javaVersion,
-                    gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme,
-                    gradleTasks != null && !gradleTasks.isEmpty()
-                        ? Maker.makeList(gradleTasks.split("\\s+"))
-                        : new ArrayList<>(0),
-                    true, 4);
+                    gwtPluginVersion, javaVersion, javaVersion, addGuiAssets, addReadme, tasks, true, 4);
 
                 LinkedHashMap<String, Platform> platforms = new LinkedHashMap<>(UserData.platforms.size());
                 for (String p : UserData.platforms) {

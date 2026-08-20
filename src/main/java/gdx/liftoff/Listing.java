@@ -14,8 +14,6 @@ import gdx.liftoff.data.templates.unofficial.*;
 
 import java.util.*;
 
-import static gdx.liftoff.Maker.*;
-
 /**
  * Fully-static class that exists so that we don't have to deal with Autumn stupid-magic from Java.
  */
@@ -23,7 +21,7 @@ public final class Listing {
     private Listing() {
     }
 
-    public static final ArrayList<Platform> platforms = makeList(
+    public static final List<Platform> platforms = Arrays.asList(
         new Android(),
         new Assets(),
         new Core(),
@@ -43,7 +41,7 @@ public final class Listing {
         for (Platform p : platforms) platformsByName.put(p.getId(), p);
     }
 
-    public static final ArrayList<Language> languages = makeList(
+    public static final List<Language> languages = Arrays.asList(
         Kotlin.INSTANCE, Groovy.INSTANCE, Scala.INSTANCE
     );
 
@@ -63,7 +61,7 @@ public final class Listing {
         return cpy;
     }
 
-    public static final ArrayList<Library> officialLibraries = makeList(
+    public static final List<Library> officialLibraries = Arrays.asList(
         new AI(),
         new Ashley(),
         new Box2D(),
@@ -77,7 +75,7 @@ public final class Listing {
         (a, b) -> NaturalTextComparator.CASE_INSENSITIVE.compare(a.getName().replaceFirst("(?i)gdx([ -]?)", ""), b.getName().replaceFirst("(?i)gdx([ -]?)", "")));
 
     static {
-        unofficialLibraries.addAll(makeList(
+        Collections.addAll(unofficialLibraries,
             new ArtemisOdb(),
             new ArtemisOdbSerializerJsonGdx(),
             new LibgdxUtils(),
@@ -228,7 +226,7 @@ public final class Listing {
             new KtxTiled(),
             new KtxVis(),
             new KtxVisStyle()
-        ));
+        );
     }
 
     public static final LinkedHashMap<String, Library> officialByName = new LinkedHashMap<>(officialLibraries.size());
@@ -259,7 +257,7 @@ public final class Listing {
         return new ArrayList<>(cpy.values());
     }
 
-    public static final ArrayList<Template> templates = makeList(
+    public static final List<Template> templates = Arrays.asList(
         new ClassicTemplate(),
         new ApplicationAdapterTemplate(),
         new ApplicationListenerTemplate(),
