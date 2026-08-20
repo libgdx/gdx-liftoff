@@ -78,6 +78,7 @@ public final class Listing {
         Collections.addAll(unofficialLibraries,
             new ArtemisOdb(),
             new ArtemisOdbSerializerJsonGdx(),
+            new PixscapeRuntime(),
             new LibgdxUtils(),
             new LibgdxUtilsBox2D(),
             new Facebook(),
