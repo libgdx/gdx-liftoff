@@ -120,6 +120,28 @@ class ArtemisOdbSerializerJsonGdx : ThirdPartyExtension() {
 }
 
 /**
+ * Runtime for Pixscape, a visual 2D and 2.5D game engine built on libGDX.
+ */
+@Extension
+class PixscapeRuntime : ThirdPartyExtension() {
+  override val id = "pixscapeRuntime"
+  override val defaultVersion = "0.1.9"
+  override val url = "https://pixscape.games"
+  override val group = "games.pixscape"
+  override val name = "pixscape-runtime"
+
+  override fun initiateDependencies(project: Project) {
+    addDependency(project, Core.ID, "$group:$name")
+    addDependency(project, GWT.ID, "$group:$name:sources")
+
+    Box2D().initiate(project)
+    ArtemisOdbSerializerJsonGdx().initiate(project)
+
+    addGwtInherit(project, "games.pixscape.runtime.PixscapeRuntime")
+  }
+}
+
+/**
  * General libGDX utilities.
  * @author Dermetfan
  * @author Maintained by Tommy Ettinger
