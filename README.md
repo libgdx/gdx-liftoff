@@ -67,8 +67,8 @@ this is automatically handled by the current Liftoff version using Gradle constr
 LWJGL3, you can now simply change `lwjgl3Version` in `gradle.properties`, which will make the constraints require a
 version of your choosing. One reason you might need this is to better support Wayland on Linux, which changed how it
 worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.2 uses LWJGL 3.3.3 unless some Gradle config changes that
-version. The constraints on the LWJGL version default to LWJGL 3.4.1 instead now, allowing Java 25 and up to work.
-Typically, you either leave `lwjgl3Version=3.4.1` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
+version. The constraints on the LWJGL version default to LWJGL 3.4.3 instead now, allowing Java 25 and up to work.
+Typically, you either leave `lwjgl3Version=3.4.3` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
 Note that if you are running on Java 25 or newer, LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of
 the older and scheduled-to-be-removed `sun.misc.Unsafe` class. This may have
 [unexpected performance problems](https://github.com/LWJGL/lwjgl3/issues/1111#issuecomment-4147955320) due to
