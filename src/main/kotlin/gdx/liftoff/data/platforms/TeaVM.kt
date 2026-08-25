@@ -46,63 +46,60 @@ class TeaVMGradleFile(
   }
 
   override fun getContent() =
-    """plugins {
+    $$"""plugins {
   id 'java'
+  id("com.github.xpenatan.gdx-teavm") version "$gdxTeaVMVersion"
 }
 
-sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
-project.ext.mainClassName = "${project.basic.rootPackage}.teavm.TeaVMBuilder"
 eclipse.project.name = appName + "-teavm"
 
 // This must be at least 17, and no higher than the JDK version this project is built with.
-java.targetCompatibility = "${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
+java.targetCompatibility = "$${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
 // This should probably be equal to targetCompatibility, above. This only affects the TeaVM module.
-java.sourceCompatibility = "${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
-
+java.sourceCompatibility = "$${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
 
 dependencies {
-${joinDependencies(dependencies)}
+$${joinDependencies(dependencies)}
 }
 
-tasks.register("runRelease", JavaExec) {
-  description = "Run the TeaVM application hosted via a local Jetty server at http://localhost:8080/"
-  group("application")
-  dependsOn(classes)
-  mainClass.set(project.mainClassName)
-  setClasspath(sourceSets.main.runtimeClasspath)
-  args += ["run"]
-}
+/// The tasks set up for debugging are gdx_teavm_web_js_build and gdx_teavm_web_js_run .
+/// These auto-build and reload changed sources; they don't obfuscate their output.
+/// The tasks for releases are gdx_teavm_web_js_release_build, gdx_teavm_web_js_release_run,
+/// gdx_teavm_web_wasm_release_build, and gdx_teavm_web_wasm_release_run .
+/// The build tasks will place a build in build/dist/js/release/webapp or build/dist/wasm/release/webapp .
+/// The run tasks (including debug) will provide a link to click in the build output.
+/// The run tasks won't end on their own; you can open the link multiple times until you stop the build.
 
-tasks.register("runDebug", JavaExec) {
-  description = "Run the TeaVM application with debug enabled hosted via a local Jetty server at http://localhost:8080/"
-  group("application")
-  dependsOn(classes)
-  mainClass.set(project.mainClassName)
-  setClasspath(sourceSets.main.runtimeClasspath)
-  args += ["debug", "run"]
-}
+gdxTeaVM {
+  webDefaults {
+    mainClass.set("$${project.basic.rootPackage}.teavm.TeaVMLauncher")
+    htmlTitle.set(appName)
+    assets.from(rootProject.files('assets'))
+  }
 
-tasks.register("buildRelease", JavaExec) {
-  description = "Build the TeaVM application; doesn't run directly"
-  group("build")
-  dependsOn(classes)
-  mainClass.set(project.mainClassName)
-  setClasspath(sourceSets.main.runtimeClasspath)
-}
+  js {
+    devServer {
+      enabled.set(true)
+      autoBuild.set(true)
+      autoReload.set(true)
+    }
+  }
 
-tasks.register("buildDebug", JavaExec) {
-  description = "Build the TeaVM application with debug enabled; doesn't run directly"
-  group("build")
-  dependsOn(classes)
-  mainClass.set(project.mainClassName)
-  setClasspath(sourceSets.main.runtimeClasspath)
-  args += ["debug"]
+  js("release") {
+    obfuscated.set(true)
+    serverPort.set(8180)
+  }
+
+  wasm("release") {
+    obfuscated.set(true)
+    serverPort.set(8181)
+  }
 }
 
 // For backwards compatibility with the earlier run and build tasks.
 tasks.register("run"){
-  dependsOn runRelease
+  dependsOn("gdx_teavm_web_wasm_release_run")
 }
-build.dependsOn buildRelease
+build.dependsOn("gdx_teavm_web_wasm_release_build")
 """
 }

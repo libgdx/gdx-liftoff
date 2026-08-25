@@ -4,7 +4,6 @@ import gdx.liftoff.config.GdxVersion
 import gdx.liftoff.data.files.SourceFile
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.platforms.Android
-import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.platforms.Core
 import gdx.liftoff.data.platforms.GWT
 import gdx.liftoff.data.platforms.Headless
@@ -719,13 +718,6 @@ public class ServerLauncher {
       fileName = "TeaVMLauncher.$launcherExtension",
       content = getTeaVMLauncherContent(project),
     )
-    addSourceFile(
-      project = project,
-      platform = TeaVM.ID,
-      packageName = "${project.basic.rootPackage}.teavm",
-      fileName = "TeaVMBuilder.$launcherExtension",
-      content = getTeaVMBuilderContent(project),
-    )
   }
 
   @Language("java")
@@ -752,52 +744,7 @@ public class TeaVMLauncher {
     }
 }"""
 
-  @Language("java")
-  fun getTeaVMBuilderContent(project: Project): String =
-    """package ${project.basic.rootPackage}.teavm;
-
-import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle;
-import com.github.xpenatan.gdx.teavm.backends.shared.config.builder.TeaBuilder;
-import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend;
-import java.io.File;
-import org.teavm.tooling.TeaVMSourceFilePolicy;
-import org.teavm.tooling.sources.DirectorySourceFileProvider;
-import org.teavm.vm.TeaVMOptimizationLevel;
-
-/** Builds the TeaVM/HTML application. */
-public class TeaVMBuilder {
-    public static void main(String[] args) {
-        // Typically set by the Gradle task, but can also be set here or with the command-line arg "debug"
-        boolean debug = false;
-        // Typically set by the Gradle task, but can also be set here or with the command-line arg "run"
-        boolean startJetty = false;
-        for (String arg : args) {
-            if ("debug".equals(arg)) debug = true;
-            else if ("run".equals(arg)) startJetty = true;
-        }
-        WebBackend backend = new WebBackend()
-                .setHtmlWidth(800) /* Change this to fit your game's requirements. */
-                .setHtmlHeight(600) /* Change this to fit your game's requirements. */
-                .setHtmlTitle("${project.basic.name}")
-//                .setWebAssembly(true) /* Uncomment this line to use WASM output instead of JavaScript output. */
-                .setStartJettyAfterBuild(startJetty)
-                .setJettyPort(8080);
-        new TeaBuilder(backend)
-            .addAssets(new AssetFileHandle("../${Assets.ID}"))
-            ${project.teaBuilderLines.joinToString("\n            ")}
-            .setOptimizationLevel(debug ? TeaVMOptimizationLevel.SIMPLE : TeaVMOptimizationLevel.ADVANCED)
-            .setMainClass(TeaVMLauncher.class.getName())
-            .setObfuscated(!debug)
-            .setDebugInformationGenerated(debug)
-            .setSourceMapsFileGenerated(debug)
-            .setSourceFilePolicy(TeaVMSourceFilePolicy.COPY)
-            .addSourceFileProvider(new DirectorySourceFileProvider(new File("../core/src/main/java/")))
-            // You can also register any classes or packages that require reflection here:
-${generateTeaVMReflectionIncludes(project)}
-            .build(new File("build/dist/" + (backend.isWebAssembly ? "wasm" : "js")));
-    }
-}"""
-
+  // TODO: This needs to be incorporated into the Gradle-plugin-based build, not the Builder source.
   fun generateTeaVMReflectionIncludes(
     project: Project,
     indent: String = " ".repeat(12),

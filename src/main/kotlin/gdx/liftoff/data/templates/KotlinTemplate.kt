@@ -2,7 +2,6 @@ package gdx.liftoff.data.templates
 
 import gdx.liftoff.data.files.path
 import gdx.liftoff.data.languages.Kotlin
-import gdx.liftoff.data.platforms.Assets
 import gdx.liftoff.data.project.Project
 import gdx.liftoff.ui.UserData
 import org.intellij.lang.annotations.Language
@@ -462,47 +461,5 @@ fun main() {
         height = 0
     }
     WebApplication(${project.basic.mainClass}(), config)
-}"""
-
-  @Language("kotlin")
-  override fun getTeaVMBuilderContent(project: Project) =
-    """package ${project.basic.rootPackage}.teavm
-
-import com.github.xpenatan.gdx.teavm.backends.shared.config.AssetFileHandle
-import com.github.xpenatan.gdx.teavm.backends.shared.config.builder.TeaBuilder
-import com.github.xpenatan.gdx.teavm.backends.web.config.backend.WebBackend
-import org.teavm.tooling.TeaVMSourceFilePolicy
-import org.teavm.tooling.sources.DirectorySourceFileProvider
-import org.teavm.vm.TeaVMOptimizationLevel
-import java.io.File
-
-/** Builds the TeaVM/HTML application. */
-object TeaVMBuilder {
-    @JvmStatic fun main(arguments: Array<String>) {
-        val debug = "debug" in arguments
-        val startJetty = "run" in arguments
-
-        val webBackend = WebBackend()
-            .setHtmlTitle("${project.basic.name}")
-            .setHtmlWidth(800) /* Change this to fit your game's requirements. */
-            .setHtmlHeight(600) /* Change this to fit your game's requirements. */
-            .setStartJettyAfterBuild(startJetty)
-            .setJettyPort(8080)
-//            .setWebAssembly(true) /* Uncomment this line to use WASM output instead of JavaScript output. */
-
-        TeaBuilder(webBackend)
-            .addAssets(AssetFileHandle("../${Assets.ID}"))
-            ${project.teaBuilderLines.joinToString("\n            ").replace("new ", "")}
-            .setOptimizationLevel(if (debug) TeaVMOptimizationLevel.SIMPLE else TeaVMOptimizationLevel.ADVANCED)
-            .setMainClass("${project.basic.rootPackage}.teavm.TeaVMLauncher")
-            .setObfuscated(!debug)
-            .setDebugInformationGenerated(debug)
-            .setSourceMapsFileGenerated(debug)
-            .setSourceFilePolicy(if (debug) TeaVMSourceFilePolicy.COPY else TeaVMSourceFilePolicy.DO_NOTHING)
-            .addSourceFileProvider(DirectorySourceFileProvider(File("../core/src/main/kotlin")))
-            // Register any classes or packages that require reflection here.
-${generateTeaVMReflectionIncludes(project, indent = " ".repeat(12))}
-            .build(File("build/dist/" + (if(webBackend.isWebAssembly) "wasm" else "js")))
-    }
 }"""
 }
