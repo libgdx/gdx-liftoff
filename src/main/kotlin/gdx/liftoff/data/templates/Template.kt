@@ -744,18 +744,6 @@ public class TeaVMLauncher {
     }
 }"""
 
-  // TODO: This needs to be incorporated into the Gradle-plugin-based build, not the Builder source.
-  fun generateTeaVMReflectionIncludes(
-    project: Project,
-    indent: String = " ".repeat(12),
-  ): String = if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
-    "$indent//.addReflectionClass(\"${project.basic.rootPackage}.reflect\")"
-  } else {
-    (project.reflectedPackages + project.reflectedClasses).joinToString(separator = "\n") {
-      "$indent.addReflectionClass(\"$it\")"
-    }
-  }
-
   fun addSourceFile(
     project: Project,
     platform: String,

@@ -45,8 +45,20 @@ class TeaVMGradleFile(
     addDependency("com.github.xpenatan.gdx-teavm:backend-web:\$gdxTeaVMVersion")
   }
 
+  fun generateTeaVMReflectionIncludes(
+    indent: String = " ".repeat(2),
+  ): String = if (project.reflectedPackages.isEmpty() && project.reflectedClasses.isEmpty()) {
+    "$indent//reflection.add(\"${project.basic.rootPackage}.reflect\")"
+  } else {
+    (project.reflectedPackages + project.reflectedClasses).joinToString(separator = "\n") {
+      "${indent}reflection.add(\"$it\")"
+    }
+  }
+
   override fun getContent() =
-    $$"""plugins {
+    $$"""import org.teavm.gradle.api.OptimizationLevel
+
+plugins {
   id 'java'
   id("com.github.xpenatan.gdx-teavm") version "$gdxTeaVMVersion"
 }
@@ -71,10 +83,14 @@ $${joinDependencies(dependencies)}
 /// The run tasks won't end on their own; you can open the link multiple times until you stop the build.
 
 gdxTeaVM {
+  assets.from(rootProject.files('assets'))
+
+  /// You can add additional classes or packages that need reflection here.
+$${generateTeaVMReflectionIncludes()}
+
   webDefaults {
     mainClass.set("$${project.basic.rootPackage}.teavm.TeaVMLauncher")
     htmlTitle.set(appName)
-    assets.from(rootProject.files('assets'))
   }
 
   js {
@@ -82,17 +98,20 @@ gdxTeaVM {
       enabled.set(true)
       autoBuild.set(true)
       autoReload.set(true)
+      optimization.set(OptimizationLevel.NONE)
     }
   }
 
   js("release") {
     obfuscated.set(true)
     serverPort.set(8180)
+    optimization.set(OptimizationLevel.BALANCED)
   }
 
   wasm("release") {
     obfuscated.set(true)
     serverPort.set(8181)
+    optimization.set(OptimizationLevel.BALANCED)
   }
 }
 
