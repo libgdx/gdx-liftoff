@@ -1,6 +1,5 @@
 package gdx.liftoff.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
-import gdx.liftoff.Main;
 import gdx.liftoff.ui.dialogs.ConfirmResetUserData;
 
 import static gdx.liftoff.Main.*;
@@ -63,7 +61,7 @@ public class OverlayTable extends Table {
 
     private Table createMinimalistTable() {
         Table table = new Table();
-        
+
         Button button = new Button(skin, "reload");
         table.add(button).expand().top().right();
         addTooltip(button, Align.left, prop.getProperty("reset"));

@@ -14,7 +14,6 @@ import com.github.tommyettinger.textra.TypingLabel;
 import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import gdx.liftoff.Main;
 import gdx.liftoff.config.Configuration;
-import gdx.liftoff.ui.FileChooserListener;
 import gdx.liftoff.ui.UserData;
 import gdx.liftoff.ui.dialogs.ConfirmDeleteProjectFolder;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;

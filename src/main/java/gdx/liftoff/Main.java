@@ -48,7 +48,6 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.util.nfd.NativeFileDialog;
 
 import java.io.IOException;
-import java.lang.StringBuilder;
 import java.util.*;
 import java.util.Collections;
 

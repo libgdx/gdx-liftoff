@@ -6,11 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
-import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.ui.UserData;
 
 import static gdx.liftoff.Main.*;
@@ -38,9 +36,12 @@ public class LanguagesDialog extends PopTable {
             contentTable = new Table();
             populate(contentTable);
 
-            ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
-            scaleContainer.setMinSize(1920, 1080);
-            scaleContainer.setPrefSize(1920, 1080);
+//            ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+//            scaleContainer.setMinSize(1920, 1080);
+//            scaleContainer.setPrefSize(1920, 1080);
+
+            Container<Table> scaleContainer = new Container<>(contentTable);
+
             collapsibleGroup.addActor(scaleContainer);
         } else {
             Table contentTable = new Table();
