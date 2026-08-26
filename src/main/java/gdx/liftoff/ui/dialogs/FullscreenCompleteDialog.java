@@ -2,17 +2,12 @@ package gdx.liftoff.ui.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.ray3k.stripe.CollapsibleGroup;
 import com.ray3k.stripe.CollapsibleGroup.CollapseType;
 import com.ray3k.stripe.PopTable;
-import com.ray3k.stripe.ScaleContainer;
 import gdx.liftoff.ui.panels.CompleteButtonsPanel;
 import gdx.liftoff.ui.panels.CompletePanel;
 import gdx.liftoff.ui.panels.GeneratingPanel;
@@ -38,9 +33,12 @@ public class FullscreenCompleteDialog extends PopTable {
         add(dualCollapsibleGroup).grow();
 
         Table contentTable = new Table();
-        ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
-        scaleContainer.setPrefSize(1920, 1080);
-        scaleContainer.setMinSize(1920, 1080);
+//        ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+//        scaleContainer.setPrefSize(1920, 1080);
+//        scaleContainer.setMinSize(1920, 1080);
+
+        Container<Table> scaleContainer = new Container<>(contentTable);
+
         dualCollapsibleGroup.addActor(scaleContainer);
         createPanels(contentTable, showGeneration);
 
