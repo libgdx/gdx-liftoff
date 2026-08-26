@@ -65,7 +65,7 @@ plugins {
 
 eclipse.project.name = appName + "-teavm"
 
-// This must be at least 17, and no higher than the JDK version this project is built with.
+// This must be at least 17, and no lower than the JDK version this project is built with.
 java.targetCompatibility = "$${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"
 // This should probably be equal to targetCompatibility, above. This only affects the TeaVM module.
 java.sourceCompatibility = "$${17.coerceAtLeast(project.advanced.javaVersion.toInt())}"

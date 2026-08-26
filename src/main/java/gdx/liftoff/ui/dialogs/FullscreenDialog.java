@@ -29,7 +29,7 @@ public class FullscreenDialog extends PopTable {
     private final ArrayList<TextButton> generateButtons = new ArrayList<>();
     private final ArrayList<Table> versionTables = new ArrayList<>();
     private final ArrayList<PathsPanel> pathsPanel = new ArrayList<>();
-  
+
     public FullscreenDialog() {
         super(skin.get("fullscreen", WindowStyle.class));
         fullscreenDialog = this;
@@ -47,9 +47,12 @@ public class FullscreenDialog extends PopTable {
         add(dualCollapsibleGroup).grow();
 
         Table contentTable = new Table();
-        ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
-        scaleContainer.setPrefSize(1920, 1080);
-        scaleContainer.setMinSize(1920, 1080);
+//        ScaleContainer scaleContainer = new ScaleContainer(Scaling.fit, contentTable);
+//        scaleContainer.setPrefSize(1920, 1080);
+//        scaleContainer.setMinSize(1920, 1080);
+
+        Container<Table> scaleContainer = new Container<>(contentTable);
+
         dualCollapsibleGroup.addActor(scaleContainer);
         createPanels(contentTable);
 
