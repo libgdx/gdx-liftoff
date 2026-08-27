@@ -125,7 +125,7 @@ class ArtemisOdbSerializerJsonGdx : ThirdPartyExtension() {
 @Extension
 class PixscapeRuntime : ThirdPartyExtension() {
   override val id = "pixscapeRuntime"
-  override val defaultVersion = "0.1.9"
+  override val defaultVersion = "0.1.10"
   override val url = "https://pixscape.games"
   override val group = "games.pixscape"
   override val name = "pixscape-runtime"
