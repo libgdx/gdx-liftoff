@@ -42,8 +42,9 @@ have access to any APIs added in Java 8 (at most, APIs from 7 are available). Li
 even if other projects use a higher language level; you need to make sure you only use features that are compatible with
 RoboVM if you target it. If you target the browser via GWT, you need to use language level 8 or 11, with 11 recommended
 (any recent JDK installation can still target 8 or 11; it can't actually be a JDK 8 or 11 installation and still run
-Gradle). If you target the browser via TeaVM, you need to use language level 11 or *higher*, which is yet another reason
-to use the recommended JDK 21 (recent JDKs like 21 can still target older language levels, as low as 8).
+Gradle). If you target the browser via TeaVM, the TeaVM module will always use at least language level 17, even if a
+lower language level is used in core or other modules. If you are using JDK 21 to build, you won't have any problem
+targeting language level 17 for TeaVM, and it will work out-of-the-box.
 
 If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
 vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
@@ -69,11 +70,9 @@ version of your choosing. One reason you might need this is to better support Wa
 worked starting in LWJGL 3.3.4 . Currently, libGDX 1.14.2 uses LWJGL 3.3.3 unless some Gradle config changes that
 version. The constraints on the LWJGL version default to LWJGL 3.4.3 instead now, allowing Java 25 and up to work.
 Typically, you either leave `lwjgl3Version=3.4.3` unchanged, or set it to `lwjgl3Version=3.3.3` for Wayland reasons.
-Note that if you are running on Java 25 or newer, LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of
-the older and scheduled-to-be-removed `sun.misc.Unsafe` class. This may have
-[unexpected performance problems](https://github.com/LWJGL/lwjgl3/issues/1111#issuecomment-4147955320) due to
-complexities of the JVM and how FFM currently works, so you could get better framerates with Java 21. There's also the
-possibility of using LWJGL3's `:unsafe` dependencies instead of the usual ones, which still needs exploration.
+Note that if you are running on Java 25 or newer with the `--sun-misc-unsafe-memory-access=deny` option (which will be
+the default in future JDKs), LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of the older and
+scheduled-to-be-removed `sun.misc.Unsafe` class.
 
 Advanced users may want to try using GraalVM to either run their project or to build a "native-image" distributable.
 Native-image, also called Substrate VM, allows you to avoid distributing a JDK at all by compiling a fairly-small
@@ -91,6 +90,13 @@ is a community edition that is GPL v2 with CE, and another edition that has chan
 Running a JAR with GraalVM *without* using native-image also works, and can sometimes yield significantly better
 performance on long-running apps relative to a typical OpenJDK installation, but it takes longer to get to full speed.
 
+Most current OS and architecture combinations are supported, except ARM Windows at this point because libGDX itself
+doesn't yet support ARM Windows. The ARM architecture is supported on Linux and macOS. x86 is supported on Windows if
+you use the cross-platform JAR, and x64 is supported for all OSes libGDX supports. Sorry if you use BSD, but libGDX
+doesn't currently support that, either. Alpine Linux (which uses MUSL as its C library) might work, but don't get your
+hopes up. Be aware that if you use TeaVM, you may need to output JavaScript instead of WASM to target very old
+OS/browser versions if you want users to be able to run with unsupported browsers on Windoes 7, for instance.
+
 If you have any trouble, you can try our [🐛Troubleshooting Guide🐛](Troubleshooting.md).
 
 ## Features
@@ -102,8 +108,7 @@ In addition to most features of the original `gdx-setup`, the `gdx-liftoff` tool
 - **Other JVM languages support.** You can choose additional languages for your project, like Kotlin or Scala.
 Their standard libraries, Gradle plugins, and appropriate source folders will be included.
 - **Customization.** You have more control over the versions of software used by your application.
-- **More third-party extensions.** Their versions are fetched from Maven Central or JitPack, so your project is always 
-generated up-to-date.
+- **More third-party extensions.** Their versions are tracked by gdx-liftoff and are updated frequently.
 - **Automatic configuration for tricky extensions.** If you're having trouble setting up
 Artemis-ODB, Lombok, or several other libraries, Liftoff does some extra work, so you don't have to. 
 - **Preferences support.** Basic data of your application is saved, so you don't have to fill it each time
@@ -178,7 +183,8 @@ The project was forked from the [`czyzby/gdx-setup`](https://github.com/czyzby/g
 [@czyzby](https://github.com/czyzby) and [@kotcrab](https://github.com/kotcrab) created the original application,
 as well as a set of libraries that it depends on (`gdx-lml` and `VisUI` respectively). Since then, the project is
 maintained by [@tommyettinger](https://github.com/tommyettinger). Graciously, czyzby came back and made a wide variety of improvements, so big
-thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now maintains gdx-lml (which this used and may still use).
+thanks there! Thanks also to [@metaphore](https://github.com/metaphore), who now maintains gdx-lml (which this used and still provides templates
+so new projects can use it).
 
 [@raeleus](https://github.com/raeleus) created the
 [Particle Park skin for scene2d.ui](https://ray3k.wordpress.com/particle-park-ui-skin-for-scene2d-ui/),
@@ -203,8 +209,8 @@ The "Space Shuttle" icon was drawn by [Delapouite](https://delapouite.com/) for 
 [in this repo](https://github.com/tommyettinger/game-icons-net-atlas), if you want to use the whole collection yourself.
 
 The font used by the Liftoff GUI in 1.14.2.1 and later is [DINish](https://github.com/playbeing/dinish), which is licensed under the
-permissive SIL OFL 1.1 . It replaces another, similar-looking font that the licensing (and even the name of the font) was unclear on,
-though it was freely available.
+permissive SIL OFL 1.1 . It replaces another, similar-looking font that the licensing (and even the name of the font)
+was unclear on, though it was freely available.
 
 Thanks also to everyone who has made the various libraries and tools Liftoff depends upon. From the huge team
 responsible for Graal Native Image, to [Construo](https://github.com/fourlastor-alexandria/construo) by pretty much a
