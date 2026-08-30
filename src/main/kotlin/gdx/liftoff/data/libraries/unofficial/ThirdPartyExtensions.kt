@@ -719,8 +719,8 @@ class HackLights : ThirdPartyExtension() {
 @Extension
 class SpineRuntime : ThirdPartyExtension() {
   override val id = "spineRuntime"
-  override val defaultVersion = "4.2.10"
-  override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/4.2/spine-libgdx"
+  override val defaultVersion = "4.3.5"
+  override val url = "https://github.com/EsotericSoftware/spine-runtimes/tree/4.3/spine-libgdx"
   override val group = "com.esotericsoftware.spine"
   override val name = "spine-libgdx"
 
@@ -991,7 +991,7 @@ class CommonsCollections : ThirdPartyExtension() {
 @Extension
 class Fory : ThirdPartyExtension() {
   override val id = "fory"
-  override val defaultVersion = "1.6.1"
+  override val defaultVersion = "1.7.0"
   override val url = "https://fory.apache.org/"
 
   // was org.furyio before 0.5.0
@@ -1534,7 +1534,7 @@ class Cringe : ThirdPartyExtension() {
 class Digital : ThirdPartyExtension() {
   override val id = "digital"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.2"
+  override val defaultVersion = "0.10.3"
   override val url = "https://github.com/tommyettinger/digital"
   override val group = "com.github.tommyettinger"
   override val name = "digital"
@@ -1575,7 +1575,7 @@ class Funderby : ThirdPartyExtension() {
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.5"
+  override val defaultVersion = "0.10.6"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1598,7 +1598,7 @@ class Juniper : ThirdPartyExtension() {
 class Jdkgdxds : ThirdPartyExtension() {
   override val id = "jdkgdxds"
   override val repository = Repository.JitPack
-  override val defaultVersion = "2.1.8"
+  override val defaultVersion = "2.1.9"
   override val url = "https://github.com/tommyettinger/jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds"
@@ -1622,7 +1622,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
   override val repository = Repository.JitPack
-  override val defaultVersion = "2.1.8.0"
+  override val defaultVersion = "2.1.9.0"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1667,7 +1667,7 @@ class KryoRegExodus : ThirdPartyExtension() {
 class KryoDigital : ThirdPartyExtension() {
   override val id = "kryoDigital"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.2.2"
+  override val defaultVersion = "0.10.3.2"
   override val url = "https://github.com/tommyettinger/kryo-digital"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-digital"
@@ -1688,7 +1688,7 @@ class KryoDigital : ThirdPartyExtension() {
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.5.2"
+  override val defaultVersion = "0.10.6.2"
   override val url = "https://github.com/tommyettinger/kryo-juniper"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"
@@ -1710,7 +1710,7 @@ class KryoJuniper : ThirdPartyExtension() {
 class KryoJdkgdxds : ThirdPartyExtension() {
   override val id = "kryoJdkgdxds"
   override val repository = Repository.JitPack
-  override val defaultVersion = "2.1.8.2"
+  override val defaultVersion = "2.1.9.2"
   override val url = "https://github.com/tommyettinger/kryo-jdkgdxds"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-jdkgdxds"
@@ -1816,7 +1816,7 @@ class KryoLibgdx : ThirdPartyExtension() {
 class TantrumLibgdx : ThirdPartyExtension() {
   override val id = "tantrumLibgdx"
   override val repository = Repository.JitPack
-  override val defaultVersion = "1.6.1.0"
+  override val defaultVersion = "1.7.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-libgdx"
@@ -1836,7 +1836,7 @@ class TantrumLibgdx : ThirdPartyExtension() {
 class TantrumRegExodus : ThirdPartyExtension() {
   override val id = "tantrumRegExodus"
   override val repository = Repository.JitPack
-  override val defaultVersion = "1.6.1.0"
+  override val defaultVersion = "1.7.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-regexodus"
@@ -1857,7 +1857,7 @@ class TantrumRegExodus : ThirdPartyExtension() {
 class TantrumDigital : ThirdPartyExtension() {
   override val id = "tantrumDigital"
   override val repository = Repository.JitPack
-  override val defaultVersion = "1.6.1.0"
+  override val defaultVersion = "1.7.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-digital"
@@ -1878,7 +1878,7 @@ class TantrumDigital : ThirdPartyExtension() {
 class TantrumJdkgdxds : ThirdPartyExtension() {
   override val id = "tantrumJdkgdxds"
   override val repository = Repository.JitPack
-  override val defaultVersion = "1.6.1.0"
+  override val defaultVersion = "1.7.0.0"
   override val url = "https://github.com/tommyettinger/tantrum"
   override val group = "com.github.tommyettinger.tantrum"
   override val name = "tantrum-jdkgdxds"
