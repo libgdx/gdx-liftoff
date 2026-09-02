@@ -440,6 +440,12 @@ fun main() {
     TODO("Implement server application.")
 }"""
 
+  override fun getFreeTypeLine(project: Project): String =
+    if (project.extensions.isSelected(
+        "gdx-freetype"
+      )
+    ) """preloadListener = com.github.xpenatan.gdx.teavm.backends.web.WebAssetPreloadListener { assetLoader -> assetLoader!!.loadScript("freetype.js") }""" else ""
+
   @Language("kotlin")
   override fun getTeaVMLauncherContent(project: Project): String =
     """@file:JvmName("TeaVMLauncher")
@@ -459,6 +465,7 @@ fun main() {
         //// If width and height are both 0, then the app will use all available space.
         width = 0
         height = 0
+        ${getFreeTypeLine(project)}
     }
     WebApplication(${project.basic.mainClass}(), config)
 }"""
