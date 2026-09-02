@@ -444,7 +444,7 @@ fun main() {
     if (project.extensions.isSelected(
         "gdx-freetype"
       )
-    ) """preloadListener = com.github.xpenatan.gdx.teavm.backends.web.WebAssetPreloadListener { assetLoader -> assetLoader!!.loadScript("freetype.js") }""" else ""
+    ) """preloadListener = com.github.xpenatan.gdx.teavm.backends.web.WebAssetPreloadListener { assetLoader -> assetLoader.loadScript("freetype.js") }""" else ""
 
   @Language("kotlin")
   override fun getTeaVMLauncherContent(project: Project): String =
