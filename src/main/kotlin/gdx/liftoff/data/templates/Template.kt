@@ -720,6 +720,8 @@ public class ServerLauncher {
     )
   }
 
+  fun getFreeTypeLine(project: Project): String = if (project.extensions.isSelected("gdx-freetype")) "config.preloadListener = assetLoader -> assetLoader.loadScript(\"freetype.js\");\n" else ""
+
   @Language("java")
   fun getTeaVMLauncherContent(project: Project): String =
     """package ${project.basic.rootPackage}.teavm;
@@ -740,6 +742,7 @@ public class TeaVMLauncher {
         //// If width and height are both 0, then the app will use all available space.
         config.width = 0;
         config.height = 0;
+        ${getFreeTypeLine(project)}
         new WebApplication(new ${project.basic.mainClass}(), config);
     }
 }"""
