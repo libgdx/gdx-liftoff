@@ -118,6 +118,7 @@ public final class Listing {
             new JBump(),
             new CommonsCollections(),
             new Fory(),
+            new ForyJson(),
             new Kryo(),
             new KryoNet(),
             new GdxWebRtc(),
