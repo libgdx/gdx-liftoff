@@ -52,7 +52,7 @@ data class AdvancedProjectData(
   /**
    * Should match the recommended/tested by the libGDX version, but it's usually safe to upgrade to latest versions to keep up with iOS changes.
    */
-  val robovmVersion: String = "2.3.23"
+  val robovmVersion: String = "2.3.26"
 
   /**
    * Will be set to 2.11.0 if using a Java version of at least 8; otherwise adapts to what the libGDX version uses.
