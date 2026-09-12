@@ -30,8 +30,8 @@ class IsometricVoxelTemplate : Template {
   override fun apply(project: Project) {
     super.apply(project)
     arrayOf(
-      "Cozette-License.txt",
-      "CozetteOutlined-standard.fnt",
+      "DINish-License.txt",
+      "DINish-Expanded.fnt",
       "isometric-trpg.atlas",
       "isometric-trpg.json",
       "isometric-trpg.png",
@@ -217,6 +217,7 @@ public class LocalMap {
     public boolean isValid(float f, float g, float h) {
         return isValid(round(f), round(g), round(h));
     }
+
     /**
      * Delegates to {@link #isValid(float, float, float)} using only the x, y, and z coordinates of {@code point}.
      * @param point a Vector4 of which only x, y, and z will be checked
@@ -309,8 +310,8 @@ public class LocalMap {
 
     /**
      * When point.w is 0, this selects terrain; when it is ENTITY_W, it selects an entity.
-     * @param point the Vector4 to retrieve; w should be either 0, {@link Mover#PLAYER_W}, or {@link Mover#FISH_W}
-     * @return whatever IsoSprite was known at the given point, if there was one, or null otherwise
+     * @param point a Vector4 key in {@link #everything}
+     * @return an IsoSprite looked up in {@link #everything}, or null if nothing was found
      */
     public IsoSprite getIsoSprite(Vector4 point) {
         return everything.get(point);
@@ -324,7 +325,7 @@ public class LocalMap {
      * @param f f-position as an int
      * @param g g-position as an int
      * @param h h-position as an int
-     * @param tileId an ID for a tile, typically from {@link AssetData}
+     * @param tileId an ID for a tile, typically from {@link AssetData}; may be -1 to remove a tile
      */
     public void setTile(int f, int g, int h, int tileId) {
         if (isValid(f, g, h)) {
@@ -404,14 +405,26 @@ public class LocalMap {
         }
     }
 
+    /**
+     * The size of the f-axis (the first dimension of tiles).
+     * @return {@code tiles.length}
+     */
     public int getFSize() {
         return tiles.length;
     }
 
+    /**
+     * The size of the g-axis (the second dimension of tiles).
+     * @return {@code tiles[0].length}
+     */
     public int getGSize() {
         return tiles[0].length;
     }
 
+    /**
+     * The size of the h-axis (the third dimension of tiles).
+     * @return {@code tiles[0][0].length}
+     */
     public int getHSize() {
         return tiles[0][0].length;
     }
@@ -444,6 +457,7 @@ public class LocalMap {
      * Used to allow paths to meander across the map area, without changing directions completely at random.
      */
     private static final GridPoint2[] DIRECTIONS = {new GridPoint2(1, 0), new GridPoint2(0, 1), new GridPoint2(-1, 0), new GridPoint2(0, -1)};
+
     /**
      * Generates a simple test map that assumes a specific tileset (using {@code isometric-trpg.atlas} as
      * {@code tileset}, {@code tileset.findRegions("tile")}). Allows setting a specific seed to get the same map every
@@ -456,11 +470,11 @@ public class LocalMap {
      * @param atlas should probably be the TextureAtlas loaded from {@code isometric-trpg.atlas}
      * @return a new LocalMap
      */
-    public static LocalMap generateTestMap(long seed, int mapSize, int mapPeak, TextureAtlas atlas) {
+    public static LocalMap generateMap(long seed, int mapSize, int mapPeak, TextureAtlas atlas) {
 
-        // noise that gradually moves a little
+        // Noise that gradually moves a little
         MiniNoise baseNoise = new MiniNoise((int) (seed), 0.06f, MiniNoise.FBM, 3);
-        // noise that is usually a low value, but has ridges of high values
+        // Noise that is usually a low value, but has ridges of high values
         MiniNoise ridgeNoise = new MiniNoise((int) (seed >> 32), 0.1f, MiniNoise.RIDGED, 1);
         // This makes calls to MathUtils random number methods predictable, including after this call completes!
         // You may want to re-randomize MathUtils' random number generator after this completes, using:
@@ -549,45 +563,56 @@ public class LocalMap {
 
         // When we're done, we just need to take all the all-connected path tiles and change them to linear paths.
         AssetData.realignPaths(map);
+        // Remove this next line if you intend to allow players to edit the map or destroy tiles during play.
+        removeInvisibleTiles(map);
         return map;
     }
 
     /**
-     * Places berry bushes, which were used in an earlier version instead of goldfish.
-     * Berry bushes are harder to notice than goldfish at small sizes, though.
+     * Modifies the given LocalMap so completely-surrounded tiles are removed from the map, "hollowing" out the map.
+     * This is meant to reduce the amount of work needed to render large maps with lots of tiles that can't ever be
+     * seen because they are surrounded on all sides. Having a tile below another doesn't change its visibility.
      * <br>
-     * This should be customized for your game, if you use it.
-     * @param seed if this {@code long} is the same, the same map will be produced on each call
-     * @param bushCount how many bushes to try to place
-     * @return this LocalMap, for chaining
+     * This should not be called if you want to be able to edit the map at runtime. That would make digging caves
+     * impossible, because the ground is just a thin shell above empty space after this is called.
+     *
+     * @param editing a LocalMap that will be modified in-place
      */
-    public LocalMap placeBushes(long seed, int bushCount) {
-        GridPoint2 point = new GridPoint2();
-        int fs = getFSize(), gs = getGSize(), hs = getHSize();
-        seed = (seed ^ 0x9E3779B97F4A7C15L) * 0xD1B54A32D192ED03L;
-        PER_BUSH:
-        for (int i = 0; i < bushCount; i++) {
-            MathSupport.fillR2(point, seed + i, fs, gs);
-            for (int h = hs - 2; h >= 0; h--) {
-                int below = getTile(point.x, point.y, h);
-                if (below == AssetData.DECO_HEDGE) {
-                    bushCount++;
-                    continue PER_BUSH; // labeled break; we want to try to place a bush in another location.
-                }
-                if (below != -1) {
-                    tiles[point.x][point.y][h + 1] = AssetData.DECO_HEDGE;
-                    everything.put(new Vector4(point.x, point.y, h + 1, Mover.FISH_W),
-                        new IsoSprite(new TextureAtlas.AtlasSprite(tileset.get(AssetData.DECO_HEDGE)), point.x, point.y, h + 1));
-                    setTile(point.x, point.y, h, AssetData.DIRT);
-                    setTile(point.x + 1, point.y, h, AssetData.DIRT);
-                    setTile(point.x - 1, point.y, h, AssetData.DIRT);
-                    setTile(point.x, point.y + 1, h, AssetData.DIRT);
-                    setTile(point.x, point.y - 1, h, AssetData.DIRT);
-                    break;
+    public static void removeInvisibleTiles(LocalMap editing) {
+        int fs = editing.getFSize();
+        int gs = editing.getGSize();
+        int hs = editing.getHSize();
+        // We need two passes to first figure out which tiles to remove,
+        // and then to remove them once we know.
+        boolean[][][] remove = new boolean[fs][gs][hs];
+        // These loops start at 1 and end early so the edges of the map don't get removed.
+        for (int f = 1; f < fs - 1; f++) {
+            for (int g = 1; g < gs - 1; g++) {
+                // This loop has to go through everything.
+                for (int h = hs - 1; h >= 0; h--) {
+                    // For a tile to be invisible, it:
+                    // can't be on the top level of the world,
+                    // can't have empty space above it, and
+                    // can't have empty space on any side.
+                    remove[f][g][h] = h != hs - 1 &&
+                        editing.tiles[f][g][h + 1] != -1 &&
+                        editing.tiles[f + 1][g][h] != -1 &&
+                        editing.tiles[f - 1][g][h] != -1 &&
+                        editing.tiles[f][g + 1][h] != -1 &&
+                        editing.tiles[f][g - 1][h] != -1;
                 }
             }
         }
-        return this;
+        // If we decided to remove a tile before, here is where we do that.
+        for (int f = 1; f < fs - 1; f++) {
+            for (int g = 1; g < gs - 1; g++) {
+                for (int h = hs - 1; h >= 0; h--) {
+                    if(remove[f][g][h])
+                        editing.setTile(f, g, h, -1);
+                }
+            }
+        }
+        // This modifies "editing" in-place, so we don't need to return.
     }
 
     /**
@@ -604,9 +629,14 @@ public class LocalMap {
     public LocalMap placeFish(long seed, int fishCount, Array<Array<Animation<TextureAtlas.AtlasSprite>>> animations) {
         GridPoint2 point = new GridPoint2();
         int fs = getFSize(), gs = getGSize(), hs = getHSize();
+        // Randomizes seed a little. Very similar seeds before this call will be very different after it.
         seed = (seed ^ 0x9E3779B97F4A7C15L) * 0xD1B54A32D192ED03L;
         for (int i = 0; i < fishCount; i++) {
+            // Assigns a somewhat-random position to point, based on seed and i.
+            // This uses the R2 sequence, which won't put points too close to each other when
+            // the second parameter goes between just a few close-together numbers.
             MathSupport.fillR2(point, seed + i, fs, gs);
+            // "Drop" the fish from above so it doesn't start inside a tile.
             for (int h = hs - 2; h >= 0; h--) {
                 int below = getTile(point.x, point.y, h);
                 if (below != -1) {
@@ -660,7 +690,7 @@ import static ${project.basic.rootPackage}.Main.OFFSET_Y;
  *     <li>The h axis is the vertical line from your heel to your head (or Hell to Heaven).</li>
  * </ul>
  */
-public class IsoSprite implements Comparable<IsoSprite> {
+public class IsoSprite {
     /**
      * The "cube side length" for one voxel.
      */
@@ -859,7 +889,8 @@ public class IsoSprite implements Comparable<IsoSprite> {
 
     /**
      * Calculates the distance from the camera to the given f,g,h position, using the given cos and sin of the rotation
-     * of the map around the given origin point.
+     * of the map around the given origin point. This won't really work for massive maps, larger than 1024x1024 or so
+     * in f by g size.
      * @param f isometric tile f-coordinate
      * @param g isometric tile g-coordinate
      * @param h isometric tile h-coordinate
@@ -870,10 +901,15 @@ public class IsoSprite implements Comparable<IsoSprite> {
      * @return the view distance to the given position, with the given rotation around the given origin
      */
     public static float viewDistance(float f, float g, float h, float originF, float originG, float cosRotation, float sinRotation) {
+        // Get f and g relative to the origin.
         f -= originF;
         g -= originG;
-        float rf = cosRotation * f - sinRotation * g + originF, rg = cosRotation * g + sinRotation * f + originG;
-        return (h * 3 - rf - rg) + (rf - rg) * (1f/2048);
+        // Get rotated f and g positions around the origin.
+        float rf = cosRotation * f - sinRotation * g + originF;
+        float rg = cosRotation * g + sinRotation * f + originG;
+        // Return the distance to the rotated position, with height taking priority, then the diagonal positions that
+        // affect distance to the camera, then with a tiny fraction of left-to-right position used to break ties.
+        return (h * 3f - rf - rg) + ((rf - rg) * (1f/2048f));
     }
 
     /**
@@ -923,17 +959,6 @@ public class IsoSprite implements Comparable<IsoSprite> {
      */
     public IsoSprite update(float stateTime) {
         return this;
-    }
-
-
-    /**
-     * Not actually used. We always use an explicit Comparator that takes rotations into account.
-     * @param other the object to be compared.
-     * @return a negative int, 0, or a positive int, depending on if the view distance for this is less than, equal to, or greater than other's view distance
-     */
-    @Override
-    public int compareTo(IsoSprite other) {
-        return NumberUtils.floatToIntBits(getViewDistance() - other.getViewDistance() + 0f);
     }
 
     @Override
@@ -4519,10 +4544,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -4537,11 +4565,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ArraySupplier;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import ${project.basic.rootPackage}.game.AssetData;
 import ${project.basic.rootPackage}.game.Mover;
 
@@ -4554,7 +4585,7 @@ import static ${project.basic.rootPackage}.util.MathSupport.INVERSE_ROOT_2;
  * classes in other modules. This is an isometric pixel art demo project where the player (a little person in blue) runs
  * around trying to save goldfish (little orange fish out of water) without bumping into enemies (green-skinned, brawny
  * orcs). Bumping into enemies will take away your health, and reaching 0 health is a game-over condition. Saving all 10
- * goldfish is the win condition.
+ * goldfish is the win condition. Arrows point to your blue player character on the edges of the map.
  * <br>
  * This uses a special kind of coordinates because isometric coordinates just don't correspond nicely to x, y,
  * and z with any common convention. Here, when referring to isometric tiles, we use "f, g, h" positions.The f and g
@@ -4588,9 +4619,9 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      */
     private SpriteBatch batch;
     /**
-     * This is the file name of the atlas of 2D assets used in the game. It uses
+     * This is the file name of the atlas of 2D gameplay assets used in the game. It uses
      * <a href="https://gvituri.itch.io/isometric-trpg">these free-to-use assets by Gustavo Vituri</a> and
-     * <a href="https://ray3k.wordpress.com/clean-crispy-ui-skin-for-libgdx/">a mangled, pixelated skin originally by Raymond Buckley</a>.
+     * <a href="https://ray3k.wordpress.com/clean-crispy-ui-skin-for-libgdx/">a skin originally by Raymond Buckley</a>.
      * <br>
      * CUSTOM TO YOUR GAME. This is closely related to {@link AssetData}, and if one changes, both should.
      */
@@ -4599,7 +4630,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      * This is the actual TextureAtlas of 2D assets used in the game. It uses
      * <a href="https://gvituri.itch.io/isometric-trpg">these free-to-use assets by Gustavo Vituri</a> and
      * <a href="https://ray3k.wordpress.com/clean-crispy-ui-skin-for-libgdx/">a skin by Raymond Buckley</a> with the
-     * font changed to <a href="https://github.com/the-moonwitch/Cozette">Cozette</a>.
+     * font changed to <a href="https://github.com/playbeing/dinish">DINish</a>.
      * <br>
      * CUSTOM TO YOUR GAME. This is closely related to {@link AssetData}, and if one changes, both should.
      */
@@ -4654,15 +4685,30 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      */
     private OrthographicCamera camera;
     /**
-     * ScreenViewport is used here with a simple fraction for its {@link ScreenViewport#setUnitsPerPixel(float)}. Using
-     * 1f, 1f/2f, 1f/3f, 1f/4f, etc. will ensure pixels stay all square consistently, and don't form ugly artifacts.
+     * ScreenViewport is used here for a screen that will be drawn pixel-perfect with 8x scaling, and
+     * later scaled down using {@link #growingViewport} with arbitrary scaling. Each pixel drawn with this will be a
+     * 8x8 pixel square on the framebuffer before it gets scaled down. If {@link #ZOOM} changes, 8 will change.
      */
     private ScreenViewport viewport;
+    /**
+     * A FitViewport is used to draw the pixel-perfect zoomed-in screen so it fits on the user's chosen size of window.
+     * This usually shinks the zoomed-in framebuffer "canvas" a lot.
+     */
+    private Viewport growingViewport;
+    /**
+     * A way to draw a zoomed-in pixel-perfect image off-screen, then later draw it larger with better scaling. This
+     * has its texture use linear filtering, which blurs the edges between pixels, but because the image is zoomed-in,
+     * only a small part of each 8x8 pixel square actually gets blurred. If the entire square was subject to blur, the
+     * image would turn to "mush" at anything but an integer multiple for scale.
+     */
+    private FrameBuffer buffer;
+
     /**
      * Mover represents any moving creature or hazard, and can be a player character or non-player character (NPC).
      * This is the player, which has {@code npc = false;} and so won't move on their own.
      */
     private Mover player;
+
     /**
      * A "crosshair-like" indicator of where the player character is on the x-axis, for when they can't be seen.
      */
@@ -4688,7 +4734,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      */
     public Label goalLabel;
     /**
-     * Only shows the current health of the player, using {@code "♥ "} for each point of health.
+     * Only shows the current health of the player, using {@code "<3"} for each point of health.
      * <br>
      * CUSTOM TO YOUR GAME.
      */
@@ -4723,27 +4769,43 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      */
     public static final int MAP_PEAK = 10;
     /**
-     * The computed width in pixels of a full map at its largest possible {@link #MAP_SIZE}.
+     * A scale factor applied to the smaller pixel art "canvas" so scaling it doesn't get as blurry. This works well
+     * if it's set to about 4 or 8, with 4 being a little more blurry and 8 being a little less. They're very similar.
      */
-    public static final int SCREEN_HORIZONTAL = (MAP_SIZE+3) * 2 * AssetData.TILE_WIDTH;
+    public static int ZOOM = 8;
     /**
-     * The computed height in pixels of a full map at its largest possible {@link #MAP_SIZE} and {@link #MAP_PEAK}.
+     * To avoid having to cast ZOOM to a float and divide by it repeatedly, we just store its inverse here.
      */
-    public static final int SCREEN_VERTICAL = (MAP_SIZE+3) * 2 * AssetData.TILE_HEIGHT + MAP_PEAK * AssetData.TILE_DEPTH;
+    public static float INVERSE_ZOOM = 1f / ZOOM;
+    /**
+     * The computed width in pixels of a 1x zoom complete map at its largest possible {@link #MAP_SIZE}.
+     * This is used for the default window size.
+     */
+    public static final int SCREEN_HORIZONTAL = ((MAP_SIZE+3) * 2 * AssetData.TILE_WIDTH);
+    /**
+     * The computed height in pixels of a 1x zoom complete map at its largest possible {@link #MAP_SIZE} and
+     * {@link #MAP_PEAK}. This is used for the default window size.
+     */
+    public static final int SCREEN_VERTICAL = ((MAP_SIZE+3) * 2 * AssetData.TILE_HEIGHT + MAP_PEAK * AssetData.TILE_DEPTH);
+    /**
+     * The computed width in pixels of a zoomed-in complete map at its largest possible {@link #MAP_SIZE}.
+     * This is used for the larger-pixel framebuffer "canvas" that gets shrunk down to fit the user's chosen size.
+     */
+    public static int ZOOMED_HORIZONTAL = SCREEN_HORIZONTAL * (ZOOM);
+    /**
+     * The computed height in pixels of a zoomed-in complete map at its largest possible {@link #MAP_SIZE} and
+     * {@link #MAP_PEAK}.
+     * This is used for the larger-pixel framebuffer "canvas" that gets shrunk down to fit the user's chosen size.
+     */
+    public static int ZOOMED_VERTICAL = SCREEN_VERTICAL * (ZOOM);
     /**
      * Added to the screen y-position of sprites to account for the buttons and touchpad below.
      */
-    public static float OFFSET_Y = 64f;
+    public static int OFFSET_Y = 64;
     /**
      * The position in fractional tiles of the very center of the map, measured from bottom center.
      */
     public float mapCenter = (MAP_SIZE - 1f) * 0.5f;
-
-    /**
-     * Can be changed to any fraction that is {@code 1.0f} divided by any integer greater than 0, which makes the screen
-     * zoom to double size if this is {@code 1.0f / 2}, or triple size if this is {@code 1.0f / 3}, and so on.
-     */
-    public float CAMERA_ZOOM = 1f;
     /**
      * In milliseconds, the time since the map was generated or regenerated.
      */
@@ -4823,6 +4885,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Komiku - Road 4 Fight.ogg"));
         backgroundMusic.setVolume(0.5f);
         backgroundMusic.setLooping(true);
+        // If we are on a web platform, we have to delay playing any sounds or music until the user interacts.
+        // Music can also start playing in handleInput() if targeting a web platform.
         if(playMusic)
             backgroundMusic.play();
 
@@ -4832,7 +4896,11 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // Loads the atlas from an internal path, in "assets/".
         atlas = new TextureAtlas(ATLAS_FILE_NAME);
 
+        // Creates a Stage using a ScreenViewport and handling its own Batch.
         stage = new Stage(new ScreenViewport());
+
+        // If the text is too small to see, you can change the units per pixel to 0.5f, 0.25f, or something else small.
+//        ((ScreenViewport)stage.getViewport()).setUnitsPerPixel(1f/2f); // 1f/2f will double the size of the Stage.
 
         // Uses the same assets and a libGDX Skin JSON file to tell scene2d.ui widgets how to draw themselves.
         // See <a href="https://github.com/raeleus/skin-composer/wiki/From-the-Ground-Up:-Scene2D.UI-Tutorials">some scene2d.ui docs</a>
@@ -4847,8 +4915,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
 
         // These three Labels show at the top, and provide info about your progress in the game and health.
         goalLabel = new Label("", skin);
-        healthLabel = new Label("[SCARLET]♥ ♥ ♥ ", skin);
-        fpsLabel = new Label("0 FPS", skin);
+        healthLabel = new Label("[SCARLET]<3<3<3", skin);
+        fpsLabel = new Label("[#ddddddff]0 FPS", skin);
 
         root.add(healthLabel);
         root.add(goalLabel);
@@ -4862,14 +4930,18 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // We use another Table for the buttons, because the touchpad is taller than any one button.
         Table buttonTable = new Table(skin);
         buttonTable.pad(2f);
-        TextButton reset = new TextButton("RESET", skin);
+
         // The ClickListeners define what happens when you click each TextButton.
+
+        // Resets the game and generates a new map. The player will have full health and all goldfish will be present.
+        TextButton reset = new TextButton("RESET", skin);
         reset.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 reset();
             }
         });
+        // Closes the game on desktop. Doesn't do anything on the web.
         TextButton exit = new TextButton("EXIT", skin);
         exit.addListener(new ClickListener(){
             @Override
@@ -4877,6 +4949,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
                 Gdx.app.exit();
             }
         });
+        // Makes the map and sprites bigger.
         TextButton zoomIn = new TextButton("Zoom In", skin);
         zoomIn.addListener(new ClickListener(){
             @Override
@@ -4884,6 +4957,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
                 camera.zoom *= .5f;
             }
         });
+        // Makes the map and sprites smaller.
         TextButton zoomOut = new TextButton("Zoom Out", skin);
         zoomOut.addListener(new ClickListener(){
             @Override
@@ -4891,6 +4965,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
                 camera.zoom *= 2f;
             }
         });
+        // Spin the map and its contents counterclockwise.
         TextButton rotateLeft = new TextButton("<-Rotate", skin);
         rotateLeft.addListener(new ClickListener(){
             @Override
@@ -4898,6 +4973,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
                 rotateCamera(1);
             }
         });
+        // Spin the map and its contents clockwise.
         TextButton rotateRight = new TextButton("Rotate->", skin);
         rotateRight.addListener(new ClickListener(){
             @Override
@@ -4939,15 +5015,16 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // Extract animations from the atlas.
         // This step will be different for every game's assets.
         animations = new Array<>(4);
-        // Apologies for the duplicated lines; these use libGDX 1.14.0 and later's way of initializing an Array.
-        // If you are using libGDX 1.13.1 or earlier, change `Animation[]::new` to `Animation.class` .
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
-        animations.add(new Array<Animation<TextureAtlas.AtlasSprite>>(true, 16, Animation[]::new));
+        // We create a single ArraySupplier with a constructor reference so Android won't create four different ones.
+        ArraySupplier<Animation<TextureAtlas.AtlasSprite>[]> animationSupplier = Animation[]::new;
+        // Apologies for the duplicated lines; these use libGDX 1.13.5 and later's way of initializing an Array.
+        animations.add(new Array<>(true, 16, animationSupplier));
+        animations.add(new Array<>(true, 16, animationSupplier));
+        animations.add(new Array<>(true, 16, animationSupplier));
+        animations.add(new Array<>(true, 16, animationSupplier));
         // Entities are stored in an odd order because of the tile sheet originally used for the atlas.
         // The original tile sheet is stored in the development repo for this demo:
-        // https://github.com/tommyettinger/IsometricVoxelDemo/blob/a9c31f3891567958c3a4b581772defa2e902a5af/raw-assets/isometric-trpg-originals/IsometricTRPGAssetPack_Entities.png?raw=true
+        // https://github.com/tommyettinger/IsometricVoxelDemo/blob/a3ed3ca4f0685e5dcb6a25e9250c62609f2627c1/raw-assets/isometric-trpg-originals/IsometricTRPGAssetPack_Entities.png?raw=true
         // It stores each 2-frame animation on the same row as another animation, and the next row has backwards-facing
         // versions of the forwards-facing animations above them. The tile sheet determined what indices each
         // AtlasRegion received, so we have to keep the tricky numbering convention. Your own game will probably have
@@ -4964,13 +5041,19 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         }
 
         // Initialize a Camera with the width and height of the area to be shown.
-        camera = new OrthographicCamera(Gdx.graphics.getWidth() * CAMERA_ZOOM, Gdx.graphics.getHeight() * CAMERA_ZOOM);
+        camera = new OrthographicCamera(ZOOMED_HORIZONTAL, ZOOMED_VERTICAL);
         // Center the camera in the middle of the map.
-        camera.position.set(AssetData.TILE_WIDTH, SCREEN_VERTICAL * 0.5f, 0);
+        camera.position.set(AssetData.TILE_WIDTH, SCREEN_VERTICAL * 0.5f, 0f);
         // Updating the camera allows the changes we made to actually take effect.
         camera.update();
         // ScreenViewport is not always a great choice, but here we want only pixel-perfect zooms, and it can do that.
         viewport = new ScreenViewport(camera);
+        // This makes the pixel-perfect view potentially much larger, but always scales by an integer multiple.
+        viewport.setUnitsPerPixel(INVERSE_ZOOM);
+        // This FitViewport scales the world up to fit the screen, adding empty space as needed at the edges.
+        growingViewport = new FitViewport(ZOOMED_HORIZONTAL, ZOOMED_VERTICAL);
+        // The FrameBuffer allows us to draw off-screen to a pixel-perfect "canvas" and scale it to any size later.
+        buffer = new FrameBuffer(Pixmap.Format.RGBA8888, ZOOMED_HORIZONTAL, ZOOMED_VERTICAL, false, false);
 
         // Calling regenerate() does the procedural map generation, and chooses a random player character.
         regenerate(
@@ -4998,7 +5081,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // Needed so the PC Mover always has id 1.
         Mover.ID_COUNTER = 1;
         startTime = TimeUtils.millis();
-        map = LocalMap.generateTestMap(
+        map = LocalMap.generateMap(
             seed,
             /* Used for both dimensions of the ground plane. */
             MAP_SIZE + ((int)seed & 3),
@@ -5018,12 +5101,12 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         map.addMover(player, Mover.PLAYER_W);
 
         // The player axis sprites show a crosshair-like indicator of where the player character is on the x and y axes.
-        playerAxisX = new Sprite(player.visual.sprite);
-        playerAxisY = new Sprite(player.visual.sprite);
+        playerAxisX = atlas.createSprite("highlight", 4);
+        playerAxisY = atlas.createSprite("highlight", 4);
         // We try to place the x-axis indicator on the horizontal line just above the buttons.
-        playerAxisX.setY(OFFSET_Y - 16);
+        playerAxisX.setY(SCREEN_VERTICAL - 4f);
         // We try to place the y-axis indicator on the very edge of the left of the screen.
-        playerAxisY.setX(SCREEN_HORIZONTAL * -0.5f + 8f);
+        playerAxisY.setX(SCREEN_HORIZONTAL * -0.5f);
 
         enemies = new Array<>(ENEMY_COUNT);
         for (int i = 0; i < ENEMY_COUNT; i++) {
@@ -5056,7 +5139,8 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         if(player.health <= 0) player.visual.sprite.setAlpha(0.5f);
 
         // This bit of code gets a little complex to handle rotating the map...
-        // But rotating the map is so cool! You can do it by pressing '[' or ']' .
+        // But rotating the map is so cool! You can do it by pressing '[' or ']', or
+        // by clicking a Rotate button.
         float time = TimeUtils.timeSinceMillis(startTime) * 0.001f;
         // Rotations stop on a 90-degree angle increment, stored as an int from 0 to 3.
         int prevRotationIndex = (int)((map.rotationDegrees + 45f) * (1f / 90f)) & 3;
@@ -5085,6 +5169,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         // When the rotation has finished, we set the previous rotation to what we just ended on.
         if(MathUtils.isEqual(map.rotationDegrees, map.targetRotation))
             map.previousRotation = map.targetRotation;
+
+        // When we begin the FrameBuffer, anything we draw won't go to the screen, but an "off-screen canvas".
+        buffer.begin();
+        viewport.update(ZOOMED_HORIZONTAL, ZOOMED_VERTICAL, false);
         // Very dark blue for the background color.
         ScreenUtils.clear(.14f, .15f, .2f, 1f);
         // Vital to get things to display. I don't actually know what the "combined" matrix is here.
@@ -5113,10 +5201,29 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         playerAxisX.draw(batch);
         playerAxisY.draw(batch);
 
+        // When we end the batch, everything scheduled to draw so far actually gets drawn.
+        batch.end();
+        // When we end the buffer, everything that has been drawn to the pixel-perfect screen is now available.
+        buffer.end();
+        // Same background color, very dark blue.
+        ScreenUtils.clear(.14f, .15f, .2f, 1f);
+        // Here we use the different, non-pixel-perfect viewport and its projection.
+        batch.setProjectionMatrix(growingViewport.getCamera().combined);
+        // We still need to apply the viewport, but here we pass true to center the camera.
+        growingViewport.apply(true);
+        // This gets the "off-screen canvas" we drew the pixel-perfect texture to, and assigns it to fb.
+        Texture fb = buffer.getColorBufferTexture();
+        // Causes a small amount of blur, but only at the edges between pixels.
+        // Each pixel is already drawn significantly larger, based on ZOOM, so only part of each will blur.
+        fb.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        // This batch will only draw one Texture, which is the screen we captured as a framebuffer.
+        batch.begin();
+        // Because the framebuffer is vertically flipped, we need to draw it with negative height, and offset above.
+        batch.draw(fb, 0, fb.getHeight(), fb.getWidth(), -fb.getHeight());
         batch.end();
 
         fpsLabel.getText().clear();
-        fpsLabel.getText().append(Gdx.graphics.getFramesPerSecond()).append(" FPS");
+        fpsLabel.getText().append("[#ddddddff]").append(Gdx.graphics.getFramesPerSecond()).append(" FPS");
         // Allows the FPS label to be drawn with the correct width.
         fpsLabel.invalidate();
 
@@ -5261,7 +5368,7 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
      * Individual voxels don't get moved; here, the map rotation is what determines where voxels are placed and how
      * they get sorted, but the rotation is just one float to change.
      *
-     * @param amount Almost always either 1 for a left rotation or -1 for a right rotation.
+     * @param amount Almost always either 1 for a counterclockwise rotation or -1 for a clockwise rotation.
      */
     public void rotateCamera(int amount) {
         map.previousRotation = map.rotationDegrees;
@@ -5338,6 +5445,9 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         updateHealth();
     }
 
+    /**
+     * Not actually used here; this doesn't use Screen or Game, so when this object is disposed, the game is over.
+     */
     @Override
     public void dispose() {
         batch.dispose();
@@ -5346,16 +5456,30 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
         backgroundMusic.dispose();
     }
 
+    /**
+     * This gets called when the game window is first created and also whenever the window changes size. It is
+     * important to update viewports here if you want them to adapt to the window size.
+     *
+     * @param width the new width in pixels
+     * @param height the new height in pixels
+     */
     @Override
     public void resize(int width, int height) {
+        // In older code, we wanted pixel-perfect zooms only, but now we can make noninteger zooms look decent.
+
+        // The commented block can be used for pixel-perfect zooms without growingViewport.
+
         // If unitsPerPixel are a fraction like 1f/2 or 1f/3, then that makes each pixel 2x or 3x the size, resp.
         // This will only divide 1f by an integer amount 1 or greater, which makes pixels always the exact right size.
         // This meant to fit an isometric map that is about MAP_SIZE by MAP_PEAK by MAP_SIZE, where MAP_PEAK is how many
         // layers of voxels can be stacked on top of each other.
-        viewport.setUnitsPerPixel(1f / Math.max(1, (int) Math.min(
-            width  / ((MAP_SIZE+1f) * (AssetData.TILE_WIDTH * 2f)),
-            height / ((MAP_SIZE+1f) * (AssetData.TILE_HEIGHT * 2f) + AssetData.TILE_DEPTH * MAP_PEAK))));
-        viewport.update(width, height);
+//        viewport.setUnitsPerPixel(1f / Math.max(1, (int) Math.min(
+//            width  / ((MAP_SIZE+1f) * (AssetData.TILE_WIDTH * 2f)),
+//            height / ((MAP_SIZE+1f) * (AssetData.TILE_HEIGHT * 2f) + AssetData.TILE_DEPTH * MAP_PEAK))));
+//        viewport.update(width, height);
+
+        // Or, we can use growingViewport and not need integer scales at all!
+        growingViewport.update(width, height);
         // The Stage is drawn separately, and has its own viewport that needs updating.
         stage.getViewport().update(width, height);
     }
@@ -5366,12 +5490,14 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
     public void updateFish() {
         if(player.health > 0) {
             if (map.totalFish == map.fishSaved) {
-                goalLabel.setText("YOU SAVED THEM ALL! Great job!");
+                // We use libGDX color markup to make any text some color other than blindingly-bright white.
+                goalLabel.setText("[ORANGE]YOU SAVED THEM ALL! Great job!");
                 player.makeInvincible(Float.NaN);
-            }
-            else
-                goalLabel.setText("SAVE THE GOLDFISH!!! " + (map.totalFish - map.fishSaved) + " still " +
+            } else {
+                // You can use either named colors or the hex RRGGBBAA color format.
+                goalLabel.setText("[#ddddddff]SAVE THE GOLDFISH!!! " + (map.totalFish - map.fishSaved) + " still " +
                     ((map.totalFish - map.fishSaved) == 1 ? "needs" : "need") + " your help!");
+            }
         }
         goalLabel.setAlignment(Align.center);
     }
@@ -5382,8 +5508,10 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
     public void updateHealth() {
         if(player.health <= 0)
         {
-            goalLabel.setText("YOU FAILED.. BY DYING...");
+            // This text is a slightly darker gray, using RRGGBBAA hex color markup.
+            goalLabel.setText("[#bbbbbbff]YOU FAILED... BY DYING...");
             goalLabel.setAlignment(Align.center);
+            // This text is a darker red frowning face.
             healthLabel.setText("[FIREBRICK]:(");
         }
         else {
@@ -5391,11 +5519,11 @@ public class ${project.basic.mainClass} extends ApplicationAdapter {
             // Shows one red heart per point of health.
             healthLabel.getText().append("[SCARLET]");
             for (int i = 0; i < player.health; i++) {
-                healthLabel.getText().append(" ♥");
+                healthLabel.getText().append("<3");
             }
-            healthLabel.setText(healthLabel.getText().toString());
             healthLabel.invalidate();
         }
     }
-}"""
+}
+"""
 }

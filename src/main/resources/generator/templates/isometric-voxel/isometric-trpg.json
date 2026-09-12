@@ -1,13 +1,13 @@
 {
 "BitmapFont": {
-	"CozetteOutlined-markup": {
-		"file": "CozetteOutlined-standard.fnt",
+	"DINish-markup": {
+		"file": "DINish-Expanded.fnt",
 		"scaledSize": -1,
 		"markupEnabled": true,
 		"flip": false
 	},
-	"CozetteOutlined-standard": {
-		"file": "CozetteOutlined-standard.fnt",
+	"DINish-standard": {
+		"file": "DINish-Expanded.fnt",
 		"scaledSize": -1,
 		"markupEnabled": false,
 		"flip": false
@@ -16,6 +16,9 @@
 "Color": {
 	"color": {
 		"hex": "ffffffff"
+	},
+	"black": {
+		"hex": "333333ff"
 	},
 	"selection": {
 		"hex": "b3b3b3ff"
@@ -297,14 +300,14 @@
 		"checkboxOn": "checkbox-pressed-c",
 		"checkboxOff": "checkbox-c",
 		"checkboxOver": "checkbox-over-c",
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"fontColor": "color"
 	},
 	"radio": {
 		"checkboxOn": "radio-pressed-c",
 		"checkboxOff": "radio-c",
 		"checkboxOver": "radio-over-c",
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"fontColor": "color"
 	}
 },
@@ -324,13 +327,13 @@
 },
 "ImageTextButtonStyle": {
 	"default": {
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"up": "button-c",
 		"down": "button-pressed-over-c",
 		"over": "button-over-c"
 	},
 	"toggle": {
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"up": "button-c",
 		"down": "button-pressed-c",
 		"over": "button-over-c",
@@ -343,7 +346,7 @@
 		"imageOver": "radio-over-c",
 		"imageChecked": "radio-pressed-c",
 		"imageCheckedOver": "radio-pressed-over-c",
-		"font": "CozetteOutlined-markup"
+		"font": "DINish-markup"
 	},
 	"checkbox": {
 		"imageUp": "checkbox-c",
@@ -351,20 +354,20 @@
 		"imageOver": "checkbox-over-c",
 		"imageChecked": "checkbox-pressed-c",
 		"imageCheckedOver": "checkbox-pressed-over-c",
-		"font": "CozetteOutlined-markup"
+		"font": "DINish-markup"
 	}
 },
 "LabelStyle": {
 	"default": {
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"fontColor": "color"
 	}
 },
 "ListStyle": {
 	"default": {
-		"font": "CozetteOutlined-markup",
-		"fontColorSelected": "color",
-		"fontColorUnselected": "color",
+		"font": "DINish-markup",
+		"fontColorSelected": "black",
+		"fontColorUnselected": "black",
 		"selection": "selection",
 		"background": "list-c"
 	}
@@ -397,8 +400,8 @@
 },
 "SelectBoxStyle": {
 	"default": {
-		"font": "CozetteOutlined-markup",
-		"fontColor": "color",
+		"font": "DINish-markup",
+		"fontColor": "black",
 		"background": "selectbox-c",
 		"scrollStyle": "default",
 		"listStyle": "default",
@@ -438,15 +441,15 @@
 },
 "TextButtonStyle": {
 	"default": {
-		"font": "CozetteOutlined-markup",
-		"fontColor": "color",
+		"font": "DINish-markup",
+		"fontColor": "black",
 		"up": "button-c",
 		"down": "button-pressed-over-c",
 		"over": "button-over-c"
 	},
 	"toggle": {
-		"font": "CozetteOutlined-markup",
-		"fontColor": "color",
+		"font": "DINish-markup",
+		"fontColor": "black",
 		"up": "button-c",
 		"down": "button-pressed-c",
 		"over": "button-over-c",
@@ -454,19 +457,19 @@
 		"checkedOver": "button-pressed-over-c"
 	},
 	"arcade": {
-		"font": "CozetteOutlined-markup",
+		"font": "DINish-markup",
 		"up": "button-arcade-c",
 		"down": "button-arcade-pressed-c"
 	}
 },
 "TextFieldStyle": {
 	"default": {
-		"font": "CozetteOutlined-standard",
+		"font": "DINish-standard",
 		"fontColor": "color",
 		"background": "textfield-c",
 		"cursor": "cursor-c",
 		"selection": "selection",
-		"messageFont": "CozetteOutlined-standard",
+		"messageFont": "DINish-standard",
 		"messageFontColor": "selection"
 	}
 },
@@ -491,12 +494,12 @@
 "WindowStyle": {
 	"default": {
 		"background": "window-c",
-		"titleFont": "CozetteOutlined-markup",
+		"titleFont": "DINish-markup",
 		"titleFontColor": "color"
 	},
 	"main": {
 		"background": "window-main-c",
-		"titleFont": "CozetteOutlined-markup",
+		"titleFont": "DINish-markup",
 		"titleFontColor": "color"
 	}
 }
