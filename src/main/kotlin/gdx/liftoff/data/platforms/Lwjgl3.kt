@@ -205,6 +205,7 @@ run {
 // You can uncomment the next line if your IDE claims a build failure even when the app closed properly.
   //setIgnoreExitValue(true)
   jvmArgs += "--enable-native-access=ALL-UNNAMED"
+  jvmArgs += "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
   if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
 }
 
@@ -227,7 +228,7 @@ jar {
 // enabling native access helps avoid a warning when Java 24 or later runs the JAR.
 // setting Multi-Release to true allows LWJGL3 to use different classes on recent Java versions.
   manifest {
-    attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED', 'Multi-Release': 'true'
+    attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED', 'Multi-Release': 'true', 'Add-Exports': 'java.base/jdk.internal.misc'
   }
 // this last step may help on some OSes that need extra instruction to make runnable JARs.
   doLast {
