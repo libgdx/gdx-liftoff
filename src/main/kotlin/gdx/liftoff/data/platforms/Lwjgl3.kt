@@ -204,8 +204,10 @@ run {
   workingDir = rootProject.file('assets').path
 // You can uncomment the next line if your IDE claims a build failure even when the app closed properly.
   //setIgnoreExitValue(true)
+// The next two jvmArgs additions help LWJGL3 on JDK 24 and higher.
   jvmArgs += "--enable-native-access=ALL-UNNAMED"
   jvmArgs += "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
+// On macOS, we need to set this for the run task to allow debugging in IDEA or AS to work.
   if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
 }
 
@@ -224,9 +226,10 @@ jar {
       $$"""
 )
   }
-// setting the manifest makes the JAR runnable.
-// enabling native access helps avoid a warning when Java 24 or later runs the JAR.
-// setting Multi-Release to true allows LWJGL3 to use different classes on recent Java versions.
+// Setting the manifest makes the JAR runnable.
+// Enabling native access helps avoid a warning when Java 24 or later runs the JAR.
+// Setting Multi-Release to true allows LWJGL3 to use different classes on recent Java versions.
+// This setting for Add-Exports ensures a warning on recent JDKs is avoided by LWJGL 3.4.2 and later.
   manifest {
     attributes 'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED', 'Multi-Release': 'true', 'Add-Exports': 'java.base/jdk.internal.misc'
   }

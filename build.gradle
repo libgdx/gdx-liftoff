@@ -44,6 +44,7 @@ jar {
     attributes (
       // Enabling native access is good for JARs run by Java 24 or later.
       // Setting Multi-Release to true allows LWJGL3 to use different classes on recent Java versions.
+      // This setting for Add-Exports ensures a warning on recent JDKs is avoided by LWJGL3.
       'Main-Class': application.mainClass, 'Enable-Native-Access': 'ALL-UNNAMED', 'Multi-Release': 'true', 'Add-Exports': 'java.base/jdk.internal.misc'
     )
   }
@@ -236,6 +237,16 @@ construo {
 //  construo.jarTask.set("jarWin")
 //  dependsOn("packageWinX64")
 //}
+
+def os = System.properties['os.name'].toLowerCase(Locale.ROOT)
+
+run {
+// The next two jvmArgs additions help LWJGL3 on JDK 24 and higher.
+  jvmArgs += "--enable-native-access=ALL-UNNAMED"
+  jvmArgs += "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
+// On macOS, we need to set this for the run task to allow debugging in IDEA or AS to work.
+  if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
+}
 
 distributions {
   main {
