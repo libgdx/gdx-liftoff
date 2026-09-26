@@ -13,21 +13,21 @@ A setup tool for [libGDX](https://libgdx.com/) Gradle projects.
 </h1>
 
 To generate a project, [download](https://github.com/libgdx/gdx-liftoff/releases) the latest application `jar`.
-The latest release targets 1.14.2 by default. Once you have the right JAR, 
+The latest release targets libGDX 1.14.2 by default. Once you have the right JAR, 
 run it (usually double-clicking will do), or run the following command manually (replacing the `VERSION` appropriately):
 
 ```shell
 java -jar gdx-liftoff-VERSION.jar
 ```
 
-While other downloads are provided in recent releases, the one without an OS type in the name will work on all
-platforms, and that one is recommended.
+While other downloads are provided in recent releases, the .jar file without any operating system in the name will work
+on all platforms, and that one is recommended.
 
-**You must build with Java 17** or newer (up to 26)! If you are downloading Java for the first time, read this paragraph
+**You must build with Java 17** or newer (up to 27)! If you are downloading Java for the first time, read this paragraph
 and the next two carefully; links are provided to recommended OpenJDK versions. Gradle's current version, as well as
 current Android tools, now require your installed JDK to be version 17 or higher. Regardless of what platforms you
 target, Gradle 8.10 and up need a JDK with a version at least 17! You can still target other releases, as low as 8
-typically, while building with any of the JDK versions 17 and up. Stable target releases of Java from 8 to 26 work here
+typically, while building with any of the JDK versions 17 and up. Stable target releases of Java from 8 to 27 work here
 now. **If you use a JDK version that isn't 21** for Gradle, then the automatic desktop release packaging with Construo
 will need some configuration changes so it downloads the same version of JDK that Gradle uses. This isn't hard, but is
 tedious, so using **21 exactly** is recommended for this reason. See our
@@ -59,11 +59,11 @@ should also have working macOS installers.
 
 Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default. 
 
-Java 25 and 26 are now somewhat supported to build your projects, in recent Liftoff versions.
+Java 25 through 27 are now somewhat supported to build your projects, in recent Liftoff versions.
 Java 25 does include some useful features for reducing memory usage, [if you enable them](https://openjdk.org/jeps/534),
-using `java -XX:+UseCompactObjectHeaders ...` to launch. Java 26 came out on March 17,
-2026, and surprisingly is already supported by Gradle. It doesn't add any (complete) language features, but does have
-several preview features and new APIs. In order to run with Java 25 or newer, LWJGL3 must use version 3.4.0 or later;
+using `java -XX:+UseCompactObjectHeaders ...` to launch. Java 27 came out on September 15, 2026, and surprisingly is
+already supported by Gradle. Other than some small changes and additions, a major improvement in Java 27 is enabling
+Compact Object Headers by default. In order to run with Java 25 or newer, LWJGL3 must use version 3.4.0 or later;
 this is automatically handled by the current Liftoff version using Gradle constraints. If you find you need an older
 LWJGL3, you can now simply change `lwjgl3Version` in `gradle.properties`, which will make the constraints require a
 version of your choosing. One reason you might need this is to better support Wayland on Linux, which changed how it
