@@ -1592,7 +1592,7 @@ class Funderby : ThirdPartyExtension() {
 class Juniper : ThirdPartyExtension() {
   override val id = "juniper"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.6"
+  override val defaultVersion = "0.10.8"
   override val url = "https://github.com/tommyettinger/juniper"
   override val group = "com.github.tommyettinger"
   override val name = "juniper"
@@ -1639,7 +1639,7 @@ class Jdkgdxds : ThirdPartyExtension() {
 class JdkgdxdsInterop : ThirdPartyExtension() {
   override val id = "jdkgdxdsInterop"
   override val repository = Repository.JitPack
-  override val defaultVersion = "2.1.9.0"
+  override val defaultVersion = "2.1.9.1"
   override val url = "https://github.com/tommyettinger/jdkgdxds_interop"
   override val group = "com.github.tommyettinger"
   override val name = "jdkgdxds_interop"
@@ -1705,7 +1705,7 @@ class KryoDigital : ThirdPartyExtension() {
 class KryoJuniper : ThirdPartyExtension() {
   override val id = "kryoJuniper"
   override val repository = Repository.JitPack
-  override val defaultVersion = "0.10.6.2"
+  override val defaultVersion = "0.10.8.2"
   override val url = "https://github.com/tommyettinger/kryo-juniper"
   override val group = "com.github.tommyettinger"
   override val name = "kryo-juniper"

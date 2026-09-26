@@ -27,7 +27,7 @@ abstract class SquidLibExtension : ThirdPartyExtension() {
  * @author Tommy Ettinger
  */
 abstract class SquidSquadExtension : Library {
-  override val defaultVersion = "4.0.12"
+  override val defaultVersion = "4.0.13"
   override val official = false
   override val repository: Repository = Repository.JitPack
   override val group = "com.github.yellowstonegames.squidsquad"
