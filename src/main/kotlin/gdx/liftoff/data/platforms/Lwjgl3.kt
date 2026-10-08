@@ -186,6 +186,7 @@ $${joinDependencies(dependencies)}
       (if (project.extensions.isSelected("gdx-controllers-lwjgl3")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-controllers-lwjgl3:\$graalHelperVersion\"\n" else "") +
       (if (project.extensions.isSelected("gdx-freetype")) "      implementation \"io.github.berstanio:gdx-svmhelper-extension-freetype:\$graalHelperVersion\"\n" else "") +
       $$"""
+
   }
   // Forces LWJGL3 to use at least $lwjgl3Version, currently 3.4.3, to avoid warnings on Java 25 and up.
   constraints{
@@ -205,10 +206,27 @@ run {
 // You can uncomment the next line if your IDE claims a build failure even when the app closed properly.
   //setIgnoreExitValue(true)
 // The next two jvmArgs additions help LWJGL3 on JDK 24 and higher.
-  jvmArgs += "--enable-native-access=ALL-UNNAMED"
-  jvmArgs += "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
+// They only are valid when running with a non-JDK-8 version, but Gradle needs 17 at this point...
+// We still restrict the version for good measure.
+  if (JavaVersion.current().isJava9Compatible()) {
+    jvmArgs += "--enable-native-access=ALL-UNNAMED"
+    jvmArgs += "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"
+  }
+// JDK 22 and later start allowing, to prepare for forcing, restrictions on sun.misc.Unsafe usage.
+// We are restricting Unsafe because with LWJGL 3.4.3, we can without issues, and because it will eventually be required.
+  if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_22)) {
+    jvmArgs += ["--sun-misc-unsafe-memory-access=deny"]
+  }
 // On macOS, we need to set this for the run task to allow debugging in IDEA or AS to work.
   if (os.contains('mac')) jvmArgs += "-XstartOnFirstThread"
+}
+
+// These two blocks duplicate the settings for the run task, but should apply to the built JAR.
+if (JavaVersion.current().isJava9Compatible()) {
+  application.applicationDefaultJvmArgs += ["--enable-native-access=ALL-UNNAMED", "--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED"]
+}
+if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_22)) {
+  application.applicationDefaultJvmArgs += ["--sun-misc-unsafe-memory-access=deny"]
 }
 
 jar {
