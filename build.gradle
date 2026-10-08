@@ -96,24 +96,24 @@ dependencies {
   }
 
   // For when NFD uses the same version as LWJGL3:
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm32"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm64"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
-  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-windows-x86"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm32"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-linux-arm64"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos"
+//  implementation "org.lwjgl:lwjgl-nfd:$lwjgl3Version:natives-macos-arm64"
 
   // In case we switch back to TinyFD...
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-windows"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-windows-x86"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-linux"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-linux-arm32"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-linux-arm64"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-macos"
-//  implementation "org.lwjgl:lwjgl-tinyfd:$tinyfdVersion:natives-macos-arm64"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-windows"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-windows-x86"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux-arm32"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-linux-arm64"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-macos"
+  implementation "org.lwjgl:lwjgl-tinyfd:$lwjgl3Version:natives-macos-arm64"
 
   // Older; only used when we needed $nfdVersion to be less than $lwjgl3Version .
 //  implementation("org.lwjgl:lwjgl-nfd:$nfdVersion"){ exclude group: 'org.lwjgl', module: 'lwjgl' }
