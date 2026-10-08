@@ -29,7 +29,6 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.freetypist.FreeTypistSkin;
 import com.github.tommyettinger.textra.Font;
-import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import com.ray3k.stripe.*;
 import gdx.liftoff.config.LiftoffVersion;
 import gdx.liftoff.data.platforms.Platform;
@@ -513,7 +512,7 @@ public class Main extends ApplicationAdapter {
 //        }
 //    }
 
-    public static void pickDirectory(FileHandle initialFolder, FileChooserAdapter callback) {
+    public static void pickDirectory(FileHandle initialFolder, FileChooserListener callback) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             FileHandle importPath = (initialFolder == null || !initialFolder.exists()) ?
