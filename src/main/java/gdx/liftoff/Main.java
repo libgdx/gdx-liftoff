@@ -40,6 +40,7 @@ import gdx.liftoff.ui.dialogs.FullscreenCompleteDialog;
 import gdx.liftoff.ui.dialogs.FullscreenDialog;
 import org.jetbrains.annotations.NotNull;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.concurrent.ExecutorService;
@@ -107,6 +108,7 @@ public class Main extends ApplicationAdapter {
 
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
+        GLFW.glfwInitHint(GLFW.GLFW_WAYLAND_LIBDECOR, GLFW.GLFW_WAYLAND_DISABLE_LIBDECOR);
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
         config.disableAudio(true);
