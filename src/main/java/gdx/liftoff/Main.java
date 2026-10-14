@@ -525,6 +525,7 @@ public class Main extends ApplicationAdapter {
                 if (folder != null) {
                     callback.selected(Array.with(Gdx.files.absolute(folder)));
                 }
+                Gdx.input.setInputProcessor(stage);
             });
         });
         executor.shutdown();
