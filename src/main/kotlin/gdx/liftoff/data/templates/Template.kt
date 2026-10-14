@@ -420,6 +420,10 @@ import $${project.basic.rootPackage}.$${project.basic.mainClass};
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
+        // If running on Linux with Wayland, this avoids causing a warning.
+        // This is only needed when lwjgl3Version is greater than 3.3.3 .
+        GLFW.glfwInitHint(GLFW.GLFW_WAYLAND_LIBDECOR, GLFW.GLFW_WAYLAND_DISABLE_LIBDECOR);
+        // Creates a new Lwjgl3Application that runs your main class with the specified configuration.
         createApplication();
     }
 
