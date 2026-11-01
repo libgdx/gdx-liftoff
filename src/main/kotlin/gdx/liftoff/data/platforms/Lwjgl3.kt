@@ -84,7 +84,7 @@ project(":lwjgl3") {
     doNotTrackState("Running the app should not be affected by Graal.")
   }
 
-  // Modified from https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/ ; thanks again, Lyze!
+  // Modified from https://web.archive.org/web/20240901085440/https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // This creates a resource-config.json file based on the contents of the assets folder (and the libGDX icons).
   // This file is used by Graal Native to embed those specific files.
   // This has to run before nativeCompile, so it runs at the start of an unrelated resource-handling command.
