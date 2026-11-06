@@ -414,15 +414,24 @@ public class SVMRegistrationFeature implements Feature {
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
+import org.lwjgl.glfw.GLFW;
 import $${project.basic.rootPackage}.$${project.basic.mainClass};
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-        // If running on Linux with Wayland, this avoids causing a warning.
-        // This is only needed when lwjgl3Version is greater than 3.3.3 .
-        GLFW.glfwInitHint(GLFW.GLFW_WAYLAND_LIBDECOR, GLFW.GLFW_WAYLAND_DISABLE_LIBDECOR);
+
+        if (UIUtils.isLinux){
+            // Prefer X11 when on Linux and there is a display.
+            // This is only useful when lwjgl3Version is greater than 3.3.3 .
+            // Doing this may be required to Snap-package this application or to publish via Steam.
+            // It may require XWayland, a compatibility layer, on machines using Wayland.
+            String display = System.getenv("DISPLAY");
+            if (display != null && !display.isEmpty()) GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+        }
+
         // Creates a new Lwjgl3Application that runs your main class with the specified configuration.
         createApplication();
     }
