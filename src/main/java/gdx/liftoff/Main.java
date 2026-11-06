@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.tommyettinger.freetypist.FreeTypistSkin;
@@ -108,7 +109,12 @@ public class Main extends ApplicationAdapter {
 
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
-        GLFW.glfwInitHint(GLFW.GLFW_WAYLAND_LIBDECOR, GLFW.GLFW_WAYLAND_DISABLE_LIBDECOR);
+        // Prefer X11 when on Linux, there is a display, and the user hasn't intentionally selected something else.
+        if (UIUtils.isLinux
+            && System.getenv("DISPLAY") != null && !"".equals(System.getenv("DISPLAY"))
+            && (System.getenv("XDG_SESSION_TYPE") == null || "".equals(System.getenv("XDG_SESSION_TYPE"))))
+            GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
         config.disableAudio(true);
@@ -117,10 +123,10 @@ public class Main extends ApplicationAdapter {
         config.setIdleFPS(8);
 
         DisplayMode primaryDesktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode();
-        int monitorWidth = primaryDesktopMode.width;
-        int monitorHeight=  primaryDesktopMode.height;
-        int windowWidth = Math.max(MathUtils.round(monitorWidth / 1920f * 800f), 800);
-        int windowHeight = Math.max(MathUtils.round(monitorHeight / 1080f * 800f), 800);
+        int monitorWidth =  primaryDesktopMode.width;
+        int monitorHeight = primaryDesktopMode.height;
+        int windowWidth =   Math.max(MathUtils.round(monitorWidth / 1920f * 800f), 800);
+        int windowHeight =  Math.max(MathUtils.round(monitorHeight / 1080f * 800f), 800);
         config.setWindowedMode(Math.min(windowWidth, monitorWidth - WINDOW_BORDER * 2), Math.min(windowHeight, monitorHeight - WINDOW_BORDER * 2));
 
         config.setWindowSizeLimits(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT, -1, -1);
