@@ -78,8 +78,8 @@ public class Main extends ApplicationAdapter {
     public static final int MIN_WINDOW_WIDTH = 400;
     public static final int MIN_WINDOW_HEIGHT = 410;
     public static final int WINDOW_BORDER = 50;
-    public static final float FULLSCREEN_MIN_WIDTH = 1500;
-    public static final float FULLSCREEN_MIN_HEIGHT = 880;
+    public static final float FULLSCREEN_MIN_WIDTH = 800;
+    public static final float FULLSCREEN_MIN_HEIGHT = 500;
     public static final float ROOT_TABLE_PREF_WIDTH = 600;
     public static final float ROOT_TABLE_PREF_HEIGHT = 700;
 
@@ -109,11 +109,11 @@ public class Main extends ApplicationAdapter {
 
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired(true)) return; // This handles macOS support and helps on Windows.
-        // Prefer X11 when on Linux, there is a display, and the user hasn't intentionally selected something else.
-        if (UIUtils.isLinux
-            && System.getenv("DISPLAY") != null && !"".equals(System.getenv("DISPLAY"))
-            && (System.getenv("XDG_SESSION_TYPE") == null || "".equals(System.getenv("XDG_SESSION_TYPE"))))
-            GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+        if (UIUtils.isLinux){
+            // Prefer X11 when on Linux and there is a display.
+            String display = System.getenv("DISPLAY");
+            if (display != null && !display.isEmpty()) GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
+        }
 
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("GDX-Liftoff");
@@ -147,8 +147,8 @@ public class Main extends ApplicationAdapter {
             @Override
             public void maximized(boolean isMax) {
                 if (isMax){
-                    boolean fullscreenMode = Gdx.graphics.getBackBufferWidth() > FULLSCREEN_MIN_WIDTH &&
-                        Gdx.graphics.getBackBufferHeight() > FULLSCREEN_MIN_HEIGHT;
+                    boolean fullscreenMode = Gdx.graphics.getWidth() > FULLSCREEN_MIN_WIDTH &&
+                        Gdx.graphics.getHeight() > FULLSCREEN_MIN_HEIGHT;
                     if (fullscreenMode && root != null) {
                         Gdx.app.postRunnable(() -> {
                             root.getCurrentTable().finishAnimation();
@@ -229,7 +229,8 @@ public class Main extends ApplicationAdapter {
         setDefaultUserData();
 
         screenViewport = new ScreenViewport();
-        float scale = Gdx.graphics.getBackBufferScale();
+        float scale = Gdx.graphics.getBackBufferWidth() / 960f;
+
         if(scale >= 1.125f) {
             float inverse = 1f / scale;
             if(scale >= 2.375f)
@@ -258,6 +259,7 @@ public class Main extends ApplicationAdapter {
             skin.getFont("font-label-header").getData().setScale(inverse);
             skin.getFont("font-label-tooltip").getData().setScale(inverse);
             skin.get("font-label", Font.class).scale(inverse);
+            screenViewport.setUnitsPerPixel(inverse);
         }
         else {
             skin = new FreeTypistSkin(Gdx.files.internal("ui-skin/skin.json"));
