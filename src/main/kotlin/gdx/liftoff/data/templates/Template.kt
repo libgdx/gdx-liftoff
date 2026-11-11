@@ -428,6 +428,7 @@ public class Lwjgl3Launcher {
             // This is only useful when lwjgl3Version is greater than 3.3.3 .
             // Doing this may be required to Snap-package this application or to publish via Steam.
             // It may require XWayland, a compatibility layer, on machines using Wayland.
+            // LWJGL 3.3.3 and earlier always use X11 compatibility, and don't need this hint.
             String display = System.getenv("DISPLAY");
             if (display != null && !display.isEmpty()) GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_X11);
         }
