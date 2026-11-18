@@ -254,13 +254,13 @@ class Dialogs : ThirdPartyExtension() {
 @Extension
 class Fleks : ThirdPartyExtension() {
   override val id = "fleks"
-  override val defaultVersion = "2.14"
+  override val defaultVersion = "2.16"
   override val url = "https://github.com/Quillraven/Fleks"
   override val group = "io.github.quillraven.fleks"
-  override val name = "Fleks"
+  override val name = "Fleks-jvm"
 
   override fun initiateDependencies(project: Project) {
-    addDependency(project, Core.ID, "io.github.quillraven.fleks:Fleks")
+    addDependency(project, Core.ID, "io.github.quillraven.fleks:Fleks-jvm")
   }
 }
 
