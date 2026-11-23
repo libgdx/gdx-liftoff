@@ -315,18 +315,18 @@ construo {
       architecture.set(Target.Architecture.X86_64)
 // You can use the JetBrains Runtime SDK for Java 25 if you need newer language features or better Wayland support.
 // This needs you to build using Java 25 as the JDK Gradle uses.
-//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.4.1-linux-x64-b329.142.tar.gz")
+//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.5.1-linux-x64-b635.102.tar.gz")
 // Or, if you are using Java 21 to build, you can use a standard Adoptium Java 21 JDK instead.
-      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_linux_hotspot_21.0.10_7.tar.gz")
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13.1_2.tar.gz")
       // Linux does not currently have a way to set the icon on the executable
     }
     register("macM1", Target.MacOs) {
       architecture.set(Target.Architecture.AARCH64)
 // You can use the JetBrains Runtime SDK for Java 25 if you need newer language features.
 // This needs you to build using Java 25 as the JDK Gradle uses.
-//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.4.1-osx-aarch64-b329.142.tar.gz")
+//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.5.1-osx-aarch64-b635.102.tar.gz")
 // Or, if you are using Java 21 to build, you can use a standard Adoptium Java 21 JDK instead.
-      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.10_7.tar.gz")
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.13.1_2.tar.gz")
       // macOS needs an identifier
       identifier.set("$${project.basic.rootPackage}." + appName)
       // Optional: icon for macOS, as an ICNS file
@@ -336,9 +336,9 @@ construo {
       architecture.set(Target.Architecture.X86_64)
 // You can use the JetBrains Runtime SDK for Java 25 if you need newer language features.
 // This needs you to build using Java 25 as the JDK Gradle uses.
-//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.4.1-osx-x64-b329.142.tar.gz")
+//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.5.1-osx-x64-b635.102.tar.gz")
 // Or, if you are using Java 21 to build, you can use a standard Adoptium Java 21 JDK instead.
-      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_mac_hotspot_21.0.10_7.tar.gz")
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_x64_mac_hotspot_21.0.13.1_2.tar.gz")
       // macOS needs an identifier
       identifier.set("$${project.basic.rootPackage}." + appName)
       // Optional: icon for macOS, as an ICNS file
@@ -350,9 +350,9 @@ construo {
       icon.set(project.file("icons/logo.png"))
 // You can use the JetBrains Runtime SDK for Java 25 if you need newer language features.
 // This needs you to build using Java 25 as the JDK Gradle uses.
-//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.4.1-windows-x64-b329.142.zip")
+//      jdkUrl.set("https://cache-redirector.jetbrains.com/intellij-jbr/jbrsdk-25.0.5.1-windows-x64-b635.102.zip")
 // Or, if you are using Java 21 to build, you can use a standard Adoptium Java 21 JDK instead.
-      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_windows_hotspot_21.0.10_7.zip")
+      jdkUrl.set("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_x64_windows_hotspot_21.0.13.1_2.zip")
 // Uncomment the next line to show a console when the game runs, to print messages.
       //useConsole.set(true)
     }
