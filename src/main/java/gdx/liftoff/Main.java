@@ -44,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.io.IOException;
@@ -478,7 +479,7 @@ public class Main extends ApplicationAdapter {
             FileHandle importPath = (initialFolder == null || !initialFolder.exists()) ?
                 Gdx.files.absolute(System.getProperty("user.home")) : initialFolder;
 
-            String folder = TinyFileDialogs.tinyfd_selectFolderDialog("Choose Folder", importPath.path());
+            String folder = TinyFileDialogs.tinyfd_selectFolderDialog("Choose Folder", importPath.path().replace('/', File.separatorChar));
             Gdx.app.postRunnable(() -> {
                 if (folder != null) {
                     callback.selected(Array.with(Gdx.files.absolute(folder)));
