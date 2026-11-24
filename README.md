@@ -29,10 +29,12 @@ current Android tools, now require your installed JDK to be version 17 or higher
 target, Gradle 8.10 and up need a JDK with a version at least 17! You can still target other releases, as low as 8
 typically, while building with any of the JDK versions 17 and up. Stable target releases of Java from 8 to 27 work here
 now. **If you use a JDK version that isn't 21** for Gradle, then the automatic desktop release packaging with Construo
-will need some configuration changes so it downloads the same version of JDK that Gradle uses. This isn't hard, but is
-tedious, so using **21 exactly** is recommended for this reason. See our
+will need some configuration changes so it downloads the same version of JDK that Gradle uses. This isn't hard, but can
+be tedious, so using **21 exactly** is recommended for this reason. See our
 [Troubleshooting](https://github.com/libgdx/gdx-liftoff/blob/master/Troubleshooting.md#how-do-i-change-the-construo-jdk-download-links-so-i-can-bundle-a-jdk-other-than-jdk-21)
-document for more details.
+document for more details. Note that there's a commented line that you can use to swap in a download for JetBrains
+Runtime SDK 25 if you want to use the latest LTS; JBRSDK in particular may have better support of Wayland on Linux. Just
+swap the lines in the `construo` block that set `jdkUrl` from the existing ones to the commented lines next to them.
 
 When you enter the JDK version you use for a project, it is **always one integer**, such as `8` or `21`. Entering any
 bugfix or point releases after that will confuse Gradle and lead to bizarre bugs. JDK versions, or language levels,
@@ -40,11 +42,13 @@ never include bugfix versions, and when you enter one here it should always be a
 If you target iOS using RoboVM, note that you will be required to use at most Java features language level 8, but won't
 have access to any APIs added in Java 8 (at most, APIs from 7 are available). Liftoff forces language level 8 for RoboVM
 even if other projects use a higher language level; you need to make sure you only use features that are compatible with
-RoboVM if you target it. If you target the browser via GWT, you need to use language level 8 or 11, with 11 recommended
-(any recent JDK installation can still target 8 or 11; it can't actually be a JDK 8 or 11 installation and still run
-Gradle). If you target the browser via TeaVM, the TeaVM module will always use at least language level 17, even if a
-lower language level is used in core or other modules. If you are using JDK 21 to build, you won't have any problem
-targeting language level 17 for TeaVM, and it will work out-of-the-box.
+RoboVM if you target it. This restriction may be able to be removed soon; RoboVM already uses a newer "libcore" from
+Android's code that supports more of the JDK, and more recent versions of it. If you target the browser via GWT, you
+need to use language level 8 or 11, with 11 recommended (any recent JDK installation can still target 8 or 11; it can't
+actually be a JDK 8 or 11 installation and still run Gradle). If you target the browser via TeaVM, the TeaVM module will
+always use at least language level 17, even if a lower language level is used in core or other modules. If you are using
+JDK 21 or 25 to build, you won't have any problem targeting language level 17 for TeaVM, and it will work
+out-of-the-box.
 
 If you don't know what JDK you have installed, or don't have one, then either of the JDK 21 installers from OpenJDK
 vendors [BellSoft Liberica](https://bell-sw.com/pages/downloads/#jdk-21-lts) or
@@ -57,7 +61,7 @@ OpenJDK 21. On macOS, you might need to get both an AARCH64 OpenJDK and an x86_6
 (any tools that still use LWJGL2 will need the x86_64 OpenJDK to run, and will use Rosetta). The links given for Windows
 should also have working macOS installers.
 
-Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default. 
+Do not install a JRE. If you have a JRE installed, you should install a JDK in its place, and make the JDK the default.
 
 Java 25 through 27 are now somewhat supported to build your projects, in recent Liftoff versions.
 Java 25 does include some useful features for reducing memory usage, [if you enable them](https://openjdk.org/jeps/534),
@@ -73,6 +77,17 @@ Typically, you either leave `lwjgl3Version=3.4.3` unchanged, or set it to `lwjgl
 Note that if you are running on Java 25 or newer with the `--sun-misc-unsafe-memory-access=deny` option (which will be
 the default in future JDKs), LWJGL3 will use the new FFM APIs (Foreign Function Memory) instead of the older and
 scheduled-to-be-removed `sun.misc.Unsafe` class.
+
+If you're worried about "Java4Shell," there isn't much need to be concerned in libGDX's domain. Because RoboVM never
+supported [Java 8's Base64 class](https://docs.oracle.com/javase/8/docs/api/java/util/Base64.html), libGDX has its
+[own Base64Coder class](https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/utils/Base64Coder.java),
+and Java 8's is not used from within libGDX. The issue that Java4Shell exploits only can occur in certain versions of
+Java (none of which are currently downloaded by Construo), and only affects the Java 8 Base64 class. The other reason to
+not be too concerned is that unless your game has a server that is loading base64-encoded data, decoding it with the
+Java 8 Base64 class, is using an unpatched JDK version, and is running on an x86_64 machine with AVX-512 enabled, 
+Java4Shell can't affect your application. It also requires a custom exploit per-application depending on how it handles
+the decoded Base64 data. The best solution is to keep your JDK up-to-date, but it isn't strictly necessary here, at
+least for most libGDX games.
 
 Advanced users may want to try using GraalVM to either run their project or to build a "native-image" distributable.
 Native-image, also called Substrate VM, allows you to avoid distributing a JDK at all by compiling a fairly-small
@@ -105,7 +120,7 @@ In addition to most features of the original `gdx-setup`, the `gdx-liftoff` tool
  
 - **Project templates.** You can choose one of many project skeletons highlighting various libGDX features.
 - **Instant input validation.** Your project data is validated as you type it in.
-- **Other JVM languages support.** You can choose additional languages for your project, like Kotlin or Scala.
+- **Other JVM languages support.** You can choose additional languages for your project, like Kotlin, Groovy, or Scala.
 Their standard libraries, Gradle plugins, and appropriate source folders will be included.
 - **Customization.** You have more control over the versions of software used by your application.
 - **More third-party extensions.** Their versions are tracked by gdx-liftoff and are updated frequently.
@@ -144,7 +159,7 @@ Gdx-Liftoff is a relatively straightforward GUI application.
  - Click Next.
  - Select any third-party extensions you want to add.
  - Click Next.
- - Enter a project path and optionally change Java version (such as to 8 for better iOS support).
+ - Enter a project path and optionally change Java version.
  - Click Generate, and let the magic happen.
 
 After that you can open the project in the path you specified, or open it more quickly in IDEA if it's installed how
@@ -153,7 +168,7 @@ Liftoff can see it (using [JetBrains Toolbox](https://www.jetbrains.com/toolbox-
 If you want to use Kotlin, a Kotlin template is recommended (such as `Kotlin Logo`); these mention that they use "Kotlin
 launchers" in their descriptions. The KTX libraries are all available as third-party extensions; these aren't required
 for Kotlin projects, but they can be helpful. KTX and other Kotlin-based libraries need Kotlin enabled. Currently,
-projects generated here default to using Kotlin 2.2.21, which may have some incompatibilities with the earlier 1.9.x
+projects generated here default to using Kotlin 2.4.21, which may have some incompatibilities with the earlier 1.9.x
 releases. You could instead set the version to the newest 1.9.x release (currently 1.9.25), in the Languages dialog,
 when you select Kotlin as an option. The 2.x series of releases claims a number of nice improvements, however, and most
 libraries appear to be either very close to compatible, or are compatible already. Liftoff itself is built using Kotlin
