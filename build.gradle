@@ -11,7 +11,7 @@ buildscript {
   dependencies {
     classpath "io.github.fourlastor:construo:2.3.0"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "org.jlleitschuh.gradle:ktlint-gradle:14.0.1"
+    classpath "org.jlleitschuh.gradle:ktlint-gradle:14.2.0"
   }
 }
 

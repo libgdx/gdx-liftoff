@@ -13,7 +13,7 @@ import gdx.liftoff.views.JvmLanguage
 @JvmLanguage
 data object Scala : Language {
   override val id = "scala"
-  override val version = "3.8.4"
+  override val version = "3.10.1"
 
   override fun initiate(project: Project) {
     project.rootGradle.plugins.add(id)
