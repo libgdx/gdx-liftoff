@@ -137,6 +137,10 @@ class PixscapeRuntime : ThirdPartyExtension() {
     Box2D().initiate(project)
     ArtemisOdbSerializerJsonGdx().initiate(project)
 
+    // Match Pixscape's transitive HUD dependencies without upgrading the desktop runtime.
+    addExternalDependency(project, GWT.ID, "com.github.tommyettinger:textratypist:2.5.0:sources")
+    addExternalDependency(project, GWT.ID, "com.github.tommyettinger:regexodus:0.1.21:sources")
+    addGwtInherit(project, "com.github.tommyettinger.textratypist")
     addGwtInherit(project, "games.pixscape.runtime.PixscapeRuntime")
   }
 }
