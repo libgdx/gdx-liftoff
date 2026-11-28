@@ -125,7 +125,7 @@ class ArtemisOdbSerializerJsonGdx : ThirdPartyExtension() {
 @Extension
 class PixscapeRuntime : ThirdPartyExtension() {
   override val id = "pixscapeRuntime"
-  override val defaultVersion = "0.2.1"
+  override val defaultVersion = "0.2.5"
   override val url = "https://pixscape.games"
   override val group = "games.pixscape"
   override val name = "pixscape-runtime"
@@ -137,6 +137,7 @@ class PixscapeRuntime : ThirdPartyExtension() {
     Box2D().initiate(project)
     ArtemisOdbSerializerJsonGdx().initiate(project)
 
+    TextraTypist().initiate(project)
     addGwtInherit(project, "games.pixscape.runtime.PixscapeRuntime")
   }
 }
